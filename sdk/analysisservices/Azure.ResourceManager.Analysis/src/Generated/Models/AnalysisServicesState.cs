@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </summary>
+    /// <summary>
+    /// The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.
+    /// Serialized Name: State
+    /// </summary>
     public readonly partial struct AnalysisServicesState : IEquatable<AnalysisServicesState>
     {
         private readonly string _value;
@@ -35,29 +38,65 @@ namespace Azure.ResourceManager.Analysis.Models
         private const string PreparingValue = "Preparing";
         private const string ScalingValue = "Scaling";
 
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: State.Deleting
+        /// </summary>
         public static AnalysisServicesState Deleting { get; } = new AnalysisServicesState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: State.Succeeded
+        /// </summary>
         public static AnalysisServicesState Succeeded { get; } = new AnalysisServicesState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: State.Failed
+        /// </summary>
         public static AnalysisServicesState Failed { get; } = new AnalysisServicesState(FailedValue);
-        /// <summary> Paused. </summary>
+        /// <summary>
+        /// Paused
+        /// Serialized Name: State.Paused
+        /// </summary>
         public static AnalysisServicesState Paused { get; } = new AnalysisServicesState(PausedValue);
-        /// <summary> Suspended. </summary>
+        /// <summary>
+        /// Suspended
+        /// Serialized Name: State.Suspended
+        /// </summary>
         public static AnalysisServicesState Suspended { get; } = new AnalysisServicesState(SuspendedValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary>
+        /// Provisioning
+        /// Serialized Name: State.Provisioning
+        /// </summary>
         public static AnalysisServicesState Provisioning { get; } = new AnalysisServicesState(ProvisioningValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: State.Updating
+        /// </summary>
         public static AnalysisServicesState Updating { get; } = new AnalysisServicesState(UpdatingValue);
-        /// <summary> Suspending. </summary>
+        /// <summary>
+        /// Suspending
+        /// Serialized Name: State.Suspending
+        /// </summary>
         public static AnalysisServicesState Suspending { get; } = new AnalysisServicesState(SuspendingValue);
-        /// <summary> Pausing. </summary>
+        /// <summary>
+        /// Pausing
+        /// Serialized Name: State.Pausing
+        /// </summary>
         public static AnalysisServicesState Pausing { get; } = new AnalysisServicesState(PausingValue);
-        /// <summary> Resuming. </summary>
+        /// <summary>
+        /// Resuming
+        /// Serialized Name: State.Resuming
+        /// </summary>
         public static AnalysisServicesState Resuming { get; } = new AnalysisServicesState(ResumingValue);
-        /// <summary> Preparing. </summary>
+        /// <summary>
+        /// Preparing
+        /// Serialized Name: State.Preparing
+        /// </summary>
         public static AnalysisServicesState Preparing { get; } = new AnalysisServicesState(PreparingValue);
-        /// <summary> Scaling. </summary>
+        /// <summary>
+        /// Scaling
+        /// Serialized Name: State.Scaling
+        /// </summary>
         public static AnalysisServicesState Scaling { get; } = new AnalysisServicesState(ScalingValue);
         /// <summary> Determines if two <see cref="AnalysisServicesState"/> values are the same. </summary>
         public static bool operator ==(AnalysisServicesState left, AnalysisServicesState right) => left.Equals(right);

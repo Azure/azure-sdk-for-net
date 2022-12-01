@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Analysis
     {
         /// <summary> Initializes a new instance of AnalysisServicesServerData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="analysisServicesSKU"> The SKU of the Analysis Services resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisServicesSKU"/> is null. </exception>
-        public AnalysisServicesServerData(AzureLocation location, ResourceSku analysisServicesSKU) : base(location)
+        /// <param name="analysisServicesSku">
+        /// The SKU of the Analysis Services resource.
+        /// Serialized Name: Resource.sku
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisServicesSku"/> is null. </exception>
+        public AnalysisServicesServerData(AzureLocation location, AnalysisServicesResourceSku analysisServicesSku) : base(location)
         {
-            Argument.AssertNotNull(analysisServicesSKU, nameof(analysisServicesSKU));
+            Argument.AssertNotNull(analysisServicesSku, nameof(analysisServicesSku));
 
-            AnalysisServicesSKU = analysisServicesSKU;
+            AnalysisServicesSku = analysisServicesSku;
         }
 
         /// <summary> Initializes a new instance of AnalysisServicesServerData. </summary>
@@ -34,37 +37,79 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="asAdministrators"> A collection of AS server administrators. </param>
-        /// <param name="backupBlobContainerUri"> The SAS container URI to the backup container. </param>
-        /// <param name="gatewayDetails"> The gateway details configured for the AS server. </param>
-        /// <param name="ipV4FirewallSettings"> The firewall settings for the AS server. </param>
-        /// <param name="querypoolConnectionMode"> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </param>
-        /// <param name="managedMode"> The managed mode of the server (0 = not managed, 1 = managed). </param>
-        /// <param name="serverMonitorMode"> The server monitor mode for AS server. </param>
-        /// <param name="state"> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </param>
-        /// <param name="provisioningState"> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="serverFullName"> The full name of the Analysis Services resource. </param>
-        /// <param name="analysisServicesServerSKU"> The SKU of the Analysis Services resource. </param>
-        /// <param name="analysisServicesSKU"> The SKU of the Analysis Services resource. </param>
-        internal AnalysisServicesServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, GatewayDetails gatewayDetails, IPv4FirewallSettings ipV4FirewallSettings, ConnectionMode? querypoolConnectionMode, ManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisServicesState? state, ProvisioningState? provisioningState, string serverFullName, ResourceSku analysisServicesServerSKU, ResourceSku analysisServicesSKU) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="asAdministrators">
+        /// A collection of AS server administrators
+        /// Serialized Name: AnalysisServicesServer.properties.asAdministrators
+        /// </param>
+        /// <param name="backupBlobContainerUri">
+        /// The SAS container URI to the backup container.
+        /// Serialized Name: AnalysisServicesServer.properties.backupBlobContainerUri
+        /// </param>
+        /// <param name="gatewayDetails">
+        /// The gateway details configured for the AS server.
+        /// Serialized Name: AnalysisServicesServer.properties.gatewayDetails
+        /// </param>
+        /// <param name="iPv4FirewallSettings">
+        /// The firewall settings for the AS server.
+        /// Serialized Name: AnalysisServicesServer.properties.ipV4FirewallSettings
+        /// </param>
+        /// <param name="queryPoolConnectionMode">
+        /// How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error.
+        /// Serialized Name: AnalysisServicesServer.properties.querypoolConnectionMode
+        /// </param>
+        /// <param name="managedMode">
+        /// The managed mode of the server (0 = not managed, 1 = managed).
+        /// Serialized Name: AnalysisServicesServer.properties.managedMode
+        /// </param>
+        /// <param name="serverMonitorMode">
+        /// The server monitor mode for AS server
+        /// Serialized Name: AnalysisServicesServer.properties.serverMonitorMode
+        /// </param>
+        /// <param name="state">
+        /// The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.
+        /// Serialized Name: AnalysisServicesServer.properties.state
+        /// </param>
+        /// <param name="provisioningState">
+        /// The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning.
+        /// Serialized Name: AnalysisServicesServer.properties.provisioningState
+        /// </param>
+        /// <param name="serverFullName">
+        /// The full name of the Analysis Services resource.
+        /// Serialized Name: AnalysisServicesServer.properties.serverFullName
+        /// </param>
+        /// <param name="analysisServicesServerSKU">
+        /// The SKU of the Analysis Services resource.
+        /// Serialized Name: AnalysisServicesServer.properties.sku
+        /// </param>
+        /// <param name="analysisServicesSku">
+        /// The SKU of the Analysis Services resource.
+        /// Serialized Name: Resource.sku
+        /// </param>
+        internal AnalysisServicesServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisServicesGatewayDetails gatewayDetails, AnalysisServicesIPv4FirewallSettings iPv4FirewallSettings, AnalysisServiceConnectionMode? queryPoolConnectionMode, AnalysisServicesManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisServicesState? state, AnalysisServicesProvisioningState? provisioningState, string serverFullName, AnalysisServicesResourceSku analysisServicesServerSKU, AnalysisServicesResourceSku analysisServicesSku) : base(id, name, resourceType, systemData, tags, location)
         {
             AsAdministrators = asAdministrators;
             BackupBlobContainerUri = backupBlobContainerUri;
             GatewayDetails = gatewayDetails;
-            IPV4FirewallSettings = ipV4FirewallSettings;
-            QuerypoolConnectionMode = querypoolConnectionMode;
+            IPv4FirewallSettings = iPv4FirewallSettings;
+            QueryPoolConnectionMode = queryPoolConnectionMode;
             ManagedMode = managedMode;
             ServerMonitorMode = serverMonitorMode;
             State = state;
             ProvisioningState = provisioningState;
             ServerFullName = serverFullName;
             AnalysisServicesServerSKU = analysisServicesServerSKU;
-            AnalysisServicesSKU = analysisServicesSKU;
+            AnalysisServicesSku = analysisServicesSku;
         }
 
-        /// <summary> A collection of AS server administrators. </summary>
+        /// <summary>
+        /// A collection of AS server administrators
+        /// Serialized Name: AnalysisServicesServer.properties.asAdministrators
+        /// </summary>
         internal ServerAdministrators AsAdministrators { get; set; }
-        /// <summary> An array of administrator user identities. </summary>
+        /// <summary>
+        /// An array of administrator user identities.
+        /// Serialized Name: ServerAdministrators.members
+        /// </summary>
         public IList<string> AsAdministratorIdentities
         {
             get
@@ -75,27 +120,60 @@ namespace Azure.ResourceManager.Analysis
             }
         }
 
-        /// <summary> The SAS container URI to the backup container. </summary>
+        /// <summary>
+        /// The SAS container URI to the backup container.
+        /// Serialized Name: AnalysisServicesServer.properties.backupBlobContainerUri
+        /// </summary>
         public Uri BackupBlobContainerUri { get; set; }
-        /// <summary> The gateway details configured for the AS server. </summary>
-        public GatewayDetails GatewayDetails { get; set; }
-        /// <summary> The firewall settings for the AS server. </summary>
-        public IPv4FirewallSettings IPV4FirewallSettings { get; set; }
-        /// <summary> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </summary>
-        public ConnectionMode? QuerypoolConnectionMode { get; set; }
-        /// <summary> The managed mode of the server (0 = not managed, 1 = managed). </summary>
-        public ManagedMode? ManagedMode { get; set; }
-        /// <summary> The server monitor mode for AS server. </summary>
+        /// <summary>
+        /// The gateway details configured for the AS server.
+        /// Serialized Name: AnalysisServicesServer.properties.gatewayDetails
+        /// </summary>
+        public AnalysisServicesGatewayDetails GatewayDetails { get; set; }
+        /// <summary>
+        /// The firewall settings for the AS server.
+        /// Serialized Name: AnalysisServicesServer.properties.ipV4FirewallSettings
+        /// </summary>
+        public AnalysisServicesIPv4FirewallSettings IPv4FirewallSettings { get; set; }
+        /// <summary>
+        /// How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error.
+        /// Serialized Name: AnalysisServicesServer.properties.querypoolConnectionMode
+        /// </summary>
+        public AnalysisServiceConnectionMode? QueryPoolConnectionMode { get; set; }
+        /// <summary>
+        /// The managed mode of the server (0 = not managed, 1 = managed).
+        /// Serialized Name: AnalysisServicesServer.properties.managedMode
+        /// </summary>
+        public AnalysisServicesManagedMode? ManagedMode { get; set; }
+        /// <summary>
+        /// The server monitor mode for AS server
+        /// Serialized Name: AnalysisServicesServer.properties.serverMonitorMode
+        /// </summary>
         public ServerMonitorMode? ServerMonitorMode { get; set; }
-        /// <summary> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </summary>
+        /// <summary>
+        /// The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.
+        /// Serialized Name: AnalysisServicesServer.properties.state
+        /// </summary>
         public AnalysisServicesState? State { get; }
-        /// <summary> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The full name of the Analysis Services resource. </summary>
+        /// <summary>
+        /// The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning.
+        /// Serialized Name: AnalysisServicesServer.properties.provisioningState
+        /// </summary>
+        public AnalysisServicesProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// The full name of the Analysis Services resource.
+        /// Serialized Name: AnalysisServicesServer.properties.serverFullName
+        /// </summary>
         public string ServerFullName { get; }
-        /// <summary> The SKU of the Analysis Services resource. </summary>
-        public ResourceSku AnalysisServicesServerSKU { get; set; }
-        /// <summary> The SKU of the Analysis Services resource. </summary>
-        public ResourceSku AnalysisServicesSKU { get; set; }
+        /// <summary>
+        /// The SKU of the Analysis Services resource.
+        /// Serialized Name: AnalysisServicesServer.properties.sku
+        /// </summary>
+        public AnalysisServicesResourceSku AnalysisServicesServerSKU { get; set; }
+        /// <summary>
+        /// The SKU of the Analysis Services resource.
+        /// Serialized Name: Resource.sku
+        /// </summary>
+        public AnalysisServicesResourceSku AnalysisServicesSku { get; set; }
     }
 }

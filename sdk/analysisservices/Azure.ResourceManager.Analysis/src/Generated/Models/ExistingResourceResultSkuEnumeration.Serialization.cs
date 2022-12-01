@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal static ExistingResourceResultSkuEnumeration DeserializeExistingResourceResultSkuEnumeration(JsonElement element)
         {
-            Optional<IReadOnlyList<ExistingResourceSkuDetails>> value = default;
+            Optional<IReadOnlyList<AsExistingResourceSkuDetails>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Analysis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExistingResourceSkuDetails> array = new List<ExistingResourceSkuDetails>();
+                    List<AsExistingResourceSkuDetails> array = new List<AsExistingResourceSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExistingResourceSkuDetails.DeserializeExistingResourceSkuDetails(item));
+                        array.Add(AsExistingResourceSkuDetails.DeserializeAsExistingResourceSkuDetails(item));
                     }
                     value = array;
                     continue;

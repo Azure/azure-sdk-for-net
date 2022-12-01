@@ -10,23 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary> An object that represents enumerating SKUs for new resources. </summary>
+    /// <summary>
+    /// An object that represents enumerating SKUs for new resources.
+    /// Serialized Name: SkuEnumerationForNewResourceResult
+    /// </summary>
     internal partial class NewResourceResultSkuEnumeration
     {
         /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>
         internal NewResourceResultSkuEnumeration()
         {
-            Value = new ChangeTrackingList<ResourceSku>();
+            Value = new ChangeTrackingList<AnalysisServicesResourceSku>();
         }
 
         /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>
-        /// <param name="value"> The collection of available SKUs for new resources. </param>
-        internal NewResourceResultSkuEnumeration(IReadOnlyList<ResourceSku> value)
+        /// <param name="value">
+        /// The collection of available SKUs for new resources.
+        /// Serialized Name: SkuEnumerationForNewResourceResult.value
+        /// </param>
+        internal NewResourceResultSkuEnumeration(IReadOnlyList<AnalysisServicesResourceSku> value)
         {
             Value = value;
         }
 
-        /// <summary> The collection of available SKUs for new resources. </summary>
-        public IReadOnlyList<ResourceSku> Value { get; }
+        /// <summary>
+        /// The collection of available SKUs for new resources.
+        /// Serialized Name: SkuEnumerationForNewResourceResult.value
+        /// </summary>
+        public IReadOnlyList<AnalysisServicesResourceSku> Value { get; }
     }
 }

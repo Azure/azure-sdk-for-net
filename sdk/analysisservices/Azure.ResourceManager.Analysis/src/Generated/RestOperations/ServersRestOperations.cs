@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.Analysis
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, CheckServerNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckServerNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, CheckServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalysisServicesServerNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -966,9 +966,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        CheckServerNameAvailabilityResult value = default;
+                        AnalysisServicesServerNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckServerNameAvailabilityResult.DeserializeCheckServerNameAvailabilityResult(document.RootElement);
+                        value = AnalysisServicesServerNameAvailabilityResult.DeserializeAnalysisServicesServerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckServerNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, CheckServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<AnalysisServicesServerNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -994,155 +994,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        CheckServerNameAvailabilityResult value = default;
+                        AnalysisServicesServerNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckServerNameAvailabilityResult.DeserializeCheckServerNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListOperationResultsRequest(string subscriptionId, AzureLocation location, string operationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.AnalysisServices/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/operationresults/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List the result of the specified operation. </summary>
-        /// <param name="subscriptionId"> A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ListOperationResultsAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListOperationResultsRequest(subscriptionId, location, operationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List the result of the specified operation. </summary>
-        /// <param name="subscriptionId"> A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ListOperationResults(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListOperationResultsRequest(subscriptionId, location, operationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListOperationStatusesRequest(string subscriptionId, AzureLocation location, string operationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.AnalysisServices/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/operationstatuses/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List the status of operation. </summary>
-        /// <param name="subscriptionId"> A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatus>> ListOperationStatusesAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListOperationStatusesRequest(subscriptionId, location, operationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    {
-                        OperationStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List the status of operation. </summary>
-        /// <param name="subscriptionId"> A unique identifier for a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatus> ListOperationStatuses(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateListOperationStatusesRequest(subscriptionId, location, operationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    {
-                        OperationStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = AnalysisServicesServerNameAvailabilityResult.DeserializeAnalysisServicesServerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

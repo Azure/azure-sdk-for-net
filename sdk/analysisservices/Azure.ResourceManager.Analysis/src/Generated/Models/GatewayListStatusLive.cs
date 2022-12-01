@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary> Status of gateway is live. </summary>
+    /// <summary>
+    /// Status of gateway is live.
+    /// Serialized Name: GatewayListStatusLive
+    /// </summary>
     public partial class GatewayListStatusLive
     {
         /// <summary> Initializes a new instance of GatewayListStatusLive. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of GatewayListStatusLive. </summary>
-        /// <param name="status"> Live message of list gateway. Status: 0 - Live. </param>
+        /// <param name="status">
+        /// Live message of list gateway. Status: 0 - Live
+        /// Serialized Name: GatewayListStatusLive.status
+        /// </param>
         internal GatewayListStatusLive(AnalysisServicesStatus? status)
         {
             Status = status;
         }
 
-        /// <summary> Live message of list gateway. Status: 0 - Live. </summary>
+        /// <summary>
+        /// Live message of list gateway. Status: 0 - Live
+        /// Serialized Name: GatewayListStatusLive.status
+        /// </summary>
         public AnalysisServicesStatus? Status { get; }
     }
 }

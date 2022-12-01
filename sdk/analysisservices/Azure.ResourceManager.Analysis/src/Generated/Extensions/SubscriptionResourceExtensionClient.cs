@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListSkusForNew
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetSkusForNewServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AnalysisServicesResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AnalysisServicesResourceSku> GetSkusForNewServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AnalysisServicesResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
                 scope.Start();
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListSkusForNew
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetSkusForNewServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AnalysisServicesResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AnalysisServicesResourceSku> GetSkusForNewServers(CancellationToken cancellationToken = default)
         {
-            Page<ResourceSku> FirstPageFunc(int? pageSizeHint)
+            Page<AnalysisServicesResourceSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
                 scope.Start();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(AzureLocation location, CheckServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalysisServicesServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
@@ -184,109 +184,13 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckServerNameAvailabilityResult> CheckNameAvailabilityServer(AzureLocation location, CheckServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AnalysisServicesServerNameAvailabilityResult> CheckNameAvailabilityServer(AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
             try
             {
                 var response = AnalysisServicesServerServersRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the result of the specified operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationresults/{operationId}
-        /// Operation Id: Servers_ListOperationResults
-        /// </summary>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetOperationResultsServerAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResultsServer");
-            scope.Start();
-            try
-            {
-                var response = await AnalysisServicesServerServersRestClient.ListOperationResultsAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the result of the specified operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationresults/{operationId}
-        /// Operation Id: Servers_ListOperationResults
-        /// </summary>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetOperationResultsServer(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResultsServer");
-            scope.Start();
-            try
-            {
-                var response = AnalysisServicesServerServersRestClient.ListOperationResults(Id.SubscriptionId, location, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the status of operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationstatuses/{operationId}
-        /// Operation Id: Servers_ListOperationStatuses
-        /// </summary>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetOperationStatusesServerAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatusesServer");
-            scope.Start();
-            try
-            {
-                var response = await AnalysisServicesServerServersRestClient.ListOperationStatusesAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the status of operation.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AnalysisServices/locations/{location}/operationstatuses/{operationId}
-        /// Operation Id: Servers_ListOperationStatuses
-        /// </summary>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="operationId"> The target operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetOperationStatusesServer(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationStatusesServer");
-            scope.Start();
-            try
-            {
-                var response = AnalysisServicesServerServersRestClient.ListOperationStatuses(Id.SubscriptionId, location, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

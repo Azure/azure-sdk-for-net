@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class ExistingResourceSkuDetails
+    public partial class AsExistingResourceSkuDetails
     {
-        internal static ExistingResourceSkuDetails DeserializeExistingResourceSkuDetails(JsonElement element)
+        internal static AsExistingResourceSkuDetails DeserializeAsExistingResourceSkuDetails(JsonElement element)
         {
-            Optional<ResourceSku> sku = default;
+            Optional<AnalysisServicesResourceSku> sku = default;
             Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = AnalysisServicesResourceSku.DeserializeAnalysisServicesResourceSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new ExistingResourceSkuDetails(sku.Value, Optional.ToNullable(resourceType));
+            return new AsExistingResourceSkuDetails(sku.Value, Optional.ToNullable(resourceType));
         }
     }
 }

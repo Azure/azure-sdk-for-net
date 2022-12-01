@@ -20,17 +20,32 @@ modelerfour:
 rename-mapping:
   State: AnalysisServicesState
   Status: AnalysisServicesStatus
+  OperationStatus: AnalysisServicesOperationStatus
   AnalysisServicesServers.value: AnalysisServicesResources
 #   SkuEnumerationForNewResourceResult.value: SKUs
-  Resource.sku: AnalysisServicesSKU
+  Resource.sku: AnalysisServicesSku
   AnalysisServicesServer.properties.sku: AnalysisServicesServerSKU
   ServerAdministrators.members: AsAdministratorIdentities
   CheckServerNameAvailabilityResult.nameAvailable: IsNameAvailable
   IPv4FirewallSettings.enablePowerBIService: IsPowerBIServiceEnabled
-  SkuDetailsForExistingResource: ExistingResourceSkuDetails
+  SkuDetailsForExistingResource: AsExistingResourceSkuDetails
   SkuEnumerationForExistingResourceResult: ExistingResourceResultSkuEnumeration
   SkuEnumerationForNewResourceResult: NewResourceResultSkuEnumeration
+  CheckServerNameAvailabilityContent: AnalysisServicesServerNameAvailabilityContent
 #   SkuEnumerationForExistingResourceResult.value: ExistingResources
+  AnalysisServicesServer.properties.ipV4FirewallSettings: IPv4FirewallSettings
+  AnalysisServicesServer.properties.querypoolConnectionMode: QueryPoolConnectionMode
+  CheckServerNameAvailabilityParameters: AnalysisServicesServerNameAvailabilityContent
+  CheckServerNameAvailabilityResult: AnalysisServicesServerNameAvailabilityResult
+  ConnectionMode: AnalysisServiceConnectionMode
+  GatewayDetails: AnalysisServicesGatewayDetails
+  IPv4FirewallRule: AnalysisServicesIPv4FirewallRule
+  IPv4FirewallSettings: AnalysisServicesIPv4FirewallSettings
+  ManagedMode: AnalysisServicesManagedMode
+  ProvisioningState: AnalysisServicesProvisioningState
+  ResourceSku: AnalysisServicesResourceSku
+  Status.0: Zero
+
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -62,7 +77,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+override-operation-name:
+  Servers_ListSkusForExisting: GetExistingSkus
+
 directive:
+  - remove-operation: Servers_ListOperationResults
+  - remove-operation: Servers_ListOperationStatuses
   - from: analysisservices.json
     where: $.definitions
     transform: >
