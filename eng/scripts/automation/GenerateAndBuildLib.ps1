@@ -368,6 +368,10 @@ function New-CADLPackageFolder() {
         [string]$outputJsonFile = "$PWD/output.json"
     )
     $serviceFolder = (Join-Path $sdkPath "sdk" $service)
+    if (!(Test-Path -Path $serviceFolder)) {
+        Write-Host "service folder does not exist! create the folder $serviceFolder"
+        New-Item -Path $serviceFolder -ItemType Directory
+    }
     $projectFolder=(Join-Path $sdkPath "sdk" $service $namespace)
     $ciymlFilePath =(Join-Path $sdkPath "sdk" $service $CI_YAML_FILE)
     $apifolder = (Join-Path $projectFolder "api")
