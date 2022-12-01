@@ -9,17 +9,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Core.Pipeline;
-using NUnit.Framework;
+using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
     [NonParallelizable]
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
