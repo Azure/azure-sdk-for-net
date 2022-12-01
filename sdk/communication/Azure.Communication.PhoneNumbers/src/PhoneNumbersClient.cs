@@ -379,7 +379,7 @@ namespace Azure.Communication.PhoneNumbers
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListPhoneNumbers(skip: null, top: null, cancellationToken);
+                    var response = RestClient.ListPhoneNumbers(skip: null, top: pageSizeHint, cancellationToken);
                     return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
