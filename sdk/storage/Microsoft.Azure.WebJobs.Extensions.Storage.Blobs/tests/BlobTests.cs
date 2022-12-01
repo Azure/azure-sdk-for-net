@@ -228,7 +228,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
             });
         }
-        
+
         private static BlobContainerClient CreateContainer(BlobServiceClient blobServiceClient, string containerName)
         {
             var container = blobServiceClient.GetBlobContainerClient(containerName);
