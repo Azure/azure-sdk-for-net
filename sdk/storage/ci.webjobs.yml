@@ -8,9 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/storage/
-    exclude:
-    - sdk/storage/Azure.ResourceManager.Storage/
+    - sdk/storage/ci.webjobs.yml
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/
@@ -28,10 +26,14 @@ pr:
     - sdk/storage/
     exclude:
     - sdk/storage/Azure.ResourceManager.Storage/
-    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
-    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
-    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/
-    - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests/
+    - sdk/storage/Azure.Storage.Blobs/
+    - sdk/storage/Azure.Storage.Blobs.Batch/
+    - sdk/storage/Azure.Storage.Blobs.ChangeFeed/
+    - sdk/storage/Azure.Storage.Common/
+    - sdk/storage/Azure.Storage.Files.DataLake/
+    - sdk/storage/Azure.Storage.Files.Shares/
+    - sdk/storage/Azure.Storage.Internal.Avro/
+    - sdk/storage/Azure.Storage.Queues/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -39,19 +41,11 @@ extends:
     ServiceDirectory: storage
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Storage.Blobs
-      safeName: AzureStorageBlobs
-    - name: Azure.Storage.Blobs.Batch
-      safeName: AzureStorageBlobsBatch
-    - name: Azure.Storage.Common
-      safeName: AzureStorageCommon
-    - name: Azure.Storage.Files.Shares
-      safeName: AzureStorageFilesShares
-    - name: Azure.Storage.Files.DataLake
-      safeName: AzureStorageFilesDataLake
-    - name: Azure.Storage.Queues
-      safeName: AzureStorageQueues
-    - name: Azure.Storage.Blobs.ChangeFeed
-      safeName: AzureStorageBlobsChangeFeed
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage
+      safeName: MicrosoftAzureWebJobsExtensionsStorage
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
+      safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
+    - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
+      safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
