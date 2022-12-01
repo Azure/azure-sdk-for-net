@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement
         /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
         /// or will default to 8 MB if the total size is greater than or equal to 100MB.
         /// </summary>
-        internal long? _maximumTransferChunkSize { get; set; }
+        internal long _maximumTransferChunkSize { get; set; }
 
         /// <summary>
         /// The size of the first range request in bytes. Single Transfer sizes smaller than this
@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement
             StorageResource sourceResource,
             StorageResource destinationResource,
             long? maximumTransferChunkSize,
-            long initialTransferSize,
+            long? initialTransferSize,
             ErrorHandlingOptions errorHandling,
             StorageResourceCreateMode createMode,
             TransferCheckpointer checkpointer,
@@ -139,12 +139,25 @@ namespace Azure.Storage.DataMovement
             _createMode = createMode;
             _checkpointer = checkpointer;
             _cancellationTokenSource = cancellationTokenSource;
-            _maximumTransferChunkSize = maximumTransferChunkSize;
-            _initialTransferSize = initialTransferSize;
             _arrayPool = arrayPool;
             PartTransferStatusEventHandler = jobPartEventHandler;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
+
+            _initialTransferSize = _destinationResource.MaxChunkSize;
+            if (initialTransferSize.HasValue)
+            {
+                _initialTransferSize = Math.Min(initialTransferSize.Value, _destinationResource.MaxChunkSize);
+            }
+            // If the maximum chunk size is not set, we will determine the chunk size
+            // based on the file length later
+            _maximumTransferChunkSize = _destinationResource.MaxChunkSize;
+            if (maximumTransferChunkSize.HasValue)
+            {
+                _maximumTransferChunkSize = Math.Min(
+                    maximumTransferChunkSize.Value,
+                    _destinationResource.MaxChunkSize);
+            }
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)
@@ -179,18 +192,11 @@ namespace Azure.Storage.DataMovement
             {
                 JobPartStatus = transferStatus;
                 // TODO: change to RaiseAsync
-                if (PartTransferStatusEventHandler != null)
-                {
-                    await PartTransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
-                        _dataTransfer.Id,
-                        transferStatus,
-                        false,
-                        _cancellationTokenSource.Token)).ConfigureAwait(false);
-                }
-                else
-                {
-                    throw new ArgumentException("PartTransferStatusEventHandler was not enabled.");
-                }
+                await PartTransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
+                    _dataTransfer.Id,
+                    transferStatus,
+                    false,
+                    _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
         }
 
@@ -249,12 +255,11 @@ namespace Azure.Storage.DataMovement
             // If the caller provided an explicit block size, we'll use it.
             // Otherwise we'll adjust dynamically based on the size of the
             // content.
-            if (_maximumTransferChunkSize.HasValue
-            && _maximumTransferChunkSize > 0)
+            if (_maximumTransferChunkSize > 0)
             {
                 long assignedSize = Math.Min(
                     _destinationResource.MaxChunkSize,
-                    _maximumTransferChunkSize.Value);
+                    _maximumTransferChunkSize);
                 return Math.Min(assignedSize, length);
             }
             long blockSize = length < Constants.LargeUploadThreshold ?

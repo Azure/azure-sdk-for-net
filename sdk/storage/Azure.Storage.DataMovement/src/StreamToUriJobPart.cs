@@ -49,10 +49,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
-        /// <param name="job"></param>
-        /// <param name="sourceResource"></param>
-        /// <param name="destinationResource"></param>
-        /// <param name="partNumber"></param>
         public StreamToUriJobPart(
             StreamToUriTransferJob job,
             int partNumber,

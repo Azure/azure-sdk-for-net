@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// On Uploads, if the value is not set, it will set at 256 MB.
         /// </summary>
-        internal long _initialTransferSize { get; set; }
+        internal long? _initialTransferSize { get; set; }
 
         /// <summary>
         /// Defines whether the transfer will be only a single transfer, or
@@ -189,21 +189,8 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _isSingleResource = true;
-
-            _initialTransferSize = _destinationResource.MaxChunkSize;
-            if (transferOptions.InitialTransferSize.HasValue)
-            {
-                _initialTransferSize = Math.Min(transferOptions.InitialTransferSize.Value, _destinationResource.MaxChunkSize);
-            }
-            // If the maximum chunk size is not set, we will determine the chunk size
-            // based on the file length later
-            _maximumTransferChunkSize = _destinationResource.MaxChunkSize;
-            if (transferOptions.MaximumTransferChunkSize.HasValue)
-            {
-                _maximumTransferChunkSize = Math.Min(
-                    transferOptions.MaximumTransferChunkSize.Value,
-                    _destinationResource.MaxChunkSize);
-            }
+            _initialTransferSize = transferOptions?.InitialTransferSize;
+            _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
         }
 
         /// <summary>
@@ -303,14 +290,14 @@ namespace Azure.Storage.DataMovement
                 _transferStatus = status;
                 if (TransferStatusEventHandler != null)
                 {
-                    _dataTransfer._state.SetTransferStatus(status);
                     await TransferStatusEventHandler.Invoke(
                         new TransferStatusEventArgs(
                             transferId: _dataTransfer.Id,
                             transferStatus: status,
-                            isRunningSynchronously: true,
+                            isRunningSynchronously: false,
                             cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
                 }
+                _dataTransfer._state.SetTransferStatus(status);
             }
         }
 
@@ -321,7 +308,7 @@ namespace Azure.Storage.DataMovement
                 new TransferStatusEventArgs(
                     transferId: _dataTransfer.Id,
                     transferStatus: status,
-                    isRunningSynchronously: true,
+                    isRunningSynchronously: false,
                     cancellationToken: _cancellationTokenSource.Token)).ConfigureAwait(false);
         }
     }

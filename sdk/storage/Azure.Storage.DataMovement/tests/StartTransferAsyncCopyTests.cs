@@ -28,7 +28,9 @@ namespace Azure.Storage.DataMovement.Tests
             public readonly StorageResource DestinationResource;
             public readonly BlockBlobClient DestinationClient;
             public SingleTransferOptions CopyOptions;
-            public AutoResetEvent CompletedStatusWait;
+            public DataTransfer DataTransfer;
+            public bool CompletedStatus;
+            public Exception Exception;
 
             public VerifyBlockCopyFromUriInfo(
                 string sourceLocalPath,
@@ -36,14 +38,17 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResource destinationResource,
                 BlockBlobClient destinationClient,
                 SingleTransferOptions copyOptions,
-                AutoResetEvent completedStatusWait)
+                bool completed,
+                Exception exception)
             {
                 SourceLocalPath = sourceLocalPath;
                 SourceResource = sourceResource;
                 DestinationResource = destinationResource;
                 DestinationClient = destinationClient;
                 CopyOptions = copyOptions;
-                CompletedStatusWait = completedStatusWait;
+                CompletedStatus = completed;
+                Exception = exception;
+                DataTransfer = default;
             }
         };
 
@@ -54,7 +59,9 @@ namespace Azure.Storage.DataMovement.Tests
             public readonly StorageResource DestinationResource;
             public readonly PageBlobClient DestinationClient;
             public SingleTransferOptions CopyOptions;
-            public AutoResetEvent CompletedStatusWait;
+            public DataTransfer DataTransfer;
+            public bool CompletedStatus;
+            public Exception Exception;
 
             public VerifyPageCopyFromUriInfo(
                 string sourceLocalPath,
@@ -62,14 +69,17 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResource destinationResource,
                 PageBlobClient destinationClient,
                 SingleTransferOptions copyOptions,
-                AutoResetEvent completedStatusWait)
+                bool completed,
+                Exception exception)
             {
                 SourceLocalPath = sourceLocalPath;
                 SourceResource = sourceResource;
                 DestinationResource = destinationResource;
                 DestinationClient = destinationClient;
                 CopyOptions = copyOptions;
-                CompletedStatusWait = completedStatusWait;
+                CompletedStatus = completed;
+                Exception = exception;
+                DataTransfer = default;
             }
         };
 
@@ -80,7 +90,9 @@ namespace Azure.Storage.DataMovement.Tests
             public readonly StorageResource DestinationResource;
             public readonly AppendBlobClient DestinationClient;
             public SingleTransferOptions CopyOptions;
-            public AutoResetEvent CompletedStatusWait;
+            public DataTransfer DataTransfer;
+            public bool CompletedStatus;
+            public Exception Exception;
 
             public VerifyAppendCopyFromUriInfo(
                 string sourceLocalPath,
@@ -88,14 +100,17 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResource destinationResource,
                 AppendBlobClient destinationClient,
                 SingleTransferOptions copyOptions,
-                AutoResetEvent completedStatusWait)
+                bool completed,
+                Exception exception)
             {
                 SourceLocalPath = sourceLocalPath;
                 SourceResource = sourceResource;
                 DestinationResource = destinationResource;
                 DestinationClient = destinationClient;
                 CopyOptions = copyOptions;
-                CompletedStatusWait = completedStatusWait;
+                CompletedStatus = completed;
+                Exception = exception;
+                DataTransfer = default;
             }
         };
 
@@ -180,11 +195,13 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Initialize BlobDataController
-                TransferManager BlobDataController = new TransferManager(transferManagerOptions);
+                TransferManager transferManager = new TransferManager(transferManagerOptions);
 
                 // Upload set of VerifyCopyFromUriInfo blobs to Copy
                 for (int i = 0; i < blobCount; i++)
                 {
+                    bool completed = false;
+                    Exception exception = null;
                     // Set up Blob to be Copyed
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
                     string localSourceFile = Path.GetTempFileName();
@@ -192,22 +209,9 @@ namespace Azure.Storage.DataMovement.Tests
 
                     // Set up event handler for the respective blob
                     AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-                    options[i].TransferStatus += (TransferStatusEventArgs args) =>
-                    {
-                        // Assert
-                        if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                        {
-                            completedStatusWait.Set();
-                        }
-                        return Task.CompletedTask;
-                    };
                     options[i].TransferFailed += (TransferFailedEventArgs args) =>
                     {
-                        if (args.Exception != null)
-                        {
-                            Assert.Fail(args.Exception.Message);
-                            completedStatusWait.Set();
-                        }
+                        exception = args.Exception;
                         return Task.CompletedTask;
                     };
 
@@ -228,23 +232,32 @@ namespace Azure.Storage.DataMovement.Tests
                         destinationResource,
                         destClient,
                         options[i],
-                        completedStatusWait));
+                        completed,
+                        exception));
                 }
 
                 // Schedule all Copy blobs consecutively
                 for (int i = 0; i < copyBlobInfo.Count; i++)
                 {
                     // Act
-                    await BlobDataController.StartTransferAsync(
+                    DataTransfer transfer = await transferManager.StartTransferAsync(
                         copyBlobInfo[i].SourceResource,
                         copyBlobInfo[i].DestinationResource,
                         options[i]).ConfigureAwait(false);
+                    copyBlobInfo[i].DataTransfer = transfer;
                 }
 
                 for (int i = 0; i < copyBlobInfo.Count; i++)
                 {
                     // Assert
-                    Assert.IsTrue(copyBlobInfo[i].CompletedStatusWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+                    if (copyBlobInfo[i].Exception != null)
+                    {
+                        Assert.Fail(copyBlobInfo[i].Exception.Message);
+                    }
+                    Assert.NotNull(copyBlobInfo[i].DataTransfer);
+                    CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
+                    await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                    Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
 
                     // Verify Copy - using original source File and Copying the destination
                     using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
@@ -369,27 +382,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
-            AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
-
-            options.TransferStatus += (TransferStatusEventArgs args) =>
-            {
-                // Assert
-                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                {
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                if (args.Exception != null)
-                {
-                    Assert.Fail(args.Exception.Message);
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
 
             List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
             await CopyBlockBlobsAndVerify(
@@ -397,9 +390,6 @@ namespace Azure.Storage.DataMovement.Tests
                 size: size,
                 waitTimeInSec: waitTimeInSec,
                 options: optionsList).ConfigureAwait(false);
-
-            // Assert
-            Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
         }
 
         [RecordedTest]
@@ -479,6 +469,8 @@ namespace Azure.Storage.DataMovement.Tests
             List<VerifyPageCopyFromUriInfo> copyBlobInfo = new List<VerifyPageCopyFromUriInfo>(blobCount);
             try
             {
+                bool completed = false;
+                Exception exception = null;
                 // Initialize BlobDataController
                 TransferManager BlobDataController = new TransferManager(transferManagerOptions);
 
@@ -492,22 +484,9 @@ namespace Azure.Storage.DataMovement.Tests
 
                     // Set up event handler for the respective blob
                     AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-                    options[i].TransferStatus += (TransferStatusEventArgs args) =>
-                    {
-                        // Assert
-                        if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                        {
-                            completedStatusWait.Set();
-                        }
-                        return Task.CompletedTask;
-                    };
                     options[i].TransferFailed += (TransferFailedEventArgs args) =>
                     {
-                        if (args.Exception != null)
-                        {
-                            Assert.Fail(args.Exception.Message);
-                            completedStatusWait.Set();
-                        }
+                        exception = args.Exception;
                         return Task.CompletedTask;
                     };
 
@@ -528,23 +507,33 @@ namespace Azure.Storage.DataMovement.Tests
                         destinationResource,
                         destClient,
                         options[i],
-                        completedStatusWait));
+                        completed,
+                        exception));
                 }
 
                 // Schedule all Copy blobs consecutively
                 for (int i = 0; i < copyBlobInfo.Count; i++)
                 {
                     // Act
-                    await BlobDataController.StartTransferAsync(
+                    DataTransfer transfer = await BlobDataController.StartTransferAsync(
                         copyBlobInfo[i].SourceResource,
                         copyBlobInfo[i].DestinationResource,
                         options[i]).ConfigureAwait(false);
+                    copyBlobInfo[i].DataTransfer = transfer;
                 }
 
                 for (int i = 0; i < copyBlobInfo.Count; i++)
                 {
                     // Assert
-                    Assert.IsTrue(copyBlobInfo[i].CompletedStatusWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+                    // Assert
+                    if (copyBlobInfo[i].Exception != null)
+                    {
+                        Assert.Fail(copyBlobInfo[i].Exception.Message);
+                    }
+                    Assert.NotNull(copyBlobInfo[i].DataTransfer);
+                    CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
+                    await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                    Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
 
                     // Verify Copy - using original source File and Copying the destination
                     using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
@@ -770,6 +759,8 @@ namespace Azure.Storage.DataMovement.Tests
             List<VerifyAppendCopyFromUriInfo> copyBlobInfo = new List<VerifyAppendCopyFromUriInfo>(blobCount);
             try
             {
+                bool completed = false;
+                Exception exception = null;
                 // Initialize BlobDataController
                 TransferManager BlobDataController = new TransferManager(transferManagerOptions);
 
@@ -782,22 +773,9 @@ namespace Azure.Storage.DataMovement.Tests
 
                     // Set up event handler for the respective blob
                     AutoResetEvent completedStatusWait = new AutoResetEvent(false);
-                    options[i].TransferStatus += (TransferStatusEventArgs args) =>
-                    {
-                        // Assert
-                        if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                        {
-                            completedStatusWait.Set();
-                        }
-                        return Task.CompletedTask;
-                    };
                     options[i].TransferFailed += (TransferFailedEventArgs args) =>
                     {
-                        if (args.Exception != null)
-                        {
-                            Assert.Fail(args.Exception.Message);
-                            completedStatusWait.Set();
-                        }
+                        exception = args.Exception;
                         return Task.CompletedTask;
                     };
 
@@ -818,23 +796,32 @@ namespace Azure.Storage.DataMovement.Tests
                         destinationResource,
                         destClient,
                         options[i],
-                        completedStatusWait));
+                        completed,
+                        exception));
                 }
 
                 // Schedule all Copy blobs consecutively
                 for (int i = 0; i < copyBlobInfo.Count; i++)
                 {
                     // Act
-                    await BlobDataController.StartTransferAsync(
+                    DataTransfer transfer = await BlobDataController.StartTransferAsync(
                         copyBlobInfo[i].SourceResource,
                         copyBlobInfo[i].DestinationResource,
                         options[i]).ConfigureAwait(false);
+                    copyBlobInfo[i].DataTransfer = transfer;
                 }
 
                 for (int i = 0; i < copyBlobInfo.Count; i++)
                 {
                     // Assert
-                    Assert.IsTrue(copyBlobInfo[i].CompletedStatusWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+                    if (copyBlobInfo[i].Exception != null)
+                    {
+                        Assert.Fail(copyBlobInfo[i].Exception.Message);
+                    }
+                    Assert.NotNull(copyBlobInfo[i].DataTransfer);
+                    CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
+                    await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                    Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
 
                     // Verify Copy - using original source File and Copying the destination
                     using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
@@ -909,15 +896,6 @@ namespace Azure.Storage.DataMovement.Tests
             int waitTimeInSec = 10;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
-            options.TransferStatus += (TransferStatusEventArgs args) =>
-            {
-                // Assert
-                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                {
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
             options.TransferFailed += (TransferFailedEventArgs args) =>
             {
                 if (args.Exception != null)

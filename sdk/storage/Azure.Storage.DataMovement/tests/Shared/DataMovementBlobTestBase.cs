@@ -531,6 +531,22 @@ namespace Azure.Storage.DataMovement.Tests
         };
 
         /// <summary>
+        /// Verifies Download blob contents
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="blob"></param>
+        internal static void CheckDownloadFile(string uploadedFile, string downloadedFile)
+        {
+            using (FileStream downloadedStream = File.OpenRead(downloadedFile))
+            {
+                using (FileStream uploadedStream = File.OpenRead(uploadedFile))
+                {
+                    TestHelper.AssertSequenceEqual(uploadedStream.AsBytes(), downloadedStream.AsBytes());
+                }
+            }
+        }
+
+        /// <summary>
         /// Verifies Upload blob contents
         /// </summary>
         /// <param name="stream"></param>

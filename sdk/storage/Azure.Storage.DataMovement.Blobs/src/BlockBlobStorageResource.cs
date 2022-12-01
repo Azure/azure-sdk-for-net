@@ -131,19 +131,19 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            BlobRequestConditions conditions = new BlobRequestConditions
-            {
-                // TODO: copy over the other conditions from the uploadOptions
-                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-            };
             if ((streamLength == completeLength) && position == 0)
             {
+                BlobRequestConditions putBlobConditions = new BlobRequestConditions
+                {
+                    // TODO: copy over the other conditions from the uploadOptions
+                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
+                };
                 // Default to Upload
                 await _blobClient.UploadAsync(
                     stream,
                     new BlobUploadOptions()
                     {
-                        Conditions = conditions,
+                        Conditions = putBlobConditions,
                     },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
@@ -154,12 +154,16 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
             }
+            BlobRequestConditions stageBlockConditions = new BlobRequestConditions
+            {
+                // TODO: copy over the other conditions from the uploadOptions
+            };
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
                 new BlockBlobStageBlockOptions()
                 {
-                    Conditions = conditions,
+                    Conditions = stageBlockConditions,
                 },
                 cancellationToken).ConfigureAwait(false);
         }

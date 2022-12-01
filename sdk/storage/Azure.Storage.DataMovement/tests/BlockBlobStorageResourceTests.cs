@@ -84,8 +84,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(Constants.KB);
             using (var stream = new MemoryStream(data))
             {
-                await blobClient.UploadAsync(
-                    content: stream);
+                await blobClient.UploadAsync(content: stream);
             }
 
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);

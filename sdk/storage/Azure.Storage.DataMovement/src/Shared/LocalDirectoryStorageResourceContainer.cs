@@ -76,14 +76,8 @@ namespace Azure.Storage.DataMovement
             PathScanner scanner = new PathScanner(_path);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                if (fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
-                {
-                    if (fileSystemInfo.FullName != Path)
-                    {
-                        yield return new LocalDirectoryStorageResourceContainer(fileSystemInfo.FullName);
-                    }
-                }
-                else
+                // Skip over directories for now since directory creation is unnecessary.
+                if (!fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
                 {
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }

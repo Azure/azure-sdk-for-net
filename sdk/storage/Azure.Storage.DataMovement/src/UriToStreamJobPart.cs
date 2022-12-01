@@ -108,9 +108,9 @@ namespace Azure.Storage.DataMovement
                 catch // TODO: only catch initial range error.
                 {
                     // Range not accepted, we need to attempt to use a default range
-                    initialResult = await _sourceResource.ReadStreamAsync(
-                    cancellationToken: _cancellationTokenSource.Token)
-                    .ConfigureAwait(false);
+                    initialResult = await _sourceResource.
+                        ReadStreamAsync(cancellationToken: _cancellationTokenSource.Token)
+                        .ConfigureAwait(false);
                 }
 
                 // If the initial request returned no content (i.e., a 304),
