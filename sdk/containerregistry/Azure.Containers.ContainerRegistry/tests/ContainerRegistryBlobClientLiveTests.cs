@@ -27,7 +27,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task Setup()
         {
             // Handle redirects in the Client pipeline and not in the test proxy.
-            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { AllowAutoRedirect = true } });
+            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { AllowAutoRedirect = false } });
         }
 
         /// <summary>
