@@ -1,5 +1,16 @@
 # Release History
 
+## 1.0.1 (2022-12-01)
+
+### Breaking Changes
+ 
+ - Add `Dns` prefix for some models
+ - Rename `RecordSet` to `Record`
+
+### Other Changes
+ - Upgraded dependent `Azure.ResourceManager` to 1.3.2
+ - Upgraded dependent `Azure.Core` to 1.26.0
+
 ## 1.0.0 (2022-09-29)
 
 This package is the first stable release of the DNS Management library.
