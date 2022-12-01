@@ -13,10 +13,8 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaTransformJobTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaTransformIdentifier;
-        private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaTransformResource _mediaTransform;
         private MediaServicesAccountResource _mediaService;
+        private MediaTransformResource _mediaTransform;
 
         private MediaJobCollection mediaTransformJobCollection => _mediaTransform.GetMediaJobs();
 
@@ -25,38 +23,13 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
-            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
-            var mediaServiceName = SessionRecording.GenerateAssetName("dotnetsdkmediatest");
-            var mediaTransformName = SessionRecording.GenerateAssetName("randomtransfer");
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _mediaServiceIdentifier = MediaServicesAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName);
-                _mediaTransformIdentifier = MediaTransformResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName, mediaTransformName);
-            }
-            else
-            {
-                using (SessionRecording.DisableRecording())
-                {
-                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
-                    var mediaService = await CreateMediaService(rgLro.Value, mediaServiceName, storage.Id);
-                    var mediaTransform = await CreateMediaTransfer(mediaService.GetMediaTransforms(), mediaTransformName);
-                    _mediaServiceIdentifier = mediaService.Id;
-                    _mediaTransformIdentifier = mediaTransform.Id;
-                }
-            }
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
-            _mediaTransform = await Client.GetMediaTransformResource(_mediaTransformIdentifier).GetAsync();
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatest");
+            var mediaTransformName = Recording.GenerateAssetName("randomtransfer");
+            _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            _mediaTransform = await CreateMediaTransfer(_mediaService, mediaTransformName);
         }
 
         private async Task<MediaJobResource> CreateDefautMediaTransferJob(string jobName)

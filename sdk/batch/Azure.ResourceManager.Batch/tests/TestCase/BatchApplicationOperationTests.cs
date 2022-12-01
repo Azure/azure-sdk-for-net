@@ -1,68 +1,40 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+
 namespace Azure.ResourceManager.Batch.Tests.TestCase
 {
     public class BatchApplicationOperationTests : BatchManagementTestBase
     {
-        private ResourceIdentifier _batchApplicationId;
-        private BatchApplicationResource _batchApplicationResource;
+        private BatchApplicationResource _batchApplication;
 
         public BatchApplicationOperationTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgName = SessionRecording.GenerateAssetName("testrg-batch");
-            var storageAccountName = SessionRecording.GenerateAssetName("azstorageforbatch");
-            var batchAccountName = SessionRecording.GenerateAssetName("testaccount");
-            var applicationName = SessionRecording.GenerateAssetName("testApplication-");
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _batchApplicationId = BatchApplicationResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, batchAccountName, applicationName);
-            }
-            else
-            {
-                using (SessionRecording.DisableRecording())
-                {
-                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
-                    var batchAccount = await CreateBatchAccount(rgLro.Value, batchAccountName, storage.Id);
-                    var applicationInput = ResourceDataHelper.GetBatchApplicationData();
-                    var lro = await batchAccount.GetBatchApplications().CreateOrUpdateAsync(WaitUntil.Completed, applicationName, applicationInput);
-                    _batchApplicationId = lro.Value.Id;
-                }
-            }
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _batchApplicationResource = await Client.GetBatchApplicationResource(_batchApplicationId).GetAsync();
+            var batchAccountName = Recording.GenerateAssetName("testaccount");
+            var applicationName = Recording.GenerateAssetName("testApplication-");
+            var batchAccount = await CreateBatchAccount(ResourceGroup, batchAccountName, StorageAccountIdentifier);
+            _batchApplication = await CreateBatchApplication(batchAccount, applicationName);
         }
 
         [TestCase]
         public async Task ApplicationResourceApiTests()
         {
             //1.Get
-            BatchApplicationResource application2 = await _batchApplicationResource.GetAsync();
+            BatchApplicationResource application = await _batchApplication.GetAsync();
 
-            ResourceDataHelper.AssertApplicationData(_batchApplicationResource.Data, application2.Data);
+            ResourceDataHelper.AssertApplicationData(_batchApplication.Data, application.Data);
             //2.Delete
-            await _batchApplicationResource.DeleteAsync(WaitUntil.Completed);
+            await _batchApplication.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

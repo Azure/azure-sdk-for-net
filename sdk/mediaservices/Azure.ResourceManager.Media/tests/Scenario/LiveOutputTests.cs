@@ -16,9 +16,7 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class LiveOutputTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaServiceIdentifier;
         private MediaServicesAccountResource _mediaService;
-        private ResourceIdentifier _liveEventIdentifier;
         private MediaLiveEventResource _liveEvent;
 
         private MediaLiveOutputCollection liveOutputCollection => _liveEvent.GetMediaLiveOutputs();
@@ -28,38 +26,13 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
-            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
-            var mediaServiceName = SessionRecording.GenerateAssetName("dotnetsdkmediatest");
-            var liveEventName = SessionRecording.GenerateAssetName("liveEvent");
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _mediaServiceIdentifier = MediaServicesAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName);
-                _liveEventIdentifier = MediaLiveEventResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, mediaServiceName, liveEventName);
-            }
-            else
-            {
-                using (SessionRecording.DisableRecording())
-                {
-                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
-                    var mediaService = await CreateMediaService(rgLro.Value, mediaServiceName, storage.Id);
-                    var liveEvent = await CreateLiveEvent(mediaService, liveEventName);
-                    _mediaServiceIdentifier = mediaService.Id;
-                    _liveEventIdentifier = liveEvent.Id;
-                }
-            }
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
-            _liveEvent = await Client.GetMediaLiveEventResource(_liveEventIdentifier).GetAsync();
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatest");
+            var liveEventName = Recording.GenerateAssetName("liveEvent");
+            _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            _liveEvent = await CreateLiveEvent(_mediaService, liveEventName);
         }
 
         [TearDown]

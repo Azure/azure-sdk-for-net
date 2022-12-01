@@ -13,44 +13,11 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaServicesTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ResourceIdentifier _storageAccountIdentifier;
-        private ResourceGroupResource _resourceGroup;
-
-        private MediaServicesAccountCollection mediaServiceCollection => _resourceGroup.GetMediaServicesAccounts();
+        private MediaServicesAccountCollection mediaServiceCollection => ResourceGroup.GetMediaServicesAccounts();
 
         public MediaServicesTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
-        }
-
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
-            var storageAccountName = SessionRecording.GenerateAssetName(StorageAccountNamePrefix);
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName);
-                _storageAccountIdentifier = StorageAccountResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName, storageAccountName);
-            }
-            else
-            {
-                using (SessionRecording.DisableRecording())
-                {
-                    var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                    var storage = await CreateStorageAccount(rgLro.Value, storageAccountName);
-                    _resourceGroupIdentifier = rgLro.Value.Data.Id;
-                    _storageAccountIdentifier = storage.Id;
-                }
-            };
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task SetUp()
-        {
-            _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [Test]
@@ -59,10 +26,10 @@ namespace Azure.ResourceManager.Media.Tests
         {
             // Create
             string mediaServiceName = Recording.GenerateAssetName("mediabasic");
-            var mediaService = await CreateMediaService(_resourceGroup, mediaServiceName, _storageAccountIdentifier);
+            var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
             Assert.IsNotNull(mediaService);
             Assert.AreEqual(mediaServiceName, mediaService.Data.Name);
-            Assert.AreEqual(_storageAccountIdentifier, mediaService.Data.StorageAccounts.FirstOrDefault().Id);
+            Assert.AreEqual(GetStorageAccountId(), mediaService.Data.StorageAccounts.FirstOrDefault().Id);
             // Check exists
             bool flag = await mediaServiceCollection.ExistsAsync(mediaServiceName);
             Assert.IsTrue(flag);
