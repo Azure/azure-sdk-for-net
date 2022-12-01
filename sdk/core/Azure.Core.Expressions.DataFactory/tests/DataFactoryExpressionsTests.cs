@@ -65,7 +65,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             { "key1", "value1" },
             { "key2", "value2" }
         };
-        private static readonly IList<string> ListOfStringValue = new List<string> { "a", "b" };
+        private static readonly List<string> ListOfStringValue = new List<string> { "a", "b" };
         private static readonly IList<string> EmptyListOfStringValue = new List<string>();
         private const bool BoolValue = true;
         private const double DoubleValue = 1.1;
@@ -92,9 +92,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var dfe = new DataFactoryExpression<IList<string>>(ListOfStringValue);
             AssertListOfStringDfe(dfe);
 
-            // TODO figure out how to support implicit cast for IList<T>
-            // dfe = ListOfStringValue;
-            // AssertArrayDfe(dfe);
+            dfe = ListOfStringValue;
+            AssertListOfStringDfe(dfe);
         }
 
         [Test]
@@ -118,13 +117,67 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [Test]
-        public void CreateFromstringLiteral()
+        public void CreateFromStringLiteral()
         {
             var dfe = new DataFactoryExpression<string?>(StringValue);
             AssertStringDfe(dfe, StringValue);
 
             dfe = StringValue;
             AssertStringDfe(dfe, StringValue);
+        }
+
+        [Test]
+        public void CreateFromDateTimeOffsetLiteral()
+        {
+            var dfe = new DataFactoryExpression<DateTimeOffset?>(DateTimeOffsetValue);
+            AssertDfe(dfe, DateTimeOffsetValue);
+
+            dfe = DateTimeOffsetValue;
+            AssertDfe(dfe, DateTimeOffsetValue);
+        }
+
+        [Test]
+        public void CreateFromTimespanLiteral()
+        {
+            var dfe = new DataFactoryExpression<TimeSpan?>(TimeSpanValue);
+            AssertDfe(dfe, TimeSpanValue);
+
+            dfe = TimeSpanValue;
+            AssertDfe(dfe, TimeSpanValue);
+        }
+
+        [Test]
+        public void CreateFromUriLiteral()
+        {
+            var dfe = new DataFactoryExpression<Uri?>(UriValue);
+            AssertDfe(dfe, UriValue);
+
+            dfe = UriValue;
+            AssertDfe(dfe, UriValue);
+        }
+
+        [Test]
+        public void CreateFromDictionaryLiteral()
+        {
+            var dfe = new DataFactoryExpression<IDictionary<string, string>?>(DictionaryValue);
+            AssertDfe(dfe, DictionaryValue);
+
+            dfe = DictionaryValue;
+            AssertDfe(dfe, DictionaryValue);
+        }
+
+        [Test]
+        public void CreateFromListOfTLiteral()
+        {
+            var literal = new List<TestModel>
+            {
+                new TestModel { A = 1, B = true },
+                new TestModel { A = 2, B = false }
+            };            var dfe = new DataFactoryExpression<IList<TestModel>>(literal);
+            AssertDfe(dfe, literal);
+
+            dfe = literal;
+            AssertDfe(dfe, literal);
         }
 
         [Test]
@@ -232,7 +285,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var dfe = new DataFactoryExpression<DateTimeOffset>(DateTimeOffsetValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(DateTimeOffsetJson, actual);
-            Assert.AreEqual(DateTimeOffsetValue.ToString(), dfe.ToString());
+            Assert.AreEqual(TypeFormatters.ToString(DateTimeOffsetValue, "O"), dfe.ToString());
         }
 
         [Test]
@@ -250,7 +303,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var dfe = new DataFactoryExpression<IDictionary<string, string>>(DictionaryValue);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(DictionaryJson, actual);
-            Assert.AreEqual("key1=value1,key2=value2", dfe.ToString());
+            Assert.AreEqual("{\"key1\":\"value1\",\"key2\":\"value2\"}", dfe.ToString());
         }
 
         [Test]
@@ -511,7 +564,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(true, dfe.Literal[0].B);
             Assert.AreEqual(2, dfe.Literal[1].A);
             Assert.AreEqual(false, dfe.Literal[1].B);
-            Assert.AreEqual("[A: 1,B: True,A: 2,B: False]", dfe.ToString());
+            Assert.AreEqual("[{\"A\":1,\"B\":true},{\"A\":2,\"B\":false}]", dfe.ToString());
         }
 
         [Test]
@@ -572,6 +625,12 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.IsTrue(dfe.HasLiteral);
             Assert.AreEqual(expectedValue, dfe.Literal);
             Assert.AreEqual(expectedValue, dfe.ToString());
+        }
+
+        private static void AssertDfe<T>(DataFactoryExpression<T> dfe, T expectedValue)
+        {
+            Assert.IsTrue(dfe.HasLiteral);
+            Assert.AreEqual(expectedValue, dfe.Literal);
         }
 
         [Test]
@@ -648,7 +707,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(2, dfe.Literal!.Count);
             Assert.AreEqual("value1", dfe.Literal["key1"]);
             Assert.AreEqual("value2", dfe.Literal["key2"]);
-            Assert.AreEqual("key1=value1,key2=value2", dfe.ToString());
+            Assert.AreEqual("{\"key1\":\"value1\",\"key2\":\"value2\"}", dfe.ToString());
         }
 
         private static void AssertListOfStringDfe(DataFactoryExpression<IList<string>> dfe)
@@ -657,7 +716,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(2, dfe.Literal!.Count);
             Assert.AreEqual("a", dfe.Literal[0]);
             Assert.AreEqual("b", dfe.Literal[1]);
-            Assert.AreEqual("[a,b]", dfe.ToString());
+            Assert.AreEqual("[\"a\",\"b\"]", dfe.ToString());
         }
 
         [Test]

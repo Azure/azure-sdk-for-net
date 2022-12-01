@@ -3,10 +3,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
-using System.Reflection;
+using System.IO;
+using System.Text.Json;
 
 namespace Azure.Core.Expressions.DataFactory
 {
@@ -69,27 +69,16 @@ namespace Azure.Core.Expressions.DataFactory
                 if (_literal == null)
                     return null;
 
-                if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(IList<>))
-                {
-                    var methodInfo = typeof(DataFactoryExpression<>).MakeGenericType(typeof(IList<>)).GetGenericTypeDefinition().MakeGenericType(typeof(T).GenericTypeArguments[0])
-                        .GetMethod(nameof(ToStringList), BindingFlags.Static | BindingFlags.NonPublic)!
-                        .MakeGenericMethod(typeof(T).GenericTypeArguments[0]);
-                    return (string?) methodInfo!.Invoke(null, new object?[] {_literal})!;
-                }
-
-                if (typeof(T) == typeof(IDictionary<string, string>))
-                {
-                     return string.Join(",", ((IDictionary<string, string?>)_literal!).Select(kvp => $"{kvp.Key}={kvp.Value}"));
-                }
-
-                return _literal?.ToString();
+                using var ms = new MemoryStream();
+                using var writer = new Utf8JsonWriter(ms);
+                var converter = new DataFactoryExpressionJsonConverter();
+                converter.Write(writer, this, new JsonSerializerOptions());
+                writer.Flush();
+                ms.Position = 0;
+                using var doc = JsonDocument.Parse(ms);
+                return doc.RootElement.ToString();
             }
             return Expression;
-        }
-
-        private static string? ToStringList<TV>(IList<TV>? list)
-        {
-            return list == null ? null : $"[{string.Join(",", list.Select(item => item?.ToString()))}]";
         }
 
         /// <summary>
