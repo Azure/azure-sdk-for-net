@@ -5,8 +5,6 @@ using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 
 namespace Azure.Core.Expressions.DataFactory
 {
@@ -62,24 +60,7 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <inheritdoc/>
-        public override string? ToString()
-        {
-            if (HasLiteral)
-            {
-                if (_literal == null)
-                    return null;
-
-                using var ms = new MemoryStream();
-                using var writer = new Utf8JsonWriter(ms);
-                var converter = new DataFactoryExpressionJsonConverter();
-                converter.Write(writer, this, new JsonSerializerOptions());
-                writer.Flush();
-                ms.Position = 0;
-                using var doc = JsonDocument.Parse(ms);
-                return doc.RootElement.ToString();
-            }
-            return Expression;
-        }
+        public override string? ToString() => HasLiteral ? _literal?.ToString() : Expression;
 
         /// <summary>
         /// Converts a primitive value into a expression representing that value.
