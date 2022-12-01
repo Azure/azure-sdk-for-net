@@ -20,10 +20,22 @@ namespace Azure.ResourceManager.TestFramework
                 string content = reader.ReadToEnd();
                 if (content.Contains(":null"))
                 {
+                    // Replace \"\":null, with ,   with any number of \
+                    content = Regex.Replace(content, "(,?)\\s*\\\\+\"[^\\\\+\"]*\\\\+\":null,?|,(})", "$1$2");
                     // Replace "":null, with ,
                     content = Regex.Replace(content, "(,?)\\s*\\\"[^\\\"]*\\\":null,?|,(})", "$1$2");
                     // Remove trailing comma
                     content = Regex.Replace(content, ",}", "}");
+                    var matches = Regex.Matches(content, @",\r\n\s+}");
+                    if (matches.Count > 0)
+                    {
+                        foreach (var match in matches)
+                        {
+                            string patten = match.ToString();
+                            string replacement = match.ToString().Substring(1);
+                            content = Regex.Replace(content, patten, replacement);
+                        }
+                    }
                 }
                 var jsonDocument = string.IsNullOrEmpty(content) ? JsonDocument.Parse("{}") : JsonDocument.Parse(content);
                 var stream = new MemoryStream();

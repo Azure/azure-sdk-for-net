@@ -18,25 +18,30 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             Traffic = new ChangeTrackingList<TrafficWeight>();
             CustomDomains = new ChangeTrackingList<CustomDomain>();
+            IPSecurityRestrictions = new ChangeTrackingList<IPSecurityRestrictionRule>();
         }
 
         /// <summary> Initializes a new instance of IngressProvider. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
+        /// <param name="exposedPort"> Exposed Port in containers for TCP traffic from ingress. </param>
         /// <param name="transport"> Ingress transport protocol. </param>
         /// <param name="traffic"> Traffic weights for app&apos;s revisions. </param>
         /// <param name="customDomains"> custom domain bindings for Container Apps&apos; hostnames. </param>
         /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
-        internal IngressProvider(string fqdn, bool? external, int? targetPort, IngressTransportMethod? transport, IList<TrafficWeight> traffic, IList<CustomDomain> customDomains, bool? allowInsecure)
+        /// <param name="ipSecurityRestrictions"> Rules to restrict incoming IP address. </param>
+        internal IngressProvider(string fqdn, bool? external, int? targetPort, int? exposedPort, IngressTransportMethod? transport, IList<TrafficWeight> traffic, IList<CustomDomain> customDomains, bool? allowInsecure, IList<IPSecurityRestrictionRule> ipSecurityRestrictions)
         {
             Fqdn = fqdn;
             External = external;
             TargetPort = targetPort;
+            ExposedPort = exposedPort;
             Transport = transport;
             Traffic = traffic;
             CustomDomains = customDomains;
             AllowInsecure = allowInsecure;
+            IPSecurityRestrictions = ipSecurityRestrictions;
         }
 
         /// <summary> Hostname. </summary>
@@ -45,6 +50,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public bool? External { get; set; }
         /// <summary> Target Port in containers for traffic from ingress. </summary>
         public int? TargetPort { get; set; }
+        /// <summary> Exposed Port in containers for TCP traffic from ingress. </summary>
+        public int? ExposedPort { get; set; }
         /// <summary> Ingress transport protocol. </summary>
         public IngressTransportMethod? Transport { get; set; }
         /// <summary> Traffic weights for app&apos;s revisions. </summary>
@@ -53,5 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public IList<CustomDomain> CustomDomains { get; }
         /// <summary> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </summary>
         public bool? AllowInsecure { get; set; }
+        /// <summary> Rules to restrict incoming IP address. </summary>
+        public IList<IPSecurityRestrictionRule> IPSecurityRestrictions { get; }
     }
 }

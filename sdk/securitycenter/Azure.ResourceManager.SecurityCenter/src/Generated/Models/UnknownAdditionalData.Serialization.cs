@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownAdditionalData DeserializeUnknownAdditionalData(JsonElement element)
         {
-            AssessedResourceType assessedResourceType = default;
+            AssessedResourceType assessedResourceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assessedResourceType"))

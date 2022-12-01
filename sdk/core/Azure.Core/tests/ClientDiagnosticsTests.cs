@@ -91,6 +91,44 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ParentIdCanBeSet()
+        {
+            string parentId = "parentId";
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.SetTraceparent(parentId);
+            scope.Start();
+
+            Assert.AreEqual(parentId, Activity.Current.ParentId);
+        }
+
+        [Test]
+        public void ParentIdCanBeSetOnStartedScope()
+        {
+            string parentId = "parentId";
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            scope.SetTraceparent(parentId);
+
+            Assert.AreEqual(parentId, Activity.Current.ParentId);
+        }
+
+        [Test]
         public void ResourceNameIsOptional()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         internal static UnknownBasePolicyRule DeserializeUnknownBasePolicyRule(JsonElement element)
         {
             string name = default;
-            string objectType = default;
+            string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

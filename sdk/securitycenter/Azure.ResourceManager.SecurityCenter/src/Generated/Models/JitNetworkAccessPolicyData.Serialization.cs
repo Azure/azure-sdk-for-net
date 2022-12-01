@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default;
-            Optional<IList<JitNetworkAccessRequest>> requests = default;
+            Optional<IList<JitNetworkAccessRequestInfo>> requests = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<JitNetworkAccessRequest> array = new List<JitNetworkAccessRequest>();
+                            List<JitNetworkAccessRequestInfo> array = new List<JitNetworkAccessRequestInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JitNetworkAccessRequest.DeserializeJitNetworkAccessRequest(item));
+                                array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item));
                             }
                             requests = array;
                             continue;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
         public CustomRolloutPropertiesSpecification(CustomRolloutSpecificationCanary canary) : base(canary)
         {
-            if (canary == null)
-            {
-                throw new ArgumentNullException(nameof(canary));
-            }
+            Argument.AssertNotNull(canary, nameof(canary));
         }
 
         /// <summary> Initializes a new instance of CustomRolloutPropertiesSpecification. </summary>

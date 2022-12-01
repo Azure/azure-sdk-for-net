@@ -193,6 +193,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
@@ -210,6 +213,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
@@ -226,6 +232,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="encryptParameters"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -285,6 +294,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// An <see cref="EncryptResult"/> containing the encrypted data
         /// along with all other information needed to decrypt it. This information should be stored with the encrypted data.
         /// </returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified algorithm does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="encryptParameters"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -955,6 +967,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
@@ -1017,6 +1046,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
         /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
@@ -1079,6 +1125,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1142,6 +1205,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
         /// along with all other information needed to verify it. This information should be stored with the signature.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1204,6 +1284,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1267,6 +1364,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1329,6 +1443,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
@@ -1392,6 +1523,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>
         /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
         /// </returns>
+        /// <remarks>
+        /// The hash algorithm used to compute the digest is derived from the specified algorithm:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="SHA256"/></term>
+        ///     <description><see cref="SignatureAlgorithm.EdDsa"/>, <see cref="SignatureAlgorithm.ES256"/>, <see cref="SignatureAlgorithm.ES256K"/>, <see cref="SignatureAlgorithm.PS256"/>, <see cref="SignatureAlgorithm.RS256"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA384"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES384"/>, <see cref="SignatureAlgorithm.PS384"/>, <see cref="SignatureAlgorithm.RS384"/></description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="SHA512"/></term>
+        ///     <description><see cref="SignatureAlgorithm.ES512"/>, <see cref="SignatureAlgorithm.PS512"/>, <see cref="SignatureAlgorithm.RS512"/></description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="data"/> is null.</exception>
         /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>

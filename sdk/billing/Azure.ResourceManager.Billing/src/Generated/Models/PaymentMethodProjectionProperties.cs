@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>
-        /// <param name="id"> Id of payment method. </param>
+        /// <param name="paymentMethodId"> Id of payment method. </param>
         /// <param name="family"> The family of payment method. </param>
         /// <param name="paymentMethodProjectionPropertiesType"> The type of payment method. </param>
         /// <param name="accountHolderName"> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </param>
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="displayName"> The display name of the payment method. </param>
         /// <param name="logos"> The list of logos for the payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
-        internal PaymentMethodProjectionProperties(string id, PaymentMethodFamily? family, string paymentMethodProjectionPropertiesType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status)
+        internal PaymentMethodProjectionProperties(ResourceIdentifier paymentMethodId, PaymentMethodFamily? family, string paymentMethodProjectionPropertiesType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status)
         {
-            Id = id;
+            PaymentMethodId = paymentMethodId;
             Family = family;
             PaymentMethodProjectionPropertiesType = paymentMethodProjectionPropertiesType;
             AccountHolderName = accountHolderName;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Id of payment method. </summary>
-        public string Id { get; }
+        public ResourceIdentifier PaymentMethodId { get; }
         /// <summary> The family of payment method. </summary>
         public PaymentMethodFamily? Family { get; set; }
         /// <summary> The type of payment method. </summary>

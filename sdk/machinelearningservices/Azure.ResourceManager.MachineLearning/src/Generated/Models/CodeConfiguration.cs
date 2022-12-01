@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scoringScript"/> is null. </exception>
         public CodeConfiguration(string scoringScript)
         {
-            if (scoringScript == null)
-            {
-                throw new ArgumentNullException(nameof(scoringScript));
-            }
+            Argument.AssertNotNull(scoringScript, nameof(scoringScript));
 
             ScoringScript = scoringScript;
         }

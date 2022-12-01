@@ -22,52 +22,52 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BooleanValue = "Boolean";
-        private const string DateTimeValue = "DateTime";
-        private const string NumberValue = "Number";
-        private const string OrdinalValue = "Ordinal";
-        private const string SpeedValue = "Speed";
-        private const string WeightValue = "Weight";
-        private const string LengthValue = "Length";
-        private const string VolumeValue = "Volume";
-        private const string AreaValue = "Area";
-        private const string AgeValue = "Age";
-        private const string InformationValue = "Information";
-        private const string TemperatureValue = "Temperature";
-        private const string CurrencyValue = "Currency";
-        private const string NumericRangeValue = "NumericRange";
-        private const string TemporalSpanValue = "TemporalSpan";
+        private const string BooleanResolutionValue = "BooleanResolution";
+        private const string DateTimeResolutionValue = "DateTimeResolution";
+        private const string NumberResolutionValue = "NumberResolution";
+        private const string OrdinalResolutionValue = "OrdinalResolution";
+        private const string SpeedResolutionValue = "SpeedResolution";
+        private const string WeightResolutionValue = "WeightResolution";
+        private const string LengthResolutionValue = "LengthResolution";
+        private const string VolumeResolutionValue = "VolumeResolution";
+        private const string AreaResolutionValue = "AreaResolution";
+        private const string AgeResolutionValue = "AgeResolution";
+        private const string InformationResolutionValue = "InformationResolution";
+        private const string TemperatureResolutionValue = "TemperatureResolution";
+        private const string CurrencyResolutionValue = "CurrencyResolution";
+        private const string NumericRangeResolutionValue = "NumericRangeResolution";
+        private const string TemporalSpanResolutionValue = "TemporalSpanResolution";
 
-        /// <summary> Boolean. </summary>
-        public static ResolutionKind Boolean { get; } = new ResolutionKind(BooleanValue);
-        /// <summary> DateTime. </summary>
-        public static ResolutionKind DateTime { get; } = new ResolutionKind(DateTimeValue);
-        /// <summary> Number. </summary>
-        public static ResolutionKind Number { get; } = new ResolutionKind(NumberValue);
-        /// <summary> Ordinal. </summary>
-        public static ResolutionKind Ordinal { get; } = new ResolutionKind(OrdinalValue);
-        /// <summary> Speed. </summary>
-        public static ResolutionKind Speed { get; } = new ResolutionKind(SpeedValue);
-        /// <summary> Weight. </summary>
-        public static ResolutionKind Weight { get; } = new ResolutionKind(WeightValue);
-        /// <summary> Length. </summary>
-        public static ResolutionKind Length { get; } = new ResolutionKind(LengthValue);
-        /// <summary> Volume. </summary>
-        public static ResolutionKind Volume { get; } = new ResolutionKind(VolumeValue);
-        /// <summary> Area. </summary>
-        public static ResolutionKind Area { get; } = new ResolutionKind(AreaValue);
-        /// <summary> Age. </summary>
-        public static ResolutionKind Age { get; } = new ResolutionKind(AgeValue);
-        /// <summary> Information. </summary>
-        public static ResolutionKind Information { get; } = new ResolutionKind(InformationValue);
-        /// <summary> Temperature. </summary>
-        public static ResolutionKind Temperature { get; } = new ResolutionKind(TemperatureValue);
-        /// <summary> Currency. </summary>
-        public static ResolutionKind Currency { get; } = new ResolutionKind(CurrencyValue);
-        /// <summary> NumericRange. </summary>
-        public static ResolutionKind NumericRange { get; } = new ResolutionKind(NumericRangeValue);
-        /// <summary> TemporalSpan. </summary>
-        public static ResolutionKind TemporalSpan { get; } = new ResolutionKind(TemporalSpanValue);
+        /// <summary> BooleanResolution. </summary>
+        public static ResolutionKind BooleanResolution { get; } = new ResolutionKind(BooleanResolutionValue);
+        /// <summary> DateTimeResolution. </summary>
+        public static ResolutionKind DateTimeResolution { get; } = new ResolutionKind(DateTimeResolutionValue);
+        /// <summary> NumberResolution. </summary>
+        public static ResolutionKind NumberResolution { get; } = new ResolutionKind(NumberResolutionValue);
+        /// <summary> OrdinalResolution. </summary>
+        public static ResolutionKind OrdinalResolution { get; } = new ResolutionKind(OrdinalResolutionValue);
+        /// <summary> SpeedResolution. </summary>
+        public static ResolutionKind SpeedResolution { get; } = new ResolutionKind(SpeedResolutionValue);
+        /// <summary> WeightResolution. </summary>
+        public static ResolutionKind WeightResolution { get; } = new ResolutionKind(WeightResolutionValue);
+        /// <summary> LengthResolution. </summary>
+        public static ResolutionKind LengthResolution { get; } = new ResolutionKind(LengthResolutionValue);
+        /// <summary> VolumeResolution. </summary>
+        public static ResolutionKind VolumeResolution { get; } = new ResolutionKind(VolumeResolutionValue);
+        /// <summary> AreaResolution. </summary>
+        public static ResolutionKind AreaResolution { get; } = new ResolutionKind(AreaResolutionValue);
+        /// <summary> AgeResolution. </summary>
+        public static ResolutionKind AgeResolution { get; } = new ResolutionKind(AgeResolutionValue);
+        /// <summary> InformationResolution. </summary>
+        public static ResolutionKind InformationResolution { get; } = new ResolutionKind(InformationResolutionValue);
+        /// <summary> TemperatureResolution. </summary>
+        public static ResolutionKind TemperatureResolution { get; } = new ResolutionKind(TemperatureResolutionValue);
+        /// <summary> CurrencyResolution. </summary>
+        public static ResolutionKind CurrencyResolution { get; } = new ResolutionKind(CurrencyResolutionValue);
+        /// <summary> NumericRangeResolution. </summary>
+        public static ResolutionKind NumericRangeResolution { get; } = new ResolutionKind(NumericRangeResolutionValue);
+        /// <summary> TemporalSpanResolution. </summary>
+        public static ResolutionKind TemporalSpanResolution { get; } = new ResolutionKind(TemporalSpanResolutionValue);
         /// <summary> Determines if two <see cref="ResolutionKind"/> values are the same. </summary>
         public static bool operator ==(ResolutionKind left, ResolutionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResolutionKind"/> values are not the same. </summary>

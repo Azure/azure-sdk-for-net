@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownBackupCriteria. </summary>
-    internal partial class UnknownBackupCriteria : BackupCriteria
+    internal partial class UnknownBackupCriteria : DataProtectionBackupCriteria
     {
         /// <summary> Initializes a new instance of UnknownBackupCriteria. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>

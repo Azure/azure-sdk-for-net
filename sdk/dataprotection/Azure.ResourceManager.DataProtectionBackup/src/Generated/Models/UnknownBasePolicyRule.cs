@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownBasePolicyRule. </summary>
-    internal partial class UnknownBasePolicyRule : BasePolicyRule
+    internal partial class UnknownBasePolicyRule : DataProtectionBasePolicyRule
     {
         /// <summary> Initializes a new instance of UnknownBasePolicyRule. </summary>
         /// <param name="name"></param>

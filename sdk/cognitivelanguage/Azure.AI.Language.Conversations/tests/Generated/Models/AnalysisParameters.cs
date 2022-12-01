@@ -7,7 +7,11 @@
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> This is the parameter set of either the Orchestration project itself or one of the target services. </summary>
+    /// <summary>
+    /// This is the parameter set of either the Orchestration project itself or one of the target services.
+    /// Please note <see cref="AnalysisParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ConversationParameters"/>, <see cref="LuisParameters"/> and <see cref="QuestionAnsweringParameters"/>.
+    /// </summary>
     public partial class AnalysisParameters
     {
         /// <summary> Initializes a new instance of AnalysisParameters. </summary>

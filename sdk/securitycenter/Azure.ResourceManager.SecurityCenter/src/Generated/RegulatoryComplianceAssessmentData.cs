@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="failedResources"> The given assessment&apos;s related resources count with failed state. </param>
         /// <param name="skippedResources"> The given assessment&apos;s related resources count with skipped state. </param>
         /// <param name="unsupportedResources"> The given assessment&apos;s related resources count with unsupported state. </param>
-        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assessmentType, string assessmentDetailsLink, State? state, int? passedResources, int? failedResources, int? skippedResources, int? unsupportedResources) : base(id, name, resourceType, systemData)
+        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assessmentType, string assessmentDetailsLink, RegulatoryComplianceState? state, int? passedResources, int? failedResources, int? skippedResources, int? unsupportedResources) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AssessmentType = assessmentType;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Link to more detailed assessment results data. The response type will be according to the assessmentType field. </summary>
         public string AssessmentDetailsLink { get; }
         /// <summary> Aggregative state based on the assessment&apos;s scanned resources states. </summary>
-        public State? State { get; set; }
+        public RegulatoryComplianceState? State { get; set; }
         /// <summary> The given assessment&apos;s related resources count with passed state. </summary>
         public int? PassedResources { get; }
         /// <summary> The given assessment&apos;s related resources count with failed state. </summary>

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             // List snapshots
             int count = 0;
             string latestSnapshotName = "";
-            ReportResource report = Client.GetReportResource(ReportResource.CreateResourceIdentifier("sdk-report9634"));
+            ReportResource report = Client.GetReportResource(ReportResource.CreateResourceIdentifier("sdk-report2947"));
             SnapshotResourceCollection snapshots = report.GetSnapshotResources();
             await foreach (SnapshotResource resource in snapshots.GetAllAsync())
             {
@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             // Get snapshot
             SnapshotResource snapshot = await snapshots.GetAsync(latestSnapshotName);
             Assert.IsNotNull(snapshot);
+
+            // Download snapshot
+            SnapshotDownloadContent content = new SnapshotDownloadContent(DownloadType.ComplianceDetailedPdfReport);
+            content.OfferGuid = null;
+            content.ReportCreatorTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+
+            ArmOperation<DownloadResponse> response = await snapshot.DownloadAsync(WaitUntil.Completed, content);
+            Assert.IsNotNull(response);
         }
     }
 }

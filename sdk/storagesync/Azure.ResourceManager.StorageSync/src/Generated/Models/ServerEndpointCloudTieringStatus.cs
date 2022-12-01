@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="filesNotTiering"> Information regarding files that failed to be tiered. </param>
         /// <param name="volumeFreeSpacePolicyStatus"> Status of the volume free space policy. </param>
         /// <param name="datePolicyStatus"> Status of the date policy. </param>
-        internal ServerEndpointCloudTieringStatus(DateTimeOffset? lastUpdatedOn, ServerEndpointHealthState? health, DateTimeOffset? healthLastUpdatedOn, int? lastCloudTieringResult, DateTimeOffset? lastSuccessTimestamp, CloudTieringSpaceSavings spaceSavings, CloudTieringCachePerformance cachePerformance, CloudTieringFilesNotTiering filesNotTiering, CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus, CloudTieringDatePolicyStatus datePolicyStatus)
+        /// <param name="lowDiskMode"> Information regarding the low disk mode state. </param>
+        internal ServerEndpointCloudTieringStatus(DateTimeOffset? lastUpdatedOn, ServerEndpointHealthState? health, DateTimeOffset? healthLastUpdatedOn, int? lastCloudTieringResult, DateTimeOffset? lastSuccessTimestamp, CloudTieringSpaceSavings spaceSavings, CloudTieringCachePerformance cachePerformance, CloudTieringFilesNotTiering filesNotTiering, CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus, CloudTieringDatePolicyStatus datePolicyStatus, CloudTieringLowDiskMode lowDiskMode)
         {
             LastUpdatedOn = lastUpdatedOn;
             Health = health;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             FilesNotTiering = filesNotTiering;
             VolumeFreeSpacePolicyStatus = volumeFreeSpacePolicyStatus;
             DatePolicyStatus = datePolicyStatus;
+            LowDiskMode = lowDiskMode;
         }
 
         /// <summary> Last updated timestamp. </summary>
@@ -62,5 +64,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public CloudTieringVolumeFreeSpacePolicyStatus VolumeFreeSpacePolicyStatus { get; }
         /// <summary> Status of the date policy. </summary>
         public CloudTieringDatePolicyStatus DatePolicyStatus { get; }
+        /// <summary> Information regarding the low disk mode state. </summary>
+        public CloudTieringLowDiskMode LowDiskMode { get; }
     }
 }

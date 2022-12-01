@@ -8,254 +8,164 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class CustomHostnameAnalysisResult : IUtf8JsonSerializable
+    public partial class CustomHostnameAnalysisResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CNameRecords))
-            {
-                writer.WritePropertyName("cNameRecords");
-                writer.WriteStartArray();
-                foreach (var item in CNameRecords)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TxtRecords))
-            {
-                writer.WritePropertyName("txtRecords");
-                writer.WriteStartArray();
-                foreach (var item in TxtRecords)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ARecords))
-            {
-                writer.WritePropertyName("aRecords");
-                writer.WriteStartArray();
-                foreach (var item in ARecords)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(AlternateCNameRecords))
-            {
-                writer.WritePropertyName("alternateCNameRecords");
-                writer.WriteStartArray();
-                foreach (var item in AlternateCNameRecords)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(AlternateTxtRecords))
-            {
-                writer.WritePropertyName("alternateTxtRecords");
-                writer.WriteStartArray();
-                foreach (var item in AlternateTxtRecords)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static CustomHostnameAnalysisResult DeserializeCustomHostnameAnalysisResult(JsonElement element)
         {
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            Optional<SystemData> systemData = default;
             Optional<string> hostName = default;
             Optional<bool> isHostnameAlreadyVerified = default;
             Optional<DnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<DefaultErrorResponse> customDomainVerificationFailureInfo = default;
+            Optional<CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo> customDomainVerificationFailureInfo = default;
             Optional<bool> hasConflictOnManagedEnvironment = default;
+            Optional<bool> conflictWithEnvironmentCustomDomain = default;
             Optional<string> conflictingContainerAppResourceId = default;
-            Optional<IList<string>> cNameRecords = default;
-            Optional<IList<string>> txtRecords = default;
-            Optional<IList<string>> aRecords = default;
-            Optional<IList<string>> alternateCNameRecords = default;
-            Optional<IList<string>> alternateTxtRecords = default;
+            Optional<IReadOnlyList<string>> cNameRecords = default;
+            Optional<IReadOnlyList<string>> txtRecords = default;
+            Optional<IReadOnlyList<string>> aRecords = default;
+            Optional<IReadOnlyList<string>> alternateCNameRecords = default;
+            Optional<IReadOnlyList<string>> alternateTxtRecords = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("hostName"))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    hostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("isHostnameAlreadyVerified"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    isHostnameAlreadyVerified = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("customDomainVerificationTest"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    customDomainVerificationTest = property.Value.GetString().ToDnsVerificationTestResult();
+                    continue;
+                }
+                if (property.NameEquals("customDomainVerificationFailureInfo"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("hostName"))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isHostnameAlreadyVerified"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            isHostnameAlreadyVerified = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("customDomainVerificationTest"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            customDomainVerificationTest = property0.Value.GetString().ToDnsVerificationTestResult();
-                            continue;
-                        }
-                        if (property0.NameEquals("customDomainVerificationFailureInfo"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            customDomainVerificationFailureInfo = DefaultErrorResponse.DeserializeDefaultErrorResponse(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("hasConflictOnManagedEnvironment"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hasConflictOnManagedEnvironment = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("conflictingContainerAppResourceId"))
-                        {
-                            conflictingContainerAppResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cNameRecords"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            cNameRecords = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("txtRecords"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            txtRecords = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("aRecords"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            aRecords = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("alternateCNameRecords"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            alternateCNameRecords = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("alternateTxtRecords"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            alternateTxtRecords = array;
-                            continue;
-                        }
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
                     }
+                    customDomainVerificationFailureInfo = CustomHostnameAnalysisResultCustomDomainVerificationFailureInfo.DeserializeCustomHostnameAnalysisResultCustomDomainVerificationFailureInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("hasConflictOnManagedEnvironment"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    hasConflictOnManagedEnvironment = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("conflictWithEnvironmentCustomDomain"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    conflictWithEnvironmentCustomDomain = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("conflictingContainerAppResourceId"))
+                {
+                    conflictingContainerAppResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("cNameRecords"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    cNameRecords = array;
+                    continue;
+                }
+                if (property.NameEquals("txtRecords"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    txtRecords = array;
+                    continue;
+                }
+                if (property.NameEquals("aRecords"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    aRecords = array;
+                    continue;
+                }
+                if (property.NameEquals("alternateCNameRecords"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    alternateCNameRecords = array;
+                    continue;
+                }
+                if (property.NameEquals("alternateTxtRecords"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    alternateTxtRecords = array;
                     continue;
                 }
             }
-            return new CustomHostnameAnalysisResult(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), conflictingContainerAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords));
+            return new CustomHostnameAnalysisResult(hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords));
         }
     }
 }

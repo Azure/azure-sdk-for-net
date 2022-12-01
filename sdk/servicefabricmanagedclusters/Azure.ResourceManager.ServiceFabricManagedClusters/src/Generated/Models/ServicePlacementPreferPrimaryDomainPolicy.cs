@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -27,10 +28,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public ServicePlacementPreferPrimaryDomainPolicy(string domainName)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
+            Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
             ServicePlacementPolicyType = ServicePlacementPolicyType.PreferredPrimaryDomain;

@@ -70,6 +70,7 @@ namespace Azure.Data.Tables.Tests
             { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
             { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
             { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
+            { "GetEntityAllowsEmptyRowKey", "Empty RowKey values are not supported by Cosmos." },
             { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
         };
 

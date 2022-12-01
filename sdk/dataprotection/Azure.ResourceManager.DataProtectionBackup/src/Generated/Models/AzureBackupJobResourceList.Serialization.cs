@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static AzureBackupJobResourceList DeserializeAzureBackupJobResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<AzureBackupJobResourceData>> value = default;
+            Optional<IReadOnlyList<DataProtectionBackupJobData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureBackupJobResourceData> array = new List<AzureBackupJobResourceData>();
+                    List<DataProtectionBackupJobData> array = new List<DataProtectionBackupJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureBackupJobResourceData.DeserializeAzureBackupJobResourceData(item));
+                        array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item));
                     }
                     value = array;
                     continue;

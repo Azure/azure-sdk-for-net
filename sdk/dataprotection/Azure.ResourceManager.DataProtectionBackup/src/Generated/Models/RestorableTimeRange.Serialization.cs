@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,9 +17,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime");
-            writer.WriteStringValue(StartTime);
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime");
-            writer.WriteStringValue(EndTime);
+            writer.WriteStringValue(EndOn, "O");
             if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType");
@@ -29,19 +30,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RestorableTimeRange DeserializeRestorableTimeRange(JsonElement element)
         {
-            string startTime = default;
-            string endTime = default;
+            DateTimeOffset startTime = default;
+            DateTimeOffset endTime = default;
             Optional<string> objectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
                 {
-                    startTime = property.Value.GetString();
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    endTime = property.Value.GetString();
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("objectType"))

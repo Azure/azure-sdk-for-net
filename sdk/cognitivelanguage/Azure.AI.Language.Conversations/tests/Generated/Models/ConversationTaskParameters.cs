@@ -20,14 +20,8 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public ConversationTaskParameters(string projectName, string deploymentName)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
@@ -46,7 +40,11 @@ namespace Azure.AI.Language.Conversations
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> The name of a target project to forward the request to. </summary>
         public string DirectTarget { get; set; }
-        /// <summary> A dictionary representing the parameters for each target project. </summary>
+        /// <summary>
+        /// A dictionary representing the parameters for each target project.
+        /// Please note <see cref="AnalysisParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConversationParameters"/>, <see cref="LuisParameters"/> and <see cref="QuestionAnsweringParameters"/>.
+        /// </summary>
         public IDictionary<string, AnalysisParameters> TargetProjectParameters { get; }
     }
 }

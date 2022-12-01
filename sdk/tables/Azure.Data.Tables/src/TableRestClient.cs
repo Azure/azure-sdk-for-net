@@ -127,5 +127,71 @@ namespace Azure.Data.Tables
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        /// <summary> Queries a single entity in a table. </summary>
+        /// <param name="table"> The name of the table. </param>
+        /// <param name="partitionKey"> The partition key of the entity. </param>
+        /// <param name="rowKey"> The row key of the entity. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
+        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response QueryEntityWithPartitionAndRowKey(string table, string partitionKey, string rowKey, int? timeout = null, string format = null, string select = null, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(table, nameof(table));
+            Argument.AssertNotNull(partitionKey, nameof(partitionKey));
+            Argument.AssertNotNull(rowKey, nameof(rowKey));
+
+            using var scope = ClientDiagnostics.CreateScope("Table.QueryEntityWithPartitionAndRowKey");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Queries a single entity in a table. </summary>
+        /// <param name="table"> The name of the table. </param>
+        /// <param name="partitionKey"> The partition key of the entity. </param>
+        /// <param name="rowKey"> The row key of the entity. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="format"> Specifies the media type for the response. Allowed values: &quot;application/json;odata=nometadata&quot; | &quot;application/json;odata=minimalmetadata&quot; | &quot;application/json;odata=fullmetadata&quot;. </param>
+        /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="table"/>, <paramref name="partitionKey"/> or <paramref name="rowKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> QueryEntityWithPartitionAndRowKeyAsync(string table, string partitionKey, string rowKey, int? timeout = null, string format = null, string select = null, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(table, nameof(table));
+            Argument.AssertNotNull(partitionKey, nameof(partitionKey));
+            Argument.AssertNotNull(rowKey, nameof(rowKey));
+
+            using var scope = ClientDiagnostics.CreateScope("Table.QueryEntityWithPartitionAndRowKey");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

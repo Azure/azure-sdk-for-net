@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BaseBackupPolicyResourceList. </summary>
         internal BaseBackupPolicyResourceList()
         {
-            Value = new ChangeTrackingList<BaseBackupPolicyResourceData>();
+            Value = new ChangeTrackingList<DataProtectionBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of BaseBackupPolicyResourceList. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
-        internal BaseBackupPolicyResourceList(IReadOnlyList<BaseBackupPolicyResourceData> value, string nextLink)
+        internal BaseBackupPolicyResourceList(IReadOnlyList<DataProtectionBackupPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources. </summary>
-        public IReadOnlyList<BaseBackupPolicyResourceData> Value { get; }
+        public IReadOnlyList<DataProtectionBackupPolicyData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </summary>
         public string NextLink { get; }
     }

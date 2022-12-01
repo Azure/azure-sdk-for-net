@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static UnknownDataStoreParameters DeserializeUnknownDataStoreParameters(JsonElement element)
         {
-            string objectType = default;
+            string objectType = "Unknown";
             DataStoreType dataStoreType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
     {
         private VerifiedPartnerCollection _verifiedPartnerCollection;
         private const string _existPartnerName = "Auth0";
-        public VerifiedPartnerTests(bool isAsync) : base(isAsync)
+        public VerifiedPartnerTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

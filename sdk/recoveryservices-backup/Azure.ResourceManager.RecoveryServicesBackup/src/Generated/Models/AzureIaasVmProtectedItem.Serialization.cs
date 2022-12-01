@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> protectedItemDataId = default;
             Optional<AzureIaasVmProtectedItemExtendedInfo> extendedInfo = default;
             Optional<ExtendedProperties> extendedProperties = default;
-            string protectedItemType = default;
+            string protectedItemType = "AzureIaaSVMProtectedItem";
             Optional<BackupManagementType> backupManagementType = default;
             Optional<DataSourceType> workloadType = default;
             Optional<string> containerName = default;

@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ids"/> is null. </exception>
         public ForceUnlinkRedisEnterpriseDatabaseContent(IEnumerable<ResourceIdentifier> ids)
         {
-            if (ids == null)
-            {
-                throw new ArgumentNullException(nameof(ids));
-            }
+            Argument.AssertNotNull(ids, nameof(ids));
 
             Ids = ids.ToList();
         }

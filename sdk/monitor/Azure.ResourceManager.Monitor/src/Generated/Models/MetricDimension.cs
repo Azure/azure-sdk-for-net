@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="values"/> is null. </exception>
         public MetricDimension(string name, string @operator, IEnumerable<string> values)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (@operator == null)
-            {
-                throw new ArgumentNullException(nameof(@operator));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(@operator, nameof(@operator));
+            Argument.AssertNotNull(values, nameof(values));
 
             Name = name;
             Operator = @operator;

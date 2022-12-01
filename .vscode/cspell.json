@@ -74,6 +74,8 @@
     "overridden",
     "parallelization",
     "personalizer",
+    "petabit",
+    "picometer",
     "pkcs",
     "pstn",
     "pwsh",
@@ -125,7 +127,8 @@
     {
       "filename": "**/sdk/automation/**/*.cs",
       "words": [
-        "tfvc"
+        "tfvc",
+        "updation"
       ]
     },
     {
@@ -405,6 +408,19 @@
       "words": [
         "dicom",
         "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybriddatamanager/**/*.cs",
+      "words": [
+        "Oaep"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridaks/**/*.cs",
+      "words": [
+        "Vmip",
+        "Kubevirt"
       ]
     },
     {
@@ -702,7 +718,8 @@
         "Aatp",
         "Puid",
         "Stix",
-        "Whois"
+        "Whois",
+        "Nlstext"
       ]
     },
     {
@@ -896,14 +913,14 @@
         "cname",
         "kube"
         ]
-    },  
+    },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Msrp",
         "Hana"
         ]
-    },  
+    },
     {
       "filename": "**/sdk/securitydevops/**/*.cs",
       "words": [
