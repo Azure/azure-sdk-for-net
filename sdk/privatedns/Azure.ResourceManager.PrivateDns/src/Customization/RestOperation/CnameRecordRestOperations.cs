@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PrivateDns
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
-            uri.AppendPath(PrivateDnsZoneName, true);
+            uri.AppendPath(privateZoneName, true);
             uri.AppendPath("/", false);
             uri.AppendPath(recordType.ToSerialString(), true);
             uri.AppendPath("/", false);
@@ -74,24 +74,24 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Creates or updates a record set within a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. Record sets of type SOA can be updated but not created (they are created when the Private DNS zone is created). </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateDnsCnameRecordData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PrivateDnsCnameRecordData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Creates or updates a record set within a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. Record sets of type SOA can be updated but not created (they are created when the Private DNS zone is created). </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateDnsCnameRecordData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PrivateDnsCnameRecordData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
-            uri.AppendPath(PrivateDnsZoneName, true);
+            uri.AppendPath(privateZoneName, true);
             uri.AppendPath("/", false);
             uri.AppendPath(recordType.ToSerialString(), true);
             uri.AppendPath("/", false);
@@ -180,23 +180,23 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Updates a record set within a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateDnsCnameRecordData>> UpdateAsync(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PrivateDnsCnameRecordData>> UpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName, data, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -215,23 +215,23 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Updates a record set within a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateDnsCnameRecordData> Update(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="aaaaRecordName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PrivateDnsCnameRecordData> Update(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsCnameRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName, data, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
-            uri.AppendPath(PrivateDnsZoneName, true);
+            uri.AppendPath(privateZoneName, true);
             uri.AppendPath("/", false);
             uri.AppendPath(recordType.ToSerialString(), true);
             uri.AppendPath("/", false);
@@ -278,21 +278,21 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Deletes a record set from a Private DNS zone. This operation cannot be undone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the Private DNS zone is deleted). </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always delete the current record set. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -307,21 +307,21 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Deletes a record set from a Private DNS zone. This operation cannot be undone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the Private DNS zone is deleted). </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always delete the current record set. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
-            uri.AppendPath(PrivateDnsZoneName, true);
+            uri.AppendPath(privateZoneName, true);
             uri.AppendPath("/", false);
             uri.AppendPath(recordType.ToSerialString(), true);
             uri.AppendPath("/", false);
@@ -360,20 +360,20 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Gets a record set. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateDnsCnameRecordData>> GetAsync(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PrivateDnsCnameRecordData>> GetAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -394,20 +394,20 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Gets a record set. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of DNS record in this record set. </param>
         /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="PrivateDnsZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateDnsCnameRecordData> Get(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, string aaaaRecordName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/> or <paramref name="aaaaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PrivateDnsCnameRecordData> Get(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, aaaaRecordName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        internal HttpMessage CreateListByTypeRequest(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, int? top, string recordsetnamesuffix)
+        internal HttpMessage CreateListByTypeRequest(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top, string recordsetnamesuffix)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
-            uri.AppendPath(PrivateDnsZoneName, true);
+            uri.AppendPath(privateZoneName, true);
             uri.AppendPath("/", false);
             uri.AppendPath(recordType.ToSerialString(), true);
             if (top != null)
@@ -458,20 +458,20 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Lists the record sets of a specified type in a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateDnsCnameRecordListResult>> ListByTypeAsync(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PrivateDnsCnameRecordListResult>> ListByTypeAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, top, recordsetnamesuffix);
+            using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -490,20 +490,20 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Lists the record sets of a specified type in a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateDnsCnameRecordListResult> ListByType(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PrivateDnsCnameRecordListResult> ListByType(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, top, recordsetnamesuffix);
+            using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, int? top, string recordsetnamesuffix)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string privateZoneName, int? top, string recordsetnamesuffix)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
-            uri.AppendPath(PrivateDnsZoneName, true);
+            uri.AppendPath(privateZoneName, true);
             uri.AppendPath("/ALL", false);
             if (top != null)
             {
@@ -551,19 +551,19 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Lists all record sets in a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateDnsCnameRecordListResult>> ListAsync(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PrivateDnsCnameRecordListResult>> ListAsync(string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, top, recordsetnamesuffix);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -582,19 +582,19 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> Lists all record sets in a Private DNS zone. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateDnsCnameRecordListResult> List(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PrivateDnsCnameRecordListResult> List(string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, PrivateDnsZoneName, top, recordsetnamesuffix);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
 #pragma warning disable CA1801 // Review unused parameters
-        internal HttpMessage CreateListByTypeNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, int? top, string recordsetnamesuffix)
+        internal HttpMessage CreateListByTypeNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top, string recordsetnamesuffix)
 #pragma warning restore CA1801 // Review unused parameters
         {
             var message = _pipeline.CreateMessage();
@@ -630,21 +630,21 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateDnsCnameRecordListResult>> ListByTypeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PrivateDnsCnameRecordListResult>> ListByTypeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, top, recordsetnamesuffix);
+            using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -664,21 +664,21 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateDnsCnameRecordListResult> ListByTypeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PrivateDnsCnameRecordListResult> ListByTypeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, PrivateDnsZoneName, recordType, top, recordsetnamesuffix);
+            using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
 #pragma warning disable CA1801 // Review unused parameters
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, int? top, string recordsetnamesuffix)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, int? top, string recordsetnamesuffix)
 #pragma warning restore CA1801 // Review unused parameters
         {
             var message = _pipeline.CreateMessage();
@@ -714,20 +714,20 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateDnsCnameRecordListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PrivateDnsCnameRecordListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, PrivateDnsZoneName, top, recordsetnamesuffix);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -747,20 +747,20 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="PrivateDnsZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="PrivateDnsZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateDnsCnameRecordListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PrivateDnsCnameRecordListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(PrivateDnsZoneName, nameof(PrivateDnsZoneName));
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, PrivateDnsZoneName, top, recordsetnamesuffix);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
