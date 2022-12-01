@@ -485,18 +485,6 @@ namespace Azure.Messaging.EventGrid
             return new MediaJobErrorDetail(code, message);
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
-        /// <param name="odataType"> The discriminator for derived types. </param>
-        /// <param name="error"> Gets the Job output error. </param>
-        /// <param name="label"> Gets the Job output label. </param>
-        /// <param name="progress"> Gets the Job output progress. </param>
-        /// <param name="state"> Gets the Job output state. </param>
-        /// <returns> A new <see cref="SystemEvents.MediaJobOutput"/> instance for mocking. </returns>
-        public static MediaJobOutput MediaJobOutput(string odataType = null, MediaJobError error = null, string label = null, long progress = default, MediaJobState state = default)
-        {
-            return new MediaJobOutput(odataType, error, label, progress, state);
-        }
-
         /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> Gets the Job output error. </param>

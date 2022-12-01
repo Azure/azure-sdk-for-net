@@ -16,10 +16,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Please note <see cref="DataFeedDetailPatch"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureApplicationInsightsDataFeedPatch"/>, <see cref="AzureBlobDataFeedPatch"/>, <see cref="AzureCosmosDBDataFeedPatch"/>, <see cref="AzureDataExplorerDataFeedPatch"/>, <see cref="AzureDataLakeStorageGen2DataFeedPatch"/>, <see cref="AzureEventHubsDataFeedPatch"/>, <see cref="AzureLogAnalyticsDataFeedPatch"/>, <see cref="AzureTableDataFeedPatch"/>, <see cref="InfluxDBDataFeedPatch"/>, <see cref="MongoDBDataFeedPatch"/>, <see cref="MySqlDataFeedPatch"/>, <see cref="PostgreSqlDataFeedPatch"/> and <see cref="SQLServerDataFeedPatch"/>.
     /// </summary>
-    internal partial class DataFeedDetailPatch
+    internal abstract partial class DataFeedDetailPatch
     {
         /// <summary> Initializes a new instance of DataFeedDetailPatch. </summary>
-        public DataFeedDetailPatch()
+        protected DataFeedDetailPatch()
         {
             RollUpColumns = new ChangeTrackingList<string>();
             Admins = new ChangeTrackingList<string>();
