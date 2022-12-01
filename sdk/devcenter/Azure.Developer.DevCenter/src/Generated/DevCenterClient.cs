@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.DevCenter
 {
-    // Data plane generated client. The DevCenter service client.
+    // Data plane generated client.
     /// <summary> The DevCenter service client. </summary>
     public partial class DevCenterClient
     {
