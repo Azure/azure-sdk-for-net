@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="properties">
         /// Serialized Name: WorkspaceConnectionPropertiesV2BasicResource.properties
         /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="SASAuthTypeWorkspaceConnectionProperties"/> and <see cref="UsernamePasswordAuthTypeWorkspaceConnectionProperties"/>.
+        /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningWorkspaceConnectionData(MachineLearningWorkspaceConnectionProperties properties)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="properties">
         /// Serialized Name: WorkspaceConnectionPropertiesV2BasicResource.properties
         /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="SASAuthTypeWorkspaceConnectionProperties"/> and <see cref="UsernamePasswordAuthTypeWorkspaceConnectionProperties"/>.
+        /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
         /// </param>
         internal MachineLearningWorkspaceConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningWorkspaceConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary>
         /// Serialized Name: WorkspaceConnectionPropertiesV2BasicResource.properties
         /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="SASAuthTypeWorkspaceConnectionProperties"/> and <see cref="UsernamePasswordAuthTypeWorkspaceConnectionProperties"/>.
+        /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
         /// </summary>
         public MachineLearningWorkspaceConnectionProperties Properties { get; set; }
     }

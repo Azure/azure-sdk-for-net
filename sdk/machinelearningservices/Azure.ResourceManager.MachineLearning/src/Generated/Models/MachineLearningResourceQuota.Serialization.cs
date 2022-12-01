@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> id = default;
             Optional<string> amlWorkspaceLocation = default;
             Optional<string> type = default;
-            Optional<ResourceName> name = default;
+            Optional<MachineLearningResourceName> name = default;
             Optional<long> limit = default;
             Optional<MachineLearningQuotaUnit> unit = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = ResourceName.DeserializeResourceName(property.Value);
+                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limit"))

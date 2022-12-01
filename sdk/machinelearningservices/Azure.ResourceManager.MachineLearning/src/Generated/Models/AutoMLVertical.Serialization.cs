@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element);
                     case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element);
                     case "ImageObjectDetection": return ImageObjectDetection.DeserializeImageObjectDetection(element);
-                    case "Regression": return Regression.DeserializeRegression(element);
+                    case "Regression": return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element);
                     case "TextClassification": return TextClassification.DeserializeTextClassification(element);
                     case "TextClassificationMultilabel": return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element);
                     case "TextNER": return TextNer.DeserializeTextNer(element);

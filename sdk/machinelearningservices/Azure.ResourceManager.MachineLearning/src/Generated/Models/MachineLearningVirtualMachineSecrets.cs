@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Admin credentials for virtual machine.
         /// Serialized Name: VirtualMachineSecretsSchema.administratorAccount
         /// </param>
-        internal MachineLearningVirtualMachineSecrets(ComputeType computeType, VirtualMachineSshCredentials administratorAccount) : base(computeType)
+        internal MachineLearningVirtualMachineSecrets(ComputeType computeType, MachineLearningVmSshCredentials administratorAccount) : base(computeType)
         {
             AdministratorAccount = administratorAccount;
             ComputeType = computeType;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Admin credentials for virtual machine.
         /// Serialized Name: VirtualMachineSecretsSchema.administratorAccount
         /// </summary>
-        public VirtualMachineSshCredentials AdministratorAccount { get; }
+        public MachineLearningVmSshCredentials AdministratorAccount { get; }
     }
 }

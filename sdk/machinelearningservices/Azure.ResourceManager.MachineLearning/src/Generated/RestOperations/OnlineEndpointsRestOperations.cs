@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RegenerateEndpointKeysContent content)
+        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, MachineLearningEndpointKeyRegenerateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, MachineLearningEndpointKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="endpointName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegenerateKeys(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
+        public Response RegenerateKeys(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, MachineLearningEndpointKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

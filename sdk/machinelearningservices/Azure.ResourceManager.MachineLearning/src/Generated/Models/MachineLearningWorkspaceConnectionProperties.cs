@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The MachineLearningWorkspaceConnectionProperties.
     /// Serialized Name: WorkspaceConnectionPropertiesV2
     /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="SASAuthTypeWorkspaceConnectionProperties"/> and <see cref="UsernamePasswordAuthTypeWorkspaceConnectionProperties"/>.
+    /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
     /// </summary>
     public abstract partial class MachineLearningWorkspaceConnectionProperties
     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// format for the workspace connection value
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
-        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat)
+        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat)
         {
             AuthType = authType;
             Category = category;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// format for the workspace connection value
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </summary>
-        public ValueFormat? ValueFormat { get; set; }
+        public MachineLearningValueFormat? ValueFormat { get; set; }
     }
 }

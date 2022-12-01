@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAzureDataLakeGen1Datastore DeserializeMachineLearningAzureDataLakeGen1Datastore(JsonElement element)
         {
-            Optional<ServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
+            Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
             string storeName = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serviceDataAccessAuthIdentity = new ServiceDataAccessAuthIdentity(property.Value.GetString());
+                    serviceDataAccessAuthIdentity = new MachineLearningServiceDataAccessAuthIdentity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storeName"))

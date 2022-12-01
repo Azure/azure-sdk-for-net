@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Customized setup scripts
         /// Serialized Name: SetupScripts.scripts
         /// </param>
-        internal SetupScripts(ScriptsToExecute scripts)
+        internal SetupScripts(MachineLearningScriptsToExecute scripts)
         {
             Scripts = scripts;
         }
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Customized setup scripts
         /// Serialized Name: SetupScripts.scripts
         /// </summary>
-        public ScriptsToExecute Scripts { get; set; }
+        public MachineLearningScriptsToExecute Scripts { get; set; }
     }
 }

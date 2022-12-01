@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "ManagedIdentity": return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element);
                     case "None": return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element);
                     case "PAT": return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element);
-                    case "SAS": return SASAuthTypeWorkspaceConnectionProperties.DeserializeSASAuthTypeWorkspaceConnectionProperties(element);
-                    case "UsernamePassword": return UsernamePasswordAuthTypeWorkspaceConnectionProperties.DeserializeUsernamePasswordAuthTypeWorkspaceConnectionProperties(element);
+                    case "SAS": return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element);
+                    case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element);
                 }
             }
             return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element);

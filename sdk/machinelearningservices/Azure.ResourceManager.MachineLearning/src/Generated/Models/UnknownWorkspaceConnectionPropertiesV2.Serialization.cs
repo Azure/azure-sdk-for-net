@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningConnectionCategory> category = default;
             Optional<string> target = default;
             Optional<string> value = default;
-            Optional<ValueFormat> valueFormat = default;
+            Optional<MachineLearningValueFormat> valueFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authType"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueFormat = new ValueFormat(property.Value.GetString());
+                    valueFormat = new MachineLearningValueFormat(property.Value.GetString());
                     continue;
                 }
             }

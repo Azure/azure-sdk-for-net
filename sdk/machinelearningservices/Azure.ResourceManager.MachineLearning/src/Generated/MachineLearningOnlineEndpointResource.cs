@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RegenerateKeysAsync(WaitUntil waitUntil, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RegenerateKeysAsync(WaitUntil waitUntil, MachineLearningEndpointKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> RegenerateKeys request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RegenerateKeys(WaitUntil waitUntil, RegenerateEndpointKeysContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RegenerateKeys(WaitUntil waitUntil, MachineLearningEndpointKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

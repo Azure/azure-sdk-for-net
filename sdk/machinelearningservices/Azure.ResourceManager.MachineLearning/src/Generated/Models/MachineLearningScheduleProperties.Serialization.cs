@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningScheduleAction action = default;
             Optional<string> displayName = default;
             Optional<bool> isEnabled = default;
-            Optional<ScheduleProvisioningStatus> provisioningState = default;
+            Optional<MachineLearningScheduleProvisioningStatus> provisioningState = default;
             MachineLearningTriggerBase trigger = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ScheduleProvisioningStatus(property.Value.GetString());
+                    provisioningState = new MachineLearningScheduleProvisioningStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trigger"))

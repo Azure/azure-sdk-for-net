@@ -50,6 +50,8 @@ rename-rules:
   AKS: Aks
   USD: Usd
   PAT: Pat
+  SAS: Sas
+  LRS: Lrs
 
 override-operation-name:
   Quotas_List: GetMachineLearningQuotas
@@ -318,6 +320,8 @@ rename-mapping:
   WorkspaceConnectionManagedIdentity.resourceId: -|arm-id
   NoneAuthTypeWorkspaceConnectionProperties: MachineLearningNoneAuthTypeWorkspaceConnection
   PATAuthTypeWorkspaceConnectionProperties: MachineLearningPATAuthTypeWorkspaceConnection
+  SASAuthTypeWorkspaceConnectionProperties: MachineLearningSASAuthTypeWorkspaceConnection
+  UsernamePasswordAuthTypeWorkspaceConnectionProperties: MachineLearningUsernamePasswordAuthTypeWorkspaceConnection
   ConnectionAuthType: MachineLearningConnectionAuthType
   ManagedOnlineDeployment: MachineLearningManagedOnlineDeployment
   ModelSize: MachineLearningModelSize
@@ -339,6 +343,48 @@ rename-mapping:
   RecurrenceFrequency: MachineLearningRecurrenceFrequency
   RecurrenceSchedule: MachineLearningRecurrenceSchedule
   WeekDay: MachineLearningWeekday
+  RegenerateEndpointKeysRequest: MachineLearningEndpointKeyRegenerateContent
+  Regression: AutoMLVerticalRegression
+  RegressionModels: AutoMLVerticalRegressionModel
+  RegressionPrimaryMetrics: AutoMLVerticalRegressionPrimaryMetric
+  RemoteLoginPortPublicAccess: MachineLearningRemoteLoginPortPublicAccess
+  ResourceName: MachineLearningResourceName
+  Route: MachineLearningInferenceContainerRoute
+  ScaleSettings: AmlComputeScaleSettings
+  ScheduleListViewType: MachineLearningScheduleListViewType
+  ScheduleProvisioningState: MachineLearningScheduleProvisioningState
+  ScheduleProvisioningStatus: MachineLearningScheduleProvisioningStatus
+  ScriptReference: MachineLearningScriptReference
+  ScriptsToExecute: MachineLearningScriptsToExecute
+  ServiceDataAccessAuthIdentity: MachineLearningServiceDataAccessAuthIdentity
+  ShortSeriesHandlingConfiguration: MachineLearningShortSeriesHandlingConfiguration
+  SkuCapacity: MachineLearningSkuCapacity
+  SkuScaleType: MachineLearningSkuScaleType
+  SkuResource: MachineLearningSkuDetail
+  SkuSetting: MachineLearningSkuSetting
+  SslConfigStatus: MachineLearningSslConfigStatus
+  StackEnsembleSettings: MachineLearningStackEnsembleSettings
+  StackMetaLearnerType: MachineLearningStackMetaLearnerType
+  Status: MachineLearningWorkspaceQuotaStatus
+  StorageAccountType: MachineLearningStorageAccountType
+  SweepJob: MachineLearningSweepJob
+  TrainingSettings: MachineLearningTrainingSettings
+  TrainingSettings.enableDnnTraining: IsDnnTrainingEnabled
+  TrainingSettings.enableModelExplainability: IsModelExplainabilityEnabled
+  TrainingSettings.enableOnnxCompatibleModels: IsOnnxCompatibleModelsEnabled
+  TrainingSettings.enableStackEnsemble: IsStackEnsembleEnabled
+  TrainingSettings.enableVoteEnsemble: IsVoteEnsembleEnabled
+  UnderlyingResourceAction: MachineLearningUnderlyingResourceAction
+  UriFileDataVersion: MachineLearningUriFileDataVersion
+  UriFolderDataVersion: MachineLearningUriFolderDataVersion
+  UsageName: MachineLearningUsageName
+  UsageUnit: MachineLearningUsageUnit
+  UserAccountCredentials: MachineLearningUserAccountCredentials
+  UseStl: MachineLearningUseStl
+  ValueFormat: MachineLearningValueFormat
+  VirtualMachineSshCredentials: MachineLearningVmSshCredentials
+  VmPriority: MachineLearningVmPriority
+  WorkspaceConnectionUsernamePassword: MachineLearningWorkspaceConnectionUsernamePassword
 
 directive:
   - from: swagger-document

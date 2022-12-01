@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> containerName = default;
             Optional<string> endpoint = default;
             Optional<string> protocol = default;
-            Optional<ServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
+            Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
             Optional<bool> isDefault = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serviceDataAccessAuthIdentity = new ServiceDataAccessAuthIdentity(property.Value.GetString());
+                    serviceDataAccessAuthIdentity = new MachineLearningServiceDataAccessAuthIdentity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("credentials"))

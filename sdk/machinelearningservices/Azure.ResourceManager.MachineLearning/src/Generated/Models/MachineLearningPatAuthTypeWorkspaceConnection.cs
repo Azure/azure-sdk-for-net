@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
         /// <param name="credentials"> Serialized Name: PATAuthTypeWorkspaceConnectionProperties.credentials. </param>
-        internal MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat, WorkspaceConnectionPersonalAccessToken credentials) : base(authType, category, target, value, valueFormat)
+        internal MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionPersonalAccessToken credentials) : base(authType, category, target, value, valueFormat)
         {
             Credentials = credentials;
             AuthType = authType;

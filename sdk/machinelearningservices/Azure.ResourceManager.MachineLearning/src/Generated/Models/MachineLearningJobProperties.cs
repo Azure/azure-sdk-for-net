@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Base definition for a job.
     /// Serialized Name: JobBase
     /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="SweepJob"/>.
+    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="MachineLearningSweepJob"/>.
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {

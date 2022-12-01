@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// format for the workspace connection value
         /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
         /// </param>
-        internal UnknownWorkspaceConnectionPropertiesV2(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, ValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
+        internal UnknownWorkspaceConnectionPropertiesV2(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
         {
             AuthType = authType;
         }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
         internal SkuResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<SkuResource>();
+            Value = new ChangeTrackingList<MachineLearningSkuDetail>();
         }
 
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type SkuResource.
         /// Serialized Name: SkuResourceArmPaginatedResult.value
         /// </param>
-        internal SkuResourceArmPaginatedResult(string nextLink, IReadOnlyList<SkuResource> value)
+        internal SkuResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningSkuDetail> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An array of objects of type SkuResource.
         /// Serialized Name: SkuResourceArmPaginatedResult.value
         /// </summary>
-        public IReadOnlyList<SkuResource> Value { get; }
+        public IReadOnlyList<MachineLearningSkuDetail> Value { get; }
     }
 }

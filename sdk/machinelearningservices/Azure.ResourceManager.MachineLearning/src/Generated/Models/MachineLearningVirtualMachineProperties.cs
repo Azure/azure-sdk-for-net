@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Indicates whether this compute will be used for running notebooks.
         /// Serialized Name: VirtualMachineSchemaProperties.isNotebookInstanceCompute
         /// </param>
-        internal MachineLearningVirtualMachineProperties(string virtualMachineSize, int? sshPort, int? notebookServerPort, string address, VirtualMachineSshCredentials administratorAccount, bool? isNotebookInstanceCompute)
+        internal MachineLearningVirtualMachineProperties(string virtualMachineSize, int? sshPort, int? notebookServerPort, string address, MachineLearningVmSshCredentials administratorAccount, bool? isNotebookInstanceCompute)
         {
             VirtualMachineSize = virtualMachineSize;
             SshPort = sshPort;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Admin credentials for virtual machine
         /// Serialized Name: VirtualMachineSchemaProperties.administratorAccount
         /// </summary>
-        public VirtualMachineSshCredentials AdministratorAccount { get; set; }
+        public MachineLearningVmSshCredentials AdministratorAccount { get; set; }
         /// <summary>
         /// Indicates whether this compute will be used for running notebooks.
         /// Serialized Name: VirtualMachineSchemaProperties.isNotebookInstanceCompute

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Azure Data Lake store name.
         /// Serialized Name: AzureDataLakeGen1Datastore.storeName
         /// </param>
-        internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, ServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
             StoreName = storeName;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Indicates which identity to use to authenticate service data access to customer&apos;s storage.
         /// Serialized Name: AzureDataLakeGen1Datastore.serviceDataAccessAuthIdentity
         /// </summary>
-        public ServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
+        public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
         /// <summary>
         /// [Required] Azure Data Lake store name.
         /// Serialized Name: AzureDataLakeGen1Datastore.storeName

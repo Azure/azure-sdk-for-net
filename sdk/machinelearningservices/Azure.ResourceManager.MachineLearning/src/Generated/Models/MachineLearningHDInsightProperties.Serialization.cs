@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<int> sshPort = default;
             Optional<string> address = default;
-            Optional<VirtualMachineSshCredentials> administratorAccount = default;
+            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sshPort"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         administratorAccount = null;
                         continue;
                     }
-                    administratorAccount = VirtualMachineSshCredentials.DeserializeVirtualMachineSshCredentials(property.Value);
+                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
                     continue;
                 }
             }

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> Status filter for schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningScheduleResource> GetAllAsync(string skip = null, ScheduleListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningScheduleResource> GetAllAsync(string skip = null, MachineLearningScheduleListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<MachineLearningScheduleResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> Status filter for schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningScheduleResource> GetAll(string skip = null, ScheduleListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningScheduleResource> GetAll(string skip = null, MachineLearningScheduleListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Page<MachineLearningScheduleResource> FirstPageFunc(int? pageSizeHint)
             {

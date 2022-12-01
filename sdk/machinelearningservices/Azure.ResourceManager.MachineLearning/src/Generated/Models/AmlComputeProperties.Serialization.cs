@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<MachineLearningOSType> osType = default;
             Optional<string> vmSize = default;
-            Optional<VmPriority> vmPriority = default;
+            Optional<MachineLearningVmPriority> vmPriority = default;
             Optional<VirtualMachineImage> virtualMachineImage = default;
             Optional<bool> isolatedNetwork = default;
-            Optional<ScaleSettings> scaleSettings = default;
-            Optional<UserAccountCredentials> userAccountCredentials = default;
+            Optional<AmlComputeScaleSettings> scaleSettings = default;
+            Optional<MachineLearningUserAccountCredentials> userAccountCredentials = default;
             Optional<ResourceId> subnet = default;
-            Optional<RemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
+            Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
             Optional<AmlAllocationState> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
             Optional<IReadOnlyList<MachineLearningError>> errors = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vmPriority = new VmPriority(property.Value.GetString());
+                    vmPriority = new MachineLearningVmPriority(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualMachineImage"))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleSettings = ScaleSettings.DeserializeScaleSettings(property.Value);
+                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userAccountCredentials"))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userAccountCredentials = null;
                         continue;
                     }
-                    userAccountCredentials = UserAccountCredentials.DeserializeUserAccountCredentials(property.Value);
+                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnet"))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    remoteLoginPortPublicAccess = new RemoteLoginPortPublicAccess(property.Value.GetString());
+                    remoteLoginPortPublicAccess = new MachineLearningRemoteLoginPortPublicAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allocationState"))

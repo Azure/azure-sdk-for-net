@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Indicates whether to overwrite existing domain label.
         /// Serialized Name: SslConfiguration.overwriteExistingDomain
         /// </param>
-        internal MachineLearningSslConfiguration(SslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain)
+        internal MachineLearningSslConfiguration(MachineLearningSslConfigStatus? status, string cert, string key, string cname, string leafDomainLabel, bool? overwriteExistingDomain)
         {
             Status = status;
             Cert = cert;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Enable or disable ssl for scoring
         /// Serialized Name: SslConfiguration.status
         /// </summary>
-        public SslConfigStatus? Status { get; set; }
+        public MachineLearningSslConfigStatus? Status { get; set; }
         /// <summary>
         /// Cert data
         /// Serialized Name: SslConfiguration.cert

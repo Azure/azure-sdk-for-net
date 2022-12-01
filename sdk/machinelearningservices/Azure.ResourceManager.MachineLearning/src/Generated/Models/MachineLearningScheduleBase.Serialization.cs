@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static MachineLearningScheduleBase DeserializeMachineLearningScheduleBase(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<ScheduleProvisioningState> provisioningStatus = default;
+            Optional<MachineLearningScheduleProvisioningState> provisioningStatus = default;
             Optional<MachineLearningScheduleStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningStatus = new ScheduleProvisioningState(property.Value.GetString());
+                    provisioningStatus = new MachineLearningScheduleProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))

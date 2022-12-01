@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </param>
-        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningScheduleAction action, string displayName, bool? isEnabled, ScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags)
+        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningScheduleAction action, string displayName, bool? isEnabled, MachineLearningScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags)
         {
             Action = action;
             DisplayName = displayName;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Provisioning state for the schedule.
         /// Serialized Name: ScheduleProperties.provisioningState
         /// </summary>
-        public ScheduleProvisioningStatus? ProvisioningState { get; }
+        public MachineLearningScheduleProvisioningStatus? ProvisioningState { get; }
         /// <summary>
         /// [Required] Specifies the trigger details
         /// Serialized Name: ScheduleProperties.trigger

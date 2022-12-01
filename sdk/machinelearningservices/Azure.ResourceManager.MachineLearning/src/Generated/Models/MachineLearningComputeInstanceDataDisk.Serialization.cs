@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningCachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<int> lun = default;
-            Optional<StorageAccountType> storageAccountType = default;
+            Optional<MachineLearningStorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("caching"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(property.Value.GetString());
+                    storageAccountType = new MachineLearningStorageAccountType(property.Value.GetString());
                     continue;
                 }
             }

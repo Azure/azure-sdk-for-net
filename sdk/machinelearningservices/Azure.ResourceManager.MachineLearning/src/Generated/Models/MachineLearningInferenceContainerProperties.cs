@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The port to send the scoring requests to, within the inference server container.
         /// Serialized Name: InferenceContainerProperties.scoringRoute
         /// </param>
-        internal MachineLearningInferenceContainerProperties(Route livenessRoute, Route readinessRoute, Route scoringRoute)
+        internal MachineLearningInferenceContainerProperties(MachineLearningInferenceContainerRoute livenessRoute, MachineLearningInferenceContainerRoute readinessRoute, MachineLearningInferenceContainerRoute scoringRoute)
         {
             LivenessRoute = livenessRoute;
             ReadinessRoute = readinessRoute;
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The route to check the liveness of the inference server container.
         /// Serialized Name: InferenceContainerProperties.livenessRoute
         /// </summary>
-        public Route LivenessRoute { get; set; }
+        public MachineLearningInferenceContainerRoute LivenessRoute { get; set; }
         /// <summary>
         /// The route to check the readiness of the inference server container.
         /// Serialized Name: InferenceContainerProperties.readinessRoute
         /// </summary>
-        public Route ReadinessRoute { get; set; }
+        public MachineLearningInferenceContainerRoute ReadinessRoute { get; set; }
         /// <summary>
         /// The port to send the scoring requests to, within the inference server container.
         /// Serialized Name: InferenceContainerProperties.scoringRoute
         /// </summary>
-        public Route ScoringRoute { get; set; }
+        public MachineLearningInferenceContainerRoute ScoringRoute { get; set; }
     }
 }

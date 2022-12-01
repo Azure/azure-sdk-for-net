@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ManagedIdentityValue = "ManagedIdentity";
         private const string UsernamePasswordValue = "UsernamePassword";
         private const string NoneValue = "None";
-        private const string SASValue = "SAS";
+        private const string SasValue = "SAS";
 
         /// <summary>
         /// PAT
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// SAS
         /// Serialized Name: ConnectionAuthType.SAS
         /// </summary>
-        public static MachineLearningConnectionAuthType SAS { get; } = new MachineLearningConnectionAuthType(SASValue);
+        public static MachineLearningConnectionAuthType Sas { get; } = new MachineLearningConnectionAuthType(SasValue);
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionAuthType left, MachineLearningConnectionAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are not the same. </summary>

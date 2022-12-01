@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Is the schedule enabled or disabled?
         /// Serialized Name: ScheduleBase.status
         /// </param>
-        internal MachineLearningScheduleBase(string id, ScheduleProvisioningState? provisioningStatus, MachineLearningScheduleStatus? status)
+        internal MachineLearningScheduleBase(string id, MachineLearningScheduleProvisioningState? provisioningStatus, MachineLearningScheduleStatus? status)
         {
             Id = id;
             ProvisioningStatus = provisioningStatus;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The current deployment state of schedule.
         /// Serialized Name: ScheduleBase.provisioningStatus
         /// </summary>
-        public ScheduleProvisioningState? ProvisioningStatus { get; }
+        public MachineLearningScheduleProvisioningState? ProvisioningStatus { get; }
         /// <summary>
         /// Is the schedule enabled or disabled?
         /// Serialized Name: ScheduleBase.status

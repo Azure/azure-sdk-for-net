@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Admin credentials for master node of the cluster
         /// Serialized Name: HDInsightProperties.administratorAccount
         /// </param>
-        internal MachineLearningHDInsightProperties(int? sshPort, string address, VirtualMachineSshCredentials administratorAccount)
+        internal MachineLearningHDInsightProperties(int? sshPort, string address, MachineLearningVmSshCredentials administratorAccount)
         {
             SshPort = sshPort;
             Address = address;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Admin credentials for master node of the cluster
         /// Serialized Name: HDInsightProperties.administratorAccount
         /// </summary>
-        public VirtualMachineSshCredentials AdministratorAccount { get; set; }
+        public MachineLearningVmSshCredentials AdministratorAccount { get; set; }
     }
 }

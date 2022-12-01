@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSslConfiguration DeserializeMachineLearningSslConfiguration(JsonElement element)
         {
-            Optional<SslConfigStatus> status = default;
+            Optional<MachineLearningSslConfigStatus> status = default;
             Optional<string> cert = default;
             Optional<string> key = default;
             Optional<string> cname = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new SslConfigStatus(property.Value.GetString());
+                    status = new MachineLearningSslConfigStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cert"))

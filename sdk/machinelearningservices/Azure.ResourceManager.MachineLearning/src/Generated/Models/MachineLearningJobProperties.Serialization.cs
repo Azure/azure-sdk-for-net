@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element);
                     case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element);
                     case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element);
-                    case "Sweep": return SweepJob.DeserializeSweepJob(element);
+                    case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element);
                 }
             }
             Optional<string> componentId = default;

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element)
         {
-            Optional<Route> livenessRoute = default;
-            Optional<Route> readinessRoute = default;
-            Optional<Route> scoringRoute = default;
+            Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
+            Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
+            Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livenessRoute"))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    livenessRoute = Route.DeserializeRoute(property.Value);
+                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
                     continue;
                 }
                 if (property.NameEquals("readinessRoute"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    readinessRoute = Route.DeserializeRoute(property.Value);
+                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scoringRoute"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scoringRoute = Route.DeserializeRoute(property.Value);
+                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
                     continue;
                 }
             }

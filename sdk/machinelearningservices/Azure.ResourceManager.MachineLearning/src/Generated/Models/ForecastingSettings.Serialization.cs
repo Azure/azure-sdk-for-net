@@ -146,13 +146,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ForecastHorizon> forecastHorizon = default;
             Optional<string> frequency = default;
             Optional<ForecastingSeasonality> seasonality = default;
-            Optional<ShortSeriesHandlingConfiguration> shortSeriesHandlingConfig = default;
+            Optional<MachineLearningShortSeriesHandlingConfiguration> shortSeriesHandlingConfig = default;
             Optional<TargetAggregationFunction> targetAggregateFunction = default;
             Optional<TargetLags> targetLags = default;
             Optional<TargetRollingWindowSize> targetRollingWindowSize = default;
             Optional<string> timeColumnName = default;
             Optional<IList<string>> timeSeriesIdColumnNames = default;
-            Optional<UseStl> useStl = default;
+            Optional<MachineLearningUseStl> useStl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryOrRegionForHolidays"))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    shortSeriesHandlingConfig = new ShortSeriesHandlingConfiguration(property.Value.GetString());
+                    shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetAggregateFunction"))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useStl = new UseStl(property.Value.GetString());
+                    useStl = new MachineLearningUseStl(property.Value.GetString());
                     continue;
                 }
             }

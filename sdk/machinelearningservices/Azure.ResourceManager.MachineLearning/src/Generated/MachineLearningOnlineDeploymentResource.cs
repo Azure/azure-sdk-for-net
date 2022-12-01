@@ -308,10 +308,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="count"> Number of Skus to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuResource> GetSkusAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningSkuDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningSkuDetail> GetSkusAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MachineLearningSkuDetail>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics.CreateScope("MachineLearningOnlineDeploymentResource.GetSkus");
                 scope.Start();
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.MachineLearning
                     throw;
                 }
             }
-            async Task<Page<SkuResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MachineLearningSkuDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics.CreateScope("MachineLearningOnlineDeploymentResource.GetSkus");
                 scope.Start();
@@ -352,10 +352,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="count"> Number of Skus to be retrieved in a page of results. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuResource> GetSkus(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningSkuDetail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningSkuDetail> GetSkus(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            Page<SkuResource> FirstPageFunc(int? pageSizeHint)
+            Page<MachineLearningSkuDetail> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics.CreateScope("MachineLearningOnlineDeploymentResource.GetSkus");
                 scope.Start();
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.MachineLearning
                     throw;
                 }
             }
-            Page<SkuResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MachineLearningSkuDetail> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics.CreateScope("MachineLearningOnlineDeploymentResource.GetSkus");
                 scope.Start();

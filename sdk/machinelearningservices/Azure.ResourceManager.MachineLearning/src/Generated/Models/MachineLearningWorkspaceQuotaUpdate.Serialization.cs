@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> type = default;
             Optional<long> limit = default;
             Optional<MachineLearningQuotaUnit> unit = default;
-            Optional<Status> status = default;
+            Optional<MachineLearningWorkspaceQuotaStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new MachineLearningWorkspaceQuotaStatus(property.Value.GetString());
                     continue;
                 }
             }

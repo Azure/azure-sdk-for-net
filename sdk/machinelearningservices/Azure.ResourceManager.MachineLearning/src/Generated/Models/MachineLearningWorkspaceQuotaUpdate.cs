@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Status of update workspace quota.
         /// Serialized Name: UpdateWorkspaceQuotas.status
         /// </param>
-        internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, Status? status)
+        internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status)
         {
             Id = id;
             UpdateWorkspaceQuotasType = updateWorkspaceQuotasType;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Status of update workspace quota.
         /// Serialized Name: UpdateWorkspaceQuotas.status
         /// </summary>
-        public Status? Status { get; }
+        public MachineLearningWorkspaceQuotaStatus? Status { get; }
     }
 }

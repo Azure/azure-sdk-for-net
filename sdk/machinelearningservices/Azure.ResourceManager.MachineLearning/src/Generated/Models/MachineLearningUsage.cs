@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The name of the type of usage.
         /// Serialized Name: Usage.name
         /// </param>
-        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, UsageUnit? unit, long? currentValue, long? limit, UsageName name)
+        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, MachineLearningUsageUnit? unit, long? currentValue, long? limit, MachineLearningUsageName name)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// An enum describing the unit of usage measurement.
         /// Serialized Name: Usage.unit
         /// </summary>
-        public UsageUnit? Unit { get; }
+        public MachineLearningUsageUnit? Unit { get; }
         /// <summary>
         /// The current usage of the resource.
         /// Serialized Name: Usage.currentValue
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The name of the type of usage.
         /// Serialized Name: Usage.name
         /// </summary>
-        public UsageName Name { get; }
+        public MachineLearningUsageName Name { get; }
     }
 }

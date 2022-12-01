@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure STL Decomposition of the time-series target column.
         /// Serialized Name: ForecastingSettings.useStl
         /// </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, ShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, UseStl? useStl)
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The parameter defining how if AutoML should handle short time series.
         /// Serialized Name: ForecastingSettings.shortSeriesHandlingConfig
         /// </summary>
-        public ShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get; set; }
+        public MachineLearningShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get; set; }
         /// <summary>
         /// The function to be used to aggregate the time series target column to conform to a user specified frequency.
         /// If the TargetAggregateFunction is set i.e. not &apos;None&apos;, but the freq parameter is not set, the error is raised. The possible target aggregation functions are: &quot;sum&quot;, &quot;max&quot;, &quot;min&quot; and &quot;mean&quot;.
@@ -184,6 +184,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure STL Decomposition of the time-series target column.
         /// Serialized Name: ForecastingSettings.useStl
         /// </summary>
-        public UseStl? UseStl { get; set; }
+        public MachineLearningUseStl? UseStl { get; set; }
     }
 }

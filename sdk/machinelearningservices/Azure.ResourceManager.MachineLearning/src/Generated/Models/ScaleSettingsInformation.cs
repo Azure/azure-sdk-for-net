@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// scale settings for AML Compute
         /// Serialized Name: ScaleSettingsInformation.scaleSettings
         /// </summary>
-        public ScaleSettings ScaleSettings { get; set; }
+        public AmlComputeScaleSettings ScaleSettings { get; set; }
     }
 }

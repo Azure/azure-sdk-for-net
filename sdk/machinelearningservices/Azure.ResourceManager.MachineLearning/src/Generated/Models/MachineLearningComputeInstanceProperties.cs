@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Customized setup scripts
         /// Serialized Name: SetupScripts.scripts
         /// </summary>
-        public ScriptsToExecute Scripts
+        public MachineLearningScriptsToExecute Scripts
         {
             get => SetupScriptsSettings is null ? default : SetupScriptsSettings.Scripts;
             set
