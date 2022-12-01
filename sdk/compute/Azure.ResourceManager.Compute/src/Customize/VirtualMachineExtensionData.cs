@@ -5,10 +5,6 @@
 
 using System;
 using System.ComponentModel;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -48,23 +44,8 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ProtectedSettingsFromKeyVault
         {
-            get
-            {
-                string raw;
-                using var stream = new MemoryStream();
-                using (var writer = new Utf8JsonWriter(stream))
-                {
-                    writer.WriteObjectValue(KeyVaultProtectedSettings);
-                    writer.Flush();
-                    raw = Encoding.UTF8.GetString(stream.ToArray());
-                }
-                return BinaryData.FromBytes(stream.ToArray());
-            }
-            set
-            {
-                var jsonElement = value.ToObjectFromJson<JsonElement>();
-                KeyVaultProtectedSettings = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(jsonElement);
-            }
+            get => BinaryData.FromObjectAsJson(KeyVaultProtectedSettings);
+            set => KeyVaultProtectedSettings = value.ToObjectFromJson<KeyVaultSecretReference>();
         }
     }
 }

@@ -5,10 +5,6 @@
 
 using System;
 using System.ComponentModel;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -44,6 +40,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ProtectedSettingsFromKeyVault { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public BinaryData ProtectedSettingsFromKeyVault
+        {
+            get => BinaryData.FromObjectAsJson(KeyVaultProtectedSettings);
+            set => KeyVaultProtectedSettings = value.ToObjectFromJson<KeyVaultSecretReference>();
+        }
     }
 }

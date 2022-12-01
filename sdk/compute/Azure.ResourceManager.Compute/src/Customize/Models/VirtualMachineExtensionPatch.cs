@@ -47,23 +47,8 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ProtectedSettingsFromKeyVault
         {
-            get
-            {
-                string raw;
-                using var stream = new MemoryStream();
-                using (var writer = new Utf8JsonWriter(stream))
-                {
-                    writer.WriteObjectValue(KeyVaultProtectedSettings);
-                    writer.Flush();
-                    raw = Encoding.UTF8.GetString(stream.ToArray());
-                }
-                return BinaryData.FromBytes(stream.ToArray());
-            }
-            set
-            {
-                var jsonElement = value.ToObjectFromJson<JsonElement>();
-                KeyVaultProtectedSettings = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(jsonElement);
-            }
+            get => BinaryData.FromObjectAsJson(ProtectedSettingsFromKeyVault);
+            set => KeyVaultProtectedSettings = value.ToObjectFromJson<KeyVaultSecretReference>();
         }
     }
 }
