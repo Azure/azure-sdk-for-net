@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The LastDetectionResult. </summary>
-    public partial class LastDetectionResult
+    /// <summary> The MultivariateLastDetectionResult. </summary>
+    public partial class MultivariateLastDetectionResult
     {
-        /// <summary> Initializes a new instance of LastDetectionResult. </summary>
-        internal LastDetectionResult()
+        /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
+        internal MultivariateLastDetectionResult()
         {
             VariableStates = new ChangeTrackingList<VariableState>();
             Results = new ChangeTrackingList<AnomalyState>();
         }
 
-        /// <summary> Initializes a new instance of LastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
         /// <param name="variableStates"></param>
         /// <param name="results"></param>
-        internal LastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results)
+        internal MultivariateLastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results)
         {
             VariableStates = variableStates.ToList();
             Results = results.ToList();

@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The LastDetectionRequest. </summary>
-    public partial class LastDetectionRequest
+    /// <summary> The MultivariateLastDetectionOptions. </summary>
+    public partial class MultivariateLastDetectionOptions
     {
-        /// <summary> Initializes a new instance of LastDetectionRequest. </summary>
+        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
         /// <param name="variables"></param>
         /// <param name="topContributorCount"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
-        public LastDetectionRequest(IEnumerable<VariableValues> variables, int topContributorCount)
+        public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables, int topContributorCount)
         {
             Argument.AssertNotNull(variables, nameof(variables));
 

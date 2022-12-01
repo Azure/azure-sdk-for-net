@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class ChangePointDetectRequest : IUtf8JsonSerializable
+    public partial class UnivariateDetectionOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,8 +22,18 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("granularity");
-            writer.WriteStringValue(Granularity.ToSerialString());
+            if (Optional.IsDefined(Granularity))
+            {
+                if (Granularity != null)
+                {
+                    writer.WritePropertyName("granularity");
+                    writer.WriteStringValue(Granularity.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("granularity");
+                }
+            }
             if (Optional.IsDefined(CustomInterval))
             {
                 if (CustomInterval != null)
@@ -48,28 +58,52 @@ namespace Azure.AI.AnomalyDetector
                     writer.WriteNull("period");
                 }
             }
-            if (Optional.IsDefined(StableTrendWindow))
+            if (Optional.IsDefined(MaxAnomalyRatio))
             {
-                if (StableTrendWindow != null)
+                if (MaxAnomalyRatio != null)
                 {
-                    writer.WritePropertyName("stableTrendWindow");
-                    writer.WriteNumberValue(StableTrendWindow.Value);
+                    writer.WritePropertyName("maxAnomalyRatio");
+                    writer.WriteNumberValue(MaxAnomalyRatio.Value);
                 }
                 else
                 {
-                    writer.WriteNull("stableTrendWindow");
+                    writer.WriteNull("maxAnomalyRatio");
                 }
             }
-            if (Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(Sensitivity))
             {
-                if (Threshold != null)
+                if (Sensitivity != null)
                 {
-                    writer.WritePropertyName("threshold");
-                    writer.WriteNumberValue(Threshold.Value);
+                    writer.WritePropertyName("sensitivity");
+                    writer.WriteNumberValue(Sensitivity.Value);
                 }
                 else
                 {
-                    writer.WriteNull("threshold");
+                    writer.WriteNull("sensitivity");
+                }
+            }
+            if (Optional.IsDefined(ImputeMode))
+            {
+                if (ImputeMode != null)
+                {
+                    writer.WritePropertyName("imputeMode");
+                    writer.WriteStringValue(ImputeMode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("imputeMode");
+                }
+            }
+            if (Optional.IsDefined(ImputeFixedValue))
+            {
+                if (ImputeFixedValue != null)
+                {
+                    writer.WritePropertyName("imputeFixedValue");
+                    writer.WriteNumberValue(ImputeFixedValue.Value);
+                }
+                else
+                {
+                    writer.WriteNull("imputeFixedValue");
                 }
             }
             writer.WriteEndObject();

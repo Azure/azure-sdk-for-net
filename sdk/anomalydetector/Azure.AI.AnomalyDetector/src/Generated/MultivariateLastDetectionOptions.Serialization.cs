@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class LastDetectionRequest : IUtf8JsonSerializable
+    public partial class MultivariateLastDetectionOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
