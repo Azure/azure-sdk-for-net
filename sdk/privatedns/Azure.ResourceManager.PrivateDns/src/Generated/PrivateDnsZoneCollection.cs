@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateZoneResource" /> and their operations.
-    /// Each <see cref="PrivateZoneResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="PrivateZoneCollection" /> instance call the GetPrivateZones method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="PrivateDnsZoneResource" /> and their operations.
+    /// Each <see cref="PrivateDnsZoneResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="PrivateDnsZoneCollection" /> instance call the GetPrivateDnsZones method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class PrivateZoneCollection : ArmCollection, IEnumerable<PrivateZoneResource>, IAsyncEnumerable<PrivateZoneResource>
+    public partial class PrivateDnsZoneCollection : ArmCollection, IEnumerable<PrivateDnsZoneResource>, IAsyncEnumerable<PrivateDnsZoneResource>
     {
-        private readonly ClientDiagnostics _privateZoneClientDiagnostics;
-        private readonly PrivateZonesRestOperations _privateZoneRestClient;
+        private readonly ClientDiagnostics _privateDnsZonePrivateZonesClientDiagnostics;
+        private readonly PrivateZonesRestOperations _privateDnsZonePrivateZonesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateZoneCollection"/> class for mocking. </summary>
-        protected PrivateZoneCollection()
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneCollection"/> class for mocking. </summary>
+        protected PrivateDnsZoneCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateZoneCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal PrivateZoneCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateDnsZoneCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateZoneClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateZoneResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PrivateZoneResource.ResourceType, out string privateZoneApiVersion);
-            _privateZoneRestClient = new PrivateZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateZoneApiVersion);
+            _privateDnsZonePrivateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsZoneResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PrivateDnsZoneResource.ResourceType, out string privateDnsZonePrivateZonesApiVersion);
+            _privateDnsZonePrivateZonesRestClient = new PrivateZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZonePrivateZonesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateZoneName, PrivateZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateDnsZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.CreateOrUpdate");
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _privateZoneRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _privateDnsZonePrivateZonesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(new PrivateDnsZoneOperationSource(Client), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, _privateDnsZonePrivateZonesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateZoneResource> CreateOrUpdate(WaitUntil waitUntil, string privateZoneName, PrivateZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateDnsZoneResource> CreateOrUpdate(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.CreateOrUpdate");
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _privateZoneRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation<PrivateZoneResource>(new PrivateZoneOperationSource(Client), _privateZoneClientDiagnostics, Pipeline, _privateZoneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _privateDnsZonePrivateZonesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(new PrivateDnsZoneOperationSource(Client), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, _privateDnsZonePrivateZonesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -133,18 +133,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
-        public virtual async Task<Response<PrivateZoneResource>> GetAsync(string privateZoneName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateDnsZoneResource>> GetAsync(string privateZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.Get");
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateZoneRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken).ConfigureAwait(false);
+                var response = await _privateDnsZonePrivateZonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
-        public virtual Response<PrivateZoneResource> Get(string privateZoneName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateDnsZoneResource> Get(string privateZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.Get");
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = _privateZoneRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken);
+                var response = _privateDnsZonePrivateZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,17 +189,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateZoneResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateDnsZoneResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateZoneResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateDnsZoneResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.GetAll");
+                using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateZoneRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateDnsZonePrivateZonesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -207,14 +207,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            async Task<Page<PrivateZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PrivateDnsZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.GetAll");
+                using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _privateZoneRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _privateDnsZonePrivateZonesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -232,17 +232,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateZoneResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateDnsZoneResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PrivateZoneResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateDnsZoneResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.GetAll");
+                using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateZoneRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _privateDnsZonePrivateZonesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            Page<PrivateZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PrivateDnsZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.GetAll");
+                using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _privateZoneRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _privateDnsZonePrivateZonesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.Exists");
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _privateZoneRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateDnsZonePrivateZonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
 
-            using var scope = _privateZoneClientDiagnostics.CreateScope("PrivateZoneCollection.Exists");
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.Exists");
             scope.Start();
             try
             {
-                var response = _privateZoneRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken: cancellationToken);
+                var response = _privateDnsZonePrivateZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PrivateDns
             }
         }
 
-        IEnumerator<PrivateZoneResource> IEnumerable<PrivateZoneResource>.GetEnumerator()
+        IEnumerator<PrivateDnsZoneResource> IEnumerable<PrivateDnsZoneResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.PrivateDns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PrivateZoneResource> IAsyncEnumerable<PrivateZoneResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PrivateDnsZoneResource> IAsyncEnumerable<PrivateDnsZoneResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
