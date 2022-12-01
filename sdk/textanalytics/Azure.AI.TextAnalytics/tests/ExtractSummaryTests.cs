@@ -242,6 +242,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
         public async Task AnalyzeOperationExtractSummaryWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
