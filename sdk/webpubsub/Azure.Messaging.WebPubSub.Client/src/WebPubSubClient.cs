@@ -823,7 +823,7 @@ namespace Azure.Messaging.WebPubSub.Clients
 
                 if (!recovered)
                 {
-                    WebPubSubClientEventSource.Log.StopRecovery(_connectionId, "Recovery attempts failed more then 30 seconds or the client is stopped");
+                    WebPubSubClientEventSource.Log.StopRecovery(_connectionId, "Recovery attempts failed more than 30 seconds or the client is stopped");
                     await HandleConnectionCloseAndNoRecovery(_latestDisconnectedMessage, token).ConfigureAwait(false);
                 }
             }
@@ -907,7 +907,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                 if (ackMessage.Success ||
                     ackMessage.Error?.Name == ErrorNameDuplicate)
                 {
-                    entity.SetResult(new WebPubSubResult(ackMessage.AckId, ackMessage.Error?.Name == "Duplicate"));
+                    entity.SetResult(new WebPubSubResult(ackMessage.AckId, ackMessage.Error?.Name == ErrorNameDuplicate));
                     return;
                 }
 
