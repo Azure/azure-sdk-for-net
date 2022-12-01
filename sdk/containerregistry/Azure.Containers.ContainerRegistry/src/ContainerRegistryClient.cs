@@ -102,7 +102,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// The HttpPipeline.
         /// </summary>
-        public HttpPipeline Pipeline => _pipeline;
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> List the names of the repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

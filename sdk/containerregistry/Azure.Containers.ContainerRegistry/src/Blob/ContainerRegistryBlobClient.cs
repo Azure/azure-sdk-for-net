@@ -135,7 +135,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <summary>
         /// The HttpPipeline.
         /// </summary>
-        public HttpPipeline Pipeline => _pipeline;
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// Uploads a manifest for an OCI Artifact.
