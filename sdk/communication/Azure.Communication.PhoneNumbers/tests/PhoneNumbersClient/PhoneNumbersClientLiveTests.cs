@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -272,6 +273,71 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
 
             Assert.NotNull(purchasedPhoneNumbers);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetPurchasedPhoneNumbersAsPages()
+        {
+            var client = CreateClient();
+            var phoneNumbers = client.GetPurchasedPhoneNumbers();
+            var phoneNumbersCount = phoneNumbers.Count();
+
+            if (phoneNumbersCount < 2)
+            {
+                Assert.Ignore("Unable to test a smaller page size.");
+            }
+
+            var expectedPageSize = phoneNumbersCount / 2;
+            var pages = client.GetPurchasedPhoneNumbers().AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(phoneNumbersCount, actual);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetPurchasedPhoneNumbersAsPagesAsync()
+        {
+            var client = CreateClient();
+            var phoneNumbers = await client.GetPurchasedPhoneNumbersAsync().ToEnumerableAsync();
+            var phoneNumbersCount = phoneNumbers.Count;
+
+            if (phoneNumbersCount < 2)
+            {
+                Assert.Ignore("Unable to test a smaller page size.");
+            }
+
+            var expectedPageSize = phoneNumbersCount / 2;
+            var pages = client.GetPurchasedPhoneNumbersAsync().AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(phoneNumbersCount, actual);
         }
 
         [Test]

@@ -342,7 +342,7 @@ namespace Azure.Communication.PhoneNumbers
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListPhoneNumbersAsync(skip: null, top: null, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListPhoneNumbersAsync(skip: null, top: pageSizeHint, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
