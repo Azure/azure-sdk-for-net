@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -136,9 +138,103 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnszone = await CreateDnsZone(dnsZoneName, _resourceGroup);
+
+            // Add some aaaaRecord
+            var aaaaRecord1 =await dnszone.GetDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa100", new DnsAaaaRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsAaaaRecords =
+                {
+                    new DnsAaaaRecordInfo()
+                    {
+                        IPv6Address = IPAddress.Parse("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55")
+                    },
+                    new DnsAaaaRecordInfo()
+                    {
+                        IPv6Address = IPAddress.Parse("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d56")
+                    },
+                }
+            });
+            var aaaaRecord2 = await dnszone.GetDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa200", new DnsAaaaRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsAaaaRecords =
+                {
+                    new DnsAaaaRecordInfo()
+                    {
+                        IPv6Address = IPAddress.Parse("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57")
+                    }
+                }
+            });
+
+            // Add some caaRecord
+            var caaRecord1 = await dnszone.GetDnsCaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "caa100", new DnsCaaRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsCaaRecords =
+                {
+                    new DnsCaaRecordInfo()
+                    {
+                        Flags = 1,
+                        Tag = "test1",
+                        Value = "caa1.contoso.com"
+                    },
+                    new DnsCaaRecordInfo()
+                    {
+                        Flags = 2,
+                        Tag = "test2",
+                        Value = "caa2.contoso.com"
+                    },
+                }
+            });
+            var caaRecord2 = await dnszone.GetDnsCaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "caa200", new DnsCaaRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsCaaRecords =
+                {
+                    new DnsCaaRecordInfo()
+                    {
+                        Flags = 3,
+                        Tag = "test3",
+                        Value = "caa3.contoso.com"
+                    }
+                }
+            });
+
+            // Add some MXRecord
+            var mxRecord = await dnszone.GetDnsMXRecords().CreateOrUpdateAsync(WaitUntil.Completed, "mx100", new DnsMXRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsMXRecords =
+                {
+                    new DnsMXRecordInfo()
+                    {
+                        Preference = 10,
+                        Exchange = "mymail1.contoso.com"
+                    }
+                }
+            });
+            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            {
+                Thread.Sleep(10000);
+            }
+
             var recordSets = await dnszone.GetAllRecordDataAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(recordSets);
-            Assert.AreEqual(2, recordSets.Count);
+            Assert.IsNotNull(recordSets[0].DnsNSRecords);
+            Assert.IsNotNull(recordSets[1].DnsSoaRecordInfo);
+
+            Assert.AreEqual(2, recordSets[2].DnsAaaaRecords.Count);
+            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55", recordSets[2].DnsAaaaRecords.First().IPv6Address.ToString());
+            Assert.AreEqual(1, recordSets[3].DnsAaaaRecords.Count);
+            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57", recordSets[3].DnsAaaaRecords.First().IPv6Address.ToString());
+
+            Assert.AreEqual(2, recordSets[4].DnsCaaRecords.Count);
+            Assert.AreEqual("caa1.contoso.com", recordSets[4].DnsCaaRecords.First().Value.ToString());
+            Assert.AreEqual(1, recordSets[5].DnsCaaRecords.Count);
+            Assert.AreEqual("caa3.contoso.com", recordSets[5].DnsCaaRecords.First().Value.ToString());
+
+            Assert.AreEqual("mymail1.contoso.com", recordSets[6].DnsMXRecords.First().Exchange.ToString());
         }
     }
 }
