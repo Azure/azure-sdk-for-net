@@ -1324,6 +1324,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var settings = new AmqpSettings();
             settings.TransportProviders.Add(saslProvider);
             settings.TransportProviders.Add(amqpProvider);
+            settings.RuntimeProvider = new DurableTerminusProvider();
 
             return settings;
         }
@@ -1439,5 +1440,38 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             link.SafeClose();
         }
+    }
+
+#pragma warning disable SA1402
+    internal class DurableTerminusProvider : ILinkRecoveryRuntimeProvider
+#pragma warning restore SA1402
+    {
+        public AmqpConnection CreateConnection(TransportBase transport, ProtocolHeader protocolHeader, bool isInitiator, AmqpSettings amqpSettings,
+            AmqpConnectionSettings connectionSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AmqpSession CreateSession(AmqpConnection connection, AmqpSessionSettings settings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AmqpLink CreateLink(AmqpSession session, AmqpLinkSettings settings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IAsyncResult BeginOpenLink(AmqpLink link, TimeSpan timeout, AsyncCallback callback, object state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndOpenLink(IAsyncResult result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IAmqpTerminusStore TerminusStore { get; } = new AmqpInMemoryTerminusStore();
     }
 }
