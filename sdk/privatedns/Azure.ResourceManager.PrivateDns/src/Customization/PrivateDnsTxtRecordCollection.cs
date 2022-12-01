@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
     /// A class representing a collection of <see cref="PrivateDnsTxtRecordResource" /> and their operations.
-    /// Each <see cref="PrivateDnsTxtRecordResource" /> in the collection will belong to the same instance of <see cref="PrivateZoneResource" />.
-    /// To get a <see cref="PrivateDnsTxtRecordCollection" /> instance call the GetPrivateDnsTxtRecords method from an instance of <see cref="PrivateZoneResource" />.
+    /// Each <see cref="PrivateDnsTxtRecordResource" /> in the collection will belong to the same instance of <see cref="PrivateDnsZoneResource" />.
+    /// To get a <see cref="PrivateDnsTxtRecordCollection" /> instance call the GetPrivateDnsTxtRecords method from an instance of <see cref="PrivateDnsZoneResource" />.
     /// </summary>
     public partial class PrivateDnsTxtRecordCollection : ArmCollection, IEnumerable<PrivateDnsTxtRecordResource>, IAsyncEnumerable<PrivateDnsTxtRecordResource>
     {
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.PrivateDns
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateZoneResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateZoneResource.ResourceType), nameof(id));
+            if (id.ResourceType != PrivateDnsZoneResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateDnsZoneResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a record set within a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{txtRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Creates or updates a record set within a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{txtRecordName}
         /// Operation Id: RecordSets_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{txtRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{txtRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Lists the record sets of a specified type in a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}
         /// Operation Id: RecordSets_ListByType
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Lists the record sets of a specified type in a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}
         /// Operation Id: RecordSets_ListByType
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{txtRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{txtRecordName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{txtRecordName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>

@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.PrivateDns
     /// A Class representing an PrivateDnsARecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="PrivateDnsARecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsARecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetPrivateDnsARecord method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateDnsZoneResource" /> using the GetPrivateDnsARecord method.
     /// </summary>
     public partial class PrivateDnsARecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateDnsARecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string aRecordName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string PrivateDnsZoneName, string aRecordName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/A/{aRecordName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/A/{aRecordName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Deletes a record set from a Private DNS zone. This operation cannot be undone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Deletes a record set from a Private DNS zone. This operation cannot be undone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Updates a record set within a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Update
         /// </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.PrivateDns
 
         /// <summary>
         /// Updates a record set within a Private DNS zone.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{PrivateDnsZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Update
         /// </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>

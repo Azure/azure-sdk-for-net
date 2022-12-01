@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsZoneResource" /> object. </returns>
         public static PrivateDnsZoneResource GetPrivateDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
+            return client.GetResourceClient<PrivateDnsZoneResource>(() =>
             {
                 PrivateDnsZoneResource.ValidateResourceId(id);
                 return new PrivateDnsZoneResource(client, id);
