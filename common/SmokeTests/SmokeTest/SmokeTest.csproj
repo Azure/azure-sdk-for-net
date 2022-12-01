@@ -38,7 +38,7 @@
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::VersionLessThan('$(TargetFrameworkVersion)', '3.1'))">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'netcoreapp3.1'))">
     <!-- This package supports netcoreapp3.1 -->
     <PackageReference Remove="Microsoft.Azure.WebPubSub.AspNetCore" />
   </ItemGroup>
