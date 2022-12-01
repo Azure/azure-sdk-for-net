@@ -12,14 +12,22 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
     [NonParallelizable]
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
+        }
+
+        [SetUp]
+        public async Task Setup()
+        {
+            // Handle redirects in the Client pipeline and not in the test proxy.
+            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { AllowAutoRedirect = true } });
         }
 
         /// <summary>
