@@ -13,10 +13,8 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Azure.Core
+namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// A mutable representation of a JSON value.
@@ -24,7 +22,7 @@ namespace Azure.Core
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [DebuggerTypeProxy(typeof(JsonDataDebuggerProxy))]
     [JsonConverter(typeof(JsonConverter))]
-    internal class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
+    public class JsonData : IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
         private readonly JsonValueKind _kind;
         private Dictionary<string, JsonData>? _objectRepresentation;
@@ -60,7 +58,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="jsonDocument">The JsonDocument to convert.</param>
         /// <remarks>A JsonDocument can be constructed from a JSON string using <see cref="JsonDocument.Parse(string, JsonDocumentOptions)"/>.</remarks>
-        public JsonData(JsonDocument jsonDocument) : this((object?)jsonDocument)
+        internal JsonData(JsonDocument jsonDocument) : this((object?)jsonDocument)
         {
         }
 
@@ -68,7 +66,7 @@ namespace Azure.Core
         /// Creates a new JsonData object which represents the given object.
         /// </summary>
         /// <param name="value">The value to convert.</param>
-        public JsonData(object? value) : this(value, DefaultJsonSerializerOptions)
+        internal JsonData(object? value) : this(value, DefaultJsonSerializerOptions)
         {
         }
 
@@ -78,7 +76,7 @@ namespace Azure.Core
         /// <param name="value">The value to convert.</param>
         /// <param name="options">Options to control the conversion behavior.</param>
         /// <param name="type">The type of the value to convert. </param>
-        public JsonData(object? value, JsonSerializerOptions options, Type? type = null)
+        internal JsonData(object? value, JsonSerializerOptions options, Type? type = null)
         {
             _value = value;
             switch (value)
@@ -346,7 +344,7 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="JsonValueKind"/> of the value of this instance.
         /// </summary>
-        public JsonValueKind Kind
+        internal JsonValueKind Kind
         {
             get => _kind;
         }
@@ -355,7 +353,7 @@ namespace Azure.Core
         /// Returns the number of elements in this array.
         /// </summary>
         /// <remarks>If <see cref="Kind"/> is not <see cref="JsonValueKind.Array"/> this methods throws <see cref="InvalidOperationException"/>.</remarks>
-        public int Length
+        internal int Length
         {
             get => EnsureArray().Count;
         }

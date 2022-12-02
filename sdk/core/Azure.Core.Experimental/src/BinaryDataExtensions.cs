@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
-namespace Azure
+namespace Azure.Core.Dynamic
 {
     /// <summary>
     /// Extensions to BinaryData.
