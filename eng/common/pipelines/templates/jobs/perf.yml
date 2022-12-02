@@ -53,6 +53,9 @@ parameters:
 - name: Iterations
   type: number
   default: '5'
+- name: Profile
+  type: boolean
+  default: false
 - name: AdditionalArguments
   type: string
   default: ''
