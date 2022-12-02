@@ -2341,9 +2341,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string SubjectBeginsWith { get { throw null; } set { } }
         public string SubjectEndsWith { get { throw null; } set { } }
     }
-    public partial class CustomSetupBase
+    public abstract partial class CustomSetupBase
     {
-        public CustomSetupBase() { }
+        protected CustomSetupBase() { }
     }
     public partial class DatabricksNotebookActivity : Azure.Analytics.Synapse.Artifacts.Models.ExecutionActivity
     {
@@ -2366,9 +2366,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public System.Collections.Generic.IList<object> Parameters { get { throw null; } }
         public object PythonFile { get { throw null; } set { } }
     }
-    public partial class DataFlow
+    public abstract partial class DataFlow
     {
-        public DataFlow() { }
+        protected DataFlow() { }
         public System.Collections.Generic.IList<object> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataFlowFolder Folder { get { throw null; } set { } }
@@ -2794,9 +2794,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.DependencyCondition left, Azure.Analytics.Synapse.Artifacts.Models.DependencyCondition right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DependencyReference
+    public abstract partial class DependencyReference
     {
-        public DependencyReference() { }
+        protected DependencyReference() { }
     }
     public partial class DistcpSettings
     {
@@ -4374,9 +4374,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public LinkedIntegrationRuntimeRbacAuthorization(string resourceId) { }
         public string ResourceId { get { throw null; } set { } }
     }
-    public partial class LinkedIntegrationRuntimeType
+    public abstract partial class LinkedIntegrationRuntimeType
     {
-        public LinkedIntegrationRuntimeType() { }
+        protected LinkedIntegrationRuntimeType() { }
     }
     public partial class LinkedService
     {
@@ -6489,9 +6489,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.ScriptType left, Azure.Analytics.Synapse.Artifacts.Models.ScriptType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecretBase
+    public abstract partial class SecretBase
     {
-        public SecretBase() { }
+        protected SecretBase() { }
     }
     public partial class SecureString : Azure.Analytics.Synapse.Artifacts.Models.SecretBase
     {
@@ -8045,9 +8045,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public WebLinkedService(Azure.Analytics.Synapse.Artifacts.Models.WebLinkedServiceTypeProperties typeProperties) { }
         public Azure.Analytics.Synapse.Artifacts.Models.WebLinkedServiceTypeProperties TypeProperties { get { throw null; } set { } }
     }
-    public partial class WebLinkedServiceTypeProperties
+    public abstract partial class WebLinkedServiceTypeProperties
     {
-        public WebLinkedServiceTypeProperties(object url) { }
+        protected WebLinkedServiceTypeProperties(object url) { }
         public object Url { get { throw null; } set { } }
     }
     public partial class WebSource : Azure.Analytics.Synapse.Artifacts.Models.CopySource

@@ -132,7 +132,7 @@ namespace Azure.Communication.JobRouter
     }
     public abstract partial class DistributionMode
     {
-        public DistributionMode(int minConcurrentOffers, int maxConcurrentOffers) { }
+        protected DistributionMode(int minConcurrentOffers, int maxConcurrentOffers) { }
         public bool? BypassSelectors { get { throw null; } set { } }
         public int MaxConcurrentOffers { get { throw null; } set { } }
         public int MinConcurrentOffers { get { throw null; } set { } }
