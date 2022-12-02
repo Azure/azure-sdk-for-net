@@ -38,6 +38,7 @@ namespace Azure.ResourceManager
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {
         public ArmClientOptions() { }
+        public System.BinaryData ApiVersionProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ArmEnvironment? Environment { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
     }
