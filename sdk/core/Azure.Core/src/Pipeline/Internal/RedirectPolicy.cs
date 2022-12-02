@@ -51,8 +51,8 @@ namespace Azure.Core.Pipeline
             Response response = message.Response;
 
             bool allowAutoRedirect = GetAllowAutoRedirectValue(message);
-
-            while (allowAutoRedirect && (redirectUri = GetUriForRedirect(request, message.Response)) != null)
+            if (!allowAutoRedirect) return;
+            while ((redirectUri = GetUriForRedirect(request, message.Response)) != null)
             {
                 redirectCount++;
 
