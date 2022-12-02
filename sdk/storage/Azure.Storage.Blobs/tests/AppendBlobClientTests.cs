@@ -1139,7 +1139,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [LiveOnly]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_02_12)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2022_11_02)]
         public async Task AppendBlockAsync_HighThroughputAppendBlob()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
