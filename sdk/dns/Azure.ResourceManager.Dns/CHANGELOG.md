@@ -2,7 +2,7 @@
 
 ## 1.0.0 (2022-12-01)
 
-This package is the first stable release of the DNS Management library.
+This package is the first stable release of the Azure DNS management library.
 
 ### Breaking Changes
 
