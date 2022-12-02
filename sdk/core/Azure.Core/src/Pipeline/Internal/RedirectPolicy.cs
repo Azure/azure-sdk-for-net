@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
         /// <param name="allowAutoRedirect"></param>
         public static void SetAllowAutoRedirect(HttpMessage message, bool allowAutoRedirect)
         {
-            message.SetInternalProperty(typeof(AllowRedirectsValueKey), allowAutoRedirect);
+            message.SetProperty(typeof(AllowRedirectsValueKey), allowAutoRedirect);
         }
 
         internal async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -275,7 +275,7 @@ namespace Azure.Core.Pipeline
         {
             bool allowAutoRedirect = true;
 
-            if (message.TryGetInternalProperty(typeof(AllowRedirectsValueKey), out object? value))
+            if (message.TryGetProperty(typeof(AllowRedirectsValueKey), out object? value))
             {
                 allowAutoRedirect = (bool)value!;
             }
