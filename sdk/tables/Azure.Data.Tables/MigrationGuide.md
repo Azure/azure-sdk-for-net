@@ -1,7 +1,7 @@
 # Migration guide from Microsoft.Azure.Cosmos.Table to Azure.Data.Tables
 
 This guide is intended to assist in the migration to the `Azure.Data.Tables` package from the legacy `Microsoft.Azure.CosmosDB.Table` package focusing on
-side-by-side comparisons for similar operations between the to versions.
+side-by-side comparisons for similar operations between the two versions.
 
 Familiarity with the `Microsoft.Azure.CosmosDB.Table` package is assumed. If you are new to the Azure Tables client library for .NET, please refer to the
 [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md) and

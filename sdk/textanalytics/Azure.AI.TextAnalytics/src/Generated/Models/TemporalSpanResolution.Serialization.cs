@@ -36,6 +36,11 @@ namespace Azure.AI.TextAnalytics
                 writer.WritePropertyName("modifier");
                 writer.WriteStringValue(Modifier.Value.ToString());
             }
+            if (Optional.IsDefined(Timex))
+            {
+                writer.WritePropertyName("timex");
+                writer.WriteStringValue(Timex);
+            }
             writer.WritePropertyName("resolutionKind");
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
@@ -47,6 +52,7 @@ namespace Azure.AI.TextAnalytics
             Optional<string> end = default;
             Optional<string> duration = default;
             Optional<TemporalModifier> modifier = default;
+            Optional<string> timex = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,13 +81,18 @@ namespace Azure.AI.TextAnalytics
                     modifier = new TemporalModifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("timex"))
+                {
+                    timex = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("resolutionKind"))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new TemporalSpanResolution(resolutionKind, begin.Value, end.Value, duration.Value, Optional.ToNullable(modifier));
+            return new TemporalSpanResolution(resolutionKind, begin.Value, end.Value, duration.Value, Optional.ToNullable(modifier), timex.Value);
         }
     }
 }

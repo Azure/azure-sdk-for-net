@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The order in which extracted sentences will be returned as result of performing extractive text summarization.
+    /// The order in which the extracted sentences will be returned in the result of extractive summarization.
     /// </summary>
     [CodeGenModel("ExtractiveSummarizationSortingCriteria")]
     public readonly partial struct SummarySentencesOrder

@@ -97,7 +97,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster4013?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster4013?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -124,7 +124,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Wed, 07 Sep 2022 09:38:12 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -139,7 +139,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -156,7 +156,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Wed, 07 Sep 2022 09:38:13 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -171,7 +171,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/caaaeda3-8ee8-4037-bd42-9111d263985a?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -255,7 +255,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster4013/listKeys?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster4013/listKeys?api-version=2022-09-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -302,7 +302,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster4013/blobServices/default/containers/container9145?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster4013/blobServices/default/containers/container9145?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -348,7 +348,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster3082?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster3082?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -375,7 +375,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Wed, 07 Sep 2022 09:38:37 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -390,7 +390,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -407,7 +407,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Wed, 07 Sep 2022 09:38:37 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -422,7 +422,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/eastus/asyncoperations/d2eed559-ccca-40ca-af38-e9ec7a6ab758?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -506,7 +506,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster3082/listKeys?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster3082/listKeys?api-version=2022-09-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -553,7 +553,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster3082/blobServices/default/containers/container5727?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-1777/providers/Microsoft.Storage/storageAccounts/azstorageforcluster3082/blobServices/default/containers/container5727?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

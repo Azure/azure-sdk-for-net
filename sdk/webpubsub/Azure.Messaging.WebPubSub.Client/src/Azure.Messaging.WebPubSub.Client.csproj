@@ -6,7 +6,6 @@
     <PackageTags>azure;webpubsub.client</PackageTags>
     <NoWarn>$(NoWarn);0067</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <RequiredTargetFrameworks>netstandard2.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>

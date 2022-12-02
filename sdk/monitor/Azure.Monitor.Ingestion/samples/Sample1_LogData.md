@@ -50,5 +50,3 @@ BinaryData data = BinaryData.FromObjectAsJson(
 // Upload our logs
 Response response = client.Upload(ruleId, streamName, RequestContent.Create(data));
 ```
-
-To see the full example source files, see [LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs).

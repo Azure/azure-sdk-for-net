@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualNetworkLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualNetworkLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
             Argument.AssertNotNull(data, nameof(data));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<VirtualNetworkLinkResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualNetworkLinkResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
             Argument.AssertNotNull(data, nameof(data));
