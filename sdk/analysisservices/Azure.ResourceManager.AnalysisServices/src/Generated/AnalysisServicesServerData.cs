@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AnalysisServices
     {
         /// <summary> Initializes a new instance of AnalysisServicesServerData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The SKU of the Analysis Services resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public AnalysisServicesServerData(AzureLocation location, ResourceSku sku) : base(location)
+        /// <param name="analysisServicesSKU"> The SKU of the Analysis Services resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisServicesSKU"/> is null. </exception>
+        public AnalysisServicesServerData(AzureLocation location, ResourceSku analysisServicesSKU) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(analysisServicesSKU, nameof(analysisServicesSKU));
 
-            Sku = sku;
+            AnalysisServicesSKU = analysisServicesSKU;
         }
 
         /// <summary> Initializes a new instance of AnalysisServicesServerData. </summary>
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.AnalysisServices
         /// <param name="state"> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="serverFullName"> The full name of the Analysis Services resource. </param>
-        /// <param name="skuPropertiesSku"> The SKU of the Analysis Services resource. </param>
-        /// <param name="sku"> The SKU of the Analysis Services resource. </param>
-        internal AnalysisServicesServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, GatewayDetails gatewayDetails, IPv4FirewallSettings ipV4FirewallSettings, ConnectionMode? querypoolConnectionMode, ManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, State? state, ProvisioningState? provisioningState, string serverFullName, ResourceSku skuPropertiesSku, ResourceSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="analysisServicesServerSKU"> The SKU of the Analysis Services resource. </param>
+        /// <param name="analysisServicesSKU"> The SKU of the Analysis Services resource. </param>
+        internal AnalysisServicesServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, GatewayDetails gatewayDetails, IPv4FirewallSettings ipV4FirewallSettings, ConnectionMode? querypoolConnectionMode, ManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisServicesState? state, ProvisioningState? provisioningState, string serverFullName, ResourceSku analysisServicesServerSKU, ResourceSku analysisServicesSKU) : base(id, name, resourceType, systemData, tags, location)
         {
             AsAdministrators = asAdministrators;
             BackupBlobContainerUri = backupBlobContainerUri;
@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.AnalysisServices
             State = state;
             ProvisioningState = provisioningState;
             ServerFullName = serverFullName;
-            SkuPropertiesSku = skuPropertiesSku;
-            Sku = sku;
+            AnalysisServicesServerSKU = analysisServicesServerSKU;
+            AnalysisServicesSKU = analysisServicesSKU;
         }
 
         /// <summary> A collection of AS server administrators. </summary>
         internal ServerAdministrators AsAdministrators { get; set; }
         /// <summary> An array of administrator user identities. </summary>
-        public IList<string> AsAdministratorsMembers
+        public IList<string> AsAdministratorIdentities
         {
             get
             {
                 if (AsAdministrators is null)
                     AsAdministrators = new ServerAdministrators();
-                return AsAdministrators.Members;
+                return AsAdministrators.AsAdministratorIdentities;
             }
         }
 
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.AnalysisServices
         /// <summary> The server monitor mode for AS server. </summary>
         public ServerMonitorMode? ServerMonitorMode { get; set; }
         /// <summary> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </summary>
-        public State? State { get; }
+        public AnalysisServicesState? State { get; }
         /// <summary> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The full name of the Analysis Services resource. </summary>
         public string ServerFullName { get; }
         /// <summary> The SKU of the Analysis Services resource. </summary>
-        public ResourceSku SkuPropertiesSku { get; set; }
+        public ResourceSku AnalysisServicesServerSKU { get; set; }
         /// <summary> The SKU of the Analysis Services resource. </summary>
-        public ResourceSku Sku { get; set; }
+        public ResourceSku AnalysisServicesSKU { get; set; }
     }
 }

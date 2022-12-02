@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AnalysisServices.Models
 
         /// <summary> Initializes a new instance of GatewayListStatusLive. </summary>
         /// <param name="status"> Live message of list gateway. Status: 0 - Live. </param>
-        internal GatewayListStatusLive(Status? status)
+        internal GatewayListStatusLive(AnalysisServicesStatus? status)
         {
             Status = status;
         }
 
         /// <summary> Live message of list gateway. Status: 0 - Live. </summary>
-        public Status? Status { get; }
+        public AnalysisServicesStatus? Status { get; }
     }
 }

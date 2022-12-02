@@ -97,7 +97,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sqlvmtestrg5823/providers/Microsoft.Storage/storageAccounts/sqlvmteststorage7812?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sqlvmtestrg5823/providers/Microsoft.Storage/storageAccounts/sqlvmteststorage7812?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -124,7 +124,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Fri, 19 Aug 2022 02:52:36 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -139,7 +139,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -156,7 +156,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Fri, 19 Aug 2022 02:52:36 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -171,7 +171,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/3b42cc2c-0150-4392-8170-876f53cd0f33?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2536,7 +2536,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sqlvmtestrg5823/providers/Microsoft.Storage/storageAccounts/sqlvmteststorage8172?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sqlvmtestrg5823/providers/Microsoft.Storage/storageAccounts/sqlvmteststorage8172?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2563,7 +2563,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Fri, 19 Aug 2022 02:59:29 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -2578,7 +2578,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2595,7 +2595,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Fri, 19 Aug 2022 02:59:29 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -2610,7 +2610,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/32b75a26-bd89-47a9-978e-054a2d5acfd1?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -4975,7 +4975,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sqlvmtestrg5823/providers/Microsoft.Storage/storageAccounts/sqlvmteststorage66?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sqlvmtestrg5823/providers/Microsoft.Storage/storageAccounts/sqlvmteststorage66?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -5002,7 +5002,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Fri, 19 Aug 2022 03:06:27 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -5017,7 +5017,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -5034,7 +5034,7 @@
         "Content-Type": "text/plain; charset=utf-8",
         "Date": "Fri, 19 Aug 2022 03:06:27 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-05-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-09-01",
         "Pragma": "no-cache",
         "Retry-After": "17",
         "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
@@ -5049,7 +5049,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus/asyncoperations/a7383b63-5491-4788-b21f-0f039980d39d?monitor=true\u0026api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
