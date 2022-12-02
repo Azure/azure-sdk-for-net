@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -293,6 +294,54 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResource(x); });
         }
 
+        [RecordedTest]
+        public async Task ApiProfile()
+        {
+            var profileStr = File.ReadAllText(GetFileName("2020-09-01-hybrid.json")).TrimEnd();
+            var profile = BinaryData.FromString(profileStr);
+
+            var options = new ArmClientOptions();
+            options.ApiVersionProfile = profile;
+            var client = GetArmClient(options);
+
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            var resourceProviders = subscription.GetResourceProviders();
+            var subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
+            var resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.resources/resourceGroups");
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2019-10-01");
+
+            client.TryGetApiVersion("Microsoft.resources/subscriptions", out subscriptionApiVersion);
+            client.TryGetApiVersion("mIcrOsoft.resources/ResourceGroups", out resourceGroupApiVersion);
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2019-10-01");
+        }
+
+        [RecordedTest]
+        public async Task ApiProfileWithApiVersionOverride()
+        {
+            var profileStr = File.ReadAllText(GetFileName("2020-09-01-hybrid.json")).TrimEnd();
+            var profile = BinaryData.FromString(profileStr);
+
+            var options = new ArmClientOptions();
+            options.ApiVersionProfile = profile;
+            options.SetApiVersion(SubscriptionResource.ResourceType, "2021-01-01");
+            options.SetApiVersion("microsoft.resources/resourceGroups", "2021-01-01");
+            var client = GetArmClient(options);
+
+            client.TryGetApiVersion("Microsoft.resources/subscriptions", out var subscriptionApiVersion);
+            client.TryGetApiVersion("mIcrOsoft.resources/ResourceGroups", out var resourceGroupApiVersion);
+            Assert.AreEqual(subscriptionApiVersion, "2021-01-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
+
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            var resourceProviders = subscription.GetResourceProviders();
+            subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
+            resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.resources/resourceGroups");
+            Assert.AreEqual(subscriptionApiVersion, "2021-01-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
+        }
+
         private static HttpPipeline GetPipelineFromClient(ArmClient client)
         {
             var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);
@@ -310,6 +359,11 @@ namespace Azure.ResourceManager.Tests
             var policyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             policyField ??= pipeline.GetType().BaseType.GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             return (ReadOnlyMemory<HttpPipelinePolicy>)policyField.GetValue(pipeline);
+        }
+
+        private string GetFileName(string fileName)
+        {
+            return Path.Combine(TestContext.CurrentContext.TestDirectory, "Scenario", "TestAssets", "Profile", fileName);
         }
     }
 }

@@ -27,8 +27,7 @@ namespace Azure.ResourceManager
         private bool? _canUseTagResource;
 
         internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
-
-        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
         internal ConcurrentDictionary<string, string> NamespaceVersionCache { get; } = new ConcurrentDictionary<string, string>();
 
         /// <summary>
@@ -111,15 +110,43 @@ namespace Azure.ResourceManager
 
         private void CopyApiVersionOverrides(ArmClientOptions options)
         {
+            if (options.ApiVersionProfile != null)
+            {
+                // Refer to https://github.com/Azure/azure-rest-api-specs/tree/main/profile#file-structure for data structure.
+                var allProfile = options.ApiVersionProfile.ToObjectFromJson() as Dictionary<string, object>;
+                var armProfile = allProfile["resource-manager"] as Dictionary<string, object>;
+                foreach (var keyValuePair in armProfile)
+                {
+                    var namespaceName = keyValuePair.Key;
+                    if (!ResourceApiVersionCache.TryGetValue(namespaceName, out var apiVersionCache))
+                    {
+                        apiVersionCache = new Dictionary<string, string>();
+                        ResourceApiVersionCache.TryAdd(namespaceName, apiVersionCache);
+                    }
+                    foreach (var resourceTypeKeyValue in keyValuePair.Value as Dictionary<string, object>)
+                    {
+                        var apiVersion = resourceTypeKeyValue.Key;
+                        var resourceTypes = resourceTypeKeyValue.Value;
+                        foreach (var resourceType in resourceTypes as IList<object>)
+                        {
+                            var resourceTypeDict = resourceType as Dictionary<string, object>;
+                            var type = resourceTypeDict["resourceType"] as string;
+                            ApiVersionOverrides[$"{namespaceName}/{type}"] = apiVersion;
+                            apiVersionCache[type] = apiVersion;
+                        }
+                    }
+                }
+            }
+
             foreach (var keyValuePair in options.ResourceApiVersionOverrides)
             {
-                ApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
+                ApiVersionOverrides[keyValuePair.Key] = keyValuePair.Value;
                 if (!ResourceApiVersionCache.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
                 {
                     apiVersionCache = new Dictionary<string, string>();
                     ResourceApiVersionCache.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
                 }
-                apiVersionCache.Add(keyValuePair.Key.Type, keyValuePair.Value);
+                apiVersionCache[keyValuePair.Key.Type] = keyValuePair.Value;
             }
         }
 

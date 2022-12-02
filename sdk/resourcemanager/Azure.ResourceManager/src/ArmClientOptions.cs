@@ -23,6 +23,11 @@ namespace Azure.ResourceManager
         public ArmEnvironment? Environment { get; set; }
 
         /// <summary>
+        /// Gets or sets API version profile. See https://github.com/Azure/azure-rest-api-specs/tree/main/profile#file-structure for data structure.
+        /// </summary>
+        public BinaryData ApiVersionProfile { get; set; }
+
+        /// <summary>
         /// Sets the api version to use for a given resource type.
         /// To find which API Versions are available in your environment you can use the <see cref="ResourceProviderResource.Get"/> method
         /// for the provider namespace you are interested in.
