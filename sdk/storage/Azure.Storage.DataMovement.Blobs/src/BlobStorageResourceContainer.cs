@@ -60,12 +60,13 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resoruce based on this respective resource.
         /// </summary>
         /// <param name="encodedPath"></param>
+        /// <param name="length"></param>
         /// <param name="type"></param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        internal StorageResource GetChildStorageResource(string encodedPath, BlobType type = BlobType.Block)
+        internal StorageResource GetChildStorageResource(string encodedPath, long? length, BlobType type = BlobType.Block)
         {
             // Recreate the blobName using the existing parent directory path
             if (type == BlobType.Append)
@@ -73,6 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(encodedPath);
                 return new AppendBlobStorageResource(
                     client,
+                    length,
                     new AppendBlobStorageResourceOptions()
                     {
                         // TODO: change options bag to be applicable to child resources
@@ -95,6 +97,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 PageBlobClient client = _blobContainerClient.GetPageBlobClient(encodedPath);
                 return new PageBlobStorageResource(
                     client,
+                    length,
                     new PageBlobStorageResourceOptions()
                     {
                         // TODO: change options bag to be applicable to child resources
@@ -117,6 +120,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(encodedPath);
                 return new BlockBlobStorageResource(
                     client,
+                    length,
                     new BlockBlobStorageResourceOptions()
                     {
                         CopyOptions = _options?.CopyOptions,
@@ -149,6 +153,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 yield return GetChildStorageResource(
                     blobItem.Name,
+                    blobItem.Properties.ContentLength,
                     blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block);
             }
         }

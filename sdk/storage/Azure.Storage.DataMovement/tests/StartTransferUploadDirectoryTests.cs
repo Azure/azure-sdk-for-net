@@ -180,7 +180,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(localDirectory, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -222,7 +221,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(localDirectory, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -266,7 +264,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(folder, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -309,7 +306,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(folder, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -356,7 +352,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(folder, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -433,7 +428,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(folder, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -481,7 +475,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(folder, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -535,7 +528,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(folder, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
         #endregion
@@ -553,21 +545,25 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 List<string> files = new List<string>();
-                string openChild = await CreateRandomFileAsync(folder);
-                string lockedChild = await CreateRandomFileAsync(folder);
+                string file1 = await CreateRandomFileAsync(folder);
+                string file2 = await CreateRandomFileAsync(folder);
+                files.Add(file1);
+                files.Add(file2);
 
                 string openSubfolder = CreateRandomDirectory(folder);
-                string openSubchild = await CreateRandomFileAsync(openSubfolder);
+                string file3 = await CreateRandomFileAsync(openSubfolder);
+                files.Add(file3);
 
                 string lockedSubfolder = CreateRandomDirectory(folder);
-                string lockedSubchild = await CreateRandomFileAsync(lockedSubfolder);
+                string file4 = await CreateRandomFileAsync(lockedSubfolder);
+                files.Add(file4);
 
                 ContainerTransferOptions options = new ContainerTransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Overwrite
                 };
-                BlobClient blobClient = test.Container.GetBlobClient(dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                await blobClient.UploadAsync(openChild);
+                BlobClient blobClient = test.Container.GetBlobClient(dirName + "/" + file1.Substring(folder.Length + 1).Replace('\\', '/'));
+                await blobClient.UploadAsync(file1);
 
                 // Act
                 await UploadBlobDirectoryAndVerify(
@@ -589,7 +585,6 @@ namespace Azure.Storage.DataMovement.Tests
             finally
             {
                 Directory.Delete(folder, true);
-                await test.Container.DeleteIfExistsAsync();
             }
         }
 
@@ -600,43 +595,51 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            StorageResourceContainer destinationResource = new BlobDirectoryStorageResourceContainer(test.Container, dirName);
-
             string folder = CreateRandomDirectory(Path.GetTempPath());
-            StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(folder);
-
-            string openChild = await CreateRandomFileAsync(folder);
-            string lockedChild = await CreateRandomFileAsync(folder);
-
-            string openSubfolder = CreateRandomDirectory(folder);
-            string openSubchild = await CreateRandomFileAsync(openSubfolder);
-
-            string lockedSubfolder = CreateRandomDirectory(folder);
-            string lockedSubchild = await CreateRandomFileAsync(lockedSubfolder);
-
-            BlobClient blobClient = test.Container.GetBlobClient(dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
-            await blobClient.UploadAsync(openChild);
-
-            ContainerTransferOptions options = new ContainerTransferOptions();
-
-            // Act
-            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            try
             {
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
-                MaximumConcurrency = 1,
-            };
-            TransferManager transferManager = new TransferManager(managerOptions);
-            await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
+                List<string> files = new List<string>();
+                string file1 = await CreateRandomFileAsync(folder);
+                string file2 = await CreateRandomFileAsync(folder);
+                files.Add(file1);
+                files.Add(file2);
 
-            // Assert - Check Response
+                string openSubfolder = CreateRandomDirectory(folder);
+                string file3 = await CreateRandomFileAsync(openSubfolder);
+                files.Add(file3);
 
-            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                .Select((BlobItem blob) => blob.Name).ToList();
+                string lockedSubfolder = CreateRandomDirectory(folder);
+                string file4 = await CreateRandomFileAsync(lockedSubfolder);
+                files.Add(file4);
 
-            Assert.AreEqual(4, blobs.Count());
+                ContainerTransferOptions options = new ContainerTransferOptions()
+                {
+                    CreateMode = StorageResourceCreateMode.Overwrite
+                };
+                BlobClient blobClient = test.Container.GetBlobClient(dirName + "/" + file1.Substring(folder.Length + 1).Replace('\\', '/'));
+                await blobClient.UploadAsync(file1);
 
-            // Cleanup
-            Directory.Delete(folder, true);
+                // Act
+                await UploadBlobDirectoryAndVerify(
+                    test.Container,
+                    folder,
+                    files,
+                    destinationPrefix: dirName,
+                    waitTimeInSec: 10);
+
+                // Assert - Check Response
+                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                        .Select((BlobItem blob) => blob.Name).ToList();
+                Assert.AreEqual(4, blobs.Count());
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.StackTrace);
+            }
+            finally
+            {
+                Directory.Delete(folder, true);
+            }
         }
         #endregion DirectoryUploadTests
     }

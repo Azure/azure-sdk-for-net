@@ -79,9 +79,6 @@ namespace Azure.Storage.DataMovement
                 {
                     //Debugger.Break();
                 }
-                // Throw an InvalidOperationException instead of using
-                // Debug.Assert because that brings down nUnit immediately
-                //throw new InvalidOperationException("Data Transfer is not completed");
             }
         }
 

@@ -57,11 +57,13 @@ namespace Azure.Storage.DataMovement
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
         /// <param name="partNumber"></param>
+        /// <param name="length"></param>
         public ServiceToServiceJobPart(
             ServiceToServiceTransferJob job,
             int partNumber,
             StorageResource sourceResource,
-            StorageResource destinationResource)
+            StorageResource destinationResource,
+            long? length)
             : base(job._dataTransfer,
                   partNumber,
                   sourceResource,
@@ -75,7 +77,8 @@ namespace Azure.Storage.DataMovement
                   job.GetJobPartStatus(),
                   job.TransferStatusEventHandler,
                   job.TransferFailedEventHandler,
-                  job._cancellationTokenSource)
+                  job._cancellationTokenSource,
+                  length)
         { }
 
         public override async Task ProcessPartToChunkAsync()
@@ -90,17 +93,20 @@ namespace Azure.Storage.DataMovement
             {
                 // Attempt to get the length, it's possible the file could
                 // not be accesible (or does not exist).
-                long? fileLength = default;
-                try
+                long? fileLength = _sourceResource.Length;
+                if (!fileLength.HasValue)
                 {
-                    StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
-                    fileLength = properties.ContentLength;
-                }
-                catch (Exception ex)
-                {
-                    // TODO: logging when given the event handler
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
-                    return;
+                    try
+                    {
+                        StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                        fileLength = properties.ContentLength;
+                    }
+                    catch (Exception ex)
+                    {
+                        // TODO: logging when given the event handler
+                        await InvokeFailedArg(ex).ConfigureAwait(false);
+                        return;
+                    }
                 }
 
                 string operationName = $"{nameof(TransferManager.StartTransferAsync)}";

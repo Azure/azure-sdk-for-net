@@ -47,6 +47,13 @@ namespace Azure.Storage.DataMovement
         public override bool IsContainer => false;
 
         /// <summary>
+        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
+        ///
+        /// Will return default if the length was not set by a GetStorageResources API call.
+        /// </summary>
+        public abstract long? Length { get; }
+
+        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position">

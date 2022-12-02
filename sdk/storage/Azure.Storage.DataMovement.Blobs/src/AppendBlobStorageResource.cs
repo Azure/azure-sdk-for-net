@@ -24,6 +24,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         private AppendBlobClient _blobClient;
         private AppendBlobStorageResourceOptions _options;
+        private long? _length;
 
         /// <summary>
         /// Returns URL
@@ -59,6 +60,13 @@ namespace Azure.Storage.DataMovement.Blobs
         public override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
+        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
+        ///
+        /// Will return default if the length was not set by a GetStorageResources API call.
+        /// </summary>
+        public override long? Length => _length;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobClient"></param>
@@ -67,6 +75,21 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _blobClient = blobClient;
             _options = options;
+        }
+
+        /// <summary>
+        /// Internal Constructor for constructing the resource retrieved by a GetStorageResources
+        /// </summary>
+        /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
+        /// <param name="length">The content length of the blob</param>
+        /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
+        internal AppendBlobStorageResource(
+            AppendBlobClient blobClient,
+            long? length,
+            AppendBlobStorageResourceOptions options = default)
+            : this(blobClient, options)
+        {
+            _length = length;
         }
 
         /// <summary>

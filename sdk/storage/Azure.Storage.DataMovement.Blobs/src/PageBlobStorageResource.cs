@@ -24,6 +24,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         private PageBlobClient _blobClient;
         private PageBlobStorageResourceOptions _options;
+        private long? _length;
 
         /// <summary>
         /// Returns URL
@@ -59,6 +60,13 @@ namespace Azure.Storage.DataMovement.Blobs
         public override long MaxChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
 
         /// <summary>
+        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
+        ///
+        /// Will return default if the length was not set by a GetStorageResources API call.
+        /// </summary>
+        public override long? Length => _length;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobClient"></param>
@@ -67,6 +75,21 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _blobClient = blobClient;
             _options = options;
+        }
+
+        /// <summary>
+        /// Internal Constructor for constructing the resource retrieved by a GetStorageResources
+        /// </summary>
+        /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
+        /// <param name="length">The content length of the blob</param>
+        /// <param name="options">Options for the storage resource. See <see cref="PageBlobStorageResourceOptions"/>.</param>
+        internal PageBlobStorageResource(
+            PageBlobClient blobClient,
+            long? length,
+            PageBlobStorageResourceOptions options = default)
+            : this(blobClient, options)
+        {
+            _length = length;
         }
 
         /// <summary>

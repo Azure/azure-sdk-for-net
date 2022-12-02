@@ -67,10 +67,11 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNullOrEmpty(directoryPrefix, nameof(directoryPrefix));
             _blobContainerClient = containerClient;
             _directoryPrefix = directoryPrefix;
+            _options = options;
+
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_blobContainerClient.Uri);
             blobUriBuilder.BlobName = string.Join("/", _directoryPrefix);
             _uri = blobUriBuilder.ToUri();
-            _options = options;
         }
 
         /// <summary>

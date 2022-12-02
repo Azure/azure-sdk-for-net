@@ -53,11 +53,13 @@ namespace Azure.Storage.DataMovement
         /// <param name="sourceResource"></param>
         /// <param name="destinationResource"></param>
         /// <param name="partNumber"></param>
+        /// <param name="length"></param>
         public UriToStreamJobPart(
             UriToStreamTransferJob job,
             int partNumber,
             StorageResource sourceResource,
-            StorageResource destinationResource)
+            StorageResource destinationResource,
+            long? length)
             : base(job._dataTransfer,
                   partNumber,
                   sourceResource,
@@ -71,7 +73,8 @@ namespace Azure.Storage.DataMovement
                   job.GetJobPartStatus(),
                   job.TransferStatusEventHandler,
                   job.TransferFailedEventHandler,
-                  job._cancellationTokenSource)
+                  job._cancellationTokenSource,
+                  length)
         { }
 
         /// <summary>
@@ -95,28 +98,122 @@ namespace Azure.Storage.DataMovement
 
             try
             {
-                Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadStreamAsync(
-                    position: 0,
-                    length: _initialTransferSize,
-                    _cancellationTokenSource.Token);
+                if (!_sourceResource.Length.HasValue)
+                {
+                    await UnknownDownloadInternal().ConfigureAwait(false);
+                }
+                else
+                {
+                    await LengthKnownDownloadInternal().ConfigureAwait(false);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // The file either does not exist any more, got moved, or renamed.
+                await InvokeFailedArg(ex).ConfigureAwait(false);
+            }
+        }
 
-                ReadStreamStorageResourceResult initialResult = default;
-                try
+        internal async Task UnknownDownloadInternal()
+        {
+            Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadStreamAsync(
+                        position: 0,
+                        length: _initialTransferSize,
+                        _cancellationTokenSource.Token);
+
+            ReadStreamStorageResourceResult initialResult = default;
+            try
+            {
+                initialResult = await initialTask.ConfigureAwait(false);
+            }
+            catch // TODO: only catch initial range error.
+            {
+                // Range not accepted, we need to attempt to use a default range
+                initialResult = await _sourceResource.
+                    ReadStreamAsync(cancellationToken: _cancellationTokenSource.Token)
+                    .ConfigureAwait(false);
+            }
+            // If the initial request returned no content (i.e., a 304),
+            // we'll pass that back to the user immediately
+            long initialLength = initialResult.Properties.ContentLength;
+            if (initialResult == default || initialLength == 0)
+            {
+                // We just need to at minimum create the file
+                await CopyToStreamInternal(
+                    offset: 0,
+                    sourceLength: 0,
+                    source: default,
+                    expectedLength: 0).ConfigureAwait(false);
+                // Queue the work to end the download
+                await QueueChunk(
+                    async () =>
+                    await CompleteFileDownload().ConfigureAwait(false))
+                    .ConfigureAwait(false);
+                return;
+            }
+
+            // TODO: Change to use buffer instead of converting to stream
+            long totalLength = ParseRangeTotalLength(initialResult.ContentRange);
+            await CopyToStreamInternal(
+                offset: 0,
+                sourceLength: initialLength,
+                source: initialResult.Content,
+                expectedLength: totalLength).ConfigureAwait(false);
+            ReportBytesWritten(initialLength);
+            if (totalLength == initialLength)
+            {
+                // Complete download since it was done in one go
+                await QueueChunk(
+                    async () =>
+                    await CompleteFileDownload().ConfigureAwait(false))
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                // Set rangeSize
+                long rangeSize = CalculateBlockSize(totalLength);
+
+                // Get list of ranges of the blob
+                IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
+                // Create Download Chunk event handler to manage when the ranges finish downloading
+                _downloadChunkHandler = GetDownloadChunkHandler(
+                    currentTranferred: initialLength,
+                    expectedLength: totalLength,
+                    ranges: ranges,
+                    jobPart: this);
+
+                // Fill the queue with tasks to download each of the remaining
+                // ranges in the blob
+                foreach (HttpRange httpRange in ranges)
                 {
-                    initialResult = await initialTask.ConfigureAwait(false);
+                    // Add the next Task (which will start the download but
+                    // return before it's completed downloading)
+                    await QueueChunk(async () =>
+                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false)).ConfigureAwait(false);
                 }
-                catch // TODO: only catch initial range error.
-                {
-                    // Range not accepted, we need to attempt to use a default range
-                    initialResult = await _sourceResource.
-                        ReadStreamAsync(cancellationToken: _cancellationTokenSource.Token)
-                        .ConfigureAwait(false);
-                }
+            }
+        }
+
+        internal async Task LengthKnownDownloadInternal()
+        {
+            long totalLength = _sourceResource.Length.Value;
+            if (_initialTransferSize <= totalLength)
+            {
+                // To prevent requesting a range that is invalid when
+                // we already know the length we can just make one get blob request.
+                ReadStreamStorageResourceResult result = await _sourceResource.
+                    ReadStreamAsync(cancellationToken: _cancellationTokenSource.Token)
+                    .ConfigureAwait(false);
 
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
-                long initialLength = initialResult.Properties.ContentLength;
-                if (initialResult == default || initialLength == 0)
+                long initialLength = result.Properties.ContentLength;
+                if (result == default || initialLength == 0)
                 {
                     // We just need to at minimum create the file
                     await CopyToStreamInternal(
@@ -131,53 +228,30 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                     return;
                 }
-
-                // TODO: Change to use buffer instead of converting to stream
-                long totalLength = ParseRangeTotalLength(initialResult.ContentRange);
-                await CopyToStreamInternal(
-                    offset: 0,
-                    sourceLength: initialLength,
-                    source: initialResult.Content,
-                    expectedLength: totalLength).ConfigureAwait(false);
-                ReportBytesWritten(initialLength);
-                if (totalLength == initialLength)
-                {
-                    // Complete download since it was done in one go
-                    await QueueChunk(
-                        async () =>
-                        await CompleteFileDownload().ConfigureAwait(false))
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    // Set rangeSize
-                    long rangeSize = CalculateBlockSize(totalLength);
-
-                    // Get list of ranges of the blob
-                    IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
-                    // Create Download Chunk event handler to manage when the ranges finish downloading
-                    _downloadChunkHandler = GetDownloadChunkHandler(
-                        currentTranferred: initialLength,
-                        expectedLength: totalLength,
-                        ranges: ranges,
-                        jobPart: this);
-
-                    // Fill the queue with tasks to download each of the remaining
-                    // ranges in the blob
-                    foreach (HttpRange httpRange in ranges)
-                    {
-                        // Add the next Task (which will start the download but
-                        // return before it's completed downloading)
-                        await QueueChunk(async () =>
-                            await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false)).ConfigureAwait(false);
-                    }
-                }
             }
-            // TODO: Expand Exception Handling
-            catch (Exception ex)
+            else
             {
-                // The file either does not exist any more, got moved, or renamed.
-                await InvokeFailedArg(ex).ConfigureAwait(false);
+                // Set rangeSize
+                long rangeSize = CalculateBlockSize(totalLength);
+
+                // Get list of ranges of the blob
+                IList<HttpRange> ranges = GetRangesList(0, totalLength, rangeSize);
+                // Create Download Chunk event handler to manage when the ranges finish downloading
+                _downloadChunkHandler = GetDownloadChunkHandler(
+                    currentTranferred: 0,
+                    expectedLength: totalLength,
+                    ranges: ranges,
+                    jobPart: this);
+
+                // Fill the queue with tasks to download each of the remaining
+                // ranges in the blob
+                foreach (HttpRange httpRange in ranges)
+                {
+                    // Add the next Task (which will start the download but
+                    // return before it's completed downloading)
+                    await QueueChunk(async () =>
+                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false)).ConfigureAwait(false);
+                }
             }
         }
 
@@ -247,6 +321,11 @@ namespace Azure.Storage.DataMovement
                     options: default,
                     cancellationToken: _cancellationTokenSource.Token).ConfigureAwait(false);
             }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
+            }
             catch (Exception ex)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
@@ -268,6 +347,11 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
+            }
             catch (Exception ex)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
@@ -282,6 +366,11 @@ namespace Azure.Storage.DataMovement
             try
             {
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

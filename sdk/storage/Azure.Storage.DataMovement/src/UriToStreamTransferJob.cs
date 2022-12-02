@@ -99,7 +99,8 @@ namespace Azure.Storage.DataMovement
                         job: this,
                         partNumber: partNumber,
                         sourceResource: resource,
-                        destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName));
+                        destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName),
+                        length: resource.Length);
                     _jobParts.Add(part);
                     yield return part;
                     partNumber++;

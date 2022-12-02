@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
         private BlockBlobStorageResourceOptions _options;
+        private long? _length;
 
         /// <summary>
         /// Returns URL
@@ -64,6 +65,13 @@ namespace Azure.Storage.DataMovement.Blobs
         public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
+        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
+        ///
+        /// Will return default if the length was not set by a GetStorageResources API call.
+        /// </summary>
+        public override long? Length => _length;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="blobClient"></param>
@@ -75,6 +83,21 @@ namespace Azure.Storage.DataMovement.Blobs
             _blobClient = blobClient;
             _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
+        }
+
+        /// <summary>
+        /// Internal Constructor for constructing the resource retrieved by a GetStorageResources
+        /// </summary>
+        /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
+        /// <param name="length">The content length of the blob</param>
+        /// <param name="options">Options for the storage resource. See <see cref="BlockBlobStorageResourceOptions"/>.</param>
+        internal BlockBlobStorageResource(
+            BlockBlobClient blobClient,
+            long? length,
+            BlockBlobStorageResourceOptions options = default)
+            : this(blobClient, options)
+        {
+            _length = length;
         }
 
         /// <summary>

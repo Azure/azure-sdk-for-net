@@ -87,6 +87,12 @@ namespace Azure.Storage.DataMovement
         public StorageTransferStatus JobPartStatus { get; set; }
 
         /// <summary>
+        /// Optional. If the length is known, we log it instead of doing a GetProperties call on the
+        /// storage resource. The length obtained during a listing call.
+        /// </summary>
+        internal long? Length;
+
+        /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
         public SyncAsyncEventHandler<TransferStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
@@ -128,7 +134,8 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
-            CancellationTokenSource cancellationTokenSource)
+            CancellationTokenSource cancellationTokenSource,
+            long? length = default)
         {
             JobPartStatus = StorageTransferStatus.Queued;
             PartNumber = partNumber;
@@ -158,6 +165,8 @@ namespace Azure.Storage.DataMovement
                     maximumTransferChunkSize.Value,
                     _destinationResource.MaxChunkSize);
             }
+
+            Length = length;
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)

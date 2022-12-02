@@ -475,7 +475,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
-                    if (args.Exception.Message == "500")
+                    // TODO: change the Exception if it's a RequestFailedException and then look at the exception.StatusCode
+                    if (args.Exception.Message.Contains("500"))
                     {
                         Console.WriteLine("We're getting throttled stop trying and lets try later");
                     }

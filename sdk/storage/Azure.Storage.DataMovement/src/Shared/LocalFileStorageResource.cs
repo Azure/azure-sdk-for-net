@@ -52,6 +52,13 @@ namespace Azure.Storage.DataMovement
         public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
+        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
+        ///
+        /// Will return default if the length was not set by a GetStorageResources API call.
+        /// </summary>
+        public override long? Length => default;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="path"></param>
