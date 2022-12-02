@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.Communication.JobRouter
         {
             writer.WriteStartObject();
             writer.WritePropertyName("functionUri");
-            writer.WriteStringValue(FunctionUri);
+            writer.WriteStringValue(FunctionUri.AbsoluteUri);
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential");
@@ -29,14 +30,14 @@ namespace Azure.Communication.JobRouter
 
         internal static FunctionRule DeserializeFunctionRule(JsonElement element)
         {
-            string functionUri = default;
+            Uri functionUri = default;
             Optional<FunctionRuleCredential> credential = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("functionUri"))
                 {
-                    functionUri = property.Value.GetString();
+                    functionUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("credential"))

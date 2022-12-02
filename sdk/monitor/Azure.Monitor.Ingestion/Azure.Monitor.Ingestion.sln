@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32721.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{2833821A-4FC4-41ED-B78B-B3A15ED47AD2}") = "Azure.Monitor.Ingestion.Perf", "perf\Azure.Monitor.Ingestion.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion.Perf", "perf\Azure.Monitor.Ingestion.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
 EndProject
-Project("{2833821A-4FC4-41ED-B78B-B3A15ED47AD2}") = "Azure.Monitor.Ingestion.Stress", "stress\Azure.Monitor.Ingestion.Stress.csproj", "{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion.Stress", "stress\Azure.Monitor.Ingestion.Stress.csproj", "{47E3BC66-5C4F-47CD-A37B-A973E54BCBA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.Ingestion", "src\Azure.Monitor.Ingestion.csproj", "{A1B4A302-A3DB-403E-9057-6228755578DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion", "src\Azure.Monitor.Ingestion.csproj", "{A1B4A302-A3DB-403E-9057-6228755578DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.Ingestion.Tests", "tests\Azure.Monitor.Ingestion.Tests.csproj", "{65C26497-57E3-44AE-A8A8-93E7671BABD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.Ingestion.Tests", "tests\Azure.Monitor.Ingestion.Tests.csproj", "{65C26497-57E3-44AE-A8A8-93E7671BABD2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{8005C2EF-F4B6-4DB0-BAD5-BB5A3076ED65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,30 +21,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B0C276D1-2930-4887-B29A-D1A33E7009A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0C276D1-2930-4887-B29A-D1A33E7009A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0C276D1-2930-4887-B29A-D1A33E7009A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0C276D1-2930-4887-B29A-D1A33E7009A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E9A77AC-792A-4432-8320-ACFD46730401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E9A77AC-792A-4432-8320-ACFD46730401}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E9A77AC-792A-4432-8320-ACFD46730401}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E9A77AC-792A-4432-8320-ACFD46730401}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECC730C1-4AEA-420C-916A-66B19B79E4DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4241C1F-A53D-474C-9E4E-075054407E74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4241C1F-A53D-474C-9E4E-075054407E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4241C1F-A53D-474C-9E4E-075054407E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4241C1F-A53D-474C-9E4E-075054407E74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA8BD3F1-8616-47B6-974C-7576CDF4717E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA8BD3F1-8616-47B6-974C-7576CDF4717E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA8BD3F1-8616-47B6-974C-7576CDF4717E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA8BD3F1-8616-47B6-974C-7576CDF4717E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85677AD3-C214-42FA-AE6E-49B956CAC8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85677AD3-C214-42FA-AE6E-49B956CAC8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85677AD3-C214-42FA-AE6E-49B956CAC8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85677AD3-C214-42FA-AE6E-49B956CAC8DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{30C5FF85-655A-49FC-A324-16438130FF3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{30C5FF85-655A-49FC-A324-16438130FF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30C5FF85-655A-49FC-A324-16438130FF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,6 +41,10 @@ Global
 		{65C26497-57E3-44AE-A8A8-93E7671BABD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C26497-57E3-44AE-A8A8-93E7671BABD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65C26497-57E3-44AE-A8A8-93E7671BABD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8005C2EF-F4B6-4DB0-BAD5-BB5A3076ED65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8005C2EF-F4B6-4DB0-BAD5-BB5A3076ED65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8005C2EF-F4B6-4DB0-BAD5-BB5A3076ED65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8005C2EF-F4B6-4DB0-BAD5-BB5A3076ED65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

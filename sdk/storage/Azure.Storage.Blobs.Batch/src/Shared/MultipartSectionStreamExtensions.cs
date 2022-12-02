@@ -34,7 +34,9 @@ namespace Azure.Core.Http.Multipart
             MediaTypeHeaderValue.TryParse(section.ContentType, out sectionMediaType);
 
             Encoding streamEncoding = sectionMediaType?.Encoding;
+#pragma warning disable SYSLIB0001 // 'Encoding.UTF7' is obsolete: 'The UTF-7 encoding is insecure and should not be used. Consider using UTF-8 instead.' - disabled because this code handles exactly that
             if (streamEncoding == null || streamEncoding == Encoding.UTF7)
+#pragma warning restore SYSLIB0001
             {
                 streamEncoding = Encoding.UTF8;
             }

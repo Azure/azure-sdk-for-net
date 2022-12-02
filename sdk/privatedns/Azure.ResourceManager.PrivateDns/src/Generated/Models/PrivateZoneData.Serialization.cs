@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<long> numberOfVirtualNetworkLinks = default;
             Optional<long> maxNumberOfVirtualNetworkLinksWithRegistration = default;
             Optional<long> numberOfVirtualNetworkLinksWithRegistration = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
             Optional<string> internalId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.PrivateDns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            privateDnsProvisioningState = new PrivateDnsProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("internalId"))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.PrivateDns
                     continue;
                 }
             }
-            return new PrivateZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(provisioningState), internalId.Value);
+            return new PrivateZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value);
         }
     }
 }

@@ -20,11 +20,14 @@ namespace Azure.Communication.Email.Tests
 
         [Test]
         [SyncOnly]
-        public void SendEmail()
+        [TestCaseSource(nameof(SetRecipientAddressState))]
+        public void SendEmail(
+            bool setTo, bool setCc, bool setBcc)
         {
             EmailClient emailClient = CreateEmailClient();
+            EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            SendEmailResult response = SendEmail(emailClient);
+            SendEmailResult response = SendEmail(emailClient, emailRecipients);
 
             Assert.IsNotNull(response);
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.MessageId));
@@ -33,11 +36,14 @@ namespace Azure.Communication.Email.Tests
 
         [Test]
         [AsyncOnly]
-        public async Task SendEmailAsync()
+        [TestCaseSource(nameof(SetRecipientAddressState))]
+        public async Task SendEmailAsync(
+            bool setTo, bool setCc, bool setBcc)
         {
             EmailClient emailClient = CreateEmailClient();
+            EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            SendEmailResult response = await SendEmailAsync(emailClient);
+            SendEmailResult response = await SendEmailAsync(emailClient, emailRecipients);
 
             Assert.IsNotNull(response);
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.MessageId));
@@ -46,11 +52,14 @@ namespace Azure.Communication.Email.Tests
 
         [Test]
         [SyncOnly]
-        public void GetSendStatus()
+        [TestCaseSource(nameof(SetRecipientAddressState) )]
+        public void GetSendStatus(
+            bool setTo, bool setCc, bool setBcc)
         {
             EmailClient emailClient = CreateEmailClient();
+            EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            SendEmailResult response = SendEmail(emailClient);
+            SendEmailResult response = SendEmail(emailClient, emailRecipients);
 
             Assert.IsNotNull(response);
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.MessageId));
@@ -64,11 +73,14 @@ namespace Azure.Communication.Email.Tests
 
         [Test]
         [AsyncOnly]
-        public async Task GetSendStatusAsync()
+        [TestCaseSource(nameof(SetRecipientAddressState))]
+        public async Task GetSendStatusAsync(
+            bool setTo, bool setCc, bool setBcc)
         {
             EmailClient emailClient = CreateEmailClient();
+            EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            SendEmailResult response = await SendEmailAsync(emailClient);
+            SendEmailResult response = await SendEmailAsync(emailClient, emailRecipients);
 
             Assert.IsNotNull(response);
             Assert.IsFalse(string.IsNullOrWhiteSpace(response.MessageId));
@@ -80,7 +92,7 @@ namespace Azure.Communication.Email.Tests
             Console.WriteLine(messageStatusResponse.Status);
         }
 
-        private Response<SendEmailResult> SendEmail(EmailClient emailClient)
+        private Response<SendEmailResult> SendEmail(EmailClient emailClient, EmailRecipients emailRecipients)
         {
             var emailContent = new EmailContent("subject");
             emailContent.PlainText = "Test";
@@ -88,13 +100,13 @@ namespace Azure.Communication.Email.Tests
             var emailMessage = new EmailMessage(
                 TestEnvironment.SenderAddress,
                 emailContent,
-                new EmailRecipients(new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "ToAddress" } }));
+                emailRecipients);
 
             Response<SendEmailResult>? response = emailClient.Send(emailMessage);
             return response;
         }
 
-        private async Task<Response<SendEmailResult>> SendEmailAsync(EmailClient emailClient)
+        private async Task<Response<SendEmailResult>> SendEmailAsync(EmailClient emailClient, EmailRecipients emailRecipients)
         {
             var emailContent = new EmailContent("subject");
             emailContent.PlainText = "Test";
@@ -102,10 +114,45 @@ namespace Azure.Communication.Email.Tests
             var emailMessage = new EmailMessage(
                 TestEnvironment.SenderAddress,
                 emailContent,
-                new EmailRecipients(new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "ToAddress" } }));
+                emailRecipients);
 
             Response<SendEmailResult>? response = await emailClient.SendAsync(emailMessage);
             return response;
+        }
+
+        private static IEnumerable<TestCaseData> SetRecipientAddressState()
+        {
+            yield return new TestCaseData(true, false, false);
+            yield return new TestCaseData(false, true, false);
+            yield return new TestCaseData(false, false, true);
+            yield return new TestCaseData(false, true, true);
+            yield return new TestCaseData(true, false, true);
+            yield return new TestCaseData(true, true, false);
+            yield return new TestCaseData(true, true, true);
+        }
+
+        private EmailRecipients GetRecipients(bool setTo, bool setCc, bool setBcc)
+        {
+            List<EmailAddress>? toEmailAddressList = null;
+            List<EmailAddress>? ccEmailAddressList = null;
+            List<EmailAddress>? bccEmailAddressList = null;
+
+            if (setTo)
+            {
+                toEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "ToAddress" } };
+            }
+
+            if (setCc)
+            {
+                ccEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "CcAddress" } };
+            }
+
+            if (setBcc)
+            {
+                bccEmailAddressList = new List<EmailAddress> { new EmailAddress(TestEnvironment.RecipientAddress) { DisplayName = "BccAddress" } };
+            }
+
+            return new EmailRecipients(toEmailAddressList, ccEmailAddressList, bccEmailAddressList);
         }
     }
 }

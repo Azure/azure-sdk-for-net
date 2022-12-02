@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-11-29)
+
+This package is the first stable release of the Microsoft Azure Operational Insights management client library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `OperationalInsights` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected all acronyms that don't follow [.NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters that end with units.
+- Optimized the name of some models and functions.
 
 ## 1.0.0-beta.1 (2022-09-22)
 
