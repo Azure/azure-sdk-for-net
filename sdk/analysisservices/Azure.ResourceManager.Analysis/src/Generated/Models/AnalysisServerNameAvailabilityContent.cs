@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// Details of server name request body.
-    /// Serialized Name: CheckServerNameAvailabilityParameters
-    /// </summary>
+    /// <summary> Details of server name request body. </summary>
     public partial class AnalysisServerNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.Analysis.Models
         {
         }
 
-        /// <summary>
-        /// Name for checking availability.
-        /// Serialized Name: CheckServerNameAvailabilityParameters.name
-        /// </summary>
+        /// <summary> Name for checking availability. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The resource type of azure analysis services.
-        /// Serialized Name: CheckServerNameAvailabilityParameters.type
-        /// </summary>
+        /// <summary> The resource type of azure analysis services. </summary>
         public string ResourceType { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// An array of firewall rules.
-    /// Serialized Name: IPv4FirewallSettings
-    /// </summary>
+    /// <summary> An array of firewall rules. </summary>
     public partial class AnalysisIPv4FirewallSettings
     {
         /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
-        /// <param name="firewallRules">
-        /// An array of firewall rules.
-        /// Serialized Name: IPv4FirewallSettings.firewallRules
-        /// </param>
-        /// <param name="isPowerBIServiceEnabled">
-        /// The indicator of enabling PBI service.
-        /// Serialized Name: IPv4FirewallSettings.enablePowerBIService
-        /// </param>
+        /// <param name="firewallRules"> An array of firewall rules. </param>
+        /// <param name="isPowerBIServiceEnabled"> The indicator of enabling PBI service. </param>
         internal AnalysisIPv4FirewallSettings(IList<AnalysisIPv4FirewallRule> firewallRules, bool? isPowerBIServiceEnabled)
         {
             FirewallRules = firewallRules;
             IsPowerBIServiceEnabled = isPowerBIServiceEnabled;
         }
 
-        /// <summary>
-        /// An array of firewall rules.
-        /// Serialized Name: IPv4FirewallSettings.firewallRules
-        /// </summary>
+        /// <summary> An array of firewall rules. </summary>
         public IList<AnalysisIPv4FirewallRule> FirewallRules { get; }
-        /// <summary>
-        /// The indicator of enabling PBI service.
-        /// Serialized Name: IPv4FirewallSettings.enablePowerBIService
-        /// </summary>
+        /// <summary> The indicator of enabling PBI service. </summary>
         public bool? IsPowerBIServiceEnabled { get; set; }
     }
 }

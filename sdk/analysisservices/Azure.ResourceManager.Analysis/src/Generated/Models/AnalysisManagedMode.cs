@@ -11,10 +11,7 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// The managed mode of the server (0 = not managed, 1 = managed).
-    /// Serialized Name: ManagedMode
-    /// </summary>
+    /// <summary> The managed mode of the server (0 = not managed, 1 = managed). </summary>
     public readonly partial struct AnalysisManagedMode : IEquatable<AnalysisManagedMode>
     {
         private readonly int _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Analysis.Models
         private const int ZeroValue = 0;
         private const int OneValue = 1;
 
-        /// <summary>
-        /// 0
-        /// Serialized Name: ManagedMode.0
-        /// </summary>
+        /// <summary> 0. </summary>
         public static AnalysisManagedMode Zero { get; } = new AnalysisManagedMode(ZeroValue);
-        /// <summary>
-        /// 1
-        /// Serialized Name: ManagedMode.1
-        /// </summary>
+        /// <summary> 1. </summary>
         public static AnalysisManagedMode One { get; } = new AnalysisManagedMode(OneValue);
         /// <summary> Determines if two <see cref="AnalysisManagedMode"/> values are the same. </summary>
         public static bool operator ==(AnalysisManagedMode left, AnalysisManagedMode right) => left.Equals(right);

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// An array of administrator user identities.
-    /// Serialized Name: ServerAdministrators
-    /// </summary>
+    /// <summary> An array of administrator user identities. </summary>
     internal partial class ServerAdministrators
     {
         /// <summary> Initializes a new instance of ServerAdministrators. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of ServerAdministrators. </summary>
-        /// <param name="asAdministratorIdentities">
-        /// An array of administrator user identities.
-        /// Serialized Name: ServerAdministrators.members
-        /// </param>
+        /// <param name="asAdministratorIdentities"> An array of administrator user identities. </param>
         internal ServerAdministrators(IList<string> asAdministratorIdentities)
         {
             AsAdministratorIdentities = asAdministratorIdentities;
         }
 
-        /// <summary>
-        /// An array of administrator user identities.
-        /// Serialized Name: ServerAdministrators.members
-        /// </summary>
+        /// <summary> An array of administrator user identities. </summary>
         public IList<string> AsAdministratorIdentities { get; }
     }
 }

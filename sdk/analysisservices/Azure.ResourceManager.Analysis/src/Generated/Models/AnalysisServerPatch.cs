@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// Provision request specification
-    /// Serialized Name: AnalysisServicesServerUpdateParameters
-    /// </summary>
+    /// <summary> Provision request specification. </summary>
     public partial class AnalysisServerPatch
     {
         /// <summary> Initializes a new instance of AnalysisServerPatch. </summary>
@@ -23,25 +20,13 @@ namespace Azure.ResourceManager.Analysis.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// The SKU of the Analysis Services resource.
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.sku
-        /// </summary>
+        /// <summary> The SKU of the Analysis Services resource. </summary>
         public AnalysisResourceSku Sku { get; set; }
-        /// <summary>
-        /// Key-value pairs of additional provisioning properties.
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.tags
-        /// </summary>
+        /// <summary> Key-value pairs of additional provisioning properties. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// A collection of AS server administrators
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.asAdministrators
-        /// </summary>
+        /// <summary> A collection of AS server administrators. </summary>
         internal ServerAdministrators AsAdministrators { get; set; }
-        /// <summary>
-        /// An array of administrator user identities.
-        /// Serialized Name: ServerAdministrators.members
-        /// </summary>
+        /// <summary> An array of administrator user identities. </summary>
         public IList<string> AsAdministratorIdentities
         {
             get
@@ -52,35 +37,17 @@ namespace Azure.ResourceManager.Analysis.Models
             }
         }
 
-        /// <summary>
-        /// The SAS container URI to the backup container.
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.backupBlobContainerUri
-        /// </summary>
+        /// <summary> The SAS container URI to the backup container. </summary>
         public Uri BackupBlobContainerUri { get; set; }
-        /// <summary>
-        /// The gateway details configured for the AS server.
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.gatewayDetails
-        /// </summary>
+        /// <summary> The gateway details configured for the AS server. </summary>
         public AnalysisGatewayDetails GatewayDetails { get; set; }
-        /// <summary>
-        /// The firewall settings for the AS server.
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.ipV4FirewallSettings
-        /// </summary>
+        /// <summary> The firewall settings for the AS server. </summary>
         public AnalysisIPv4FirewallSettings IPV4FirewallSettings { get; set; }
-        /// <summary>
-        /// How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error.
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.querypoolConnectionMode
-        /// </summary>
+        /// <summary> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </summary>
         public AnalysisConnectionMode? QuerypoolConnectionMode { get; set; }
-        /// <summary>
-        /// The managed mode of the server (0 = not managed, 1 = managed).
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.managedMode
-        /// </summary>
+        /// <summary> The managed mode of the server (0 = not managed, 1 = managed). </summary>
         public AnalysisManagedMode? ManagedMode { get; set; }
-        /// <summary>
-        /// The server monitor mode for AS server
-        /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.serverMonitorMode
-        /// </summary>
+        /// <summary> The server monitor mode for AS server. </summary>
         public ServerMonitorMode? ServerMonitorMode { get; set; }
     }
 }

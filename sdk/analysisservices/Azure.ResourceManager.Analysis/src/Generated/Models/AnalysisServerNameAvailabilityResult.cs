@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// The checking result of server name availability.
-    /// Serialized Name: CheckServerNameAvailabilityResult
-    /// </summary>
+    /// <summary> The checking result of server name availability. </summary>
     public partial class AnalysisServerNameAvailabilityResult
     {
         /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
-        /// <param name="isNameAvailable">
-        /// Indicator of available of the server name.
-        /// Serialized Name: CheckServerNameAvailabilityResult.nameAvailable
-        /// </param>
-        /// <param name="reason">
-        /// The reason of unavailability.
-        /// Serialized Name: CheckServerNameAvailabilityResult.reason
-        /// </param>
-        /// <param name="message">
-        /// The detailed message of the request unavailability.
-        /// Serialized Name: CheckServerNameAvailabilityResult.message
-        /// </param>
+        /// <param name="isNameAvailable"> Indicator of available of the server name. </param>
+        /// <param name="reason"> The reason of unavailability. </param>
+        /// <param name="message"> The detailed message of the request unavailability. </param>
         internal AnalysisServerNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
         {
             IsNameAvailable = isNameAvailable;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Analysis.Models
             Message = message;
         }
 
-        /// <summary>
-        /// Indicator of available of the server name.
-        /// Serialized Name: CheckServerNameAvailabilityResult.nameAvailable
-        /// </summary>
+        /// <summary> Indicator of available of the server name. </summary>
         public bool? IsNameAvailable { get; }
-        /// <summary>
-        /// The reason of unavailability.
-        /// Serialized Name: CheckServerNameAvailabilityResult.reason
-        /// </summary>
+        /// <summary> The reason of unavailability. </summary>
         public string Reason { get; }
-        /// <summary>
-        /// The detailed message of the request unavailability.
-        /// Serialized Name: CheckServerNameAvailabilityResult.message
-        /// </summary>
+        /// <summary> The detailed message of the request unavailability. </summary>
         public string Message { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </summary>
     public readonly partial struct AnalysisProvisioningState : IEquatable<AnalysisProvisioningState>
     {
         private readonly string _value;
@@ -38,65 +35,29 @@ namespace Azure.ResourceManager.Analysis.Models
         private const string PreparingValue = "Preparing";
         private const string ScalingValue = "Scaling";
 
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static AnalysisProvisioningState Deleting { get; } = new AnalysisProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static AnalysisProvisioningState Succeeded { get; } = new AnalysisProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static AnalysisProvisioningState Failed { get; } = new AnalysisProvisioningState(FailedValue);
-        /// <summary>
-        /// Paused
-        /// Serialized Name: ProvisioningState.Paused
-        /// </summary>
+        /// <summary> Paused. </summary>
         public static AnalysisProvisioningState Paused { get; } = new AnalysisProvisioningState(PausedValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: ProvisioningState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static AnalysisProvisioningState Suspended { get; } = new AnalysisProvisioningState(SuspendedValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: ProvisioningState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static AnalysisProvisioningState Provisioning { get; } = new AnalysisProvisioningState(ProvisioningValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static AnalysisProvisioningState Updating { get; } = new AnalysisProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Suspending
-        /// Serialized Name: ProvisioningState.Suspending
-        /// </summary>
+        /// <summary> Suspending. </summary>
         public static AnalysisProvisioningState Suspending { get; } = new AnalysisProvisioningState(SuspendingValue);
-        /// <summary>
-        /// Pausing
-        /// Serialized Name: ProvisioningState.Pausing
-        /// </summary>
+        /// <summary> Pausing. </summary>
         public static AnalysisProvisioningState Pausing { get; } = new AnalysisProvisioningState(PausingValue);
-        /// <summary>
-        /// Resuming
-        /// Serialized Name: ProvisioningState.Resuming
-        /// </summary>
+        /// <summary> Resuming. </summary>
         public static AnalysisProvisioningState Resuming { get; } = new AnalysisProvisioningState(ResumingValue);
-        /// <summary>
-        /// Preparing
-        /// Serialized Name: ProvisioningState.Preparing
-        /// </summary>
+        /// <summary> Preparing. </summary>
         public static AnalysisProvisioningState Preparing { get; } = new AnalysisProvisioningState(PreparingValue);
-        /// <summary>
-        /// Scaling
-        /// Serialized Name: ProvisioningState.Scaling
-        /// </summary>
+        /// <summary> Scaling. </summary>
         public static AnalysisProvisioningState Scaling { get; } = new AnalysisProvisioningState(ScalingValue);
         /// <summary> Determines if two <see cref="AnalysisProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AnalysisProvisioningState left, AnalysisProvisioningState right) => left.Equals(right);

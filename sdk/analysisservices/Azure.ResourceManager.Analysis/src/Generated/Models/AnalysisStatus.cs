@@ -11,10 +11,7 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// Live message of list gateway. Status: 0 - Live
-    /// Serialized Name: Status
-    /// </summary>
+    /// <summary> Live message of list gateway. Status: 0 - Live. </summary>
     public readonly partial struct AnalysisStatus : IEquatable<AnalysisStatus>
     {
         private readonly int _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Analysis.Models
 
         private const int ZeroValue = 0;
 
-        /// <summary>
-        /// 0
-        /// Serialized Name: Status.0
-        /// </summary>
+        /// <summary> 0. </summary>
         public static AnalysisStatus Zero { get; } = new AnalysisStatus(ZeroValue);
         /// <summary> Determines if two <see cref="AnalysisStatus"/> values are the same. </summary>
         public static bool operator ==(AnalysisStatus left, AnalysisStatus right) => left.Equals(right);

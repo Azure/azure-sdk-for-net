@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// An object that represents enumerating SKUs for existing resources.
-    /// Serialized Name: SkuEnumerationForExistingResourceResult
-    /// </summary>
+    /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
     internal partial class ExistingResourceResultSkuEnumeration
     {
         /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
-        /// <param name="value">
-        /// The collection of available SKUs for existing resources.
-        /// Serialized Name: SkuEnumerationForExistingResourceResult.value
-        /// </param>
+        /// <param name="value"> The collection of available SKUs for existing resources. </param>
         internal ExistingResourceResultSkuEnumeration(IReadOnlyList<AsExistingResourceSkuDetails> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The collection of available SKUs for existing resources.
-        /// Serialized Name: SkuEnumerationForExistingResourceResult.value
-        /// </summary>
+        /// <summary> The collection of available SKUs for existing resources. </summary>
         public IReadOnlyList<AsExistingResourceSkuDetails> Value { get; }
     }
 }

@@ -13,17 +13,11 @@ using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// An array of Analysis Services resources.
-    /// Serialized Name: AnalysisServicesServers
-    /// </summary>
+    /// <summary> An array of Analysis Services resources. </summary>
     internal partial class AnalysisServers
     {
         /// <summary> Initializes a new instance of AnalysisServers. </summary>
-        /// <param name="analysisResources">
-        /// An array of Analysis Services resources.
-        /// Serialized Name: AnalysisServicesServers.value
-        /// </param>
+        /// <param name="analysisResources"> An array of Analysis Services resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisResources"/> is null. </exception>
         internal AnalysisServers(IEnumerable<AnalysisServerData> analysisResources)
         {
@@ -33,19 +27,13 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of AnalysisServers. </summary>
-        /// <param name="analysisResources">
-        /// An array of Analysis Services resources.
-        /// Serialized Name: AnalysisServicesServers.value
-        /// </param>
+        /// <param name="analysisResources"> An array of Analysis Services resources. </param>
         internal AnalysisServers(IReadOnlyList<AnalysisServerData> analysisResources)
         {
             AnalysisResources = analysisResources;
         }
 
-        /// <summary>
-        /// An array of Analysis Services resources.
-        /// Serialized Name: AnalysisServicesServers.value
-        /// </summary>
+        /// <summary> An array of Analysis Services resources. </summary>
         public IReadOnlyList<AnalysisServerData> AnalysisResources { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// The detail of firewall rule.
-    /// Serialized Name: IPv4FirewallRule
-    /// </summary>
+    /// <summary> The detail of firewall rule. </summary>
     public partial class AnalysisIPv4FirewallRule
     {
         /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
-        /// <param name="firewallRuleName">
-        /// The rule name.
-        /// Serialized Name: IPv4FirewallRule.firewallRuleName
-        /// </param>
-        /// <param name="rangeStart">
-        /// The start range of IPv4.
-        /// Serialized Name: IPv4FirewallRule.rangeStart
-        /// </param>
-        /// <param name="rangeEnd">
-        /// The end range of IPv4.
-        /// Serialized Name: IPv4FirewallRule.rangeEnd
-        /// </param>
+        /// <param name="firewallRuleName"> The rule name. </param>
+        /// <param name="rangeStart"> The start range of IPv4. </param>
+        /// <param name="rangeEnd"> The end range of IPv4. </param>
         internal AnalysisIPv4FirewallRule(string firewallRuleName, string rangeStart, string rangeEnd)
         {
             FirewallRuleName = firewallRuleName;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Analysis.Models
             RangeEnd = rangeEnd;
         }
 
-        /// <summary>
-        /// The rule name.
-        /// Serialized Name: IPv4FirewallRule.firewallRuleName
-        /// </summary>
+        /// <summary> The rule name. </summary>
         public string FirewallRuleName { get; set; }
-        /// <summary>
-        /// The start range of IPv4.
-        /// Serialized Name: IPv4FirewallRule.rangeStart
-        /// </summary>
+        /// <summary> The start range of IPv4. </summary>
         public string RangeStart { get; set; }
-        /// <summary>
-        /// The end range of IPv4.
-        /// Serialized Name: IPv4FirewallRule.rangeEnd
-        /// </summary>
+        /// <summary> The end range of IPv4. </summary>
         public string RangeEnd { get; set; }
     }
 }

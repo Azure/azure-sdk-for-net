@@ -11,10 +11,7 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// The server monitor mode for AS server
-    /// Serialized Name: ServerMonitorMode
-    /// </summary>
+    /// <summary> The server monitor mode for AS server. </summary>
     public readonly partial struct ServerMonitorMode : IEquatable<ServerMonitorMode>
     {
         private readonly int _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Analysis.Models
         private const int ZeroValue = 0;
         private const int OneValue = 1;
 
-        /// <summary>
-        /// 0
-        /// Serialized Name: ServerMonitorMode.0
-        /// </summary>
+        /// <summary> 0. </summary>
         public static ServerMonitorMode Zero { get; } = new ServerMonitorMode(ZeroValue);
-        /// <summary>
-        /// 1
-        /// Serialized Name: ServerMonitorMode.1
-        /// </summary>
+        /// <summary> 1. </summary>
         public static ServerMonitorMode One { get; } = new ServerMonitorMode(OneValue);
         /// <summary> Determines if two <see cref="ServerMonitorMode"/> values are the same. </summary>
         public static bool operator ==(ServerMonitorMode left, ServerMonitorMode right) => left.Equals(right);

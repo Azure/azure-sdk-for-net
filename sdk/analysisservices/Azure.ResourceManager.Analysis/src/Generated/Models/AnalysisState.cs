@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.
-    /// Serialized Name: State
-    /// </summary>
+    /// <summary> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </summary>
     public readonly partial struct AnalysisState : IEquatable<AnalysisState>
     {
         private readonly string _value;
@@ -38,65 +35,29 @@ namespace Azure.ResourceManager.Analysis.Models
         private const string PreparingValue = "Preparing";
         private const string ScalingValue = "Scaling";
 
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: State.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static AnalysisState Deleting { get; } = new AnalysisState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: State.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static AnalysisState Succeeded { get; } = new AnalysisState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: State.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static AnalysisState Failed { get; } = new AnalysisState(FailedValue);
-        /// <summary>
-        /// Paused
-        /// Serialized Name: State.Paused
-        /// </summary>
+        /// <summary> Paused. </summary>
         public static AnalysisState Paused { get; } = new AnalysisState(PausedValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: State.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static AnalysisState Suspended { get; } = new AnalysisState(SuspendedValue);
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: State.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static AnalysisState Provisioning { get; } = new AnalysisState(ProvisioningValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: State.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static AnalysisState Updating { get; } = new AnalysisState(UpdatingValue);
-        /// <summary>
-        /// Suspending
-        /// Serialized Name: State.Suspending
-        /// </summary>
+        /// <summary> Suspending. </summary>
         public static AnalysisState Suspending { get; } = new AnalysisState(SuspendingValue);
-        /// <summary>
-        /// Pausing
-        /// Serialized Name: State.Pausing
-        /// </summary>
+        /// <summary> Pausing. </summary>
         public static AnalysisState Pausing { get; } = new AnalysisState(PausingValue);
-        /// <summary>
-        /// Resuming
-        /// Serialized Name: State.Resuming
-        /// </summary>
+        /// <summary> Resuming. </summary>
         public static AnalysisState Resuming { get; } = new AnalysisState(ResumingValue);
-        /// <summary>
-        /// Preparing
-        /// Serialized Name: State.Preparing
-        /// </summary>
+        /// <summary> Preparing. </summary>
         public static AnalysisState Preparing { get; } = new AnalysisState(PreparingValue);
-        /// <summary>
-        /// Scaling
-        /// Serialized Name: State.Scaling
-        /// </summary>
+        /// <summary> Scaling. </summary>
         public static AnalysisState Scaling { get; } = new AnalysisState(ScalingValue);
         /// <summary> Determines if two <see cref="AnalysisState"/> values are the same. </summary>
         public static bool operator ==(AnalysisState left, AnalysisState right) => left.Equals(right);

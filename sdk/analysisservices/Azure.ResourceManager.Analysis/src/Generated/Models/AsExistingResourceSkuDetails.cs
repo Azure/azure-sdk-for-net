@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// An object that represents SKU details for existing resources.
-    /// Serialized Name: SkuDetailsForExistingResource
-    /// </summary>
+    /// <summary> An object that represents SKU details for existing resources. </summary>
     public partial class AsExistingResourceSkuDetails
     {
         /// <summary> Initializes a new instance of AsExistingResourceSkuDetails. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of AsExistingResourceSkuDetails. </summary>
-        /// <param name="sku">
-        /// The SKU in SKU details for existing resources.
-        /// Serialized Name: SkuDetailsForExistingResource.sku
-        /// </param>
-        /// <param name="resourceType">
-        /// The resource type.
-        /// Serialized Name: SkuDetailsForExistingResource.resourceType
-        /// </param>
+        /// <param name="sku"> The SKU in SKU details for existing resources. </param>
+        /// <param name="resourceType"> The resource type. </param>
         internal AsExistingResourceSkuDetails(AnalysisResourceSku sku, ResourceType? resourceType)
         {
             Sku = sku;
             ResourceType = resourceType;
         }
 
-        /// <summary>
-        /// The SKU in SKU details for existing resources.
-        /// Serialized Name: SkuDetailsForExistingResource.sku
-        /// </summary>
+        /// <summary> The SKU in SKU details for existing resources. </summary>
         public AnalysisResourceSku Sku { get; }
-        /// <summary>
-        /// The resource type.
-        /// Serialized Name: SkuDetailsForExistingResource.resourceType
-        /// </summary>
+        /// <summary> The resource type. </summary>
         public ResourceType? ResourceType { get; }
     }
 }

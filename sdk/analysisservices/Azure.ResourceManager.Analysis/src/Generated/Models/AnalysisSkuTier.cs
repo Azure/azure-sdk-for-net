@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// The name of the Azure pricing tier to which the SKU applies.
-    /// Serialized Name: SkuTier
-    /// </summary>
+    /// <summary> The name of the Azure pricing tier to which the SKU applies. </summary>
     public readonly partial struct AnalysisSkuTier : IEquatable<AnalysisSkuTier>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Analysis.Models
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
 
-        /// <summary>
-        /// Development
-        /// Serialized Name: SkuTier.Development
-        /// </summary>
+        /// <summary> Development. </summary>
         public static AnalysisSkuTier Development { get; } = new AnalysisSkuTier(DevelopmentValue);
-        /// <summary>
-        /// Basic
-        /// Serialized Name: SkuTier.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static AnalysisSkuTier Basic { get; } = new AnalysisSkuTier(BasicValue);
-        /// <summary>
-        /// Standard
-        /// Serialized Name: SkuTier.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static AnalysisSkuTier Standard { get; } = new AnalysisSkuTier(StandardValue);
         /// <summary> Determines if two <see cref="AnalysisSkuTier"/> values are the same. </summary>
         public static bool operator ==(AnalysisSkuTier left, AnalysisSkuTier right) => left.Equals(right);

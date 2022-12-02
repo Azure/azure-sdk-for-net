@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    /// <summary>
-    /// Represents the SKU name and Azure pricing tier for Analysis Services resource.
-    /// Serialized Name: ResourceSku
-    /// </summary>
+    /// <summary> Represents the SKU name and Azure pricing tier for Analysis Services resource. </summary>
     public partial class AnalysisResourceSku
     {
         /// <summary> Initializes a new instance of AnalysisResourceSku. </summary>
-        /// <param name="name">
-        /// Name of the SKU level.
-        /// Serialized Name: ResourceSku.name
-        /// </param>
+        /// <param name="name"> Name of the SKU level. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AnalysisResourceSku(string name)
         {
@@ -30,18 +24,9 @@ namespace Azure.ResourceManager.Analysis.Models
         }
 
         /// <summary> Initializes a new instance of AnalysisResourceSku. </summary>
-        /// <param name="name">
-        /// Name of the SKU level.
-        /// Serialized Name: ResourceSku.name
-        /// </param>
-        /// <param name="tier">
-        /// The name of the Azure pricing tier to which the SKU applies.
-        /// Serialized Name: ResourceSku.tier
-        /// </param>
-        /// <param name="capacity">
-        /// The number of instances in the read only query pool.
-        /// Serialized Name: ResourceSku.capacity
-        /// </param>
+        /// <param name="name"> Name of the SKU level. </param>
+        /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
+        /// <param name="capacity"> The number of instances in the read only query pool. </param>
         internal AnalysisResourceSku(string name, AnalysisSkuTier? tier, int? capacity)
         {
             Name = name;
@@ -49,20 +34,11 @@ namespace Azure.ResourceManager.Analysis.Models
             Capacity = capacity;
         }
 
-        /// <summary>
-        /// Name of the SKU level.
-        /// Serialized Name: ResourceSku.name
-        /// </summary>
+        /// <summary> Name of the SKU level. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The name of the Azure pricing tier to which the SKU applies.
-        /// Serialized Name: ResourceSku.tier
-        /// </summary>
+        /// <summary> The name of the Azure pricing tier to which the SKU applies. </summary>
         public AnalysisSkuTier? Tier { get; set; }
-        /// <summary>
-        /// The number of instances in the read only query pool.
-        /// Serialized Name: ResourceSku.capacity
-        /// </summary>
+        /// <summary> The number of instances in the read only query pool. </summary>
         public int? Capacity { get; set; }
     }
 }
