@@ -80,11 +80,8 @@ namespace Azure.Core.Shared
                 // var secondMessage = _pipeline.CreateMessage();
                 // secondMessage.Request.Uri.Host = firstMessage.Request.Uri.Host;
                 // GeoRedundantReadFallbackPolicy.SetHostAffinity(secondMessage, true);
-                // secondMessage.ProcessingContext.HostAffinity = true;
                 // ...
                 // _pipeline.Send(secondMessage);
-
-
 
                 // first attempt - use fallback host if set
                 if (message.ProcessingContext.RetryNumber == 0)
