@@ -25,12 +25,23 @@ namespace Azure.Core.Shared
 
         public static void SetHostAffinity(HttpMessage message, bool hostAffinity)
         {
-            message.SetInternalProperty(typeof(GeoRedundantReadFallbackPolicy), hostAffinity);
+            message.SetInternalProperty(typeof(HostAffinityKey), hostAffinity);
         }
 
-        public static bool GetHostAffinity(HttpMessage message)
+        private static bool GetHostAffinity(HttpMessage message)
         {
-            return message.TryGetInternalProperty(typeof(GeoRedundantReadFallbackPolicy), out object? hostAffinity) && hostAffinity is true;
+            return message.TryGetInternalProperty(typeof(HostAffinityKey), out object? hostAffinity) && hostAffinity is true;
+        }
+
+        private static void SetPrimaryHost(HttpMessage message)
+        {
+            message.SetInternalProperty(typeof(PrimaryHostKey), message.Request.Uri.Host!);
+        }
+
+        private static string GetPrimaryHost(HttpMessage message)
+        {
+            message.TryGetInternalProperty(typeof(PrimaryHostKey), out object? primaryHost);
+            return (string)primaryHost!;
         }
 
         /// <summary>
@@ -42,6 +53,18 @@ namespace Azure.Core.Shared
             // TODO implement policy for write hosts as well (or include in this policy)
             if (message.Request.Method != RequestMethod.Get && message.Request.Method != RequestMethod.Head)
                 return;
+
+            if (message.HasResponse || GetHostAffinity(message))
+                return;
+
+            if (message.ProcessingContext.RetryNumber == 0)
+            {
+                SetPrimaryHost(message);
+                // avoid locking for common path - there is a chance that the index would be incremented here by another thread but we prioritize
+                // throughput over correctness in this case
+                if (_fallbackIndex == null)
+                    return;
+            }
 
             // must be under lock so that this can be synchronized across client calls - each call should leverage the fallback information
             // from all other calls
@@ -61,8 +84,7 @@ namespace Azure.Core.Shared
                 // ...
                 // _pipeline.Send(secondMessage);
 
-                if (GetHostAffinity(message))
-                    return;
+
 
                 // first attempt - use fallback host if set
                 if (message.ProcessingContext.RetryNumber == 0)
@@ -73,8 +95,11 @@ namespace Azure.Core.Shared
 
                 // subsequent attempt
 
-                // only fallback if no response was received
-                if (message.HasResponse)
+                // we should only advance if another thread hasn't already done so
+                bool shouldAdvance = (_fallbackIndex == null && message.Request.Uri.Host == GetPrimaryHost(message)) ||
+                                  (_fallbackIndex != null && message.Request.Uri.Host == _readFallbackHosts[_fallbackIndex.Value]);
+
+                if (!shouldAdvance)
                     return;
 
                 // advance the index
@@ -95,6 +120,18 @@ namespace Azure.Core.Shared
             {
                 message.Request.Uri.Host = _readFallbackHosts[_fallbackIndex.Value];
             }
+            else
+            {
+                message.Request.Uri.Host = GetPrimaryHost(message);
+            }
+        }
+
+        private class HostAffinityKey
+        {
+        }
+
+        private class PrimaryHostKey
+        {
         }
     }
 }
