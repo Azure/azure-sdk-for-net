@@ -14,6 +14,8 @@ New design of track 2 initial commit.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the type of property `ResourceType` of ExistingResourceSkuDetails from `String` to `ResourceType`.
+- Corrected the namespace of this project from `Azure.Management.AnalysisServices` to `Azure.ResourceManager.Analysis`
+- Corrected the prefix `AnalysisServices` of a subset of classes in this project from `AnalysisServices` to `Analysis`
 - The value of the int type generates an error when using ToSerialString() for type conversion, so the modelAsString in the corresponding property['x-ms-enum'] is converted to true in the autorest.md
 - Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Prepended `AnalysisServices` prefix to all single / simple model names
