@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Multivariate anomaly detection status. </summary>
-    public partial class DetectionResultSummary
+    public partial class MultivariateDetectionResultSummary
     {
-        /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of MultivariateDetectionResultSummary. </summary>
         /// <param name="status"></param>
         /// <param name="setupInfo"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
-        internal DetectionResultSummary(DetectionStatus status, DetectionRequest setupInfo)
+        internal MultivariateDetectionResultSummary(MultivariateDetectionStatus status, MultivariateDetectionOptions setupInfo)
         {
             Argument.AssertNotNull(setupInfo, nameof(setupInfo));
 
@@ -29,12 +29,12 @@ namespace Azure.AI.AnomalyDetector
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of MultivariateDetectionResultSummary. </summary>
         /// <param name="status"></param>
         /// <param name="errors"></param>
         /// <param name="variableStates"></param>
         /// <param name="setupInfo"></param>
-        internal DetectionResultSummary(DetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, DetectionRequest setupInfo)
+        internal MultivariateDetectionResultSummary(MultivariateDetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, MultivariateDetectionOptions setupInfo)
         {
             Status = status;
             Errors = errors.ToList();
@@ -43,12 +43,12 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Gets the status. </summary>
-        public DetectionStatus Status { get; }
+        public MultivariateDetectionStatus Status { get; }
         /// <summary> Gets the errors. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
         /// <summary> Gets the variable states. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
         /// <summary> Gets the setup info. </summary>
-        public DetectionRequest SetupInfo { get; }
+        public MultivariateDetectionOptions SetupInfo { get; }
     }
 }

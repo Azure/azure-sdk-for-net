@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class DetectionRequest : IUtf8JsonSerializable
+    public partial class MultivariateDetectionOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteEndObject();
         }
 
-        internal static DetectionRequest DeserializeDetectionRequest(JsonElement element)
+        internal static MultivariateDetectionOptions DeserializeMultivariateDetectionOptions(JsonElement element)
         {
             string dataSource = default;
             int topContributorCount = default;
@@ -57,15 +57,15 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new DetectionRequest(dataSource, topContributorCount, startTime, endTime);
+            return new MultivariateDetectionOptions(dataSource, topContributorCount, startTime, endTime);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DetectionRequest FromResponse(Response response)
+        internal static MultivariateDetectionOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDetectionRequest(document.RootElement);
+            return DeserializeMultivariateDetectionOptions(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

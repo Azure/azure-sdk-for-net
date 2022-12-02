@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class LastDetectionResult
+    public partial class MultivariateLastDetectionResult
     {
-        internal static LastDetectionResult DeserializeLastDetectionResult(JsonElement element)
+        internal static MultivariateLastDetectionResult DeserializeMultivariateLastDetectionResult(JsonElement element)
         {
             Optional<IReadOnlyList<VariableState>> variableStates = default;
             Optional<IReadOnlyList<AnomalyState>> results = default;
@@ -51,15 +51,15 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new LastDetectionResult(Optional.ToList(variableStates), Optional.ToList(results));
+            return new MultivariateLastDetectionResult(Optional.ToList(variableStates), Optional.ToList(results));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LastDetectionResult FromResponse(Response response)
+        internal static MultivariateLastDetectionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeLastDetectionResult(document.RootElement);
+            return DeserializeMultivariateLastDetectionResult(document.RootElement);
         }
     }
 }

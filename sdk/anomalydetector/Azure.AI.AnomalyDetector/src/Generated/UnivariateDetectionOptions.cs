@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> The request of entire or last anomaly detection. </summary>
-    public partial class DetectRequest
+    public partial class UnivariateDetectionOptions
     {
-        /// <summary> Initializes a new instance of DetectRequest. </summary>
+        /// <summary> Initializes a new instance of UnivariateDetectionOptions. </summary>
         /// <param name="series"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
-        public DetectRequest(IEnumerable<TimeSeriesPoint> series)
+        public UnivariateDetectionOptions(IEnumerable<TimeSeriesPoint> series)
         {
             Argument.AssertNotNull(series, nameof(series));
 

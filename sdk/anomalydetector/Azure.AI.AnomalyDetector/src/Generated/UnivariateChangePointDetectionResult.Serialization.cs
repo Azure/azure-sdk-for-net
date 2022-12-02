@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class ChangePointDetectResponse
+    public partial class UnivariateChangePointDetectionResult
     {
-        internal static ChangePointDetectResponse DeserializeChangePointDetectResponse(JsonElement element)
+        internal static UnivariateChangePointDetectionResult DeserializeUnivariateChangePointDetectionResult(JsonElement element)
         {
             Optional<int?> period = default;
             Optional<IReadOnlyList<bool>> isChangePoint = default;
@@ -62,15 +62,15 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new ChangePointDetectResponse(Optional.ToNullable(period), Optional.ToList(isChangePoint), Optional.ToList(confidenceScores));
+            return new UnivariateChangePointDetectionResult(Optional.ToNullable(period), Optional.ToList(isChangePoint), Optional.ToList(confidenceScores));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChangePointDetectResponse FromResponse(Response response)
+        internal static UnivariateChangePointDetectionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChangePointDetectResponse(document.RootElement);
+            return DeserializeUnivariateChangePointDetectionResult(document.RootElement);
         }
     }
 }

@@ -14,15 +14,15 @@ namespace Azure.AI.AnomalyDetector
     /// Detection request for batch inference. This is an asynchronous inference which
     /// will need another API to get detection results.
     /// </summary>
-    public partial class DetectionRequest
+    public partial class MultivariateDetectionOptions
     {
-        /// <summary> Initializes a new instance of DetectionRequest. </summary>
+        /// <summary> Initializes a new instance of MultivariateDetectionOptions. </summary>
         /// <param name="dataSource"></param>
         /// <param name="topContributorCount"></param>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public DetectionRequest(string dataSource, int topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
+        public MultivariateDetectionOptions(string dataSource, int topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class EntireDetectResponse
+    public partial class UnivariateDetectionResult
     {
-        internal static EntireDetectResponse DeserializeEntireDetectResponse(JsonElement element)
+        internal static UnivariateDetectionResult DeserializeUnivariateDetectionResult(JsonElement element)
         {
             int period = default;
             IReadOnlyList<float> expectedValues = default;
@@ -107,15 +107,15 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new EntireDetectResponse(period, expectedValues, upperMargins, lowerMargins, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToList(severity));
+            return new UnivariateDetectionResult(period, expectedValues, upperMargins, lowerMargins, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToList(severity));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EntireDetectResponse FromResponse(Response response)
+        internal static UnivariateDetectionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEntireDetectResponse(document.RootElement);
+            return DeserializeUnivariateDetectionResult(document.RootElement);
         }
     }
 }

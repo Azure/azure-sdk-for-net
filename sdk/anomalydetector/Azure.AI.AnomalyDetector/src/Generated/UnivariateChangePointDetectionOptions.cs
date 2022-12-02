@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> The request of change point detection. </summary>
-    public partial class ChangePointDetectRequest
+    public partial class UnivariateChangePointDetectionOptions
     {
-        /// <summary> Initializes a new instance of ChangePointDetectRequest. </summary>
+        /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
         /// <param name="series"></param>
         /// <param name="granularity"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
-        public ChangePointDetectRequest(IEnumerable<TimeSeriesPoint> series, TimeGranularity granularity)
+        public UnivariateChangePointDetectionOptions(IEnumerable<TimeSeriesPoint> series, TimeGranularity granularity)
         {
             Argument.AssertNotNull(series, nameof(series));
 

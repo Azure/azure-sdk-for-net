@@ -8,9 +8,9 @@
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> The response of last anomaly detection. </summary>
-    public partial class LastDetectResponse
+    public partial class UnivariateLastDetectionResult
     {
-        /// <summary> Initializes a new instance of LastDetectResponse. </summary>
+        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
         /// <param name="period"></param>
         /// <param name="suggestedWindow"></param>
         /// <param name="expectedValue"></param>
@@ -19,7 +19,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="isAnomaly"></param>
         /// <param name="isNegativeAnomaly"></param>
         /// <param name="isPositiveAnomaly"></param>
-        internal LastDetectResponse(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly)
+        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly)
         {
             Period = period;
             SuggestedWindow = suggestedWindow;
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector
             IsPositiveAnomaly = isPositiveAnomaly;
         }
 
-        /// <summary> Initializes a new instance of LastDetectResponse. </summary>
+        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
         /// <param name="period"></param>
         /// <param name="suggestedWindow"></param>
         /// <param name="expectedValue"></param>
@@ -41,7 +41,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="isNegativeAnomaly"></param>
         /// <param name="isPositiveAnomaly"></param>
         /// <param name="severity"></param>
-        internal LastDetectResponse(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity)
+        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity)
         {
             Period = period;
             SuggestedWindow = suggestedWindow;

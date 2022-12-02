@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class DetectionResultSummary
+    public partial class MultivariateDetectionResultSummary
     {
-        internal static DetectionResultSummary DeserializeDetectionResultSummary(JsonElement element)
+        internal static MultivariateDetectionResultSummary DeserializeMultivariateDetectionResultSummary(JsonElement element)
         {
-            DetectionStatus status = default;
+            MultivariateDetectionStatus status = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<IReadOnlyList<VariableState>> variableStates = default;
-            DetectionRequest setupInfo = default;
+            MultivariateDetectionOptions setupInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString().ToDetectionStatus();
+                    status = property.Value.GetString().ToMultivariateDetectionStatus();
                     continue;
                 }
                 if (property.NameEquals("errors"))
@@ -59,19 +59,19 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (property.NameEquals("setupInfo"))
                 {
-                    setupInfo = DetectionRequest.DeserializeDetectionRequest(property.Value);
+                    setupInfo = MultivariateDetectionOptions.DeserializeMultivariateDetectionOptions(property.Value);
                     continue;
                 }
             }
-            return new DetectionResultSummary(status, Optional.ToList(errors), Optional.ToList(variableStates), setupInfo);
+            return new MultivariateDetectionResultSummary(status, Optional.ToList(errors), Optional.ToList(variableStates), setupInfo);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DetectionResultSummary FromResponse(Response response)
+        internal static MultivariateDetectionResultSummary FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDetectionResultSummary(document.RootElement);
+            return DeserializeMultivariateDetectionResultSummary(document.RootElement);
         }
     }
 }

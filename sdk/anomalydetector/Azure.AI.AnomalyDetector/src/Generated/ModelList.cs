@@ -20,7 +20,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="currentCount"></param>
         /// <param name="maxCount"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="models"/> is null. </exception>
-        internal ModelList(IEnumerable<Model> models, int currentCount, int maxCount)
+        internal ModelList(IEnumerable<AnomalyDetectionModel> models, int currentCount, int maxCount)
         {
             Argument.AssertNotNull(models, nameof(models));
 
@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="currentCount"></param>
         /// <param name="maxCount"></param>
         /// <param name="nextLink"></param>
-        internal ModelList(IReadOnlyList<Model> models, int currentCount, int maxCount, string nextLink)
+        internal ModelList(IReadOnlyList<AnomalyDetectionModel> models, int currentCount, int maxCount, string nextLink)
         {
             Models = models.ToList();
             CurrentCount = currentCount;
@@ -43,7 +43,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Gets the models. </summary>
-        public IReadOnlyList<Model> Models { get; }
+        public IReadOnlyList<AnomalyDetectionModel> Models { get; }
         /// <summary> Gets the current count. </summary>
         public int CurrentCount { get; }
         /// <summary> Gets the max count. </summary>
