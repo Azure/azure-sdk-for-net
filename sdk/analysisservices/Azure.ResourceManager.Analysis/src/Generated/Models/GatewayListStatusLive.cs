@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// Live message of list gateway. Status: 0 - Live
         /// Serialized Name: GatewayListStatusLive.status
         /// </param>
-        internal GatewayListStatusLive(AnalysisServicesStatus? status)
+        internal GatewayListStatusLive(AnalysisStatus? status)
         {
             Status = status;
         }
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Analysis.Models
         /// Live message of list gateway. Status: 0 - Live
         /// Serialized Name: GatewayListStatusLive.status
         /// </summary>
-        public AnalysisServicesStatus? Status { get; }
+        public AnalysisStatus? Status { get; }
     }
 }

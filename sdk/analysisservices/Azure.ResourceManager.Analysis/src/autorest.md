@@ -15,16 +15,18 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+mgmt-debug:
+  show-serialized-names: true
 
 
 rename-mapping:
-  State: AnalysisServicesState
-  Status: AnalysisServicesStatus
-  OperationStatus: AnalysisServicesOperationStatus
-  AnalysisServicesServers.value: AnalysisServicesResources
+  State: AnalysisState
+  Status: AnalysisStatus
+  OperationStatus: AnalysisOperationStatus
+  AnalysisServicesServers.value: AnalysisResources
 #   SkuEnumerationForNewResourceResult.value: SKUs
-  Resource.sku: AnalysisServicesSku
-  AnalysisServicesServer.properties.sku: AnalysisServicesServerSKU
+  Resource.sku: AnalysisSku
+  AnalysisServicesServer.properties.sku: AnalysisServerSKU
   ServerAdministrators.members: AsAdministratorIdentities
   CheckServerNameAvailabilityResult.nameAvailable: IsNameAvailable
   IPv4FirewallSettings.enablePowerBIService: IsPowerBIServiceEnabled
@@ -35,15 +37,21 @@ rename-mapping:
 #   SkuEnumerationForExistingResourceResult.value: ExistingResources
   AnalysisServicesServer.properties.ipV4FirewallSettings: IPv4FirewallSettings
   AnalysisServicesServer.properties.querypoolConnectionMode: QueryPoolConnectionMode
-  CheckServerNameAvailabilityParameters: AnalysisServicesServerNameAvailabilityContent
-  CheckServerNameAvailabilityResult: AnalysisServicesServerNameAvailabilityResult
-  ConnectionMode: AnalysisServiceConnectionMode
-  GatewayDetails: AnalysisServicesGatewayDetails
-  IPv4FirewallRule: AnalysisServicesIPv4FirewallRule
-  IPv4FirewallSettings: AnalysisServicesIPv4FirewallSettings
-  ManagedMode: AnalysisServicesManagedMode
-  ProvisioningState: AnalysisServicesProvisioningState
-  ResourceSku: AnalysisServicesResourceSku
+  CheckServerNameAvailabilityParameters: AnalysisServerNameAvailabilityContent
+  CheckServerNameAvailabilityResult: AnalysisServerNameAvailabilityResult
+  ConnectionMode: AnalysisConnectionMode
+  GatewayDetails: AnalysisGatewayDetails
+  IPv4FirewallRule: AnalysisIPv4FirewallRule
+  IPv4FirewallSettings: AnalysisIPv4FirewallSettings
+  ManagedMode: AnalysisManagedMode
+  ProvisioningState: AnalysisProvisioningState
+  ResourceSku: AnalysisResourceSku
+  AnalysisServicesServerUpdateParameters: AnalysisServerPatch
+  AnalysisServicesServers: AnalysisServers
+  AnalysisServicesServer: AnalysisServer
+  AnalysisServicesServerData: AnalysisServerData
+  AnalysisServicesServerResource: AnalysisServerResource
+  AnalysisServicesServerCollection: AnalysisServerCollection
   Status.0: Zero
 
 

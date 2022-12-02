@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>
         internal NewResourceResultSkuEnumeration()
         {
-            Value = new ChangeTrackingList<AnalysisServicesResourceSku>();
+            Value = new ChangeTrackingList<AnalysisResourceSku>();
         }
 
         /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The collection of available SKUs for new resources.
         /// Serialized Name: SkuEnumerationForNewResourceResult.value
         /// </param>
-        internal NewResourceResultSkuEnumeration(IReadOnlyList<AnalysisServicesResourceSku> value)
+        internal NewResourceResultSkuEnumeration(IReadOnlyList<AnalysisResourceSku> value)
         {
             Value = value;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The collection of available SKUs for new resources.
         /// Serialized Name: SkuEnumerationForNewResourceResult.value
         /// </summary>
-        public IReadOnlyList<AnalysisServicesResourceSku> Value { get; }
+        public IReadOnlyList<AnalysisResourceSku> Value { get; }
     }
 }

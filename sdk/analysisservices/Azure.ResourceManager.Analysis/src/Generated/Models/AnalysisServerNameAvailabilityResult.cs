@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.Analysis.Models
     /// The checking result of server name availability.
     /// Serialized Name: CheckServerNameAvailabilityResult
     /// </summary>
-    public partial class AnalysisServicesServerNameAvailabilityResult
+    public partial class AnalysisServerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of AnalysisServicesServerNameAvailabilityResult. </summary>
-        internal AnalysisServicesServerNameAvailabilityResult()
+        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
+        internal AnalysisServerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisServicesServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable">
         /// Indicator of available of the server name.
         /// Serialized Name: CheckServerNameAvailabilityResult.nameAvailable
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The detailed message of the request unavailability.
         /// Serialized Name: CheckServerNameAvailabilityResult.message
         /// </param>
-        internal AnalysisServicesServerNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
+        internal AnalysisServerNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;

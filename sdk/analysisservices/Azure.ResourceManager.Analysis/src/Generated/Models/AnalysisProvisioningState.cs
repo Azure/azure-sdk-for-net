@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Analysis.Models
     /// The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning.
     /// Serialized Name: ProvisioningState
     /// </summary>
-    public readonly partial struct AnalysisServicesProvisioningState : IEquatable<AnalysisServicesProvisioningState>
+    public readonly partial struct AnalysisProvisioningState : IEquatable<AnalysisProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisServicesProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AnalysisServicesProvisioningState(string value)
+        public AnalysisProvisioningState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -42,74 +42,74 @@ namespace Azure.ResourceManager.Analysis.Models
         /// Deleting
         /// Serialized Name: ProvisioningState.Deleting
         /// </summary>
-        public static AnalysisServicesProvisioningState Deleting { get; } = new AnalysisServicesProvisioningState(DeletingValue);
+        public static AnalysisProvisioningState Deleting { get; } = new AnalysisProvisioningState(DeletingValue);
         /// <summary>
         /// Succeeded
         /// Serialized Name: ProvisioningState.Succeeded
         /// </summary>
-        public static AnalysisServicesProvisioningState Succeeded { get; } = new AnalysisServicesProvisioningState(SucceededValue);
+        public static AnalysisProvisioningState Succeeded { get; } = new AnalysisProvisioningState(SucceededValue);
         /// <summary>
         /// Failed
         /// Serialized Name: ProvisioningState.Failed
         /// </summary>
-        public static AnalysisServicesProvisioningState Failed { get; } = new AnalysisServicesProvisioningState(FailedValue);
+        public static AnalysisProvisioningState Failed { get; } = new AnalysisProvisioningState(FailedValue);
         /// <summary>
         /// Paused
         /// Serialized Name: ProvisioningState.Paused
         /// </summary>
-        public static AnalysisServicesProvisioningState Paused { get; } = new AnalysisServicesProvisioningState(PausedValue);
+        public static AnalysisProvisioningState Paused { get; } = new AnalysisProvisioningState(PausedValue);
         /// <summary>
         /// Suspended
         /// Serialized Name: ProvisioningState.Suspended
         /// </summary>
-        public static AnalysisServicesProvisioningState Suspended { get; } = new AnalysisServicesProvisioningState(SuspendedValue);
+        public static AnalysisProvisioningState Suspended { get; } = new AnalysisProvisioningState(SuspendedValue);
         /// <summary>
         /// Provisioning
         /// Serialized Name: ProvisioningState.Provisioning
         /// </summary>
-        public static AnalysisServicesProvisioningState Provisioning { get; } = new AnalysisServicesProvisioningState(ProvisioningValue);
+        public static AnalysisProvisioningState Provisioning { get; } = new AnalysisProvisioningState(ProvisioningValue);
         /// <summary>
         /// Updating
         /// Serialized Name: ProvisioningState.Updating
         /// </summary>
-        public static AnalysisServicesProvisioningState Updating { get; } = new AnalysisServicesProvisioningState(UpdatingValue);
+        public static AnalysisProvisioningState Updating { get; } = new AnalysisProvisioningState(UpdatingValue);
         /// <summary>
         /// Suspending
         /// Serialized Name: ProvisioningState.Suspending
         /// </summary>
-        public static AnalysisServicesProvisioningState Suspending { get; } = new AnalysisServicesProvisioningState(SuspendingValue);
+        public static AnalysisProvisioningState Suspending { get; } = new AnalysisProvisioningState(SuspendingValue);
         /// <summary>
         /// Pausing
         /// Serialized Name: ProvisioningState.Pausing
         /// </summary>
-        public static AnalysisServicesProvisioningState Pausing { get; } = new AnalysisServicesProvisioningState(PausingValue);
+        public static AnalysisProvisioningState Pausing { get; } = new AnalysisProvisioningState(PausingValue);
         /// <summary>
         /// Resuming
         /// Serialized Name: ProvisioningState.Resuming
         /// </summary>
-        public static AnalysisServicesProvisioningState Resuming { get; } = new AnalysisServicesProvisioningState(ResumingValue);
+        public static AnalysisProvisioningState Resuming { get; } = new AnalysisProvisioningState(ResumingValue);
         /// <summary>
         /// Preparing
         /// Serialized Name: ProvisioningState.Preparing
         /// </summary>
-        public static AnalysisServicesProvisioningState Preparing { get; } = new AnalysisServicesProvisioningState(PreparingValue);
+        public static AnalysisProvisioningState Preparing { get; } = new AnalysisProvisioningState(PreparingValue);
         /// <summary>
         /// Scaling
         /// Serialized Name: ProvisioningState.Scaling
         /// </summary>
-        public static AnalysisServicesProvisioningState Scaling { get; } = new AnalysisServicesProvisioningState(ScalingValue);
-        /// <summary> Determines if two <see cref="AnalysisServicesProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(AnalysisServicesProvisioningState left, AnalysisServicesProvisioningState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="AnalysisServicesProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(AnalysisServicesProvisioningState left, AnalysisServicesProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalysisServicesProvisioningState"/>. </summary>
-        public static implicit operator AnalysisServicesProvisioningState(string value) => new AnalysisServicesProvisioningState(value);
+        public static AnalysisProvisioningState Scaling { get; } = new AnalysisProvisioningState(ScalingValue);
+        /// <summary> Determines if two <see cref="AnalysisProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(AnalysisProvisioningState left, AnalysisProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AnalysisProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(AnalysisProvisioningState left, AnalysisProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AnalysisProvisioningState"/>. </summary>
+        public static implicit operator AnalysisProvisioningState(string value) => new AnalysisProvisioningState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AnalysisServicesProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is AnalysisProvisioningState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(AnalysisServicesProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AnalysisProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

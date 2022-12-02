@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisServicesGatewayDetails : IUtf8JsonSerializable
+    public partial class AnalysisGatewayDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteEndObject();
         }
 
-        internal static AnalysisServicesGatewayDetails DeserializeAnalysisServicesGatewayDetails(JsonElement element)
+        internal static AnalysisGatewayDetails DeserializeAnalysisGatewayDetails(JsonElement element)
         {
             Optional<string> gatewayResourceId = default;
             Optional<string> gatewayObjectId = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisServicesGatewayDetails(gatewayResourceId.Value, gatewayObjectId.Value, dmtsClusterUri.Value);
+            return new AnalysisGatewayDetails(gatewayResourceId.Value, gatewayObjectId.Value, dmtsClusterUri.Value);
         }
     }
 }

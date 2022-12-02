@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Analysis.Models
     /// The gateway details.
     /// Serialized Name: GatewayDetails
     /// </summary>
-    public partial class AnalysisServicesGatewayDetails
+    public partial class AnalysisGatewayDetails
     {
-        /// <summary> Initializes a new instance of AnalysisServicesGatewayDetails. </summary>
-        public AnalysisServicesGatewayDetails()
+        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        public AnalysisGatewayDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisServicesGatewayDetails. </summary>
+        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
         /// <param name="gatewayResourceId">
         /// Gateway resource to be associated with the server.
         /// Serialized Name: GatewayDetails.gatewayResourceId
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// Uri of the DMTS cluster.
         /// Serialized Name: GatewayDetails.dmtsClusterUri
         /// </param>
-        internal AnalysisServicesGatewayDetails(string gatewayResourceId, string gatewayObjectId, Uri dmtsClusterUri)
+        internal AnalysisGatewayDetails(string gatewayResourceId, string gatewayObjectId, Uri dmtsClusterUri)
         {
             GatewayResourceId = gatewayResourceId;
             GatewayObjectId = gatewayObjectId;

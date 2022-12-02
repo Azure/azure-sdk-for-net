@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Analysis
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AnalysisServicesServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AnalysisServicesServerResources and their operations over a AnalysisServicesServerResource. </returns>
-        public virtual AnalysisServicesServerCollection GetAnalysisServicesServers()
+        /// <summary> Gets a collection of AnalysisServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AnalysisServerResources and their operations over a AnalysisServerResource. </returns>
+        public virtual AnalysisServerCollection GetAnalysisServers()
         {
-            return GetCachedClient(Client => new AnalysisServicesServerCollection(Client, Id));
+            return GetCachedClient(Client => new AnalysisServerCollection(Client, Id));
         }
     }
 }

@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.Analysis.Models
     /// An array of firewall rules.
     /// Serialized Name: IPv4FirewallSettings
     /// </summary>
-    public partial class AnalysisServicesIPv4FirewallSettings
+    public partial class AnalysisIPv4FirewallSettings
     {
-        /// <summary> Initializes a new instance of AnalysisServicesIPv4FirewallSettings. </summary>
-        public AnalysisServicesIPv4FirewallSettings()
+        /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
+        public AnalysisIPv4FirewallSettings()
         {
-            FirewallRules = new ChangeTrackingList<AnalysisServicesIPv4FirewallRule>();
+            FirewallRules = new ChangeTrackingList<AnalysisIPv4FirewallRule>();
         }
 
-        /// <summary> Initializes a new instance of AnalysisServicesIPv4FirewallSettings. </summary>
+        /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
         /// <param name="firewallRules">
         /// An array of firewall rules.
         /// Serialized Name: IPv4FirewallSettings.firewallRules
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The indicator of enabling PBI service.
         /// Serialized Name: IPv4FirewallSettings.enablePowerBIService
         /// </param>
-        internal AnalysisServicesIPv4FirewallSettings(IList<AnalysisServicesIPv4FirewallRule> firewallRules, bool? isPowerBIServiceEnabled)
+        internal AnalysisIPv4FirewallSettings(IList<AnalysisIPv4FirewallRule> firewallRules, bool? isPowerBIServiceEnabled)
         {
             FirewallRules = firewallRules;
             IsPowerBIServiceEnabled = isPowerBIServiceEnabled;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// An array of firewall rules.
         /// Serialized Name: IPv4FirewallSettings.firewallRules
         /// </summary>
-        public IList<AnalysisServicesIPv4FirewallRule> FirewallRules { get; }
+        public IList<AnalysisIPv4FirewallRule> FirewallRules { get; }
         /// <summary>
         /// The indicator of enabling PBI service.
         /// Serialized Name: IPv4FirewallSettings.enablePowerBIService

@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Analysis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AnalysisServicesServerResource" /> and their operations.
-    /// Each <see cref="AnalysisServicesServerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AnalysisServicesServerCollection" /> instance call the GetAnalysisServicesServers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AnalysisServerResource" /> and their operations.
+    /// Each <see cref="AnalysisServerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AnalysisServerCollection" /> instance call the GetAnalysisServers method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class AnalysisServicesServerCollection : ArmCollection, IEnumerable<AnalysisServicesServerResource>, IAsyncEnumerable<AnalysisServicesServerResource>
+    public partial class AnalysisServerCollection : ArmCollection, IEnumerable<AnalysisServerResource>, IAsyncEnumerable<AnalysisServerResource>
     {
-        private readonly ClientDiagnostics _analysisServicesServerServersClientDiagnostics;
-        private readonly ServersRestOperations _analysisServicesServerServersRestClient;
+        private readonly ClientDiagnostics _analysisServerServersClientDiagnostics;
+        private readonly ServersRestOperations _analysisServerServersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AnalysisServicesServerCollection"/> class for mocking. </summary>
-        protected AnalysisServicesServerCollection()
+        /// <summary> Initializes a new instance of the <see cref="AnalysisServerCollection"/> class for mocking. </summary>
+        protected AnalysisServerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AnalysisServicesServerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AnalysisServerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AnalysisServicesServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AnalysisServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _analysisServicesServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Analysis", AnalysisServicesServerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AnalysisServicesServerResource.ResourceType, out string analysisServicesServerServersApiVersion);
-            _analysisServicesServerServersRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, analysisServicesServerServersApiVersion);
+            _analysisServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Analysis", AnalysisServerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AnalysisServerResource.ResourceType, out string analysisServerServersApiVersion);
+            _analysisServerServersRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, analysisServerServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AnalysisServicesServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, AnalysisServicesServerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AnalysisServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, AnalysisServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.CreateOrUpdate");
+            using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _analysisServicesServerServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AnalysisArmOperation<AnalysisServicesServerResource>(new AnalysisServicesServerOperationSource(Client), _analysisServicesServerServersClientDiagnostics, Pipeline, _analysisServicesServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _analysisServerServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AnalysisServicesServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, AnalysisServicesServerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AnalysisServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, AnalysisServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.CreateOrUpdate");
+            using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _analysisServicesServerServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken);
-                var operation = new AnalysisArmOperation<AnalysisServicesServerResource>(new AnalysisServicesServerOperationSource(Client), _analysisServicesServerServersClientDiagnostics, Pipeline, _analysisServicesServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _analysisServerServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public virtual async Task<Response<AnalysisServicesServerResource>> GetAsync(string serverName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalysisServerResource>> GetAsync(string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.Get");
+            using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _analysisServicesServerServersRestClient.GetDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                var response = await _analysisServerServersRestClient.GetDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AnalysisServicesServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AnalysisServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public virtual Response<AnalysisServicesServerResource> Get(string serverName, CancellationToken cancellationToken = default)
+        public virtual Response<AnalysisServerResource> Get(string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.Get");
+            using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Get");
             scope.Start();
             try
             {
-                var response = _analysisServicesServerServersRestClient.GetDetails(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken);
+                var response = _analysisServerServersRestClient.GetDetails(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AnalysisServicesServerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AnalysisServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AnalysisServicesServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AnalysisServicesServerResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AnalysisServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisServicesServerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AnalysisServerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.GetAll");
+                using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _analysisServicesServerServersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AnalysisServicesResources.Select(value => new AnalysisServicesServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _analysisServerServersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +211,17 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AnalysisServicesServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AnalysisServicesServerResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AnalysisServerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisServicesServerResource> FirstPageFunc(int? pageSizeHint)
+            Page<AnalysisServerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.GetAll");
+                using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _analysisServicesServerServersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.AnalysisServicesResources.Select(value => new AnalysisServicesServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = _analysisServerServersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.Analysis
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.Exists");
+            using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _analysisServicesServerServersRestClient.GetDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _analysisServerServersRestClient.GetDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,11 +272,11 @@ namespace Azure.ResourceManager.Analysis
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
-            using var scope = _analysisServicesServerServersClientDiagnostics.CreateScope("AnalysisServicesServerCollection.Exists");
+            using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _analysisServicesServerServersRestClient.GetDetails(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken);
+                var response = _analysisServerServersRestClient.GetDetails(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Analysis
             }
         }
 
-        IEnumerator<AnalysisServicesServerResource> IEnumerable<AnalysisServicesServerResource>.GetEnumerator()
+        IEnumerator<AnalysisServerResource> IEnumerable<AnalysisServerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Analysis
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AnalysisServicesServerResource> IAsyncEnumerable<AnalysisServicesServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AnalysisServerResource> IAsyncEnumerable<AnalysisServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

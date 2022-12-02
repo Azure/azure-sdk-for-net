@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisServicesResourceSku : IUtf8JsonSerializable
+    public partial class AnalysisResourceSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteEndObject();
         }
 
-        internal static AnalysisServicesResourceSku DeserializeAnalysisServicesResourceSku(JsonElement element)
+        internal static AnalysisResourceSku DeserializeAnalysisResourceSku(JsonElement element)
         {
             string name = default;
             Optional<AnalysisSkuTier> tier = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisServicesResourceSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
+            return new AnalysisResourceSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
         }
     }
 }

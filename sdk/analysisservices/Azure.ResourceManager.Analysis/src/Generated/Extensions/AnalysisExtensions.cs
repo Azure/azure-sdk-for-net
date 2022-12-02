@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Analysis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AnalysisServicesServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AnalysisServicesServerResource> GetAnalysisServicesServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAnalysisServicesServersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAnalysisServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Analysis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AnalysisServicesServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AnalysisServicesServerResource> GetAnalysisServicesServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AnalysisServerResource> GetAnalysisServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAnalysisServicesServers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAnalysisServers(cancellationToken);
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Analysis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AnalysisServicesResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AnalysisServicesResourceSku> GetSkusForNewServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AnalysisResourceSku> GetSkusForNewServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkusForNewServersAsync(cancellationToken);
         }
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Analysis
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AnalysisServicesResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AnalysisServicesResourceSku> GetSkusForNewServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AnalysisResourceSku> GetSkusForNewServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkusForNewServers(cancellationToken);
         }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<AnalysisServicesServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<AnalysisServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<AnalysisServicesServerNameAvailabilityResult> CheckNameAvailabilityServer(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<AnalysisServerNameAvailabilityResult> CheckNameAvailabilityServer(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Analysis
             );
         }
 
-        /// <summary> Gets a collection of AnalysisServicesServerResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AnalysisServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AnalysisServicesServerResources and their operations over a AnalysisServicesServerResource. </returns>
-        public static AnalysisServicesServerCollection GetAnalysisServicesServers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AnalysisServerResources and their operations over a AnalysisServerResource. </returns>
+        public static AnalysisServerCollection GetAnalysisServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetAnalysisServicesServers();
+            return GetExtensionClient(resourceGroupResource).GetAnalysisServers();
         }
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AnalysisServicesServerResource>> GetAnalysisServicesServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AnalysisServerResource>> GetAnalysisServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAnalysisServicesServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAnalysisServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,25 +158,25 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AnalysisServicesServerResource> GetAnalysisServicesServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static Response<AnalysisServerResource> GetAnalysisServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAnalysisServicesServers().Get(serverName, cancellationToken);
+            return resourceGroupResource.GetAnalysisServers().Get(serverName, cancellationToken);
         }
 
-        #region AnalysisServicesServerResource
+        #region AnalysisServerResource
         /// <summary>
-        /// Gets an object representing an <see cref="AnalysisServicesServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AnalysisServicesServerResource.CreateResourceIdentifier" /> to create an <see cref="AnalysisServicesServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AnalysisServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AnalysisServerResource.CreateResourceIdentifier" /> to create an <see cref="AnalysisServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AnalysisServicesServerResource" /> object. </returns>
-        public static AnalysisServicesServerResource GetAnalysisServicesServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AnalysisServerResource" /> object. </returns>
+        public static AnalysisServerResource GetAnalysisServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AnalysisServicesServerResource.ValidateResourceId(id);
-                return new AnalysisServicesServerResource(client, id);
+                AnalysisServerResource.ValidateResourceId(id);
+                return new AnalysisServerResource(client, id);
             }
             );
         }

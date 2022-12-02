@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AnalysisServicesServerData>> GetDetailsAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalysisServerData>> GetDetailsAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServerData value = default;
+                        AnalysisServerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalysisServicesServerData.DeserializeAnalysisServicesServerData(document.RootElement);
+                        value = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AnalysisServicesServerData)null, message.Response);
+                    return Response.FromValue((AnalysisServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AnalysisServicesServerData> GetDetails(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<AnalysisServerData> GetDetails(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,19 +107,19 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServerData value = default;
+                        AnalysisServerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalysisServicesServerData.DeserializeAnalysisServicesServerData(document.RootElement);
+                        value = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AnalysisServicesServerData)null, message.Response);
+                    return Response.FromValue((AnalysisServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serverName, AnalysisServicesServerData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serverName, AnalysisServerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string serverName, AnalysisServicesServerData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string serverName, AnalysisServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string serverName, AnalysisServicesServerData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string serverName, AnalysisServerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Analysis
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, AnalysisServicesServerPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, AnalysisServerPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, AnalysisServicesServerPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, AnalysisServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string serverName, AnalysisServicesServerPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string serverName, AnalysisServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AnalysisServicesServers>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalysisServers>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -527,9 +527,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServers value = default;
+                        AnalysisServers value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalysisServicesServers.DeserializeAnalysisServicesServers(document.RootElement);
+                        value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AnalysisServicesServers> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AnalysisServers> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -554,9 +554,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServers value = default;
+                        AnalysisServers value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalysisServicesServers.DeserializeAnalysisServicesServers(document.RootElement);
+                        value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AnalysisServicesServers>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalysisServers>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -596,9 +596,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServers value = default;
+                        AnalysisServers value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalysisServicesServers.DeserializeAnalysisServicesServers(document.RootElement);
+                        value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AnalysisServicesServers> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AnalysisServers> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -621,9 +621,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServers value = default;
+                        AnalysisServers value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalysisServicesServers.DeserializeAnalysisServicesServers(document.RootElement);
+                        value = AnalysisServers.DeserializeAnalysisServers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.Analysis
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, AnalysisServerNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AnalysisServicesServerNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalysisServerNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -966,9 +966,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServerNameAvailabilityResult value = default;
+                        AnalysisServerNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnalysisServicesServerNameAvailabilityResult.DeserializeAnalysisServicesServerNameAvailabilityResult(document.RootElement);
+                        value = AnalysisServerNameAvailabilityResult.DeserializeAnalysisServerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AnalysisServicesServerNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<AnalysisServerNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -994,9 +994,9 @@ namespace Azure.ResourceManager.Analysis
             {
                 case 200:
                     {
-                        AnalysisServicesServerNameAvailabilityResult value = default;
+                        AnalysisServerNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnalysisServicesServerNameAvailabilityResult.DeserializeAnalysisServicesServerNameAvailabilityResult(document.RootElement);
+                        value = AnalysisServerNameAvailabilityResult.DeserializeAnalysisServerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

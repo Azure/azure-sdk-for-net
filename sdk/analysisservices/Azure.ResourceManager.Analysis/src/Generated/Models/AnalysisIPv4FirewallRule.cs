@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.Analysis.Models
     /// The detail of firewall rule.
     /// Serialized Name: IPv4FirewallRule
     /// </summary>
-    public partial class AnalysisServicesIPv4FirewallRule
+    public partial class AnalysisIPv4FirewallRule
     {
-        /// <summary> Initializes a new instance of AnalysisServicesIPv4FirewallRule. </summary>
-        public AnalysisServicesIPv4FirewallRule()
+        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
+        public AnalysisIPv4FirewallRule()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisServicesIPv4FirewallRule. </summary>
+        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
         /// <param name="firewallRuleName">
         /// The rule name.
         /// Serialized Name: IPv4FirewallRule.firewallRuleName
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The end range of IPv4.
         /// Serialized Name: IPv4FirewallRule.rangeEnd
         /// </param>
-        internal AnalysisServicesIPv4FirewallRule(string firewallRuleName, string rangeStart, string rangeEnd)
+        internal AnalysisIPv4FirewallRule(string firewallRuleName, string rangeStart, string rangeEnd)
         {
             FirewallRuleName = firewallRuleName;
             RangeStart = rangeStart;

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisServicesIPv4FirewallRule : IUtf8JsonSerializable
+    public partial class AnalysisIPv4FirewallRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteEndObject();
         }
 
-        internal static AnalysisServicesIPv4FirewallRule DeserializeAnalysisServicesIPv4FirewallRule(JsonElement element)
+        internal static AnalysisIPv4FirewallRule DeserializeAnalysisIPv4FirewallRule(JsonElement element)
         {
             Optional<string> firewallRuleName = default;
             Optional<string> rangeStart = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisServicesIPv4FirewallRule(firewallRuleName.Value, rangeStart.Value, rangeEnd.Value);
+            return new AnalysisIPv4FirewallRule(firewallRuleName.Value, rangeStart.Value, rangeEnd.Value);
         }
     }
 }

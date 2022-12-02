@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisServicesServerPatch : IUtf8JsonSerializable
+    public partial class AnalysisServerPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

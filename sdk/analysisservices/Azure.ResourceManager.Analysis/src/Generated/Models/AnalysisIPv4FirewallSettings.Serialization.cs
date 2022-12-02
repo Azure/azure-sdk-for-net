@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisServicesIPv4FirewallSettings : IUtf8JsonSerializable
+    public partial class AnalysisIPv4FirewallSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteEndObject();
         }
 
-        internal static AnalysisServicesIPv4FirewallSettings DeserializeAnalysisServicesIPv4FirewallSettings(JsonElement element)
+        internal static AnalysisIPv4FirewallSettings DeserializeAnalysisIPv4FirewallSettings(JsonElement element)
         {
-            Optional<IList<AnalysisServicesIPv4FirewallRule>> firewallRules = default;
+            Optional<IList<AnalysisIPv4FirewallRule>> firewallRules = default;
             Optional<bool> enablePowerBIService = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Analysis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AnalysisServicesIPv4FirewallRule> array = new List<AnalysisServicesIPv4FirewallRule>();
+                    List<AnalysisIPv4FirewallRule> array = new List<AnalysisIPv4FirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisServicesIPv4FirewallRule.DeserializeAnalysisServicesIPv4FirewallRule(item));
+                        array.Add(AnalysisIPv4FirewallRule.DeserializeAnalysisIPv4FirewallRule(item));
                     }
                     firewallRules = array;
                     continue;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisServicesIPv4FirewallSettings(Optional.ToList(firewallRules), Optional.ToNullable(enablePowerBIService));
+            return new AnalysisIPv4FirewallSettings(Optional.ToList(firewallRules), Optional.ToNullable(enablePowerBIService));
         }
     }
 }

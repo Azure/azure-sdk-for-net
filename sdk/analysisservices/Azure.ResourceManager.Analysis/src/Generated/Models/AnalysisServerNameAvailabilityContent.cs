@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.Analysis.Models
     /// Details of server name request body.
     /// Serialized Name: CheckServerNameAvailabilityParameters
     /// </summary>
-    public partial class AnalysisServicesServerNameAvailabilityContent
+    public partial class AnalysisServerNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of AnalysisServicesServerNameAvailabilityContent. </summary>
-        public AnalysisServicesServerNameAvailabilityContent()
+        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityContent. </summary>
+        public AnalysisServerNameAvailabilityContent()
         {
         }
 

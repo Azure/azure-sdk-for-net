@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Analysis.Models
     /// Provision request specification
     /// Serialized Name: AnalysisServicesServerUpdateParameters
     /// </summary>
-    public partial class AnalysisServicesServerPatch
+    public partial class AnalysisServerPatch
     {
-        /// <summary> Initializes a new instance of AnalysisServicesServerPatch. </summary>
-        public AnalysisServicesServerPatch()
+        /// <summary> Initializes a new instance of AnalysisServerPatch. </summary>
+        public AnalysisServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The SKU of the Analysis Services resource.
         /// Serialized Name: AnalysisServicesServerUpdateParameters.sku
         /// </summary>
-        public AnalysisServicesResourceSku Sku { get; set; }
+        public AnalysisResourceSku Sku { get; set; }
         /// <summary>
         /// Key-value pairs of additional provisioning properties.
         /// Serialized Name: AnalysisServicesServerUpdateParameters.tags
@@ -61,22 +61,22 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The gateway details configured for the AS server.
         /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.gatewayDetails
         /// </summary>
-        public AnalysisServicesGatewayDetails GatewayDetails { get; set; }
+        public AnalysisGatewayDetails GatewayDetails { get; set; }
         /// <summary>
         /// The firewall settings for the AS server.
         /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.ipV4FirewallSettings
         /// </summary>
-        public AnalysisServicesIPv4FirewallSettings IPV4FirewallSettings { get; set; }
+        public AnalysisIPv4FirewallSettings IPV4FirewallSettings { get; set; }
         /// <summary>
         /// How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error.
         /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.querypoolConnectionMode
         /// </summary>
-        public AnalysisServiceConnectionMode? QuerypoolConnectionMode { get; set; }
+        public AnalysisConnectionMode? QuerypoolConnectionMode { get; set; }
         /// <summary>
         /// The managed mode of the server (0 = not managed, 1 = managed).
         /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.managedMode
         /// </summary>
-        public AnalysisServicesManagedMode? ManagedMode { get; set; }
+        public AnalysisManagedMode? ManagedMode { get; set; }
         /// <summary>
         /// The server monitor mode for AS server
         /// Serialized Name: AnalysisServicesServerUpdateParameters.properties.serverMonitorMode

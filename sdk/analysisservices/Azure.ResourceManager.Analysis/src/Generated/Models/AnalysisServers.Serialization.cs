@@ -12,25 +12,25 @@ using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    internal partial class AnalysisServicesServers
+    internal partial class AnalysisServers
     {
-        internal static AnalysisServicesServers DeserializeAnalysisServicesServers(JsonElement element)
+        internal static AnalysisServers DeserializeAnalysisServers(JsonElement element)
         {
-            IReadOnlyList<AnalysisServicesServerData> value = default;
+            IReadOnlyList<AnalysisServerData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AnalysisServicesServerData> array = new List<AnalysisServicesServerData>();
+                    List<AnalysisServerData> array = new List<AnalysisServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisServicesServerData.DeserializeAnalysisServicesServerData(item));
+                        array.Add(AnalysisServerData.DeserializeAnalysisServerData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new AnalysisServicesServers(value);
+            return new AnalysisServers(value);
         }
     }
 }

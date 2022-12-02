@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Analysis
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _analysisServicesServerServersClientDiagnostics;
-        private ServersRestOperations _analysisServicesServerServersRestClient;
+        private ClientDiagnostics _analysisServerServersClientDiagnostics;
+        private ServersRestOperations _analysisServerServersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Analysis
         {
         }
 
-        private ClientDiagnostics AnalysisServicesServerServersClientDiagnostics => _analysisServicesServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Analysis", AnalysisServicesServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations AnalysisServicesServerServersRestClient => _analysisServicesServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AnalysisServicesServerResource.ResourceType));
+        private ClientDiagnostics AnalysisServerServersClientDiagnostics => _analysisServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Analysis", AnalysisServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations AnalysisServerServersRestClient => _analysisServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AnalysisServerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AnalysisServicesServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AnalysisServicesServerResource> GetAnalysisServicesServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisServicesServerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AnalysisServerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServicesServers");
+                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServers");
                 scope.Start();
                 try
                 {
-                    var response = await AnalysisServicesServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AnalysisServicesResources.Select(value => new AnalysisServicesServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = await AnalysisServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AnalysisServicesServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AnalysisServicesServerResource> GetAnalysisServicesServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AnalysisServerResource> GetAnalysisServers(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisServicesServerResource> FirstPageFunc(int? pageSizeHint)
+            Page<AnalysisServerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServicesServers");
+                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAnalysisServers");
                 scope.Start();
                 try
                 {
-                    var response = AnalysisServicesServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.AnalysisServicesResources.Select(value => new AnalysisServicesServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = AnalysisServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.AnalysisResources.Select(value => new AnalysisServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -104,16 +104,16 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListSkusForNew
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AnalysisServicesResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AnalysisServicesResourceSku> GetSkusForNewServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AnalysisResourceSku> GetSkusForNewServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AnalysisServicesResourceSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AnalysisResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
+                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
                 scope.Start();
                 try
                 {
-                    var response = await AnalysisServicesServerServersRestClient.ListSkusForNewAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await AnalysisServerServersRestClient.ListSkusForNewAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListSkusForNew
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AnalysisServicesResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AnalysisServicesResourceSku> GetSkusForNewServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AnalysisResourceSku> GetSkusForNewServers(CancellationToken cancellationToken = default)
         {
-            Page<AnalysisServicesResourceSku> FirstPageFunc(int? pageSizeHint)
+            Page<AnalysisResourceSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
+                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
                 scope.Start();
                 try
                 {
-                    var response = AnalysisServicesServerServersRestClient.ListSkusForNew(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = AnalysisServerServersRestClient.ListSkusForNew(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -160,13 +160,13 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalysisServicesServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalysisServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
+            using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
             try
             {
-                var response = await AnalysisServicesServerServersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var response = await AnalysisServerServersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -184,13 +184,13 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalysisServicesServerNameAvailabilityResult> CheckNameAvailabilityServer(AzureLocation location, AnalysisServicesServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AnalysisServerNameAvailabilityResult> CheckNameAvailabilityServer(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = AnalysisServicesServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
+            using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
             scope.Start();
             try
             {
-                var response = AnalysisServicesServerServersRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
+                var response = AnalysisServerServersRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Analysis.Models
     /// The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.
     /// Serialized Name: State
     /// </summary>
-    public readonly partial struct AnalysisServicesState : IEquatable<AnalysisServicesState>
+    public readonly partial struct AnalysisState : IEquatable<AnalysisState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisServicesState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AnalysisServicesState(string value)
+        public AnalysisState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -42,74 +42,74 @@ namespace Azure.ResourceManager.Analysis.Models
         /// Deleting
         /// Serialized Name: State.Deleting
         /// </summary>
-        public static AnalysisServicesState Deleting { get; } = new AnalysisServicesState(DeletingValue);
+        public static AnalysisState Deleting { get; } = new AnalysisState(DeletingValue);
         /// <summary>
         /// Succeeded
         /// Serialized Name: State.Succeeded
         /// </summary>
-        public static AnalysisServicesState Succeeded { get; } = new AnalysisServicesState(SucceededValue);
+        public static AnalysisState Succeeded { get; } = new AnalysisState(SucceededValue);
         /// <summary>
         /// Failed
         /// Serialized Name: State.Failed
         /// </summary>
-        public static AnalysisServicesState Failed { get; } = new AnalysisServicesState(FailedValue);
+        public static AnalysisState Failed { get; } = new AnalysisState(FailedValue);
         /// <summary>
         /// Paused
         /// Serialized Name: State.Paused
         /// </summary>
-        public static AnalysisServicesState Paused { get; } = new AnalysisServicesState(PausedValue);
+        public static AnalysisState Paused { get; } = new AnalysisState(PausedValue);
         /// <summary>
         /// Suspended
         /// Serialized Name: State.Suspended
         /// </summary>
-        public static AnalysisServicesState Suspended { get; } = new AnalysisServicesState(SuspendedValue);
+        public static AnalysisState Suspended { get; } = new AnalysisState(SuspendedValue);
         /// <summary>
         /// Provisioning
         /// Serialized Name: State.Provisioning
         /// </summary>
-        public static AnalysisServicesState Provisioning { get; } = new AnalysisServicesState(ProvisioningValue);
+        public static AnalysisState Provisioning { get; } = new AnalysisState(ProvisioningValue);
         /// <summary>
         /// Updating
         /// Serialized Name: State.Updating
         /// </summary>
-        public static AnalysisServicesState Updating { get; } = new AnalysisServicesState(UpdatingValue);
+        public static AnalysisState Updating { get; } = new AnalysisState(UpdatingValue);
         /// <summary>
         /// Suspending
         /// Serialized Name: State.Suspending
         /// </summary>
-        public static AnalysisServicesState Suspending { get; } = new AnalysisServicesState(SuspendingValue);
+        public static AnalysisState Suspending { get; } = new AnalysisState(SuspendingValue);
         /// <summary>
         /// Pausing
         /// Serialized Name: State.Pausing
         /// </summary>
-        public static AnalysisServicesState Pausing { get; } = new AnalysisServicesState(PausingValue);
+        public static AnalysisState Pausing { get; } = new AnalysisState(PausingValue);
         /// <summary>
         /// Resuming
         /// Serialized Name: State.Resuming
         /// </summary>
-        public static AnalysisServicesState Resuming { get; } = new AnalysisServicesState(ResumingValue);
+        public static AnalysisState Resuming { get; } = new AnalysisState(ResumingValue);
         /// <summary>
         /// Preparing
         /// Serialized Name: State.Preparing
         /// </summary>
-        public static AnalysisServicesState Preparing { get; } = new AnalysisServicesState(PreparingValue);
+        public static AnalysisState Preparing { get; } = new AnalysisState(PreparingValue);
         /// <summary>
         /// Scaling
         /// Serialized Name: State.Scaling
         /// </summary>
-        public static AnalysisServicesState Scaling { get; } = new AnalysisServicesState(ScalingValue);
-        /// <summary> Determines if two <see cref="AnalysisServicesState"/> values are the same. </summary>
-        public static bool operator ==(AnalysisServicesState left, AnalysisServicesState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="AnalysisServicesState"/> values are not the same. </summary>
-        public static bool operator !=(AnalysisServicesState left, AnalysisServicesState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalysisServicesState"/>. </summary>
-        public static implicit operator AnalysisServicesState(string value) => new AnalysisServicesState(value);
+        public static AnalysisState Scaling { get; } = new AnalysisState(ScalingValue);
+        /// <summary> Determines if two <see cref="AnalysisState"/> values are the same. </summary>
+        public static bool operator ==(AnalysisState left, AnalysisState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AnalysisState"/> values are not the same. </summary>
+        public static bool operator !=(AnalysisState left, AnalysisState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AnalysisState"/>. </summary>
+        public static implicit operator AnalysisState(string value) => new AnalysisState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AnalysisServicesState other && Equals(other);
+        public override bool Equals(object obj) => obj is AnalysisState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(AnalysisServicesState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AnalysisState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

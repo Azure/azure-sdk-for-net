@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The resource type.
         /// Serialized Name: SkuDetailsForExistingResource.resourceType
         /// </param>
-        internal AsExistingResourceSkuDetails(AnalysisServicesResourceSku sku, ResourceType? resourceType)
+        internal AsExistingResourceSkuDetails(AnalysisResourceSku sku, ResourceType? resourceType)
         {
             Sku = sku;
             ResourceType = resourceType;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// The SKU in SKU details for existing resources.
         /// Serialized Name: SkuDetailsForExistingResource.sku
         /// </summary>
-        public AnalysisServicesResourceSku Sku { get; }
+        public AnalysisResourceSku Sku { get; }
         /// <summary>
         /// The resource type.
         /// Serialized Name: SkuDetailsForExistingResource.resourceType

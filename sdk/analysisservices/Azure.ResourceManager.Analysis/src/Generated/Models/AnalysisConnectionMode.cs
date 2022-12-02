@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Analysis.Models
     /// How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error.
     /// Serialized Name: ConnectionMode
     /// </summary>
-    public enum AnalysisServiceConnectionMode
+    public enum AnalysisConnectionMode
     {
         /// <summary>
         /// All

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal static GatewayListStatusLive DeserializeGatewayListStatusLive(JsonElement element)
         {
-            Optional<AnalysisServicesStatus> status = default;
+            Optional<AnalysisStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new AnalysisServicesStatus(property.Value.GetInt32());
+                    status = new AnalysisStatus(property.Value.GetInt32());
                     continue;
                 }
             }

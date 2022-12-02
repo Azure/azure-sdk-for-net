@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisServicesServerNameAvailabilityResult
+    public partial class AnalysisServerNameAvailabilityResult
     {
-        internal static AnalysisServicesServerNameAvailabilityResult DeserializeAnalysisServicesServerNameAvailabilityResult(JsonElement element)
+        internal static AnalysisServerNameAvailabilityResult DeserializeAnalysisServerNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisServicesServerNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new AnalysisServerNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

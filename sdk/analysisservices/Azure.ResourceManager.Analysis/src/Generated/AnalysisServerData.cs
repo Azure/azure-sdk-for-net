@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis
 {
-    /// <summary> A class representing the AnalysisServicesServer data model. </summary>
-    public partial class AnalysisServicesServerData : TrackedResourceData
+    /// <summary> A class representing the AnalysisServer data model. </summary>
+    public partial class AnalysisServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AnalysisServicesServerData. </summary>
+        /// <summary> Initializes a new instance of AnalysisServerData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="analysisServicesSku">
+        /// <param name="analysisSku">
         /// The SKU of the Analysis Services resource.
         /// Serialized Name: Resource.sku
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisServicesSku"/> is null. </exception>
-        public AnalysisServicesServerData(AzureLocation location, AnalysisServicesResourceSku analysisServicesSku) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisSku"/> is null. </exception>
+        public AnalysisServerData(AzureLocation location, AnalysisResourceSku analysisSku) : base(location)
         {
-            Argument.AssertNotNull(analysisServicesSku, nameof(analysisServicesSku));
+            Argument.AssertNotNull(analysisSku, nameof(analysisSku));
 
-            AnalysisServicesSku = analysisServicesSku;
+            AnalysisSku = analysisSku;
         }
 
-        /// <summary> Initializes a new instance of AnalysisServicesServerData. </summary>
+        /// <summary> Initializes a new instance of AnalysisServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -77,15 +77,15 @@ namespace Azure.ResourceManager.Analysis
         /// The full name of the Analysis Services resource.
         /// Serialized Name: AnalysisServicesServer.properties.serverFullName
         /// </param>
-        /// <param name="analysisServicesServerSKU">
+        /// <param name="analysisServerSKU">
         /// The SKU of the Analysis Services resource.
         /// Serialized Name: AnalysisServicesServer.properties.sku
         /// </param>
-        /// <param name="analysisServicesSku">
+        /// <param name="analysisSku">
         /// The SKU of the Analysis Services resource.
         /// Serialized Name: Resource.sku
         /// </param>
-        internal AnalysisServicesServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisServicesGatewayDetails gatewayDetails, AnalysisServicesIPv4FirewallSettings iPv4FirewallSettings, AnalysisServiceConnectionMode? queryPoolConnectionMode, AnalysisServicesManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisServicesState? state, AnalysisServicesProvisioningState? provisioningState, string serverFullName, AnalysisServicesResourceSku analysisServicesServerSKU, AnalysisServicesResourceSku analysisServicesSku) : base(id, name, resourceType, systemData, tags, location)
+        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSKU, AnalysisResourceSku analysisSku) : base(id, name, resourceType, systemData, tags, location)
         {
             AsAdministrators = asAdministrators;
             BackupBlobContainerUri = backupBlobContainerUri;
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Analysis
             State = state;
             ProvisioningState = provisioningState;
             ServerFullName = serverFullName;
-            AnalysisServicesServerSKU = analysisServicesServerSKU;
-            AnalysisServicesSku = analysisServicesSku;
+            AnalysisServerSKU = analysisServerSKU;
+            AnalysisSku = analysisSku;
         }
 
         /// <summary>
@@ -129,22 +129,22 @@ namespace Azure.ResourceManager.Analysis
         /// The gateway details configured for the AS server.
         /// Serialized Name: AnalysisServicesServer.properties.gatewayDetails
         /// </summary>
-        public AnalysisServicesGatewayDetails GatewayDetails { get; set; }
+        public AnalysisGatewayDetails GatewayDetails { get; set; }
         /// <summary>
         /// The firewall settings for the AS server.
         /// Serialized Name: AnalysisServicesServer.properties.ipV4FirewallSettings
         /// </summary>
-        public AnalysisServicesIPv4FirewallSettings IPv4FirewallSettings { get; set; }
+        public AnalysisIPv4FirewallSettings IPv4FirewallSettings { get; set; }
         /// <summary>
         /// How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error.
         /// Serialized Name: AnalysisServicesServer.properties.querypoolConnectionMode
         /// </summary>
-        public AnalysisServiceConnectionMode? QueryPoolConnectionMode { get; set; }
+        public AnalysisConnectionMode? QueryPoolConnectionMode { get; set; }
         /// <summary>
         /// The managed mode of the server (0 = not managed, 1 = managed).
         /// Serialized Name: AnalysisServicesServer.properties.managedMode
         /// </summary>
-        public AnalysisServicesManagedMode? ManagedMode { get; set; }
+        public AnalysisManagedMode? ManagedMode { get; set; }
         /// <summary>
         /// The server monitor mode for AS server
         /// Serialized Name: AnalysisServicesServer.properties.serverMonitorMode
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.Analysis
         /// The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning.
         /// Serialized Name: AnalysisServicesServer.properties.state
         /// </summary>
-        public AnalysisServicesState? State { get; }
+        public AnalysisState? State { get; }
         /// <summary>
         /// The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning.
         /// Serialized Name: AnalysisServicesServer.properties.provisioningState
         /// </summary>
-        public AnalysisServicesProvisioningState? ProvisioningState { get; }
+        public AnalysisProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The full name of the Analysis Services resource.
         /// Serialized Name: AnalysisServicesServer.properties.serverFullName
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Analysis
         /// The SKU of the Analysis Services resource.
         /// Serialized Name: AnalysisServicesServer.properties.sku
         /// </summary>
-        public AnalysisServicesResourceSku AnalysisServicesServerSKU { get; set; }
+        public AnalysisResourceSku AnalysisServerSKU { get; set; }
         /// <summary>
         /// The SKU of the Analysis Services resource.
         /// Serialized Name: Resource.sku
         /// </summary>
-        public AnalysisServicesResourceSku AnalysisServicesSku { get; set; }
+        public AnalysisResourceSku AnalysisSku { get; set; }
     }
 }
