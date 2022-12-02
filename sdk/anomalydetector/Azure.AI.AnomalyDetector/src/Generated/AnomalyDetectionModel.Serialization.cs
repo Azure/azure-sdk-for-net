@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class Model
+    public partial class AnomalyDetectionModel
     {
-        internal static Model DeserializeModel(JsonElement element)
+        internal static AnomalyDetectionModel DeserializeAnomalyDetectionModel(JsonElement element)
         {
             string modelId = default;
             DateTimeOffset createdTime = default;
@@ -48,15 +48,15 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new Model(modelId, createdTime, lastUpdatedTime, modelInfo);
+            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Model FromResponse(Response response)
+        internal static AnomalyDetectionModel FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeModel(document.RootElement);
+            return DeserializeAnomalyDetectionModel(document.RootElement);
         }
     }
 }

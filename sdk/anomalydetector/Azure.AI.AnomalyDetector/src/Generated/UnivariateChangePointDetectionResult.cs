@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> The response of change point detection. </summary>
-    public partial class ChangePointDetectResponse
+    public partial class UnivariateChangePointDetectionResult
     {
-        /// <summary> Initializes a new instance of ChangePointDetectResponse. </summary>
-        internal ChangePointDetectResponse()
+        /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
+        internal UnivariateChangePointDetectionResult()
         {
             IsChangePoint = new ChangeTrackingList<bool>();
             ConfidenceScores = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of ChangePointDetectResponse. </summary>
+        /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
         /// <param name="period"></param>
         /// <param name="isChangePoint"></param>
         /// <param name="confidenceScores"></param>
-        internal ChangePointDetectResponse(int? period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores)
+        internal UnivariateChangePointDetectionResult(int? period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores)
         {
             Period = period;
             IsChangePoint = isChangePoint.ToList();

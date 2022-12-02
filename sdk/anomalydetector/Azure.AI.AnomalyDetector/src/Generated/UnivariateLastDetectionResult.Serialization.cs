@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class LastDetectResponse
+    public partial class UnivariateLastDetectionResult
     {
-        internal static LastDetectResponse DeserializeLastDetectResponse(JsonElement element)
+        internal static UnivariateLastDetectionResult DeserializeUnivariateLastDetectionResult(JsonElement element)
         {
             int period = default;
             int suggestedWindow = default;
@@ -77,15 +77,15 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new LastDetectResponse(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToNullable(severity));
+            return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToNullable(severity));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LastDetectResponse FromResponse(Response response)
+        internal static UnivariateLastDetectionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeLastDetectResponse(document.RootElement);
+            return DeserializeUnivariateLastDetectionResult(document.RootElement);
         }
     }
 }

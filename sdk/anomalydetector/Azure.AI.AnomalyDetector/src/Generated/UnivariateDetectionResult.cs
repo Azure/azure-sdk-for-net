@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> The response of entire anomaly detection. </summary>
-    public partial class EntireDetectResponse
+    public partial class UnivariateDetectionResult
     {
-        /// <summary> Initializes a new instance of EntireDetectResponse. </summary>
+        /// <summary> Initializes a new instance of UnivariateDetectionResult. </summary>
         /// <param name="period"></param>
         /// <param name="expectedValues"></param>
         /// <param name="upperMargins"></param>
@@ -24,7 +24,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="isNegativeAnomaly"></param>
         /// <param name="isPositiveAnomaly"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="expectedValues"/>, <paramref name="upperMargins"/>, <paramref name="lowerMargins"/>, <paramref name="isAnomaly"/>, <paramref name="isNegativeAnomaly"/> or <paramref name="isPositiveAnomaly"/> is null. </exception>
-        internal EntireDetectResponse(int period, IEnumerable<float> expectedValues, IEnumerable<float> upperMargins, IEnumerable<float> lowerMargins, IEnumerable<bool> isAnomaly, IEnumerable<bool> isNegativeAnomaly, IEnumerable<bool> isPositiveAnomaly)
+        internal UnivariateDetectionResult(int period, IEnumerable<float> expectedValues, IEnumerable<float> upperMargins, IEnumerable<float> lowerMargins, IEnumerable<bool> isAnomaly, IEnumerable<bool> isNegativeAnomaly, IEnumerable<bool> isPositiveAnomaly)
         {
             Argument.AssertNotNull(expectedValues, nameof(expectedValues));
             Argument.AssertNotNull(upperMargins, nameof(upperMargins));
@@ -43,7 +43,7 @@ namespace Azure.AI.AnomalyDetector
             Severity = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of EntireDetectResponse. </summary>
+        /// <summary> Initializes a new instance of UnivariateDetectionResult. </summary>
         /// <param name="period"></param>
         /// <param name="expectedValues"></param>
         /// <param name="upperMargins"></param>
@@ -52,7 +52,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="isNegativeAnomaly"></param>
         /// <param name="isPositiveAnomaly"></param>
         /// <param name="severity"></param>
-        internal EntireDetectResponse(int period, IReadOnlyList<float> expectedValues, IReadOnlyList<float> upperMargins, IReadOnlyList<float> lowerMargins, IReadOnlyList<bool> isAnomaly, IReadOnlyList<bool> isNegativeAnomaly, IReadOnlyList<bool> isPositiveAnomaly, IReadOnlyList<float> severity)
+        internal UnivariateDetectionResult(int period, IReadOnlyList<float> expectedValues, IReadOnlyList<float> upperMargins, IReadOnlyList<float> lowerMargins, IReadOnlyList<bool> isAnomaly, IReadOnlyList<bool> isNegativeAnomaly, IReadOnlyList<bool> isPositiveAnomaly, IReadOnlyList<float> severity)
         {
             Period = period;
             ExpectedValues = expectedValues.ToList();

@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class DetectionResult
+    public partial class MultivariateDetectionResult
     {
-        internal static DetectionResult DeserializeDetectionResult(JsonElement element)
+        internal static MultivariateDetectionResult DeserializeMultivariateDetectionResult(JsonElement element)
         {
             string resultId = default;
-            DetectionResultSummary summary = default;
+            MultivariateDetectionResultSummary summary = default;
             IReadOnlyList<AnomalyState> results = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (property.NameEquals("summary"))
                 {
-                    summary = DetectionResultSummary.DeserializeDetectionResultSummary(property.Value);
+                    summary = MultivariateDetectionResultSummary.DeserializeMultivariateDetectionResultSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("results"))
@@ -42,15 +42,15 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new DetectionResult(resultId, summary, results);
+            return new MultivariateDetectionResult(resultId, summary, results);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DetectionResult FromResponse(Response response)
+        internal static MultivariateDetectionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDetectionResult(document.RootElement);
+            return DeserializeMultivariateDetectionResult(document.RootElement);
         }
     }
 }

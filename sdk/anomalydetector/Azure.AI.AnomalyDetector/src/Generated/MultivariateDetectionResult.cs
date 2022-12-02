@@ -13,14 +13,14 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Detection results for the given resultId. </summary>
-    public partial class DetectionResult
+    public partial class MultivariateDetectionResult
     {
-        /// <summary> Initializes a new instance of DetectionResult. </summary>
+        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/>, <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
-        internal DetectionResult(string resultId, DetectionResultSummary summary, IEnumerable<AnomalyState> results)
+        internal MultivariateDetectionResult(string resultId, MultivariateDetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
             Argument.AssertNotNull(resultId, nameof(resultId));
             Argument.AssertNotNull(summary, nameof(summary));
@@ -31,11 +31,11 @@ namespace Azure.AI.AnomalyDetector
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of DetectionResult. </summary>
+        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
         /// <param name="results"></param>
-        internal DetectionResult(string resultId, DetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        internal MultivariateDetectionResult(string resultId, MultivariateDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
         {
             ResultId = resultId;
             Summary = summary;
@@ -45,7 +45,7 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Gets the result id. </summary>
         public string ResultId { get; }
         /// <summary> Gets the summary. </summary>
-        public DetectionResultSummary Summary { get; }
+        public MultivariateDetectionResultSummary Summary { get; }
         /// <summary> Gets the results. </summary>
         public IReadOnlyList<AnomalyState> Results { get; }
     }

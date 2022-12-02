@@ -16,7 +16,7 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static ModelList DeserializeModelList(JsonElement element)
         {
-            IReadOnlyList<Model> models = default;
+            IReadOnlyList<AnomalyDetectionModel> models = default;
             int currentCount = default;
             int maxCount = default;
             Optional<string> nextLink = default;
@@ -24,10 +24,10 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (property.NameEquals("models"))
                 {
-                    List<Model> array = new List<Model>();
+                    List<AnomalyDetectionModel> array = new List<AnomalyDetectionModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Model.DeserializeModel(item));
+                        array.Add(AnomalyDetectionModel.DeserializeAnomalyDetectionModel(item));
                     }
                     models = array;
                     continue;

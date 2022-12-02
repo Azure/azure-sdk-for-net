@@ -11,14 +11,14 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Response of getting a model. </summary>
-    public partial class Model
+    public partial class AnomalyDetectionModel
     {
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Initializes a new instance of AnomalyDetectionModel. </summary>
         /// <param name="modelId"></param>
         /// <param name="createdTime"></param>
         /// <param name="lastUpdatedTime"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        internal Model(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
+        internal AnomalyDetectionModel(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 
@@ -27,12 +27,12 @@ namespace Azure.AI.AnomalyDetector
             LastUpdatedTime = lastUpdatedTime;
         }
 
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Initializes a new instance of AnomalyDetectionModel. </summary>
         /// <param name="modelId"></param>
         /// <param name="createdTime"></param>
         /// <param name="lastUpdatedTime"></param>
         /// <param name="modelInfo"></param>
-        internal Model(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo)
+        internal AnomalyDetectionModel(string modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo)
         {
             ModelId = modelId;
             CreatedTime = createdTime;
