@@ -15,12 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
     /// </summary>
-    public abstract partial class WebLinkedServiceTypeProperties
+    public partial class WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        protected WebLinkedServiceTypeProperties(object url)
+        public WebLinkedServiceTypeProperties(object url)
         {
             Argument.AssertNotNull(url, nameof(url));
 
