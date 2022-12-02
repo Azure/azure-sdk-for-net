@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         /// <param name="allowAutoRedirect"></param>
-        public static void AllowAutoRedirect(HttpMessage message, bool allowAutoRedirect)
+        public static void SetAllowAutoRedirect(HttpMessage message, bool allowAutoRedirect)
         {
             message.SetInternalProperty(typeof(AllowRedirectsValueKey), allowAutoRedirect);
         }
