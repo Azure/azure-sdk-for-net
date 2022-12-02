@@ -342,6 +342,58 @@ namespace Azure.Core.Dynamic
         public static bool operator !=(string? left, JsonData? right) => !(left == right);
 
         /// <summary>
+        /// Returns true if a <see cref="JsonData"/> has the same value as a given int,
+        /// and false otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="JsonData"/> to compare.</param>
+        /// <param name="right">The <see cref="int"/> to compare.</param>
+        /// <returns>True if the given JsonData represents the given int, and false otherwise.</returns>
+        public static bool operator ==(JsonData? left, int right)
+        {
+            if (left is null)
+            {
+                return false;
+            }
+
+            return left.Kind == JsonValueKind.Number && ((int)left) == right;
+        }
+
+        /// <summary>
+        /// Returns false if a <see cref="JsonData"/> has the same value as a given int,
+        /// and true otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="JsonData"/> to compare.</param>
+        /// <param name="right">The <see cref="int"/> to compare.</param>
+        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        public static bool operator !=(JsonData? left, int right) => !(left == right);
+
+        /// <summary>
+        /// Returns true if a <see cref="JsonData"/> has the same value as a given int,
+        /// and false otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="int"/> to compare.</param>
+        /// <param name="right">The <see cref="JsonData"/> to compare.</param>
+        /// <returns>True if the given JsonData represents the given int, and false otherwise.</returns>
+        public static bool operator ==(int left, JsonData? right)
+        {
+            if (right is null)
+            {
+                return false;
+            }
+
+            return right.Kind == JsonValueKind.Number && ((int)right) == left;
+        }
+
+        /// <summary>
+        /// Returns false if a <see cref="JsonData"/> has the same value as a given int,
+        /// and true otherwise.
+        /// </summary>
+        /// <param name="left">The <see cref="int"/> to compare.</param>
+        /// <param name="right">The <see cref="JsonData"/> to compare.</param>
+        /// <returns>False if the given JsonData represents the given int, and false otherwise</returns>
+        public static bool operator !=(int left, JsonData? right) => !(left == right);
+
+        /// <summary>
         /// The <see cref="JsonValueKind"/> of the value of this instance.
         /// </summary>
         internal JsonValueKind Kind
@@ -437,6 +489,7 @@ namespace Azure.Core.Dynamic
         }
 
         private string? GetString() => (string?)EnsureValue();
+
         private int GetIn32()
         {
             var value = EnsureNumberValue().AsLong();
@@ -448,6 +501,7 @@ namespace Azure.Core.Dynamic
         }
 
         private long GetLong() => EnsureNumberValue().AsLong();
+
         private float GetFloat()
         {
             var value = EnsureNumberValue().AsDouble();
@@ -458,6 +512,7 @@ namespace Azure.Core.Dynamic
             return (float)value;
         }
         private double GetDouble() => EnsureNumberValue().AsDouble();
+
         private bool GetBoolean() => (bool)EnsureValue()!;
 
         private void WriteTo(Utf8JsonWriter writer)

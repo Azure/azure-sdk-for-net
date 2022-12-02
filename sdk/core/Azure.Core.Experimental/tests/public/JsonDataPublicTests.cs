@@ -350,6 +350,23 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void OperatorEqualsForInt()
+        {
+            dynamic fiveJson = new BinaryData("{ \"value\": 5 }").ToDynamic().value;
+            dynamic sixJson = new BinaryData("{ \"value\": 6 }").ToDynamic().value;
+
+            Assert.IsTrue(fiveJson == 5);
+            Assert.IsTrue(5 == fiveJson);
+            Assert.IsFalse(fiveJson != 5);
+            Assert.IsFalse(5 != fiveJson);
+
+            Assert.IsFalse(sixJson == 5);
+            Assert.IsFalse(5 == sixJson);
+            Assert.IsTrue(sixJson != 5);
+            Assert.IsTrue(5 != sixJson);
+        }
+
+        [Test]
         public void OperatorEqualsForString()
         {
             dynamic fooJson = new BinaryData("\"foo\"").ToDynamic();
