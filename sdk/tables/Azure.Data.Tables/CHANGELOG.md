@@ -10,6 +10,7 @@
 - Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.
 
 ### Other Changes
+- `TableClient.CreateIfNotExists` / `TableClient.CreateIfNotExistsAsync` documentation corrected (methods do not return `null` if the table already exists)
 
 ## 12.7.1 (2022-12-06)
 

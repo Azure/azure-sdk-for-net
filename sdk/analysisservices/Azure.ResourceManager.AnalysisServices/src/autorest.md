@@ -17,15 +17,19 @@ modelerfour:
   flatten-payloads: false
 
 
-# rename-mapping:
-#   State: AnalysisServicesState
-#   Status: AnalysisServicesStatus
-#   AnalysisServicesServers.value: Resources
+rename-mapping:
+  State: AnalysisServicesState
+  Status: AnalysisServicesStatus
+  AnalysisServicesServers.value: AnalysisServicesResources
 #   SkuEnumerationForNewResourceResult.value: SKUs
-#   SkuEnumerationForExistingResourceResult.value: SKUs
-#   Resource.sku: AnalysisServicesSKU
-#   AnalysisServicesServer.properties.sku: AnalysisServicesServerSKU
-#   ServerAdministrators.members: AdministratorIdentities
+  Resource.sku: AnalysisServicesSKU
+  AnalysisServicesServer.properties.sku: AnalysisServicesServerSKU
+  ServerAdministrators.members: AsAdministratorIdentities
+  CheckServerNameAvailabilityResult.nameAvailable: IsNameAvailable
+  IPv4FirewallSettings.enablePowerBIService: IsPowerBIServiceEnabled
+  SkuDetailsForExistingResource: ExistingResourceSkuDetails
+  SkuEnumerationForExistingResourceResult: ExistingResourceResultSkuEnumeration
+  SkuEnumerationForNewResourceResult: NewResourceResultSkuEnumeration
 #   SkuEnumerationForExistingResourceResult.value: ExistingResources
 
 format-by-name-rules:
@@ -70,5 +74,8 @@ directive:
           "name": "ServerMonitorMode",
           "modelAsString": true
         }
+  - from: analysisservices.json
+    where: $.definitions.SkuDetailsForExistingResource.properties.resourceType
+    transform: $["x-ms-format"] = "resource-type"
 
 ```

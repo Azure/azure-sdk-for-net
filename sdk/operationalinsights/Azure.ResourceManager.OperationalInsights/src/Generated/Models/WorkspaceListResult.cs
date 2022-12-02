@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
         internal WorkspaceListResult()
         {
-            Value = new ChangeTrackingList<WorkspaceData>();
+            Value = new ChangeTrackingList<OperationalInsightsWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
         /// <param name="value"> A list of workspaces. </param>
-        internal WorkspaceListResult(IReadOnlyList<WorkspaceData> value)
+        internal WorkspaceListResult(IReadOnlyList<OperationalInsightsWorkspaceData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of workspaces. </summary>
-        public IReadOnlyList<WorkspaceData> Value { get; }
+        public IReadOnlyList<OperationalInsightsWorkspaceData> Value { get; }
     }
 }
