@@ -25,22 +25,22 @@ namespace Azure.Core.Shared
 
         public static void SetHostAffinity(HttpMessage message, bool hostAffinity)
         {
-            message.SetInternalProperty(typeof(HostAffinityKey), hostAffinity);
+            message.SetProperty(typeof(HostAffinityKey), hostAffinity);
         }
 
         private static bool GetHostAffinity(HttpMessage message)
         {
-            return message.TryGetInternalProperty(typeof(HostAffinityKey), out object? hostAffinity) && hostAffinity is true;
+            return message.TryGetProperty(typeof(HostAffinityKey), out object? hostAffinity) && hostAffinity is true;
         }
 
         private static void SetPrimaryHost(HttpMessage message)
         {
-            message.SetInternalProperty(typeof(PrimaryHostKey), message.Request.Uri.Host!);
+            message.SetProperty(typeof(PrimaryHostKey), message.Request.Uri.Host!);
         }
 
         private static string GetPrimaryHost(HttpMessage message)
         {
-            message.TryGetInternalProperty(typeof(PrimaryHostKey), out object? primaryHost);
+            message.TryGetProperty(typeof(PrimaryHostKey), out object? primaryHost);
             return (string)primaryHost!;
         }
 
