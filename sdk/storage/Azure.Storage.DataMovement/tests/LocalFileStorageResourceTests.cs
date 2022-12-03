@@ -66,6 +66,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public void Ctor_string()
         {
             // Arrange
@@ -81,6 +82,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task ReadStreamAsync()
         {
             // Arrange
@@ -103,6 +105,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task ReadStreamAsync_Position()
         {
             // Arrange
@@ -128,6 +131,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task ReadStreamAsync_Error()
         {
             // Arrange
@@ -146,6 +150,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task WriteStreamAsync()
         {
             // Arrange
@@ -184,6 +189,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task WriteStreamAsync_Position()
         {
             // Arrange
@@ -224,10 +230,11 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task WriteStreamAsync_Error()
         {
             // Arrange
-            string path = "C:\\FakeFileName";
+            string path = Path.GetTempFileName();
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
             var length = Constants.KB;
             var data = GetRandomBuffer(length);
@@ -238,13 +245,14 @@ namespace Azure.Storage.DataMovement.Tests
                     await storageResource.WriteFromStreamAsync(stream, false);
                 }
             }
-            catch (UnauthorizedAccessException ex)
+            catch (IOException ex)
             {
-                Assert.AreEqual(ex.Message, $"Access to the path '{path}' is denied.");
+                Assert.AreEqual(ex.Message, $"File path {path} already exists. Cannot overwite file");
             }
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -262,6 +270,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -280,6 +289,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task CompleteTransferAsync()
         {
             // Arrange
