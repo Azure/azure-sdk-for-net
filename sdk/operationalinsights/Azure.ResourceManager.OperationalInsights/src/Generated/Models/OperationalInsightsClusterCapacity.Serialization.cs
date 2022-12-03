@@ -11,13 +11,5 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal static partial class OperationalInsightsClusterCapacityExtensions
     {
-        public static OperationalInsightsClusterCapacity ToOperationalInsightsClusterCapacity(this long value)
-        {
-            if (value == 500L) return OperationalInsightsClusterCapacity.FiveHundred;
-            if (value == 1000L) return OperationalInsightsClusterCapacity.TenHundred;
-            if (value == 2000L) return OperationalInsightsClusterCapacity.TwoThousand;
-            if (value == 5000L) return OperationalInsightsClusterCapacity.FiveThousand;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationalInsightsClusterCapacity value.");
-        }
     }
 }
