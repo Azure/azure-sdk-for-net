@@ -80,6 +80,11 @@ jobs:
           MatrixName: 'Windows'
   variables:
   - ${{ parameters.Variables }}
+  - name: Profile
+    ${{ if parameters.Profile }}:
+      value: '--profile'
+    ${{ else }}:
+      value: ''
   pool:
     name: $(Pool)
     vmImage: $(OSVmImage)
@@ -128,8 +133,7 @@ jobs:
       --tests "${{ parameters.Tests }}"
       --arguments "${{ parameters.Arguments }}"
       --iterations ${{ parameters.Iterations }}
-      ${{ if parameters.Profile }}:
-        --profile
+      $(Profile)
       ${{ parameters.AdditionalArguments }}
     workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
     env:
