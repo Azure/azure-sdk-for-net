@@ -1,14 +1,14 @@
 # Azure Storage Common client library for .NET
 
-> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
+> Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
 
 Azure Storage is a Microsoft-managed service providing cloud storage that is
-highly available, secure, durable, scalable, and redundant. Azure Storage
-includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
-and Azure Queues.
+highly available, secure, durable, scalable, and redundant.
 
-The Azure.Storage.DataMovement library provides infrastructure shared by the other
-Azure Storage client libraries.
+The Azure Storage Data Movement library is optimized for uploading, downloading and
+copying customer data.
+
+Currently this version of the Data Movement library only supports Blobs.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
@@ -16,11 +16,11 @@ Azure Storage client libraries.
 
 ### Install the package
 
-Install the Azure Storage DataMovement client library for .NET you'd like to use with
+Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.DataMovement` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement.Blobs
+dotnet add package Azure.Storage.DataMovement
 ```
 
 ### Prerequisites
@@ -35,6 +35,11 @@ Here's an example using the Azure CLI:
 ```Powershell
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
+
+### Authenticate the client
+In order to interact with the Data Movement library you have to create an instance with the TransferManager class.
+
+TODO: Insert code snippet here.
 
 ## Key concepts
 
@@ -86,8 +91,8 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src
-[package]: https://www.nuget.org/packages/Azure.Storage.Common/
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/src
+[package]: https://www.nuget.org/packages/Azure.Storage.Data/
 [docs]: https://docs.microsoft.com/dotnet/api/azure.storage
 [rest_docs]: https://docs.microsoft.com/rest/api/storageservices/
 [product_docs]: https://docs.microsoft.com/azure/storage/

@@ -37,6 +37,11 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the client
+In order to interact with the Data Movement library you have to create an instance with the TransferManager class.
+
+TODO: Insert code snippet here.
+
 ## Key concepts
 
 The Azure Storage Common client library contains shared infrastructure like
