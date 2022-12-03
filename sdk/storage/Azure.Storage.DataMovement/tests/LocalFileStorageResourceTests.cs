@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement;
@@ -12,47 +15,78 @@ using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Mono.Unix.Native;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     public class LocalFileStorageResourceTests : StorageTestBase<StorageTestEnvironment>
     {
+        private readonly FileSystemAccessRule _winAcl;
         public LocalFileStorageResourceTests(bool async)
            : base(async, null /* TestMode.Record /* to re-record */)
-        { }
-
-        private static string CreateRandomFile(string parentPath)
         {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, Path.GetRandomFileName())))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return fs.Name;
+                string currentUser = WindowsIdentity.GetCurrent().Name;
+                _winAcl = new FileSystemAccessRule(currentUser, FileSystemRights.ReadData, AccessControlType.Deny);
             }
         }
 
+        private string[] fileNames => new[]
+        {
+            "C:\\Users\\user1\\Documents\file.txt",
+            "C:\\Users\\user1\\Documents\file",
+            "C:\\Users\\user1\\Documents\file\\",
+            "user1\\Documents\file\\",
+        };
+
+        private void AllowReadData(string path, bool isDirectory, bool allowRead)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Dynamically will be set to correct type supplied by user
+                dynamic fsInfo = isDirectory ? new DirectoryInfo(path) : new FileInfo(path);
+                dynamic fsSec = FileSystemAclExtensions.GetAccessControl(fsInfo);
+
+                fsSec.ModifyAccessRule(allowRead ? AccessControlModification.Remove : AccessControlModification.Add, _winAcl, out bool result);
+
+                FileSystemAclExtensions.SetAccessControl(fsInfo, fsSec);
+            }
+#if !NETFRAMEWORK
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                FilePermissions permissions = (allowRead ?
+                    (FilePermissions.S_IRWXU | FilePermissions.S_IRWXG | FilePermissions.S_IRWXO) :
+                    (FilePermissions.S_IWUSR | FilePermissions.S_IWGRP | FilePermissions.S_IWOTH));
+
+                Syscall.chmod(path, permissions);
+            }
+#endif
+        }
+
         [Test]
-        [TestCase("C:\\Users\\user1\\Documents\file.txt")]
-        [TestCase("C:\\Users\\user1\\Documents\file")]
-        [TestCase("C:\\Users\\user1\\Documents\file\\")]
-        [TestCase("user1\\Documents\file\\")]
-        public void Ctor_string(string path)
+        public void Ctor_string()
         {
             // Arrange
-            LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
+            foreach (string path in fileNames)
+            {
+                LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
-            // Assert
-            Assert.AreEqual(path, storageResource.Path);
-            Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
-            Assert.AreEqual(TransferCopyMethod.None, storageResource.ServiceCopyMethod);
+                // Assert
+                Assert.AreEqual(path, storageResource.Path);
+                Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
+                Assert.AreEqual(TransferCopyMethod.None, storageResource.ServiceCopyMethod);
+            }
         }
 
         [Test]
         public async Task ReadStreamAsync()
         {
             // Arrange
-            string path = CreateRandomFile(Path.GetTempPath());
-            var length = Constants.KB;
-            var data = GetRandomBuffer(length);
+            var size = Constants.KB;
+            string path = await CreateRandomFileAsync(Path.GetTempPath(), size:0);
+            var data = GetRandomBuffer(size);
             using (var stream = new MemoryStream(data))
             {
                 using FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate);
@@ -72,7 +106,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ReadStreamAsync_Position()
         {
             // Arrange
-            string path = CreateRandomFile(Path.GetTempPath());
+            string path = await CreateRandomFileAsync(Path.GetTempPath(), size: 0);
             var length = Constants.KB;
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
@@ -97,82 +131,116 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ReadStreamAsync_Error()
         {
             // Arrange
-            string path = "C:/FakeFileName";
+            string path = "C:\\FakeFileName";
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act without creating the blob
-            await TestHelper.AssertExpectedExceptionAsync<Exception>(
-                storageResource.ReadStreamAsync(),
-                e =>
-                {
-                    Assert.IsTrue(e.Message.Contains("Could not find file"));
-                });
+            try
+            {
+                await storageResource.ReadStreamAsync();
+            }
+            catch (FileNotFoundException ex)
+            {
+                Assert.AreEqual(ex.Message, $"Could not find file '{path}'.");
+            }
         }
 
         [Test]
         public async Task WriteStreamAsync()
         {
             // Arrange
-            string path = CreateRandomFile(Path.GetTempPath());
-            var length = Constants.KB;
-            var data = GetRandomBuffer(length);
-
-            // Act
-            LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            using (var stream = new MemoryStream(data))
+            string tempPath = Path.GetTempPath();
+            string tempFile = string.Concat(tempPath, Path.GetRandomFileName());
+            try
             {
-                // Act
-                await storageResource.WriteFromStreamAsync(stream, false);
-            }
+                var length = Constants.KB;
+                var data = GetRandomBuffer(length);
 
-            // Assert
-            using FileStream pathStream = new FileStream(path, FileMode.Open);
-            Assert.NotNull(pathStream);
-            TestHelper.AssertSequenceEqual(data, pathStream.AsBytes().ToArray());
+                // Act
+                LocalFileStorageResource storageResource = new LocalFileStorageResource(tempFile);
+                using (var stream = new MemoryStream(data))
+                {
+                    // Act
+                    await storageResource.WriteFromStreamAsync(
+                        stream,
+                        false,
+                        streamLength: length,
+                        completeLength: length);
+                }
+
+                // Assert
+                using FileStream pathStream = new FileStream(tempFile, FileMode.Open);
+                Assert.NotNull(pathStream);
+                TestHelper.AssertSequenceEqual(data, pathStream.AsBytes().ToArray());
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.StackTrace);
+            }
+            finally
+            {
+                File.Delete(tempFile);
+            }
         }
 
         [Test]
         public async Task WriteStreamAsync_Position()
         {
             // Arrange
-            string path = CreateRandomFile(Path.GetTempPath());
-            var length = Constants.KB;
-            var data = GetRandomBuffer(length);
-
-            // Act
-            var readPosition = 5;
-            LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            using (var stream = new MemoryStream(data))
+            var writePosition = 5;
+            string path = await CreateRandomFileAsync(Path.GetTempPath(), size: writePosition);
+            try
             {
-                // Act
-                await storageResource.WriteFromStreamAsync(stream, false, position: readPosition);
-            }
+                var length = Constants.KB;
+                var data = GetRandomBuffer(length);
 
-            // Assert
-            using FileStream pathStream = new FileStream(path, FileMode.Open);
-            Assert.NotNull(pathStream);
-            byte[] copiedData = new byte[data.Length - readPosition];
-            Array.Copy(data, readPosition, copiedData, 0, data.Length - readPosition);
-            TestHelper.AssertSequenceEqual(copiedData, pathStream.AsBytes().ToArray());
+                // Act
+                LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
+                using (var stream = new MemoryStream(data))
+                {
+                    // Act
+                    await storageResource.WriteFromStreamAsync(
+                        stream,
+                        false,
+                        position: writePosition,
+                        streamLength: length,
+                        completeLength: length);
+                }
+
+                // Assert
+                using FileStream pathStream = new FileStream(path, FileMode.Open);
+                Assert.NotNull(pathStream);
+                pathStream.Seek(writePosition, SeekOrigin.Begin);
+                TestHelper.AssertSequenceEqual(data, pathStream.AsBytes().ToArray());
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.StackTrace);
+            }
+            finally
+            {
+                File.Delete(path);
+            }
         }
 
         [Test]
         public async Task WriteStreamAsync_Error()
         {
             // Arrange
-            string path = "C:/FakeFileName";
+            string path = "C:\\FakeFileName";
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
             var length = Constants.KB;
             var data = GetRandomBuffer(length);
-            using (var stream = new MemoryStream(data))
+            try
             {
-                // Act without creating the blob
-                await TestHelper.AssertExpectedExceptionAsync<Exception>(
-                    storageResource.WriteFromStreamAsync(stream, false),
-                    e =>
-                    {
-                        Assert.IsTrue(e.Message.Contains("Could not find file"));
-                    });
+                using (var stream = new MemoryStream(data))
+                {
+                    await storageResource.WriteFromStreamAsync(stream, false);
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Assert.AreEqual(ex.Message, $"Access to the path '{path}' is denied.");
             }
         }
 
@@ -180,7 +248,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            string path = CreateRandomFile(Path.GetTempPath());
+            int size = Constants.KB;
+            string path = await CreateRandomFileAsync(Path.GetTempPath(), size: size);
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
@@ -188,7 +257,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, Constants.KB);
+            Assert.AreEqual(result.ContentLength, size);
             Assert.NotNull(result.ETag);
         }
 
@@ -200,19 +269,21 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.GetPropertiesAsync(),
-                e =>
-                {
-                    Assert.IsTrue(e.Message.Contains("The specified blob does not exist."));
-                });
+            try
+            {
+                await storageResource.GetPropertiesAsync();
+            }
+            catch (FileNotFoundException ex)
+            {
+                Assert.AreEqual(ex.Message, "Unable to find the specified file.");
+            }
         }
 
         [Test]
         public async Task CompleteTransferAsync()
         {
             // Arrange
-            string path = CreateRandomFile(Path.GetTempPath());
+            string path = await CreateRandomFileAsync(Path.GetTempPath(), size: 0);
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
@@ -220,22 +291,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.IsTrue(File.Exists(path));
-        }
-
-        [Test]
-        public async Task CompleteTransferAsync_Error()
-        {
-            // Arrange
-            string path = "C:/FakeFileName";
-            LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.GetPropertiesAsync(),
-                e =>
-                {
-                    Assert.IsTrue(e.Message.Contains("The specified blob does not exist."));
-                });
         }
     }
 }

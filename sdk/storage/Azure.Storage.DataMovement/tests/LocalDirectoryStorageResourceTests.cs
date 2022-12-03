@@ -20,6 +20,14 @@ namespace Azure.Storage.DataMovement.Tests
            : base(async, null /* TestMode.Record /* to re-record */)
         { }
 
+        private string[] fileNames => new[]
+        {
+            "C:\\Users\\user1\\Documents\file.txt",
+            "C:\\Users\\user1\\Documents\file",
+            "C:\\Users\\user1\\Documents\file\\",
+            "user1\\Documents\file\\",
+        };
+
         private static string CreateRandomDirectory(string parentPath)
         {
             return Directory.CreateDirectory(Path.Combine(parentPath, Path.GetRandomFileName())).FullName;
@@ -34,18 +42,17 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase("C:\\Users\\user1\\Documents\file.txt")]
-        [TestCase("C:\\Users\\user1\\Documents\file")]
-        [TestCase("C:\\Users\\user1\\Documents\file\\")]
-        [TestCase("user1\\Documents\file\\")]
-        public void Ctor_string(string path)
+        public void Ctor_string()
         {
-            // Arrange
-            LocalDirectoryStorageResourceContainer storageResource = new LocalDirectoryStorageResourceContainer(path);
+            foreach (string path in fileNames)
+            {
+                // Arrange
+                LocalDirectoryStorageResourceContainer storageResource = new LocalDirectoryStorageResourceContainer(path);
 
-            // Assert
-            Assert.AreEqual(path, storageResource.Path);
-            Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
+                // Assert
+                Assert.AreEqual(path, storageResource.Path);
+                Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
+            }
         }
 
         [Test]
@@ -105,14 +112,14 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 string fileName = CreateRandomFile(folderPath);
                 paths.Add(fileName);
-                fileNames.Add(fileName.Substring(folderPath.Length));
+                fileNames.Add(fileName.Substring(folderPath.Length + 1));
             }
             string subdir = CreateRandomDirectory(folderPath);
             for (int i = 0; i < 3; i++)
             {
                 string fileName = CreateRandomFile(subdir);
                 paths.Add(fileName);
-                fileNames.Add(fileName.Substring(subdir.Length));
+                fileNames.Add(fileName.Substring(folderPath.Length + 1));
             }
 
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);

@@ -284,6 +284,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob_SmallChunks()
         {
             long size = Constants.KB;
@@ -313,6 +314,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 400)]
         [TestCase(Constants.GB, 800)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob_Progress(long size, int waitTimeInSec)
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
@@ -333,6 +335,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob_EventHandler()
         {
             // Arrange
@@ -377,6 +380,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 400)]
         [TestCase(Constants.GB, 1000)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob_BlobSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -399,6 +403,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 600)]
         [TestCase(2, Constants.GB, 2000)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob_Multiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
@@ -560,6 +565,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToPageBlob()
         {
             // Arrange
@@ -579,6 +585,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 400)]
         [TestCase(Constants.GB, 800)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToPageBlob_Progress(long size, int waitTimeInSec)
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
@@ -600,6 +607,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToPageBlob_EventHandler()
         {
             // Arrange
@@ -644,6 +652,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 400)]
         [TestCase(Constants.GB, 1000)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToPageBlob_BlobSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -689,6 +698,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 600)]
         [TestCase(2, Constants.GB, 2000)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToPageBlob_Multiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
@@ -848,6 +858,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToAppendBlob()
         {
             // Arrange
@@ -867,6 +878,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 400)]
         [TestCase(Constants.GB, 800)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToAppendBlob_Progress(long size, int waitTimeInSec)
         {
             AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
@@ -888,6 +900,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToAppendBlob_EventHandler()
         {
             // Arrange
@@ -923,6 +936,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 400)]
         [TestCase(Constants.GB, 1000)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToAppendBlob_BlobSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -968,6 +982,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 600)]
         [TestCase(2, Constants.GB, 2000)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToAppendBlob_Multiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Security.AccessControl;
 using System.Runtime.InteropServices;
+using Azure.Storage.Test;
 #if !NETFRAMEWORK
 using Mono.Unix.Native;
 #endif
@@ -54,17 +55,18 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             IEnumerable<FileSystemInfo> result = scanner.Scan(); // Conversion to list is necessary because results from Scan() disappear once read
+            List<string> pathNames = result.Select(p => p.FullName).ToList();
 
             // Assert
             Assert.Multiple(() =>
             {
-                CollectionAssert.Contains(result, folder, "Missing entry for the working folder.");
-                CollectionAssert.Contains(result, openSubfolder, "Missing entry for the readable subfolder.");
-                CollectionAssert.Contains(result, lockedSubfolder, "Missing entry for the unreadable subfolder.");
-                CollectionAssert.Contains(result, openChild, "Missing entry for the readable child.");
-                CollectionAssert.Contains(result, openSubchild, "Missing entry for the readable subchild.");
-                CollectionAssert.Contains(result, lockedChild, "Missing entry for the unreadable child."); // No permissions on file, but that should be dealt with by caller
-                CollectionAssert.DoesNotContain(result, lockedSubchild); // No permissions to enumerate folder, children not returned
+                CollectionAssert.Contains(pathNames, folder, "Missing entry for the working folder.");
+                CollectionAssert.Contains(pathNames, openSubfolder, "Missing entry for the readable subfolder.");
+                CollectionAssert.Contains(pathNames, lockedSubfolder, "Missing entry for the unreadable subfolder.");
+                CollectionAssert.Contains(pathNames, openChild, "Missing entry for the readable child.");
+                CollectionAssert.Contains(pathNames, openSubchild, "Missing entry for the readable subchild.");
+                CollectionAssert.Contains(pathNames, lockedChild, "Missing entry for the unreadable child."); // No permissions on file, but that should be dealt with by caller
+                CollectionAssert.DoesNotContain(pathNames, lockedSubchild); // No permissions to enumerate folder, children not returned
             });
 
             // Cleanup
@@ -87,10 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
             PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
-            IEnumerable<FileSystemInfo> result = scanner.Scan();
-
-            // Act/Assert
-            CollectionAssert.Contains(result, folder);
+            scanner.Scan();
 
             // Cleanup
             AllowReadData(folder, true, true);
@@ -109,9 +108,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             IEnumerable<FileSystemInfo> result = scanner.Scan();
+            List<string> pathNames = result.Select(p => p.FullName).ToList();
 
             // Assert
-            CollectionAssert.Contains(result, file);
+            CollectionAssert.Contains(pathNames, file);
 
             // Cleanup
             File.Delete(file);
@@ -130,9 +130,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             IEnumerable<FileSystemInfo> result = scanner.Scan();
+            List<string> pathNames = result.Select(p => p.FullName).ToList();
 
             // Assert
-            CollectionAssert.Contains(result, file);
+            CollectionAssert.Contains(pathNames, file);
 
             // Cleanup
             AllowReadData(file, true, true);

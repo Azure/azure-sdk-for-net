@@ -37,11 +37,11 @@ namespace Azure.Storage.DataMovement.Tests
         public void EnsureCompleted_CancellationToken()
         {
             DataTransfer transfer = new DataTransfer(StorageTransferStatus.Queued);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
             TestHelper.AssertExpectedException(
                 () => transfer.EnsureCompleted(cancellationTokenSource.Token),
-                new InvalidOperationException("Data Transfer is not completed"));
+                new TaskCanceledException("The operation was canceled."));
         }
 
         [Test]
@@ -55,14 +55,16 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AwaitCompletion_CancellationToken()
         {
             DataTransfer transfer = new DataTransfer(StorageTransferStatus.Queued);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
-            await TestHelper.AssertExpectedExceptionAsync<Exception>(
-                transfer.AwaitCompletion(cancellationTokenSource.Token),
-                e =>
-                {
-                    Assert.NotNull(e);
-                });
+            try
+            {
+                await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            }
+            catch (TaskCanceledException exception)
+            {
+                Assert.AreEqual(exception.Message, "The operation was canceled.");
+            }
         }
     }
 }

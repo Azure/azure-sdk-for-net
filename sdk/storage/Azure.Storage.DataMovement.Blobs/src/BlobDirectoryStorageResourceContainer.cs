@@ -173,7 +173,15 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // TODO: if there's no parent directory, that means we should return the BlobStorageResourceContainer instead
             // Recreate the blobName using the existing parent directory path
-            return new BlobDirectoryStorageResourceContainer(_blobContainerClient, _directoryPrefix.Substring(0, _directoryPrefix.LastIndexOf('/')));
+            int delimiter = _directoryPrefix.LastIndexOf('/');
+            if (delimiter > -1)
+            {
+                return new BlobDirectoryStorageResourceContainer(_blobContainerClient, _directoryPrefix.Substring(0, delimiter));
+            }
+            else
+            {
+                return new BlobStorageResourceContainer(_blobContainerClient);
+            }
         }
 
         /// <summary>

@@ -142,6 +142,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(4 * Constants.MB, 200)]
         [TestCase(257 * Constants.MB, 500)]
         [TestCase(Constants.GB, 500)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DownloadDirectoryAsync(int size, int waitInSec)
         {
             // Arrange
@@ -204,6 +205,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DownloadDirectoryAsync_Empty()
         {
             // Arrange
@@ -241,6 +243,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DownloadDirectoryAsync_SingleFile()
         {
             // Arrange
@@ -282,6 +285,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DownloadDirectoryAsync_ManySubDirectories()
         {
             // Arrange
@@ -338,6 +342,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DownloadDirectoryAsync_SubDirectoriesLevels(int level)
         {
             // Arrange
