@@ -128,7 +128,8 @@ jobs:
       --tests "${{ parameters.Tests }}"
       --arguments "${{ parameters.Arguments }}"
       --iterations ${{ parameters.Iterations }}
-      --profile ${{ parameters.Profile }}
+      ${{ if parameters.Profile }}:
+        --profile
       ${{ parameters.AdditionalArguments }}
     workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
     env:
