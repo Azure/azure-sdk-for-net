@@ -119,7 +119,9 @@ namespace Azure.Core.Dynamic
         public bool Equals(Azure.Core.Dynamic.JsonData other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.Dynamic.JsonData? left, int right) { throw null; }
         public static bool operator ==(Azure.Core.Dynamic.JsonData? left, string? right) { throw null; }
+        public static bool operator ==(int left, Azure.Core.Dynamic.JsonData? right) { throw null; }
         public static bool operator ==(string? left, Azure.Core.Dynamic.JsonData? right) { throw null; }
         public static explicit operator bool (Azure.Core.Dynamic.JsonData json) { throw null; }
         public static explicit operator double (Azure.Core.Dynamic.JsonData json) { throw null; }
@@ -132,7 +134,9 @@ namespace Azure.Core.Dynamic
         public static explicit operator float? (Azure.Core.Dynamic.JsonData json) { throw null; }
         public static explicit operator float (Azure.Core.Dynamic.JsonData json) { throw null; }
         public static explicit operator string (Azure.Core.Dynamic.JsonData json) { throw null; }
+        public static bool operator !=(Azure.Core.Dynamic.JsonData? left, int right) { throw null; }
         public static bool operator !=(Azure.Core.Dynamic.JsonData? left, string? right) { throw null; }
+        public static bool operator !=(int left, Azure.Core.Dynamic.JsonData? right) { throw null; }
         public static bool operator !=(string? left, Azure.Core.Dynamic.JsonData? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
