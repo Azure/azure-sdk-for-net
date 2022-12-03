@@ -8,15 +8,15 @@
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The capacity value. </summary>
-    public enum OperationalInsightsClusterCapacity
+    public enum OperationalInsightsClusterCapacity : long
     {
         /// <summary> 500. </summary>
-        FiveHundred,
+        FiveHundred = 500L,
         /// <summary> 1000. </summary>
-        TenHundred,
+        TenHundred = 1000L,
         /// <summary> 2000. </summary>
-        TwoThousand,
+        TwoThousand = 2000L,
         /// <summary> 5000. </summary>
-        FiveThousand
+        FiveThousand = 5000L
     }
 }
