@@ -52,9 +52,3 @@ if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object bl
     await blobClient.DeleteAsync();
 }
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample10_ClaimCheck.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample10_ClaimCheck.cs)

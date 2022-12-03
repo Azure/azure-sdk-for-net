@@ -76,9 +76,9 @@ namespace Azure.Communication.MediaComposition
         public GroupCallOutput(string id) { }
         public string Id { get { throw null; } set { } }
     }
-    public partial class InputGroup
+    public abstract partial class InputGroup
     {
-        public InputGroup() { }
+        protected InputGroup() { }
         public string Height { get { throw null; } set { } }
         public string Layer { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.InputPosition Position { get { throw null; } set { } }
@@ -384,18 +384,18 @@ namespace Azure.Communication.MediaComposition.Models
         public int Height { get { throw null; } set { } }
         public int Width { get { throw null; } set { } }
     }
-    public partial class MediaCompositionLayout
+    public abstract partial class MediaCompositionLayout
     {
         internal MediaCompositionLayout() { }
         public string PlaceholderImageUri { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.LayoutResolution Resolution { get { throw null; } set { } }
     }
-    public partial class MediaInput
+    public abstract partial class MediaInput
     {
         internal MediaInput() { }
         public string PlaceholderImageUri { get { throw null; } set { } }
     }
-    public partial class MediaOutput
+    public abstract partial class MediaOutput
     {
         internal MediaOutput() { }
     }

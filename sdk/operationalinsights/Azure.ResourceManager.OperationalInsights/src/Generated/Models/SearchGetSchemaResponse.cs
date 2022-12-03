@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of SearchGetSchemaResponse. </summary>
         internal SearchGetSchemaResponse()
         {
-            Value = new ChangeTrackingList<SearchSchemaValue>();
+            Value = new ChangeTrackingList<OperationalInsightsSearchSchemaValue>();
         }
 
         /// <summary> Initializes a new instance of SearchGetSchemaResponse. </summary>
         /// <param name="metadata"> The metadata from search results. </param>
         /// <param name="value"> The array of result values. </param>
-        internal SearchGetSchemaResponse(SearchMetadata metadata, IReadOnlyList<SearchSchemaValue> value)
+        internal SearchGetSchemaResponse(SearchMetadata metadata, IReadOnlyList<OperationalInsightsSearchSchemaValue> value)
         {
             Metadata = metadata;
             Value = value;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> The metadata from search results. </summary>
         public SearchMetadata Metadata { get; }
         /// <summary> The array of result values. </summary>
-        public IReadOnlyList<SearchSchemaValue> Value { get; }
+        public IReadOnlyList<OperationalInsightsSearchSchemaValue> Value { get; }
     }
 }

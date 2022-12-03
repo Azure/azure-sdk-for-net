@@ -19,16 +19,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        public PartialManagedServiceIdentity Identity { get; set; }
-        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
-        public string Kind { get; set; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
         /// <summary> Additional attributes of the entity. </summary>
-        public PartialBatchDeployment Properties { get; set; }
-        /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
-        public PartialSku Sku { get; set; }
+        internal PartialBatchDeployment Properties { get; set; }
+        /// <summary> Description of the endpoint deployment. </summary>
+        public string PartialBatchDeploymentDescription
+        {
+            get => Properties is null ? default : Properties.Description;
+            set
+            {
+                if (Properties is null)
+                    Properties = new PartialBatchDeployment();
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

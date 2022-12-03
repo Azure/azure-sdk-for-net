@@ -10,68 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ScheduleBase : IUtf8JsonSerializable
+    public partial class ScheduleBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EndOn))
-            {
-                if (EndOn != null)
-                {
-                    writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("endTime");
-                }
-            }
-            if (Optional.IsDefined(ScheduleStatus))
-            {
-                writer.WritePropertyName("scheduleStatus");
-                writer.WriteStringValue(ScheduleStatus.Value.ToString());
-            }
-            writer.WritePropertyName("scheduleType");
-            writer.WriteStringValue(ScheduleType.ToString());
-            if (Optional.IsDefined(StartOn))
-            {
-                if (StartOn != null)
-                {
-                    writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startTime");
-                }
-            }
-            if (Optional.IsDefined(TimeZone))
-            {
-                if (TimeZone != null)
-                {
-                    writer.WritePropertyName("timeZone");
-                    writer.WriteStringValue(TimeZone);
-                }
-                else
-                {
-                    writer.WriteNull("timeZone");
-                }
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ScheduleBase DeserializeScheduleBase(JsonElement element)
         {
-            if (element.TryGetProperty("scheduleType", out JsonElement discriminator))
+            Optional<string> id = default;
+            Optional<ScheduleProvisioningState> provisioningStatus = default;
+            Optional<ScheduleStatus> status = default;
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("id"))
                 {
-                    case "Cron": return CronSchedule.DeserializeCronSchedule(element);
-                    case "Recurrence": return RecurrenceSchedule.DeserializeRecurrenceSchedule(element);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        id = null;
+                        continue;
+                    }
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("provisioningStatus"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningStatus = new ScheduleProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    status = new ScheduleStatus(property.Value.GetString());
+                    continue;
                 }
             }
-            return UnknownScheduleBase.DeserializeUnknownScheduleBase(element);
+            return new ScheduleBase(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status));
         }
     }
 }

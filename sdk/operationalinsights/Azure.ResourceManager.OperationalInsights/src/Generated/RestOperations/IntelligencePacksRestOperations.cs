@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<IntelligencePack>>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<OperationalInsightsIntelligencePack>>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<IntelligencePack> value = default;
+                        IReadOnlyList<OperationalInsightsIntelligencePack> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<IntelligencePack> array = new List<IntelligencePack>();
+                        List<OperationalInsightsIntelligencePack> array = new List<OperationalInsightsIntelligencePack>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(IntelligencePack.DeserializeIntelligencePack(item));
+                            array.Add(OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<IntelligencePack>> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<OperationalInsightsIntelligencePack>> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -260,12 +260,12 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<IntelligencePack> value = default;
+                        IReadOnlyList<OperationalInsightsIntelligencePack> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<IntelligencePack> array = new List<IntelligencePack>();
+                        List<OperationalInsightsIntelligencePack> array = new List<OperationalInsightsIntelligencePack>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(IntelligencePack.DeserializeIntelligencePack(item));
+                            array.Add(OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

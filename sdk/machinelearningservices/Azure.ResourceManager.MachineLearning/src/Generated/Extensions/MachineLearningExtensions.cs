@@ -282,20 +282,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceConnectionResource
+        #region WorkspaceConnectionPropertiesV2BasicResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkspaceConnectionPropertiesV2BasicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceConnectionPropertiesV2BasicResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceConnectionPropertiesV2BasicResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceConnectionResource" /> object. </returns>
-        public static WorkspaceConnectionResource GetWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkspaceConnectionPropertiesV2BasicResource" /> object. </returns>
+        public static WorkspaceConnectionPropertiesV2BasicResource GetWorkspaceConnectionPropertiesV2BasicResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceConnectionResource.ValidateResourceId(id);
-                return new WorkspaceConnectionResource(client, id);
+                WorkspaceConnectionPropertiesV2BasicResource.ValidateResourceId(id);
+                return new WorkspaceConnectionPropertiesV2BasicResource(client, id);
             }
             );
         }
@@ -600,6 +600,25 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 OnlineDeploymentResource.ValidateResourceId(id);
                 return new OnlineDeploymentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ScheduleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduleResource" /> object. </returns>
+        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ScheduleResource.ValidateResourceId(id);
+                return new ScheduleResource(client, id);
             }
             );
         }

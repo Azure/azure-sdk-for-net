@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(AutoRebuild))
+            {
+                writer.WritePropertyName("autoRebuild");
+                writer.WriteStringValue(AutoRebuild.Value.ToString());
+            }
             if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build");
@@ -104,6 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static EnvironmentVersionProperties DeserializeEnvironmentVersionProperties(JsonElement element)
         {
+            Optional<AutoRebuildSetting> autoRebuild = default;
             Optional<BuildContext> build = default;
             Optional<string> condaFile = default;
             Optional<EnvironmentType> environmentType = default;
@@ -117,6 +123,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("autoRebuild"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    autoRebuild = new AutoRebuildSetting(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("build"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -242,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new EnvironmentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(osType));
+            return new EnvironmentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(osType));
         }
     }
 }
