@@ -42,6 +42,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public void Ctor_string()
         {
             foreach (string path in fileNames)
@@ -56,6 +57,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
@@ -81,6 +83,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetChildStorageResourceAsync()
         {
             List<string> paths = new List<string>();
@@ -103,6 +106,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetChildStorageResourceAsync_SubDir()
         {
             List<string> paths = new List<string>();
