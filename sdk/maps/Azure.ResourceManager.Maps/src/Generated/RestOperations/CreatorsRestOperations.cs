@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Maps
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-02-01";
+            _apiVersion = apiVersion ?? "2021-12-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MapsCreatorListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CreatorList>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorListResult value = default;
+                        CreatorList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
+                        value = CreatorList.DeserializeCreatorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MapsCreatorListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<CreatorList> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorListResult value = default;
+                        CreatorList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
+                        value = CreatorList.DeserializeCreatorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Maps
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string creatorName, MapsCreatorData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CreatorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MapsCreatorData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string creatorName, MapsCreatorData data, CancellationToken cancellationToken = default)
+        public async Task<Response<CreatorData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CreatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                 case 201:
                     {
-                        MapsCreatorData value = default;
+                        CreatorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
+                        value = CreatorData.DeserializeCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MapsCreatorData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string creatorName, MapsCreatorData data, CancellationToken cancellationToken = default)
+        public Response<CreatorData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CreatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                 case 201:
                     {
-                        MapsCreatorData value = default;
+                        CreatorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
+                        value = CreatorData.DeserializeCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Maps
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string creatorName, MapsCreatorPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CreatorPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="creatorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MapsCreatorData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string creatorName, MapsCreatorPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<CreatorData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CreatorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorData value = default;
+                        CreatorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
+                        value = CreatorData.DeserializeCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="creatorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MapsCreatorData> Update(string subscriptionId, string resourceGroupName, string accountName, string creatorName, MapsCreatorPatch patch, CancellationToken cancellationToken = default)
+        public Response<CreatorData> Update(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CreatorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorData value = default;
+                        CreatorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
+                        value = CreatorData.DeserializeCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MapsCreatorData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CancellationToken cancellationToken = default)
+        public async Task<Response<CreatorData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -421,13 +421,13 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorData value = default;
+                        CreatorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
+                        value = CreatorData.DeserializeCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MapsCreatorData)null, message.Response);
+                    return Response.FromValue((CreatorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MapsCreatorData> Get(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CancellationToken cancellationToken = default)
+        public Response<CreatorData> Get(string subscriptionId, string resourceGroupName, string accountName, string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorData value = default;
+                        CreatorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MapsCreatorData.DeserializeMapsCreatorData(document.RootElement);
+                        value = CreatorData.DeserializeCreatorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MapsCreatorData)null, message.Response);
+                    return Response.FromValue((CreatorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MapsCreatorListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CreatorList>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -501,9 +501,9 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorListResult value = default;
+                        CreatorList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
+                        value = CreatorList.DeserializeCreatorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MapsCreatorListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<CreatorList> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -532,9 +532,9 @@ namespace Azure.ResourceManager.Maps
             {
                 case 200:
                     {
-                        MapsCreatorListResult value = default;
+                        CreatorList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MapsCreatorListResult.DeserializeMapsCreatorListResult(document.RootElement);
+                        value = CreatorList.DeserializeCreatorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

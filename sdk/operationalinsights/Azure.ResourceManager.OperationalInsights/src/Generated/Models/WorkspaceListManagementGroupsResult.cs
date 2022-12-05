@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of WorkspaceListManagementGroupsResult. </summary>
         internal WorkspaceListManagementGroupsResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsManagementGroup>();
+            Value = new ChangeTrackingList<ManagementGroup>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceListManagementGroupsResult. </summary>
         /// <param name="value"> Gets or sets a list of management groups attached to the workspace. </param>
-        internal WorkspaceListManagementGroupsResult(IReadOnlyList<OperationalInsightsManagementGroup> value)
+        internal WorkspaceListManagementGroupsResult(IReadOnlyList<ManagementGroup> value)
         {
             Value = value;
         }
 
         /// <summary> Gets or sets a list of management groups attached to the workspace. </summary>
-        public IReadOnlyList<OperationalInsightsManagementGroup> Value { get; }
+        public IReadOnlyList<ManagementGroup> Value { get; }
     }
 }

@@ -4,8 +4,9 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Identity;
 
-namespace Azure.Identity
+namespace Azure.Identitiy
 {
     internal static class TokenHelper
     {

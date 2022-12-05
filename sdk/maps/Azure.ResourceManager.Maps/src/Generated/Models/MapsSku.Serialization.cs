@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsSku DeserializeMapsSku(JsonElement element)
         {
-            MapsSkuName name = default;
+            Name name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new MapsSkuName(property.Value.GetString());
+                    name = new Name(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))

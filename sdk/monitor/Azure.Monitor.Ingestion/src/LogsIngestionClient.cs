@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -37,13 +37,13 @@ namespace Azure.Monitor.Ingestion
 
         internal readonly struct BatchedLogs <T>
         {
-            public BatchedLogs(int logsCount, BinaryData logsData)
+            public BatchedLogs(List<T> logsList, BinaryData logsData)
             {
-                LogsCount = logsCount;
+                LogsList = logsList;
                 LogsData = logsData;
             }
 
-            public int LogsCount { get; }
+            public List<T> LogsList { get; }
             public BinaryData LogsData { get; }
         }
 
@@ -87,18 +87,14 @@ namespace Azure.Monitor.Ingestion
         /// <returns></returns>
         internal static IEnumerable<BatchedLogs<T>> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
         {
-            // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
-            ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
-            Utf8JsonWriter writer = new Utf8JsonWriter(arrayBuffer);
-            writer.WriteStartArray();
+            //TODO: use Array pool instead
+            MemoryStream stream = new MemoryStream(SingleUploadThreshold);
+            WriteMemory(stream, BinaryData.FromString("[").ToMemory());
             int entryCount = 0;
             List<T> currentLogList = new List<T>();
-            var logEntriesList = logEntries.ToList();
-            int logEntriesCount = logEntriesList.Count;
-            foreach (var log in logEntriesList)
+            foreach (var log in logEntries)
             {
                 BinaryData entry;
-                bool isLastEntry = (entryCount + 1 == logEntriesCount);
                 // If log is already BinaryData, no need to serialize it
                 if (log is BinaryData d)
                     entry = d;
@@ -110,69 +106,51 @@ namespace Azure.Monitor.Ingestion
                     entry = options.Serializer.Serialize(log);
 
                 var memory = entry.ToMemory();
-                // if single log is > 1 Mb send to be gzipped by itself
-                if (memory.Length > SingleUploadThreshold)
+                if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
                 {
-                    // Create tempArrayBufferWriter (unsized to store log) and tempWriter for individual log
-                    ArrayBufferWriter<byte> tempArrayBuffer = new ArrayBufferWriter<byte>();
-                    Utf8JsonWriter tempWriter = new Utf8JsonWriter(tempArrayBuffer);
-                    tempWriter.WriteStartArray();
-                    WriteMemory(tempWriter, memory);
-                    tempWriter.WriteEndArray();
-                    tempWriter.Flush();
-                    yield return new BatchedLogs<T>(1, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
+                    MemoryStream tempStream = new MemoryStream(); // create tempStream for individual log
+                    WriteMemory(tempStream, BinaryData.FromString("[").ToMemory());
+                    WriteMemory(tempStream, memory);
+                    WriteMemory(tempStream, BinaryData.FromString("]").ToMemory());
+                    tempStream.Position = 0;
+                    yield return new BatchedLogs<T>(new List<T>{log}, BinaryData.FromStream(tempStream));
                 }
-                // if adding this entry makes stream > 1 Mb send current stream now
-                else if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
+                else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
-                    writer.WriteEndArray();
-                    writer.Flush();
-                    // This batch is full so send it now
-                    yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                    WriteMemory(stream, BinaryData.FromString("]").ToMemory());
+                    stream.Position = 0; // set Position to 0 to return everything from beginning of stream
+                    yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
 
-                    // Reset arrayBuffer and writer for next batch
-                    arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
-                    writer.Reset(arrayBuffer);
-                    writer.WriteStartArray();
-                    // reset log list
-                    currentLogList = new List<T>();
-                    // add current log to memory and currentLogList
-                    WriteMemory(writer, memory);
+                    // reset stream and currentLogList
+                    stream = new MemoryStream(SingleUploadThreshold); // reset stream
+                    currentLogList = new List<T>(); // reset log list
+                    WriteMemory(stream, memory); // add log to memory and currentLogList
                     currentLogList.Add(log);
-
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
-                    {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
-                    }
                 }
                 else
                 {
-                    // Add entry to existing stream and update logList
-                    WriteMemory(writer, memory);
-                    currentLogList.Add(log);
-
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
+                    WriteMemory(stream, memory);
+                    if ((entryCount + 1) == logEntries.Count())
                     {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs<T>(currentLogList.Count, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
+                        // reached end of logs and we haven't returned yet
+                        WriteMemory(stream, BinaryData.FromString("]").ToMemory());
+                        stream.Position = 0;
+                        currentLogList.Add(log);
+                        yield return new BatchedLogs<T>(currentLogList, BinaryData.FromStream(stream));
+                    }
+                    else
+                    {
+                        WriteMemory(stream, BinaryData.FromString(",").ToMemory());
+                        currentLogList.Add(log);
                     }
                 }
                 entryCount++;
             }
         }
 
-        private static void WriteMemory(Utf8JsonWriter writer, ReadOnlyMemory<byte> memory)
+        private static void WriteMemory(MemoryStream stream, ReadOnlyMemory<byte> memory)
         {
-            using (JsonDocument doc = JsonDocument.Parse(memory))
-            {
-                // Comma separator added automatically by JsonWriter
-                doc.RootElement.WriteTo(writer);
-            }
+            stream.Write(memory.ToArray(), 0, memory.Length); //TODO: fix ToArray
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
@@ -236,7 +214,7 @@ namespace Azure.Monitor.Ingestion
                 }
                 catch (Exception ex)
                 {
-                    logsFailed += batch.LogsCount;
+                    logsFailed += batch.LogsList.Count;
                     // If we have an error, add Exception from response into exceptions list without throwing
                     AddException(
                         ref exceptions,
@@ -314,7 +292,7 @@ namespace Azure.Monitor.Ingestion
                         cancellationToken);
 
                     // Add the block to our task and commit lists
-                    runningTasks.Add((task, batch.LogsCount));
+                    runningTasks.Add((task, batch.LogsList.Count));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)

@@ -16,17 +16,17 @@ namespace Azure.Storage.Files.Shares.Models
         internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element)
         {
             string nextMarker = default;
-            IReadOnlyList<HandleItem> handleList = default;
+            IReadOnlyList<ShareFileHandle> handleList = default;
             if (element.Element("NextMarker") is XElement nextMarkerElement)
             {
                 nextMarker = (string)nextMarkerElement;
             }
             if (element.Element("Entries") is XElement entriesElement)
             {
-                var array = new List<HandleItem>();
+                var array = new List<ShareFileHandle>();
                 foreach (var e in entriesElement.Elements("Handle"))
                 {
-                    array.Add(HandleItem.DeserializeHandleItem(e));
+                    array.Add(ShareFileHandle.DeserializeShareFileHandle(e));
                 }
                 handleList = array;
             }

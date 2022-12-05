@@ -503,9 +503,9 @@ namespace Azure.Maps.Search.Models
         public GeoJsonMultiPolygonData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
     }
-    public abstract partial class GeoJsonObject
+    public partial class GeoJsonObject
     {
-        protected GeoJsonObject() { }
+        public GeoJsonObject() { }
     }
     public enum GeoJsonObjectType
     {

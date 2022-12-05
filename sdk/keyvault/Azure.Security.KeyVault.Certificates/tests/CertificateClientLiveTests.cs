@@ -934,15 +934,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            try
-            {
-                await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
-            }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("An internal error has occurred"))
-            {
-                // This test fails often enough with an internal HTTP 500 to ignore.
-                Assert.Inconclusive("The service encountered an internal error");
-            }
+            await operation.WaitForCompletionAsync(DefaultCertificateOperationPollingInterval, default);
 
             // Sign data remotely.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));

@@ -14,14 +14,14 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal static DirectoryItem DeserializeDirectoryItem(XElement element)
         {
-            StringEncoded name = default;
+            string name = default;
             string fileId = default;
             FileProperty properties = default;
             string attributes = default;
             string permissionKey = default;
             if (element.Element("Name") is XElement nameElement)
             {
-                name = StringEncoded.DeserializeStringEncoded(nameElement);
+                name = (string)nameElement;
             }
             if (element.Element("FileId") is XElement fileIdElement)
             {

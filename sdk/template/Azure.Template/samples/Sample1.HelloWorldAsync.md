@@ -22,3 +22,6 @@ SecretBundle secret = await client.GetSecretValueAsync("TestSecret");
 
 Console.WriteLine(secret.Value);
 ```
+
+To see the full example source files, see:
+* [HelloWorldAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorldAsync.cs)

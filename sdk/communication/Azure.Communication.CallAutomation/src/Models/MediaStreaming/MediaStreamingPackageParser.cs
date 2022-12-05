@@ -4,6 +4,7 @@
 using System;
 using System.Text;
 using System.Text.Json;
+using Azure.Communication.CallAutomation.Models.MediaStreaming;
 
 namespace Azure.Communication.CallAutomation
 {

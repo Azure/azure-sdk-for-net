@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -26,18 +25,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="issuerUri"> The URL of the issuer to be trusted. </param>
+        /// <param name="issuer"> The URL of the issuer to be trusted. </param>
         /// <param name="subject"> The identifier of the external identity. </param>
         /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
-        internal FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IList<string> audiences) : base(id, name, resourceType, systemData)
+        internal FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string issuer, string subject, IList<string> audiences) : base(id, name, resourceType, systemData)
         {
-            IssuerUri = issuerUri;
+            Issuer = issuer;
             Subject = subject;
             Audiences = audiences;
         }
 
         /// <summary> The URL of the issuer to be trusted. </summary>
-        public Uri IssuerUri { get; set; }
+        public string Issuer { get; set; }
         /// <summary> The identifier of the external identity. </summary>
         public string Subject { get; set; }
         /// <summary> The list of audiences that can appear in the issued token. </summary>

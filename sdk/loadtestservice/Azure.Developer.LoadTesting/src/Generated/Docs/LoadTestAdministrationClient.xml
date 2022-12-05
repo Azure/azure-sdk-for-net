@@ -6,8 +6,7 @@
 This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     value = new {
@@ -29,8 +28,7 @@ Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty(
 This sample shows how to call CreateOrUpdateAppComponentsAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     testId = "<testId>",
@@ -96,8 +94,7 @@ Schema for <c>AppComponentsMap</c>:
 This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     value = new {
@@ -119,8 +116,7 @@ Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty(
 This sample shows how to call CreateOrUpdateAppComponents with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     testId = "<testId>",
@@ -186,8 +182,7 @@ Schema for <c>AppComponentsMap</c>:
 This sample shows how to call DeleteAppComponentAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.DeleteAppComponentAsync("<name>");
 Console.WriteLine(response.Status);
@@ -199,8 +194,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteAppComponent with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.DeleteAppComponent("<name>");
 Console.WriteLine(response.Status);
@@ -212,8 +206,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetAppComponentByNameAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetAppComponentByNameAsync("<name>");
 
@@ -253,8 +246,7 @@ Schema for <c>AppComponentsMap</c>:
 This sample shows how to call GetAppComponentByName with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetAppComponentByName("<name>");
 
@@ -294,8 +286,7 @@ Schema for <c>AppComponentsMap</c>:
 This sample shows how to call GetAppComponentAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetAppComponentAsync();
 
@@ -307,8 +298,7 @@ Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty(
 This sample shows how to call GetAppComponentAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetAppComponentAsync("<testRunId>", "<testId>");
 
@@ -348,8 +338,7 @@ Schema for <c>AppComponentsMap</c>:
 This sample shows how to call GetAppComponent and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetAppComponent();
 
@@ -361,8 +350,7 @@ Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty(
 This sample shows how to call GetAppComponent with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetAppComponent("<testRunId>", "<testId>");
 
@@ -402,8 +390,7 @@ Schema for <c>AppComponentsMap</c>:
 This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -415,8 +402,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     testId = "<testId>",
@@ -486,8 +472,7 @@ Schema for <c>ServerMetricsModel</c>:
 This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -499,8 +484,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     testId = "<testId>",
@@ -570,8 +554,7 @@ Schema for <c>ServerMetricsModel</c>:
 This sample shows how to call GetServerMetricsByNameAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetServerMetricsByNameAsync("<name>");
 
@@ -611,8 +594,7 @@ Schema for <c>ServerMetricsModel</c>:
 This sample shows how to call GetServerMetricsByName with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetServerMetricsByName("<name>");
 
@@ -652,8 +634,7 @@ Schema for <c>ServerMetricsModel</c>:
 This sample shows how to call DeleteServerMetricsAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.DeleteServerMetricsAsync("<name>");
 Console.WriteLine(response.Status);
@@ -665,8 +646,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteServerMetrics with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.DeleteServerMetrics("<name>");
 Console.WriteLine(response.Status);
@@ -678,8 +658,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetServerMetricsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetServerMetricsAsync();
 
@@ -689,8 +668,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetServerMetricsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetServerMetricsAsync("<testRunId>", "<testId>");
 
@@ -730,8 +708,7 @@ Schema for <c>ServerMetricsModel</c>:
 This sample shows how to call GetServerMetrics and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetServerMetrics();
 
@@ -741,8 +718,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetServerMetrics with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetServerMetrics("<testRunId>", "<testId>");
 
@@ -782,8 +758,7 @@ Schema for <c>ServerMetricsModel</c>:
 This sample shows how to call GetServerDefaultMetricsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetServerDefaultMetricsAsync();
 
@@ -814,8 +789,7 @@ Schema for <c>DefaultServerMetricsConfigListModel</c>:
 This sample shows how to call GetServerDefaultMetrics and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetServerDefaultMetrics();
 
@@ -846,8 +820,7 @@ Schema for <c>DefaultServerMetricsConfigListModel</c>:
 This sample shows how to call GetSupportedResourceTypesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetSupportedResourceTypesAsync();
 
@@ -873,8 +846,7 @@ Schema for <c>SupportedResourceType</c>:
 This sample shows how to call GetSupportedResourceTypes and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetSupportedResourceTypes();
 
@@ -900,8 +872,7 @@ Schema for <c>SupportedResourceType</c>:
 This sample shows how to call CreateOrUpdateTestAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -913,8 +884,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateTestAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     description = "<description>",
@@ -1100,8 +1070,7 @@ Schema for <c>TestModel</c>:
 This sample shows how to call CreateOrUpdateTest with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {};
 
@@ -1113,8 +1082,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateTest with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     description = "<description>",
@@ -1300,8 +1268,7 @@ Schema for <c>TestModel</c>:
 This sample shows how to call DeleteLoadTestAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.DeleteLoadTestAsync("<testId>");
 Console.WriteLine(response.Status);
@@ -1313,8 +1280,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteLoadTest with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.DeleteLoadTest("<testId>");
 Console.WriteLine(response.Status);
@@ -1326,8 +1292,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetLoadTestAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetLoadTestAsync("<testId>");
 
@@ -1439,8 +1404,7 @@ Schema for <c>TestModel</c>:
 This sample shows how to call GetLoadTest with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetLoadTest("<testId>");
 
@@ -1552,8 +1516,7 @@ Schema for <c>TestModel</c>:
 This sample shows how to call GetLoadTestSearchesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetLoadTestSearchesAsync();
 
@@ -1563,8 +1526,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetLoadTestSearchesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetLoadTestSearchesAsync("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
 
@@ -1682,8 +1644,7 @@ Schema for <c>TestModelResourceList</c>:
 This sample shows how to call GetLoadTestSearches and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetLoadTestSearches();
 
@@ -1693,8 +1654,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetLoadTestSearches with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetLoadTestSearches("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
 
@@ -1812,8 +1772,7 @@ Schema for <c>TestModelResourceList</c>:
 This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
@@ -1825,8 +1784,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
@@ -1864,8 +1822,7 @@ Schema for <c>FileUrl</c>:
 This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
@@ -1877,8 +1834,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 var data = File.OpenRead("<filePath>");
 
@@ -1916,8 +1872,7 @@ Schema for <c>FileUrl</c>:
 This sample shows how to call GetTestFileAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetTestFileAsync("<testId>", "<fileId>");
 
@@ -1953,8 +1908,7 @@ Schema for <c>FileUrl</c>:
 This sample shows how to call GetTestFile with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetTestFile("<testId>", "<fileId>");
 
@@ -1990,8 +1944,7 @@ Schema for <c>FileUrl</c>:
 This sample shows how to call DeleteTestFileAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.DeleteTestFileAsync("<testId>", "<fileId>");
 Console.WriteLine(response.Status);
@@ -2003,8 +1956,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call DeleteTestFile with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.DeleteTestFile("<testId>", "<fileId>");
 Console.WriteLine(response.Status);
@@ -2016,8 +1968,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetAllTestFilesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetAllTestFilesAsync("<testId>");
 
@@ -2027,8 +1978,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetAllTestFilesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = await client.GetAllTestFilesAsync("<testId>", "<continuationToken>");
 
@@ -2070,8 +2020,7 @@ Schema for <c>FileUrlList</c>:
 This sample shows how to call GetAllTestFiles with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetAllTestFiles("<testId>");
 
@@ -2081,8 +2030,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetAllTestFiles with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
 Response response = client.GetAllTestFiles("<testId>", "<continuationToken>");
 

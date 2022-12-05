@@ -93,7 +93,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
+                }
             }
         }
     }

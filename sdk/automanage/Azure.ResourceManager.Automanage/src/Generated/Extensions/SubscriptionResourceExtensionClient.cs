@@ -43,13 +43,6 @@ namespace Azure.ResourceManager.Automanage
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a ServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
-        public virtual ServicePrincipalResource GetServicePrincipal()
-        {
-            return new ServicePrincipalResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Automanage/servicePrincipals/default"));
-        }
-
         /// <summary>
         /// Retrieve a list of configuration profile within a subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles

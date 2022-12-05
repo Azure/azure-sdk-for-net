@@ -114,7 +114,6 @@ if ($VsoQueuedPipelines) {
   }else {
     "[$($resp.definition.name)]($($resp._links.web.href))"
   }
-  LogDebug "Here are the queued pipeline links: "
-  LogDebug $QueuedPipelineLinks
+  $QueuedPipelineLinks
   Write-Host "##vso[task.setvariable variable=$VsoQueuedPipelines]$QueuedPipelineLinks"
 }

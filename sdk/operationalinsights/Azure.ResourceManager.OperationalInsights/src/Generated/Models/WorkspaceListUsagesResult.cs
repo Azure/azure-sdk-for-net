@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of WorkspaceListUsagesResult. </summary>
         internal WorkspaceListUsagesResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsUsageMetric>();
+            Value = new ChangeTrackingList<UsageMetric>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceListUsagesResult. </summary>
         /// <param name="value"> Gets or sets a list of usage metrics for a workspace. </param>
-        internal WorkspaceListUsagesResult(IReadOnlyList<OperationalInsightsUsageMetric> value)
+        internal WorkspaceListUsagesResult(IReadOnlyList<UsageMetric> value)
         {
             Value = value;
         }
 
         /// <summary> Gets or sets a list of usage metrics for a workspace. </summary>
-        public IReadOnlyList<OperationalInsightsUsageMetric> Value { get; }
+        public IReadOnlyList<UsageMetric> Value { get; }
     }
 }

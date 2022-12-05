@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Model factory for read-only models. </summary>

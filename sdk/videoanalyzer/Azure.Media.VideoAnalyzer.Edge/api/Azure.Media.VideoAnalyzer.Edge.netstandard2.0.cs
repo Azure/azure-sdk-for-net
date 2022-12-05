@@ -1,8 +1,8 @@
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public abstract partial class CertificateSource
+    public partial class CertificateSource
     {
-        protected CertificateSource() { }
+        public CertificateSource() { }
     }
     public partial class CognitiveServicesVisionProcessor : Azure.Media.VideoAnalyzer.Edge.Models.ProcessorNodeBase
     {
@@ -12,9 +12,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationBase Operation { get { throw null; } set { } }
         public Azure.Media.VideoAnalyzer.Edge.Models.SamplingOptions SamplingOptions { get { throw null; } set { } }
     }
-    public abstract partial class CredentialsBase
+    public partial class CredentialsBase
     {
-        protected CredentialsBase() { }
+        public CredentialsBase() { }
     }
     public partial class DiscoveredOnvifDevice
     {
@@ -30,9 +30,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public System.Collections.Generic.IList<Azure.Media.VideoAnalyzer.Edge.Models.DiscoveredOnvifDevice> Value { get { throw null; } }
         public static Azure.Media.VideoAnalyzer.Edge.Models.DiscoveredOnvifDeviceCollection Deserialize(string json) { throw null; }
     }
-    public abstract partial class EndpointBase
+    public partial class EndpointBase
     {
-        protected EndpointBase(string url) { }
+        public EndpointBase(string url) { }
         public Azure.Media.VideoAnalyzer.Edge.Models.CredentialsBase Credentials { get { throw null; } set { } }
         public string Url { get { throw null; } set { } }
     }
@@ -129,9 +129,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         public ImageFormatPng() { }
     }
-    public abstract partial class ImageFormatProperties
+    public partial class ImageFormatProperties
     {
-        protected ImageFormatProperties() { }
+        public ImageFormatProperties() { }
     }
     public partial class ImageFormatRaw : Azure.Media.VideoAnalyzer.Edge.Models.ImageFormatProperties
     {
@@ -299,9 +299,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public MediaUri() { }
         public string Uri { get { throw null; } set { } }
     }
-    public abstract partial class MethodRequest
+    public partial class MethodRequest
     {
-        protected MethodRequest() { }
+        public MethodRequest() { }
         public string ApiVersion { get { throw null; } set { } }
         public string MethodName { get { throw null; } set { } }
         public virtual string GetPayloadAsJson() { throw null; }
@@ -361,9 +361,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator !=(Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile left, Azure.Media.VideoAnalyzer.Edge.Models.Mpeg4Profile right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class NamedLineBase
+    public partial class NamedLineBase
     {
-        protected NamedLineBase(string name) { }
+        public NamedLineBase(string name) { }
         public string Name { get { throw null; } set { } }
     }
     public partial class NamedLineString : Azure.Media.VideoAnalyzer.Edge.Models.NamedLineBase
@@ -371,9 +371,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public NamedLineString(string name, string line) : base (default(string)) { }
         public string Line { get { throw null; } set { } }
     }
-    public abstract partial class NamedPolygonBase
+    public partial class NamedPolygonBase
     {
-        protected NamedPolygonBase(string name) { }
+        public NamedPolygonBase(string name) { }
         public string Name { get { throw null; } set { } }
     }
     public partial class NamedPolygonString : Azure.Media.VideoAnalyzer.Edge.Models.NamedPolygonBase
@@ -597,9 +597,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public Azure.Media.VideoAnalyzer.Edge.Models.PipelineTopology PipelineTopology { get { throw null; } set { } }
         public override string GetPayloadAsJson() { throw null; }
     }
-    public abstract partial class ProcessorNodeBase
+    public partial class ProcessorNodeBase
     {
-        protected ProcessorNodeBase(string name, System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> inputs) { }
+        public ProcessorNodeBase(string name, System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> inputs) { }
         public System.Collections.Generic.IList<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> Inputs { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
@@ -694,15 +694,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public string MaximumActivationTime { get { throw null; } set { } }
         public string MinimumActivationTime { get { throw null; } set { } }
     }
-    public abstract partial class SinkNodeBase
+    public partial class SinkNodeBase
     {
-        protected SinkNodeBase(string name, System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> inputs) { }
+        public SinkNodeBase(string name, System.Collections.Generic.IEnumerable<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> inputs) { }
         public System.Collections.Generic.IList<Azure.Media.VideoAnalyzer.Edge.Models.NodeInput> Inputs { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
-    public abstract partial class SourceNodeBase
+    public partial class SourceNodeBase
     {
-        protected SourceNodeBase(string name) { }
+        public SourceNodeBase(string name) { }
         public string Name { get { throw null; } set { } }
     }
     public partial class SpatialAnalysisCustomOperation : Azure.Media.VideoAnalyzer.Edge.Models.SpatialAnalysisOperationBase
@@ -710,9 +710,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public SpatialAnalysisCustomOperation(string extensionConfiguration) { }
         public string ExtensionConfiguration { get { throw null; } set { } }
     }
-    public abstract partial class SpatialAnalysisOperationBase
+    public partial class SpatialAnalysisOperationBase
     {
-        protected SpatialAnalysisOperationBase() { }
+        public SpatialAnalysisOperationBase() { }
     }
     public partial class SpatialAnalysisOperationEventBase
     {

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Maps
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
@@ -49,7 +54,8 @@ namespace Azure.ResourceManager.Maps
         internal static MapsAccountData DeserializeMapsAccountData(JsonElement element)
         {
             MapsSku sku = default;
-            Optional<MapsAccountKind> kind = default;
+            Optional<MapsKind> kind = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<MapsAccountProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -71,7 +77,17 @@ namespace Azure.ResourceManager.Maps
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new MapsAccountKind(property.Value.GetString());
+                    kind = new MapsKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -130,7 +146,7 @@ namespace Azure.ResourceManager.Maps
                     continue;
                 }
             }
-            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), properties.Value);
+            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), identity, properties.Value);
         }
     }
 }

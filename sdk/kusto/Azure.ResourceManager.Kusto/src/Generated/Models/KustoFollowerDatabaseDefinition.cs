@@ -30,15 +30,11 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
-        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        internal KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId, string attachedDatabaseConfigurationName, string databaseName, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, KustoDatabaseShareOrigin? databaseShareOrigin)
+        internal KustoFollowerDatabaseDefinition(ResourceIdentifier clusterResourceId, string attachedDatabaseConfigurationName, string databaseName)
         {
             ClusterResourceId = clusterResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
             DatabaseName = databaseName;
-            TableLevelSharingProperties = tableLevelSharingProperties;
-            DatabaseShareOrigin = databaseShareOrigin;
         }
 
         /// <summary> Resource id of the cluster that follows a database owned by this cluster. </summary>
@@ -47,9 +43,5 @@ namespace Azure.ResourceManager.Kusto.Models
         public string AttachedDatabaseConfigurationName { get; set; }
         /// <summary> The database name owned by this cluster that was followed. * in case following all databases. </summary>
         public string DatabaseName { get; }
-        /// <summary> Table level sharing specifications. </summary>
-        public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; }
-        /// <summary> The origin of the following setup. </summary>
-        public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
     }
 }

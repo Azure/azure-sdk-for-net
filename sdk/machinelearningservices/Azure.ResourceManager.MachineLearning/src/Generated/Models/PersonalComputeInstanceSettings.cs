@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Settings for a personal compute instance.
-    /// Serialized Name: PersonalComputeInstanceSettings
-    /// </summary>
+    /// <summary> Settings for a personal compute instance. </summary>
     internal partial class PersonalComputeInstanceSettings
     {
         /// <summary> Initializes a new instance of PersonalComputeInstanceSettings. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of PersonalComputeInstanceSettings. </summary>
-        /// <param name="assignedUser">
-        /// A user explicitly assigned to a personal compute instance.
-        /// Serialized Name: PersonalComputeInstanceSettings.assignedUser
-        /// </param>
-        internal PersonalComputeInstanceSettings(MachineLearningComputeInstanceAssignedUser assignedUser)
+        /// <param name="assignedUser"> A user explicitly assigned to a personal compute instance. </param>
+        internal PersonalComputeInstanceSettings(AssignedUser assignedUser)
         {
             AssignedUser = assignedUser;
         }
 
-        /// <summary>
-        /// A user explicitly assigned to a personal compute instance.
-        /// Serialized Name: PersonalComputeInstanceSettings.assignedUser
-        /// </summary>
-        public MachineLearningComputeInstanceAssignedUser AssignedUser { get; set; }
+        /// <summary> A user explicitly assigned to a personal compute instance. </summary>
+        public AssignedUser AssignedUser { get; set; }
     }
 }

@@ -9,14 +9,12 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A collection of categories that were used to classify a given document.
+    /// Collection of <see cref="ClassificationCategory"/> objects in a document,
+    /// and warnings encountered while processing the document.
     /// </summary>
     [DebuggerTypeProxy(typeof(ClassificationCategoryCollectionDebugView))]
     public class ClassificationCategoryCollection : ReadOnlyCollection<ClassificationCategory>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClassificationCategoryCollection"/> class.
-        /// </summary>
         internal ClassificationCategoryCollection(IList<ClassificationCategory> classificationCategories, IList<TextAnalyticsWarning> warnings)
             : base(classificationCategories)
         {
@@ -24,12 +22,12 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// The warnings that resulted from processing the document.
+        /// Warnings encountered while processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
         /// <summary>
-        /// A debugger proxy for the <see cref="ClassificationCategoryCollection"/> class.
+        /// Debugger Proxy class for <see cref="ClassificationCategoryCollection"/>.
         /// </summary>
         internal class ClassificationCategoryCollectionDebugView
         {

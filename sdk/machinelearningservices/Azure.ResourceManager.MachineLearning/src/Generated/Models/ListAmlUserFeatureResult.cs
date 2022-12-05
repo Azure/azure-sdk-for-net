@@ -10,42 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The List Aml user feature operation response.
-    /// Serialized Name: ListAmlUserFeatureResult
-    /// </summary>
+    /// <summary> The List Aml user feature operation response. </summary>
     internal partial class ListAmlUserFeatureResult
     {
         /// <summary> Initializes a new instance of ListAmlUserFeatureResult. </summary>
         internal ListAmlUserFeatureResult()
         {
-            Value = new ChangeTrackingList<MachineLearningUserFeature>();
+            Value = new ChangeTrackingList<AmlUserFeature>();
         }
 
         /// <summary> Initializes a new instance of ListAmlUserFeatureResult. </summary>
-        /// <param name="value">
-        /// The list of AML user facing features.
-        /// Serialized Name: ListAmlUserFeatureResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page of AML user features information. Call ListNext() with this to fetch the next page of AML user features information.
-        /// Serialized Name: ListAmlUserFeatureResult.nextLink
-        /// </param>
-        internal ListAmlUserFeatureResult(IReadOnlyList<MachineLearningUserFeature> value, string nextLink)
+        /// <param name="value"> The list of AML user facing features. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of AML user features information. Call ListNext() with this to fetch the next page of AML user features information. </param>
+        internal ListAmlUserFeatureResult(IReadOnlyList<AmlUserFeature> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of AML user facing features.
-        /// Serialized Name: ListAmlUserFeatureResult.value
-        /// </summary>
-        public IReadOnlyList<MachineLearningUserFeature> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page of AML user features information. Call ListNext() with this to fetch the next page of AML user features information.
-        /// Serialized Name: ListAmlUserFeatureResult.nextLink
-        /// </summary>
+        /// <summary> The list of AML user facing features. </summary>
+        public IReadOnlyList<AmlUserFeature> Value { get; }
+        /// <summary> The URI to fetch the next page of AML user features information. Call ListNext() with this to fetch the next page of AML user features information. </summary>
         public string NextLink { get; }
     }
 }

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
         internal LinkedStorageAccountsListResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsLinkedStorageAccountsData>();
+            Value = new ChangeTrackingList<LinkedStorageAccountsResourceData>();
         }
 
         /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
         /// <param name="value"> A list of linked storage accounts instances. </param>
-        internal LinkedStorageAccountsListResult(IReadOnlyList<OperationalInsightsLinkedStorageAccountsData> value)
+        internal LinkedStorageAccountsListResult(IReadOnlyList<LinkedStorageAccountsResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of linked storage accounts instances. </summary>
-        public IReadOnlyList<OperationalInsightsLinkedStorageAccountsData> Value { get; }
+        public IReadOnlyList<LinkedStorageAccountsResourceData> Value { get; }
     }
 }

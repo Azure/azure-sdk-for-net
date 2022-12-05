@@ -12,10 +12,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="CredentialsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
     /// </summary>
-    public abstract partial class CredentialsBase
+    public partial class CredentialsBase
     {
         /// <summary> Initializes a new instance of CredentialsBase. </summary>
-        protected CredentialsBase()
+        public CredentialsBase()
         {
         }
 

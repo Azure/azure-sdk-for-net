@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static PersonalComputeInstanceSettings DeserializePersonalComputeInstanceSettings(JsonElement element)
         {
-            Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
+            Optional<AssignedUser> assignedUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignedUser"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value);
+                    assignedUser = AssignedUser.DeserializeAssignedUser(property.Value);
                     continue;
                 }
             }

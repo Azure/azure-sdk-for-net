@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// The Primary Key
         /// Serialized Name: Serial.1
         /// </summary>
-        Primary = 1,
+        Primary,
         /// <summary>
         /// The Secondary Key
         /// Serialized Name: Serial.2
         /// </summary>
-        Secondary = 2
+        Secondary
     }
 }

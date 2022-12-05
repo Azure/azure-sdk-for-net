@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    [CodeGenModel("HealthcareDocumentType")]
+    [CodeGenModel("DocumentType")]
     public readonly partial struct HealthcareDocumentType
     {
     }

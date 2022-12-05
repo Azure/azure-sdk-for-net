@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         protected Task<FunctionResult> ExecuteWithAuthAsync(HttpRequestMessage request, ExecutionContext executor,
             InvocationContext context, TaskCompletionSource<object> tcs = null)
         {
-            if (!Resolver.ValidateSignature(request, executor.SignatureValidationOptions))
+            if (!Resolver.ValidateSignature(request, executor.AccessKeys))
             {
                 throw new SignalRTriggerAuthorizeFailedException();
             }

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -25,8 +24,9 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatest");
-            _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
+            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
+            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaforle"), storage.Id);
         }
 
         [Test]

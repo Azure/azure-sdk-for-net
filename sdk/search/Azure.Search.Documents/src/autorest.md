@@ -25,25 +25,6 @@ directive:
 - remove-operation: Documents_SuggestGet
 ```
 
-### Suppress Abstract Base Class
-
-``` yaml
-suppress-abstract-base-class:
-- CharFilter
-- CognitiveServicesAccount
-- DataChangeDetectionPolicy
-- DataDeletionDetectionPolicy
-- LexicalAnalyzer
-- LexicalNormalizer
-- LexicalTokenizer
-- ScoringFunction
-- SearchIndexerDataIdentity
-- SearchIndexerSkill
-- Similarity
-- TokenFilter
-```
-
-
 ## CodeGen hacks
 These should eventually be fixed in the code generator.
 

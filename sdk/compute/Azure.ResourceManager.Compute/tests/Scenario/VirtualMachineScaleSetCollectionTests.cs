@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
 using NUnit.Framework;
 
@@ -26,40 +25,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
-            VirtualMachineScaleSetResource vmss = lro.Value;
-            Assert.AreEqual(vmssName, vmss.Data.Name);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task CreateOrUpdateWithExtensions()
-        {
-            var collection = await GetVirtualMachineScaleSetCollectionAsync();
-            var vmssName = Recording.GenerateAssetName("testVMSS-");
-            var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-
-            input.VirtualMachineProfile.ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
-            {
-                Extensions =
-                    {
-                        new VirtualMachineScaleSetExtensionData("TestExt")
-                        {
-                            AutoUpgradeMinorVersion = true,
-                            EnableAutomaticUpgrade = false,
-                            Settings = BinaryData.FromObjectAsJson(new {}),
-                            ProtectedSettings = BinaryData.FromObjectAsJson(new
-                                {
-                                    commandToExecute = $@"echo helloworld",
-                                }),
-                            Publisher = "Microsoft.Azure.Extensions",
-                            ExtensionType = "CustomScript",
-                            TypeHandlerVersion = "2.1",
-                        }
-                    }
-            };
-
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
             VirtualMachineScaleSetResource vmss = lro.Value;
             Assert.AreEqual(vmssName, vmss.Data.Name);

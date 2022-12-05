@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummaryDocumentResult DeserializeAbstractiveSummaryDocumentResult(JsonElement element)
         {
-            IList<AbstractiveSummaryInternal> summaries = default;
+            IList<AbstractiveSummary> summaries = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -51,10 +51,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("summaries"))
                 {
-                    List<AbstractiveSummaryInternal> array = new List<AbstractiveSummaryInternal>();
+                    List<AbstractiveSummary> array = new List<AbstractiveSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryInternal.DeserializeAbstractiveSummaryInternal(item));
+                        array.Add(AbstractiveSummary.DeserializeAbstractiveSummary(item));
                     }
                     summaries = array;
                     continue;

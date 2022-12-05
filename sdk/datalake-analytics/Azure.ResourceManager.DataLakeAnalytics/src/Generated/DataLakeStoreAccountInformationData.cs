@@ -23,19 +23,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="suffix">
-        /// The optional suffix for the Data Lake Store account.
-        /// Serialized Name: DataLakeStoreAccountInformation.properties.suffix
-        /// </param>
+        /// <param name="suffix"> The optional suffix for the Data Lake Store account. </param>
         internal DataLakeStoreAccountInformationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string suffix) : base(id, name, resourceType, systemData)
         {
             Suffix = suffix;
         }
 
-        /// <summary>
-        /// The optional suffix for the Data Lake Store account.
-        /// Serialized Name: DataLakeStoreAccountInformation.properties.suffix
-        /// </summary>
+        /// <summary> The optional suffix for the Data Lake Store account. </summary>
         public string Suffix { get; }
     }
 }

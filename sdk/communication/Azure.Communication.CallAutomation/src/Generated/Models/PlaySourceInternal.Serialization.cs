@@ -27,11 +27,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("fileSource");
                 writer.WriteObjectValue(FileSource);
             }
-            if (Optional.IsDefined(TextSource))
-            {
-                writer.WritePropertyName("textSource");
-                writer.WriteObjectValue(TextSource);
-            }
             writer.WriteEndObject();
         }
     }

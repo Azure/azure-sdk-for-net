@@ -25,7 +25,5 @@ namespace Azure.Core.TestFramework.Models
 
         /// <summary> Gets the x recording file. </summary>
         public string XRecordingFile { get; }
-        /// <summary> Gets or sets the x recording assets file. </summary>
-        public string XRecordingAssetsFile { get; set; }
     }
 }

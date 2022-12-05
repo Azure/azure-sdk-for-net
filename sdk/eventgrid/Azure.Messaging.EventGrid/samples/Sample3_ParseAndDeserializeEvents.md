@@ -94,3 +94,7 @@ foreach (EventGridEvent egEvent in egEvents)
     }
 }
 ```
+
+## Source
+To view the full example source, see:
+- [Sample2_ParseAndDeserializeEvents.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/tests/Samples/Sample2_ParseAndDeserializeEvents.cs)

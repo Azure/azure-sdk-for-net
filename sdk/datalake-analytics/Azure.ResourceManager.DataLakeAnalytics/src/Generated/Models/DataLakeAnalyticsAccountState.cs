@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary>
-    /// The state of the Data Lake Analytics account.
-    /// Serialized Name: DataLakeAnalyticsAccountState
-    /// </summary>
+    /// <summary> The state of the Data Lake Analytics account. </summary>
     public enum DataLakeAnalyticsAccountState
     {
-        /// <summary>
-        /// Active
-        /// Serialized Name: DataLakeAnalyticsAccountState.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         Active,
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: DataLakeAnalyticsAccountState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         Suspended
     }
 }

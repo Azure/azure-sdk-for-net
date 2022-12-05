@@ -32,16 +32,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("dtmfOptions");
                 writer.WriteObjectValue(DtmfOptions);
             }
-            if (Optional.IsCollectionDefined(Choices))
-            {
-                writer.WritePropertyName("choices");
-                writer.WriteStartArray();
-                foreach (var item in Choices)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
     }

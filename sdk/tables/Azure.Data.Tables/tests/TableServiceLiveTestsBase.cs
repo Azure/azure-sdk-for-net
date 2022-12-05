@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -183,7 +182,7 @@ namespace Azure.Data.Tables.Tests
                             { GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}") },
                             { BinaryTypePropertyName, new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } },
                             { Int64TypePropertyName, long.Parse(number) },
-                            { DoubleTypePropertyName, double.Parse($"{number}.0", CultureInfo.InvariantCulture) },
+                            { DoubleTypePropertyName, double.Parse($"{number}.0") },
                             { DoubleDecimalTypePropertyName, n + 0.5 },
                             { IntTypePropertyName, n },
                         };
@@ -248,7 +247,7 @@ namespace Azure.Data.Tables.Tests
                             BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
                             Int64TypeProperty = long.Parse(number),
                             UInt64TypeProperty = ulong.Parse(number),
-                            DoubleTypeProperty = double.Parse($"{number}.0", CultureInfo.InvariantCulture),
+                            DoubleTypeProperty = double.Parse($"{number}.0"),
                             IntTypeProperty = n,
                         };
                     })
@@ -281,7 +280,7 @@ namespace Azure.Data.Tables.Tests
                             DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                             DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                             Double = n + 0.5,
-                            DoubleInteger = double.Parse($"{n.ToString()}.0", CultureInfo.InvariantCulture),
+                            DoubleInteger = double.Parse($"{n.ToString()}.0"),
                             DoubleN = n + 0.5,
                             DoublePrimitive = n + 0.5,
                             DoublePrimitiveN = n + 0.5,

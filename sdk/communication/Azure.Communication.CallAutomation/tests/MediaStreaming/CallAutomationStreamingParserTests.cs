@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication.CallAutomation.Models.MediaStreaming;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 

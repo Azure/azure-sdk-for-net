@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LogAnalyticsQueryPackQueryListResult. </summary>
         /// <param name="value"> List of Log Analytics QueryPack Query definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LogAnalyticsQueryPackQueryListResult(IEnumerable<LogAnalyticsQueryData> value)
+        internal LogAnalyticsQueryPackQueryListResult(IEnumerable<LogAnalyticsQueryPackQueryData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LogAnalyticsQueryPackQueryListResult. </summary>
         /// <param name="value"> List of Log Analytics QueryPack Query definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Log Analytics QueryPack definitions if too many QueryPack-Queries where returned in the result set. </param>
-        internal LogAnalyticsQueryPackQueryListResult(IReadOnlyList<LogAnalyticsQueryData> value, string nextLink)
+        internal LogAnalyticsQueryPackQueryListResult(IReadOnlyList<LogAnalyticsQueryPackQueryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Log Analytics QueryPack Query definitions. </summary>
-        public IReadOnlyList<LogAnalyticsQueryData> Value { get; }
+        public IReadOnlyList<LogAnalyticsQueryPackQueryData> Value { get; }
         /// <summary> The URI to get the next set of Log Analytics QueryPack definitions if too many QueryPack-Queries where returned in the result set. </summary>
         public string NextLink { get; }
     }

@@ -176,7 +176,7 @@ namespace Azure.AI.TextAnalytics
         /// The first two letters of the ISO 4217 three-letter code are the same as the code for the country name,
         /// and, where possible, the third letter corresponds to the first letter of the currency name.
         /// </summary>
-        [CodeGenMember("Iso4217")]
+        [CodeGenMember("ISO4217")]
         public string Iso4217 { get; }
 
         /// <summary>
@@ -479,13 +479,12 @@ namespace Azure.AI.TextAnalytics
             ResolutionKind = ResolutionKind.TemporalSpanResolution;
         }
 
-        internal TemporalSpanResolution(ResolutionKind resolutionKind, string begin, string end, string duration, TemporalModifier? modifier, string timex) : base(resolutionKind)
+        internal TemporalSpanResolution(ResolutionKind resolutionKind, string begin, string end, string duration, TemporalModifier? modifier) : base(resolutionKind)
         {
             Begin = begin;
             End = end;
             Duration = duration;
             Modifier = modifier;
-            Timex = timex;
             ResolutionKind = resolutionKind;
         }
 
@@ -515,12 +514,6 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         [CodeGenMember("Modifier")]
         public TemporalModifier? Modifier { get; }
-
-        /// <summary>
-        /// An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings.
-        /// </summary>
-        [CodeGenMember("Timex")]
-        public string Timex { get; }
     }
 
     [CodeGenModel("VolumeResolution")]

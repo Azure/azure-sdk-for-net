@@ -3,15 +3,16 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class DocumentAnalysisSamples
+    [LiveOnly]
+    public partial class Snippets : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [RecordedTest]
         public void CreateDocumentAnalysisClient()

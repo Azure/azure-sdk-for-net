@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Identitiy;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
 using System.Diagnostics.Tracing;

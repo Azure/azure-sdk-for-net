@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<long> total = default;
             Optional<long> top = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<OperationalInsightsSearchCoreSummary>> coreSummaries = default;
+            Optional<IReadOnlyList<CoreSummary>> coreSummaries = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastUpdated = default;
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationalInsightsSearchCoreSummary> array = new List<OperationalInsightsSearchCoreSummary>();
+                    List<CoreSummary> array = new List<CoreSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSearchCoreSummary.DeserializeOperationalInsightsSearchCoreSummary(item));
+                        array.Add(CoreSummary.DeserializeCoreSummary(item));
                     }
                     coreSummaries = array;
                     continue;

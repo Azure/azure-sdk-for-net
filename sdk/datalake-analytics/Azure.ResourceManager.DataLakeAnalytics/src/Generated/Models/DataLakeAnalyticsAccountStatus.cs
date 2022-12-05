@@ -7,66 +7,30 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary>
-    /// The provisioning status of the Data Lake Analytics account.
-    /// Serialized Name: DataLakeAnalyticsAccountStatus
-    /// </summary>
+    /// <summary> The provisioning status of the Data Lake Analytics account. </summary>
     public enum DataLakeAnalyticsAccountStatus
     {
-        /// <summary>
-        /// Failed
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Creating
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         Creating,
-        /// <summary>
-        /// Running
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         Running,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// Patching
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Patching
-        /// </summary>
+        /// <summary> Patching. </summary>
         Patching,
-        /// <summary>
-        /// Suspending
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Suspending
-        /// </summary>
+        /// <summary> Suspending. </summary>
         Suspending,
-        /// <summary>
-        /// Resuming
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Resuming
-        /// </summary>
+        /// <summary> Resuming. </summary>
         Resuming,
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         Deleting,
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         Deleted,
-        /// <summary>
-        /// Undeleting
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Undeleting
-        /// </summary>
+        /// <summary> Undeleting. </summary>
         Undeleting,
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: DataLakeAnalyticsAccountStatus.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         Canceled
     }
 }

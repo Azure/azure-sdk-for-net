@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         private const string EnglishDocument1 = @"A recent report by the Government Accountability Office found a dramatic increase in oil.";
-        private static readonly List<string> s_englishExpectedOutput1 = new List<string>
+        private static readonly List<string> e_document1ExpectedOutput = new List<string>
         {
             "recent",
             "Government",
@@ -30,13 +30,13 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         private const string EnglishDocument2 = @"Capital Call #20 for Berkshire Multifamily.";
-        private static readonly List<string> s_englishExpectedOutput2 = new List<string>
+        private static readonly List<string> e_document2ExpectedOutput = new List<string>
         {
             "Berkshire Multifamily",
         };
 
         private const string SpanishDocument1 = @"Un informe reciente de la Oficina de Responsabilidad del Gobierno encontró un aumento dramático en el petróleo.";
-        private static readonly List<string> s_spanishExpectedOutput1 = new List<string>
+        private static readonly List<string> s_document1ExpectedOutput = new List<string>
         {
             "reciente",
             "Responsabilidad",
@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Tests
             "petróleo",
         };
 
-        private static readonly List<string> s_englishBatchConvenienceDocuments = new List<string>
+        private static readonly List<string> e_batchConvenienceDocuments = new List<string>
         {
             EnglishDocument1,
             EnglishDocument2
@@ -62,12 +62,6 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                  Language = "es",
             }
-        };
-
-        private static readonly Dictionary<string, List<string>> s_englishExpectedBatchOutput = new()
-        {
-            { "0", s_englishExpectedOutput1 },
-            { "1", s_englishExpectedOutput2 },
         };
 
         [RecordedTest]
@@ -91,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_englishExpectedOutput1);
+            ValidateInDocumentResult(entites, e_document1ExpectedOutput);
         }
 
         [RecordedTest]
@@ -115,7 +109,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_englishExpectedOutput1);
+            ValidateInDocumentResult(entites, e_document1ExpectedOutput);
         }
 
         [RecordedTest]
@@ -144,7 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
             RecognizeEntitiesResult firstResult = results.First();
             CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_spanishExpectedOutput1);
+            ValidateInDocumentResult(entites, s_document1ExpectedOutput);
         }
 
         [RecordedTest]
@@ -186,7 +180,6 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizeCustomEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            Dictionary<string, List<string>> expectedOutput = s_englishExpectedBatchOutput;
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
@@ -195,12 +188,18 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            var operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
+            var operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
 
             var results = ExtractDocumentsResultsFromResponse(operation);
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", e_document1ExpectedOutput },
+                { "1", e_document2ExpectedOutput },
+            };
 
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
@@ -226,8 +225,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", s_englishExpectedOutput1 },
-                { "2", s_spanishExpectedOutput1 },
+                { "1", e_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput);
@@ -273,7 +272,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(e_batchConvenienceDocuments, batchActions);
 
             await PollUntilTimeout(operation);
             Assert.IsTrue(operation.HasCompleted);
@@ -303,8 +302,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", s_englishExpectedOutput1 },
-                { "2", s_spanishExpectedOutput1 },
+                { "1", e_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
             };
 
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
@@ -328,86 +327,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
-                { "1", s_englishExpectedOutput1 },
-                { "2", s_spanishExpectedOutput1 },
+                { "1", e_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
             };
 
             ValidateBatchDocumentsResult(resultCollection, expectedOutput);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task RecognizeCustomEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            RecognizeCustomEntitiesOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-
-            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(
-                s_englishBatchConvenienceDocuments,
-                TestEnvironment.RecognizeCustomEntitiesProjectName,
-                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
-                "auto",
-                options);
-
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            ValidateBatchDocumentsResult(resultCollection, s_englishExpectedBatchOutput, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationRecognizeCustomEntitiesWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            List<string> documents = s_englishBatchConvenienceDocuments;
-            Dictionary<string, List<string>> expectedOutput = s_englishExpectedBatchOutput;
-            TextAnalyticsActions actions = new()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                },
-                DisplayName = "RecognizeCustomEntitiesWithAutoDetectedLanguageTest",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> actionResults = resultCollection.RecognizeCustomEntitiesResults;
-            Assert.IsNotNull(actionResults);
-
-            RecognizeCustomEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void RecognizeCustomEntitiesBatchWithDefaultLanguageThrows()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-            RecognizeCustomEntitiesOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
-                async () => await client.StartRecognizeCustomEntitiesAsync(
-                s_englishBatchConvenienceDocuments,
-                TestEnvironment.RecognizeCustomEntitiesProjectName,
-                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
-                "auto",
-                options));
-
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
@@ -440,11 +364,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateBatchDocumentsResult(
-            RecognizeCustomEntitiesResultCollection results,
-            Dictionary<string, List<string>> minimumExpectedOutput,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+        private void ValidateBatchDocumentsResult(RecognizeCustomEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
         {
             if (includeStatistics)
             {
@@ -457,42 +377,27 @@ namespace Azure.AI.TextAnalytics.Tests
             else
                 Assert.IsNull(results.Statistics);
 
-            foreach (RecognizeEntitiesResult result in results)
+            foreach (RecognizeEntitiesResult entitiesInDocument in results)
             {
-                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
 
-                Assert.False(result.HasError);
+                Assert.False(entitiesInDocument.HasError);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(result.Statistics);
+                Assert.IsNotNull(entitiesInDocument.Statistics);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
-                    Assert.Greater(result.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
+                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
                 }
                 else
                 {
-                    Assert.AreEqual(0, result.Statistics.CharacterCount);
-                    Assert.AreEqual(0, result.Statistics.TransactionCount);
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
                 }
 
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
-                }
-
-                ValidateInDocumentResult(result.Entities, minimumExpectedOutput[result.Id]);
+                ValidateInDocumentResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
             }
         }
     }

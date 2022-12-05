@@ -781,9 +781,6 @@
       "properties": {
         "x-recording-file": {
           "type": "string"
-        },
-        "x-recording-assets-file": {
-          "type": "string"
         }
       },
       "required": [

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -72,11 +71,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("databaseRouting");
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
-            if (Optional.IsDefined(RetrievalStartOn))
-            {
-                writer.WritePropertyName("retrievalStartDate");
-                writer.WriteStringValue(RetrievalStartOn.Value, "O");
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -97,7 +91,6 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<IList<string>> eventSystemProperties = default;
             Optional<string> sharedAccessPolicyName = default;
             Optional<KustoDatabaseRouting> databaseRouting = default;
-            Optional<DateTimeOffset> retrievalStartDate = default;
             Optional<KustoProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -215,16 +208,6 @@ namespace Azure.ResourceManager.Kusto.Models
                             databaseRouting = new KustoDatabaseRouting(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("retrievalStartDate"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            retrievalStartDate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -239,7 +222,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            return new KustoIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Optional.ToNullable(databaseRouting), Optional.ToNullable(provisioningState));
         }
     }
 }

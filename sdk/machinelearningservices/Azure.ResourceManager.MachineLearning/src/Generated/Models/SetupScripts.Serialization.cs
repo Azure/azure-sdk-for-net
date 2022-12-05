@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static SetupScripts DeserializeSetupScripts(JsonElement element)
         {
-            Optional<MachineLearningScriptsToExecute> scripts = default;
+            Optional<ScriptsToExecute> scripts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scripts"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scripts = MachineLearningScriptsToExecute.DeserializeMachineLearningScriptsToExecute(property.Value);
+                    scripts = ScriptsToExecute.DeserializeScriptsToExecute(property.Value);
                     continue;
                 }
             }

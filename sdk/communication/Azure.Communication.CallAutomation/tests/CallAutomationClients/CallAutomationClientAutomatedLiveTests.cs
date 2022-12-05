@@ -81,7 +81,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
+                }
             }
         }
 
@@ -137,8 +148,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 {
                     if (ex.Status == 404)
                     {
+                        // doesn't exist, as expected
+                        Assert.Pass();
                         callConnectionId = null;
-                        return;
                     }
                 }
             }
@@ -148,7 +160,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
+                }
             }
         }
     }

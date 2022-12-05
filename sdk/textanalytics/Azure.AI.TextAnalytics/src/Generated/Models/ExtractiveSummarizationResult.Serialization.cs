@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static ExtractiveSummarizationResult DeserializeExtractiveSummarizationResult(JsonElement element)
         {
-            IList<ExtractedSummaryDocumentResultWithDetectedLanguage> documents = default;
+            IList<ExtractiveSummarizationResultDocumentsItem> documents = default;
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
@@ -51,10 +51,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<ExtractedSummaryDocumentResultWithDetectedLanguage> array = new List<ExtractedSummaryDocumentResultWithDetectedLanguage>();
+                    List<ExtractiveSummarizationResultDocumentsItem> array = new List<ExtractiveSummarizationResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtractedSummaryDocumentResultWithDetectedLanguage.DeserializeExtractedSummaryDocumentResultWithDetectedLanguage(item));
+                        array.Add(ExtractiveSummarizationResultDocumentsItem.DeserializeExtractiveSummarizationResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;

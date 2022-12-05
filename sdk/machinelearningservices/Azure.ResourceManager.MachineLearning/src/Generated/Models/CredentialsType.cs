@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine the datastore credentials type.
-    /// Serialized Name: CredentialsType
-    /// </summary>
+    /// <summary> Enum to determine the datastore credentials type. </summary>
     internal readonly partial struct CredentialsType : IEquatable<CredentialsType>
     {
         private readonly string _value;
@@ -30,32 +27,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string NoneValue = "None";
         private const string SasValue = "Sas";
         private const string ServicePrincipalValue = "ServicePrincipal";
+        private const string KerberosKeytabValue = "KerberosKeytab";
+        private const string KerberosPasswordValue = "KerberosPassword";
 
-        /// <summary>
-        /// AccountKey
-        /// Serialized Name: CredentialsType.AccountKey
-        /// </summary>
+        /// <summary> AccountKey. </summary>
         public static CredentialsType AccountKey { get; } = new CredentialsType(AccountKeyValue);
-        /// <summary>
-        /// Certificate
-        /// Serialized Name: CredentialsType.Certificate
-        /// </summary>
+        /// <summary> Certificate. </summary>
         public static CredentialsType Certificate { get; } = new CredentialsType(CertificateValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: CredentialsType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static CredentialsType None { get; } = new CredentialsType(NoneValue);
-        /// <summary>
-        /// Sas
-        /// Serialized Name: CredentialsType.Sas
-        /// </summary>
+        /// <summary> Sas. </summary>
         public static CredentialsType Sas { get; } = new CredentialsType(SasValue);
-        /// <summary>
-        /// ServicePrincipal
-        /// Serialized Name: CredentialsType.ServicePrincipal
-        /// </summary>
+        /// <summary> ServicePrincipal. </summary>
         public static CredentialsType ServicePrincipal { get; } = new CredentialsType(ServicePrincipalValue);
+        /// <summary> KerberosKeytab. </summary>
+        public static CredentialsType KerberosKeytab { get; } = new CredentialsType(KerberosKeytabValue);
+        /// <summary> KerberosPassword. </summary>
+        public static CredentialsType KerberosPassword { get; } = new CredentialsType(KerberosPasswordValue);
         /// <summary> Determines if two <see cref="CredentialsType"/> values are the same. </summary>
         public static bool operator ==(CredentialsType left, CredentialsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CredentialsType"/> values are not the same. </summary>

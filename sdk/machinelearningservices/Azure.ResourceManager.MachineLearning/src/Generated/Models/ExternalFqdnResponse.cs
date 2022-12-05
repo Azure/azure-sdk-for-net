@@ -10,26 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The ExternalFqdnResponse.
-    /// Serialized Name: ExternalFqdnResponse
-    /// </summary>
+    /// <summary> The ExternalFqdnResponse. </summary>
     internal partial class ExternalFqdnResponse
     {
         /// <summary> Initializes a new instance of ExternalFqdnResponse. </summary>
         internal ExternalFqdnResponse()
         {
-            Value = new ChangeTrackingList<MachineLearningFqdnEndpoints>();
+            Value = new ChangeTrackingList<FqdnEndpoints>();
         }
 
         /// <summary> Initializes a new instance of ExternalFqdnResponse. </summary>
-        /// <param name="value"> Serialized Name: ExternalFqdnResponse.value. </param>
-        internal ExternalFqdnResponse(IReadOnlyList<MachineLearningFqdnEndpoints> value)
+        /// <param name="value"></param>
+        internal ExternalFqdnResponse(IReadOnlyList<FqdnEndpoints> value)
         {
             Value = value;
         }
 
-        /// <summary> Serialized Name: ExternalFqdnResponse.value. </summary>
-        public IReadOnlyList<MachineLearningFqdnEndpoints> Value { get; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<FqdnEndpoints> Value { get; }
     }
 }

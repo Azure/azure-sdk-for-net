@@ -46,3 +46,9 @@ Console.WriteLine(receivedEmployee.Age);
 // complete the message, thereby deleting it from the service
 await receiver.CompleteMessageAsync(receivedMessage);
 ```
+
+## Source
+
+To see the full example source, see:
+
+* [Sample11_CloudEvents.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample11_CloudEvents.cs)

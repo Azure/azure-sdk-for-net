@@ -5,8 +5,6 @@ $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
-$GithubUri = "https://github.com/Azure/azure-sdk-for-net"
-$PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
 
@@ -322,10 +320,6 @@ function Get-DocsCiConfig($configPath) {
       # Split the rows by the comma
       $fields = $row.Split(',')
 
-      if (!$fields -or $fields.Count -lt 2) {
-        LogError "Please check the csv entry: $configPath."
-        LogError "Do include the package name for each of the csv entry."
-      }
       # If the {package_ID} field contains optional properties inside square
       # brackets, parse those properties into key value pairs. In the case of 
       # duplicate keys, the last one wins.
@@ -353,7 +347,7 @@ function Get-DocsCiConfig($configPath) {
       # Remaining entries in the row are versions, add them to the package 
       # properties
       $outputVersions = @()
-      if ($fields.Count -gt 2 -and $fields[2]) {
+      if ($fields[2]) {
         $outputVersions = $fields[2..($fields.Count - 1)]
       }
 

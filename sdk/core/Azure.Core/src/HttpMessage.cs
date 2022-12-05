@@ -161,7 +161,7 @@ namespace Azure.Core
         /// <param name="type">The property type.</param>
         /// <param name="value">The property value.</param>
         /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
-        public bool TryGetProperty(Type type, out object? value)
+        internal bool TryGetInternalProperty(Type type, out object? value)
         {
             value = null;
             return _typeProperties?.TryGetValue(type, out value) == true;
@@ -173,7 +173,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="type">The key for the value.</param>
         /// <param name="value">The property value.</param>
-        public void SetProperty(Type type, object value)
+        internal void SetInternalProperty(Type type, object value)
         {
             _typeProperties ??= new Dictionary<Type, object>();
             _typeProperties[type] = value;

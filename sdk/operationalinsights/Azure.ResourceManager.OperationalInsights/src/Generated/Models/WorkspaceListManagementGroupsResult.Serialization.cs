@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static WorkspaceListManagementGroupsResult DeserializeWorkspaceListManagementGroupsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OperationalInsightsManagementGroup>> value = default;
+            Optional<IReadOnlyList<ManagementGroup>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationalInsightsManagementGroup> array = new List<OperationalInsightsManagementGroup>();
+                    List<ManagementGroup> array = new List<ManagementGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(item));
+                        array.Add(ManagementGroup.DeserializeManagementGroup(item));
                     }
                     value = array;
                     continue;

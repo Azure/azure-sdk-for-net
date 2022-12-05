@@ -39,8 +39,6 @@ $dotnetSdkVersion = $GlobalJson.sdk.version
 $installScript = GetDotNetInstallScript
     
 $dotnet = Join-Path $RepoRoot ".dotnet"
-bash $installScript --install-dir $dotnet
-bash $installScript --install-dir $dotnet -c 3.1
 & bash $installScript --install-dir $dotnet --version $dotnetSdkVersion
 
 if (Test-Path $installScript) {

@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Dns
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DnsARecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsARecordResources and their operations over a DnsARecordResource. </returns>
-        public virtual DnsARecordCollection GetDnsARecords()
+        /// <summary> Gets a collection of ARecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of ARecordResources and their operations over a ARecordResource. </returns>
+        public virtual ARecordCollection GetARecords()
         {
-            return GetCachedClient(Client => new DnsARecordCollection(Client, Id));
+            return GetCachedClient(Client => new ARecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DnsARecordResource>> GetDnsARecordAsync(string aRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ARecordResource>> GetARecordAsync(string aRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsARecords().GetAsync(aRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetARecords().GetAsync(aRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -124,30 +124,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsARecordResource> GetDnsARecord(string aRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<ARecordResource> GetARecord(string aRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsARecords().Get(aRecordName, cancellationToken);
+            return GetARecords().Get(aRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DnsAaaaRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsAaaaRecordResources and their operations over a DnsAaaaRecordResource. </returns>
-        public virtual DnsAaaaRecordCollection GetDnsAaaaRecords()
+        /// <summary> Gets a collection of AaaaRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of AaaaRecordResources and their operations over a AaaaRecordResource. </returns>
+        public virtual AaaaRecordCollection GetAaaaRecords()
         {
-            return GetCachedClient(Client => new DnsAaaaRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{aaaaRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aaaaRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsAaaaRecordResource>> GetDnsAaaaRecordAsync(string aaaaRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsAaaaRecords().GetAsync(aaaaRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new AaaaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -159,16 +145,30 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aaaaRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsAaaaRecordResource> GetDnsAaaaRecord(string aaaaRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AaaaRecordResource>> GetAaaaRecordAsync(string aaaaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsAaaaRecords().Get(aaaaRecordName, cancellationToken);
+            return await GetAaaaRecords().GetAsync(aaaaRecordName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DnsCaaRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsCaaRecordResources and their operations over a DnsCaaRecordResource. </returns>
-        public virtual DnsCaaRecordCollection GetDnsCaaRecords()
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{aaaaRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="aaaaRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aaaaRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AaaaRecordResource> GetAaaaRecord(string aaaaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DnsCaaRecordCollection(Client, Id));
+            return GetAaaaRecords().Get(aaaaRecordName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CaaRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of CaaRecordResources and their operations over a CaaRecordResource. </returns>
+        public virtual CaaRecordCollection GetCaaRecords()
+        {
+            return GetCachedClient(Client => new CaaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DnsCaaRecordResource>> GetDnsCaaRecordAsync(string caaRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CaaRecordResource>> GetCaaRecordAsync(string caaRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsCaaRecords().GetAsync(caaRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetCaaRecords().GetAsync(caaRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -194,30 +194,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsCaaRecordResource> GetDnsCaaRecord(string caaRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<CaaRecordResource> GetCaaRecord(string caaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsCaaRecords().Get(caaRecordName, cancellationToken);
+            return GetCaaRecords().Get(caaRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DnsCnameRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsCnameRecordResources and their operations over a DnsCnameRecordResource. </returns>
-        public virtual DnsCnameRecordCollection GetDnsCnameRecords()
+        /// <summary> Gets a collection of CnameRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of CnameRecordResources and their operations over a CnameRecordResource. </returns>
+        public virtual CnameRecordCollection GetCnameRecords()
         {
-            return GetCachedClient(Client => new DnsCnameRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsCnameRecordResource>> GetDnsCnameRecordAsync(string cnameRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsCnameRecords().GetAsync(cnameRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new CnameRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -229,16 +215,30 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsCnameRecordResource> GetDnsCnameRecord(string cnameRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CnameRecordResource>> GetCnameRecordAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsCnameRecords().Get(cnameRecordName, cancellationToken);
+            return await GetCnameRecords().GetAsync(cnameRecordName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DnsMXRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsMXRecordResources and their operations over a DnsMXRecordResource. </returns>
-        public virtual DnsMXRecordCollection GetDnsMXRecords()
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{cnameRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CnameRecordResource> GetCnameRecord(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DnsMXRecordCollection(Client, Id));
+            return GetCnameRecords().Get(cnameRecordName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MXRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of MXRecordResources and their operations over a MXRecordResource. </returns>
+        public virtual MXRecordCollection GetMXRecords()
+        {
+            return GetCachedClient(Client => new MXRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DnsMXRecordResource>> GetDnsMXRecordAsync(string mxRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MXRecordResource>> GetMXRecordAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsMXRecords().GetAsync(mxRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetMXRecords().GetAsync(mxRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -264,30 +264,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsMXRecordResource> GetDnsMXRecord(string mxRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<MXRecordResource> GetMXRecord(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsMXRecords().Get(mxRecordName, cancellationToken);
+            return GetMXRecords().Get(mxRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DnsNSRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsNSRecordResources and their operations over a DnsNSRecordResource. </returns>
-        public virtual DnsNSRecordCollection GetDnsNSRecords()
+        /// <summary> Gets a collection of NSRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of NSRecordResources and their operations over a NSRecordResource. </returns>
+        public virtual NSRecordCollection GetNSRecords()
         {
-            return GetCachedClient(Client => new DnsNSRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsNSRecordResource>> GetDnsNSRecordAsync(string nsRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsNSRecords().GetAsync(nsRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new NSRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -299,16 +285,30 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsNSRecordResource> GetDnsNSRecord(string nsRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NSRecordResource>> GetNSRecordAsync(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsNSRecords().Get(nsRecordName, cancellationToken);
+            return await GetNSRecords().GetAsync(nsRecordName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DnsPtrRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsPtrRecordResources and their operations over a DnsPtrRecordResource. </returns>
-        public virtual DnsPtrRecordCollection GetDnsPtrRecords()
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{nsRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="nsRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NSRecordResource> GetNSRecord(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DnsPtrRecordCollection(Client, Id));
+            return GetNSRecords().Get(nsRecordName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PtrRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of PtrRecordResources and their operations over a PtrRecordResource. </returns>
+        public virtual PtrRecordCollection GetPtrRecords()
+        {
+            return GetCachedClient(Client => new PtrRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -320,9 +320,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DnsPtrRecordResource>> GetDnsPtrRecordAsync(string ptrRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PtrRecordResource>> GetPtrRecordAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsPtrRecords().GetAsync(ptrRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetPtrRecords().GetAsync(ptrRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -334,30 +334,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsPtrRecordResource> GetDnsPtrRecord(string ptrRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<PtrRecordResource> GetPtrRecord(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsPtrRecords().Get(ptrRecordName, cancellationToken);
+            return GetPtrRecords().Get(ptrRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DnsSoaRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsSoaRecordResources and their operations over a DnsSoaRecordResource. </returns>
-        public virtual DnsSoaRecordCollection GetDnsSoaRecords()
+        /// <summary> Gets a collection of SoaRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of SoaRecordResources and their operations over a SoaRecordResource. </returns>
+        public virtual SoaRecordCollection GetSoaRecords()
         {
-            return GetCachedClient(Client => new DnsSoaRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{soaRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsSoaRecordResource>> GetDnsSoaRecordAsync(string soaRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsSoaRecords().GetAsync(soaRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SoaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -369,16 +355,30 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsSoaRecordResource> GetDnsSoaRecord(string soaRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoaRecordResource>> GetSoaRecordAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsSoaRecords().Get(soaRecordName, cancellationToken);
+            return await GetSoaRecords().GetAsync(soaRecordName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DnsSrvRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsSrvRecordResources and their operations over a DnsSrvRecordResource. </returns>
-        public virtual DnsSrvRecordCollection GetDnsSrvRecords()
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{soaRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SoaRecordResource> GetSoaRecord(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DnsSrvRecordCollection(Client, Id));
+            return GetSoaRecords().Get(soaRecordName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SrvRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of SrvRecordResources and their operations over a SrvRecordResource. </returns>
+        public virtual SrvRecordCollection GetSrvRecords()
+        {
+            return GetCachedClient(Client => new SrvRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -390,9 +390,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DnsSrvRecordResource>> GetDnsSrvRecordAsync(string srvRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SrvRecordResource>> GetSrvRecordAsync(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsSrvRecords().GetAsync(srvRecordName, cancellationToken).ConfigureAwait(false);
+            return await GetSrvRecords().GetAsync(srvRecordName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -404,30 +404,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsSrvRecordResource> GetDnsSrvRecord(string srvRecordName, CancellationToken cancellationToken = default)
+        public virtual Response<SrvRecordResource> GetSrvRecord(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsSrvRecords().Get(srvRecordName, cancellationToken);
+            return GetSrvRecords().Get(srvRecordName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DnsTxtRecordResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of DnsTxtRecordResources and their operations over a DnsTxtRecordResource. </returns>
-        public virtual DnsTxtRecordCollection GetDnsTxtRecords()
+        /// <summary> Gets a collection of TxtRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of TxtRecordResources and their operations over a TxtRecordResource. </returns>
+        public virtual TxtRecordCollection GetTxtRecords()
         {
-            return GetCachedClient(Client => new DnsTxtRecordCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a record set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{txtRecordName}
-        /// Operation Id: RecordSets_Get
-        /// </summary>
-        /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsTxtRecordResource>> GetDnsTxtRecordAsync(string txtRecordName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsTxtRecords().GetAsync(txtRecordName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new TxtRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -439,9 +425,23 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DnsTxtRecordResource> GetDnsTxtRecord(string txtRecordName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TxtRecordResource>> GetTxtRecordAsync(string txtRecordName, CancellationToken cancellationToken = default)
         {
-            return GetDnsTxtRecords().Get(txtRecordName, cancellationToken);
+            return await GetTxtRecords().GetAsync(txtRecordName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{txtRecordName}
+        /// Operation Id: RecordSets_Get
+        /// </summary>
+        /// <param name="txtRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="txtRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TxtRecordResource> GetTxtRecord(string txtRecordName, CancellationToken cancellationToken = default)
+        {
+            return GetTxtRecords().Get(txtRecordName, cancellationToken);
         }
 
         /// <summary>
@@ -608,10 +608,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsRecordData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsRecordData> GetAllRecordDataAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecordData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecordData> GetAllRecordDataAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsRecordData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RecordData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<DnsRecordData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RecordData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();
@@ -652,10 +652,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsRecordData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsRecordData> GetAllRecordData(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecordData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecordData> GetAllRecordData(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsRecordData> FirstPageFunc(int? pageSizeHint)
+            Page<RecordData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<DnsRecordData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RecordData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordData");
                 scope.Start();

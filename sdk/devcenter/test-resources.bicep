@@ -1,6 +1,5 @@
 param resourceLocation string = resourceGroup().location
-param baseName string = resourceGroup().name
-param catalogPatIdentifier string
+param catalogSecretIdentifier string
 param devCenterPresetMsi string
 param projectEnvironmentTypePresetMsi string
 param testUserOid string
@@ -8,12 +7,11 @@ param testUserName string
 param projectAdminRoleDefinitionId string
 param deploymentEnvironmentsRoleDefinitionId string
 
-var defaultDevCenterName = 'sdk-dc-${uniqueString('devcenter', baseName, resourceGroup().name)}'
-
+var defaultDevCenterName = 'sdk-default-devcenter'
 var defaultProjectName = 'sdk-default-project'
 var defaultPoolName = 'sdk-default-pool'
-var defaultNetworkConnectionName = 'sdk-networkconnection-${uniqueString('networkConnection', baseName, resourceGroup().name)}'
-var defaultNetworkConnection2Name = 'sdk-networkconnection2-${uniqueString('networkConnection', baseName, resourceGroup().name)}'
+var defaultNetworkConnectionName = 'sdk-default-networkconnection'
+var defaultNetworkConnection2Name = 'sdk-default-networkconnection2'
 var defaultMarketplaceDefinition = 'sdk-default-devboxdefinition'
 var defaultCatalogName = 'sdk-default-catalog'
 var defaultEnvironmentTypeName = 'sdk-default-environment-type'
@@ -168,7 +166,7 @@ resource catalog 'Microsoft.DevCenter/devcenters/catalogs@2022-09-01-preview' = 
   properties: {
     gitHub: {
       branch: 'main'
-      secretIdentifier: catalogPatIdentifier
+      secretIdentifier: catalogSecretIdentifier
       path: '/NewFormat'
       uri: gitUri
     }
@@ -186,7 +184,7 @@ resource projectEnvironmentType 'Microsoft.DevCenter/projects/environmentTypes@2
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-        '${projectEnvironmentTypePresetMsi}': {}
+        '${devCenterPresetMsi}': {}
     }
   }
   properties: {

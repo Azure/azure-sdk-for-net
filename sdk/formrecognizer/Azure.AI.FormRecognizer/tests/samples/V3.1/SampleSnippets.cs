@@ -4,16 +4,17 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class FormRecognizerSamples
+    [LiveOnly]
+    public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
     {
         [RecordedTest]
         public void CreateFormRecognizerClient()

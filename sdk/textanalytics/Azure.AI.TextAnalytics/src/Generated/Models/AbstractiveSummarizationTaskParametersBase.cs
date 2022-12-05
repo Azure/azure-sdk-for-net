@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for an Abstractive Summarization task. </summary>
@@ -13,20 +16,25 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of AbstractiveSummarizationTaskParametersBase. </summary>
         public AbstractiveSummarizationTaskParametersBase()
         {
+            PhraseControls = new ChangeTrackingList<PhraseControl>();
         }
 
         /// <summary> Initializes a new instance of AbstractiveSummarizationTaskParametersBase. </summary>
         /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal AbstractiveSummarizationTaskParametersBase(int? sentenceCount, StringIndexType? stringIndexType)
+        /// <param name="phraseControls"> Control the phrases to be used in the summary. </param>
+        internal AbstractiveSummarizationTaskParametersBase(int? sentenceCount, StringIndexType? stringIndexType, IList<PhraseControl> phraseControls)
         {
             SentenceCount = sentenceCount;
             StringIndexType = stringIndexType;
+            PhraseControls = phraseControls;
         }
 
         /// <summary> It controls the approximate number of sentences in the output summaries. </summary>
         public int? SentenceCount { get; set; }
         /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
+        /// <summary> Control the phrases to be used in the summary. </summary>
+        public IList<PhraseControl> PhraseControls { get; }
     }
 }

@@ -7,31 +7,13 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The UnknownAutoMLVertical.
-    /// Serialized Name: UnknownAutoMLVertical
-    /// </summary>
+    /// <summary> The UnknownAutoMLVertical. </summary>
     internal partial class UnknownAutoMLVertical : AutoMLVertical
     {
         /// <summary> Initializes a new instance of UnknownAutoMLVertical. </summary>
-        /// <param name="logVerbosity">
-        /// Log verbosity for the job.
-        /// Serialized Name: AutoMLVertical.logVerbosity
-        /// </param>
-        /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
-        /// Also known as label column name in context of classification tasks.
-        /// Serialized Name: AutoMLVertical.targetColumnName
-        /// </param>
-        /// <param name="taskType">
-        /// [Required] Task type for AutoMLJob.
-        /// Serialized Name: AutoMLVertical.taskType
-        /// </param>
-        /// <param name="trainingData">
-        /// [Required] Training data input.
-        /// Serialized Name: AutoMLVertical.trainingData
-        /// </param>
-        internal UnknownAutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        internal UnknownAutoMLVertical(LogVerbosity? logVerbosity, TaskType taskType) : base(logVerbosity, taskType)
         {
             TaskType = taskType;
         }

@@ -3,8 +3,8 @@
 
 using System;
 using System.ComponentModel;
-using System.Text.Json.Serialization;
-using System.Collections.Generic;
+using System.Linq;
+using System.Security;
 
 namespace Azure.Core.Expressions.DataFactory
 {
@@ -12,23 +12,20 @@ namespace Azure.Core.Expressions.DataFactory
     /// A class representing either a primitive value or an expression.
     /// For details on DataFactoryExpressions see https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions.
     /// </summary>
-    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="TimeSpan"/>,
-    /// <see cref="DateTimeOffset"/>, <see cref="Uri"/>, <see cref="IList{String}"/>, <see cref="IList{TElement}"/> where TElement has a <see cref="JsonConverter"/> defined,
-    /// or <see cref="IDictionary{String,String}"/>.</typeparam>
+    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="Array"/>. </typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    [JsonConverter(typeof(DataFactoryExpressionJsonConverter))]
-    public sealed class DataFactoryExpression<T>
+    public sealed partial class DataFactoryExpression<T> : IUtf8JsonSerializable
 #pragma warning restore SA1649 // File name should match first type name
     {
-        internal string? Type { get; }
-        private readonly T? _literal;
-        internal string? Expression { get; }
+        private string? _type;
+        private T? _literal;
+        private string? _expression;
 
         /// <summary>
         /// Initializes a new instance of DataFactoryExpression with a literal value.
         /// </summary>
         /// <param name="literal"> The literal value. </param>
-        public DataFactoryExpression(T? literal)
+        public DataFactoryExpression(T literal)
         {
             HasLiteral = true;
             _literal = literal;
@@ -55,12 +52,26 @@ namespace Azure.Core.Expressions.DataFactory
 
         internal DataFactoryExpression(string expression, string type)
         {
-            Type = type;
-            Expression = expression;
+            _type = type;
+            _expression = expression;
         }
 
         /// <inheritdoc/>
-        public override string? ToString() => HasLiteral ? _literal?.ToString() : Expression;
+        public override string? ToString()
+        {
+            if (HasLiteral)
+            {
+                if (_literal is Array literalArray)
+                {
+                    return $"[{string.Join(",", literalArray.OfType<object>().Select(item => item?.ToString()))}]";
+                }
+                else
+                {
+                    return _literal?.ToString();
+                }
+            }
+            return _expression!;
+        }
 
         /// <summary>
         /// Converts a primitive value into a expression representing that value.

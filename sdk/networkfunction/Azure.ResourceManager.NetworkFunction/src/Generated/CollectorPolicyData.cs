@@ -14,11 +14,10 @@ using Azure.ResourceManager.NetworkFunction.Models;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary> A class representing the CollectorPolicy data model. </summary>
-    public partial class CollectorPolicyData : TrackedResourceData
+    public partial class CollectorPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of CollectorPolicyData. </summary>
-        /// <param name="location"> The location. </param>
-        public CollectorPolicyData(AzureLocation location) : base(location)
+        public CollectorPolicyData()
         {
             EmissionPolicies = new ChangeTrackingList<EmissionPoliciesPropertiesFormat>();
         }
@@ -28,13 +27,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             IngestionPolicy = ingestionPolicy;

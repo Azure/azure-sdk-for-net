@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,13 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.1.0-beta.1 (2022-11-18)
-
-### Other Changes
-
-- Upgraded API version to 2022-04-01-preview.
-- Upgraded dependent Azure.ResourceManager to 1.3.2.
 
 ## 1.0.0 (2022-09-27)
 

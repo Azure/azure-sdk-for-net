@@ -56,15 +56,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
-                if (UserAccountCredentials != null)
-                {
-                    writer.WritePropertyName("userAccountCredentials");
-                    writer.WriteObjectValue(UserAccountCredentials);
-                }
-                else
-                {
-                    writer.WriteNull("userAccountCredentials");
-                }
+                writer.WritePropertyName("userAccountCredentials");
+                writer.WriteObjectValue(UserAccountCredentials);
             }
             if (Optional.IsDefined(Subnet))
             {
@@ -85,54 +78,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(EnableNodePublicIP))
             {
-                if (EnableNodePublicIP != null)
-                {
-                    writer.WritePropertyName("enableNodePublicIp");
-                    writer.WriteBooleanValue(EnableNodePublicIP.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enableNodePublicIp");
-                }
+                writer.WritePropertyName("enableNodePublicIp");
+                writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
-            if (Optional.IsDefined(PropertyBag))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
-                if (PropertyBag != null)
+                writer.WritePropertyName("propertyBag");
+                writer.WriteStartObject();
+                foreach (var item in PropertyBag)
                 {
-                    writer.WritePropertyName("propertyBag");
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(PropertyBag);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(PropertyBag.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
                 }
-                else
-                {
-                    writer.WriteNull("propertyBag");
-                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
 
         internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element)
         {
-            Optional<MachineLearningOSType> osType = default;
+            Optional<OSType> osType = default;
             Optional<string> vmSize = default;
-            Optional<MachineLearningVmPriority> vmPriority = default;
+            Optional<VmPriority> vmPriority = default;
             Optional<VirtualMachineImage> virtualMachineImage = default;
             Optional<bool> isolatedNetwork = default;
-            Optional<AmlComputeScaleSettings> scaleSettings = default;
-            Optional<MachineLearningUserAccountCredentials> userAccountCredentials = default;
+            Optional<ScaleSettings> scaleSettings = default;
+            Optional<UserAccountCredentials> userAccountCredentials = default;
             Optional<ResourceId> subnet = default;
-            Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
-            Optional<AmlAllocationState> allocationState = default;
+            Optional<RemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
+            Optional<AllocationState> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Optional<IReadOnlyList<MachineLearningError>> errors = default;
-            Optional<int?> currentNodeCount = default;
-            Optional<int?> targetNodeCount = default;
-            Optional<MachineLearningNodeStateCounts> nodeStateCounts = default;
-            Optional<bool?> enableNodePublicIP = default;
-            Optional<BinaryData> propertyBag = default;
+            Optional<IReadOnlyList<ErrorResponse>> errors = default;
+            Optional<int> currentNodeCount = default;
+            Optional<int> targetNodeCount = default;
+            Optional<NodeStateCounts> nodeStateCounts = default;
+            Optional<bool> enableNodePublicIP = default;
+            Optional<IDictionary<string, BinaryData>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))
@@ -142,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new MachineLearningOSType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmSize"))
@@ -157,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vmPriority = new MachineLearningVmPriority(property.Value.GetString());
+                    vmPriority = new VmPriority(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualMachineImage"))
@@ -187,17 +172,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value);
+                    scaleSettings = ScaleSettings.DeserializeScaleSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userAccountCredentials"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        userAccountCredentials = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    userAccountCredentials = MachineLearningUserAccountCredentials.DeserializeMachineLearningUserAccountCredentials(property.Value);
+                    userAccountCredentials = UserAccountCredentials.DeserializeUserAccountCredentials(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subnet"))
@@ -217,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    remoteLoginPortPublicAccess = new MachineLearningRemoteLoginPortPublicAccess(property.Value.GetString());
+                    remoteLoginPortPublicAccess = new RemoteLoginPortPublicAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allocationState"))
@@ -227,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allocationState = new AmlAllocationState(property.Value.GetString());
+                    allocationState = new AllocationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allocationStateTransitionTime"))
@@ -247,10 +232,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         errors = null;
                         continue;
                     }
-                    List<MachineLearningError> array = new List<MachineLearningError>();
+                    List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
                     }
                     errors = array;
                     continue;
@@ -259,7 +244,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        currentNodeCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentNodeCount = property.Value.GetInt32();
@@ -269,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        targetNodeCount = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetNodeCount = property.Value.GetInt32();
@@ -279,17 +264,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nodeStateCounts = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nodeStateCounts = MachineLearningNodeStateCounts.DeserializeMachineLearningNodeStateCounts(property.Value);
+                    nodeStateCounts = NodeStateCounts.DeserializeNodeStateCounts(property.Value);
                     continue;
                 }
                 if (property.NameEquals("enableNodePublicIp"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        enableNodePublicIP = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableNodePublicIP = property.Value.GetBoolean();
@@ -299,14 +284,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        propertyBag = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    propertyBag = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                    }
+                    propertyBag = dictionary;
                     continue;
                 }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value);
+            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToDictionary(propertyBag));
         }
     }
 }

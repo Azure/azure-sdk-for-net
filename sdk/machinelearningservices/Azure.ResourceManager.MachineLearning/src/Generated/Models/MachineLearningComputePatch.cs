@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// AmlCompute update parameters.
-    /// Serialized Name: ClusterUpdateParameters
-    /// </summary>
+    /// <summary> AmlCompute update parameters. </summary>
     public partial class MachineLearningComputePatch
     {
         /// <summary> Initializes a new instance of MachineLearningComputePatch. </summary>
@@ -18,16 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary>
-        /// Properties of ClusterUpdate
-        /// Serialized Name: ClusterUpdateParameters.properties.properties
-        /// </summary>
+        /// <summary> Properties of ClusterUpdate. </summary>
         internal ScaleSettingsInformation Properties { get; set; }
-        /// <summary>
-        /// scale settings for AML Compute
-        /// Serialized Name: ScaleSettingsInformation.scaleSettings
-        /// </summary>
-        public AmlComputeScaleSettings ScaleSettings
+        /// <summary> scale settings for AML Compute. </summary>
+        public ScaleSettings ScaleSettings
         {
             get => Properties is null ? default : Properties.ScaleSettings;
             set

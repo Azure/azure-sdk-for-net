@@ -15,10 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UriSource))
+            if (Optional.IsDefined(UrlSource))
             {
                 writer.WritePropertyName("urlSource");
-                writer.WriteStringValue(UriSource.AbsoluteUri);
+                writer.WriteStringValue(UrlSource);
             }
             if (Optional.IsDefined(Base64Source))
             {

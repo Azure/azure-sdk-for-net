@@ -13,8 +13,6 @@ namespace Azure.ResourceManager.PrivateDns.Tests
     public class PrivateDnsManagementTestBase : ManagementRecordedTestBase<PrivateDnsManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected AzureLocation DefaultLocation = AzureLocation.EastUS;
-        protected const string DefaultResourceGroupName = "PrivateDnsRG";
 
         protected PrivateDnsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -32,22 +30,12 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgNamePrefix = DefaultResourceGroupName)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
-            var subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
-        }
-
-        protected async Task<PrivateDnsZoneResource> CreatePrivateZone(ResourceGroupResource resourceGroup,string zoneName)
-        {
-            var data = new PrivateDnsZoneData("global")
-            {
-            };
-            var privateZone = await resourceGroup.GetPrivateDnsZones().CreateOrUpdateAsync(WaitUntil.Completed,zoneName,data);
-            return privateZone.Value;
         }
     }
 }

@@ -3,14 +3,14 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal interface IInternalServiceHubContextStore : IServiceHubContextStore, IAsyncDisposable, IDisposable
     {
-        IOptionsMonitor<SignatureValidationOptions> SignatureValidationOptions { get; }
+        AccessKey[] AccessKeys { get; }
 
         ValueTask<ServiceHubContext<T>> GetAsync<T>(string hubName) where T : class;
     }

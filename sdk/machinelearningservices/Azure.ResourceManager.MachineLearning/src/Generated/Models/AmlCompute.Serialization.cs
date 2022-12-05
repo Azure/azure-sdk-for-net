@@ -24,34 +24,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("computeType");
             writer.WriteStringValue(ComputeType.ToString());
-            if (Optional.IsDefined(ComputeLocation))
-            {
-                writer.WritePropertyName("computeLocation");
-                writer.WriteStringValue(ComputeLocation);
-            }
             if (Optional.IsDefined(Description))
             {
-                if (Description != null)
-                {
-                    writer.WritePropertyName("description");
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
-                }
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ResourceId))
             {
-                if (ResourceId != null)
-                {
-                    writer.WritePropertyName("resourceId");
-                    writer.WriteStringValue(ResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("resourceId");
-                }
+                writer.WritePropertyName("resourceId");
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
@@ -66,12 +47,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<AmlComputeProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<string> description = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
+            Optional<IReadOnlyList<ErrorResponse>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
             Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
@@ -103,16 +84,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new MachineLearningProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -140,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceId = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -153,10 +129,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         provisioningErrors = null;
                         continue;
                     }
-                    List<MachineLearningError> array = new List<MachineLearningError>();
+                    List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
                     }
                     provisioningErrors = array;
                     continue;

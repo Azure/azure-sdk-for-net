@@ -55,7 +55,7 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (Optional.IsCollectionDefined(SignUpTypes))
             {
@@ -70,17 +70,17 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(SignUpUrl))
             {
                 writer.WritePropertyName("signUpUrl");
-                writer.WriteStringValue(SignUpUrl.AbsoluteUri);
+                writer.WriteStringValue(SignUpUrl);
             }
             if (Optional.IsDefined(TermsOfServiceUrl))
             {
                 writer.WritePropertyName("termsOfServiceUrl");
-                writer.WriteStringValue(TermsOfServiceUrl.AbsoluteUri);
+                writer.WriteStringValue(TermsOfServiceUrl);
             }
             if (Optional.IsDefined(PrivacyPolicyUrl))
             {
                 writer.WritePropertyName("privacyPolicyUrl");
-                writer.WriteStringValue(PrivacyPolicyUrl.AbsoluteUri);
+                writer.WriteStringValue(PrivacyPolicyUrl);
             }
             if (Optional.IsDefined(ExpectedDateOfService))
             {
@@ -98,11 +98,11 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<bool> isPoliticalCampaign = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<Uri> url = default;
+            Optional<string> url = default;
             Optional<IList<ProgramSignUpType>> signUpTypes = default;
-            Optional<Uri> signUpUrl = default;
-            Optional<Uri> termsOfServiceUrl = default;
-            Optional<Uri> privacyPolicyUrl = default;
+            Optional<string> signUpUrl = default;
+            Optional<string> termsOfServiceUrl = default;
+            Optional<string> privacyPolicyUrl = default;
             Optional<DateTimeOffset> expectedDateOfService = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -163,12 +163,7 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("signUpTypes"))
@@ -188,32 +183,17 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 if (property.NameEquals("signUpUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    signUpUrl = new Uri(property.Value.GetString());
+                    signUpUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("termsOfServiceUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    termsOfServiceUrl = new Uri(property.Value.GetString());
+                    termsOfServiceUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privacyPolicyUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    privacyPolicyUrl = new Uri(property.Value.GetString());
+                    privacyPolicyUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("expectedDateOfService"))

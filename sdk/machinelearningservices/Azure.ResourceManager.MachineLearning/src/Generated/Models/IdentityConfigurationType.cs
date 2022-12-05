@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Enum to determine identity framework.
-    /// Serialized Name: IdentityConfigurationType
-    /// </summary>
+    /// <summary> Enum to determine identity framework. </summary>
     internal readonly partial struct IdentityConfigurationType : IEquatable<IdentityConfigurationType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AMLTokenValue = "AMLToken";
         private const string UserIdentityValue = "UserIdentity";
 
-        /// <summary>
-        /// Managed
-        /// Serialized Name: IdentityConfigurationType.Managed
-        /// </summary>
+        /// <summary> Managed. </summary>
         public static IdentityConfigurationType Managed { get; } = new IdentityConfigurationType(ManagedValue);
-        /// <summary>
-        /// AMLToken
-        /// Serialized Name: IdentityConfigurationType.AMLToken
-        /// </summary>
+        /// <summary> AMLToken. </summary>
         public static IdentityConfigurationType AMLToken { get; } = new IdentityConfigurationType(AMLTokenValue);
-        /// <summary>
-        /// UserIdentity
-        /// Serialized Name: IdentityConfigurationType.UserIdentity
-        /// </summary>
+        /// <summary> UserIdentity. </summary>
         public static IdentityConfigurationType UserIdentity { get; } = new IdentityConfigurationType(UserIdentityValue);
         /// <summary> Determines if two <see cref="IdentityConfigurationType"/> values are the same. </summary>
         public static bool operator ==(IdentityConfigurationType left, IdentityConfigurationType right) => left.Equals(right);

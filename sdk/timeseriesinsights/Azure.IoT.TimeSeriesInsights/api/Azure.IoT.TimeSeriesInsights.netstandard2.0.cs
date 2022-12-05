@@ -417,9 +417,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (string value) { throw null; }
         public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (System.TimeSpan value) { throw null; }
     }
-    public abstract partial class TimeSeriesVariable
+    public partial class TimeSeriesVariable
     {
-        protected TimeSeriesVariable() { }
+        public TimeSeriesVariable() { }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
     }
 }

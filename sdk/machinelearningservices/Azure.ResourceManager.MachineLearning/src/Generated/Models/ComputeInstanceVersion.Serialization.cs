@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("runtime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        runtime = null;
-                        continue;
-                    }
                     runtime = property.Value.GetString();
                     continue;
                 }

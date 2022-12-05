@@ -10,32 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The List Virtual Machine size operation response.
-    /// Serialized Name: VirtualMachineSizeListResult
-    /// </summary>
+    /// <summary> The List Virtual Machine size operation response. </summary>
     internal partial class VirtualMachineSizeListResult
     {
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
         internal VirtualMachineSizeListResult()
         {
-            Value = new ChangeTrackingList<MachineLearningVmSize>();
+            Value = new ChangeTrackingList<VirtualMachineSize>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
-        /// <param name="value">
-        /// The list of virtual machine sizes supported by AmlCompute.
-        /// Serialized Name: VirtualMachineSizeListResult.value
-        /// </param>
-        internal VirtualMachineSizeListResult(IReadOnlyList<MachineLearningVmSize> value)
+        /// <param name="value"> The list of virtual machine sizes supported by AmlCompute. </param>
+        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of virtual machine sizes supported by AmlCompute.
-        /// Serialized Name: VirtualMachineSizeListResult.value
-        /// </summary>
-        public IReadOnlyList<MachineLearningVmSize> Value { get; }
+        /// <summary> The list of virtual machine sizes supported by AmlCompute. </summary>
+        public IReadOnlyList<VirtualMachineSize> Value { get; }
     }
 }

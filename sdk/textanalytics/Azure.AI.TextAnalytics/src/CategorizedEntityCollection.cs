@@ -18,9 +18,7 @@ namespace Azure.AI.TextAnalytics
         internal CategorizedEntityCollection(IList<CategorizedEntity> entities, IList<TextAnalyticsWarning> warnings)
             : base(entities)
         {
-            Warnings = (warnings is not null)
-                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
-                : new List<TextAnalyticsWarning>();
+            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
         /// <summary>

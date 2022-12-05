@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static WorkspaceListUsagesResult DeserializeWorkspaceListUsagesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OperationalInsightsUsageMetric>> value = default;
+            Optional<IReadOnlyList<UsageMetric>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationalInsightsUsageMetric> array = new List<OperationalInsightsUsageMetric>();
+                    List<UsageMetric> array = new List<UsageMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric(item));
+                        array.Add(UsageMetric.DeserializeUsageMetric(item));
                     }
                     value = array;
                     continue;

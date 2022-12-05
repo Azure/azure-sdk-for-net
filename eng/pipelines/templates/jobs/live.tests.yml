@@ -131,11 +131,11 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           Container: ${{ parameters.UsePlatformContainer }}
-      - script: >
+      - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-          --logger "trx"
+          --filter 'TestCategory!=Manually & ($(AdditionalTestFilters))'
+          --logger 'trx'
           --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}

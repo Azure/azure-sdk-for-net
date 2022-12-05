@@ -11,42 +11,27 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A paginated list of CodeContainer entities.
-    /// Serialized Name: CodeContainerResourceArmPaginatedResult
-    /// </summary>
+    /// <summary> A paginated list of CodeContainer entities. </summary>
     internal partial class CodeContainerResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of CodeContainerResourceArmPaginatedResult. </summary>
         internal CodeContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<MachineLearningCodeContainerData>();
+            Value = new ChangeTrackingList<CodeContainerData>();
         }
 
         /// <summary> Initializes a new instance of CodeContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink">
-        /// The link to the next page of CodeContainer objects. If null, there are no additional pages.
-        /// Serialized Name: CodeContainerResourceArmPaginatedResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// An array of objects of type CodeContainer.
-        /// Serialized Name: CodeContainerResourceArmPaginatedResult.value
-        /// </param>
-        internal CodeContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningCodeContainerData> value)
+        /// <param name="nextLink"> The link to the next page of CodeContainer objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type CodeContainer. </param>
+        internal CodeContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<CodeContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link to the next page of CodeContainer objects. If null, there are no additional pages.
-        /// Serialized Name: CodeContainerResourceArmPaginatedResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of CodeContainer objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// An array of objects of type CodeContainer.
-        /// Serialized Name: CodeContainerResourceArmPaginatedResult.value
-        /// </summary>
-        public IReadOnlyList<MachineLearningCodeContainerData> Value { get; }
+        /// <summary> An array of objects of type CodeContainer. </summary>
+        public IReadOnlyList<CodeContainerData> Value { get; }
     }
 }

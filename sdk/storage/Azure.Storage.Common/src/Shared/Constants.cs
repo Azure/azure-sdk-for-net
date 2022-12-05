@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Storage
@@ -25,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2021-12-02";
+        public const string DefaultSasVersion = "2021-10-04";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -232,7 +231,6 @@ namespace Azure.Storage
             internal static class Page
             {
                 public const int PageSizeBytes = 512;
-                public const int MaxPageBlockBytes = 4 * Constants.MB; // 4MB
             }
 
             internal static class Container

@@ -32,8 +32,6 @@ extends:
     Artifacts:
     - name: Azure.Messaging.WebPubSub
       safeName: AzureMessagingWebPubSub
-    - name: Azure.Messaging.WebPubSub.Client
-      safeName: AzureMessagingWebPubSubClient
     - name: Microsoft.Azure.WebJobs.Extensions.WebPubSub
       safeName: MicrosoftAzureWebJobsExtensionsWebPubSub
     - name: Microsoft.Azure.WebPubSub.AspNetCore

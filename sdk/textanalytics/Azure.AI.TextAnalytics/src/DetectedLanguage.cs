@@ -23,35 +23,35 @@ namespace Azure.AI.TextAnalytics
             Iso6391Name = iso6391Name;
             ConfidenceScore = confidenceScore;
             Script = script;
-            Warnings = (warnings is not null)
-                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
-                : new List<TextAnalyticsWarning>();
+            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
         /// <summary>
-        /// The spelled-out name of the detected language (for example, "English" or "French").
+        /// Gets the spelled-out name of the detected language (for example,
+        /// "English" or "French").
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// The two letter representation of the detected language according to the ISO 639-1 standard (for example,
-        /// "en" or "fr").
+        /// Gets a two letter representation of the detected language
+        /// according to the ISO 639-1 standard (for example, "en" or "fr").
         /// </summary>
         public string Iso6391Name { get; }
 
         /// <summary>
-        /// The score between 0.0 and 1.0 indicating the confidence that the language was accurately detected.
+        /// Gets a confidence score between 0 and 1. Scores close to 1
+        /// indicate high certainty that the identified language is correct.
         /// </summary>
         public double ConfidenceScore { get; }
 
         /// <summary>
-        /// The non-native script of the detected language, if applicable (for example, "Latin" in the case of
-        /// romanized Hindi).
+        /// Gets the non-native script of the detected language, if applicable
+        /// (for example, "Latin" in the case of romanized Hindi).
         /// </summary>
         public ScriptKind? Script { get; }
 
         /// <summary>
-        /// The warnings that resulted from processing the document.
+        /// Gets the warnings encountered while processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
     }

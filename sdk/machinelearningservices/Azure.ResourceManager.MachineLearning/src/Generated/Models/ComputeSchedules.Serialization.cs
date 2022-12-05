@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ComputeSchedules DeserializeComputeSchedules(JsonElement element)
         {
-            Optional<IReadOnlyList<MachineLearningComputeStartStopSchedule>> computeStartStop = default;
+            Optional<IReadOnlyList<ComputeStartStopSchedule>> computeStartStop = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeStartStop"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineLearningComputeStartStopSchedule> array = new List<MachineLearningComputeStartStopSchedule>();
+                    List<ComputeStartStopSchedule> array = new List<ComputeStartStopSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeStartStopSchedule.DeserializeMachineLearningComputeStartStopSchedule(item));
+                        array.Add(ComputeStartStopSchedule.DeserializeComputeStartStopSchedule(item));
                     }
                     computeStartStop = array;
                     continue;

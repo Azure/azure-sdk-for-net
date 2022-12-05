@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 #endif
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
 
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Samples
 #else
             string endpoint = TestEnvironment.Endpoint;
 #endif
-            TextAnalyticsClient client = new(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 
@@ -47,8 +47,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            AzureKeyCredential credentials = new(apiKey);
-            TextAnalyticsClient client = new(new Uri(endpoint), credentials);
+            var credentials = new AzureKeyCredential(apiKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
             string document = "Este documento está en español.";
 
             #region Snippet:BadRequest

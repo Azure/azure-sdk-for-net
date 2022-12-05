@@ -104,14 +104,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                 if (ex.Status == 404 && stopRecording)
                 {
                     // recording stopped successfully
-                    return;
+                    Assert.Pass();
                 }
 
                 Assert.Fail($"Unexpected error: {ex}");
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                if (Mode == RecordedTestMode.Live)
+                {
+                    using (Recording.DisableRecording())
+                    {
+                        var callConnection = client.GetCallConnection(callConnectionId);
+                        var hangUpOptions = new HangUpOptions(true);
+                        hangUpOptions.RepeatabilityHeaders = null;
+                        await callConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                    }
+                }
             }
         }
 
@@ -206,7 +215,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
+                }
             }
         }
 
@@ -304,7 +324,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
+                }
             }
         }
     }

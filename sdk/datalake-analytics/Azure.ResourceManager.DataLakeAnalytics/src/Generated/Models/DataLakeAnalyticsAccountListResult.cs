@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary>
-    /// Data Lake Analytics account list information.
-    /// Serialized Name: DataLakeAnalyticsAccountListResult
-    /// </summary>
+    /// <summary> Data Lake Analytics account list information. </summary>
     internal partial class DataLakeAnalyticsAccountListResult
     {
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountListResult. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountListResult. </summary>
-        /// <param name="value">
-        /// The results of the list operation.
-        /// Serialized Name: DataLakeAnalyticsAccountListResult.value
-        /// </param>
-        /// <param name="count">
-        /// The current number of data lake analytics accounts under this subscription.
-        /// Serialized Name: DataLakeAnalyticsAccountListResult.count
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: DataLakeAnalyticsAccountListResult.nextLink
-        /// </param>
+        /// <param name="value"> The results of the list operation. </param>
+        /// <param name="count"> The current number of data lake analytics accounts under this subscription. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal DataLakeAnalyticsAccountListResult(IReadOnlyList<DataLakeAnalyticsAccountBasic> value, int? count, string nextLink)
         {
             Value = value;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The results of the list operation.
-        /// Serialized Name: DataLakeAnalyticsAccountListResult.value
-        /// </summary>
+        /// <summary> The results of the list operation. </summary>
         public IReadOnlyList<DataLakeAnalyticsAccountBasic> Value { get; }
-        /// <summary>
-        /// The current number of data lake analytics accounts under this subscription.
-        /// Serialized Name: DataLakeAnalyticsAccountListResult.count
-        /// </summary>
+        /// <summary> The current number of data lake analytics accounts under this subscription. </summary>
         public int? Count { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: DataLakeAnalyticsAccountListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

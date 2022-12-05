@@ -27,9 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>();
-            capabilities.Add(new CosmosDBAccountCapability("EnableCassandra"));
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, capabilities)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, new CosmosDBAccountCapability("EnableTable"))).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -62,7 +60,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableCreateAndUpdate()
         {
             var table = await CreateTable(null);
@@ -95,7 +92,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableList()
         {
             var database = await CreateTable(null);
@@ -109,7 +105,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableThroughput()
         {
             var database = await CreateTable(null);
@@ -156,7 +151,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flaky test: Need diagnose the table API issue from RP team")]
         public async Task TableDelete()
         {
             var database = await CreateTable(null);

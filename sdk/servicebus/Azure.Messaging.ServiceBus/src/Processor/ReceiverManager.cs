@@ -59,7 +59,9 @@ namespace Azure.Messaging.ServiceBus
             _scopeFactory = scopeFactory;
         }
 
-        public virtual async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
+        public virtual async Task CloseReceiverIfNeeded(
+            CancellationToken cancellationToken,
+            bool forceClose = false)
         {
             var capturedReceiver = Receiver;
             if (capturedReceiver != null)
@@ -120,8 +122,6 @@ namespace Azure.Messaging.ServiceBus
                     .ConfigureAwait(false);
             }
         }
-
-        public virtual Task CancelAsync() => Task.CompletedTask;
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {

@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<MachineLearningUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
             async Task<Page<MachineLearningUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningUsage> GetMachineLearningUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<MachineLearningUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
             Page<MachineLearningUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningUsages");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningVmSize>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningVmSizes");
+                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineSizes");
                 scope.Start();
                 try
                 {
@@ -263,12 +263,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningVmSize> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningVmSizes");
+                using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineSizes");
                 scope.Start();
                 try
                 {
@@ -292,12 +292,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UpdateWorkspaceQuotas> UpdateAllQuotaAsync(AzureLocation location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningWorkspaceQuotaUpdate>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<UpdateWorkspaceQuotas>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateAllQuota");
                 scope.Start();
                 try
                 {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location for update quota is queried. </param>
         /// <param name="content"> Quota update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="UpdateWorkspaceQuotas" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UpdateWorkspaceQuotas> UpdateAllQuota(AzureLocation location, QuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningWorkspaceQuotaUpdate> FirstPageFunc(int? pageSizeHint)
+            Page<UpdateWorkspaceQuotas> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateMachineLearningQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateAllQuota");
                 scope.Start();
                 try
                 {
@@ -349,12 +349,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceQuota" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceQuota> GetAllQuotaAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningResourceQuota>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceQuota>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllQuota");
                 scope.Start();
                 try
                 {
@@ -367,9 +367,9 @@ namespace Azure.ResourceManager.MachineLearning
                     throw;
                 }
             }
-            async Task<Page<MachineLearningResourceQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllQuota");
                 scope.Start();
                 try
                 {
@@ -392,12 +392,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceQuota" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceQuota> GetAllQuota(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningResourceQuota> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceQuota> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllQuota");
                 scope.Start();
                 try
                 {
@@ -410,9 +410,9 @@ namespace Azure.ResourceManager.MachineLearning
                     throw;
                 }
             }
-            Page<MachineLearningResourceQuota> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceQuota> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMachineLearningQuotas");
+                using var scope = QuotasClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllQuota");
                 scope.Start();
                 try
                 {

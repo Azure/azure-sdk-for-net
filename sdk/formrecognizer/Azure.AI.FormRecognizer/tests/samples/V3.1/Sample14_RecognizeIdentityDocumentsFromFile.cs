@@ -11,7 +11,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples
+    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [RecordedTest]
         public async Task RecognizeIdentityDocumentsFromFile()

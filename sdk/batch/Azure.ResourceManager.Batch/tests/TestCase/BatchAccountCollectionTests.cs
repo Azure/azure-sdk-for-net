@@ -2,10 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Batch.Models;
+using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Batch.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Batch.Tests.TestCase
 {
@@ -16,15 +21,22 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
         {
         }
 
+        private async Task<BatchAccountCollection> GetAccountCollectionAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup.GetBatchAccounts();
+        }
+
         [TestCase]
         public async Task AccountCollectionApiTests()
         {
+            ResourceIdentifier storageAccountId = (await GetStorageAccountResource()).Id;
             //1.CreateOrUpdate
-            var collection = ResourceGroup.GetBatchAccounts();
+            var collection = await GetAccountCollectionAsync();
             var name = Recording.GenerateAssetName("account");
             var name2 = Recording.GenerateAssetName("account");
             var name3 = Recording.GenerateAssetName("account");
-            var input = ResourceDataHelper.GetBatchAccountData(StorageAccountIdentifier);
+            var input = ResourceDataHelper.GetBatchAccountData(storageAccountId);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             BatchAccountResource account1 = lro.Value;
             Assert.AreEqual(name, account1.Data.Name);
@@ -41,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
                 count++;
             }
             Assert.GreaterOrEqual(count, 3);
-            //4.Exists
+            //4Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));
 

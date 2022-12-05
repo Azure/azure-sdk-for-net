@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static TablesListResult DeserializeTablesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OperationalInsightsTableData>> value = default;
+            Optional<IReadOnlyList<TableData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationalInsightsTableData> array = new List<OperationalInsightsTableData>();
+                    List<TableData> array = new List<TableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsTableData.DeserializeOperationalInsightsTableData(item));
+                        array.Add(TableData.DeserializeTableData(item));
                     }
                     value = array;
                     continue;

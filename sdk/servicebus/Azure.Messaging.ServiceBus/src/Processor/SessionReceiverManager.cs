@@ -145,24 +145,21 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
-        {
-            await CloseReceiverCore(forceClose: true, cancellationToken).ConfigureAwait(false);
-        }
-
-        private async Task CloseReceiverCore(bool forceClose, CancellationToken cancellationToken)
+        public override async Task CloseReceiverIfNeeded(
+            CancellationToken processorCancellationToken,
+            bool forceClose = false)
         {
             bool releaseSemaphore = false;
             try
             {
-                // Intentionally not including cancellation token as
+                // Intentionally not including processor cancellation token as
                 // we need to ensure that we at least attempt to close the receiver if needed.
                 await WaitSemaphore(CancellationToken.None).ConfigureAwait(false);
                 releaseSemaphore = true;
 
                 if (forceClose)
                 {
-                    await CloseReceiver(cancellationToken).ConfigureAwait(false);
+                    await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
                     return;
                 }
 
@@ -183,7 +180,7 @@ namespace Azure.Messaging.ServiceBus
                         // as this means the session lock was lost or the user requested to close the session.
                         _sessionCancellationSource.IsCancellationRequested)
                     {
-                        await CloseReceiver(cancellationToken).ConfigureAwait(false);
+                        await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
                     }
                 }
             }
@@ -228,7 +225,7 @@ namespace Azure.Messaging.ServiceBus
                 // cancel the automatic session lock renewal
                 try
                 {
-                    await CancelAsync().ConfigureAwait(false);
+                    await CancelSessionAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex) when (ex is TaskCanceledException)
                 {
@@ -320,7 +317,7 @@ namespace Azure.Messaging.ServiceBus
                     if (sbException.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
                         // this will be awaited when closing the receiver
-                        _ = CancelAsync();
+                        _ = CancelSessionAsync();
                     }
                 }
                 await RaiseExceptionReceived(
@@ -337,7 +334,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (canProcess)
                 {
-                    await CloseReceiverCore(forceClose: false, processorCancellationToken).ConfigureAwait(false);
+                    await CloseReceiverIfNeeded(processorCancellationToken).ConfigureAwait(false);
                 }
             }
         }
@@ -409,7 +406,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public override async Task CancelAsync()
+        internal async Task CancelSessionAsync()
         {
             if (_sessionCancellationSource is { IsCancellationRequested: false })
             {

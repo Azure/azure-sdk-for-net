@@ -240,8 +240,8 @@ namespace Azure.AI.TextAnalytics
             new DocumentSentiment(
                 sentiment: ConvertToTextSentiment(legacySentiment.Sentiment),
                 positiveScore: legacySentiment.ConfidenceScores.Positive,
-                neutralScore: legacySentiment.ConfidenceScores.Neutral,
                 negativeScore: legacySentiment.ConfidenceScores.Negative,
+                neutralScore: legacySentiment.ConfidenceScores.Neutral,
                 sentenceSentiments: ConvertToSentenceSentiments(legacySentiment.Sentences),
                 warnings: ConvertToWarnings(legacySentiment.Warnings));
 
@@ -258,12 +258,7 @@ namespace Azure.AI.TextAnalytics
             //Read sentiments
             foreach (var docSentiment in results.Documents)
             {
-                analyzedSentiments.Add(
-                    new AnalyzeSentimentResult(
-                        docSentiment.Id,
-                        ConvertToDocumentStatistics(docSentiment.Statistics),
-                        ConvertToDocumentSentiment(docSentiment),
-                        default));
+                analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, ConvertToDocumentStatistics(docSentiment.Statistics), ConvertToDocumentSentiment(docSentiment)));
             }
 
             analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
@@ -347,12 +342,7 @@ namespace Azure.AI.TextAnalytics
             //Read Key phrases
             foreach (var docKeyPhrases in results.Documents)
             {
-                keyPhrases.Add(
-                    new ExtractKeyPhrasesResult(
-                        docKeyPhrases.Id,
-                        ConvertToDocumentStatistics(docKeyPhrases.Statistics),
-                        ConvertToKeyPhraseCollection(docKeyPhrases),
-                        default));
+                keyPhrases.Add(new ExtractKeyPhrasesResult(docKeyPhrases.Id, ConvertToDocumentStatistics(docKeyPhrases.Statistics), ConvertToKeyPhraseCollection(docKeyPhrases)));
             }
 
             keyPhrases = SortHeterogeneousCollection(keyPhrases, idToIndexMap);
@@ -413,12 +403,7 @@ namespace Azure.AI.TextAnalytics
             //Read document entities
             foreach (var docEntities in results.Documents)
             {
-                recognizeEntities.Add(
-                    new RecognizeEntitiesResult(
-                        docEntities.Id,
-                        ConvertToDocumentStatistics(docEntities.Statistics),
-                        ConvertToCategorizedEntityCollection(docEntities),
-                        default));
+                recognizeEntities.Add(new RecognizeEntitiesResult(docEntities.Id, ConvertToDocumentStatistics(docEntities.Statistics), ConvertToCategorizedEntityCollection(docEntities)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
@@ -480,12 +465,7 @@ namespace Azure.AI.TextAnalytics
             //Read document entities
             foreach (var docEntities in results.Documents)
             {
-                recognizeEntities.Add(
-                    new RecognizePiiEntitiesResult(
-                        docEntities.Id,
-                        ConvertToDocumentStatistics(docEntities.Statistics),
-                        ConvertToPiiEntityCollection(docEntities),
-                        default));
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(docEntities.Id, ConvertToDocumentStatistics(docEntities.Statistics), ConvertToPiiEntityCollection(docEntities)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
@@ -578,12 +558,7 @@ namespace Azure.AI.TextAnalytics
             //Read document linked entities
             foreach (var docEntities in results.Documents)
             {
-                recognizeEntities.Add(
-                    new RecognizeLinkedEntitiesResult(
-                        docEntities.Id,
-                        ConvertToDocumentStatistics(docEntities.Statistics),
-                        ConvertToLinkedEntityCollection(docEntities),
-                        default));
+                recognizeEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, ConvertToDocumentStatistics(docEntities.Statistics), ConvertToLinkedEntityCollection(docEntities)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
@@ -699,26 +674,24 @@ namespace Azure.AI.TextAnalytics
 
         internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(Legacy.HealthcareResult results, IDictionary<string, int> idToIndexMap)
         {
-            List<AnalyzeHealthcareEntitiesResult> healthcareEntititesResults = new(results.Errors.Count);
+            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>(results.Errors.Count);
 
-            // Read errors.
-            foreach (Legacy.DocumentError error in results.Errors)
+            //Read errors
+            foreach (var error in results.Errors)
             {
                 healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
-            // Read entities.
+            //Read entities
             foreach (Legacy.DocumentHealthcareEntities documentHealthcareEntities in results.Documents)
             {
-                healthcareEntititesResults.Add(
-                    new AnalyzeHealthcareEntitiesResult(
-                        documentHealthcareEntities.Id,
-                        ConvertToDocumentStatistics(documentHealthcareEntities.Statistics),
-                        ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
-                        ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
-                        default,
-                        default,
-                        ConvertToWarnings(documentHealthcareEntities.Warnings)));
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
+                    documentHealthcareEntities.Id,
+                    ConvertToDocumentStatistics(documentHealthcareEntities.Statistics),
+                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
+                    ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
+                    ConvertToWarnings(documentHealthcareEntities.Warnings),
+                    default));
             }
 
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<OperationalInsightsAvailableServiceTier>>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<AvailableServiceTier>>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<OperationalInsightsAvailableServiceTier> value = default;
+                        IReadOnlyList<AvailableServiceTier> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<OperationalInsightsAvailableServiceTier> array = new List<OperationalInsightsAvailableServiceTier>();
+                        List<AvailableServiceTier> array = new List<AvailableServiceTier>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(item));
+                            array.Add(AvailableServiceTier.DeserializeAvailableServiceTier(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<OperationalInsightsAvailableServiceTier>> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<AvailableServiceTier>> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        IReadOnlyList<OperationalInsightsAvailableServiceTier> value = default;
+                        IReadOnlyList<AvailableServiceTier> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<OperationalInsightsAvailableServiceTier> array = new List<OperationalInsightsAvailableServiceTier>();
+                        List<AvailableServiceTier> array = new List<AvailableServiceTier>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier(item));
+                            array.Add(AvailableServiceTier.DeserializeAvailableServiceTier(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

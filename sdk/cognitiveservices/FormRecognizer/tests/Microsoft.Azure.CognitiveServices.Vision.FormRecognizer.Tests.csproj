@@ -8,6 +8,9 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <PropertyGroup>

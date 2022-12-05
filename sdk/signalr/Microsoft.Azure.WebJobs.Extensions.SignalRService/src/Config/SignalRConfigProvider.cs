@@ -85,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 .BindToInput(new NegotiationContextAsyncConverter(_serviceManagerStore));
 
             _ = context.AddBindingRule<SignalREndpointsAttribute>()
-                   .AddConverter<ServiceEndpoint[], JArray>(endpoints => JArray.FromObject(endpoints, JTokenExtensions.JsonSerializers))
+                   .AddConverter<ServiceEndpoint[], JArray>(endpoints => JArray.FromObject(endpoints, ServiceEndpointJsonConverter.JsonSerializer))
                    .BindToInput(new SignalREndpointsAsyncConverter(_serviceManagerStore));
 
             var signalRAttributeRule = context.AddBindingRule<SignalRAttribute>();

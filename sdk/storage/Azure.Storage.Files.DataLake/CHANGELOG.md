@@ -1,8 +1,14 @@
 # Release History
 
 ## 12.13.0-beta.1 (Unreleased)
-- Added support for service version 2021-12-02.
-- Added support for leasing operations on DataLakeFileClient.Append(), .AppendAsync(), .Flush(), and .FlushAsync().
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 12.12.1 (2022-10-13)
 - Fixed bug where DataLakeQueryCsvTextOptions was not properly sending the RecordSeparator when calling DataLakeFileClient.Query()

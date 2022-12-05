@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,7 +23,7 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (Optional.IsDefined(Address))
             {
@@ -47,7 +46,7 @@ namespace Azure.Communication.ShortCodes.Models
         internal static CompanyInformation DeserializeCompanyInformation(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<Uri> url = default;
+            Optional<string> url = default;
             Optional<string> address = default;
             Optional<ContactInformation> contactInformation = default;
             Optional<CustomerCareInformation> customerCareInformation = default;
@@ -60,12 +59,7 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("address"))

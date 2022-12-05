@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> privateIPAddress = default;
             Optional<string> publicIPAddress = default;
             Optional<int> port = default;
-            Optional<MachineLearningNodeState> nodeState = default;
+            Optional<NodeState> nodeState = default;
             Optional<string> runId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,21 +29,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        privateIPAddress = null;
-                        continue;
-                    }
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        publicIPAddress = null;
-                        continue;
-                    }
                     publicIPAddress = property.Value.GetString();
                     continue;
                 }
@@ -64,16 +54,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nodeState = new MachineLearningNodeState(property.Value.GetString());
+                    nodeState = new NodeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("runId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        runId = null;
-                        continue;
-                    }
                     runId = property.Value.GetString();
                     continue;
                 }

@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntitiesResult DeserializeEntitiesResult(JsonElement element)
         {
-            IList<EntitiesResultWithDetectedLanguage> documents = default;
+            IList<EntitiesResultDocumentsItem> documents = default;
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
@@ -51,10 +51,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<EntitiesResultWithDetectedLanguage> array = new List<EntitiesResultWithDetectedLanguage>();
+                    List<EntitiesResultDocumentsItem> array = new List<EntitiesResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntitiesResultWithDetectedLanguage.DeserializeEntitiesResultWithDetectedLanguage(item));
+                        array.Add(EntitiesResultDocumentsItem.DeserializeEntitiesResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;

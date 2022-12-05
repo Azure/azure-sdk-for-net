@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary>
-    /// The parameters used to add a new Data Lake Store account.
-    /// Serialized Name: AddDataLakeStoreParameters
-    /// </summary>
+    /// <summary> The parameters used to add a new Data Lake Store account. </summary>
     public partial class DataLakeStoreAccountInformationCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountInformationCreateOrUpdateContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         {
         }
 
-        /// <summary>
-        /// The optional suffix for the Data Lake Store account.
-        /// Serialized Name: AddDataLakeStoreParameters.properties.suffix
-        /// </summary>
+        /// <summary> The optional suffix for the Data Lake Store account. </summary>
         public string Suffix { get; set; }
     }
 }

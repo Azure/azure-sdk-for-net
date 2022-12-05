@@ -11,12 +11,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -28,16 +28,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         private readonly ParameterInfo _parameterInfo;
         private readonly SignalRTriggerAttribute _attribute;
         private readonly ISignalRTriggerDispatcher _dispatcher;
-        private readonly IOptionsMonitor<SignatureValidationOptions> _signatureValidationOptions;
+        private readonly AccessKey[] _accessKeys;
         private readonly ServiceHubContext _hubContext;
 
-        public SignalRTriggerBinding(ParameterInfo parameterInfo, SignalRTriggerAttribute attribute, ISignalRTriggerDispatcher dispatcher, IOptionsMonitor<SignatureValidationOptions> signatureValidationOptions, ServiceHubContext hubContext)
+        public SignalRTriggerBinding(ParameterInfo parameterInfo, SignalRTriggerAttribute attribute, ISignalRTriggerDispatcher dispatcher, AccessKey[] accessKeys, ServiceHubContext hubContext)
         {
             _parameterInfo = parameterInfo ?? throw new ArgumentNullException(nameof(parameterInfo));
             _attribute = attribute ?? throw new ArgumentNullException(nameof(attribute));
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
-            _signatureValidationOptions = signatureValidationOptions ?? throw new ArgumentNullException(nameof(signatureValidationOptions));
-            _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
+            _accessKeys = accessKeys ?? throw new ArgumentNullException(nameof(accessKeys));
+            _hubContext = hubContext;
             BindingDataContract = CreateBindingContract(_attribute, _parameterInfo);
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
             // It's not a real listener, and it doesn't need a start or close.
             _dispatcher.Map((_attribute.HubName, _attribute.Category, _attribute.Event),
-                new ExecutionContext { Executor = context.Executor, SignatureValidationOptions = _signatureValidationOptions });
+                new ExecutionContext { Executor = context.Executor, AccessKeys = _accessKeys });
 
             return Task.FromResult<IListener>(new NullListener());
         }

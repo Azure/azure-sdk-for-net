@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static LinkedServiceListResult DeserializeLinkedServiceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OperationalInsightsLinkedServiceData>> value = default;
+            Optional<IReadOnlyList<LinkedServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationalInsightsLinkedServiceData> array = new List<OperationalInsightsLinkedServiceData>();
+                    List<LinkedServiceData> array = new List<LinkedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(item));
+                        array.Add(LinkedServiceData.DeserializeLinkedServiceData(item));
                     }
                     value = array;
                     continue;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -45,17 +44,17 @@ namespace Azure.ResourceManager.Compute
                 ExtensionType = "extType",
                 TypeHandlerVersion = "1.2",
                 AutoUpgradeMinorVersion = true,
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Settings = BinaryData.FromObjectAsJson(new
                 {
-                    ["UserName"] = "xyz@microsoft.com"
+                    UserName = "xyz@microsoft.com"
                 }),
                 SuppressFailures = true,
-                ProtectedSettingsFromKeyVault = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                ProtectedSettingsFromKeyVault = BinaryData.FromObjectAsJson(new
                 {
-                    ["secretUrl"] = "https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e",
-                    ["sourceVault"] = new Dictionary<string, object>()
+                    secretUrl = "https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e",
+                    sourceVault = new
                     {
-                        ["id"] = "/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/kvName"
+                        id = "/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/myResourceGroup/providers/Microsoft.KeyVault/vaults/kvName"
                     }
                 }),
             };

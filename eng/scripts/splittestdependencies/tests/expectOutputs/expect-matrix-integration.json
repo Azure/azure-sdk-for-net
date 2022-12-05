@@ -81,8 +81,9 @@
         }
       },
       "TestMode": {
-        "netcoreapp31_Test_Record": {
-          "SupportsRecording": true
+        "netcoreapp31_Coverage_Record": {
+          "SupportsRecording": true,
+          "CollectCoverage": true
         }
       },
       "OverrideFiles": {
@@ -91,3 +92,4 @@
     }
   ]
 }
+  

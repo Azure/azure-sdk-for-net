@@ -17,13 +17,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             new CommunicationUserIdentifier("id")
         };
         private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
-        private static readonly TextSource _textSource = new TextSource("PlayTTS test text.")
-        {
-            SourceLocale = "en-US",
-            TargetLocale = "en-US",
-            VoiceGender = GenderType.Female,
-            VoiceName = "LULU"
-        };
         private static readonly PlayOptions _options = new PlayOptions()
         {
             Loop = false,
@@ -113,14 +106,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.PlayAsync(_textSource, _target, _options)
-                },
-                new Func<CallMedia, Task<Response>>?[]
-                {
-                   callMedia => callMedia.PlayToAllAsync(_textSource, _options)
-                },
-                new Func<CallMedia, Task<Response>>?[]
-                {
                    callMedia => callMedia.CancelAllMediaOperationsAsync()
                 },
                 new Func<CallMedia, Task<Response>>?[]
@@ -145,14 +130,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response>?[]
                 {
                    callMedia => callMedia.PlayToAll(_fileSource, _options)
-                },
-                new Func<CallMedia, Response>?[]
-                {
-                   callMedia => callMedia.Play(_textSource, _target, _options)
-                },
-                new Func<CallMedia, Response>?[]
-                {
-                   callMedia => callMedia.PlayToAll(_textSource, _options)
                 },
                 new Func<CallMedia, Response>?[]
                 {

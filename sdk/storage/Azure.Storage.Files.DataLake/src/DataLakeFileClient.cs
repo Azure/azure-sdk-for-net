@@ -1985,9 +1985,6 @@ namespace Azure.Storage.Files.DataLake
                 offset,
                 options?.TransferValidation,
                 options?.LeaseId,
-                options?.LeaseAction,
-                options?.LeaseDuration,
-                options?.ProposedLeaseId,
                 options?.ProgressHandler,
                 options?.Flush,
                 async: false,
@@ -2037,9 +2034,6 @@ namespace Azure.Storage.Files.DataLake
                 offset,
                 options?.TransferValidation,
                 options?.LeaseId,
-                options?.LeaseAction,
-                options?.LeaseDuration,
-                options?.ProposedLeaseId,
                 options?.ProgressHandler,
                 options?.Flush,
                 async: true,
@@ -2112,9 +2106,6 @@ namespace Azure.Storage.Files.DataLake
                     }
                     : default,
                 leaseId,
-                leaseAction: null,
-                leaseDuration: null,
-                proposedLeaseId: null,
                 progressHandler,
                 flush: null,
                 async: false,
@@ -2188,9 +2179,6 @@ namespace Azure.Storage.Files.DataLake
                     }
                     : default,
                 leaseId,
-                leaseAction: null,
-                leaseDuration: null,
-                proposedLeaseId: null,
                 progressHandler,
                 flush: null,
                 async: true,
@@ -2222,21 +2210,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseId">
         /// Lease id for operation.
         /// </param>
-        /// <param name="leaseAction">
-        /// Lease action.
-        /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileAppendOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
-        /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeFileAppendOptions.LeaseId"/>.  Only applicable if <see cref="DataLakeFileAppendOptions.Flush"/> is set to true.
-        /// </param>
-        /// <param name="leaseDuration">
-        /// Specifies the duration of the lease, in seconds, or specify
-        /// <see cref="DataLakeLeaseClient.InfiniteLeaseDuration"/> for a lease that never expires.
-        /// A non-infinite lease can be between 15 and 60 seconds.
-        /// </param>
-        /// <param name="proposedLeaseId">
-        /// Proposed lease ID. Valid with <see cref="LeaseAction.Acquire"/> and <see cref="LeaseAction.AcquireRelease"/>.
-        /// </param>
         /// <param name="progressHandler">
         /// Progress handler for append operation.
         /// </param>
@@ -2263,9 +2236,6 @@ namespace Azure.Storage.Files.DataLake
             long? offset,
             UploadTransferValidationOptions validationOptionsOverride,
             string leaseId,
-            LeaseAction? leaseAction,
-            TimeSpan? leaseDuration,
-            string proposedLeaseId,
             IProgress<long> progressHandler,
             bool? flush,
             bool async,
@@ -2294,14 +2264,6 @@ namespace Azure.Storage.Files.DataLake
                     Errors.VerifyStreamPosition(content, nameof(content));
                     ResponseWithHeaders<PathAppendDataHeaders> response;
 
-                    long? leaseDurationLong = null;
-                    if (leaseDuration.HasValue)
-                    {
-                        leaseDurationLong = leaseDuration < TimeSpan.Zero
-                            ? Constants.Blob.Lease.InfiniteLeaseDuration
-                            : Convert.ToInt64(leaseDuration.Value.TotalSeconds);
-                    }
-
                     if (async)
                     {
                         response = await PathRestClient.AppendDataAsync(
@@ -2314,9 +2276,6 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
-                            leaseAction: leaseAction,
-                            leaseDuration: leaseDurationLong,
-                            proposedLeaseId: proposedLeaseId,
                             flush: flush,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2333,9 +2292,6 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
-                            leaseAction: leaseAction,
-                            leaseDuration: leaseDurationLong,
-                            proposedLeaseId: proposedLeaseId,
                             flush: flush,
                             cancellationToken: cancellationToken);
                     }
@@ -2359,53 +2315,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Flush Data
         /// <summary>
-        /// The <see cref="Flush(long, DataLakeFileFlushOptions, CancellationToken)"/> operation flushes (writes) previously
-        /// appended data to a file.
-        /// </summary>
-        /// <param name="position">
-        /// This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.
-        /// It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.
-        /// The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written,
-        /// to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and
-        /// equal to the length of the file after all data has been written, and there must not be a request entity body included
-        /// with the request.
-        /// </param>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// path.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<PathInfo> Flush(
-            long position,
-            DataLakeFileFlushOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            return FlushInternal(
-                position: position,
-                retainUncommittedData: options?.RetainUncommittedData,
-                close: options?.Close,
-                httpHeaders: options?.HttpHeaders,
-                conditions: options?.Conditions,
-                leaseAction: options?.LeaseAction,
-                leaseDuration: options?.LeaseDuration,
-                proposedLeaseId: options?.ProposedLeaseId,
-                async: false,
-                cancellationToken: cancellationToken)
-                .EnsureCompleted();
-        }
-
-        /// <summary>
-        /// The <see cref="Flush(long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken)"/> operation flushes (writes) previously
+        /// The <see cref="Flush"/> operation flushes (writes) previously
         /// appended data to a file.
         /// </summary>
         /// <param name="position">
@@ -2451,16 +2361,13 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> Flush(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position,
-            bool? retainUncommittedData,
-            bool? close,
-            PathHttpHeaders httpHeaders,
-            DataLakeRequestConditions conditions,
-            CancellationToken cancellationToken)
+            bool? retainUncommittedData = default,
+            bool? close = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
         {
             return FlushInternal(
                 position,
@@ -2468,62 +2375,13 @@ namespace Azure.Storage.Files.DataLake
                 close,
                 httpHeaders,
                 conditions,
-                leaseAction: null,
-                leaseDuration: null,
-                proposedLeaseId: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="FlushAsync(long, DataLakeFileFlushOptions, CancellationToken)"/> operation flushes (writes) previously
-        /// appended data to a file.
-        /// </summary>
-        /// <param name="position">
-        /// This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.
-        /// It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.
-        /// The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written,
-        /// to the file. To flush, the previously uploaded data must be contiguous, the position parameter must be specified and
-        /// equal to the length of the file after all data has been written, and there must not be a request entity body included
-        /// with the request.
-        /// </param>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// path.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<PathInfo>> FlushAsync(
-            long position,
-            DataLakeFileFlushOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            return await FlushInternal(
-                position: position,
-                retainUncommittedData: options?.RetainUncommittedData,
-                close: options?.Close,
-                httpHeaders: options?.HttpHeaders,
-                conditions: options?.Conditions,
-                leaseAction: options?.LeaseAction,
-                leaseDuration: options?.LeaseDuration,
-                proposedLeaseId: options?.ProposedLeaseId,
-                async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The <see cref="FlushAsync(long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken)"/> operation flushes (writes) previously
+        /// The <see cref="FlushAsync"/> operation flushes (writes) previously
         /// appended data to a file.
         /// </summary>
         /// <param name="position">
@@ -2569,16 +2427,13 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PathInfo>> FlushAsync(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long position,
-            bool? retainUncommittedData,
-            bool? close,
-            PathHttpHeaders httpHeaders,
-            DataLakeRequestConditions conditions,
-            CancellationToken cancellationToken)
+            bool? retainUncommittedData = default,
+            bool? close = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
         {
             return await FlushInternal(
                 position,
@@ -2586,9 +2441,6 @@ namespace Azure.Storage.Files.DataLake
                 close,
                 httpHeaders,
                 conditions,
-                leaseAction: null,
-                leaseDuration: null,
-                proposedLeaseId: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2629,21 +2481,6 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the flush of this file.
         /// </param>
-        /// <param name="leaseAction">
-        /// Lease action.
-        /// <see cref="LeaseAction.Acquire"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.
-        /// <see cref="LeaseAction.AcquireRelease"/> will attempt to aquire a new lease on the file, with <see cref="DataLakeFileFlushOptions.ProposedLeaseId"/> as the lease ID.  The lease will be released once the Append operation is complete.
-        /// <see cref="LeaseAction.AutoRenew"/> will attempt to renew the lease specified by <see cref="DataLakeRequestConditions.LeaseId"/>.
-        /// <see cref="LeaseAction.Release"/> will attempt to release the least speified by <see cref="DataLakeRequestConditions.LeaseId"/>.
-        /// </param>
-        /// <param name="leaseDuration">
-        /// Specifies the duration of the lease, in seconds, or specify
-        /// <see cref="DataLakeLeaseClient.InfiniteLeaseDuration"/> for a lease that never expires.
-        /// A non-infinite lease can be between 15 and 60 seconds.
-        /// </param>
-        /// <param name="proposedLeaseId">
-        /// Proposed lease ID. Valid with <see cref="LeaseAction.Acquire"/> and <see cref="LeaseAction.AcquireRelease"/>.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2665,9 +2502,6 @@ namespace Azure.Storage.Files.DataLake
             bool? close,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
-            LeaseAction? leaseAction,
-            TimeSpan? leaseDuration,
-            string proposedLeaseId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2685,14 +2519,6 @@ namespace Azure.Storage.Files.DataLake
                     scope.Start();
                     ResponseWithHeaders<PathFlushDataHeaders> response;
 
-                    long? leaseDurationLong = null;
-                    if (leaseDuration.HasValue)
-                    {
-                        leaseDurationLong = leaseDuration < TimeSpan.Zero
-                            ? Constants.Blob.Lease.InfiniteLeaseDuration
-                            : Convert.ToInt64(leaseDuration.Value.TotalSeconds);
-                    }
-
                     if (async)
                     {
                         response = await PathRestClient.FlushDataAsync(
@@ -2702,9 +2528,6 @@ namespace Azure.Storage.Files.DataLake
                             contentLength: 0,
                             contentMD5: httpHeaders?.ContentHash,
                             leaseId: conditions?.LeaseId,
-                            leaseAction: leaseAction,
-                            leaseDuration: leaseDurationLong,
-                            proposedLeaseId: proposedLeaseId,
                             cacheControl: httpHeaders?.CacheControl,
                             contentType: httpHeaders?.ContentType,
                             contentDisposition: httpHeaders?.ContentDisposition,
@@ -2729,9 +2552,6 @@ namespace Azure.Storage.Files.DataLake
                             contentLength: 0,
                             contentMD5: httpHeaders?.ContentHash,
                             leaseId: conditions?.LeaseId,
-                            leaseAction: leaseAction,
-                            leaseDuration: leaseDurationLong,
-                            proposedLeaseId: proposedLeaseId,
                             cacheControl: httpHeaders?.CacheControl,
                             contentType: httpHeaders?.ContentType,
                             contentDisposition: httpHeaders?.ContentDisposition,
@@ -5230,9 +5050,6 @@ namespace Azure.Storage.Files.DataLake
                         offset: 0,
                         validationOptions,
                         args?.Conditions?.LeaseId,
-                        leaseAction: null,
-                        leaseDuration: null,
-                        proposedLeaseId: null,
                         progressHandler,
                         flush: null,
                         async,
@@ -5245,9 +5062,6 @@ namespace Azure.Storage.Files.DataLake
                         close: args.Close,
                         args.HttpHeaders,
                         args.Conditions,
-                        leaseAction: null,
-                        leaseDuration: null,
-                        proposedLeaseId: null,
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -5258,9 +5072,6 @@ namespace Azure.Storage.Files.DataLake
                         offset,
                         validationOptions,
                         args?.Conditions?.LeaseId,
-                        leaseAction: null,
-                        leaseDuration: null,
-                        proposedLeaseId: null,
                         progressHandler,
                         flush: null,
                         async,
@@ -5279,9 +5090,6 @@ namespace Azure.Storage.Files.DataLake
                         close: args.Close,
                         httpHeaders: args.HttpHeaders,
                         conditions: args.Conditions,
-                        leaseAction: null,
-                        leaseDuration: null,
-                        proposedLeaseId: null,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 },

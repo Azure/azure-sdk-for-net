@@ -132,11 +132,6 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("primaryUserAssignedIdentity");
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
-            if (Optional.IsDefined(IsV1LegacyMode))
-            {
-                writer.WritePropertyName("v1LegacyMode");
-                writer.WriteBooleanValue(IsV1LegacyMode.Value);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -159,23 +154,22 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<string> containerRegistry = default;
             Optional<string> storageAccount = default;
             Optional<Uri> discoveryUrl = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
-            Optional<MachineLearningEncryptionSetting> encryption = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<EncryptionProperty> encryption = default;
             Optional<bool> hbiWorkspace = default;
             Optional<string> serviceProvisionedResourceGroup = default;
             Optional<int> privateLinkCount = default;
             Optional<string> imageBuildCompute = default;
             Optional<bool> allowPublicAccessWhenBehindVnet = default;
-            Optional<MachineLearningPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IList<MachineLearningSharedPrivateLinkResource>> sharedPrivateLinkResources = default;
-            Optional<MachineLearningNotebookResourceInfo> notebookInfo = default;
+            Optional<IList<SharedPrivateLinkResource>> sharedPrivateLinkResources = default;
+            Optional<NotebookResourceInfo> notebookInfo = default;
             Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
             Optional<string> primaryUserAssignedIdentity = default;
             Optional<Guid> tenantId = default;
             Optional<bool> storageHnsEnabled = default;
             Optional<Uri> mlFlowTrackingUri = default;
-            Optional<bool> v1LegacyMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -310,7 +304,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new MachineLearningProvisioningState(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
@@ -320,7 +314,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = MachineLearningEncryptionSetting.DeserializeMachineLearningEncryptionSetting(property0.Value);
+                            encryption = EncryptionProperty.DeserializeEncryptionProperty(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hbiWorkspace"))
@@ -370,7 +364,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new MachineLearningPublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -395,10 +389,10 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MachineLearningSharedPrivateLinkResource> array = new List<MachineLearningSharedPrivateLinkResource>();
+                            List<SharedPrivateLinkResource> array = new List<SharedPrivateLinkResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningSharedPrivateLinkResource.DeserializeMachineLearningSharedPrivateLinkResource(item));
+                                array.Add(SharedPrivateLinkResource.DeserializeSharedPrivateLinkResource(item));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -410,7 +404,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value);
+                            notebookInfo = NotebookResourceInfo.DeserializeNotebookResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceManagedResourcesSettings"))
@@ -458,21 +452,11 @@ namespace Azure.ResourceManager.MachineLearning
                             mlFlowTrackingUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("v1LegacyMode"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            v1LegacyMode = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value, Optional.ToNullable(v1LegacyMode));
+            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
         }
     }
 }

@@ -30,15 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(CvStepSize))
             {
-                if (CvStepSize != null)
-                {
-                    writer.WritePropertyName("cvStepSize");
-                    writer.WriteNumberValue(CvStepSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("cvStepSize");
-                }
+                writer.WritePropertyName("cvStepSize");
+                writer.WriteNumberValue(CvStepSize.Value);
             }
             if (Optional.IsDefined(FeatureLags))
             {
@@ -47,8 +40,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ForecastHorizon))
             {
-                writer.WritePropertyName("forecastHorizon");
-                writer.WriteObjectValue(ForecastHorizon);
+                if (ForecastHorizon != null)
+                {
+                    writer.WritePropertyName("forecastHorizon");
+                    writer.WriteObjectValue(ForecastHorizon);
+                }
+                else
+                {
+                    writer.WriteNull("forecastHorizon");
+                }
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -64,8 +64,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Seasonality))
             {
-                writer.WritePropertyName("seasonality");
-                writer.WriteObjectValue(Seasonality);
+                if (Seasonality != null)
+                {
+                    writer.WritePropertyName("seasonality");
+                    writer.WriteObjectValue(Seasonality);
+                }
+                else
+                {
+                    writer.WriteNull("seasonality");
+                }
             }
             if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
@@ -141,18 +148,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element)
         {
             Optional<string> countryOrRegionForHolidays = default;
-            Optional<int?> cvStepSize = default;
-            Optional<MachineLearningFeatureLag> featureLags = default;
+            Optional<int> cvStepSize = default;
+            Optional<FeatureLag> featureLags = default;
             Optional<ForecastHorizon> forecastHorizon = default;
             Optional<string> frequency = default;
-            Optional<ForecastingSeasonality> seasonality = default;
-            Optional<MachineLearningShortSeriesHandlingConfiguration> shortSeriesHandlingConfig = default;
+            Optional<Seasonality> seasonality = default;
+            Optional<ShortSeriesHandlingConfiguration> shortSeriesHandlingConfig = default;
             Optional<TargetAggregationFunction> targetAggregateFunction = default;
             Optional<TargetLags> targetLags = default;
             Optional<TargetRollingWindowSize> targetRollingWindowSize = default;
             Optional<string> timeColumnName = default;
             Optional<IList<string>> timeSeriesIdColumnNames = default;
-            Optional<MachineLearningUseStl> useStl = default;
+            Optional<UseStl> useStl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryOrRegionForHolidays"))
@@ -169,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cvStepSize = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cvStepSize = property.Value.GetInt32();
@@ -182,14 +189,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featureLags = new MachineLearningFeatureLag(property.Value.GetString());
+                    featureLags = new FeatureLag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("forecastHorizon"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        forecastHorizon = null;
                         continue;
                     }
                     forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value);
@@ -209,10 +216,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        seasonality = null;
                         continue;
                     }
-                    seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value);
+                    seasonality = Seasonality.DeserializeSeasonality(property.Value);
                     continue;
                 }
                 if (property.NameEquals("shortSeriesHandlingConfig"))
@@ -222,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
+                    shortSeriesHandlingConfig = new ShortSeriesHandlingConfiguration(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetAggregateFunction"))
@@ -287,7 +294,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useStl = new MachineLearningUseStl(property.Value.GetString());
+                    useStl = new UseStl(property.Value.GetString());
                     continue;
                 }
             }

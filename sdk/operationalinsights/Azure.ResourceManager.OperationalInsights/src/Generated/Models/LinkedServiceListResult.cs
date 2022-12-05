@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LinkedServiceListResult. </summary>
         internal LinkedServiceListResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsLinkedServiceData>();
+            Value = new ChangeTrackingList<LinkedServiceData>();
         }
 
         /// <summary> Initializes a new instance of LinkedServiceListResult. </summary>
         /// <param name="value"> The list of linked service instances. </param>
-        internal LinkedServiceListResult(IReadOnlyList<OperationalInsightsLinkedServiceData> value)
+        internal LinkedServiceListResult(IReadOnlyList<LinkedServiceData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of linked service instances. </summary>
-        public IReadOnlyList<OperationalInsightsLinkedServiceData> Value { get; }
+        public IReadOnlyList<LinkedServiceData> Value { get; }
     }
 }

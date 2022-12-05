@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -50,10 +49,10 @@ namespace Azure.ResourceManager.Compute
                 TypeHandlerVersion = "1.2",
                 AutoUpgradeMinorVersion = true,
                 EnableAutomaticUpgrade = true,
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Settings = BinaryData.FromObjectAsJson(new
                 {
                 }),
-                ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                ProtectedSettings = BinaryData.FromObjectAsJson(new
                 {
                 }),
                 InstanceView = new VirtualMachineExtensionInstanceView()

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>
         internal PrivateZoneListResult()
         {
-            Value = new ChangeTrackingList<PrivateDnsZoneData>();
+            Value = new ChangeTrackingList<PrivateZoneData>();
         }
 
         /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>
         /// <param name="value"> Information about the Private DNS zones. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal PrivateZoneListResult(IReadOnlyList<PrivateDnsZoneData> value, string nextLink)
+        internal PrivateZoneListResult(IReadOnlyList<PrivateZoneData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the Private DNS zones. </summary>
-        public IReadOnlyList<PrivateDnsZoneData> Value { get; }
+        public IReadOnlyList<PrivateZoneData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

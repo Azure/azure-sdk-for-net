@@ -20,6 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("primaryMetric");
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
+            if (Optional.IsDefined(DataSettings))
+            {
+                if (DataSettings != null)
+                {
+                    writer.WritePropertyName("dataSettings");
+                    writer.WriteObjectValue(DataSettings);
+                }
+                else
+                {
+                    writer.WriteNull("dataSettings");
+                }
+            }
             if (Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
@@ -44,52 +56,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
-            {
-                if (ValidationData != null)
-                {
-                    writer.WritePropertyName("validationData");
-                    writer.WriteObjectValue(ValidationData);
-                }
-                else
-                {
-                    writer.WriteNull("validationData");
-                }
-            }
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity");
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
-            {
-                if (TargetColumnName != null)
-                {
-                    writer.WritePropertyName("targetColumnName");
-                    writer.WriteStringValue(TargetColumnName);
-                }
-                else
-                {
-                    writer.WriteNull("targetColumnName");
-                }
-            }
             writer.WritePropertyName("taskType");
             writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData");
-            writer.WriteObjectValue(TrainingData);
             writer.WriteEndObject();
         }
 
         internal static TextClassification DeserializeTextClassification(JsonElement element)
         {
             Optional<ClassificationPrimaryMetric> primaryMetric = default;
+            Optional<NlpVerticalDataSettings> dataSettings = default;
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            Optional<LogVerbosity> logVerbosity = default;
             TaskType taskType = default;
-            MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"))
@@ -100,6 +84,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     primaryMetric = new ClassificationPrimaryMetric(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataSettings = null;
+                        continue;
+                    }
+                    dataSettings = NlpVerticalDataSettings.DeserializeNlpVerticalDataSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("featurizationSettings"))
@@ -122,16 +116,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        validationData = null;
-                        continue;
-                    }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("logVerbosity"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -139,17 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetColumnName"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        targetColumnName = null;
-                        continue;
-                    }
-                    targetColumnName = property.Value.GetString();
+                    logVerbosity = new LogVerbosity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("taskType"))
@@ -157,13 +131,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trainingData"))
-                {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
-                    continue;
-                }
             }
-            return new TextClassification(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, limitSettings.Value, validationData.Value);
+            return new TextClassification(Optional.ToNullable(logVerbosity), taskType, Optional.ToNullable(primaryMetric), dataSettings.Value, featurizationSettings.Value, limitSettings.Value);
         }
     }
 }

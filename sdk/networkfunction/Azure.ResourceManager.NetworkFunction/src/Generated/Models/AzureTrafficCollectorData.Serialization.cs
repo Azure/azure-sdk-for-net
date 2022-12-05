@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.NetworkFunction
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(CollectorPolicies))
+            {
+                writer.WritePropertyName("collectorPolicies");
+                writer.WriteStartArray();
+                foreach (var item in CollectorPolicies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub");
@@ -53,7 +63,7 @@ namespace Azure.ResourceManager.NetworkFunction
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<SubResource>> collectorPolicies = default;
+            Optional<IList<CollectorPolicyData>> collectorPolicies = default;
             Optional<SubResource> virtualHub = default;
             Optional<CollectorProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -129,10 +139,10 @@ namespace Azure.ResourceManager.NetworkFunction
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<CollectorPolicyData> array = new List<CollectorPolicyData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
+                                array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item));
                             }
                             collectorPolicies = array;
                             continue;

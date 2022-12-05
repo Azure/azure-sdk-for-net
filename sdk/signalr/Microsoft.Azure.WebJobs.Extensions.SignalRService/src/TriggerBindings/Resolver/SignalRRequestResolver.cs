@@ -10,13 +10,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Serverless.Protocols;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal class SignalRRequestResolver : IRequestResolver
     {
+        private readonly bool _validateSignature;
+
+        // Now it's only used in test
+        internal SignalRRequestResolver(bool validateSignature = true)
+        {
+            _validateSignature = validateSignature;
+        }
+
         public bool ValidateContentType(HttpRequestMessage request)
         {
             var contentType = request.Content.Headers.ContentType.MediaType;
@@ -28,16 +36,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         }
 
         // The algorithm is defined in spec: Hex_encoded(HMAC_SHA256(access-key, connection-id))
-        public bool ValidateSignature(HttpRequestMessage request, IOptionsMonitor<SignatureValidationOptions> signatureValidationOptions)
+        public bool ValidateSignature(HttpRequestMessage request, AccessKey[] accessKeys)
         {
-            if (!signatureValidationOptions.CurrentValue.RequireValidation)
+            if (!_validateSignature)
             {
                 return true;
             }
 
-            foreach (var accessKey in signatureValidationOptions.CurrentValue.AccessKeys)
+            if (accessKeys is null)
             {
-                if (!string.IsNullOrEmpty(accessKey) &&
+                throw new ArgumentNullException(nameof(accessKeys));
+            }
+
+            foreach (var accessKey in accessKeys)
+            {
+                // Skip validation for aad access key.
+                if (accessKey is AadAccessKey)
+                {
+                    return true;
+                }
+                var accessToken = accessKey.Value;
+                if (!string.IsNullOrEmpty(accessToken) &&
                      request.Headers.TryGetValues(Constants.AsrsSignature, out var values))
                 {
                     var signatures = SignalRTriggerUtils.GetSignatureList(values.FirstOrDefault());
@@ -45,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                     {
                         continue;
                     }
-                    using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey)))
+                    using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessToken)))
                     {
                         var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Headers.GetValues(Constants.AsrsConnectionIdHeader).First()));
                         var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");

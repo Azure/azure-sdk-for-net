@@ -27,7 +27,6 @@ namespace Azure.Messaging.WebPubSub
         private static readonly char[] PropertySeparator = { ';' };
 
         internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
-        internal static byte[] s_group = Encoding.UTF8.GetBytes("webpubsub.group");
 
         /// <summary>
         /// Creates a URI with authentication token.
@@ -38,23 +37,9 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="roles">Roles that the connection with the generated token will have.</param>
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Uri GetClientAccessUri(DateTimeOffset expiresAt, string userId, IEnumerable<string> roles, CancellationToken cancellationToken)
+        public virtual Uri GetClientAccessUri(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            => GetClientAccessUriInternal(expiresAt, userId, roles, null, async: false, cancellationToken).EnsureCompleted();
-
-        /// <summary>
-        /// Creates a URI with authentication token.
-        /// </summary>
-        /// <param name="expiresAt">UTC time when the token expires.</param>
-        /// <param name="userId">User Id.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <param name="roles">Roles that the connection with the generated token will have.</param>
-        /// <param name="groups">Groups that the connection with the generated token will join when it connects.</param>
-        /// <returns></returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Uri GetClientAccessUri(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, IEnumerable<string> groups = default, CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
-            => GetClientAccessUriInternal(expiresAt, userId, roles, groups, async: false, cancellationToken).EnsureCompleted();
+            => GetClientAccessUriInternal(expiresAt, userId, roles, async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Creates a URI with authentication token.
@@ -65,22 +50,8 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="roles">Roles that the connection with the generated token will have.</param>
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Uri> GetClientAccessUriAsync(DateTimeOffset expiresAt, string userId, IEnumerable<string> roles, CancellationToken cancellationToken)
-            => await GetClientAccessUriInternal(expiresAt, userId, roles, null, async: true, cancellationToken).ConfigureAwait(false);
-#pragma warning restore AZC0015 // Unexpected client method return type.
-
-        /// <summary>
-        /// Creates a URI with authentication token.
-        /// </summary>
-        /// <param name="expiresAt">UTC time when the token expires.</param>
-        /// <param name="userId">User Id.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <param name="roles">Roles that the connection with the generated token will have.</param>
-        /// <param name="groups">Groups that the connection with the generated token will join when it connects.</param>
-        /// <returns></returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Uri> GetClientAccessUriAsync(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, IEnumerable<string> groups = default, CancellationToken cancellationToken = default)
-            => await GetClientAccessUriInternal(expiresAt, userId, roles, groups, async: true, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Uri> GetClientAccessUriAsync(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, CancellationToken cancellationToken = default)
+            => await GetClientAccessUriInternal(expiresAt, userId, roles, async: true, cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
@@ -93,34 +64,13 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Uri GetClientAccessUri(
-            TimeSpan expiresAfter,
-            string userId,
-            IEnumerable<string> roles,
-            CancellationToken cancellationToken)
-#pragma warning restore AZC0015 // Unexpected client method return type.
-        {
-            return GetClientAccessUriInternal(expiresAfter, userId, roles, null, false, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Creates a URI with authentication token.
-        /// </summary>
-        /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
-        /// <param name="userId">User Id.</param>
-        /// <param name="roles">Roles that the connection with the generated token will have.</param>
-        /// <param name="groups">Groups that the connection with the generated token will join when it connects.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns></returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Uri GetClientAccessUri(
             TimeSpan expiresAfter = default,
             string userId = default,
             IEnumerable<string> roles = default,
-            IEnumerable<string> groups = default,
             CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            return GetClientAccessUriInternal(expiresAfter, userId, roles, groups, false, cancellationToken).EnsureCompleted();
+            return GetClientAccessUriInternal(expiresAfter, userId, roles, false, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -133,34 +83,13 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<Uri> GetClientAccessUriAsync(
-            TimeSpan expiresAfter,
-            string userId,
-            IEnumerable<string> roles,
-            CancellationToken cancellationToken)
-#pragma warning restore AZC0015 // Unexpected client method return type.
-        {
-            return await GetClientAccessUriInternal(expiresAfter, userId, roles, null, true, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates a URI with authentication token.
-        /// </summary>
-        /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
-        /// <param name="userId">User Id.</param>
-        /// <param name="roles">Roles that the connection with the generated token will have.</param>
-        /// <param name="groups">Groups that the connection with the generated token will join when it connects.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns></returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Uri> GetClientAccessUriAsync(
             TimeSpan expiresAfter = default,
             string userId = default,
             IEnumerable<string> roles = default,
-            IEnumerable<string> groups = default,
             CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            return await GetClientAccessUriInternal(expiresAfter, userId, roles, groups, true, cancellationToken).ConfigureAwait(false);
+            return await GetClientAccessUriInternal(expiresAfter, userId, roles, true, cancellationToken).ConfigureAwait(false);
         }
 
         internal static int GetMinutesToExpire(TimeSpan expiresAfter) => Math.Max((int)expiresAfter.TotalMinutes, 1);
@@ -171,7 +100,6 @@ namespace Azure.Messaging.WebPubSub
             DateTimeOffset expiresAt,
             string userId = default,
             IEnumerable<string> roles = default,
-            IEnumerable<string> groups = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -184,14 +112,14 @@ namespace Azure.Messaging.WebPubSub
                 var minutesToExpire = GetMinutesToExpire(expiresAt);
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, groups, context).ConfigureAwait(false) :
+                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, null, context).ConfigureAwait(false) :
                     GenerateClientTokenImpl(userId, roles, minutesToExpire, null, context);
                 using var jsonDocument = JsonDocument.Parse(clientTokenResponse.Content);
                 token = jsonDocument.RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }
             else if (_credential != null)
             {
-                token = GenerateTokenFromAzureKeyCredential(expiresAt, userId, roles, groups);
+                token = GenerateTokenFromAzureKeyCredential(expiresAt, userId, roles);
             }
             else
             {
@@ -210,7 +138,6 @@ namespace Azure.Messaging.WebPubSub
             TimeSpan expireAfter,
             string userId = default,
             IEnumerable<string> roles = default,
-            IEnumerable<string> groups = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -223,7 +150,7 @@ namespace Azure.Messaging.WebPubSub
                 var minutesToExpire = GetMinutesToExpire(expireAfter);
 
                 Response clientTokenResponse = async ?
-                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, groups, context).ConfigureAwait(false) :
+                    await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, null, context).ConfigureAwait(false) :
                     GenerateClientTokenImpl(userId, roles, minutesToExpire, null, context);
                 using var jsonDocument = JsonDocument.Parse(clientTokenResponse.Content);
                 token = jsonDocument.RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
@@ -234,7 +161,7 @@ namespace Azure.Messaging.WebPubSub
                 {
                     expireAfter = TimeSpan.FromHours(1);
                 }
-                token = GenerateTokenFromAzureKeyCredential(DateTimeOffset.UtcNow.Add(expireAfter), userId, roles, groups);
+                token = GenerateTokenFromAzureKeyCredential(DateTimeOffset.UtcNow.Add(expireAfter), userId, roles);
             }
             else
             {
@@ -321,7 +248,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        private string GenerateTokenFromAzureKeyCredential(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default, IEnumerable<string> groups = default)
+        private string GenerateTokenFromAzureKeyCredential(DateTimeOffset expiresAt, string userId = default, IEnumerable<string> roles = default)
         {
             var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
 
@@ -342,10 +269,6 @@ namespace Azure.Messaging.WebPubSub
             if (roles != default && roles.Any())
             {
                 jwt.AddClaim(s_role, roles);
-            }
-            if (groups != default && groups.Any())
-            {
-                jwt.AddClaim(s_group, groups);
             }
             jwt.AddClaim(JwtBuilder.Nbf, now);
             jwt.AddClaim(JwtBuilder.Exp, expiresAt);

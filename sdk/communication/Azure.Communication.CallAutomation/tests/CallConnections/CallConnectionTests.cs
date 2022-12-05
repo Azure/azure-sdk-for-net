@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using System;
+using Azure.Communication.CallAutomation.Models.Misc;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {

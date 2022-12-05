@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ExternalFqdnResponse DeserializeExternalFqdnResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<MachineLearningFqdnEndpoints>> value = default;
+            Optional<IReadOnlyList<FqdnEndpoints>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineLearningFqdnEndpoints> array = new List<MachineLearningFqdnEndpoints>();
+                    List<FqdnEndpoints> array = new List<FqdnEndpoints>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints(item));
+                        array.Add(FqdnEndpoints.DeserializeFqdnEndpoints(item));
                     }
                     value = array;
                     continue;

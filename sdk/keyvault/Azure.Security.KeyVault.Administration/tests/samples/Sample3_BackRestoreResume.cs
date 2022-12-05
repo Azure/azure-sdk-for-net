@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
-        [RecordedTest]
+        [Test]
         public async Task ResumeBackupRestore()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;

@@ -125,15 +125,3 @@ directive:
   transform: >
     $.status["x-ms-enum"].values = [{value: "Succeeded", name: "Succeeded" },{value: "Failed", name: "Failed" },{value: "Inprogress", name: "InProgress" }];
 ```
-
-### Suppress Abstract Base Class
-
-``` yaml
-suppress-abstract-base-class:
-- CustomSetupBase
-- DataFlow
-- DependencyReference
-- LinkedIntegrationRuntimeType
-- SecretBase
-- WebLinkedServiceTypeProperties
-```

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static LogAnalyticsQueryPackQueryListResult DeserializeLogAnalyticsQueryPackQueryListResult(JsonElement element)
         {
-            IReadOnlyList<LogAnalyticsQueryData> value = default;
+            IReadOnlyList<LogAnalyticsQueryPackQueryData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<LogAnalyticsQueryData> array = new List<LogAnalyticsQueryData>();
+                    List<LogAnalyticsQueryPackQueryData> array = new List<LogAnalyticsQueryPackQueryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(item));
+                        array.Add(LogAnalyticsQueryPackQueryData.DeserializeLogAnalyticsQueryPackQueryData(item));
                     }
                     value = array;
                     continue;
