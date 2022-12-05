@@ -216,7 +216,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect anomalies for the entire series in batch. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -235,7 +235,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect anomalies for the entire series in batch. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -304,7 +304,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect anomaly status of the latest point in time series. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -321,7 +321,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect anomaly status of the latest point in time series. </summary>
-        /// <param name="options"> The UnivariateDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks>
@@ -388,7 +388,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect change point for the entire series. </summary>
-        /// <param name="options"> The UnivariateChangePointDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks> Evaluate change point score of every series point. </remarks>
@@ -402,7 +402,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Detect change point for the entire series. </summary>
-        /// <param name="options"> The UnivariateChangePointDetectionOptions to use. </param>
+        /// <param name="options"> Method of univariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <remarks> Evaluate change point score of every series point. </remarks>
@@ -466,7 +466,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -494,7 +494,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -522,7 +522,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -548,7 +548,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
-        /// <param name="resultId"> The String to use. </param>
+        /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resultId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -574,7 +574,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
-        /// <param name="modelInfo"> The ModelInfo to use. </param>
+        /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         /// <remarks>
@@ -596,7 +596,7 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
-        /// <param name="modelInfo"> The ModelInfo to use. </param>
+        /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         /// <remarks>
@@ -829,7 +829,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect Multivariate Anomaly. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateBatchDetectionOptions to use. </param>
+        /// <param name="options"> Request of multivariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -853,7 +853,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect Multivariate Anomaly. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateBatchDetectionOptions to use. </param>
+        /// <param name="options"> Request of multivariate anomaly detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -933,7 +933,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect anomalies in the last point of the request body. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateLastDetectionOptions to use. </param>
+        /// <param name="options"> Request of last detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -955,7 +955,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect anomalies in the last point of the request body. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateLastDetectionOptions to use. </param>
+        /// <param name="options"> Request of last detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>

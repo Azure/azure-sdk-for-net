@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The VariableState. </summary>
+    /// <summary> Variable Status. </summary>
     public partial class VariableState
     {
         /// <summary> Initializes a new instance of VariableState. </summary>
