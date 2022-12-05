@@ -14,8 +14,65 @@ using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class FormRecognizerModelFactory
     {
+
+        /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="jsonError"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, JsonElement jsonError = default, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, "documentModelBuild", resourceLocation, apiVersion, tags, jsonError, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelComposeOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="jsonError"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, JsonElement jsonError = default, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, "documentModelCompose", resourceLocation, apiVersion, tags, jsonError, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelCopyToOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="jsonError"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, JsonElement jsonError = default, DocumentModelDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, "documentModelCopyTo", resourceLocation, apiVersion, tags, jsonError, result);
+        }
     }
 }

@@ -6,10 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class MonitorQueryModelFactory
     {
         /// <summary> Initializes a new instance of LogsTableColumn. </summary>
@@ -25,6 +28,19 @@ namespace Azure.Monitor.Query.Models
             }
 
             return new LogsTableColumn(name, type);
+        }
+
+        /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <param name="statistics"> Any object. </param>
+        /// <param name="visualization"> Any object. </param>
+        /// <param name="error"> Any object. </param>
+        /// <returns> A new <see cref="Models.LogsBatchQueryResult"/> instance for mocking. </returns>
+        public static LogsBatchQueryResult LogsBatchQueryResult(IEnumerable<LogsTable> allTables = null, JsonElement statistics = default, JsonElement visualization = default, JsonElement error = default)
+        {
+            allTables ??= new List<LogsTable>();
+
+            return new LogsBatchQueryResult(allTables?.ToList(), statistics, visualization, error);
         }
 
         /// <summary> Initializes a new instance of MetricAvailability. </summary>

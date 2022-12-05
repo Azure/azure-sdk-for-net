@@ -6,12 +6,48 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class TableModelFactory
     {
+        /// <summary> Initializes a new instance of TableServiceProperties. </summary>
+        /// <param name="logging"> Azure Analytics Logging settings. </param>
+        /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for tables. </param>
+        /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for tables. </param>
+        /// <param name="cors"> The set of CORS rules. </param>
+        /// <returns> A new <see cref="Models.TableServiceProperties"/> instance for mocking. </returns>
+        public static TableServiceProperties TableServiceProperties(TableAnalyticsLoggingSettings logging = null, TableMetrics hourMetrics = null, TableMetrics minuteMetrics = null, IEnumerable<TableCorsRule> cors = null)
+        {
+            cors ??= new List<TableCorsRule>();
+
+            return new TableServiceProperties(logging, hourMetrics, minuteMetrics, cors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of TableRetentionPolicy. </summary>
+        /// <param name="enabled"> Indicates whether a retention policy is enabled for the service. </param>
+        /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
+        /// <returns> A new <see cref="Tables.TableRetentionPolicy"/> instance for mocking. </returns>
+        public static TableRetentionPolicy TableRetentionPolicy(bool enabled = default, int? days = null)
+        {
+            return new TableRetentionPolicy(enabled, days);
+        }
+
+        /// <summary> Initializes a new instance of TableMetrics. </summary>
+        /// <param name="version"> The version of Analytics to configure. </param>
+        /// <param name="enabled"> Indicates whether metrics are enabled for the Table service. </param>
+        /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
+        /// <param name="retentionPolicy"> The retention policy. </param>
+        /// <returns> A new <see cref="Models.TableMetrics"/> instance for mocking. </returns>
+        public static TableMetrics TableMetrics(string version = null, bool enabled = default, bool? includeApis = null, TableRetentionPolicy retentionPolicy = null)
+        {
+            return new TableMetrics(version, enabled, includeApis, retentionPolicy);
+        }
+
         /// <summary> Initializes a new instance of TableServiceStatistics. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
         /// <returns> A new <see cref="Models.TableServiceStatistics"/> instance for mocking. </returns>

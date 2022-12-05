@@ -12,7 +12,7 @@ using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class MapsSearchModelFactory
     {
         /// <summary> Initializes a new instance of PolygonResult. </summary>
@@ -32,6 +32,14 @@ namespace Azure.Maps.Search.Models
         public static PolygonObject PolygonObject(string providerId = null, GeoObject geometryData = null)
         {
             return new PolygonObject(providerId, geometryData);
+        }
+
+        /// <summary> Initializes a new instance of GeoJsonObject. </summary>
+        /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <returns> A new <see cref="Models.GeoJsonObject"/> instance for mocking. </returns>
+        public static GeoJsonObject GeoJsonObject(string type = null)
+        {
+            return new UnknownGeoJsonObject(type);
         }
 
         /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>

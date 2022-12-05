@@ -8,10 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
         /// <summary> Initializes a new instance of AnomalyAlertConfiguration. </summary>
@@ -34,6 +35,31 @@ namespace Azure.AI.MetricsAdvisor.Models
             metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
 
             return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, dimensionsToSplitAlert?.ToList(), idsOfHooksToAlert?.ToList(), metricAlertConfigurations?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MetricBoundaryCondition. </summary>
+        /// <param name="lowerBound">
+        /// lower bound
+        /// 
+        /// should be specified when direction is Both or Down
+        /// </param>
+        /// <param name="upperBound">
+        /// upper bound
+        /// 
+        /// should be specified when direction is Both or Up
+        /// </param>
+        /// <param name="direction"> value filter direction. </param>
+        /// <param name="measureType"> data used to implement value filter. </param>
+        /// <param name="companionMetricId"> the other metric unique id used for value filter. </param>
+        /// <param name="shouldAlertIfDataPointMissing">
+        /// trigger alert when the corresponding point is missing in the other metric
+        /// 
+        /// should be specified only when using other metric to filter
+        /// </param>
+        /// <returns> A new <see cref="Models.MetricBoundaryCondition"/> instance for mocking. </returns>
+        public static MetricBoundaryCondition MetricBoundaryCondition(double? lowerBound = null, double? upperBound = null, BoundaryDirection direction = default, BoundaryMeasureType? measureType = null, string companionMetricId = null, bool? shouldAlertIfDataPointMissing = null)
+        {
+            return new MetricBoundaryCondition(lowerBound, upperBound, direction, measureType, companionMetricId, shouldAlertIfDataPointMissing);
         }
 
         /// <summary> Initializes a new instance of AnomalyAlert. </summary>
@@ -70,6 +96,56 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new AnomalyDetectionConfiguration(id, name, description, metricId, wholeSeriesDetectionConditions, seriesGroupDetectionConditions?.ToList(), seriesDetectionConditions?.ToList());
         }
 
+        /// <summary> Initializes a new instance of MetricWholeSeriesDetectionCondition. </summary>
+        /// <param name="conditionOperator">
+        /// condition operator
+        /// 
+        /// should be specified when combining multiple detection conditions
+        /// </param>
+        /// <param name="smartDetectionCondition"></param>
+        /// <param name="hardThresholdCondition"></param>
+        /// <param name="changeThresholdCondition"></param>
+        /// <returns> A new <see cref="Models.MetricWholeSeriesDetectionCondition"/> instance for mocking. </returns>
+        public static MetricWholeSeriesDetectionCondition MetricWholeSeriesDetectionCondition(DetectionConditionOperator? conditionOperator = null, SmartDetectionCondition smartDetectionCondition = null, HardThresholdCondition hardThresholdCondition = null, ChangeThresholdCondition changeThresholdCondition = null)
+        {
+            return new MetricWholeSeriesDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition);
+        }
+
+        /// <summary> Initializes a new instance of HardThresholdCondition. </summary>
+        /// <param name="lowerBound">
+        /// lower bound
+        /// 
+        /// should be specified when anomalyDetectorDirection is Both or Down
+        /// </param>
+        /// <param name="upperBound">
+        /// upper bound
+        /// 
+        /// should be specified when anomalyDetectorDirection is Both or Up
+        /// </param>
+        /// <param name="anomalyDetectorDirection"> detection direction. </param>
+        /// <param name="suppressCondition"></param>
+        /// <returns> A new <see cref="Models.HardThresholdCondition"/> instance for mocking. </returns>
+        public static HardThresholdCondition HardThresholdCondition(double? lowerBound = null, double? upperBound = null, AnomalyDetectorDirection anomalyDetectorDirection = default, SuppressCondition suppressCondition = null)
+        {
+            return new HardThresholdCondition(lowerBound, upperBound, anomalyDetectorDirection, suppressCondition);
+        }
+
+        /// <summary> Initializes a new instance of MetricSeriesGroupDetectionCondition. </summary>
+        /// <param name="conditionOperator">
+        /// condition operator
+        /// 
+        /// should be specified when combining multiple detection conditions
+        /// </param>
+        /// <param name="smartDetectionCondition"></param>
+        /// <param name="hardThresholdCondition"></param>
+        /// <param name="changeThresholdCondition"></param>
+        /// <param name="seriesGroupKey"></param>
+        /// <returns> A new <see cref="Models.MetricSeriesGroupDetectionCondition"/> instance for mocking. </returns>
+        public static MetricSeriesGroupDetectionCondition MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator = null, SmartDetectionCondition smartDetectionCondition = null, HardThresholdCondition hardThresholdCondition = null, ChangeThresholdCondition changeThresholdCondition = null, DimensionKey seriesGroupKey = null)
+        {
+            return new MetricSeriesGroupDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition, seriesGroupKey);
+        }
+
         /// <summary> Initializes a new instance of IncidentRootCause. </summary>
         /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
@@ -83,6 +159,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new IncidentRootCause(seriesKey, paths?.ToList(), contributionScore, description);
         }
 
+        /// <summary> Initializes a new instance of DataSourceCredentialEntity. </summary>
+        /// <param name="credentialKind"> Type of data source credential. </param>
+        /// <param name="id"> Unique id of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
+        /// <param name="description"> Description of data source credential. </param>
+        /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
+        public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = null, string id = null, string name = null, string description = null)
+        {
+            return new UnknownDataSourceCredential(credentialKind, id, name, description);
+        }
+
         /// <summary> Initializes a new instance of DataFeedMetric. </summary>
         /// <param name="id"> metric id. </param>
         /// <param name="name"> metric name. </param>
@@ -92,6 +179,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedMetric DataFeedMetric(string id = null, string name = null, string displayName = null, string description = null)
         {
             return new DataFeedMetric(id, name, displayName, description);
+        }
+
+        /// <summary> Initializes a new instance of DataFeedDimension. </summary>
+        /// <param name="name"> dimension name. </param>
+        /// <param name="displayName"> dimension display name. </param>
+        /// <returns> A new <see cref="Models.DataFeedDimension"/> instance for mocking. </returns>
+        public static DataFeedDimension DataFeedDimension(string name = null, string displayName = null)
+        {
+            return new DataFeedDimension(name, displayName);
         }
 
         /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>

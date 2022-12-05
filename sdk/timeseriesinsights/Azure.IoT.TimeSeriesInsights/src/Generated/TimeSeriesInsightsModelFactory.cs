@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class TimeSeriesInsightsModelFactory
     {
         /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>
@@ -41,6 +42,15 @@ namespace Azure.IoT.TimeSeriesInsights
             return new TimeSeriesOperationErrorDetails(code, message, additionalProperties);
         }
 
+        /// <summary> Initializes a new instance of TimeSeriesInsightsEventProperty. </summary>
+        /// <param name="name"> The name of the property. </param>
+        /// <param name="propertyValueType"> The type of the property. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesInsightsEventProperty"/> instance for mocking. </returns>
+        public static TimeSeriesInsightsEventProperty TimeSeriesInsightsEventProperty(string name = null, TimeSeriesPropertyType? propertyValueType = null)
+        {
+            return new TimeSeriesInsightsEventProperty(name, propertyValueType);
+        }
+
         /// <summary> Initializes a new instance of TimeSeriesModelSettings. </summary>
         /// <param name="name"> Time series model display name which is shown in the UX. Examples: &quot;Temperature Sensors&quot;, &quot;MyDevices&quot;. </param>
         /// <param name="timeSeriesIdProperties"> Time series ID properties defined during environment creation. </param>
@@ -62,6 +72,15 @@ namespace Azure.IoT.TimeSeriesInsights
             return new TimeSeriesIdProperty(name, type);
         }
 
+        /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
+        /// <param name="kind"> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </param>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesVariable"/> instance for mocking. </returns>
+        public static TimeSeriesVariable TimeSeriesVariable(string kind = null, TimeSeriesExpression filter = null)
+        {
+            return new UnknownVariable(kind, filter);
+        }
+
         /// <summary> Initializes a new instance of InstancesOperationResult. </summary>
         /// <param name="instance"> Time series instance object - set when the operation is successful (except put operation). </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
@@ -69,6 +88,23 @@ namespace Azure.IoT.TimeSeriesInsights
         public static InstancesOperationResult InstancesOperationResult(TimeSeriesInstance instance = null, TimeSeriesOperationError error = null)
         {
             return new InstancesOperationResult(instance, error);
+        }
+
+        /// <summary> Initializes a new instance of TimeSeriesType. </summary>
+        /// <param name="id"> Case-sensitive unique type identifier that is immutable. Can be null on create or update requests, and then server generates the ID. Not null on get and delete operations. </param>
+        /// <param name="name"> User-given unique name for the type. Mutable, not null. </param>
+        /// <param name="description"> Description of the type. May be null. </param>
+        /// <param name="variables">
+        /// Different variables associated with the type. Not empty, not null.
+        /// Please note <see cref="TimeSeriesVariable"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
+        /// </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesType"/> instance for mocking. </returns>
+        public static TimeSeriesType TimeSeriesType(string id = null, string name = null, string description = null, IDictionary<string, TimeSeriesVariable> variables = null)
+        {
+            variables ??= new Dictionary<string, TimeSeriesVariable>();
+
+            return new TimeSeriesType(id, name, description, variables);
         }
 
         /// <summary> Initializes a new instance of TimeSeriesTypeOperationResult. </summary>
@@ -80,6 +116,26 @@ namespace Azure.IoT.TimeSeriesInsights
             return new TimeSeriesTypeOperationResult(timeSeriesType, error);
         }
 
+        /// <summary> Initializes a new instance of TimeSeriesHierarchy. </summary>
+        /// <param name="id"> Case-sensitive unique hierarchy identifier. Can be null while creating hierarchy objects and then server generates the id, not null on get and delete operations. </param>
+        /// <param name="name"> User-given unique name for the type. It is mutable and not null. </param>
+        /// <param name="source"> Definition of how time series hierarchy tree levels are created. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesHierarchy"/> instance for mocking. </returns>
+        public static TimeSeriesHierarchy TimeSeriesHierarchy(string id = null, string name = null, TimeSeriesHierarchySource source = null)
+        {
+            return new TimeSeriesHierarchy(id, name, source);
+        }
+
+        /// <summary> Initializes a new instance of TimeSeriesHierarchySource. </summary>
+        /// <param name="instanceFieldNames"> List of instance field names that must be set in all time series instances that belong to this hierarchy. The order of the instance fields defines the levels in the hierarchy. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesHierarchySource"/> instance for mocking. </returns>
+        public static TimeSeriesHierarchySource TimeSeriesHierarchySource(IEnumerable<string> instanceFieldNames = null)
+        {
+            instanceFieldNames ??= new List<string>();
+
+            return new TimeSeriesHierarchySource(instanceFieldNames?.ToList());
+        }
+
         /// <summary> Initializes a new instance of TimeSeriesHierarchyOperationResult. </summary>
         /// <param name="hierarchy"> Time series hierarchy object - set when the operation is successful. </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
@@ -87,6 +143,57 @@ namespace Azure.IoT.TimeSeriesInsights
         public static TimeSeriesHierarchyOperationResult TimeSeriesHierarchyOperationResult(TimeSeriesHierarchy hierarchy = null, TimeSeriesOperationError error = null)
         {
             return new TimeSeriesHierarchyOperationResult(hierarchy, error);
+        }
+
+        /// <summary> Initializes a new instance of TimeSeriesInterpolation. </summary>
+        /// <param name="kind"> The type of interpolation technique : &quot;Linear&quot; or &quot;Step&quot;. </param>
+        /// <param name="boundary"> The time range to the left and right of the search span to be used for Interpolation. This is helpful in scenarios where the data points are missing close to the start or end of the input search span. Can be null. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesInterpolation"/> instance for mocking. </returns>
+        public static TimeSeriesInterpolation TimeSeriesInterpolation(InterpolationKind? kind = null, InterpolationBoundary boundary = null)
+        {
+            return new TimeSeriesInterpolation(kind, boundary);
+        }
+
+        /// <summary> Initializes a new instance of InterpolationBoundary. </summary>
+        /// <param name="span"> &lt;Need description here&gt;. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.InterpolationBoundary"/> instance for mocking. </returns>
+        public static InterpolationBoundary InterpolationBoundary(TimeSpan? span = null)
+        {
+            return new InterpolationBoundary(span);
+        }
+
+        /// <summary> Initializes a new instance of NumericVariable. </summary>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
+        /// <param name="value"> Value time series expression is used to represent the value of the signal that is going to be aggregated or interpolated. For example, temperature values from the event is represented like this: &quot;$event.Temperature.Double&quot;. </param>
+        /// <param name="interpolation"> The interpolation operation to be performed on the raw data points. Currently, only sampling of interpolated time series is allowed. Allowed aggregate function - eg: left($value). Can be null if no interpolation needs to be applied. </param>
+        /// <param name="aggregation"> Aggregation time series expression when kind is &quot;numeric&quot; is used to represent the aggregation that needs to be performed on the $value expression. This requires $value to be specified and can only use $value inside the aggregate functions. For example, aggregation for calculating minimum of the $value is written as: &quot;min($value)&quot;. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.NumericVariable"/> instance for mocking. </returns>
+        public static NumericVariable NumericVariable(TimeSeriesExpression filter = null, TimeSeriesExpression value = null, TimeSeriesInterpolation interpolation = null, TimeSeriesExpression aggregation = null)
+        {
+            return new NumericVariable("numeric", filter, value, interpolation, aggregation);
+        }
+
+        /// <summary> Initializes a new instance of AggregateVariable. </summary>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
+        /// <param name="aggregation"> Aggregation time series expression when kind is &quot;aggregate&quot; is used to represent the aggregation that needs to be performed directly using event properties like &quot;$event.Temperature&quot;. For example, aggregation for calculating range of temperature changes can be written as: &quot;max($event.Temperature)-min($event.Temperature)&quot;. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.AggregateVariable"/> instance for mocking. </returns>
+        public static AggregateVariable AggregateVariable(TimeSeriesExpression filter = null, TimeSeriesExpression aggregation = null)
+        {
+            return new AggregateVariable("aggregate", filter, aggregation);
+        }
+
+        /// <summary> Initializes a new instance of CategoricalVariable. </summary>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
+        /// <param name="value"> Value time series expression is used to represent the value of the signal that is going to be categorized. It can evaluate to only &apos;String&apos; or &apos;Long&apos; type for categorical variables. </param>
+        /// <param name="interpolation"> Categorical variable supports only &apos;step&apos; interpolation. </param>
+        /// <param name="categories"> &lt;This property needs a description&gt;. </param>
+        /// <param name="defaultCategory"> Represents the default category. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.CategoricalVariable"/> instance for mocking. </returns>
+        public static CategoricalVariable CategoricalVariable(TimeSeriesExpression filter = null, TimeSeriesExpression value = null, TimeSeriesInterpolation interpolation = null, IEnumerable<TimeSeriesAggregateCategory> categories = null, TimeSeriesDefaultCategory defaultCategory = null)
+        {
+            categories ??= new List<TimeSeriesAggregateCategory>();
+
+            return new CategoricalVariable("categorical", filter, value, interpolation, categories?.ToList(), defaultCategory);
         }
     }
 }

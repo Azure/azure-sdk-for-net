@@ -12,7 +12,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class SearchModelFactory
     {
 
@@ -53,6 +53,64 @@ namespace Azure.Search.Documents.Models
             return new AutocompleteResults(coverage, results?.ToList());
         }
 
+        /// <summary> Initializes a new instance of SearchIndexerDataContainer. </summary>
+        /// <param name="name"> The name of the table or view (for Azure SQL data source) or collection (for CosmosDB data source) that will be indexed. </param>
+        /// <param name="query"> A query that is applied to this data container. The syntax and meaning of this parameter is datasource-specific. Not supported by Azure SQL datasources. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataContainer"/> instance for mocking. </returns>
+        public static SearchIndexerDataContainer SearchIndexerDataContainer(string name = null, string query = null)
+        {
+            return new SearchIndexerDataContainer(name, query);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataIdentity"/> instance for mocking. </returns>
+        public static SearchIndexerDataIdentity SearchIndexerDataIdentity(string oDataType = null)
+        {
+            return new UnknownSearchIndexerDataIdentity(oDataType);
+        }
+
+        /// <summary> Initializes a new instance of IndexingSchedule. </summary>
+        /// <param name="interval"> The interval of time between indexer executions. </param>
+        /// <param name="startTime"> The time when an indexer should start running. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexingSchedule"/> instance for mocking. </returns>
+        public static IndexingSchedule IndexingSchedule(TimeSpan interval = default, DateTimeOffset? startTime = null)
+        {
+            return new IndexingSchedule(interval, startTime);
+        }
+
+        /// <summary> Initializes a new instance of IndexingParameters. </summary>
+        /// <param name="batchSize"> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </param>
+        /// <param name="maxFailedItems"> The maximum number of items that can fail indexing for indexer execution to still be considered successful. -1 means no limit. Default is 0. </param>
+        /// <param name="maxFailedItemsPerBatch"> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </param>
+        /// <param name="indexingParametersConfiguration"> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexingParameters"/> instance for mocking. </returns>
+        public static IndexingParameters IndexingParameters(int? batchSize = null, int? maxFailedItems = null, int? maxFailedItemsPerBatch = null, IndexingParametersConfiguration indexingParametersConfiguration = null)
+        {
+            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, indexingParametersConfiguration);
+        }
+
+        /// <summary> Initializes a new instance of FieldMapping. </summary>
+        /// <param name="sourceFieldName"> The name of the field in the data source. </param>
+        /// <param name="targetFieldName"> The name of the target field in the index. Same as the source field name by default. </param>
+        /// <param name="mappingFunction"> A function to apply to each source field value before indexing. </param>
+        /// <returns> A new <see cref="Indexes.Models.FieldMapping"/> instance for mocking. </returns>
+        public static FieldMapping FieldMapping(string sourceFieldName = null, string targetFieldName = null, FieldMappingFunction mappingFunction = null)
+        {
+            return new FieldMapping(sourceFieldName, targetFieldName, mappingFunction);
+        }
+
+        /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
+        /// <param name="name"> The name of the field mapping function. </param>
+        /// <param name="parameters"> A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type. </param>
+        /// <returns> A new <see cref="Indexes.Models.FieldMappingFunction"/> instance for mocking. </returns>
+        public static FieldMappingFunction FieldMappingFunction(string name = null, IDictionary<string, object> parameters = null)
+        {
+            parameters ??= new Dictionary<string, object>();
+
+            return new FieldMappingFunction(name, parameters);
+        }
+
         /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
@@ -86,6 +144,1062 @@ namespace Azure.Search.Documents.Models
             warnings ??= new List<SearchIndexerWarning>();
 
             return new IndexerExecutionResult(status, statusDetail, currentState, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerSkill"/> instance for mocking. </returns>
+        public static SearchIndexerSkill SearchIndexerSkill(string oDataType = null, string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new UnknownSearchIndexerSkill(oDataType, name, description, context, inputs?.ToList(), outputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
+        /// <param name="name"> The name of the input. </param>
+        /// <param name="source"> The source of the input. </param>
+        /// <param name="sourceContext"> The source context used for selecting recursive inputs. </param>
+        /// <param name="inputs"> The recursive inputs used when creating a complex type. </param>
+        /// <returns> A new <see cref="Indexes.Models.InputFieldMappingEntry"/> instance for mocking. </returns>
+        public static InputFieldMappingEntry InputFieldMappingEntry(string name = null, string source = null, string sourceContext = null, IEnumerable<InputFieldMappingEntry> inputs = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+
+            return new InputFieldMappingEntry(name, source, sourceContext, inputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of OutputFieldMappingEntry. </summary>
+        /// <param name="name"> The name of the output defined by the skill. </param>
+        /// <param name="targetName"> The target name of the output. It is optional and default to name. </param>
+        /// <returns> A new <see cref="Indexes.Models.OutputFieldMappingEntry"/> instance for mocking. </returns>
+        public static OutputFieldMappingEntry OutputFieldMappingEntry(string name = null, string targetName = null)
+        {
+            return new OutputFieldMappingEntry(name, targetName);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>
+        /// <param name="tables"> Projections to Azure Table storage. </param>
+        /// <param name="objects"> Projections to Azure Blob storage. </param>
+        /// <param name="files"> Projections to Azure File storage. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeStoreProjection"/> instance for mocking. </returns>
+        public static KnowledgeStoreProjection KnowledgeStoreProjection(IEnumerable<KnowledgeStoreTableProjectionSelector> tables = null, IEnumerable<KnowledgeStoreObjectProjectionSelector> objects = null, IEnumerable<KnowledgeStoreFileProjectionSelector> files = null)
+        {
+            tables ??= new List<KnowledgeStoreTableProjectionSelector>();
+            objects ??= new List<KnowledgeStoreObjectProjectionSelector>();
+            files ??= new List<KnowledgeStoreFileProjectionSelector>();
+
+            return new KnowledgeStoreProjection(tables?.ToList(), objects?.ToList(), files?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeStoreTableProjectionSelector. </summary>
+        /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
+        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
+        /// <param name="source"> Source data to project. </param>
+        /// <param name="sourceContext"> Source context for complex projections. </param>
+        /// <param name="inputs"> Nested inputs for complex projections. </param>
+        /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeStoreTableProjectionSelector"/> instance for mocking. </returns>
+        public static KnowledgeStoreTableProjectionSelector KnowledgeStoreTableProjectionSelector(string referenceKeyName = null, string generatedKeyName = null, string source = null, string sourceContext = null, IEnumerable<InputFieldMappingEntry> inputs = null, string tableName = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+
+            return new KnowledgeStoreTableProjectionSelector(referenceKeyName, generatedKeyName, source, sourceContext, inputs?.ToList(), tableName);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeStoreObjectProjectionSelector. </summary>
+        /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
+        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
+        /// <param name="source"> Source data to project. </param>
+        /// <param name="sourceContext"> Source context for complex projections. </param>
+        /// <param name="inputs"> Nested inputs for complex projections. </param>
+        /// <param name="storageContainer"> Blob container to store projections in. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeStoreObjectProjectionSelector"/> instance for mocking. </returns>
+        public static KnowledgeStoreObjectProjectionSelector KnowledgeStoreObjectProjectionSelector(string referenceKeyName = null, string generatedKeyName = null, string source = null, string sourceContext = null, IEnumerable<InputFieldMappingEntry> inputs = null, string storageContainer = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+
+            return new KnowledgeStoreObjectProjectionSelector(referenceKeyName, generatedKeyName, source, sourceContext, inputs?.ToList(), storageContainer);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeStoreFileProjectionSelector. </summary>
+        /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
+        /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
+        /// <param name="source"> Source data to project. </param>
+        /// <param name="sourceContext"> Source context for complex projections. </param>
+        /// <param name="inputs"> Nested inputs for complex projections. </param>
+        /// <param name="storageContainer"> Blob container to store projections in. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeStoreFileProjectionSelector"/> instance for mocking. </returns>
+        public static KnowledgeStoreFileProjectionSelector KnowledgeStoreFileProjectionSelector(string referenceKeyName = null, string generatedKeyName = null, string source = null, string sourceContext = null, IEnumerable<InputFieldMappingEntry> inputs = null, string storageContainer = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+
+            return new KnowledgeStoreFileProjectionSelector(referenceKeyName, generatedKeyName, source, sourceContext, inputs?.ToList(), storageContainer);
+        }
+
+        /// <summary> Initializes a new instance of ScoringProfile. </summary>
+        /// <param name="name"> The name of the scoring profile. </param>
+        /// <param name="textWeights"> Parameters that boost scoring based on text matches in certain index fields. </param>
+        /// <param name="functions">
+        /// The collection of functions that influence the scoring of documents.
+        /// Please note <see cref="ScoringFunction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/> and <see cref="TagScoringFunction"/>.
+        /// </param>
+        /// <param name="functionAggregation"> A value indicating how the results of individual scoring functions should be combined. Defaults to &quot;Sum&quot;. Ignored if there are no scoring functions. </param>
+        /// <returns> A new <see cref="Indexes.Models.ScoringProfile"/> instance for mocking. </returns>
+        public static ScoringProfile ScoringProfile(string name = null, TextWeights textWeights = null, IEnumerable<ScoringFunction> functions = null, ScoringFunctionAggregation? functionAggregation = null)
+        {
+            functions ??= new List<ScoringFunction>();
+
+            return new ScoringProfile(name, textWeights, functions?.ToList(), functionAggregation);
+        }
+
+        /// <summary> Initializes a new instance of CorsOptions. </summary>
+        /// <param name="allowedOrigins"> The list of origins from which JavaScript code will be granted access to your index. Can contain a list of hosts of the form {protocol}://{fully-qualified-domain-name}[:{port#}], or a single &apos;*&apos; to allow all origins (not recommended). </param>
+        /// <param name="maxAgeInSeconds"> The duration for which browsers should cache CORS preflight responses. Defaults to 5 minutes. </param>
+        /// <returns> A new <see cref="Indexes.Models.CorsOptions"/> instance for mocking. </returns>
+        public static CorsOptions CorsOptions(IEnumerable<string> allowedOrigins = null, long? maxAgeInSeconds = null)
+        {
+            allowedOrigins ??= new List<string>();
+
+            return new CorsOptions(allowedOrigins?.ToList(), maxAgeInSeconds);
+        }
+
+        /// <summary> Initializes a new instance of LexicalNormalizer. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the normalizer. </param>
+        /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
+        /// <returns> A new <see cref="Indexes.Models.LexicalNormalizer"/> instance for mocking. </returns>
+        public static LexicalNormalizer LexicalNormalizer(string oDataType = null, string name = null)
+        {
+            return new UnknownLexicalNormalizer(oDataType, name);
+        }
+
+        /// <summary> Initializes a new instance of SemanticSettings. </summary>
+        /// <param name="configurations"> The semantic configurations for the index. </param>
+        /// <returns> A new <see cref="Indexes.Models.SemanticSettings"/> instance for mocking. </returns>
+        public static SemanticSettings SemanticSettings(IEnumerable<SemanticConfiguration> configurations = null)
+        {
+            configurations ??= new List<SemanticConfiguration>();
+
+            return new SemanticSettings(configurations?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PrioritizedFields. </summary>
+        /// <param name="titleField"> Defines the title field to be used for semantic ranking, captions, highlights, and answers. If you don&apos;t have a title field in your index, leave this blank. </param>
+        /// <param name="contentFields"> Defines the content fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain text in natural language form. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </param>
+        /// <param name="keywordFields"> Defines the keyword fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain a list of keywords. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </param>
+        /// <returns> A new <see cref="Indexes.Models.PrioritizedFields"/> instance for mocking. </returns>
+        public static PrioritizedFields PrioritizedFields(SemanticField titleField = null, IEnumerable<SemanticField> contentFields = null, IEnumerable<SemanticField> keywordFields = null)
+        {
+            contentFields ??= new List<SemanticField>();
+            keywordFields ??= new List<SemanticField>();
+
+            return new PrioritizedFields(titleField, contentFields?.ToList(), keywordFields?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of SemanticField. </summary>
+        /// <param name="fieldName"></param>
+        /// <returns> A new <see cref="Indexes.Models.SemanticField"/> instance for mocking. </returns>
+        public static SemanticField SemanticField(string fieldName = null)
+        {
+            return new SemanticField(fieldName);
+        }
+
+        /// <summary> Initializes a new instance of CustomAnalyzer. </summary>
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="tokenizerName"> The name of the tokenizer to use to divide continuous text into a sequence of tokens, such as breaking a sentence into words. </param>
+        /// <param name="tokenFilters"> A list of token filters used to filter out or modify the tokens generated by a tokenizer. For example, you can specify a lowercase filter that converts all characters to lowercase. The filters are run in the order in which they are listed. </param>
+        /// <param name="charFilters"> A list of character filters used to prepare input text before it is processed by the tokenizer. For instance, they can replace certain characters or symbols. The filters are run in the order in which they are listed. </param>
+        /// <returns> A new <see cref="Indexes.Models.CustomAnalyzer"/> instance for mocking. </returns>
+        public static CustomAnalyzer CustomAnalyzer(string name = null, LexicalTokenizerName tokenizerName = default, IEnumerable<TokenFilterName> tokenFilters = null, IEnumerable<string> charFilters = null)
+        {
+            tokenFilters ??= new List<TokenFilterName>();
+            charFilters ??= new List<string>();
+
+            return new CustomAnalyzer("#Microsoft.Azure.Search.CustomAnalyzer", name, tokenizerName, tokenFilters?.ToList(), charFilters?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of LuceneStandardAnalyzer. </summary>
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
+        /// <param name="stopwords"> A list of stopwords. </param>
+        /// <returns> A new <see cref="Indexes.Models.LuceneStandardAnalyzer"/> instance for mocking. </returns>
+        public static LuceneStandardAnalyzer LuceneStandardAnalyzer(string name = null, int? maxTokenLength = null, IEnumerable<string> stopwords = null)
+        {
+            stopwords ??= new List<string>();
+
+            return new LuceneStandardAnalyzer("#Microsoft.Azure.Search.StandardAnalyzer", name, maxTokenLength, stopwords?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of StopAnalyzer. </summary>
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="stopwords"> A list of stopwords. </param>
+        /// <returns> A new <see cref="Indexes.Models.StopAnalyzer"/> instance for mocking. </returns>
+        public static StopAnalyzer StopAnalyzer(string name = null, IEnumerable<string> stopwords = null)
+        {
+            stopwords ??= new List<string>();
+
+            return new StopAnalyzer("#Microsoft.Azure.Search.StopAnalyzer", name, stopwords?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CustomNormalizer. </summary>
+        /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
+        /// <param name="tokenFilters"> A list of token filters used to filter out or modify the input token. For example, you can specify a lowercase filter that converts all characters to lowercase. The filters are run in the order in which they are listed. </param>
+        /// <param name="charFilters"> A list of character filters used to prepare input text before it is processed. For instance, they can replace certain characters or symbols. The filters are run in the order in which they are listed. </param>
+        /// <returns> A new <see cref="Indexes.Models.CustomNormalizer"/> instance for mocking. </returns>
+        public static CustomNormalizer CustomNormalizer(string name = null, IEnumerable<TokenFilterName> tokenFilters = null, IEnumerable<CharFilterName> charFilters = null)
+        {
+            tokenFilters ??= new List<TokenFilterName>();
+            charFilters ??= new List<CharFilterName>();
+
+            return new CustomNormalizer("#Microsoft.Azure.Search.CustomNormalizer", name, tokenFilters?.ToList(), charFilters?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ClassicTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
+        /// <returns> A new <see cref="Indexes.Models.ClassicTokenizer"/> instance for mocking. </returns>
+        public static ClassicTokenizer ClassicTokenizer(string name = null, int? maxTokenLength = null)
+        {
+            return new ClassicTokenizer("#Microsoft.Azure.Search.ClassicTokenizer", name, maxTokenLength);
+        }
+
+        /// <summary> Initializes a new instance of EdgeNGramTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
+        /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
+        /// <param name="tokenChars"> Character classes to keep in the tokens. </param>
+        /// <returns> A new <see cref="Indexes.Models.EdgeNGramTokenizer"/> instance for mocking. </returns>
+        public static EdgeNGramTokenizer EdgeNGramTokenizer(string name = null, int? minGram = null, int? maxGram = null, IEnumerable<TokenCharacterKind> tokenChars = null)
+        {
+            tokenChars ??= new List<TokenCharacterKind>();
+
+            return new EdgeNGramTokenizer("#Microsoft.Azure.Search.EdgeNGramTokenizer", name, minGram, maxGram, tokenChars?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of KeywordTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="bufferSize"> The read buffer size in bytes. Default is 256. </param>
+        /// <returns> A new <see cref="Indexes.Models.KeywordTokenizer"/> instance for mocking. </returns>
+        public static KeywordTokenizer KeywordTokenizer(string name = null, int? bufferSize = null)
+        {
+            return new KeywordTokenizer("#Microsoft.Azure.Search.KeywordTokenizer", name, bufferSize);
+        }
+
+        /// <summary> Initializes a new instance of KeywordTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 256. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
+        /// <returns> A new <see cref="Indexes.Models.KeywordTokenizer"/> instance for mocking. </returns>
+        public static KeywordTokenizer KeywordTokenizer(string name = null, int? maxTokenLength = null)
+        {
+            return new KeywordTokenizer("#Microsoft.Azure.Search.KeywordTokenizerV2", name, maxTokenLength);
+        }
+
+        /// <summary> Initializes a new instance of MicrosoftLanguageTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Tokens longer than the maximum length are split. Maximum token length that can be used is 300 characters. Tokens longer than 300 characters are first split into tokens of length 300 and then each of those tokens is split based on the max token length set. Default is 255. </param>
+        /// <param name="isSearchTokenizer"> A value indicating how the tokenizer is used. Set to true if used as the search tokenizer, set to false if used as the indexing tokenizer. Default is false. </param>
+        /// <param name="language"> The language to use. The default is English. </param>
+        /// <returns> A new <see cref="Indexes.Models.MicrosoftLanguageTokenizer"/> instance for mocking. </returns>
+        public static MicrosoftLanguageTokenizer MicrosoftLanguageTokenizer(string name = null, int? maxTokenLength = null, bool? isSearchTokenizer = null, MicrosoftTokenizerLanguage? language = null)
+        {
+            return new MicrosoftLanguageTokenizer("#Microsoft.Azure.Search.MicrosoftLanguageTokenizer", name, maxTokenLength, isSearchTokenizer, language);
+        }
+
+        /// <summary> Initializes a new instance of MicrosoftLanguageStemmingTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Tokens longer than the maximum length are split. Maximum token length that can be used is 300 characters. Tokens longer than 300 characters are first split into tokens of length 300 and then each of those tokens is split based on the max token length set. Default is 255. </param>
+        /// <param name="isSearchTokenizer"> A value indicating how the tokenizer is used. Set to true if used as the search tokenizer, set to false if used as the indexing tokenizer. Default is false. </param>
+        /// <param name="language"> The language to use. The default is English. </param>
+        /// <returns> A new <see cref="Indexes.Models.MicrosoftLanguageStemmingTokenizer"/> instance for mocking. </returns>
+        public static MicrosoftLanguageStemmingTokenizer MicrosoftLanguageStemmingTokenizer(string name = null, int? maxTokenLength = null, bool? isSearchTokenizer = null, MicrosoftStemmingTokenizerLanguage? language = null)
+        {
+            return new MicrosoftLanguageStemmingTokenizer("#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer", name, maxTokenLength, isSearchTokenizer, language);
+        }
+
+        /// <summary> Initializes a new instance of NGramTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
+        /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
+        /// <param name="tokenChars"> Character classes to keep in the tokens. </param>
+        /// <returns> A new <see cref="Indexes.Models.NGramTokenizer"/> instance for mocking. </returns>
+        public static NGramTokenizer NGramTokenizer(string name = null, int? minGram = null, int? maxGram = null, IEnumerable<TokenCharacterKind> tokenChars = null)
+        {
+            tokenChars ??= new List<TokenCharacterKind>();
+
+            return new NGramTokenizer("#Microsoft.Azure.Search.NGramTokenizer", name, minGram, maxGram, tokenChars?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PathHierarchyTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="delimiter"> The delimiter character to use. Default is &quot;/&quot;. </param>
+        /// <param name="replacement"> A value that, if set, replaces the delimiter character. Default is &quot;/&quot;. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default and maximum is 300. </param>
+        /// <param name="reverseTokenOrder"> A value indicating whether to generate tokens in reverse order. Default is false. </param>
+        /// <param name="numberOfTokensToSkip"> The number of initial tokens to skip. Default is 0. </param>
+        /// <returns> A new <see cref="Indexes.Models.PathHierarchyTokenizer"/> instance for mocking. </returns>
+        public static PathHierarchyTokenizer PathHierarchyTokenizer(string name = null, char? delimiter = null, char? replacement = null, int? maxTokenLength = null, bool? reverseTokenOrder = null, int? numberOfTokensToSkip = null)
+        {
+            return new PathHierarchyTokenizer("#Microsoft.Azure.Search.PathHierarchyTokenizerV2", name, delimiter, replacement, maxTokenLength, reverseTokenOrder, numberOfTokensToSkip);
+        }
+
+        /// <summary> Initializes a new instance of LuceneStandardTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. </param>
+        /// <returns> A new <see cref="Indexes.Models.LuceneStandardTokenizer"/> instance for mocking. </returns>
+        public static LuceneStandardTokenizer LuceneStandardTokenizer(string name = null, int? maxTokenLength = null)
+        {
+            return new LuceneStandardTokenizer("#Microsoft.Azure.Search.StandardTokenizer", name, maxTokenLength);
+        }
+
+        /// <summary> Initializes a new instance of LuceneStandardTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
+        /// <returns> A new <see cref="Indexes.Models.LuceneStandardTokenizer"/> instance for mocking. </returns>
+        public static LuceneStandardTokenizer LuceneStandardTokenizer(string name = null, int? maxTokenLength = null)
+        {
+            return new LuceneStandardTokenizer("#Microsoft.Azure.Search.StandardTokenizerV2", name, maxTokenLength);
+        }
+
+        /// <summary> Initializes a new instance of UaxUrlEmailTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
+        /// <returns> A new <see cref="Indexes.Models.UaxUrlEmailTokenizer"/> instance for mocking. </returns>
+        public static UaxUrlEmailTokenizer UaxUrlEmailTokenizer(string name = null, int? maxTokenLength = null)
+        {
+            return new UaxUrlEmailTokenizer("#Microsoft.Azure.Search.UaxUrlEmailTokenizer", name, maxTokenLength);
+        }
+
+        /// <summary> Initializes a new instance of AsciiFoldingTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="preserveOriginal"> A value indicating whether the original token will be kept. Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.AsciiFoldingTokenFilter"/> instance for mocking. </returns>
+        public static AsciiFoldingTokenFilter AsciiFoldingTokenFilter(string name = null, bool? preserveOriginal = null)
+        {
+            return new AsciiFoldingTokenFilter("#Microsoft.Azure.Search.AsciiFoldingTokenFilter", name, preserveOriginal);
+        }
+
+        /// <summary> Initializes a new instance of CjkBigramTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="ignoreScripts"> The scripts to ignore. </param>
+        /// <param name="outputUnigrams"> A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.CjkBigramTokenFilter"/> instance for mocking. </returns>
+        public static CjkBigramTokenFilter CjkBigramTokenFilter(string name = null, IEnumerable<CjkBigramTokenFilterScripts> ignoreScripts = null, bool? outputUnigrams = null)
+        {
+            ignoreScripts ??= new List<CjkBigramTokenFilterScripts>();
+
+            return new CjkBigramTokenFilter("#Microsoft.Azure.Search.CjkBigramTokenFilter", name, ignoreScripts?.ToList(), outputUnigrams);
+        }
+
+        /// <summary> Initializes a new instance of CommonGramTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="commonWords"> The set of common words. </param>
+        /// <param name="ignoreCase"> A value indicating whether common words matching will be case insensitive. Default is false. </param>
+        /// <param name="useQueryMode"> A value that indicates whether the token filter is in query mode. When in query mode, the token filter generates bigrams and then removes common words and single terms followed by a common word. Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.CommonGramTokenFilter"/> instance for mocking. </returns>
+        public static CommonGramTokenFilter CommonGramTokenFilter(string name = null, IEnumerable<string> commonWords = null, bool? ignoreCase = null, bool? useQueryMode = null)
+        {
+            commonWords ??= new List<string>();
+
+            return new CommonGramTokenFilter("#Microsoft.Azure.Search.CommonGramTokenFilter", name, commonWords?.ToList(), ignoreCase, useQueryMode);
+        }
+
+        /// <summary> Initializes a new instance of DictionaryDecompounderTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="wordList"> The list of words to match against. </param>
+        /// <param name="minWordSize"> The minimum word size. Only words longer than this get processed. Default is 5. Maximum is 300. </param>
+        /// <param name="minSubwordSize"> The minimum subword size. Only subwords longer than this are outputted. Default is 2. Maximum is 300. </param>
+        /// <param name="maxSubwordSize"> The maximum subword size. Only subwords shorter than this are outputted. Default is 15. Maximum is 300. </param>
+        /// <param name="onlyLongestMatch"> A value indicating whether to add only the longest matching subword to the output. Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.DictionaryDecompounderTokenFilter"/> instance for mocking. </returns>
+        public static DictionaryDecompounderTokenFilter DictionaryDecompounderTokenFilter(string name = null, IEnumerable<string> wordList = null, int? minWordSize = null, int? minSubwordSize = null, int? maxSubwordSize = null, bool? onlyLongestMatch = null)
+        {
+            wordList ??= new List<string>();
+
+            return new DictionaryDecompounderTokenFilter("#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter", name, wordList?.ToList(), minWordSize, minSubwordSize, maxSubwordSize, onlyLongestMatch);
+        }
+
+        /// <summary> Initializes a new instance of EdgeNGramTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="minGram"> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </param>
+        /// <param name="maxGram"> The maximum n-gram length. Default is 2. </param>
+        /// <param name="side"> Specifies which side of the input the n-gram should be generated from. Default is &quot;front&quot;. </param>
+        /// <returns> A new <see cref="Indexes.Models.EdgeNGramTokenFilter"/> instance for mocking. </returns>
+        public static EdgeNGramTokenFilter EdgeNGramTokenFilter(string name = null, int? minGram = null, int? maxGram = null, EdgeNGramTokenFilterSide? side = null)
+        {
+            return new EdgeNGramTokenFilter("#Microsoft.Azure.Search.EdgeNGramTokenFilter", name, minGram, maxGram, side);
+        }
+
+        /// <summary> Initializes a new instance of EdgeNGramTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
+        /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
+        /// <param name="side"> Specifies which side of the input the n-gram should be generated from. Default is &quot;front&quot;. </param>
+        /// <returns> A new <see cref="Indexes.Models.EdgeNGramTokenFilter"/> instance for mocking. </returns>
+        public static EdgeNGramTokenFilter EdgeNGramTokenFilter(string name = null, int? minGram = null, int? maxGram = null, EdgeNGramTokenFilterSide? side = null)
+        {
+            return new EdgeNGramTokenFilter("#Microsoft.Azure.Search.EdgeNGramTokenFilterV2", name, minGram, maxGram, side);
+        }
+
+        /// <summary> Initializes a new instance of ElisionTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="articles"> The set of articles to remove. </param>
+        /// <returns> A new <see cref="Indexes.Models.ElisionTokenFilter"/> instance for mocking. </returns>
+        public static ElisionTokenFilter ElisionTokenFilter(string name = null, IEnumerable<string> articles = null)
+        {
+            articles ??= new List<string>();
+
+            return new ElisionTokenFilter("#Microsoft.Azure.Search.ElisionTokenFilter", name, articles?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of KeepTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="keepWords"> The list of words to keep. </param>
+        /// <param name="lowerCaseKeepWords"> A value indicating whether to lower case all words first. Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.KeepTokenFilter"/> instance for mocking. </returns>
+        public static KeepTokenFilter KeepTokenFilter(string name = null, IEnumerable<string> keepWords = null, bool? lowerCaseKeepWords = null)
+        {
+            keepWords ??= new List<string>();
+
+            return new KeepTokenFilter("#Microsoft.Azure.Search.KeepTokenFilter", name, keepWords?.ToList(), lowerCaseKeepWords);
+        }
+
+        /// <summary> Initializes a new instance of KeywordMarkerTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="keywords"> A list of words to mark as keywords. </param>
+        /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.KeywordMarkerTokenFilter"/> instance for mocking. </returns>
+        public static KeywordMarkerTokenFilter KeywordMarkerTokenFilter(string name = null, IEnumerable<string> keywords = null, bool? ignoreCase = null)
+        {
+            keywords ??= new List<string>();
+
+            return new KeywordMarkerTokenFilter("#Microsoft.Azure.Search.KeywordMarkerTokenFilter", name, keywords?.ToList(), ignoreCase);
+        }
+
+        /// <summary> Initializes a new instance of LengthTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="minLength"> The minimum length in characters. Default is 0. Maximum is 300. Must be less than the value of max. </param>
+        /// <param name="maxLength"> The maximum length in characters. Default and maximum is 300. </param>
+        /// <returns> A new <see cref="Indexes.Models.LengthTokenFilter"/> instance for mocking. </returns>
+        public static LengthTokenFilter LengthTokenFilter(string name = null, int? minLength = null, int? maxLength = null)
+        {
+            return new LengthTokenFilter("#Microsoft.Azure.Search.LengthTokenFilter", name, minLength, maxLength);
+        }
+
+        /// <summary> Initializes a new instance of LimitTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxTokenCount"> The maximum number of tokens to produce. Default is 1. </param>
+        /// <param name="consumeAllTokens"> A value indicating whether all tokens from the input must be consumed even if maxTokenCount is reached. Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.LimitTokenFilter"/> instance for mocking. </returns>
+        public static LimitTokenFilter LimitTokenFilter(string name = null, int? maxTokenCount = null, bool? consumeAllTokens = null)
+        {
+            return new LimitTokenFilter("#Microsoft.Azure.Search.LimitTokenFilter", name, maxTokenCount, consumeAllTokens);
+        }
+
+        /// <summary> Initializes a new instance of NGramTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="minGram"> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </param>
+        /// <param name="maxGram"> The maximum n-gram length. Default is 2. </param>
+        /// <returns> A new <see cref="Indexes.Models.NGramTokenFilter"/> instance for mocking. </returns>
+        public static NGramTokenFilter NGramTokenFilter(string name = null, int? minGram = null, int? maxGram = null)
+        {
+            return new NGramTokenFilter("#Microsoft.Azure.Search.NGramTokenFilter", name, minGram, maxGram);
+        }
+
+        /// <summary> Initializes a new instance of NGramTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
+        /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
+        /// <returns> A new <see cref="Indexes.Models.NGramTokenFilter"/> instance for mocking. </returns>
+        public static NGramTokenFilter NGramTokenFilter(string name = null, int? minGram = null, int? maxGram = null)
+        {
+            return new NGramTokenFilter("#Microsoft.Azure.Search.NGramTokenFilterV2", name, minGram, maxGram);
+        }
+
+        /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="patterns"> A list of patterns to match against each token. </param>
+        /// <param name="preserveOriginal"> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </param>
+        /// <returns> A new <see cref="Indexes.Models.PatternCaptureTokenFilter"/> instance for mocking. </returns>
+        public static PatternCaptureTokenFilter PatternCaptureTokenFilter(string name = null, IEnumerable<string> patterns = null, bool? preserveOriginal = null)
+        {
+            patterns ??= new List<string>();
+
+            return new PatternCaptureTokenFilter("#Microsoft.Azure.Search.PatternCaptureTokenFilter", name, patterns?.ToList(), preserveOriginal);
+        }
+
+        /// <summary> Initializes a new instance of PatternReplaceTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="pattern"> A regular expression pattern. </param>
+        /// <param name="replacement"> The replacement text. </param>
+        /// <returns> A new <see cref="Indexes.Models.PatternReplaceTokenFilter"/> instance for mocking. </returns>
+        public static PatternReplaceTokenFilter PatternReplaceTokenFilter(string name = null, string pattern = null, string replacement = null)
+        {
+            return new PatternReplaceTokenFilter("#Microsoft.Azure.Search.PatternReplaceTokenFilter", name, pattern, replacement);
+        }
+
+        /// <summary> Initializes a new instance of PhoneticTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="encoder"> The phonetic encoder to use. Default is &quot;metaphone&quot;. </param>
+        /// <param name="replaceOriginalTokens"> A value indicating whether encoded tokens should replace original tokens. If false, encoded tokens are added as synonyms. Default is true. </param>
+        /// <returns> A new <see cref="Indexes.Models.PhoneticTokenFilter"/> instance for mocking. </returns>
+        public static PhoneticTokenFilter PhoneticTokenFilter(string name = null, PhoneticEncoder? encoder = null, bool? replaceOriginalTokens = null)
+        {
+            return new PhoneticTokenFilter("#Microsoft.Azure.Search.PhoneticTokenFilter", name, encoder, replaceOriginalTokens);
+        }
+
+        /// <summary> Initializes a new instance of ShingleTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="maxShingleSize"> The maximum shingle size. Default and minimum value is 2. </param>
+        /// <param name="minShingleSize"> The minimum shingle size. Default and minimum value is 2. Must be less than the value of maxShingleSize. </param>
+        /// <param name="outputUnigrams"> A value indicating whether the output stream will contain the input tokens (unigrams) as well as shingles. Default is true. </param>
+        /// <param name="outputUnigramsIfNoShingles"> A value indicating whether to output unigrams for those times when no shingles are available. This property takes precedence when outputUnigrams is set to false. Default is false. </param>
+        /// <param name="tokenSeparator"> The string to use when joining adjacent tokens to form a shingle. Default is a single space (&quot; &quot;). </param>
+        /// <param name="filterToken"> The string to insert for each position at which there is no token. Default is an underscore (&quot;_&quot;). </param>
+        /// <returns> A new <see cref="Indexes.Models.ShingleTokenFilter"/> instance for mocking. </returns>
+        public static ShingleTokenFilter ShingleTokenFilter(string name = null, int? maxShingleSize = null, int? minShingleSize = null, bool? outputUnigrams = null, bool? outputUnigramsIfNoShingles = null, string tokenSeparator = null, string filterToken = null)
+        {
+            return new ShingleTokenFilter("#Microsoft.Azure.Search.ShingleTokenFilter", name, maxShingleSize, minShingleSize, outputUnigrams, outputUnigramsIfNoShingles, tokenSeparator, filterToken);
+        }
+
+        /// <summary> Initializes a new instance of SnowballTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="language"> The language to use. </param>
+        /// <returns> A new <see cref="Indexes.Models.SnowballTokenFilter"/> instance for mocking. </returns>
+        public static SnowballTokenFilter SnowballTokenFilter(string name = null, SnowballTokenFilterLanguage language = default)
+        {
+            return new SnowballTokenFilter("#Microsoft.Azure.Search.SnowballTokenFilter", name, language);
+        }
+
+        /// <summary> Initializes a new instance of StemmerTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="language"> The language to use. </param>
+        /// <returns> A new <see cref="Indexes.Models.StemmerTokenFilter"/> instance for mocking. </returns>
+        public static StemmerTokenFilter StemmerTokenFilter(string name = null, StemmerTokenFilterLanguage language = default)
+        {
+            return new StemmerTokenFilter("#Microsoft.Azure.Search.StemmerTokenFilter", name, language);
+        }
+
+        /// <summary> Initializes a new instance of StemmerOverrideTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
+        /// <returns> A new <see cref="Indexes.Models.StemmerOverrideTokenFilter"/> instance for mocking. </returns>
+        public static StemmerOverrideTokenFilter StemmerOverrideTokenFilter(string name = null, IEnumerable<string> rules = null)
+        {
+            rules ??= new List<string>();
+
+            return new StemmerOverrideTokenFilter("#Microsoft.Azure.Search.StemmerOverrideTokenFilter", name, rules?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of StopwordsTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="stopwords"> The list of stopwords. This property and the stopwords list property cannot both be set. </param>
+        /// <param name="stopwordsList"> A predefined list of stopwords to use. This property and the stopwords property cannot both be set. Default is English. </param>
+        /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
+        /// <param name="removeTrailingStopWords"> A value indicating whether to ignore the last search term if it&apos;s a stop word. Default is true. </param>
+        /// <returns> A new <see cref="Indexes.Models.StopwordsTokenFilter"/> instance for mocking. </returns>
+        public static StopwordsTokenFilter StopwordsTokenFilter(string name = null, IEnumerable<string> stopwords = null, StopwordsList? stopwordsList = null, bool? ignoreCase = null, bool? removeTrailingStopWords = null)
+        {
+            stopwords ??= new List<string>();
+
+            return new StopwordsTokenFilter("#Microsoft.Azure.Search.StopwordsTokenFilter", name, stopwords?.ToList(), stopwordsList, ignoreCase, removeTrailingStopWords);
+        }
+
+        /// <summary> Initializes a new instance of SynonymTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="synonyms"> A list of synonyms in following one of two formats: 1. incredible, unbelievable, fabulous =&gt; amazing - all terms on the left side of =&gt; symbol will be replaced with all terms on its right side; 2. incredible, unbelievable, fabulous, amazing - comma separated list of equivalent words. Set the expand option to change how this list is interpreted. </param>
+        /// <param name="ignoreCase"> A value indicating whether to case-fold input for matching. Default is false. </param>
+        /// <param name="expand"> A value indicating whether all words in the list of synonyms (if =&gt; notation is not used) will map to one another. If true, all words in the list of synonyms (if =&gt; notation is not used) will map to one another. The following list: incredible, unbelievable, fabulous, amazing is equivalent to: incredible, unbelievable, fabulous, amazing =&gt; incredible, unbelievable, fabulous, amazing. If false, the following list: incredible, unbelievable, fabulous, amazing will be equivalent to: incredible, unbelievable, fabulous, amazing =&gt; incredible. Default is true. </param>
+        /// <returns> A new <see cref="Indexes.Models.SynonymTokenFilter"/> instance for mocking. </returns>
+        public static SynonymTokenFilter SynonymTokenFilter(string name = null, IEnumerable<string> synonyms = null, bool? ignoreCase = null, bool? expand = null)
+        {
+            synonyms ??= new List<string>();
+
+            return new SynonymTokenFilter("#Microsoft.Azure.Search.SynonymTokenFilter", name, synonyms?.ToList(), ignoreCase, expand);
+        }
+
+        /// <summary> Initializes a new instance of TruncateTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="length"> The length at which terms will be truncated. Default and maximum is 300. </param>
+        /// <returns> A new <see cref="Indexes.Models.TruncateTokenFilter"/> instance for mocking. </returns>
+        public static TruncateTokenFilter TruncateTokenFilter(string name = null, int? length = null)
+        {
+            return new TruncateTokenFilter("#Microsoft.Azure.Search.TruncateTokenFilter", name, length);
+        }
+
+        /// <summary> Initializes a new instance of UniqueTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="onlyOnSamePosition"> A value indicating whether to remove duplicates only at the same position. Default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.UniqueTokenFilter"/> instance for mocking. </returns>
+        public static UniqueTokenFilter UniqueTokenFilter(string name = null, bool? onlyOnSamePosition = null)
+        {
+            return new UniqueTokenFilter("#Microsoft.Azure.Search.UniqueTokenFilter", name, onlyOnSamePosition);
+        }
+
+        /// <summary> Initializes a new instance of WordDelimiterTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="generateWordParts"> A value indicating whether to generate part words. If set, causes parts of words to be generated; for example &quot;AzureSearch&quot; becomes &quot;Azure&quot; &quot;Search&quot;. Default is true. </param>
+        /// <param name="generateNumberParts"> A value indicating whether to generate number subwords. Default is true. </param>
+        /// <param name="catenateWords"> A value indicating whether maximum runs of word parts will be catenated. For example, if this is set to true, &quot;Azure-Search&quot; becomes &quot;AzureSearch&quot;. Default is false. </param>
+        /// <param name="catenateNumbers"> A value indicating whether maximum runs of number parts will be catenated. For example, if this is set to true, &quot;1-2&quot; becomes &quot;12&quot;. Default is false. </param>
+        /// <param name="catenateAll"> A value indicating whether all subword parts will be catenated. For example, if this is set to true, &quot;Azure-Search-1&quot; becomes &quot;AzureSearch1&quot;. Default is false. </param>
+        /// <param name="splitOnCaseChange"> A value indicating whether to split words on caseChange. For example, if this is set to true, &quot;AzureSearch&quot; becomes &quot;Azure&quot; &quot;Search&quot;. Default is true. </param>
+        /// <param name="preserveOriginal"> A value indicating whether original words will be preserved and added to the subword list. Default is false. </param>
+        /// <param name="splitOnNumerics"> A value indicating whether to split on numbers. For example, if this is set to true, &quot;Azure1Search&quot; becomes &quot;Azure&quot; &quot;1&quot; &quot;Search&quot;. Default is true. </param>
+        /// <param name="stemEnglishPossessive"> A value indicating whether to remove trailing &quot;&apos;s&quot; for each subword. Default is true. </param>
+        /// <param name="protectedWords"> A list of tokens to protect from being delimited. </param>
+        /// <returns> A new <see cref="Indexes.Models.WordDelimiterTokenFilter"/> instance for mocking. </returns>
+        public static WordDelimiterTokenFilter WordDelimiterTokenFilter(string name = null, bool? generateWordParts = null, bool? generateNumberParts = null, bool? catenateWords = null, bool? catenateNumbers = null, bool? catenateAll = null, bool? splitOnCaseChange = null, bool? preserveOriginal = null, bool? splitOnNumerics = null, bool? stemEnglishPossessive = null, IEnumerable<string> protectedWords = null)
+        {
+            protectedWords ??= new List<string>();
+
+            return new WordDelimiterTokenFilter("#Microsoft.Azure.Search.WordDelimiterTokenFilter", name, generateWordParts, generateNumberParts, catenateWords, catenateNumbers, catenateAll, splitOnCaseChange, preserveOriginal, splitOnNumerics, stemEnglishPossessive, protectedWords?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MappingCharFilter. </summary>
+        /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="mappings"> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </param>
+        /// <returns> A new <see cref="Indexes.Models.MappingCharFilter"/> instance for mocking. </returns>
+        public static MappingCharFilter MappingCharFilter(string name = null, IEnumerable<string> mappings = null)
+        {
+            mappings ??= new List<string>();
+
+            return new MappingCharFilter("#Microsoft.Azure.Search.MappingCharFilter", name, mappings?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PatternReplaceCharFilter. </summary>
+        /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="pattern"> A regular expression pattern. </param>
+        /// <param name="replacement"> The replacement text. </param>
+        /// <returns> A new <see cref="Indexes.Models.PatternReplaceCharFilter"/> instance for mocking. </returns>
+        public static PatternReplaceCharFilter PatternReplaceCharFilter(string name = null, string pattern = null, string replacement = null)
+        {
+            return new PatternReplaceCharFilter("#Microsoft.Azure.Search.PatternReplaceCharFilter", name, pattern, replacement);
+        }
+
+        /// <summary> Initializes a new instance of ClassicSimilarity. </summary>
+        /// <returns> A new <see cref="Indexes.Models.ClassicSimilarity"/> instance for mocking. </returns>
+        public static ClassicSimilarity ClassicSimilarity()
+        {
+            return new ClassicSimilarity("#Microsoft.Azure.Search.ClassicSimilarity");
+        }
+
+        /// <summary> Initializes a new instance of BM25Similarity. </summary>
+        /// <param name="k1"> This property controls the scaling function between the term frequency of each matching terms and the final relevance score of a document-query pair. By default, a value of 1.2 is used. A value of 0.0 means the score does not scale with an increase in term frequency. </param>
+        /// <param name="b"> This property controls how the length of a document affects the relevance score. By default, a value of 0.75 is used. A value of 0.0 means no length normalization is applied, while a value of 1.0 means the score is fully normalized by the length of the document. </param>
+        /// <returns> A new <see cref="Indexes.Models.BM25Similarity"/> instance for mocking. </returns>
+        public static BM25Similarity BM25Similarity(double? k1 = null, double? b = null)
+        {
+            return new BM25Similarity("#Microsoft.Azure.Search.BM25Similarity", k1, b);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerDataNoneIdentity. </summary>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataNoneIdentity"/> instance for mocking. </returns>
+        public static SearchIndexerDataNoneIdentity SearchIndexerDataNoneIdentity()
+        {
+            return new SearchIndexerDataNoneIdentity("#Microsoft.Azure.Search.DataNoneIdentity");
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerDataUserAssignedIdentity. </summary>
+        /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form &quot;/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId&quot; that should have been assigned to the search service. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataUserAssignedIdentity"/> instance for mocking. </returns>
+        public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string userAssignedIdentity = null)
+        {
+            return new SearchIndexerDataUserAssignedIdentity("#Microsoft.Azure.Search.DataUserAssignedIdentity", userAssignedIdentity);
+        }
+
+        /// <summary> Initializes a new instance of HighWaterMarkChangeDetectionPolicy. </summary>
+        /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
+        /// <returns> A new <see cref="Indexes.Models.HighWaterMarkChangeDetectionPolicy"/> instance for mocking. </returns>
+        public static HighWaterMarkChangeDetectionPolicy HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName = null)
+        {
+            return new HighWaterMarkChangeDetectionPolicy("#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy", highWaterMarkColumnName);
+        }
+
+        /// <summary> Initializes a new instance of SqlIntegratedChangeTrackingPolicy. </summary>
+        /// <returns> A new <see cref="Indexes.Models.SqlIntegratedChangeTrackingPolicy"/> instance for mocking. </returns>
+        public static SqlIntegratedChangeTrackingPolicy SqlIntegratedChangeTrackingPolicy()
+        {
+            return new SqlIntegratedChangeTrackingPolicy("#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy");
+        }
+
+        /// <summary> Initializes a new instance of SoftDeleteColumnDeletionDetectionPolicy. </summary>
+        /// <param name="softDeleteColumnName"> The name of the column to use for soft-deletion detection. </param>
+        /// <param name="softDeleteMarkerValue"> The marker value that identifies an item as deleted. </param>
+        /// <returns> A new <see cref="Indexes.Models.SoftDeleteColumnDeletionDetectionPolicy"/> instance for mocking. </returns>
+        public static SoftDeleteColumnDeletionDetectionPolicy SoftDeleteColumnDeletionDetectionPolicy(string softDeleteColumnName = null, string softDeleteMarkerValue = null)
+        {
+            return new SoftDeleteColumnDeletionDetectionPolicy("#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy", softDeleteColumnName, softDeleteMarkerValue);
+        }
+
+        /// <summary> Initializes a new instance of DistanceScoringFunction. </summary>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
+        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
+        /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
+        /// <param name="parameters"> Parameter values for the distance scoring function. </param>
+        /// <returns> A new <see cref="Indexes.Models.DistanceScoringFunction"/> instance for mocking. </returns>
+        public static DistanceScoringFunction DistanceScoringFunction(string fieldName = null, double boost = default, ScoringFunctionInterpolation? interpolation = null, DistanceScoringParameters parameters = null)
+        {
+            return new DistanceScoringFunction("distance", fieldName, boost, interpolation, parameters);
+        }
+
+        /// <summary> Initializes a new instance of FreshnessScoringFunction. </summary>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
+        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
+        /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
+        /// <param name="parameters"> Parameter values for the freshness scoring function. </param>
+        /// <returns> A new <see cref="Indexes.Models.FreshnessScoringFunction"/> instance for mocking. </returns>
+        public static FreshnessScoringFunction FreshnessScoringFunction(string fieldName = null, double boost = default, ScoringFunctionInterpolation? interpolation = null, FreshnessScoringParameters parameters = null)
+        {
+            return new FreshnessScoringFunction("freshness", fieldName, boost, interpolation, parameters);
+        }
+
+        /// <summary> Initializes a new instance of MagnitudeScoringFunction. </summary>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
+        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
+        /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
+        /// <param name="parameters"> Parameter values for the magnitude scoring function. </param>
+        /// <returns> A new <see cref="Indexes.Models.MagnitudeScoringFunction"/> instance for mocking. </returns>
+        public static MagnitudeScoringFunction MagnitudeScoringFunction(string fieldName = null, double boost = default, ScoringFunctionInterpolation? interpolation = null, MagnitudeScoringParameters parameters = null)
+        {
+            return new MagnitudeScoringFunction("magnitude", fieldName, boost, interpolation, parameters);
+        }
+
+        /// <summary> Initializes a new instance of MagnitudeScoringParameters. </summary>
+        /// <param name="boostingRangeStart"> The field value at which boosting starts. </param>
+        /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
+        /// <param name="shouldBoostBeyondRangeByConstant"> A value indicating whether to apply a constant boost for field values beyond the range end value; default is false. </param>
+        /// <returns> A new <see cref="Indexes.Models.MagnitudeScoringParameters"/> instance for mocking. </returns>
+        public static MagnitudeScoringParameters MagnitudeScoringParameters(double boostingRangeStart = default, double boostingRangeEnd = default, bool? shouldBoostBeyondRangeByConstant = null)
+        {
+            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, shouldBoostBeyondRangeByConstant);
+        }
+
+        /// <summary> Initializes a new instance of TagScoringFunction. </summary>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
+        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
+        /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
+        /// <param name="parameters"> Parameter values for the tag scoring function. </param>
+        /// <returns> A new <see cref="Indexes.Models.TagScoringFunction"/> instance for mocking. </returns>
+        public static TagScoringFunction TagScoringFunction(string fieldName = null, double boost = default, ScoringFunctionInterpolation? interpolation = null, TagScoringParameters parameters = null)
+        {
+            return new TagScoringFunction("tag", fieldName, boost, interpolation, parameters);
+        }
+
+        /// <summary> Initializes a new instance of DefaultCognitiveServicesAccount. </summary>
+        /// <param name="description"> Description of the cognitive service resource attached to a skillset. </param>
+        /// <returns> A new <see cref="Indexes.Models.DefaultCognitiveServicesAccount"/> instance for mocking. </returns>
+        public static DefaultCognitiveServicesAccount DefaultCognitiveServicesAccount(string description = null)
+        {
+            return new DefaultCognitiveServicesAccount("#Microsoft.Azure.Search.DefaultCognitiveServices", description);
+        }
+
+        /// <summary> Initializes a new instance of CognitiveServicesAccountKey. </summary>
+        /// <param name="description"> Description of the cognitive service resource attached to a skillset. </param>
+        /// <param name="key"> The key used to provision the cognitive service resource attached to a skillset. </param>
+        /// <returns> A new <see cref="Indexes.Models.CognitiveServicesAccountKey"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountKey CognitiveServicesAccountKey(string description = null, string key = null)
+        {
+            return new CognitiveServicesAccountKey("#Microsoft.Azure.Search.CognitiveServicesByKey", description, key);
+        }
+
+        /// <summary> Initializes a new instance of CustomEntity. </summary>
+        /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the &quot;normalized&quot; form of the text being found. </param>
+        /// <param name="description"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
+        /// <param name="type"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
+        /// <param name="subtype"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
+        /// <param name="id"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
+        /// <param name="caseSensitive"> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to character casing. Sample case insensitive matches of &quot;Microsoft&quot; could be: microsoft, microSoft, MICROSOFT. </param>
+        /// <param name="accentSensitive"> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to accent. </param>
+        /// <param name="fuzzyEditDistance"> Defaults to 0. Maximum value of 5. Denotes the acceptable number of divergent characters that would still constitute a match with the entity name. The smallest possible fuzziness for any given match is returned. For instance, if the edit distance is set to 3, &quot;Windows10&quot; would still match &quot;Windows&quot;, &quot;Windows10&quot; and &quot;Windows 7&quot;. When case sensitivity is set to false, case differences do NOT count towards fuzziness tolerance, but otherwise do. </param>
+        /// <param name="defaultCaseSensitive"> Changes the default case sensitivity value for this entity. It be used to change the default value of all aliases caseSensitive values. </param>
+        /// <param name="defaultAccentSensitive"> Changes the default accent sensitivity value for this entity. It be used to change the default value of all aliases accentSensitive values. </param>
+        /// <param name="defaultFuzzyEditDistance"> Changes the default fuzzy edit distance value for this entity. It can be used to change the default value of all aliases fuzzyEditDistance values. </param>
+        /// <param name="aliases"> An array of complex objects that can be used to specify alternative spellings or synonyms to the root entity name. </param>
+        /// <returns> A new <see cref="Indexes.Models.CustomEntity"/> instance for mocking. </returns>
+        public static CustomEntity CustomEntity(string name = null, string description = null, string type = null, string subtype = null, string id = null, bool? caseSensitive = null, bool? accentSensitive = null, int? fuzzyEditDistance = null, bool? defaultCaseSensitive = null, bool? defaultAccentSensitive = null, int? defaultFuzzyEditDistance = null, IEnumerable<CustomEntityAlias> aliases = null)
+        {
+            aliases ??= new List<CustomEntityAlias>();
+
+            return new CustomEntity(name, description, type, subtype, id, caseSensitive, accentSensitive, fuzzyEditDistance, defaultCaseSensitive, defaultAccentSensitive, defaultFuzzyEditDistance, aliases?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CustomEntityAlias. </summary>
+        /// <param name="text"> The text of the alias. </param>
+        /// <param name="caseSensitive"> Determine if the alias is case sensitive. </param>
+        /// <param name="accentSensitive"> Determine if the alias is accent sensitive. </param>
+        /// <param name="fuzzyEditDistance"> Determine the fuzzy edit distance of the alias. </param>
+        /// <returns> A new <see cref="Indexes.Models.CustomEntityAlias"/> instance for mocking. </returns>
+        public static CustomEntityAlias CustomEntityAlias(string text = null, bool? caseSensitive = null, bool? accentSensitive = null, int? fuzzyEditDistance = null)
+        {
+            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance);
+        }
+
+        /// <summary> Initializes a new instance of ConditionalSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <returns> A new <see cref="Indexes.Models.ConditionalSkill"/> instance for mocking. </returns>
+        public static ConditionalSkill ConditionalSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new ConditionalSkill("#Microsoft.Skills.Util.ConditionalSkill", name, description, context, inputs?.ToList(), outputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of OcrSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="shouldDetectOrientation"> A value indicating to turn orientation detection on or not. Default is false. </param>
+        /// <param name="lineEnding"> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is &quot;space&quot;. </param>
+        /// <returns> A new <see cref="Indexes.Models.OcrSkill"/> instance for mocking. </returns>
+        public static OcrSkill OcrSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, OcrSkillLanguage? defaultLanguageCode = null, bool? shouldDetectOrientation = null, LineEnding? lineEnding = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new OcrSkill("#Microsoft.Skills.Vision.OcrSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, shouldDetectOrientation, lineEnding);
+        }
+
+        /// <summary> Initializes a new instance of ImageAnalysisSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="visualFeatures"> A list of visual features. </param>
+        /// <param name="details"> A string indicating which domain-specific details to return. </param>
+        /// <returns> A new <see cref="Indexes.Models.ImageAnalysisSkill"/> instance for mocking. </returns>
+        public static ImageAnalysisSkill ImageAnalysisSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, ImageAnalysisSkillLanguage? defaultLanguageCode = null, IEnumerable<VisualFeature> visualFeatures = null, IEnumerable<ImageDetail> details = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+            visualFeatures ??= new List<VisualFeature>();
+            details ??= new List<ImageDetail>();
+
+            return new ImageAnalysisSkill("#Microsoft.Skills.Vision.ImageAnalysisSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, visualFeatures?.ToList(), details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ShaperSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <returns> A new <see cref="Indexes.Models.ShaperSkill"/> instance for mocking. </returns>
+        public static ShaperSkill ShaperSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new ShaperSkill("#Microsoft.Skills.Util.ShaperSkill", name, description, context, inputs?.ToList(), outputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MergeSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="insertPreTag"> The tag indicates the start of the merged text. By default, the tag is an empty space. </param>
+        /// <param name="insertPostTag"> The tag indicates the end of the merged text. By default, the tag is an empty space. </param>
+        /// <returns> A new <see cref="Indexes.Models.MergeSkill"/> instance for mocking. </returns>
+        public static MergeSkill MergeSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, string insertPreTag = null, string insertPostTag = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new MergeSkill("#Microsoft.Skills.Text.MergeSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), insertPreTag, insertPostTag);
+        }
+
+        /// <summary> Initializes a new instance of EntityRecognitionSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="categories"> A list of entity categories that should be extracted. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="includeTypelessEntities"> Determines whether or not to include entities which are well known but don&apos;t conform to a pre-defined type. If this configuration is not set (default), set to null or set to false, entities which don&apos;t conform to one of the pre-defined types will not be surfaced. </param>
+        /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
+        /// <returns> A new <see cref="Indexes.Models.EntityRecognitionSkill"/> instance for mocking. </returns>
+        public static EntityRecognitionSkill EntityRecognitionSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, IEnumerable<EntityCategory> categories = null, EntityRecognitionSkillLanguage? defaultLanguageCode = null, bool? includeTypelessEntities = null, double? minimumPrecision = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+            categories ??= new List<EntityCategory>();
+
+            return new EntityRecognitionSkill("#Microsoft.Skills.Text.EntityRecognitionSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), categories?.ToList(), defaultLanguageCode, includeTypelessEntities, minimumPrecision);
+        }
+
+        /// <summary> Initializes a new instance of SentimentSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <returns> A new <see cref="Indexes.Models.SentimentSkill"/> instance for mocking. </returns>
+        public static SentimentSkill SentimentSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, SentimentSkillLanguage? defaultLanguageCode = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new SentimentSkill("#Microsoft.Skills.Text.SentimentSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode);
+        }
+
+        /// <summary> Initializes a new instance of EntityLinkingSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        /// <returns> A new <see cref="Indexes.Models.EntityLinkingSkill"/> instance for mocking. </returns>
+        public static EntityLinkingSkill EntityLinkingSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, string defaultLanguageCode = null, double? minimumPrecision = null, string modelVersion = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new EntityLinkingSkill("#Microsoft.Skills.Text.V3.EntityLinkingSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, minimumPrecision, modelVersion);
+        }
+
+        /// <summary> Initializes a new instance of PiiDetectionSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
+        /// <param name="maskingMode"> A parameter that provides various ways to mask the personal information detected in the input text. Default is &apos;none&apos;. </param>
+        /// <param name="maskingCharacter"> The character used to mask the text if the maskingMode parameter is set to replace. Default is &apos;*&apos;. </param>
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        /// <param name="piiCategories"> A list of PII entity categories that should be extracted and masked. </param>
+        /// <param name="domain"> If specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;phi&apos;, &apos;none&apos;. Default is &apos;none&apos;. </param>
+        /// <returns> A new <see cref="Indexes.Models.PiiDetectionSkill"/> instance for mocking. </returns>
+        public static PiiDetectionSkill PiiDetectionSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, string defaultLanguageCode = null, double? minimumPrecision = null, PiiDetectionSkillMaskingMode? maskingMode = null, string maskingCharacter = null, string modelVersion = null, IEnumerable<string> piiCategories = null, string domain = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+            piiCategories ??= new List<string>();
+
+            return new PiiDetectionSkill("#Microsoft.Skills.Text.PIIDetectionSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, minimumPrecision, maskingMode, maskingCharacter, modelVersion, piiCategories?.ToList(), domain);
+        }
+
+        /// <summary> Initializes a new instance of SplitSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="textSplitMode"> A value indicating which split mode to perform. </param>
+        /// <param name="maximumPageLength"> The desired maximum page length. Default is 10000. </param>
+        /// <returns> A new <see cref="Indexes.Models.SplitSkill"/> instance for mocking. </returns>
+        public static SplitSkill SplitSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, SplitSkillLanguage? defaultLanguageCode = null, TextSplitMode? textSplitMode = null, int? maximumPageLength = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new SplitSkill("#Microsoft.Skills.Text.SplitSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, textSplitMode, maximumPageLength);
+        }
+
+        /// <summary> Initializes a new instance of CustomEntityLookupSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="entitiesDefinitionUri"> Path to a JSON or CSV file containing all the target text to match against. This entity definition is read at the beginning of an indexer run. Any updates to this file during an indexer run will not take effect until subsequent runs. This config must be accessible over HTTPS. </param>
+        /// <param name="inlineEntitiesDefinition"> The inline CustomEntity definition. </param>
+        /// <param name="globalDefaultCaseSensitive"> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </param>
+        /// <param name="globalDefaultAccentSensitive"> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </param>
+        /// <param name="globalDefaultFuzzyEditDistance"> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </param>
+        /// <returns> A new <see cref="Indexes.Models.CustomEntityLookupSkill"/> instance for mocking. </returns>
+        public static CustomEntityLookupSkill CustomEntityLookupSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, CustomEntityLookupSkillLanguage? defaultLanguageCode = null, Uri entitiesDefinitionUri = null, IEnumerable<CustomEntity> inlineEntitiesDefinition = null, bool? globalDefaultCaseSensitive = null, bool? globalDefaultAccentSensitive = null, int? globalDefaultFuzzyEditDistance = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+            inlineEntitiesDefinition ??= new List<CustomEntity>();
+
+            return new CustomEntityLookupSkill("#Microsoft.Skills.Text.CustomEntityLookupSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, entitiesDefinitionUri, inlineEntitiesDefinition?.ToList(), globalDefaultCaseSensitive, globalDefaultAccentSensitive, globalDefaultFuzzyEditDistance);
+        }
+
+        /// <summary> Initializes a new instance of TextTranslationSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultToLanguageCode"> The language code to translate documents into for documents that don&apos;t specify the to language explicitly. </param>
+        /// <param name="defaultFromLanguageCode"> The language code to translate documents from for documents that don&apos;t specify the from language explicitly. </param>
+        /// <param name="suggestedFrom"> The language code to translate documents from when neither the fromLanguageCode input nor the defaultFromLanguageCode parameter are provided, and the automatic language detection is unsuccessful. Default is en. </param>
+        /// <returns> A new <see cref="Indexes.Models.TextTranslationSkill"/> instance for mocking. </returns>
+        public static TextTranslationSkill TextTranslationSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, TextTranslationSkillLanguage defaultToLanguageCode = default, TextTranslationSkillLanguage? defaultFromLanguageCode = null, TextTranslationSkillLanguage? suggestedFrom = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new TextTranslationSkill("#Microsoft.Skills.Text.TranslationSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultToLanguageCode, defaultFromLanguageCode, suggestedFrom);
+        }
+
+        /// <summary> Initializes a new instance of DocumentExtractionSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="parsingMode"> The parsingMode for the skill. Will be set to &apos;default&apos; if not defined. </param>
+        /// <param name="dataToExtract"> The type of data to be extracted for the skill. Will be set to &apos;contentAndMetadata&apos; if not defined. </param>
+        /// <param name="configuration"> A dictionary of configurations for the skill. </param>
+        /// <returns> A new <see cref="Indexes.Models.DocumentExtractionSkill"/> instance for mocking. </returns>
+        public static DocumentExtractionSkill DocumentExtractionSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, BlobIndexerParsingMode? parsingMode = null, BlobIndexerDataToExtract? dataToExtract = null, IDictionary<string, object> configuration = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+            configuration ??= new Dictionary<string, object>();
+
+            return new DocumentExtractionSkill("#Microsoft.Skills.Util.DocumentExtractionSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), parsingMode, dataToExtract, configuration);
+        }
+
+        /// <summary> Initializes a new instance of WebApiSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="uri"> The url for the Web API. </param>
+        /// <param name="httpHeaders"> The headers required to make the http request. </param>
+        /// <param name="httpMethod"> The method for the http request. </param>
+        /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
+        /// <param name="batchSize"> The desired batch size which indicates number of documents. </param>
+        /// <param name="degreeOfParallelism"> If set, the number of parallel calls that can be made to the Web API. </param>
+        /// <returns> A new <see cref="Indexes.Models.WebApiSkill"/> instance for mocking. </returns>
+        public static WebApiSkill WebApiSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, string uri = null, IDictionary<string, string> httpHeaders = null, string httpMethod = null, TimeSpan? timeout = null, int? batchSize = null, int? degreeOfParallelism = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+            httpHeaders ??= new Dictionary<string, string>();
+
+            return new WebApiSkill("#Microsoft.Skills.Custom.WebApiSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), uri, httpHeaders, httpMethod, timeout, batchSize, degreeOfParallelism);
         }
     }
 }

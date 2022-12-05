@@ -8,12 +8,35 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Containers.ContainerRegistry.Specialized;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
+        /// <summary> Initializes a new instance of OciAnnotations. </summary>
+        /// <param name="createdOn"> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </param>
+        /// <param name="authors"> Contact details of the people or organization responsible for the image. </param>
+        /// <param name="url"> URL to find more information on the image. </param>
+        /// <param name="documentation"> URL to get documentation on the image. </param>
+        /// <param name="source"> URL to get source code for building the image. </param>
+        /// <param name="version"> Version of the packaged software. The version MAY match a label or tag in the source code repository, may also be Semantic versioning-compatible. </param>
+        /// <param name="revision"> Source control revision identifier for the packaged software. </param>
+        /// <param name="vendor"> Name of the distributing entity, organization or individual. </param>
+        /// <param name="licenses"> License(s) under which contained software is distributed as an SPDX License Expression. </param>
+        /// <param name="name"> Name of the reference for a target. </param>
+        /// <param name="title"> Human-readable title of the image. </param>
+        /// <param name="description"> Human-readable description of the software packaged in the image. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Specialized.OciAnnotations"/> instance for mocking. </returns>
+        public static OciAnnotations OciAnnotations(DateTimeOffset? createdOn = null, string authors = null, string url = null, string documentation = null, string source = null, string version = null, string revision = null, string vendor = null, string licenses = null, string name = null, string title = null, string description = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new OciAnnotations(createdOn, authors, url, documentation, source, version, revision, vendor, licenses, name, title, description, additionalProperties);
+        }
+
         /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
@@ -80,6 +103,19 @@ namespace Azure.Containers.ContainerRegistry
             tags ??= new List<string>();
 
             return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, sizeInBytes, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts?.ToList(), tags?.ToList(), canDelete, canWrite, canList, canRead);
+        }
+
+        /// <summary> Initializes a new instance of OciManifest. </summary>
+        /// <param name="schemaVersion"> Schema version. </param>
+        /// <param name="config"> V2 image config descriptor. </param>
+        /// <param name="layers"> List of V2 image layer information. </param>
+        /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
+        /// <returns> A new <see cref="Specialized.OciManifest"/> instance for mocking. </returns>
+        public static OciManifest OciManifest(int? schemaVersion = null, OciBlobDescriptor config = null, IEnumerable<OciBlobDescriptor> layers = null, OciAnnotations annotations = null)
+        {
+            layers ??= new List<OciBlobDescriptor>();
+
+            return new OciManifest(schemaVersion, config, layers?.ToList(), annotations);
         }
     }
 }

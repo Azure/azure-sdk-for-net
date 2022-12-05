@@ -11,9 +11,55 @@ using System.Linq;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class IotHubGatewayServiceAPIsModelFactory
     {
+        /// <summary> Initializes a new instance of TwinConfiguration. </summary>
+        /// <param name="id"> The unique identifier of the configuration. </param>
+        /// <param name="schemaVersion"> The schema version of the configuration. </param>
+        /// <param name="labels"> The key-value pairs used to describe the configuration. </param>
+        /// <param name="content"> The content of the configuration. </param>
+        /// <param name="targetCondition"> The query used to define the targeted devices or modules. The query is based on twin tags and/or reported properties. </param>
+        /// <param name="createdTimeUtc"> The creation date and time of the configuration. </param>
+        /// <param name="lastUpdatedTimeUtc"> The update date and time of the configuration. </param>
+        /// <param name="priority"> The priority number assigned to the configuration. </param>
+        /// <param name="systemMetrics"> The system metrics computed by the IoT Hub that cannot be customized. </param>
+        /// <param name="metrics"> The custom metrics specified by the developer as queries against twin reported properties. </param>
+        /// <param name="etag"> The ETag of the configuration. </param>
+        /// <returns> A new <see cref="Models.TwinConfiguration"/> instance for mocking. </returns>
+        public static TwinConfiguration TwinConfiguration(string id = null, string schemaVersion = null, IDictionary<string, string> labels = null, ConfigurationContent content = null, string targetCondition = null, DateTimeOffset? createdTimeUtc = null, DateTimeOffset? lastUpdatedTimeUtc = null, int? priority = null, ConfigurationMetrics systemMetrics = null, ConfigurationMetrics metrics = null, string etag = null)
+        {
+            labels ??= new Dictionary<string, string>();
+
+            return new TwinConfiguration(id, schemaVersion, labels, content, targetCondition, createdTimeUtc, lastUpdatedTimeUtc, priority, systemMetrics, metrics, etag);
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationContent. </summary>
+        /// <param name="deviceContent"> The device configuration content. </param>
+        /// <param name="modulesContent"> The modules configuration content. </param>
+        /// <param name="moduleContent"> The module configuration content. </param>
+        /// <returns> A new <see cref="Models.ConfigurationContent"/> instance for mocking. </returns>
+        public static ConfigurationContent ConfigurationContent(IDictionary<string, object> deviceContent = null, IDictionary<string, IDictionary<string, object>> modulesContent = null, IDictionary<string, object> moduleContent = null)
+        {
+            deviceContent ??= new Dictionary<string, object>();
+            modulesContent ??= new Dictionary<string, IDictionary<string, object>>();
+            moduleContent ??= new Dictionary<string, object>();
+
+            return new ConfigurationContent(deviceContent, modulesContent, moduleContent);
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationMetrics. </summary>
+        /// <param name="results"> The results of the metrics collection queries. </param>
+        /// <param name="queries"> The key-value pairs with queries and their identifier. </param>
+        /// <returns> A new <see cref="Models.ConfigurationMetrics"/> instance for mocking. </returns>
+        public static ConfigurationMetrics ConfigurationMetrics(IDictionary<string, long> results = null, IDictionary<string, string> queries = null)
+        {
+            results ??= new Dictionary<string, long>();
+            queries ??= new Dictionary<string, string>();
+
+            return new ConfigurationMetrics(results, queries);
+        }
+
         /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
         /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
@@ -41,6 +87,62 @@ namespace Azure.IoT.Hub.Service.Models
         public static ServiceStatistics ServiceStatistics(long? connectedDeviceCount = null)
         {
             return new ServiceStatistics(connectedDeviceCount);
+        }
+
+        /// <summary> Initializes a new instance of DeviceIdentity. </summary>
+        /// <param name="deviceId"> The unique identifier of the device. </param>
+        /// <param name="generationId"> The IoT Hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created. </param>
+        /// <param name="etag"> The string representing a weak ETag for the device identity, as per RFC7232. </param>
+        /// <param name="connectionState"> The state of the device. </param>
+        /// <param name="status"> The status of the device. If the status disabled, a device cannot connect to the service. </param>
+        /// <param name="statusReason"> The 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed. </param>
+        /// <param name="connectionStateUpdatedTime"> The date and time the connection state was last updated. </param>
+        /// <param name="statusUpdatedTime"> The date and time when the status field was last updated. </param>
+        /// <param name="lastActivityTime"> The date and last time the device last connected, received, or sent a message. </param>
+        /// <param name="cloudToDeviceMessageCount"> The number of cloud-to-device messages currently queued to be sent to the device. </param>
+        /// <param name="authentication"> The authentication mechanism used by the device. </param>
+        /// <param name="capabilities"> The set of capabilities of the device. For example, if this device is an edge device or not. </param>
+        /// <param name="deviceScope"> The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship. </param>
+        /// <returns> A new <see cref="Models.DeviceIdentity"/> instance for mocking. </returns>
+        public static DeviceIdentity DeviceIdentity(string deviceId = null, string generationId = null, string etag = null, DeviceConnectionState? connectionState = null, DeviceStatus? status = null, string statusReason = null, DateTimeOffset? connectionStateUpdatedTime = null, DateTimeOffset? statusUpdatedTime = null, DateTimeOffset? lastActivityTime = null, int? cloudToDeviceMessageCount = null, AuthenticationMechanism authentication = null, DeviceCapabilities capabilities = null, string deviceScope = null)
+        {
+            return new DeviceIdentity(deviceId, generationId, etag, connectionState, status, statusReason, connectionStateUpdatedTime, statusUpdatedTime, lastActivityTime, cloudToDeviceMessageCount, authentication, capabilities, deviceScope);
+        }
+
+        /// <summary> Initializes a new instance of AuthenticationMechanism. </summary>
+        /// <param name="symmetricKey"> The primary and secondary keys used for SAS based authentication. </param>
+        /// <param name="x509Thumbprint"> The primary and secondary x509 thumbprints used for x509 based authentication. </param>
+        /// <param name="type"> The type of authentication used to connect to the service. </param>
+        /// <returns> A new <see cref="Models.AuthenticationMechanism"/> instance for mocking. </returns>
+        public static AuthenticationMechanism AuthenticationMechanism(SymmetricKey symmetricKey = null, X509Thumbprint x509Thumbprint = null, AuthenticationMechanismType? type = null)
+        {
+            return new AuthenticationMechanism(symmetricKey, x509Thumbprint, type);
+        }
+
+        /// <summary> Initializes a new instance of SymmetricKey. </summary>
+        /// <param name="primaryKey"> The base64 encoded primary key of the device. </param>
+        /// <param name="secondaryKey"> The base64 encoded secondary key of the device. </param>
+        /// <returns> A new <see cref="Models.SymmetricKey"/> instance for mocking. </returns>
+        public static SymmetricKey SymmetricKey(string primaryKey = null, string secondaryKey = null)
+        {
+            return new SymmetricKey(primaryKey, secondaryKey);
+        }
+
+        /// <summary> Initializes a new instance of X509Thumbprint. </summary>
+        /// <param name="primaryThumbprint"> The X509 client certificate primary thumbprint. </param>
+        /// <param name="secondaryThumbprint"> The X509 client certificate secondary thumbprint. </param>
+        /// <returns> A new <see cref="Models.X509Thumbprint"/> instance for mocking. </returns>
+        public static X509Thumbprint X509Thumbprint(string primaryThumbprint = null, string secondaryThumbprint = null)
+        {
+            return new X509Thumbprint(primaryThumbprint, secondaryThumbprint);
+        }
+
+        /// <summary> Initializes a new instance of DeviceCapabilities. </summary>
+        /// <param name="isIotEdgeDevice"> The property that determines if the device is an edge device or not. </param>
+        /// <returns> A new <see cref="Models.DeviceCapabilities"/> instance for mocking. </returns>
+        public static DeviceCapabilities DeviceCapabilities(bool? isIotEdgeDevice = null)
+        {
+            return new DeviceCapabilities(isIotEdgeDevice);
         }
 
         /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
@@ -78,6 +180,66 @@ namespace Azure.IoT.Hub.Service.Models
             return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
         }
 
+        /// <summary> Initializes a new instance of TwinData. </summary>
+        /// <param name="deviceId"> The unique identifier of the device in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
+        /// <param name="moduleId"> The unique identifier of the module in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {&apos;-&apos;, &apos;:&apos;, &apos;.&apos;, &apos;+&apos;, &apos;%&apos;, &apos;_&apos;, &apos;#&apos;, &apos;*&apos;, &apos;?&apos;, &apos;!&apos;, &apos;(&apos;, &apos;)&apos;, &apos;,&apos;, &apos;=&apos;, &apos;@&apos;, &apos;;&apos;, &apos;$&apos;, &apos;&apos;&apos;}. </param>
+        /// <param name="tags"> The collection of key-value pairs read and written by the solution back end. They are not visible to device apps. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The values are JSON objects, up-to 4KB in length. </param>
+        /// <param name="properties"> The desired and reported properties of the twin. </param>
+        /// <param name="etag"> The string representing a ETag for the device twin, as per RFC7232. </param>
+        /// <param name="version"> The version for the device twin including tags and desired properties. </param>
+        /// <param name="deviceEtag"> The string representing a ETag for the device, as per RFC7232. </param>
+        /// <param name="status"> The enabled status of the device. If disabled, the device cannot connect to the service. </param>
+        /// <param name="statusReason"> The reason for the current status of the device, if any. </param>
+        /// <param name="statusUpdateTime"> The date and time when the status of the device was last updated. </param>
+        /// <param name="connectionState"> The connection state of the device. </param>
+        /// <param name="lastActivityTime"> The date and time when the device last connected or received or sent a message. The date and time is sepecified in ISO8601 datetime format in UTC, for example, 2015-01-28T16:24:48.789Z. This value is not updated if the device uses the HTTP/1 protocol to perform messaging operations. </param>
+        /// <param name="cloudToDeviceMessageCount"> The number of cloud-to-device messages sent. </param>
+        /// <param name="authenticationType"> The authentication type used by the device. </param>
+        /// <param name="x509Thumbprint"> The X509 thumbprint of the device. </param>
+        /// <param name="capabilities"> The status of capabilities enabled on the device. </param>
+        /// <param name="deviceScope"> The scope of the device. </param>
+        /// <returns> A new <see cref="Models.TwinData"/> instance for mocking. </returns>
+        public static TwinData TwinData(string deviceId = null, string moduleId = null, IDictionary<string, object> tags = null, TwinProperties properties = null, string etag = null, long? version = null, string deviceEtag = null, TwinStatus? status = null, string statusReason = null, DateTimeOffset? statusUpdateTime = null, TwinConnectionState? connectionState = null, DateTimeOffset? lastActivityTime = null, int? cloudToDeviceMessageCount = null, TwinAuthenticationType? authenticationType = null, X509Thumbprint x509Thumbprint = null, DeviceCapabilities capabilities = null, string deviceScope = null)
+        {
+            tags ??= new Dictionary<string, object>();
+
+            return new TwinData(deviceId, moduleId, tags, properties, etag, version, deviceEtag, status, statusReason, statusUpdateTime, connectionState, lastActivityTime, cloudToDeviceMessageCount, authenticationType, x509Thumbprint, capabilities, deviceScope);
+        }
+
+        /// <summary> Initializes a new instance of TwinProperties. </summary>
+        /// <param name="desired"> The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The desired porperty values are JSON objects, up-to 4KB in length. </param>
+        /// <param name="reported"> The collection of reported property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The reported property values are JSON objects, up-to 4KB in length. </param>
+        /// <returns> A new <see cref="Models.TwinProperties"/> instance for mocking. </returns>
+        public static TwinProperties TwinProperties(IDictionary<string, object> desired = null, IDictionary<string, object> reported = null)
+        {
+            desired ??= new Dictionary<string, object>();
+            reported ??= new Dictionary<string, object>();
+
+            return new TwinProperties(desired, reported);
+        }
+
+        /// <summary> Initializes a new instance of JobProperties. </summary>
+        /// <param name="jobId"> The unique identifier of the job. </param>
+        /// <param name="startTimeUtc"> System generated. Ignored at creation. The start date and time of the job in UTC. </param>
+        /// <param name="endTimeUtc"> System generated. Ignored at creation. The end date and time of the job in UTC. </param>
+        /// <param name="type"> The job type. </param>
+        /// <param name="status"> System generated. Ignored at creation. The status of the job. </param>
+        /// <param name="progress"> System generated. Ignored at creation. The percentage of job completion. </param>
+        /// <param name="inputBlobContainerUri"> The URI containing SAS token to a blob container that contains registry data to sync. </param>
+        /// <param name="inputBlobName"> The blob name to use when importing from the input blob container. </param>
+        /// <param name="outputBlobContainerUri"> The SAS token to access the blob container. This is used to output the status and results of the job. </param>
+        /// <param name="outputBlobName"> The blob name that will be created in the output blob container. This blob will contain the exported device registry information for the IoT Hub. </param>
+        /// <param name="excludeKeysInExport"> Optional for export jobs; ignored for other jobs. If not specified, the service defaults to false. If false, authorization keys are included in export output. Keys are exported as null otherwise. </param>
+        /// <param name="storageAuthenticationType"> The authentication type used for connecting to the storage account. </param>
+        /// <param name="failureReason"> System genereated.  Ignored at creation. The reason for failure, if a failure occurred. </param>
+        /// <param name="includeConfigurations"> Defaults to false. If true, then configurations are included in the data export/import. </param>
+        /// <param name="configurationsBlobName"> Defaults to configurations.txt. Specifies the name of the blob to use when exporting/importing configurations. </param>
+        /// <returns> A new <see cref="Models.JobProperties"/> instance for mocking. </returns>
+        public static JobProperties JobProperties(string jobId = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, JobPropertiesType? type = null, JobPropertiesStatus? status = null, int? progress = null, string inputBlobContainerUri = null, string inputBlobName = null, string outputBlobContainerUri = null, string outputBlobName = null, bool? excludeKeysInExport = null, JobPropertiesStorageAuthenticationType? storageAuthenticationType = null, string failureReason = null, bool? includeConfigurations = null, string configurationsBlobName = null)
+        {
+            return new JobProperties(jobId, startTimeUtc, endTimeUtc, type, status, progress, inputBlobContainerUri, inputBlobName, outputBlobContainerUri, outputBlobName, excludeKeysInExport, storageAuthenticationType, failureReason, includeConfigurations, configurationsBlobName);
+        }
+
         /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
         /// <param name="totalMessagesPurged"> The total number of messages purged. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
@@ -108,6 +270,17 @@ namespace Azure.IoT.Hub.Service.Models
             return new JobResponse(jobId, queryCondition, createdTime, startTime, endTime, maxExecutionTimeInSeconds, type, cloudToDeviceMethod, updateTwin, status, failureReason, statusMessage, deviceJobStatistics);
         }
 
+        /// <summary> Initializes a new instance of CloudToDeviceMethodRequest. </summary>
+        /// <param name="methodName"> The name of the method to execute. </param>
+        /// <param name="payload"> The JSON-formatted direct method payload, up to 128kb in size. </param>
+        /// <param name="responseTimeoutInSeconds"> The time (in seconds) that the service waits for the method invocation to return a response. The default is 30 seconds, minimum is 5 seconds, and maximum is 300 seconds. </param>
+        /// <param name="connectTimeoutInSeconds"> The time (in seconds) that the service waits for the device to come online. The default is 0 seconds (which means the device must already be online) and the maximum is 300 seconds. </param>
+        /// <returns> A new <see cref="Models.CloudToDeviceMethodRequest"/> instance for mocking. </returns>
+        public static CloudToDeviceMethodRequest CloudToDeviceMethodRequest(string methodName = null, object payload = null, int? responseTimeoutInSeconds = null, int? connectTimeoutInSeconds = null)
+        {
+            return new CloudToDeviceMethodRequest(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
+        }
+
         /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
         /// <param name="deviceCount"> The number of devices targeted by the job. </param>
         /// <param name="failedCount"> The number of failed jobs. </param>
@@ -130,6 +303,23 @@ namespace Azure.IoT.Hub.Service.Models
             items ??= new List<object>();
 
             return new QueryResult(type, items?.ToList(), continuationToken);
+        }
+
+        /// <summary> Initializes a new instance of ModuleIdentity. </summary>
+        /// <param name="moduleId"> The unique identifier of the module. </param>
+        /// <param name="managedBy"> Identifies who manages this module. For instance, this value is \&quot;IotEdge\&quot; if the edge runtime owns this module. </param>
+        /// <param name="deviceId"> The unique identifier of the device. </param>
+        /// <param name="generationId"> The IoT Hub generated, case-sensitive string up to 128 characters long. This value is used to distinguish modules with the same moduleId, when they have been deleted and re-created. </param>
+        /// <param name="etag"> The string representing a weak ETag for the module identity, as per RFC7232. </param>
+        /// <param name="connectionState"> The connection state of the device. </param>
+        /// <param name="connectionStateUpdatedTime"> The date and time the connection state was last updated. </param>
+        /// <param name="lastActivityTime"> The date and time the device last connected, received, or sent a message. </param>
+        /// <param name="cloudToDeviceMessageCount"> The number of cloud-to-module messages currently queued to be sent to the module. </param>
+        /// <param name="authentication"> The authentication mechanism used by the module when connecting to the service and edge hub. </param>
+        /// <returns> A new <see cref="Models.ModuleIdentity"/> instance for mocking. </returns>
+        public static ModuleIdentity ModuleIdentity(string moduleId = null, string managedBy = null, string deviceId = null, string generationId = null, string etag = null, ModuleConnectionState? connectionState = null, DateTimeOffset? connectionStateUpdatedTime = null, DateTimeOffset? lastActivityTime = null, int? cloudToDeviceMessageCount = null, AuthenticationMechanism authentication = null)
+        {
+            return new ModuleIdentity(moduleId, managedBy, deviceId, generationId, etag, connectionState, connectionStateUpdatedTime, lastActivityTime, cloudToDeviceMessageCount, authentication);
         }
 
         /// <summary> Initializes a new instance of CloudToDeviceMethodResponse. </summary>

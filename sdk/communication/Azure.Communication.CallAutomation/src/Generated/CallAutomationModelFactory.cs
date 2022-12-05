@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
@@ -20,6 +20,18 @@ namespace Azure.Communication.CallAutomation
         public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
         {
             return new TransferCallToParticipantResult(operationContext);
+        }
+
+        /// <summary> Initializes a new instance of RecognizeChoice. </summary>
+        /// <param name="label"> Identifier for a given choice. </param>
+        /// <param name="phrases"> List of phrases to recognize. </param>
+        /// <param name="tone"></param>
+        /// <returns> A new <see cref="CallAutomation.RecognizeChoice"/> instance for mocking. </returns>
+        public static RecognizeChoice RecognizeChoice(string label = null, IEnumerable<string> phrases = null, DtmfTone? tone = null)
+        {
+            phrases ??= new List<string>();
+
+            return new RecognizeChoice(label, phrases?.ToList(), tone);
         }
 
         /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>

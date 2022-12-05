@@ -10,9 +10,25 @@ using System.Linq;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for generated models. </summary>
     public static partial class KeyVaultAdministrationModelFactory
     {
+        /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
+        /// <param name="actions"> Action permissions that are granted. </param>
+        /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        /// <param name="dataActions"> Data action permissions that are granted. </param>
+        /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultPermission"/> instance for mocking. </returns>
+        public static KeyVaultPermission KeyVaultPermission(IEnumerable<string> actions = null, IEnumerable<string> notActions = null, IEnumerable<KeyVaultDataAction> dataActions = null, IEnumerable<KeyVaultDataAction> notDataActions = null)
+        {
+            actions ??= new List<string>();
+            notActions ??= new List<string>();
+            dataActions ??= new List<KeyVaultDataAction>();
+            notDataActions ??= new List<KeyVaultDataAction>();
+
+            return new KeyVaultPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList());
+        }
+
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
