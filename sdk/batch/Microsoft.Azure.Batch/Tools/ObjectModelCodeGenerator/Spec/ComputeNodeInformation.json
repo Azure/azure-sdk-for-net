@@ -1,4 +1,4 @@
-    {
+{
       "Name": "ComputeNodeInformation",
       "ProtocolName": "Models.ComputeNodeInformation",
       "SummaryComment": "The compute node information class.",

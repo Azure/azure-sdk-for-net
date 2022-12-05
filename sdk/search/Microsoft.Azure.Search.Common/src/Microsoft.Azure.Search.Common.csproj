@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageTags>Microsoft Azure Cognitive Search;Microsoft Azure Search;Search</PackageTags>
     <Description>Common types needed by the Azure Cognitive Search .NET libraries. This is not the package you are looking for; It is only meant to be used as a dependency.</Description>

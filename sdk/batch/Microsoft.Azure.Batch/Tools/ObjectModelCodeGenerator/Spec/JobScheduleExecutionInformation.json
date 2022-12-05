@@ -1,4 +1,4 @@
-    {
+{
       "Name": "JobScheduleExecutionInformation",
       "ProtocolName": "Models.JobScheduleExecutionInformation",
       "SummaryComment": "The execution information for a job schedule.",

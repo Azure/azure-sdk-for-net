@@ -1,4 +1,4 @@
-    {
+{
       "Name": "CertificateReference",
       "ProtocolName": "Models.CertificateReference",
       "SummaryComment": "Represents a certificate object of the Azure Batch service.",

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Newtonsoft.Json;
 using Xunit;

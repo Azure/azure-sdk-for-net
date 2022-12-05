@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Tests</AssemblyTitle>
     <Description>Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Tests Class Library</Description>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;

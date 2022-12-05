@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers;
+using Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Xunit;

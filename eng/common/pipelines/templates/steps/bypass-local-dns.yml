@@ -1,4 +1,3 @@
-
 steps:
     # https://github.com/actions/virtual-environments/issues/798
     - script: sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf

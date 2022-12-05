@@ -101,6 +101,3 @@ finally
     await consumer.CloseAsync();
 }
 ```
-  
-  
-

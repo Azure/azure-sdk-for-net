@@ -1,4 +1,4 @@
-﻿Param([switch] $WhatIf) 
+Param([switch] $WhatIf) 
 
 # You can set up these values to your desired test environment,
 # or leave them blank to be prompted

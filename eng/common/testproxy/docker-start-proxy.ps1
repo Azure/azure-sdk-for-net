@@ -1,4 +1,4 @@
- #!/usr/bin/env pwsh -c
+#!/usr/bin/env pwsh -c
 
 <#
 .SYNOPSIS

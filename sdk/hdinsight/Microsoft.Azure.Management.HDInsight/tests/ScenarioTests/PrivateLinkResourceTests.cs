@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.HDInsight;
+using Microsoft.Azure.Management.HDInsight;
 using Microsoft.Azure.Management.HDInsight.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using static Management.HDInsight.Tests.HDInsightManagementTestUtilities;

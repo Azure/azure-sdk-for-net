@@ -1,4 +1,4 @@
-﻿{
+{
   "Name": "HttpHeader",
   "ProtocolName": "Models.HttpHeader",
   "SummaryComment": "An HTTP header name-value pair",

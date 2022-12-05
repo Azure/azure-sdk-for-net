@@ -1,4 +1,4 @@
-﻿namespace Relay.Tests.TestHelper
+namespace Relay.Tests.TestHelper
 {
 
     using System;

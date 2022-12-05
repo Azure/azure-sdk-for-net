@@ -248,4 +248,3 @@ namespace Compute.Tests
         }
     }
 }
-

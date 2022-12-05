@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest;
+using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
 using System.Text;

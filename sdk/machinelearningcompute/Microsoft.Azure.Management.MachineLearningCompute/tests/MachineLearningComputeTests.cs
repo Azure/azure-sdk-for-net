@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using Microsoft.Azure.Management.MachineLearningCompute;
 using Xunit.Abstractions;

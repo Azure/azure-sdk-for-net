@@ -1,4 +1,3 @@
-
 # Quickstart Tutorial - Resource Management
 
 We are excited to announce that a new set of management libraries are

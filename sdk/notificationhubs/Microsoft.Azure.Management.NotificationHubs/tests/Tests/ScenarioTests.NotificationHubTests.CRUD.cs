@@ -209,4 +209,3 @@ namespace NotificationHubs.Tests.ScenarioTests
         }
     }
 }
-

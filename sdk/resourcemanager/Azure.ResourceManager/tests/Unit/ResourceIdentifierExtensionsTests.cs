@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Tests

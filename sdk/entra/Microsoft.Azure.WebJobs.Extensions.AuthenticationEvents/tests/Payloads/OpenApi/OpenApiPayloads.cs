@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.OpenApi
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.OpenApi
 {
     /// <summary>Test data for OpenApi</summary>
     public static class OpenApiPayloads

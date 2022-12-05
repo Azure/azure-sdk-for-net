@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.SecurityInsights.Models;
+using Microsoft.Azure.Management.SecurityInsights.Models;
 using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 
 namespace Microsoft.Azure.Management.SecurityInsights.Tests.AlertRules

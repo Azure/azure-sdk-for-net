@@ -1,4 +1,4 @@
-﻿namespace CosmosDB.Tests.ScenarioTests
+namespace CosmosDB.Tests.ScenarioTests
 {
     using System;
     using System.Collections.Generic;

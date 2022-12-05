@@ -78,5 +78,3 @@ namespace ExtendedLocation.Tests.ScenarioTests
         }
     }
 }
-
-

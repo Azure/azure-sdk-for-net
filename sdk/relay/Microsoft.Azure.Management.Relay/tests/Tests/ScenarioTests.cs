@@ -66,4 +66,3 @@ namespace Relay.Tests.ScenarioTests
         }  
     }
 }
-

@@ -133,4 +133,3 @@ namespace ResourceGroups.Tests
         }
     }
 }
-

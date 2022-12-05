@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest;
+using Microsoft.Rest;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
 using System.Collections;

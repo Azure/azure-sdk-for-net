@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Batch.Protocol.Models
+namespace Microsoft.Azure.Batch.Protocol.Models
 {
     public partial class AccountListSupportedImagesOptions : ITimeoutOptions, IODataFilter { }
     public partial class AccountListSupportedImagesNextOptions : IOptions { }

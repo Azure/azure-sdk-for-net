@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Microsoft Azure CognitiveServices Language TextAnalytics Tests Class Library</Description>
     <AssemblyTitle>Microsoft Azure CognitiveServices Language TextAnalytics Tests</AssemblyTitle>

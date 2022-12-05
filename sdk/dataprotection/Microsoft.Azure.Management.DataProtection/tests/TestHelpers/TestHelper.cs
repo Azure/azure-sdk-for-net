@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Xunit;
 using System.IO;

@@ -67,4 +67,3 @@ namespace LabServices.Tests
         }
     }
 }
-

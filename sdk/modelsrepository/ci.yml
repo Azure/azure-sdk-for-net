@@ -29,4 +29,3 @@ extends:
     Artifacts:
     - name: Azure.IoT.ModelsRepository
       safeName: AzureIoTModelsRepository
-

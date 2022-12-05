@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest;
+using Microsoft.Rest;
 using System;
 using System.Net.Http;
 using System.Threading;

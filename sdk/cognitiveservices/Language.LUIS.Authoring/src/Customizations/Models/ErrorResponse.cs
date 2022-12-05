@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
     using Newtonsoft.Json;
 

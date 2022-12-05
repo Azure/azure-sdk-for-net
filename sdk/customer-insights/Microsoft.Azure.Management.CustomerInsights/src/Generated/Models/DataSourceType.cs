@@ -22,4 +22,3 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public const string SystemDefault = "SystemDefault";
     }
 }
-

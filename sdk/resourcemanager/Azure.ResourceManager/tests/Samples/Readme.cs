@@ -1,4 +1,4 @@
-﻿#region Snippet:Readme_AuthClient
+#region Snippet:Readme_AuthClient
 using System;
 using System.Threading.Tasks;
 using Azure.Core;

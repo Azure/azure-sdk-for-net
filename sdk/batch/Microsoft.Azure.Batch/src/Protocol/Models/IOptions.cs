@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Batch.Protocol.Models
+namespace Microsoft.Azure.Batch.Protocol.Models
 {
     using System;
 

@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('CR.test.reference.props'))" />
   <PropertyGroup>
     <Description>Test Project for Microsoft.Rest.ClientRuntime.Azure</Description>

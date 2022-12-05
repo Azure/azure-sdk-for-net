@@ -1,4 +1,4 @@
-﻿{
+{
     "$schema": "https://xunit.github.io/schema/current/xunit.runner.schema.json",
     "longRunningTestSeconds": 181,
     "diagnosticMessages": true,

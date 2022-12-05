@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MSIT")]
 [assembly: AssemblyProduct("Batch.Tests")]
-[assembly: AssemblyCopyright("Copyright © MSIT 2013")]
+[assembly: AssemblyCopyright("Copyright ï¿½ MSIT 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

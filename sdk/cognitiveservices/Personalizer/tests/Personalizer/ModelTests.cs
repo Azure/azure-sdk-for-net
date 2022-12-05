@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.Personalizer.Models;
+using Microsoft.Azure.CognitiveServices.Personalizer.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="StyleCop.Analyzers rules with selected rules set to warning." Description="StyleCop.Analyzers with selected rules enabled. Rules with IsEnabledByDefault = false are disabled." ToolsVersion="14.0">
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.SpecialRules">
     <Rule Id="SA0001" Action="None" />

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.KeyVault.Models;
+using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Rest.TransientFaultHandling;
 using System;
 using System.Net;

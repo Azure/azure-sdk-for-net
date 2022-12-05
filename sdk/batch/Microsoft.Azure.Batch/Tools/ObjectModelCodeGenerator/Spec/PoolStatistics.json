@@ -1,4 +1,4 @@
-    {
+{
       "Name": "PoolStatistics",
       "ProtocolName": "Models.PoolStatistics",
       "SummaryComment": "Contains utilization and resource usage statistics for the lifetime of a pool.",

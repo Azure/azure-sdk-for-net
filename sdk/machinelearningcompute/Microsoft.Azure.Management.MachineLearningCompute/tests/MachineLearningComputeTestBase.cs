@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.MachineLearningCompute;
+using Microsoft.Azure.Management.MachineLearningCompute;
 using Microsoft.Azure.Management.MachineLearningCompute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;

@@ -37,4 +37,3 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         }
     }
 }
-

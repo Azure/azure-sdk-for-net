@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Azure.CognitiveServices.ContentModerator;
 using Microsoft.Azure.CognitiveServices.ContentModerator.Models;
 using System.Collections.Generic;

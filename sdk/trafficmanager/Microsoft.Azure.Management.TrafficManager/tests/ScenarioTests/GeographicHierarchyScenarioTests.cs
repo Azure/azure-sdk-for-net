@@ -46,4 +46,3 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
         }
     }
 }
-

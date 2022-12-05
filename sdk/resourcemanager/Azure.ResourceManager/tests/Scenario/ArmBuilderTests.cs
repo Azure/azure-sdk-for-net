@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
 

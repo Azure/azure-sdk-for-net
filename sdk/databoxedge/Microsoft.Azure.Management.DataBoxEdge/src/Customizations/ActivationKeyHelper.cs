@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge.Models;
+using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Newtonsoft.Json;
 using System;
 using System.Security.Cryptography;
@@ -229,4 +229,3 @@ namespace Microsoft.Azure.Management.DataBoxEdge
     #endregion
     #endregion
 }
-

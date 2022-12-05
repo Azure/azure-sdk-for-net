@@ -62,6 +62,3 @@ var model = new CustomModel
 var data = BinaryData.FromObjectAsJson(model);
 model = data.ToObjectFromJson<CustomModel>();
 ```
-
-
-

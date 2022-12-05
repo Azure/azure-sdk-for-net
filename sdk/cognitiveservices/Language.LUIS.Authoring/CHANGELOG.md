@@ -36,5 +36,3 @@
 - Issue where AzureAccount Api are not able to be authenticated ([#8023](https://github.com/Azure/azure-sdk-for-net/issues/8023))
 
 ## 3.2.0-preview.1 (2019-10-30)
-
-

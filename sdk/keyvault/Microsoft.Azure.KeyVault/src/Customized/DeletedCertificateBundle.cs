@@ -1,4 +1,3 @@
-﻿
 namespace Microsoft.Azure.KeyVault.Models
 {
     public partial class DeletedCertificateBundle

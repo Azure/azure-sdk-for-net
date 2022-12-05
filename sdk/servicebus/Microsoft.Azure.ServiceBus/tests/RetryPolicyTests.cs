@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.ServiceBus.UnitTests
+namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Threading.Tasks;

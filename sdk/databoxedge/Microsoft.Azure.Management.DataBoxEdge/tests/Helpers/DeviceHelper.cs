@@ -1,4 +1,4 @@
-﻿using Azure.Identity;
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Azure.Management.DataBoxEdge;
 using Microsoft.Azure.Management.DataBoxEdge.Models;

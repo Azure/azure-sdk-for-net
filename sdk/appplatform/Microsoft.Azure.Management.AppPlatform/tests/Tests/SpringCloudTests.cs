@@ -1,4 +1,3 @@
-﻿
 using Microsoft.Azure.Management.AppPlatform.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;

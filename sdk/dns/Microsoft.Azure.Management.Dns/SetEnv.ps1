@@ -1,4 +1,4 @@
-﻿Param(
+Param(
     [parameter(Mandatory=$true)]
     [string] $SubscriptionId,
     [parameter(Mandatory=$true)]
@@ -26,4 +26,3 @@ if ($Environment -ine "Prod")
 }
 
 $env:TEST_CSM_ORGID_AUTHENTICATION=$str;
-

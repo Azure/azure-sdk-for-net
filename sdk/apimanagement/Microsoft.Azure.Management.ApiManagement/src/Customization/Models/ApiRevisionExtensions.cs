@@ -1,4 +1,3 @@
-﻿
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>

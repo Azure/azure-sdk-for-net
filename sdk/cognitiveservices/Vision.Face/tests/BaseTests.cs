@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
+using Microsoft.Azure.CognitiveServices.Vision.Face;
 using System.Net.Http;
 
 namespace FaceSDK.Tests

@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
+namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 {
     using System;
     using System.Collections.Generic;

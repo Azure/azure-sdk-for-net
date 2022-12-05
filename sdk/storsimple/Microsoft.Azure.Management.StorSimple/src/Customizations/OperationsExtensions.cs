@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.StorSimple1200Series
+namespace Microsoft.Azure.Management.StorSimple1200Series
 {
     using Rest.Azure;
     using Microsoft.Azure.Management.StorSimple1200Series.Models;
@@ -21,4 +21,3 @@
         //}
     }
 }
-

@@ -1,4 +1,4 @@
-    {
+{
       "Name": "TaskExecutionInformation",
       "ProtocolName": "Models.TaskExecutionInformation",
       "SummaryComment": "Task execution information.",

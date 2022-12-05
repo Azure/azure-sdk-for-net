@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <!-- Excluded in Debug Configuration https://github.com/Azure/azure-sdk-for-net/issues/6211 !-->
   <PropertyGroup>
     <AssemblyTitle>Microsoft.Azure.CognitiveServices.LUIS-Authoring.Tests</AssemblyTitle>

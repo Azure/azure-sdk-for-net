@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge;
+using Microsoft.Azure.Management.DataBoxEdge;
 using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Microsoft.Rest.Azure;
 using System.Collections.Generic;
@@ -62,4 +62,3 @@ namespace DataBoxEdge.Tests
         }
     }
 }
-

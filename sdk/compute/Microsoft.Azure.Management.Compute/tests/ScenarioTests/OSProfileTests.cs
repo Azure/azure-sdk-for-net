@@ -351,4 +351,3 @@ namespace Compute.Tests
 #pragma warning restore 1998
     }
 }
-

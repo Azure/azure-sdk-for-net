@@ -1,4 +1,3 @@
-
 namespace Microsoft.Azure.Management.StorSimple8000Series
 {
     using Azure;
@@ -252,4 +251,3 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         Task<AzureOperationResponse<IPage<Backup>>> ListByDeviceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
-

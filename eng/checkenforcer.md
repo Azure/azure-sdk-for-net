@@ -1,4 +1,4 @@
-  # What is Check Enforcer?
+# What is Check Enforcer?
   
   Check Enforcer helps ensure all pull requests are covered by at least one
   check-run (typically an Azure Pipeline). When all check-runs associated

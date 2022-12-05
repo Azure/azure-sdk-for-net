@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.ServiceBus.Amqp.Framing
+namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 {
     using Microsoft.Azure.Amqp;
 

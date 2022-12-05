@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Experimental types that are being evaluated and which may or may not eventually be promoted to official status in the Event Hubs client libraries.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
     <AssemblyTitle>Microsoft Azure Event Hubs Experimental Extensions</AssemblyTitle>

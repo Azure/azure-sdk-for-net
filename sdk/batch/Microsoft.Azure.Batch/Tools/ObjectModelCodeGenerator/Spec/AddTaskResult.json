@@ -1,4 +1,4 @@
-    {
+{
       "Name": "AddTaskResult",
       "ProtocolName": "Models.TaskAddResult",
       "ConstructorAccess": "internal",

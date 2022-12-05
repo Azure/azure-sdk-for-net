@@ -1,4 +1,4 @@
-    {
+{
       "Name": "UsageStatistics",
       "ProtocolName": "Models.UsageStatistics",
       "SummaryComment": "Statistics related to pool usage data.",

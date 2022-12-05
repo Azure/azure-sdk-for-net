@@ -1,4 +1,4 @@
-﻿using ClientRuntime.Tests.Common.Fakes;
+using ClientRuntime.Tests.Common.Fakes;
 using Microsoft.Rest;
 using System;
 using System.Net;

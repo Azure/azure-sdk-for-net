@@ -308,4 +308,3 @@ namespace Compute.Tests
         }
     }
 }
-

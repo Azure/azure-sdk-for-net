@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge;
+using Microsoft.Azure.Management.DataBoxEdge;
 using Microsoft.Azure.Management.DataBoxEdge.Models;
 using System.Collections.Generic;
 using System.Linq;

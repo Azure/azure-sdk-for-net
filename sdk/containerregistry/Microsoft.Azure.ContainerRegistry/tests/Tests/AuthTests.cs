@@ -1,4 +1,4 @@
-﻿namespace ContainerRegistry.Tests
+namespace ContainerRegistry.Tests
 {
     using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

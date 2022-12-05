@@ -1,4 +1,4 @@
-﻿namespace StorSimple1200Series.Tests
+namespace StorSimple1200Series.Tests
 {
     using System.Reflection;
     using System.Runtime.Serialization;

@@ -323,4 +323,3 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         }
     }
 }
-

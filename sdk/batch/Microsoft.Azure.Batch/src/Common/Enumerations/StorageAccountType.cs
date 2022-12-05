@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Batch.Common
+namespace Microsoft.Azure.Batch.Common
 {
     /// <summary>
     /// The storage account type for use in creating data disks.

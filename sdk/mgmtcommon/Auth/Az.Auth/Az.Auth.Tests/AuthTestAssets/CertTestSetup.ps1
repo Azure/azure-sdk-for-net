@@ -1,4 +1,3 @@
-
 Function Update-AADApplicationWithCertificate
 {
     #SPN: PsAutoTestADAppUsingSPN

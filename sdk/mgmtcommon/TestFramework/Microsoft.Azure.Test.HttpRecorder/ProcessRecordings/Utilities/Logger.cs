@@ -1,4 +1,4 @@
-﻿#if FullNetFx && NETCOREAPP2_0_OR_GREATER
+#if FullNetFx && NETCOREAPP2_0_OR_GREATER
 
 namespace Microsoft.Azure.Test.HttpRecorder.ProcessRecordings.Utilities
 {

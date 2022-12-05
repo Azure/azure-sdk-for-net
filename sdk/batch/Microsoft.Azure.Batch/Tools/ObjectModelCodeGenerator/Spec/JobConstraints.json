@@ -1,4 +1,4 @@
-    {
+{
       "Name": "JobConstraints",
       "ProtocolName": "Models.JobConstraints",
       "SummaryComment": "Specifies the execution constraints for a job.",

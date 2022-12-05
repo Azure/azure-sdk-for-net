@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.DataFactory.Models
+namespace Microsoft.Azure.Management.DataFactory.Models
 {
     public partial class FactoryVSTSConfiguration : FactoryRepoConfiguration
     {

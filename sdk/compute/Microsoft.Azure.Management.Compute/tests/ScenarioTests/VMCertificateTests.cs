@@ -82,4 +82,3 @@ namespace Compute.Tests
         }
     }
 }
-

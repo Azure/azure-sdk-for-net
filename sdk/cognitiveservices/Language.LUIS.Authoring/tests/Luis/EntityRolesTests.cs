@@ -1,4 +1,3 @@
-﻿
 namespace LUIS.Authoring.Tests.Luis
 {
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;

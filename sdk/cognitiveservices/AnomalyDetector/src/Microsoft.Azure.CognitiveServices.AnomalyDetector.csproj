@@ -23,4 +23,3 @@
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
 </Project>
-

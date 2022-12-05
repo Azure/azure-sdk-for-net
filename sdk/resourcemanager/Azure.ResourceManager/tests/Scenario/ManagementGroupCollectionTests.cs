@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.ManagementGroups.Models;

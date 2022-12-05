@@ -100,4 +100,4 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 - The extension has been split per storage service, i.e. `Microsoft.Azure.WebJobs.Extension.Storage.Queues` has been created.
 - The extension uses V12 Azure Storage SDK.
 - Added support for token credential authentication using Azure.Identity library, including support for managed identity and client secret credentials.
-- This version does not Base64-encode queue messages. Support for that is planned for future releases. 
+- This version does not Base64-encode queue messages. Support for that is planned for future releases.

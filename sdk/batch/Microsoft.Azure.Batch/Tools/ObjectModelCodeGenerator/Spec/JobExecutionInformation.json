@@ -1,4 +1,4 @@
-    {
+{
       "Name": "JobExecutionInformation",
       "ProtocolName": "Models.JobExecutionInformation",
       "SummaryComment": "Information about the execution of an Azure Batch job.",

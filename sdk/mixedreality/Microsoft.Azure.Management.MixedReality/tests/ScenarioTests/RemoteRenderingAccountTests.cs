@@ -93,4 +93,3 @@ namespace MixedReality.Tests
         }
     }
 }
-

@@ -238,5 +238,3 @@ finally
     await producer.CloseAsync();
 }
 ```
-
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using System;
 using System.Net;
 using System.Net.Http;

@@ -1,5 +1,3 @@
-﻿
-
 namespace HttpRecorder.Tests.MocServerTests
 {
     using HttpRecorder.Tests;

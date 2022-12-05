@@ -628,4 +628,3 @@ namespace DataLakeAnalytics.Tests
         }
     }
 }
-

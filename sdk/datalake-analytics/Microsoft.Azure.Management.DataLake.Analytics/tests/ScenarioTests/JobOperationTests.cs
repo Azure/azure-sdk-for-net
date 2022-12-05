@@ -291,4 +291,3 @@ namespace DataLakeAnalytics.Tests
         }
     }
 }
-

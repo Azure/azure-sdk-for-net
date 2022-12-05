@@ -1,1 +1,1 @@
-﻿dotnet build /t:GenerateCode
+dotnet build /t:GenerateCode

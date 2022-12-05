@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.ApplicationInsights.Query.Models;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest;
 using System.Collections.Generic;
 using System.Linq;

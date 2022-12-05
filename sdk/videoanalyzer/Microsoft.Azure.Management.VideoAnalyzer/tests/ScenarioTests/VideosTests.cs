@@ -51,4 +51,3 @@ namespace VideoAnalyzer.Tests.ScenarioTests
         }
     }
 }
-

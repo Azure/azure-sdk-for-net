@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebJobs.Host.Executors;
 using System.Net.Http;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests

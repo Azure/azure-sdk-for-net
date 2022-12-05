@@ -1,4 +1,4 @@
-    {
+{
       "Name": "CloudPool",
       "ProtocolName": "Models.CloudPool",
       "TransportProtocolName": "Models.PoolAddParameter",

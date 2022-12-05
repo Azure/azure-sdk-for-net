@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.KeyVault.Models
+namespace Microsoft.Azure.KeyVault.Models
 {
     public partial class DeletedCertificateItem
     {

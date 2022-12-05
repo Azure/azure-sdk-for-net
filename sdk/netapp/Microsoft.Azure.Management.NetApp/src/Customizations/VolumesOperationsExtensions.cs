@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.NetApp.Customizations
+namespace Microsoft.Azure.Management.NetApp.Customizations
 {
     using System.Threading;
     using System.Threading.Tasks;

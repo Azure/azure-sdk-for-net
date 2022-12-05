@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Azure.Management.StoragePool;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Network.Models;

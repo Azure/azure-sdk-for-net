@@ -60,4 +60,3 @@ namespace WebSites.Tests.ScenarioTests
         */
     }
 }
-

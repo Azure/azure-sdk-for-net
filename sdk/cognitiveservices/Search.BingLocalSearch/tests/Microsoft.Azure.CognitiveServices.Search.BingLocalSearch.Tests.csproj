@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <Description>Microsoft Azure CognitiveServices Search LocalSearch Tests Class Library</Description>
     <AssemblyTitle>Microsoft Azure CognitiveServices Search LocalSearch Tests</AssemblyTitle>

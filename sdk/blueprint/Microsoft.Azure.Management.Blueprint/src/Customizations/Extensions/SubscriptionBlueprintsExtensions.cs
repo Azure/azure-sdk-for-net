@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Blueprint.Models;
+using Microsoft.Azure.Management.Blueprint.Models;
 using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;

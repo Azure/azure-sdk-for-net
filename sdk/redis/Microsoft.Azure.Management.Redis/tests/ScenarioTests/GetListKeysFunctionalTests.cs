@@ -152,4 +152,3 @@ namespace AzureRedisCache.Tests
         }
     }
 }
-

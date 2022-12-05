@@ -47,4 +47,3 @@ namespace EdgeGateway.Tests
 
     }
 }
-

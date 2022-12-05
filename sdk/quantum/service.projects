@@ -1,4 +1,3 @@
-
 <!--
   This file allows overrides and extensions to the build configuration defined
   by the central engineering system, and is considered during pipeline builds for

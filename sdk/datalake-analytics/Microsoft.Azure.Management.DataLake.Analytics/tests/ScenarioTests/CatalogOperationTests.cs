@@ -545,4 +545,3 @@ namespace DataLakeAnalytics.Tests
         }
     }
 }
-

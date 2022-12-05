@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;

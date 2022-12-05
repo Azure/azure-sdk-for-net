@@ -1,4 +1,3 @@
-﻿
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
@@ -131,4 +130,3 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
     }
 }
-

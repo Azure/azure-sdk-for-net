@@ -64,5 +64,3 @@ namespace CustomProviders.Tests
         }
     }
 }
-
-

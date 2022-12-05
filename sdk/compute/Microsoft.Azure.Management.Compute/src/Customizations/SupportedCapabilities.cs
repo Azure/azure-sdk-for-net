@@ -1,5 +1,3 @@
-﻿
-
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using System.Collections.Generic;

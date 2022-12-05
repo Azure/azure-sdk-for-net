@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.NetApp;
+using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;

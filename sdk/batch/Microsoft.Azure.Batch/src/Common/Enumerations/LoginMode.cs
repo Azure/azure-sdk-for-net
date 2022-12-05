@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Batch.Common
+namespace Microsoft.Azure.Batch.Common
 {
     /// <summary>
     /// The mode to use when logging in to a Windows user.

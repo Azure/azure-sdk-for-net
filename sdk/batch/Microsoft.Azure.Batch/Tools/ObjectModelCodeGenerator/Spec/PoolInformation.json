@@ -1,4 +1,4 @@
-    {
+{
       "Name": "PoolInformation",
       "ProtocolName": "Models.PoolInformation",
       "SummaryComment": "Specifies how a job should be assigned to a pool.",

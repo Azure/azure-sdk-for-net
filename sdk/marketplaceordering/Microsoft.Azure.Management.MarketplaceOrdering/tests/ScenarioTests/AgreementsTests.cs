@@ -62,4 +62,3 @@ namespace MarketplaceOrdering.Tests.ScenarioTests
         }
     }
 }
-

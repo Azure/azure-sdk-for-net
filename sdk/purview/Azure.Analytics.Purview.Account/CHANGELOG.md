@@ -15,4 +15,3 @@
 ### New Features
 
 - Initial preview release of the Azure Purview Account client library for .NET
-

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
 	<PropertyGroup>
 		<PackageId>Monitor.Tests</PackageId>

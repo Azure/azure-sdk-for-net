@@ -496,4 +496,3 @@ await Task.WhenAll(tasks);
 ```
 
 For `Azure.Messaging.ServiceBus`, we felt that the client-side approach would introduce complexity and confusion around error scenarios due to the potential for partial success.  It also may hide a performance bottleneck, which we would like to avoid.  Since this pattern is fairly straight-forward to implement, we felt it was better applied in the application than hidden within the Azure SDK.
-

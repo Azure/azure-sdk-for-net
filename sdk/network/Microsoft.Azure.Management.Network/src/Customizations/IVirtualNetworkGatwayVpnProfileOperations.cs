@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.Network
+namespace Microsoft.Azure.Management.Network
 {
     using Microsoft.Azure;
     using Microsoft.Azure.Management;

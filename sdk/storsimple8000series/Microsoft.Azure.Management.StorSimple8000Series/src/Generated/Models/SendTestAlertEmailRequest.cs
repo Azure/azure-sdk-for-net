@@ -1,4 +1,3 @@
-
 namespace Microsoft.Azure.Management.StorSimple8000Series.Models
 {
     using Azure;
@@ -51,4 +50,3 @@ namespace Microsoft.Azure.Management.StorSimple8000Series.Models
         }
     }
 }
-

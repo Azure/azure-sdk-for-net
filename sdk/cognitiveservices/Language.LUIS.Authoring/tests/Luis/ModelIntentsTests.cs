@@ -1,4 +1,4 @@
-﻿namespace LUIS.Authoring.Tests.Luis
+namespace LUIS.Authoring.Tests.Luis
 {
     using System;
     using System.Linq;

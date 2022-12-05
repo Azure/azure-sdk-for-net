@@ -25,4 +25,3 @@ catch
     Write-Error "Get-PullRequest failed with exception:`n$_"
     exit 1
 }
-

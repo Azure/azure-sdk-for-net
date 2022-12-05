@@ -127,4 +127,3 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         }
     }
 }
-

@@ -72,4 +72,3 @@ namespace NotificationHubs.Tests.ScenarioTests
         }
     }
 }
-

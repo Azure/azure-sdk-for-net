@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.EdgeGateway;
+using Microsoft.Azure.Management.EdgeGateway;
 using Microsoft.Azure.Management.EdgeGateway.Models;
 using Microsoft.Rest.Azure;
 using System.Collections.Generic;

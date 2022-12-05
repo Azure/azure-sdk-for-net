@@ -18,4 +18,3 @@ clear-output-folder: true
 use-internal-constructors: true
 use-datetimeoffset: true
 ```
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Security;
+using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;

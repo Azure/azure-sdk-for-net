@@ -1,4 +1,3 @@
-﻿
 namespace Microsoft.Azure.Management.StorSimple8000Series
 {
     using System;

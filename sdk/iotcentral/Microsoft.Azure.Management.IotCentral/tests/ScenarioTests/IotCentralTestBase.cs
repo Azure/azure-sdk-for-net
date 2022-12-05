@@ -141,4 +141,3 @@ namespace IotCentral.Tests.ScenarioTests
         }
     }
 }
-

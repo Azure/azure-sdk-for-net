@@ -87,4 +87,3 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         }
     }
 }
-

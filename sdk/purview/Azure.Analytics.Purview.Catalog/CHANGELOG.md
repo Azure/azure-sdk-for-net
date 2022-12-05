@@ -37,4 +37,3 @@
 ### New Features
 
 - Initial preview release of the Azure Purview Catalog client library for .NET
-

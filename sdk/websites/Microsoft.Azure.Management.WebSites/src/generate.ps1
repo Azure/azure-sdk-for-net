@@ -1,1 +1,1 @@
-﻿Start-AutoRestCodeGeneration -ResourceProvider "web/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "web/resource-manager" -AutoRestVersion "v2"

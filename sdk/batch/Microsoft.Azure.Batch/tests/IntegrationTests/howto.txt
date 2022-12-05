@@ -1,4 +1,4 @@
-﻿How to run the Batch Client integration tests:
+How to run the Batch Client integration tests:
 
 1. Set the environment variables required by the tests.  These variables are specified in ClientIntegrationTestCommon.cs, 
    but at the time this howto was written they include:

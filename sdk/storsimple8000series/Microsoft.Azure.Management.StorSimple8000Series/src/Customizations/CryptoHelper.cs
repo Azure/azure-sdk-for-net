@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.StorSimple8000Series
+namespace Microsoft.Azure.Management.StorSimple8000Series
 {
     using System;
     using System.IO;

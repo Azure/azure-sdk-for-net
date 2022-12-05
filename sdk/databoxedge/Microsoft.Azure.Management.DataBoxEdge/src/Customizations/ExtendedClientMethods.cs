@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.DataBoxEdge.Models;
+using Microsoft.Azure.Management.DataBoxEdge.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

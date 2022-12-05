@@ -1,4 +1,3 @@
-
 namespace Microsoft.Azure.Management.StorSimple8000Series
 {
     using Azure;
@@ -428,4 +427,3 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         Task<AzureOperationResponse<TimeSettings>> BeginCreateOrUpdateTimeSettingsWithHttpMessagesAsync(string deviceName, TimeSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
-

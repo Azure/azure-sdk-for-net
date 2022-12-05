@@ -1,4 +1,4 @@
-﻿using Language.Tests;
+using Language.Tests;
 
 using Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models;
 using Microsoft.Azure.Test.HttpRecorder;

@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests
+namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests
 {
     using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
     using Microsoft.Azure.Test.HttpRecorder;

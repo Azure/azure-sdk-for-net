@@ -1,4 +1,3 @@
-
 trigger:
   branches:
     include:

@@ -1,4 +1,4 @@
-﻿{
+{
   "Name": "NodePlacementConfiguration",
   "ProtocolName": "Models.NodePlacementConfiguration",
   "SummaryComment": "Node placement configuration for a pool.",

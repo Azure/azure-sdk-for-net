@@ -60,4 +60,3 @@ namespace DataBoxEdge.Tests
         #endregion Test Methods
     }
 }
-

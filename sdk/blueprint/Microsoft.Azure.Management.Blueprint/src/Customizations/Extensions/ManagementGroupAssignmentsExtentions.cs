@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.Blueprint.Customizations.Extensions
+namespace Microsoft.Azure.Management.Blueprint.Customizations.Extensions
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -186,4 +186,3 @@
 
     }
 }
-

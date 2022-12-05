@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.HybridData
+namespace Microsoft.Azure.Management.HybridData
 {
     using Microsoft.Azure.Management.HybridData.Models;
     using Newtonsoft.Json.Linq;

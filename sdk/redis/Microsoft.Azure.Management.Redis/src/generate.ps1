@@ -1,1 +1,1 @@
-﻿Start-AutoRestCodeGeneration -ResourceProvider "redis/resource-manager" -AutoRestVersion "v2"
+Start-AutoRestCodeGeneration -ResourceProvider "redis/resource-manager" -AutoRestVersion "v2"

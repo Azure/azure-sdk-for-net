@@ -1,4 +1,3 @@
-
 The SetSwaggerTestEnvironment.ps1 script will set the environment variables that are required to Create/Update/Running the swagger tests in the SDK repo.
 
 Sample:

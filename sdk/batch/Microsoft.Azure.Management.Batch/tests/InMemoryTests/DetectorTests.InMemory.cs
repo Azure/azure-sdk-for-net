@@ -1,4 +1,4 @@
-﻿using Batch.Tests.Helpers;
+using Batch.Tests.Helpers;
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
 using Microsoft.Rest;

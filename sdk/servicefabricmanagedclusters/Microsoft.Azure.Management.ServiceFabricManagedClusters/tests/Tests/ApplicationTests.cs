@@ -230,4 +230,3 @@ namespace ServiceFabricManagedClusters.Tests
         }
     }
 }
-

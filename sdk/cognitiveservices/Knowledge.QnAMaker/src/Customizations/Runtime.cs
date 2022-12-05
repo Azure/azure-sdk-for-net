@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
+namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
 {    
     using Models;
     using System.Threading;

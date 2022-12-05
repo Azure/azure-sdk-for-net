@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.FormRecognizer
+namespace Microsoft.Azure.CognitiveServices.FormRecognizer
 {
     using System;
     using System.Net.Http;

@@ -177,4 +177,3 @@ namespace Compute.Tests
         }
     }
 }
-

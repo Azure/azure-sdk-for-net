@@ -1,4 +1,4 @@
-    {
+{
       "Name": "ApplicationPackageReference",
       "ProtocolName": "Models.ApplicationPackageReference",
       "SummaryComment": "A reference to an application package to be deployed to compute nodes.",

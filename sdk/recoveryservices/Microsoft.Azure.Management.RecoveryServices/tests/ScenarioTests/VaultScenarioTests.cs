@@ -92,4 +92,3 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
         }
     }
 }
-

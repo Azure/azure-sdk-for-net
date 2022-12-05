@@ -98,4 +98,3 @@ namespace Consumption.Tests.ScenarioTests
         }
     }
 }
-

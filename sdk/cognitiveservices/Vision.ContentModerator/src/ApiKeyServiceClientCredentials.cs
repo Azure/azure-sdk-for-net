@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.ContentModerator
+namespace Microsoft.Azure.CognitiveServices.ContentModerator
 {
     using System;
     using System.Net.Http;

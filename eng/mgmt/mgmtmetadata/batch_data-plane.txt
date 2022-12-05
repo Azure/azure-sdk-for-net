@@ -1,4 +1,4 @@
-﻿Installing AutoRest version: 2.0.4283
+Installing AutoRest version: 2.0.4283
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code

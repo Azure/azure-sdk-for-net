@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.KeyVault.Customized.Authentication;
+using Microsoft.Azure.KeyVault.Customized.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Net;

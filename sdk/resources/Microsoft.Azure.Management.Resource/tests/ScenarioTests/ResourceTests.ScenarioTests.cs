@@ -418,4 +418,3 @@ namespace ResourceGroups.Tests
         }
     }
 }
-

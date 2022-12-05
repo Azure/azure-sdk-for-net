@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>ContainerRegistry.Tests</PackageId>
     <Description>Microsoft.Azure.ContainerRegistry tests Library</Description>

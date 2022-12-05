@@ -66,4 +66,3 @@ namespace PostgreSQL.Tests.ScenarioTests
         }
     }
 }
-

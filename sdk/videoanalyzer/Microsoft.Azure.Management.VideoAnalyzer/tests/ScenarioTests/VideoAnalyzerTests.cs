@@ -278,4 +278,3 @@ namespace VideoAnalyzer.Tests.ScenarioTests
         }
     }
 }
-

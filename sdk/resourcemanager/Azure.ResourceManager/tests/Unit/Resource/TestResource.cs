@@ -1,4 +1,4 @@
-﻿using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Tests
 {

@@ -40,4 +40,3 @@ This is a Public Preview version, so breaking changes are possible in subsequent
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.CallingServer/README.md
 [DTMF]: https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling
-

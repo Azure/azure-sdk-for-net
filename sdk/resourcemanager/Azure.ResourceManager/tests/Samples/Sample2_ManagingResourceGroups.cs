@@ -1,4 +1,4 @@
-﻿#region Snippet:Managing_Resource_Groups_Namespaces
+#region Snippet:Managing_Resource_Groups_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;

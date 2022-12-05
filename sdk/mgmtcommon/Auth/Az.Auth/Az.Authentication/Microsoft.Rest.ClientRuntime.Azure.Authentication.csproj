@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('clientruntime.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Rest.ClientRuntime.Azure.Authentication</PackageId>

@@ -1,4 +1,4 @@
-﻿using Compute.Tests;
+using Compute.Tests;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.ResourceManager;

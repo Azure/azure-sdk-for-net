@@ -1,4 +1,4 @@
-﻿<VSTemplateManifest Version="1.0" xmlns="http://schemas.microsoft.com/developer/vstemplatemanifest/2015">
+<VSTemplateManifest Version="1.0" xmlns="http://schemas.microsoft.com/developer/vstemplatemanifest/2015">
   <VSTemplateContainer TemplateType="Project" Locale="1033">
     <RelativePathOnDisk>CSharp\1033\PortableClassLibrary</RelativePathOnDisk>
     <TemplateFileName>csPortableClassLibrary.vstemplate</TemplateFileName>

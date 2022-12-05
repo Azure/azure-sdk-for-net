@@ -6,4 +6,3 @@ $ExportAPIScript = Join-Path $PSScriptRoot "../../../../eng/scripts/Export-API.p
 
 $UpdateSnippetsScript = Join-Path $PSScriptRoot "../../../../eng/scripts/Update-Snippets.ps1" 
 &$UpdateSnippetsScript -ServiceDirectory "quantum" | Write-Verbose
-

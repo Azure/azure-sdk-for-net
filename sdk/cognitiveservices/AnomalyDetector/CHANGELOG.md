@@ -17,5 +17,3 @@
 * Added the new enum value `Secondly` to `Granularity`
 
 ## 1.0.0-preview.1 (2020-07-07)
-
-

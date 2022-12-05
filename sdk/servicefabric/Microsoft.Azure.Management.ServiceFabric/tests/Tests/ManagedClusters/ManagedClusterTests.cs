@@ -193,4 +193,3 @@ namespace ServiceFabric.Tests.Managed
         }
     }
 }
-

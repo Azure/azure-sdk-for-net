@@ -1,4 +1,3 @@
-
 using Microsoft.Azure.Management.ProviderHub.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;

@@ -610,4 +610,3 @@ namespace Scheduler.Test.ScenarioTests
         }
     }
 }
-

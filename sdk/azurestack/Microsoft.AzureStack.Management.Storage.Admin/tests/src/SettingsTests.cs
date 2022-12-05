@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Microsoft.AzureStack.Management.Storage.Admin;
 using Microsoft.AzureStack.Management.Storage.Admin.Models;
 using Xunit;

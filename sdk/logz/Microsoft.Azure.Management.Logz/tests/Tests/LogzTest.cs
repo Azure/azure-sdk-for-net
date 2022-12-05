@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Logz.Models;
+using Microsoft.Azure.Management.Logz.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

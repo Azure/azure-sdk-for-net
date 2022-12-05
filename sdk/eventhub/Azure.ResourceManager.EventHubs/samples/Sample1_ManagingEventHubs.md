@@ -69,4 +69,3 @@ EventHubResource eventHub = await eventHubCollection.GetAsync("myEventHub");
 EventHubResource eventHub = await eventHubCollection.GetAsync("myEventhub");
 await eventHub.DeleteAsync(WaitUntil.Completed);
 ```
-

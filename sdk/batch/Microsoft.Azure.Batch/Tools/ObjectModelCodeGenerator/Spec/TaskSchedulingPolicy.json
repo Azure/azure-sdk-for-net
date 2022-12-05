@@ -1,4 +1,4 @@
-    {
+{
       "Name": "TaskSchedulingPolicy",
       "ProtocolName": "Models.TaskSchedulingPolicy",
       "SummaryComment": "A scheduling policy for a compute node.",

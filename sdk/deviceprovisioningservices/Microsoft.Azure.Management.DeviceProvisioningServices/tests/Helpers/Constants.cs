@@ -1,4 +1,4 @@
-﻿namespace DeviceProvisioningServices.Tests.Helpers
+namespace DeviceProvisioningServices.Tests.Helpers
 {
     public static class Constants
     {

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Search.Tests Class Library</Description>
     <AssemblyTitle>Microsoft Azure Cognitive Search Tests</AssemblyTitle>

@@ -132,4 +132,3 @@ await managedInstance.DeleteAsync(WaitUntil.Completed);
 ## Next steps
 
 Take a look at the [Managing Managed Databases](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/sqlmanagement/Azure.ResourceManager.Sql/samples/Sample2_ManagingManagedDatabases.md) samples.
-

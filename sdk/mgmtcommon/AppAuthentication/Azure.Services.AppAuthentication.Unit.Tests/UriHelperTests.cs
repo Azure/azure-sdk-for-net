@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 
 namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 {

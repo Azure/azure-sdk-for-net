@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Newtonsoft.Json.Linq;
 using System;

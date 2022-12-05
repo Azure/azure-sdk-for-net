@@ -1,4 +1,4 @@
-﻿using ContentModeratorTests.Helpers;
+using ContentModeratorTests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -67,4 +67,3 @@ namespace ContentModeratorTests
 
     }
 }
-

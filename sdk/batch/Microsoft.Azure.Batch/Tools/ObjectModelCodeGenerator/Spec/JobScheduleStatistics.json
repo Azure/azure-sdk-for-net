@@ -1,4 +1,4 @@
-    {
+{
       "Name": "JobScheduleStatistics",
       "ProtocolName": "Models.JobScheduleStatistics",
       "SummaryComment": "Resource usage statistics for a <see cref=\"CloudJobSchedule\"/>.",

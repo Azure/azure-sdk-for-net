@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.Compute.Models
+namespace Microsoft.Azure.Management.Compute.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.ApplicationInsights.Query.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     /// <summary>
     /// Contains fields common between nested segmented data and segmented metric data.

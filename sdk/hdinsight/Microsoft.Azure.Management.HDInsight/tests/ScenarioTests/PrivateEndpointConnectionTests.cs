@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.HDInsight;
+using Microsoft.Azure.Management.HDInsight;
 using Microsoft.Azure.Management.HDInsight.Models;
 using NetworkPrivateEndpoint = Microsoft.Azure.Management.Network.Models.PrivateEndpoint;
 using NetworkPrivateLinkServiceConnection = Microsoft.Azure.Management.Network.Models.PrivateLinkServiceConnection;

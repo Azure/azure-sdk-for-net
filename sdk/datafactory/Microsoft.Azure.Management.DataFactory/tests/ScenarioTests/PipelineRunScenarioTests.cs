@@ -38,4 +38,3 @@ namespace DataFactory.Tests.ScenarioTests
         }
     }
 }
-

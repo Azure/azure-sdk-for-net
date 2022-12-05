@@ -1,5 +1,3 @@
-﻿
-
 namespace Fabric.Tests
 {
     using Microsoft.AzureStack.Management.Fabric.Admin.Models;

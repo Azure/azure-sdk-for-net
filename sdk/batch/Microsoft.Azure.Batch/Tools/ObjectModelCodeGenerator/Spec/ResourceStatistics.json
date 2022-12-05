@@ -1,4 +1,4 @@
-    {
+{
       "Name": "ResourceStatistics",
       "ProtocolName": "Models.ResourceStatistics",
       "SummaryComment": "The resource statistics data for the pool.",

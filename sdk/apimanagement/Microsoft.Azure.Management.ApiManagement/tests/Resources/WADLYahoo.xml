@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://wadl.dev.java.net/2009/02" xmlns:tns="urn:yahoo:yn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ya="urn:yahoo:api" xmlns:yn="urn:yahoo:yn" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd">
   <doc title="Yahoo News Search">Yahoo News Search API</doc>
   <grammars>

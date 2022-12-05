@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.OperationalInsights;
+using Microsoft.Azure.OperationalInsights;
 using Microsoft.Azure.OperationalInsights.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

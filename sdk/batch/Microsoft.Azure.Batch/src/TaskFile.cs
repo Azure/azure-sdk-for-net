@@ -101,5 +101,3 @@ namespace Microsoft.Azure.Batch
 
     }
 }
-        
-

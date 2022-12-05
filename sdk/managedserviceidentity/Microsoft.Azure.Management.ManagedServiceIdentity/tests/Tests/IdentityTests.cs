@@ -178,4 +178,3 @@ namespace ManagedServiceIdentity.Tests.Tests
         }
     }
 }
-

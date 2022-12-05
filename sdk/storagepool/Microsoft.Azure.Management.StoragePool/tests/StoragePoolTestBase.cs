@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Azure.Management.StoragePool;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Text;

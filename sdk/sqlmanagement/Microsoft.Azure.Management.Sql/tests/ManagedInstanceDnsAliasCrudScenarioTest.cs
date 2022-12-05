@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Rest.Azure;

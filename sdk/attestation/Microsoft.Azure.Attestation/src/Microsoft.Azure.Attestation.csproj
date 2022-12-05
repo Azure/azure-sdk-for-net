@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Description>Microsoft Azure Attestation Library</Description>
         <AssemblyName>Microsoft.Azure.Attestation</AssemblyName>

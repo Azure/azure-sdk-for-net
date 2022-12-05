@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.Azure.Management.Automation
 {
     using System;
     using System.Linq;

@@ -1,4 +1,4 @@
-﻿Installing AutoRest version: v2
+Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
@@ -12,4 +12,3 @@ Commit:      140d83c74936b2ca952209efce04a6847eff9c02
 AutoRest information
 Requested version: 2.0.4421
 Bootstrapper version:    autorest@2.0.4413
-

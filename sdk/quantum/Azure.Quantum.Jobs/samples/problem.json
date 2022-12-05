@@ -1,4 +1,4 @@
-﻿{
+{
     "cost_function": {
         "version": "1.0",
         "type": "ising",

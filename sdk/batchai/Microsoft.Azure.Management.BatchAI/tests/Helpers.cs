@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using Microsoft.Azure.Management.BatchAI;
 using Microsoft.Azure.Management.BatchAI.Models;

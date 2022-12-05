@@ -81,4 +81,3 @@ namespace Microsoft.Azure.Management.CustomerInsights
         Task<AzureOperationResponse<ImageDefinition>> GetUploadUrlForDataWithHttpMessagesAsync(string resourceGroupName, string hubName, GetImageUploadUrlInput parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
-

@@ -1,4 +1,4 @@
-﻿#region Snippet:Using_Statements
+#region Snippet:Using_Statements
 using System;
 using System.Linq;
 using Azure.Identity;

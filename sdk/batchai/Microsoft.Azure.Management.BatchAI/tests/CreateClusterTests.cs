@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using Xunit;
 using Microsoft.Azure.Management.BatchAI;

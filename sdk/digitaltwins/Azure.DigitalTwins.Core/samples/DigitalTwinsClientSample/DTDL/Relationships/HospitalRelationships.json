@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "$relationshipId": "BuildingHasFloor",
         "$sourceId": "BuildingTwin",

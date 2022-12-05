@@ -1,4 +1,3 @@
-
 namespace Microsoft.Azure.Management.StorSimple8000Series
 {
     using Azure;
@@ -319,4 +318,3 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string deviceName, string volumeContainerName, string volumeName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
-

@@ -159,4 +159,3 @@ namespace DataBoxEdge.Tests
         #endregion
     }
 }
-

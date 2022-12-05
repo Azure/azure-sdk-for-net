@@ -327,4 +327,3 @@ namespace SignalR.Tests
         }
     }
 }
-

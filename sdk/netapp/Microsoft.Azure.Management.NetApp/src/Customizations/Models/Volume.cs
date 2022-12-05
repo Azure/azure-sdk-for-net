@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest.Azure;
+using Microsoft.Rest.Azure;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.NetApp.Models

@@ -1,4 +1,3 @@
-
 function create-service-readme($readmeFolder, $readmeName, $moniker, $msService, $indexTableLink, $serviceName, $author, $msAuthor)
 {
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName

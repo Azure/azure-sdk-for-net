@@ -11,4 +11,3 @@
 
 * .NET Framework 4.5.2
 * Netstandard 1.4, based on the NetCore framework
-

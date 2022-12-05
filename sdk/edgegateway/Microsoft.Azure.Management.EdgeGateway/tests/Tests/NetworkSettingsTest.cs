@@ -32,4 +32,3 @@ namespace EdgeGateway.Tests
         #endregion Test Methods
     }
 }
-

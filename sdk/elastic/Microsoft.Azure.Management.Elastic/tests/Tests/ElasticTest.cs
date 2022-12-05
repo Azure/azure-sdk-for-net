@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Elastic;
 using Microsoft.Azure.Management.Elastic.Models;

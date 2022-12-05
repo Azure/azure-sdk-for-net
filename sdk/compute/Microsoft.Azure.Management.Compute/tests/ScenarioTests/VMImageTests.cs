@@ -262,4 +262,3 @@ namespace Compute.Tests
         }
     }
 }
-

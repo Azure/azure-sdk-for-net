@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.FormRecognizer;
+using Microsoft.Azure.CognitiveServices.FormRecognizer;
 using System.Net.Http;
 
 namespace FormRecognizerSDK.Tests

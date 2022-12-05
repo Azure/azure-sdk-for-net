@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Services.AppAuthentication.TestCommon;
+using Microsoft.Azure.Services.AppAuthentication.TestCommon;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;

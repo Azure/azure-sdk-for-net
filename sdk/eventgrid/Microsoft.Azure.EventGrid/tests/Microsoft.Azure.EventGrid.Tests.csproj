@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure EventGrid Tests</AssemblyTitle>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

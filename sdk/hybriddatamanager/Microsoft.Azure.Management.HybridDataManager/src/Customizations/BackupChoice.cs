@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.HybridData
+namespace Microsoft.Azure.Management.HybridData
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;

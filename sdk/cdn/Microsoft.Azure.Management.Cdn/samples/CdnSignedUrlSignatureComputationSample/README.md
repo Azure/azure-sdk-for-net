@@ -32,5 +32,3 @@ For example:
 iTsrLX9rVAIJkSahBA_j5o9Azf5-j331ohxDR1Gx2js=
 
 Example Signed request with signnature as part of query string paramters: https://contoso.azureedge.net/urlsigning/test?expires=2145916800&keyid:key1&signature=iTsrLX9rVAIJkSahBA_j5o9Azf5-j331ohxDR1Gx2js=
-
-

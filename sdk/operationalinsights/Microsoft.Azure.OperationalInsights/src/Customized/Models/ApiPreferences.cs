@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.OperationalInsights.Models
+namespace Microsoft.Azure.OperationalInsights.Models
 {
     public class ApiPreferences
     {

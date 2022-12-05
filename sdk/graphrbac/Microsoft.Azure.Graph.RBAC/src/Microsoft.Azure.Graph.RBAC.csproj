@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk"> 
+<Project Sdk="Microsoft.NET.Sdk"> 
   <PropertyGroup>
     <Version>3.8.0-preview.2</Version>
     <Description>Provides Microsoft Azure Graph RBAC access.</Description>

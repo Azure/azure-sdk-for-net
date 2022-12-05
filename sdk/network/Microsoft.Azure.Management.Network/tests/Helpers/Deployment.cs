@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Networks.Tests.Helpers;
 using Newtonsoft.Json.Linq;

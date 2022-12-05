@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.ResourceGraph.Models
+namespace Microsoft.Azure.Management.ResourceGraph.Models
 {
     using System.Collections.Generic;
 

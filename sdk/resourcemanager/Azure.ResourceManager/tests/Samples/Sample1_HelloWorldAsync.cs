@@ -1,4 +1,4 @@
-﻿#region Snippet:Hello_World_Async_Namespaces
+#region Snippet:Hello_World_Async_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;

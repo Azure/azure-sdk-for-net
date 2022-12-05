@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.AnomalyDetector;
+using Microsoft.Azure.CognitiveServices.AnomalyDetector;
 using Microsoft.Azure.CognitiveServices.AnomalyDetector.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

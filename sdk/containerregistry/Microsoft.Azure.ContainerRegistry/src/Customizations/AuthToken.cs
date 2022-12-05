@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest;
+using Microsoft.Rest;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
@@ -187,5 +187,3 @@ namespace Microsoft.Azure.ContainerRegistry
         }
     }
 }
-
-

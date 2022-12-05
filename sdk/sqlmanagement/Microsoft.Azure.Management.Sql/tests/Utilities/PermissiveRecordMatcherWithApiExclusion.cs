@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Collections.Generic;
 using System.Linq;

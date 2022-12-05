@@ -191,4 +191,3 @@ namespace Microsoft.Azure.Management.CustomerInsights
         Task<AzureOperationResponse<IPage<AuthorizationPolicyResourceFormat>>> ListByHubNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
-

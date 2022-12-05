@@ -1,4 +1,4 @@
-    {
+{
       "Name": "WindowsConfiguration",
       "ProtocolName": "Models.WindowsConfiguration",
       "SummaryComment": "Windows operating system settings to apply to the virtual machine.",

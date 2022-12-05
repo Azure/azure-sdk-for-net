@@ -285,4 +285,3 @@ namespace IotHub.Tests.ScenarioTests
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;

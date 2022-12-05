@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.Blueprint
+namespace Microsoft.Azure.Management.Blueprint
 {
     using Microsoft.Rest.Azure;
     using Models;
@@ -101,4 +101,3 @@
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.OperationalInsights.Models;
+using Microsoft.Azure.OperationalInsights.Models;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.OperationalInsights

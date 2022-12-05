@@ -1,4 +1,4 @@
-﻿# Azure.Communication.JobRouter
+# Azure.Communication.JobRouter
 
 When a new version of the swagger needs to be updated:
 1. Go to sdk\communication\Azure.Communication.JobRouter\src, and run `dotnet msbuild /t:GenerateCode` to generate code.

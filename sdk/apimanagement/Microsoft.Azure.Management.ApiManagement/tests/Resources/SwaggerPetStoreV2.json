@@ -1,4 +1,4 @@
-﻿{
+{
     "x-comment": "This file was extended from /github.com/swagger-api/swagger-spec/blob/master/examples/v2.0/json/petstore-with-external-docs.json",
     "swagger": "2.0",
     "info": {
@@ -456,4 +456,3 @@
         }
     }
 }
-

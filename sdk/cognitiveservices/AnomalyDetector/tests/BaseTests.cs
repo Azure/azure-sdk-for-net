@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.AnomalyDetector;
+using Microsoft.Azure.CognitiveServices.AnomalyDetector;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

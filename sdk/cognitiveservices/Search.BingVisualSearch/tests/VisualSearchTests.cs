@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.CognitiveServices.Search.VisualSearch;
 using Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "PowerBIDedicated/resource-manager" -AutoRestVersion "v2" 
+Start-AutoRestCodeGeneration -ResourceProvider "PowerBIDedicated/resource-manager" -AutoRestVersion "v2"

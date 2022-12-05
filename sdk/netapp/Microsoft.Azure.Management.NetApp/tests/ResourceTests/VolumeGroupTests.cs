@@ -1,4 +1,4 @@
-﻿using NetApp.Tests.Helpers;
+using NetApp.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;

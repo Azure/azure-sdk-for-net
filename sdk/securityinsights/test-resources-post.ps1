@@ -68,4 +68,3 @@ $body = @{
 
 #Make the call
 Invoke-RestMethod -Method PUT -Uri $url -Body ($body | ConvertTo-Json) -Headers $headers
-

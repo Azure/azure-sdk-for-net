@@ -1,4 +1,4 @@
-    {
+{
       "Name": "PoolSpecification",
       "ProtocolName": "Models.PoolSpecification",
       "SummaryComment": "The specification for a pool.",

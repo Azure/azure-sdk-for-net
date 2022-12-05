@@ -76,5 +76,3 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
         }
     }
 }
-
-

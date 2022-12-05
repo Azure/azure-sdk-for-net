@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using ContainerService.Tests;
 using Microsoft.Azure.Management.ContainerService;
 using Microsoft.Azure.Management.Resources;

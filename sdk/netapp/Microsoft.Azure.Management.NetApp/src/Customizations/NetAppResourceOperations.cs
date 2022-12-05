@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.NetApp.Models;
+using Microsoft.Azure.Management.NetApp.Models;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using Newtonsoft.Json;

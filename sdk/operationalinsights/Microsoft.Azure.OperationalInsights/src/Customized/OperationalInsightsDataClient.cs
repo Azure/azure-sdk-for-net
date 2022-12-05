@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.OperationalInsights.Models;
+using Microsoft.Azure.OperationalInsights.Models;
 using Microsoft.Rest;
 using System.Collections.Generic;
 using System.Net.Http;

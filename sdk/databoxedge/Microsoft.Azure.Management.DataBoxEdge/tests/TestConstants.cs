@@ -1,4 +1,4 @@
-﻿namespace DataBoxEdge.Tests
+namespace DataBoxEdge.Tests
 {
     /// <summary>
     /// Contains the constants used in tests

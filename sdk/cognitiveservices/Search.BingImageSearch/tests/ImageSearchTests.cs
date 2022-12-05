@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.CognitiveServices.Search.ImageSearch;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;

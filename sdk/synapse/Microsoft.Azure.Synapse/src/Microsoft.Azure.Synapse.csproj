@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Synapse</PackageId>
 		<Description>Azure Synapse Client SDK Library</Description>

@@ -109,4 +109,3 @@ namespace Consumption.Tests.ScenarioTests
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using KubernetesService.Tests;
 using Microsoft.Kubernetes;
 using Microsoft.Azure.Management.Resources;

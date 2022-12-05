@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest.Azure;
+using Microsoft.Rest.Azure;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;

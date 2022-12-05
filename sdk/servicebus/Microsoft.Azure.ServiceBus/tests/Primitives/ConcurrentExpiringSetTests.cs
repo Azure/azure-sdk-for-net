@@ -1,4 +1,4 @@
-﻿// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // <copyright company="Microsoft Corporation" file="ConcurrentExpiringSetTests.cs">
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>

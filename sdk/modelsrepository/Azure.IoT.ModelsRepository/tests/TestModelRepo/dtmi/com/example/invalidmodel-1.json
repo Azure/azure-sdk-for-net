@@ -1,4 +1,4 @@
-﻿{
+{
   "@id": "dtmi:com:example:invalidmodel;1",
   "@type": "Interface",
   "displayName": "Phone",

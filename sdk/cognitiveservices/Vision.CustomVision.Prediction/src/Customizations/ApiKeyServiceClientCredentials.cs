@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
+namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
 {
     using System;
     using System.Net.Http;

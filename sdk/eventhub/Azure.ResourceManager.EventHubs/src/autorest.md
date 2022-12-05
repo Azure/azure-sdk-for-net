@@ -133,4 +133,3 @@ directive:
       transform: >
         $.AvailableCluster.properties.location['x-ms-format'] = 'azure-location';
 ```
-

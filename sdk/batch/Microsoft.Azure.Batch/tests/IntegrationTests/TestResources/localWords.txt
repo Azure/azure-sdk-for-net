@@ -1,4 +1,4 @@
- Volume in drive C is OS
+Volume in drive C is OS
  Volume Serial Number is 0044-B86A
 
  Directory of C:\tmp

@@ -70,5 +70,3 @@ New design of track 2 initial commit.
 #### Package Name
 
 The package name has been changed from `Microsoft.Azure.Management.Authorization` to `Azure.ResourceManager.Authorization`
-
-

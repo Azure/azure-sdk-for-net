@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.Compute
+namespace Microsoft.Azure.Management.Compute
 {
     using System.Collections.Generic;
     using System.Threading;

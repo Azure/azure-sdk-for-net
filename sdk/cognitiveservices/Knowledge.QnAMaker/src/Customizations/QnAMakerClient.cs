@@ -1,4 +1,4 @@
-﻿using System.Net.Http;
+using System.Net.Http;
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
 {

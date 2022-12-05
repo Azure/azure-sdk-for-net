@@ -5,4 +5,3 @@
 
 @echo off
 call %~dp0..\..\..\..\tools\generate.cmd monitor/resource-manager %*
-

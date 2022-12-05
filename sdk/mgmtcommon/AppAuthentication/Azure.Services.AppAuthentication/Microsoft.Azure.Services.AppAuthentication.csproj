@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
         <Description>There is a newer version of this library available here: https://www.nuget.org/packages/Azure.Identity/

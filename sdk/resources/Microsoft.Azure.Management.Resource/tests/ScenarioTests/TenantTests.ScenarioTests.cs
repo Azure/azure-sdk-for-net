@@ -45,4 +45,3 @@ namespace ResourceGroups.Tests
         }
     }
 }
-

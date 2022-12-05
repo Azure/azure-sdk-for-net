@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
+using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
 using System.Net.Http;
 
 namespace QnAMaker.Tests

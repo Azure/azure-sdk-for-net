@@ -103,4 +103,3 @@ Note that these breaking changes are only breaking changes from the **preview** 
 - Official public preview of [Azure.DigitalTwins.Core SDK](https://www.nuget.org/packages/Azure.DigitalTwins.Core)
 - [Azure Digital Twins Public Repo](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core)
 - [Azure Digital Twins Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples)
-

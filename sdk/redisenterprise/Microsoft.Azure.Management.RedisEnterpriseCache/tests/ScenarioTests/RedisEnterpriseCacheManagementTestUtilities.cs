@@ -30,4 +30,3 @@ namespace AzureRedisEnterpriseCache.Tests.ScenarioTests
         }
     }
 }
-

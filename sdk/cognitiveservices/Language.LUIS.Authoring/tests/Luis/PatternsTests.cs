@@ -1,4 +1,3 @@
-﻿
 namespace LUIS.Authoring.Tests.Luis
 {
     using System;

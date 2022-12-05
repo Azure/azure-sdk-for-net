@@ -1,4 +1,3 @@
-
 namespace Microsoft.Azure.Management.StorSimple8000Series
 {
     using Azure;
@@ -263,4 +262,3 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         Task<AzureOperationResponse> BeginBackupNowWithHttpMessagesAsync(string deviceName, string backupPolicyName, string backupType, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
-

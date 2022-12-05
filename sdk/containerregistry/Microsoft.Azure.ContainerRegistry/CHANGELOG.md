@@ -23,4 +23,3 @@
 - Preview release for Azure Container Registry Data plane operations
 - Support for basic container runtime operations, such as get, delete and update of manifest, repository, tags and their attributes.
 - Autogenerate operations and models from [2018-08-10 containerregistry.json swagger spec](https://github.com/Azure/azure-rest-api-specs/blob/master/specification/containerregistry/data-plane/Microsoft.ContainerRegistry/preview/2018-08-10/containerregistry.json).
-

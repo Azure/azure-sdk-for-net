@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
+namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
 {
     using System;
     using System.Net.Http;

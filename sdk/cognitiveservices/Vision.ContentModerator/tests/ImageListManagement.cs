@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using Microsoft.Rest.Serialization;
 using Microsoft.Azure.CognitiveServices.ContentModerator.Models;

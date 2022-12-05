@@ -1,4 +1,4 @@
-﻿namespace EdgeGateway.Tests
+namespace EdgeGateway.Tests
 {
     /// <summary>
     /// Contains the constants used in tests

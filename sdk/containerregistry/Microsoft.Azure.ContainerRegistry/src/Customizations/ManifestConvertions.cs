@@ -1,4 +1,3 @@
-﻿
 namespace Microsoft.Azure.ContainerRegistry.Models
 {
     public partial class V2Manifest : Manifest

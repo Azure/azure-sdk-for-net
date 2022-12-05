@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Batch.Protocol
+namespace Microsoft.Azure.Batch.Protocol
 {
     using System;
     using System.Threading;

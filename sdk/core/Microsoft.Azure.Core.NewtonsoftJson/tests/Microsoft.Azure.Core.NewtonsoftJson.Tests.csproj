@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Azure.Core.Tests</RootNamespace>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

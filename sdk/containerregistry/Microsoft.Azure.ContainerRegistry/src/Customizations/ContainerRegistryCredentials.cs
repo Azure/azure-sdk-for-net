@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest;
+using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -326,6 +326,3 @@ namespace Microsoft.Azure.ContainerRegistry
         #endregion
     }
 }
-
-
-

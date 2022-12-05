@@ -1,4 +1,3 @@
-﻿
 namespace BatchClientIntegrationTests
 {
     using System;

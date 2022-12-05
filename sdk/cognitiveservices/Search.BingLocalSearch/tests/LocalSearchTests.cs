@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.CognitiveServices.Search.LocalSearch;
 using Microsoft.Azure.CognitiveServices.Search.LocalSearch.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -30,4 +30,3 @@ namespace SearchSDK.Tests
         }
     }
 }
-

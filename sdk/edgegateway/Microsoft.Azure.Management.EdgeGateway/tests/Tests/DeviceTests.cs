@@ -95,4 +95,3 @@ namespace EdgeGateway.Tests
 
     }
 }
-

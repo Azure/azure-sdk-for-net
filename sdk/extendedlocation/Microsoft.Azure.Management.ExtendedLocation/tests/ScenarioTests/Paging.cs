@@ -32,5 +32,3 @@ namespace ExtendedLocation.Tests.ScenarioTests
         }
     }
 }
-
-

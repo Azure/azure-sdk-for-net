@@ -1,4 +1,3 @@
-﻿
 using Microsoft.Azure.Management.Datadog.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;

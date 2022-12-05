@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Language Text Analytics Client Library</AssemblyTitle>
     <Description>Provides API functions for consuming Microsoft Azure Cognitive Services Language Text Analytics APIs.</Description>

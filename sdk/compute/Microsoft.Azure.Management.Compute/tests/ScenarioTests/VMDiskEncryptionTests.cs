@@ -69,4 +69,3 @@ namespace Compute.Tests
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.Batch;
+using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.Azure;

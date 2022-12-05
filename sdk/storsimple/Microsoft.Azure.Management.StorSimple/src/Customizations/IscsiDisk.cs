@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.StorSimple1200Series.Models
+namespace Microsoft.Azure.Management.StorSimple1200Series.Models
 {
     public partial class ISCSIDisk
     {

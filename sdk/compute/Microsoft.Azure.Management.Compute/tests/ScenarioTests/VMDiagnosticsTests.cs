@@ -106,4 +106,3 @@ namespace Compute.Tests
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.HybridData
+namespace Microsoft.Azure.Management.HybridData
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

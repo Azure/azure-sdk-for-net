@@ -1,4 +1,4 @@
-    {
+{
       "Name": "CloudJob",
       "ProtocolName": "Models.CloudJob",
       "TransportProtocolName": "Models.JobAddParameter",

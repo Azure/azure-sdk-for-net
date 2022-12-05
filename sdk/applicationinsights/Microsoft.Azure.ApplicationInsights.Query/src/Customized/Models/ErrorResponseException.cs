@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest;
+using Microsoft.Rest;
 
 namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {

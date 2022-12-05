@@ -1,4 +1,4 @@
-﻿{
+{
   "VirtualMachineName": "netvmtestv2vm1",
   "VirtualMachineResourceGroupName": "netsdktestrg",
   "VirtualMachineType": "Compute",

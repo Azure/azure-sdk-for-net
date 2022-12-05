@@ -241,4 +241,3 @@ namespace GuestConfiguration.Tests.ScenarioTests
         }
     }
 }
-

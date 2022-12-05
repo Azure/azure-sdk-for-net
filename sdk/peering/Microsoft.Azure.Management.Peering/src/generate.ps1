@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "peering/resource-manager" -AutoRestVersion "v2" 
+Start-AutoRestCodeGeneration -ResourceProvider "peering/resource-manager" -AutoRestVersion "v2"

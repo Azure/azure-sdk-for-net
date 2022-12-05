@@ -1,4 +1,4 @@
-    {
+{
       "Name": "Certificate",
       "ProtocolName": "Models.Certificate",
       "TransportProtocolName": "Models.CertificateAddParameter",

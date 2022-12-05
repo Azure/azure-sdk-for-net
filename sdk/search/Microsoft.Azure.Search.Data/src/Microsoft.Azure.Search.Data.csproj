@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageTags>Microsoft Azure Cognitive Search;Microsoft Azure Search;Search</PackageTags>
     <Description>Use this package if you're developing a .NET application using Azure Cognitive Search, and you only need to query or update documents in your indexes. If you also need to create or update indexes, synonym maps, or other service-level resources, use the Microsoft.Azure.Search package instead.</Description>

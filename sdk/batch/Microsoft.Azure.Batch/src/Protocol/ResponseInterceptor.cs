@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Batch.Protocol
+namespace Microsoft.Azure.Batch.Protocol
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

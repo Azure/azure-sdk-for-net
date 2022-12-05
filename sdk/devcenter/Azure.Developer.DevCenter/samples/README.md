@@ -13,4 +13,3 @@ description: Samples for the Azure.Developer.DevCenter client library.
 
 * [Create and delete a Dev Box](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample_CreateDeleteDevBoxAsync.md)
 * [Create and delete an Environment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample_CreateDeleteDevBoxAsync.md)
-

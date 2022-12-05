@@ -1,4 +1,4 @@
-    {
+{
       "Name": "ResizeError",
       "ProtocolName": "Models.ResizeError",
       "SummaryComment": "An error that occurred when resizing a pool.",

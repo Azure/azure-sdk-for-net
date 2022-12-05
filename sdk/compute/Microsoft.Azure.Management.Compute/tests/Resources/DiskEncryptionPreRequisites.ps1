@@ -1,4 +1,4 @@
-﻿Param(
+Param(
   [Parameter(Mandatory = $true, 
              HelpMessage="Name of the resource group to which the KeyVault belongs to.  A new resource group with this name will be created if one doesn't exist")]
   [ValidateNotNullOrEmpty()]

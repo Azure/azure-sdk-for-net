@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.ApplicationInsights.Query.Models;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;

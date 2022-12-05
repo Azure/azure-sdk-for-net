@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
+namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 {
     using System;
     using System.Net.Http;

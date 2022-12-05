@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.ContainerInstance
+namespace Microsoft.Azure.Management.ContainerInstance
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

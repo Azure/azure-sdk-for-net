@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.EdgeGateway
+namespace Microsoft.Azure.Management.EdgeGateway
 {
     using System;
     using System.IO;

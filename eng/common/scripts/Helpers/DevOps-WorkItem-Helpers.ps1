@@ -1,4 +1,3 @@
-
 $ReleaseDevOpsOrgParameters =  @("--organization", "https://dev.azure.com/azure-sdk")
 $ReleaseDevOpsCommonParameters =  $ReleaseDevOpsOrgParameters + @("--output", "json")
 $ReleaseDevOpsCommonParametersWithProject = $ReleaseDevOpsCommonParameters + @("--project", "Release")

@@ -1,4 +1,4 @@
-    {
+{
       "Name": "SubtaskInformation",
       "ProtocolName": "Models.SubtaskInformation",
       "SummaryComment": "Information about an Azure Batch subtask.",

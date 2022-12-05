@@ -70,4 +70,4 @@ namespace Avs.Tests
             avsClient.ScriptExecutions.Delete(rgName, cloudName, executionName);
         }
     }
-} 
+}

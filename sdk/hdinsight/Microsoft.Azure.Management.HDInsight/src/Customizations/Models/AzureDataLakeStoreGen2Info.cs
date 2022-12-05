@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.HDInsight.Models
+namespace Microsoft.Azure.Management.HDInsight.Models
 {
     using System;
 

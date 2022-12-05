@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Test.HttpRecorder.ProcessRecordings.Processors;
+using Microsoft.Azure.Test.HttpRecorder.ProcessRecordings.Processors;
 using System;
 using System.Collections.Generic;
 using System.IO;

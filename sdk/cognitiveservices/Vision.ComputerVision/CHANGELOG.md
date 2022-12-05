@@ -42,5 +42,3 @@ Supports v3.1 Cognitive Services Computer Vision API endpoints.
 * Updating the description visual feature for analyze image method and the describe image method.
 
 ## 6.0.0-preview.1 (2020-07-07)
-
-

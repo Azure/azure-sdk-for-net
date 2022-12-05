@@ -1,4 +1,4 @@
-    {
+{
       "Name": "ExitOptions",
       "ProtocolName": "Models.ExitOptions",
       "SummaryComment": "How the Batch service should respond to a particular exit condition.",

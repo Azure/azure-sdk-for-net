@@ -66,4 +66,3 @@ namespace MySQL.Tests.ScenarioTests
         }
     }
 }
-

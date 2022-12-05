@@ -65,4 +65,3 @@ namespace NotificationHubs.Tests.ScenarioTests
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.EdgeGateway.Models;
+using Microsoft.Azure.Management.EdgeGateway.Models;
 using Microsoft.Rest;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;

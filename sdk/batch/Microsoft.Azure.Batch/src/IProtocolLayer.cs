@@ -319,4 +319,4 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationResponse<IPage<Models.ApplicationSummary>, Models.ApplicationListHeaders>> ListApplicationSummaries(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken);
     }
-} 
+}

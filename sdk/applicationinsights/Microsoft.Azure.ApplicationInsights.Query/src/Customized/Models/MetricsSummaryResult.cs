@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.ApplicationInsights.Query.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     /// <summary>
     /// A metric summary result.

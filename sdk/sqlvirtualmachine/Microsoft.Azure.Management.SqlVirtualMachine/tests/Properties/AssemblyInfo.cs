@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System;
 using System.Resources;
@@ -23,4 +23,3 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure SQL VM.")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-

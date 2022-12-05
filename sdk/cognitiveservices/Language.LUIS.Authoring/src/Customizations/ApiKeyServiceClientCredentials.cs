@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
 {
     using System;
     using System.Net.Http;

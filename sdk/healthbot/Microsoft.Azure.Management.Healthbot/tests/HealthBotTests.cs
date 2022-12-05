@@ -1,4 +1,3 @@
-﻿
 using System;
 using System.Net;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -116,4 +115,3 @@ namespace Healthbot.Tests
 
     }
 }
-

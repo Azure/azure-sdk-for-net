@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.Management.DataBoxEdge
+namespace Microsoft.Azure.Management.DataBoxEdge
 {
     using System;
     using System.IO;

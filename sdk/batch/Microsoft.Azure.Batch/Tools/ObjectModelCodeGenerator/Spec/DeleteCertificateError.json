@@ -1,4 +1,4 @@
-    {
+{
       "Name": "DeleteCertificateError",
       "ProtocolName": "Models.DeleteCertificateError",
       "SummaryComment": "An error encountered by the Batch service when deleting a certificate.",

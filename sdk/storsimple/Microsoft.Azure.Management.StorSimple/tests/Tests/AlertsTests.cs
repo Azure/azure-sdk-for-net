@@ -104,4 +104,3 @@ namespace StorSimple1200Series.Tests
         #endregion Private method
     }
 }
-

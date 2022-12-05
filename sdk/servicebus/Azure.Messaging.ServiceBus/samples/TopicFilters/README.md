@@ -65,5 +65,3 @@ The other way to run the sample is by specifying an environment variable that co
 ```dotnetcli
 dotnet run -- --connection-variable <environment variable name>
 ```
-
-

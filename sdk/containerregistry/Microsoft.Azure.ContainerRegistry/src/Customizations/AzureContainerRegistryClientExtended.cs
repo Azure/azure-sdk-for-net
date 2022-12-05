@@ -1,4 +1,4 @@
-﻿using Microsoft.Rest;
+using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using System.Net.Http;
 namespace Microsoft.Azure.ContainerRegistry
@@ -81,5 +81,3 @@ namespace Microsoft.Azure.ContainerRegistry
     }
 
 }
-
-

@@ -22,4 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EventHubs
       safeName: AzureResourceManagerEventHubs
-

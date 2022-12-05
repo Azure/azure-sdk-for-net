@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('CR.test.reference.props'))" />  
   <PropertyGroup>
     <Description>HttpRecorder.Tests Class Library</Description>

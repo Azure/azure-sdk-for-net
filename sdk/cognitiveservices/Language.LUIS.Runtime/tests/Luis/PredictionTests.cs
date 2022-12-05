@@ -1,4 +1,4 @@
-﻿namespace LUIS.Runtime.Tests
+namespace LUIS.Runtime.Tests
 {
     using System;
     using System.Linq;

@@ -258,4 +258,3 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿# Troubleshoot Azure Identity authentication issues
+# Troubleshoot Azure Identity authentication issues
 
 This troubleshooting guide covers failure investigation techniques, common errors for the credential types in the Azure Identity .NET client library, and mitigation steps to resolve these errors.
 

@@ -174,4 +174,3 @@ namespace Media.Tests.ScenarioTests
         }
     }
 }
-

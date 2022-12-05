@@ -27,4 +27,3 @@ set generateFolder=%~dp0Generated\Management\Insights
 
 
 call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Management.Insights %autoRestVersion% %generateFolder% "-FT 1"
- 

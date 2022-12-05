@@ -1,4 +1,3 @@
-
 # cSpell:ignore Committish
 # cSpell:ignore committish
 # cSpell:ignore PULLREQUEST

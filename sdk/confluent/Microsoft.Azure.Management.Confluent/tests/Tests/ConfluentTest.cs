@@ -1,4 +1,3 @@
-﻿
 using Microsoft.Azure.Management.Confluent.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;

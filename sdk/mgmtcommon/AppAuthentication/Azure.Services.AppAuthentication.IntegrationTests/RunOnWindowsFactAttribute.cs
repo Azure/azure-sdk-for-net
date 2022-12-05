@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using Xunit;
 
 namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests

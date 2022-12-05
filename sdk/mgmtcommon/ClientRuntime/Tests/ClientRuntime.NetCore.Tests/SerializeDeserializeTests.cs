@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Rest.ClientRuntime.Tests
+namespace Microsoft.Rest.ClientRuntime.Tests
 {
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;

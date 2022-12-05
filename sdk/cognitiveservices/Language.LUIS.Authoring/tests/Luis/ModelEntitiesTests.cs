@@ -1,4 +1,4 @@
-﻿namespace LUIS.Authoring.Tests.Luis
+namespace LUIS.Authoring.Tests.Luis
 {
     using System.Linq;
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;

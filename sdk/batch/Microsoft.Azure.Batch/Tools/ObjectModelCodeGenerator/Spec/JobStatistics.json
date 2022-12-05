@@ -1,4 +1,4 @@
-    {
+{
       "Name": "JobStatistics",
       "ProtocolName": "Models.JobStatistics",
       "SummaryComment": "Resource usage statistics for the job.",

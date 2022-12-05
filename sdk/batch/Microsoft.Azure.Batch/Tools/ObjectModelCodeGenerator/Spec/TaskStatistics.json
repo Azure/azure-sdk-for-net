@@ -1,4 +1,4 @@
-    {
+{
       "Name": "TaskStatistics",
       "ProtocolName": "Models.TaskStatistics",
       "SummaryComment": "Resource usage statistics for the task.",

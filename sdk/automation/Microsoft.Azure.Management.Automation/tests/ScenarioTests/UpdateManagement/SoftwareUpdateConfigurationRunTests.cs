@@ -1,4 +1,4 @@
-﻿namespace Automation.Tests.ScenarioTests.UpdateManagement
+namespace Automation.Tests.ScenarioTests.UpdateManagement
 {
     using System;
 

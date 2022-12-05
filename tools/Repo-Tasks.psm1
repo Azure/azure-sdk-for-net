@@ -1,4 +1,4 @@
-﻿$taskScriptDir = [System.IO.Path]::GetDirectoryName($PSCommandPath)
+$taskScriptDir = [System.IO.Path]::GetDirectoryName($PSCommandPath)
 $env:repoRoot = [System.IO.Path]::GetDirectoryName($taskScriptDir)
 $userPsFileDir = [string]::Empty
 

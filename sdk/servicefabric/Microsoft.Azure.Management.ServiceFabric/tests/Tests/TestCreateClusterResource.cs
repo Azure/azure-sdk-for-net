@@ -46,4 +46,3 @@ namespace ServiceFabric.Tests.Tests
         }
     }
 }
-

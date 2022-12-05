@@ -24,4 +24,3 @@
 ### New Features
 
 - Initial preview release of the Purview Scanning client library for .NET
-

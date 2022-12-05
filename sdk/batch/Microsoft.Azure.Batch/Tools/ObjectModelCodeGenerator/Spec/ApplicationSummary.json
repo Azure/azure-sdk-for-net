@@ -1,4 +1,4 @@
-    {
+{
       "Name": "ApplicationSummary",
       "ProtocolName": "Models.ApplicationSummary",
       "SummaryComment": "Contains information about an application in an Azure Batch account.",

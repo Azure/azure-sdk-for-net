@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.CognitiveServices.AnomalyDetector
+namespace Microsoft.Azure.CognitiveServices.AnomalyDetector
 {
     using System;
     using System.Net.Http;

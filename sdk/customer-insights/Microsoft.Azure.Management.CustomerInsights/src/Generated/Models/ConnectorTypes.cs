@@ -25,4 +25,3 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public const string Outbound = "Outbound";
     }
 }
-

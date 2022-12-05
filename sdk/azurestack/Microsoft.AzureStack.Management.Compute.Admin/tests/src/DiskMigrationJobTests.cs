@@ -1,4 +1,3 @@
-﻿
 using Microsoft.AzureStack.Management.Compute.Admin;
 using Microsoft.AzureStack.Management.Compute.Admin.Models;
 using System;

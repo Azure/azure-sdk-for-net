@@ -1,4 +1,4 @@
-    {
+{
       "Name": "CloudServiceConfiguration",
       "ProtocolName": "Models.CloudServiceConfiguration",
       "SummaryComment": "The configuration for compute nodes in a pool based on the Azure Cloud Services platform.",
