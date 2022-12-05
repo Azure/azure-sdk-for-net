@@ -100,7 +100,7 @@ private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, st
     try
     {
         Console.WriteLine("Start batch detect...");
-        MultivariateDetectionOptions request = new MultivariateDetectionOptions(datasource, 10, start_time, end_time);
+        MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, start_time, end_time);
 
         TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
         MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(model_id, request);
