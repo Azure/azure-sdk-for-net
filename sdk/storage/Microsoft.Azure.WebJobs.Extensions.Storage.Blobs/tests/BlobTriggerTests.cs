@@ -169,7 +169,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
             Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
 
-            Assert.True(resultConnection.Contains(ConnectionName));
+            Assert.AreEqual(ConnectionName, resultConnection);
             Assert.AreEqual(ContainerName, resultContainerName);
             Assert.AreEqual(BlobName, resultBlobName);
         }
@@ -198,10 +198,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 b.AddAzureStorageBlobs();
                 b.UseStorageServices(blobServiceClient, queueServiceClient);
-            }, programType, setTaskSource, settings: new Dictionary<string, string>() {
-                // This takes precedence over env variables.
-                { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
-            });
+            }, programType, setTaskSource);
         }
     }
 }
