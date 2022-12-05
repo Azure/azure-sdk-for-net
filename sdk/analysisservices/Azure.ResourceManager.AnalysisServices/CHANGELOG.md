@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (2022-11-29)
+## 1.0.0-beta.1 (2022-12-05)
 
 ### Package Name
 
