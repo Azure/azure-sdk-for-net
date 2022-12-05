@@ -88,15 +88,13 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task RecognizeEntitiesWithSubCategoryTest()
         {
-            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions() { ModelVersion = "2020-04-01" };
             TextAnalyticsClient client = GetClient();
             string document = "I had a wonderful trip to Seattle last week.";
 
-            RecognizeEntitiesResultCollection result = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, options: options );
+            RecognizeEntitiesResultCollection result = await client.RecognizeEntitiesBatchAsync(new List<string>() { document });
 
-            var documentResult = result.FirstOrDefault();
+            RecognizeEntitiesResult documentResult = result.FirstOrDefault();
             Assert.IsFalse(documentResult.HasError);
-
             Assert.GreaterOrEqual(documentResult.Entities.Count, 3);
 
             foreach (CategorizedEntity entity in documentResult.Entities)
@@ -104,10 +102,6 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (entity.Text == "last week")
                     Assert.AreEqual("DateRange", entity.SubCategory);
             }
-
-            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
-            Assert.IsFalse(options.IncludeStatistics);
-            Assert.AreEqual("2020-04-01", options.ModelVersion);
         }
 
         [RecordedTest]

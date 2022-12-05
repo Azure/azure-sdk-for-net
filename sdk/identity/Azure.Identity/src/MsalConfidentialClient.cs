@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +19,7 @@ namespace Azure.Identity
         private readonly Func<string> _assertionCallback;
         private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
         private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
+        private readonly Uri _authority;
 
         internal string RedirectUrl { get; }
 
@@ -59,6 +59,7 @@ namespace Azure.Identity
             : base(pipeline, tenantId, clientId, options)
         {
             _appTokenProviderCallback = appTokenProviderCallback;
+            _authority = options?.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud;
         }
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
@@ -69,11 +70,12 @@ namespace Azure.Identity
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
 
-            //special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            // The authority matches the one configured in the CredentialOptions.
             if (_appTokenProviderCallback != null)
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
-                    .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId, false)
+                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
                     .WithInstanceDiscoveryMetadata(s_instanceMetadata);
             }
             else
@@ -102,7 +104,7 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
-            if (!string.IsNullOrEmpty(RegionalAuthority))
+            if (_appTokenProviderCallback == null && !string.IsNullOrEmpty(RegionalAuthority))
             {
                 confClientBuilder.WithAzureRegion(RegionalAuthority);
             }

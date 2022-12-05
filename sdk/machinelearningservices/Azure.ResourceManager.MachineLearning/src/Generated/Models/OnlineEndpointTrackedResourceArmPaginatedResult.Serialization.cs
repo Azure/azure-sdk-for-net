@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static OnlineEndpointTrackedResourceArmPaginatedResult DeserializeOnlineEndpointTrackedResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<OnlineEndpointData>> value = default;
+            Optional<IReadOnlyList<MachineLearningOnlineEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OnlineEndpointData> array = new List<OnlineEndpointData>();
+                    List<MachineLearningOnlineEndpointData> array = new List<MachineLearningOnlineEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OnlineEndpointData.DeserializeOnlineEndpointData(item));
+                        array.Add(MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(item));
                     }
                     value = array;
                     continue;
