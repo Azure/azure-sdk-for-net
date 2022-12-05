@@ -24,7 +24,6 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
@@ -48,7 +47,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly HttpRequestProcessor _httpRequestProcessor;
         private readonly IFunctionDataCache _functionDataCache;
-        private readonly IConfiguration _configuration;
 
         public BlobsExtensionConfigProvider(
             BlobServiceClientProvider blobServiceClientProvider,
@@ -59,10 +57,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
             IFunctionDataCache functionDataCache,
-            ILoggerFactory loggerFactory,
-            IConfiguration configuration)
+            ILoggerFactory loggerFactory)
         {
-            _configuration = configuration;
             _blobServiceClientProvider = blobServiceClientProvider;
             _triggerBinder = triggerBinder;
             _blobWrittenWatcherGetter = contextAccessor;
@@ -82,8 +78,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             IConverterManager converterManager,
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
-            ILoggerFactory loggerFactory,
-            IConfiguration configuration) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory, configuration)
+            ILoggerFactory loggerFactory) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory)
         {
         }
 
