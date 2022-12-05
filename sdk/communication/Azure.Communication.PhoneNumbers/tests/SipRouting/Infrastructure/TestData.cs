@@ -1,13 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     internal static class TestData
     {
-        public static readonly List<string> Fqdns = new List<string>(){ "sbs1.sipconfigtest.com", "sbs2.sipconfigtest.com" };
+        private static readonly Guid Domain = Guid.NewGuid();
+        public static readonly List<string> Fqdns = new List<string>(){ "sbs1." + Domain + ".com", "sbs2." + Domain + ".com" };
         public static readonly int[] TrunkPorts = { 1122, 1123 };
 
         public static readonly List<SipTrunk> TrunkList = new List<SipTrunk>
@@ -16,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             new SipTrunk(Fqdns[1], TrunkPorts[1])
         };
 
-        public static readonly SipTrunk NewTrunk = new SipTrunk("newsbs.sipconfigtest.com", 3333);
+        public static readonly SipTrunk NewTrunk = new SipTrunk("newsbs." + Domain + ".com", 3333);
 
         public static readonly SipTrunkRoute RuleNavigateToTrunk1 = new SipTrunkRoute(
             name: "First rule",
