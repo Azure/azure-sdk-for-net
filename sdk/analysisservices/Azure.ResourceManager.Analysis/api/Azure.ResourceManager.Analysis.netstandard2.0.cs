@@ -2,16 +2,16 @@ namespace Azure.ResourceManager.Analysis
 {
     public static partial class AnalysisExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult> CheckNameAvailabilityServer(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource> GetAnalysisServer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource>> GetAnalysisServerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Analysis.AnalysisServerResource GetAnalysisServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Analysis.AnalysisServerCollection GetAnalysisServers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Analysis.AnalysisServerResource> GetAnalysisServers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Analysis.AnalysisServerResource> GetAnalysisServersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku> GetSkusForNewServers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku> GetSkusForNewServersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku> GetEligibleSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku> GetEligibleSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AnalysisServerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Analysis.AnalysisServerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Analysis.AnalysisServerResource>, System.Collections.IEnumerable
     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Analysis
     public partial class AnalysisServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AnalysisServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisResourceSku analysisSku) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku AnalysisServerSKU { get { throw null; } set { } }
+        public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku AnalysisServerSku { get { throw null; } set { } }
         public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku AnalysisSku { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AsAdministratorIdentities { get { throw null; } }
         public System.Uri BackupBlobContainerUri { get { throw null; } set { } }
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Analysis
         public virtual System.Threading.Tasks.Task<Azure.Response> DissociateGatewayAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Analysis.Models.AsExistingResourceSkuDetails> GetExistingSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Analysis.Models.AsExistingResourceSkuDetails> GetExistingSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Analysis.Models.GatewayListStatusLive> GetGatewayStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.Models.GatewayListStatusLive>> GetGatewayStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Analysis.Models.AnalysisExistingSku> GetExistingSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Analysis.Models.AnalysisExistingSku> GetExistingSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus> GetGatewayStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus>> GetGatewayStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Resume(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -82,12 +82,23 @@ namespace Azure.ResourceManager.Analysis.Models
         All = 0,
         ReadOnly = 1,
     }
+    public partial class AnalysisExistingSku
+    {
+        internal AnalysisExistingSku() { }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku Sku { get { throw null; } }
+    }
     public partial class AnalysisGatewayDetails
     {
         public AnalysisGatewayDetails() { }
         public System.Uri DmtsClusterUri { get { throw null; } }
         public string GatewayObjectId { get { throw null; } }
         public string GatewayResourceId { get { throw null; } set { } }
+    }
+    public partial class AnalysisGatewayStatus
+    {
+        internal AnalysisGatewayStatus() { }
+        public Azure.ResourceManager.Analysis.Models.AnalysisStatus? Status { get { throw null; } }
     }
     public partial class AnalysisIPv4FirewallRule
     {
@@ -242,17 +253,6 @@ namespace Azure.ResourceManager.Analysis.Models
         public static implicit operator Azure.ResourceManager.Analysis.Models.AnalysisStatus (int value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Analysis.Models.AnalysisStatus left, Azure.ResourceManager.Analysis.Models.AnalysisStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AsExistingResourceSkuDetails
-    {
-        internal AsExistingResourceSkuDetails() { }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
-        public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku Sku { get { throw null; } }
-    }
-    public partial class GatewayListStatusLive
-    {
-        internal GatewayListStatusLive() { }
-        public Azure.ResourceManager.Analysis.Models.AnalysisStatus? Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServerMonitorMode : System.IEquatable<Azure.ResourceManager.Analysis.Models.ServerMonitorMode>
