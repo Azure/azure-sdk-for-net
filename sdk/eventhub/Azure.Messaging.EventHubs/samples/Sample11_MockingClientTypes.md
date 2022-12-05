@@ -5,6 +5,17 @@ Event Hubs is built to support unit testing with mocks, as described in the [Azu
 
 The following examples focus on scenarios likely to occur in applications, and demonstrate how to mock the Event Hubs types typically used in each scenario. The code snippets utilize the mock object framework, Moq, in order to provide practical examples. However, many mocking frameworks exist and can be used with the same approach in mind.
 
+## Table of contents
+
+- **Publishing events**
+  - [Using the EventHubProducerClient](#publishing-events-with-the-eventhubproducerclient)
+  - [Using the EventHubBufferedProducerClient](#publishing-events-using-an-eventhubbufferedproducerclient)
+- **Consuming events**
+  - [Using the EventHubConsumerClient](#consuming-events-using-an-eventhubconsumerclient)
+  - [Using the PartitionReceiver](#consuming-events-using-the-partitionreceiver)
+- **Querying metadata**
+  - [Using any client type](#querying-metadata-properties-using-the-eventhubproducerclient-eventhubbufferedproducerclient-or-eventhubconsumerclient)
+
 ## Publishing events with the `EventHubProducerClient`
 
 When using batches to publish to Event Hubs, the key interactions with the `EventHubProducerClient` are calling `CreateBatchAsync` to create the batch and `SendAsync` to publish it. 
@@ -306,7 +317,58 @@ await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionA
 // This is where applications can verify that the partition events output by the consumer client were handled as expected.
 ```
 
-## Reading properties from `EventHubProducerClient`, `EventHubBufferedProducerClient`, and `EventHubConsumerClient`
+## Consuming events using the `PartitionReceiver`
+
+The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch. 
+
+Given the purpose of the `PartitionReceiver`, it is anticipated that most applications will have complex code surrounding their receivers, so this snippet is intentionally simple, with the focus being on using the `EventHubsModelFactory` to mock events being returned from the broker.
+
+```C# Snippet:EventHubs_Sample11_PartitionReceiverMock
+Mock<PartitionReceiver> mockReceiver = new();
+
+// ReceivedEvents is a list of events to use when mocking ReceiveBatchAsync within the PartitionReceiver.
+
+List<EventData> receivedEvents = new();
+
+for (int index = 0; index < 10; index++)
+{
+    // Mocking an EventData instance, different arguments can simulate different potential
+    // outputs from the broker
+    EventData eventData = EventHubsModelFactory.EventData(
+        eventBody: new BinaryData($"Sample-Event-{index}"),
+        systemProperties: new Dictionary<string, object>(), //arbitrary value
+        partitionKey: $"sample-key-{index}",
+        sequenceNumber: 1234,
+        offset: 234,
+        enqueuedTime: DateTimeOffset.Parse("9:25 AM"));
+
+    receivedEvents.Add(eventData);
+}
+
+// This sets up the mock to receive the list of events defined above when ReceiveBatchAsync is called
+// on a given partition.
+
+mockReceiver
+    .Setup(r => r.ReceiveBatchAsync(
+        It.IsAny<int>(),
+        It.IsAny<TimeSpan>(),
+        It.IsAny<CancellationToken>()))
+    .ReturnsAsync(receivedEvents);
+
+// The following demonstrates how to use the mocked methods. This would be where application code utilizing
+// the mocked methods could be called and verified.
+
+PartitionReceiver receiver = mockReceiver.Object;
+
+using CancellationTokenSource cancellationTokenSource = new();
+
+IEnumerable<EventData> receivedBatch = await receiver.ReceiveBatchAsync(
+    maximumEventCount: 10,
+    TimeSpan.FromSeconds(1),
+    cancellationTokenSource.Token);
+```
+
+## Querying metadata properties using the `EventHubProducerClient`, `EventHubBufferedProducerClient`, or `EventHubConsumerClient`
 
 Many applications make decisions for publishing based on the properties of the Event Hub itself or the properties of its partitions. Both can be mocked using the `EventHubsModelFactory`. The following snippet demonstrates how to mock Event Hub properties for both the `EventHubBufferedProducerClient` and the `EventHubProducerClient`, and how to set up the mocked producer clients to return a cohesive set of values for each of the accompanying getter methods.
 
@@ -429,55 +491,4 @@ string[] consumerPartitions = new string[] { "0", "1", "2" };
 mockConsumer
     .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
     .ReturnsAsync(consumerPartitions);
-```
-
-## Receiving Batches using the `PartitionReceiver`
-
-The sample below illustrates how to mock a `PartitionReceiver`, and set up its `ReceiveBatchAsync` method to return a simple data batch. 
-
-Given the purpose of the `PartitionReceiver`, it is anticipated that most applications will have complex code surrounding their receivers, so this snippet is intentionally simple, with the focus being on using the `EventHubsModelFactory` to mock events being returned from the broker.
-
-```C# Snippet:EventHubs_Sample11_PartitionReceiverMock
-Mock<PartitionReceiver> mockReceiver = new();
-
-// ReceivedEvents is a list of events to use when mocking ReceiveBatchAsync within the PartitionReceiver.
-
-List<EventData> receivedEvents = new();
-
-for (int index = 0; index < 10; index++)
-{
-    // Mocking an EventData instance, different arguments can simulate different potential
-    // outputs from the broker
-    EventData eventData = EventHubsModelFactory.EventData(
-        eventBody: new BinaryData($"Sample-Event-{index}"),
-        systemProperties: new Dictionary<string, object>(), //arbitrary value
-        partitionKey: $"sample-key-{index}",
-        sequenceNumber: 1234,
-        offset: 234,
-        enqueuedTime: DateTimeOffset.Parse("9:25 AM"));
-
-    receivedEvents.Add(eventData);
-}
-
-// This sets up the mock to receive the list of events defined above when ReceiveBatchAsync is called
-// on a given partition.
-
-mockReceiver
-    .Setup(r => r.ReceiveBatchAsync(
-        It.IsAny<int>(),
-        It.IsAny<TimeSpan>(),
-        It.IsAny<CancellationToken>()))
-    .ReturnsAsync(receivedEvents);
-
-// The following demonstrates how to use the mocked methods. This would be where application code utilizing
-// the mocked methods could be called and verified.
-
-PartitionReceiver receiver = mockReceiver.Object;
-
-using CancellationTokenSource cancellationTokenSource = new();
-
-IEnumerable<EventData> receivedBatch = await receiver.ReceiveBatchAsync(
-    maximumEventCount: 10,
-    TimeSpan.FromSeconds(1),
-    cancellationTokenSource.Token);
 ```

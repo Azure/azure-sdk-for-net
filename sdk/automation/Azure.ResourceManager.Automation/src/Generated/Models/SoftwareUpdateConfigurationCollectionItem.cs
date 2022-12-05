@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -27,8 +28,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="createdOn"> Creation time of the software update configuration, which only appears in the response. </param>
         /// <param name="lastModifiedOn"> Last time software update configuration was modified, which only appears in the response. </param>
         /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
-        /// <param name="nextRun"> ext run time of the update. </param>
-        internal SoftwareUpdateConfigurationCollectionItem(string name, string id, UpdateConfiguration updateConfiguration, SoftwareUpdateConfigurationTasks tasks, ScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRun)
+        /// <param name="nextRunOn"> ext run time of the update. </param>
+        internal SoftwareUpdateConfigurationCollectionItem(string name, ResourceIdentifier id, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRunOn)
         {
             Name = name;
             Id = id;
@@ -39,19 +40,19 @@ namespace Azure.ResourceManager.Automation.Models
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
-            NextRun = nextRun;
+            NextRunOn = nextRunOn;
         }
 
         /// <summary> Name of the software update configuration. </summary>
         public string Name { get; }
         /// <summary> Resource Id of the software update configuration. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Update specific properties of the software update configuration. </summary>
-        public UpdateConfiguration UpdateConfiguration { get; }
+        public SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration { get; }
         /// <summary> Pre and Post Tasks defined. </summary>
         public SoftwareUpdateConfigurationTasks Tasks { get; }
         /// <summary> execution frequency of the schedule associated with the software update configuration. </summary>
-        public ScheduleFrequency? Frequency { get; }
+        public AutomationScheduleFrequency? Frequency { get; }
         /// <summary> the start time of the update. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> Creation time of the software update configuration, which only appears in the response. </summary>
@@ -61,6 +62,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Provisioning state for the software update configuration, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> ext run time of the update. </summary>
-        public DateTimeOffset? NextRun { get; }
+        public DateTimeOffset? NextRunOn { get; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -18,6 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "DynamicClassificationResults": return DynamicClassificationTaskResult.DeserializeDynamicClassificationTaskResult(element);
                     case "EntityLinkingResults": return EntityLinkingTaskResult.DeserializeEntityLinkingTaskResult(element);
                     case "EntityRecognitionResults": return EntitiesTaskResult.DeserializeEntitiesTaskResult(element);
                     case "KeyPhraseExtractionResults": return KeyPhraseTaskResult.DeserializeKeyPhraseTaskResult(element);
@@ -26,16 +26,7 @@ namespace Azure.AI.TextAnalytics.Models
                     case "SentimentAnalysisResults": return SentimentTaskResult.DeserializeSentimentTaskResult(element);
                 }
             }
-            AnalyzeTextTaskResultsKind kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new AnalyzeTextTaskResult(kind);
+            return UnknownAnalyzeTextTaskResult.DeserializeUnknownAnalyzeTextTaskResult(element);
         }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="denylistValues"/> is null. </exception>
         public DenylistCustomAlertRule(bool isEnabled, IEnumerable<string> denylistValues) : base(isEnabled)
         {
-            if (denylistValues == null)
-            {
-                throw new ArgumentNullException(nameof(denylistValues));
-            }
+            Argument.AssertNotNull(denylistValues, nameof(denylistValues));
 
             DenylistValues = denylistValues.ToList();
             RuleType = "DenylistCustomAlertRule";
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="ruleType"> The type of the custom alert rule. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
         /// <param name="denylistValues"> The values to deny. The format of the values depends on the rule type. </param>
-        internal DenylistCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, ValueType? valueType, IList<string> denylistValues) : base(displayName, description, isEnabled, ruleType, valueType)
+        internal DenylistCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, SecurityValueType? valueType, IList<string> denylistValues) : base(displayName, description, isEnabled, ruleType, valueType)
         {
             DenylistValues = denylistValues;
             RuleType = ruleType ?? "DenylistCustomAlertRule";

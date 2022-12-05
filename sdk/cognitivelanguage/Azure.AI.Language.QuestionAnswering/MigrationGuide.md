@@ -257,5 +257,5 @@ await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
 Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can delete a project using the `DeleteProjectAsync` method:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
+Operation deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
 ```

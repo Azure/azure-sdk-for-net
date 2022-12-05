@@ -1662,9 +1662,9 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
@@ -1691,9 +1691,9 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
@@ -1720,9 +1720,9 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
@@ -1748,9 +1748,9 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
         /// <item><description>Key Phrases Extraction</description></item>
         /// <item><description>Sentiment Analysis</description></item>
-        /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
         /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Text Summarization</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
@@ -2037,6 +2037,146 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
         public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+
+        #endregion
+
+        #region Extract Summary
+
+        /// <summary>
+        /// Performs extractive summarization on the given documents, which consists of extracting
+        /// sentences that collectively represent the most important or relevant information within
+        /// the original content.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
+        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
+        /// sentences for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual ExtractSummaryOperation StartExtractSummary(
+            IEnumerable<string> documents,
+            string language = default,
+            ExtractSummaryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartExtractSummary(documents, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs extractive summarization on the given documents, which consists of extracting
+        /// sentences that collectively represent the most important or relevant information within
+        /// the original content.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
+        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
+        /// sentences for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual ExtractSummaryOperation StartExtractSummary(
+            IEnumerable<TextDocumentInput> documents,
+            ExtractSummaryOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.StartExtractSummary(documents, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs extractive summarization on the given documents, which consists of extracting
+        /// sentences that collectively represent the most important or relevant information within
+        /// the original content.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The additional configurable <see cref="ExtractSummaryOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
+        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
+        /// sentences for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual async Task<ExtractSummaryOperation> StartExtractSummaryAsync(
+            IEnumerable<string> documents,
+            string language = default,
+            ExtractSummaryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartExtractSummaryAsync(documents, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs extractive summarization on the given documents, which consists of extracting
+        /// sentences that collectively represent the most important or relevant information within
+        /// the original content.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/summarization/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="ExtractSummaryOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// An <see cref="ExtractSummaryOperation"/> that can be used to monitor the status of this long-running operation.
+        /// Upon completion, the <see cref="ExtractSummaryOperation"/> will contain the collections of extracted summary
+        /// sentences for each document that was successfully analyzed.
+        /// </returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
+        public virtual async Task<ExtractSummaryOperation> StartExtractSummaryAsync(
+            IEnumerable<TextDocumentInput> documents,
+            ExtractSummaryOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.StartExtractSummaryAsync(documents, options, cancellationToken).ConfigureAwait(false);
+        }
 
         #endregion
 

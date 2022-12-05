@@ -10,16 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownCopyLogDetails : IUtf8JsonSerializable
+    internal partial class UnknownCopyLogDetails
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("copyLogDetailsType");
-            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element)
         {
             DataBoxOrderType copyLogDetailsType = default;

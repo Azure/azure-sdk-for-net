@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks.Sources;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
@@ -23,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the string value.</summary>
         /// <value>The value.</value>
         internal string Value { get; set; }
+        internal bool NullAsEmptyObject { get; set; } = true;
         /// <summary>Gets or sets the child json elements.</summary>
         /// <value>The elements.</value>
         internal List<AuthenticationEventJsonElement> Elements { get; } = new List<AuthenticationEventJsonElement>();
@@ -418,14 +420,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     jsonWriter.WriteStartObject();
                     jsonWriter.WriteEndObject();
                 }
-                else if (!string.IsNullOrEmpty(Value))//If there are no Elements or Properties but a value, write out the value.
+                else if (Value is string sValue)//If there are no Elements or Properties but a value, write out the value.
                 {
-                    WriteObjectToWriter(jsonWriter, Value);
+                    WriteObjectToWriter(jsonWriter, sValue);
                 }
                 else if (Properties.Count == 0)
                 {
-                    jsonWriter.WriteStartObject();
-                    jsonWriter.WriteEndObject();
+                    if (NullAsEmptyObject)
+                    {
+                        jsonWriter.WriteStartObject();
+                        jsonWriter.WriteEndObject();
+                    }
+                    else
+                    {
+                        WriteObjectToWriter(jsonWriter, null);
+                    }
                 }
             }
             else if (_jsonElement.ValueKind == JsonValueKind.Array)

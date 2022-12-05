@@ -10,7 +10,7 @@ using Azure.Messaging.ServiceBus;
 namespace DeadLetterQueue
 {
     // This sample shows how to move messages to the Dead-letter queue, how to retrieve
-    // messages from it, and resubmit corrected message back into the main queue. 
+    // messages from it, and resubmit corrected message back into the main queue.
     public class Program
     {
         private static ServiceBusClient _client;
@@ -52,16 +52,16 @@ namespace DeadLetterQueue
             var cts = new CancellationTokenSource();
             var sender = _client.CreateSender(queueName);
 
-            // For the delivery count scenario, we first send a single message, 
+            // For the delivery count scenario, we first send a single message,
             // and then pick it up and abandon it until is "disappears" from the queue.
-            // Then we fetch the message from the dead-letter queue (DLQ) and inspect it. 
+            // Then we fetch the message from the dead-letter queue (DLQ) and inspect it.
             await SendMessages(sender, 1);
             await ExceedMaxDeliveryAsync(queueName);
 
             // For the fix-up scenario, we send a series of messages to a queue, and
-            // run a receive loop that explicitly pushes messages into the DLQ when 
-            // they don't satisfy a processing condition. The fix-up receive loop inspects 
-            // the DLQ, fixes the "faulty" messages, and resubmits them into processing. 
+            // run a receive loop that explicitly pushes messages into the DLQ when
+            // they don't satisfy a processing condition. The fix-up receive loop inspects
+            // the DLQ, fixes the "faulty" messages, and resubmits them into processing.
             var sendTask = SendMessages(sender, int.MaxValue);
             var receiveTask = ReceiveMessages(queueName, cts.Token);
             var fixupTask = PickUpAndFixDeadletters(queueName, sender, cts.Token);
@@ -72,7 +72,7 @@ namespace DeadLetterQueue
                 Task.Delay(TimeSpan.FromSeconds(10))
             );
 
-            // end the processing 
+            // end the processing
             cts.Cancel();
             // await shutdown and exit
             await Task.WhenAll(sendTask, receiveTask, fixupTask);
@@ -95,9 +95,9 @@ namespace DeadLetterQueue
             };
 
             // send a message for each data entry, but at most maxMessages
-            // we're sending in a loop, but don't block on each send, but 
+            // we're sending in a loop, but don't block on each send, but
             // rather collect all sends in a list and then wait for all of
-            // them to complete asynchronously, which is much faster  
+            // them to complete asynchronously, which is much faster
             var tasks = new List<Task>();
             for (int i = 0; i < Math.Min(data.Length, maxMessages); i++)
             {
@@ -106,8 +106,8 @@ namespace DeadLetterQueue
                 {
                     ContentType = "application/json", // JSON data
                     Subject = i % 2 == 0 ? "Scientist" : "Physicist", // random picked header
-                    MessageId = i.ToString(), // message-id 
-                    TimeToLive = TimeSpan.FromMinutes(2) // message expires in 2 minutes 
+                    MessageId = i.ToString(), // message-id
+                    TimeToLive = TimeSpan.FromMinutes(2) // message expires in 2 minutes
                 };
 
                 // start sending this message
@@ -117,7 +117,7 @@ namespace DeadLetterQueue
                     Console.WriteLine($"Message sent: Id = {message.MessageId}");
                     Console.ResetColor();
                 }
-                
+
                 // After the send task is complete, output this to the console.
                 tasks.Add(sender.SendMessageAsync(message).ContinueWith((t) =>
                 {
@@ -140,7 +140,7 @@ namespace DeadLetterQueue
 
             while (true)
             {
-                // Ask the broker to return any message readily available or return with no 
+                // Ask the broker to return any message readily available or return with no
                 // result after 2 seconds (allowing for clients with great network latency)
                 ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(2));
                 if (msg != null)
@@ -151,18 +151,19 @@ namespace DeadLetterQueue
                 }
                 else
                 {
-                    // Once the system moves the message to the DLQ, the main queue is empty 
+                    // Once the system moves the message to the DLQ, the main queue is empty
                     // and the loop exits as ReceiveAsync returns null.
                     break;
                 }
             }
 
-            // For picking up the message from a DLQ, we make a receiver just like for a 
-            // regular queue. We could also use QueueClient and a registered handler here. 
-            // The required path is constructed with the EntityNameHelper.FormatDeadLetterPath() 
-            // helper method, and always follows the pattern "{entity}/$DeadLetterQueue", 
-            // meaning that for a queue "Q1", the path is "Q1/$DeadLetterQueue" and for a 
-            // topic "T1" and subscription "S1", the path is "T1/Subscriptions/S1/$DeadLetterQueue" 
+            // For picking up the message from a DLQ, we make a receiver just like for a
+            // regular queue. We could also use QueueClient and a registered handler here.
+            // The required path is automatically constructed with the help of
+            // <see cref="ServiceBusReceiverOptions.SubQueue"/> and <see cref="SubQueue.DeadLetter"/>,
+            // and always follows the pattern "{entity}/$DeadLetterQueue",
+            // meaning that for a queue "Q1", the path is "Q1/$DeadLetterQueue" and for a
+            // topic "T1" and subscription "S1", the path is "T1/Subscriptions/S1/$DeadLetterQueue"
             ServiceBusReceiver deadletterReceiver = _client.CreateReceiver(queueName,
                 new ServiceBusReceiverOptions {SubQueue = SubQueue.DeadLetter});
             while (true)
@@ -193,7 +194,7 @@ namespace DeadLetterQueue
             var doneReceiving = new TaskCompletionSource<bool>();
             ServiceBusProcessor processor = _client.CreateProcessor(queueName);
 
-            // close the receiver and factory when the CancellationToken fires 
+            // close the receiver and factory when the CancellationToken fires
             cancellationToken.Register(
                 async () =>
                 {
@@ -204,7 +205,7 @@ namespace DeadLetterQueue
             processor.ProcessMessageAsync += async args =>
             {
                 ServiceBusReceivedMessage message = args.Message;
-                // If the message holds JSON data and the label is set to "Scientist", 
+                // If the message holds JSON data and the label is set to "Scientist",
                 // we accept the message and print it.
                 if (message.Subject != null &&
                     message.ContentType != null &&
@@ -255,7 +256,7 @@ namespace DeadLetterQueue
             ServiceBusProcessor dlqProcessor =
                 _client.CreateProcessor(queueName, new ServiceBusProcessorOptions {SubQueue = SubQueue.DeadLetter});
 
-            // close the receiver and factory when the CancellationToken fires 
+            // close the receiver and factory when the CancellationToken fires
             cancellationToken.Register(
                 async () =>
                 {
@@ -267,7 +268,7 @@ namespace DeadLetterQueue
             dlqProcessor.ProcessMessageAsync += async args =>
             {
                 // first, we create a new sendable message of the picked up message
-                // that we can resubmit. 
+                // that we can resubmit.
                 var resubmitMessage = new ServiceBusMessage(args.Message);
                 // if the message has an "error" we know the main loop
                 // can't handle, let's fix the message

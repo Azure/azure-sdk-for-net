@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -57,49 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "WranglingDataFlow": return FactoryWranglingDataFlowDefinition.DeserializeFactoryWranglingDataFlowDefinition(element);
                 }
             }
-            string type = default;
-            Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("annotations"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
-                    }
-                    annotations = array;
-                    continue;
-                }
-                if (property.NameEquals("folder"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownFactoryDataFlowDefinition(type, description.Value, Optional.ToList(annotations), folder.Value);
+            return UnknownDataFlow.DeserializeUnknownDataFlow(element);
         }
     }
 }

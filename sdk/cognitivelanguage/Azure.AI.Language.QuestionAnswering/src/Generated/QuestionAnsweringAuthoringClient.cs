@@ -71,49 +71,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProjectDetailsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetProjectDetailsAsync("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("projectName").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("language").ToString());
-        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
-        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectMetadata</c>:
-        /// <code>{
-        ///   projectName: string, # Optional. Name of the project.
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjectDetailsAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectDetailsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -139,49 +97,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProjectDetails with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetProjectDetails("<projectName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("projectName").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("language").ToString());
-        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
-        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectMetadata</c>:
-        /// <code>{
-        ///   projectName: string, # Optional. Name of the project.
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjectDetails(String,RequestContext)']/*" />
         public virtual Response GetProjectDetails(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -208,86 +124,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     language = "<language>",
-        /// };
-        /// 
-        /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     description = "<description>",
-        ///     language = "<language>",
-        ///     multilingualResource = true,
-        ///     settings = new {
-        ///         defaultAnswer = "<defaultAnswer>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("projectName").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("language").ToString());
-        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
-        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>CreateProjectOptions</c>:
-        /// <code>{
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectMetadata</c>:
-        /// <code>{
-        ///   projectName: string, # Optional. Name of the project.
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='CreateProjectAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -315,86 +152,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     language = "<language>",
-        /// };
-        /// 
-        /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     description = "<description>",
-        ///     language = "<language>",
-        ///     multilingualResource = true,
-        ///     settings = new {
-        ///         defaultAnswer = "<defaultAnswer>",
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("projectName").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("language").ToString());
-        /// Console.WriteLine(result.GetProperty("multilingualResource").ToString());
-        /// Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>CreateProjectOptions</c>:
-        /// <code>{
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectMetadata</c>:
-        /// <code>{
-        ///   projectName: string, # Optional. Name of the project.
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='CreateProject(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -421,42 +179,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeleteStatusAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetDeleteStatusAsync("<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeleteStatusAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetDeleteStatusAsync(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -482,42 +205,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeleteStatus with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetDeleteStatus("<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeleteStatus(String,RequestContext)']/*" />
         public virtual Response GetDeleteStatus(string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -544,41 +232,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetExportStatusAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetExportStatusAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -606,41 +260,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetExportStatus with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetExportStatus("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetExportStatus(String,String,RequestContext)']/*" />
         public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -668,42 +288,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetImportStatusAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetImportStatusAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -731,42 +316,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetImportStatus with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetImportStatus("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetImportStatus(String,String,RequestContext)']/*" />
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -795,42 +345,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeployStatusAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeployStatusAsync(String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -860,42 +375,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeployStatus with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeployStatus(String,String,String,RequestContext)']/*" />
         public virtual Response GetDeployStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -924,58 +404,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateSynonymsAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call UpdateSynonymsAsync with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     value = new[] {
-        ///         new {
-        ///             alterations = new[] {
-        ///                 "<String>"
-        ///             },
-        ///         }
-        ///     },
-        ///     nextLink = "<nextLink>",
-        /// };
-        /// 
-        /// Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SynonymAssets</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       alterations: [string], # Required. Collection of word alterations.
-        ///     }
-        ///   ], # Optional. Collection of synonyms.
-        ///   nextLink: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSynonymsAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateSynonymsAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1003,58 +432,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateSynonyms with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call UpdateSynonyms with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     value = new[] {
-        ///         new {
-        ///             alterations = new[] {
-        ///                 "<String>"
-        ///             },
-        ///         }
-        ///     },
-        ///     nextLink = "<nextLink>",
-        /// };
-        /// 
-        /// Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>SynonymAssets</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       alterations: [string], # Required. Collection of word alterations.
-        ///     }
-        ///   ], # Optional. Collection of synonyms.
-        ///   nextLink: string, # Optional.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSynonyms(String,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateSynonyms(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1082,42 +460,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetUpdateSourcesStatusAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateSourcesStatusAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1145,42 +488,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetUpdateSourcesStatus with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateSourcesStatus(String,String,RequestContext)']/*" />
         public virtual Response GetUpdateSourcesStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1208,42 +516,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetUpdateQnasStatusAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateQnasStatusAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetUpdateQnasStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1271,42 +544,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetUpdateQnasStatus with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetUpdateQnasStatus(String,String,RequestContext)']/*" />
         public virtual Response GetUpdateQnasStatus(string projectName, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1334,58 +572,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call AddFeedbackAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call AddFeedbackAsync with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     records = new[] {
-        ///         new {
-        ///             userId = "<userId>",
-        ///             userQuestion = "<userQuestion>",
-        ///             qnaId = 1234,
-        ///         }
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActiveLearningFeedback</c>:
-        /// <code>{
-        ///   records: [
-        ///     {
-        ///       userId: string, # Optional. Unique identifier of the user.
-        ///       userQuestion: string, # Optional. User suggested question for the QnA.
-        ///       qnaId: number, # Optional. Unique ID of the QnA.
-        ///     }
-        ///   ], # Optional. A list of Feedback Records for Active Learning.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='AddFeedbackAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddFeedbackAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1413,58 +600,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call AddFeedback with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// This sample shows how to call AddFeedback with all parameters and request content.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     records = new[] {
-        ///         new {
-        ///             userId = "<userId>",
-        ///             userQuestion = "<userQuestion>",
-        ///             qnaId = 1234,
-        ///         }
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ActiveLearningFeedback</c>:
-        /// <code>{
-        ///   records: [
-        ///     {
-        ///       userId: string, # Optional. Unique identifier of the user.
-        ///       userQuestion: string, # Optional. User suggested question for the QnA.
-        ///       qnaId: number, # Optional. Unique ID of the QnA.
-        ///     }
-        ///   ], # Optional. A list of Feedback Records for Active Learning.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='AddFeedback(String,RequestContent,RequestContext)']/*" />
         public virtual Response AddFeedback(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -1485,74 +621,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProjectsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetProjectsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetProjectsAsync(1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("language").ToString());
-        ///     Console.WriteLine(result.GetProperty("multilingualResource").ToString());
-        ///     Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectsMetadataValue</c>:
-        /// <code>{
-        ///   projectName: string, # Optional. Name of the project.
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjectsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("QuestionAnsweringAuthoringClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementationAsync("QuestionAnsweringAuthoringClient.GetProjects", context);
         }
 
-        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1560,8 +638,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(context)
+                        : CreateGetProjectsNextPageRequest(nextLink, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1570,74 +648,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Gets all projects for a user. </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetProjects and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetProjects())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetProjects(1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("language").ToString());
-        ///     Console.WriteLine(result.GetProperty("multilingualResource").ToString());
-        ///     Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectsMetadataValue</c>:
-        /// <code>{
-        ///   projectName: string, # Optional. Name of the project.
-        ///   description: string, # Optional. Description of the project.
-        ///   language: string, # Optional. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///   multilingualResource: boolean, # Optional. Resource enabled for multiple languages across projects or not.
-        ///   settings: {
-        ///     defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///   }, # Optional. Configurable settings of the Project.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Project creation date-time.
-        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. Represents the project last modified date-time.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetProjects(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetProjects(RequestContext context = null)
         {
-            return GetProjectsImplementation("QuestionAnsweringAuthoringClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementation("QuestionAnsweringAuthoringClient.GetProjects", context);
         }
 
-        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1645,8 +665,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetProjectsRequest(maxCount, skip, maxpagesize, context)
-                        : CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
+                        ? CreateGetProjectsRequest(context)
+                        : CreateGetProjectsNextPageRequest(nextLink, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1656,64 +676,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDeploymentsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("deploymentName").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectDeploymentsList</c>:
-        /// <code>{
-        ///   deploymentName: string, # Optional. Name of the deployment.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentsAsync(String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementationAsync("QuestionAnsweringAuthoringClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementationAsync("QuestionAnsweringAuthoringClient.GetDeployments", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1721,8 +697,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1732,64 +708,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> List all deployments of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetDeployments with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetDeployments("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetDeployments with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetDeployments("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("deploymentName").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectDeploymentsList</c>:
-        /// <code>{
-        ///   deploymentName: string, # Optional. Name of the deployment.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetDeployments(String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementation("QuestionAnsweringAuthoringClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementation("QuestionAnsweringAuthoringClient.GetDeployments", projectName, context);
         }
 
-        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1797,8 +729,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetDeploymentsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetDeploymentsRequest(projectName, context)
+                        : CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1808,62 +740,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSynonymsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetSynonymsAsync("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSynonymsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SynonymAsset</c>:
-        /// <code>{
-        ///   alterations: [string], # Required. Collection of word alterations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSynonymsAsync(String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSynonymsAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementationAsync("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementationAsync("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -1871,8 +761,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSynonymsRequest(projectName, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1882,62 +772,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the synonyms of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSynonyms with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetSynonyms("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSynonyms with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetSynonyms("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SynonymAsset</c>:
-        /// <code>{
-        ///   alterations: [string], # Required. Collection of word alterations.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> GetSynonyms(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSynonyms(String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSynonyms(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementation("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementation("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, context);
         }
 
-        private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -1945,8 +793,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSynonymsRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSynonymsRequest(projectName, context)
+                        : CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -1956,71 +804,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSourcesAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetSourcesAsync("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSourcesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetSourcesAsync("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaSourcesMetadata</c>:
-        /// <code>{
-        ///   displayName: string, # Optional. Friendly name of the Source.
-        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///   sourceUri: string, # Required. URI location for the file or url.
-        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSourcesAsync(String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSourcesAsync(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementationAsync("QuestionAnsweringAuthoringClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementationAsync("QuestionAnsweringAuthoringClient.GetSources", projectName, context);
         }
 
-        private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2028,8 +825,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSourcesRequest(projectName, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2039,71 +836,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Gets all the sources of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSources with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetSources("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSources with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetSources("<projectName>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaSourcesMetadata</c>:
-        /// <code>{
-        ///   displayName: string, # Optional. Friendly name of the Source.
-        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///   sourceUri: string, # Required. URI location for the file or url.
-        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> GetSources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetSources(String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSources(string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementation("QuestionAnsweringAuthoringClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementation("QuestionAnsweringAuthoringClient.GetSources", projectName, context);
         }
 
-        private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2111,8 +857,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSourcesRequest(projectName, maxCount, skip, maxpagesize, context)
-                        : CreateGetSourcesNextPageRequest(nextLink, projectName, maxCount, skip, maxpagesize, context);
+                        ? CreateGetSourcesRequest(projectName, context)
+                        : CreateGetSourcesNextPageRequest(nextLink, projectName, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2123,118 +869,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetQnasAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetQnasAsync("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetQnasAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaAsset</c>:
-        /// <code>{
-        ///   id: number, # Optional. Unique ID for the QnA.
-        ///   answer: string, # Optional. Answer text.
-        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///   questions: [string], # Optional. List of questions associated with the answer.
-        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///   dialog: {
-        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///     prompts: [
-        ///       {
-        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///         qna: {
-        ///           id: number, # Optional. Unique ID for the QnA.
-        ///           answer: string, # Optional. Answer text.
-        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///           questions: [string], # Optional. List of questions associated with the answer.
-        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///           dialog: QnaDialog, # Optional. Context of a QnA.
-        ///           activeLearningSuggestions: [
-        ///             {
-        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///               suggestedQuestions: [
-        ///                 {
-        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                 }
-        ///               ], # Optional. List of all suggested questions for the QnA.
-        ///             }
-        ///           ], # Optional. List of Active Learning suggestions for the QnA.
-        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///       }
-        ///     ], # Optional. List of prompts associated with the answer.
-        ///   }, # Optional. Context of a QnA.
-        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetQnasAsync(String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetQnasAsync(string projectName, string source = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementationAsync("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementationAsync("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, context);
         }
 
-        private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -2242,8 +890,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, maxCount, skip, maxpagesize, context)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, maxCount, skip, maxpagesize, context);
+                        ? CreateGetQnasRequest(projectName, source, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2254,118 +902,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Gets all the QnAs of a project. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="source"> Source of the QnA. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetQnas with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetQnas("<projectName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetQnas with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaAsset</c>:
-        /// <code>{
-        ///   id: number, # Optional. Unique ID for the QnA.
-        ///   answer: string, # Optional. Answer text.
-        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///   questions: [string], # Optional. List of questions associated with the answer.
-        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///   dialog: {
-        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///     prompts: [
-        ///       {
-        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///         qna: {
-        ///           id: number, # Optional. Unique ID for the QnA.
-        ///           answer: string, # Optional. Answer text.
-        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///           questions: [string], # Optional. List of questions associated with the answer.
-        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///           dialog: QnaDialog, # Optional. Context of a QnA.
-        ///           activeLearningSuggestions: [
-        ///             {
-        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///               suggestedQuestions: [
-        ///                 {
-        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                 }
-        ///               ], # Optional. List of all suggested questions for the QnA.
-        ///             }
-        ///           ], # Optional. List of Active Learning suggestions for the QnA.
-        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///       }
-        ///     ], # Optional. List of prompts associated with the answer.
-        ///   }, # Optional. Context of a QnA.
-        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='GetQnas(String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetQnas(string projectName, string source = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementation("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementation("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, context);
         }
 
-        private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -2373,8 +923,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetQnasRequest(projectName, source, maxCount, skip, maxpagesize, context)
-                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, maxCount, skip, maxpagesize, context);
+                        ? CreateGetQnasRequest(projectName, source, context)
+                        : CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -2389,45 +939,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteProjectAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,String,RequestContext)']/*" />
+        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2436,7 +950,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2452,45 +966,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteProject with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
-        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,String,RequestContext)']/*" />
+        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2499,7 +977,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2518,57 +996,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call ExportAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// This sample shows how to call ExportAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,String,String,String,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -2597,57 +1025,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call Export with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = client.Export(WaitUntil.Completed, "<projectName>");
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// This sample shows how to call Export with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='Export(WaitUntil,String,String,String,RequestContext)']/*" />
         public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -2677,202 +1055,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call ImportAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// This sample shows how to call ImportAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     metadata = new {
-        ///         description = "<description>",
-        ///         language = "<language>",
-        ///         multilingualResource = true,
-        ///         settings = new {
-        ///             defaultAnswer = "<defaultAnswer>",
-        ///         },
-        ///     },
-        ///     assets = new {
-        ///         synonyms = new[] {
-        ///             new {
-        ///                 alterations = new[] {
-        ///                     "<String>"
-        ///                 },
-        ///             }
-        ///         },
-        ///         qnas = new[] {
-        ///             new {
-        ///                 id = 1234,
-        ///                 answer = "<answer>",
-        ///                 source = "<source>",
-        ///                 questions = new[] {
-        ///                     "<String>"
-        ///                 },
-        ///                 metadata = new {
-        ///                     key = "<String>",
-        ///                 },
-        ///                 dialog = new {
-        ///                     isContextOnly = true,
-        ///                     prompts = new[] {
-        ///                         new {
-        ///                             displayOrder = 1234,
-        ///                             qnaId = 1234,
-        ///                             qna = new {
-        ///                                 id = 1234,
-        ///                                 answer = "<answer>",
-        ///                                 source = "<source>",
-        ///                                 questions = new[] {
-        ///                                     "<String>"
-        ///                                 },
-        ///                                 metadata = new {
-        ///                                     key = "<String>",
-        ///                                 },
-        ///                                 activeLearningSuggestions = new[] {
-        ///                                     new {
-        ///                                         clusterHead = "<clusterHead>",
-        ///                                         suggestedQuestions = new[] {
-        ///                                             new {
-        ///                                                 question = "<question>",
-        ///                                                 userSuggestedCount = 1234,
-        ///                                                 autoSuggestedCount = 1234,
-        ///                                             }
-        ///                                         },
-        ///                                     }
-        ///                                 },
-        ///                             },
-        ///                             displayText = "<displayText>",
-        ///                         }
-        ///                     },
-        ///                 },
-        ///                 activeLearningSuggestions = new[] {
-        ///                     new {
-        ///                         clusterHead = "<clusterHead>",
-        ///                         suggestedQuestions = new[] {
-        ///                             new {
-        ///                                 question = "<question>",
-        ///                                 userSuggestedCount = 1234,
-        ///                                 autoSuggestedCount = 1234,
-        ///                             }
-        ///                         },
-        ///                     }
-        ///                 },
-        ///             }
-        ///         },
-        ///     },
-        ///     fileUri = "<fileUri>",
-        /// };
-        /// 
-        /// var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ImportJobOptions</c>:
-        /// <code>{
-        ///   metadata: {
-        ///     description: string, # Optional. Description of the project.
-        ///     language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///     multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-        ///     settings: {
-        ///       defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///     }, # Optional. Configurable settings of the Project.
-        ///   }, # Optional. Parameters needed to create the project.
-        ///   assets: {
-        ///     synonyms: [
-        ///       {
-        ///         alterations: [string], # Required. Collection of word alterations.
-        ///       }
-        ///     ], # Optional. Collection of synonyms.
-        ///     qnas: [
-        ///       {
-        ///         id: number, # Optional. Unique ID for the QnA.
-        ///         answer: string, # Optional. Answer text.
-        ///         source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///         questions: [string], # Optional. List of questions associated with the answer.
-        ///         metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///         dialog: {
-        ///           isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///           prompts: [
-        ///             {
-        ///               displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///               qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///               qna: {
-        ///                 id: number, # Optional. Unique ID for the QnA.
-        ///                 answer: string, # Optional. Answer text.
-        ///                 source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///                 questions: [string], # Optional. List of questions associated with the answer.
-        ///                 metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///                 dialog: QnaDialog, # Optional. Context of a QnA.
-        ///                 activeLearningSuggestions: [
-        ///                   {
-        ///                     clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///                     suggestedQuestions: [
-        ///                       {
-        ///                         question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                         userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                         autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                       }
-        ///                     ], # Optional. List of all suggested questions for the QnA.
-        ///                   }
-        ///                 ], # Optional. List of Active Learning suggestions for the QnA.
-        ///               }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///               displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///             }
-        ///           ], # Optional. List of prompts associated with the answer.
-        ///         }, # Optional. Context of a QnA.
-        ///         activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///       }
-        ///     ], # Optional. List of QnA records to import.
-        ///   }, # Optional. All assets for this project.
-        ///   fileUri: string, # Optional. Import data File URI.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,String,RequestContent,String,String,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -2902,202 +1085,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call Import with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// This sample shows how to call Import with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     metadata = new {
-        ///         description = "<description>",
-        ///         language = "<language>",
-        ///         multilingualResource = true,
-        ///         settings = new {
-        ///             defaultAnswer = "<defaultAnswer>",
-        ///         },
-        ///     },
-        ///     assets = new {
-        ///         synonyms = new[] {
-        ///             new {
-        ///                 alterations = new[] {
-        ///                     "<String>"
-        ///                 },
-        ///             }
-        ///         },
-        ///         qnas = new[] {
-        ///             new {
-        ///                 id = 1234,
-        ///                 answer = "<answer>",
-        ///                 source = "<source>",
-        ///                 questions = new[] {
-        ///                     "<String>"
-        ///                 },
-        ///                 metadata = new {
-        ///                     key = "<String>",
-        ///                 },
-        ///                 dialog = new {
-        ///                     isContextOnly = true,
-        ///                     prompts = new[] {
-        ///                         new {
-        ///                             displayOrder = 1234,
-        ///                             qnaId = 1234,
-        ///                             qna = new {
-        ///                                 id = 1234,
-        ///                                 answer = "<answer>",
-        ///                                 source = "<source>",
-        ///                                 questions = new[] {
-        ///                                     "<String>"
-        ///                                 },
-        ///                                 metadata = new {
-        ///                                     key = "<String>",
-        ///                                 },
-        ///                                 activeLearningSuggestions = new[] {
-        ///                                     new {
-        ///                                         clusterHead = "<clusterHead>",
-        ///                                         suggestedQuestions = new[] {
-        ///                                             new {
-        ///                                                 question = "<question>",
-        ///                                                 userSuggestedCount = 1234,
-        ///                                                 autoSuggestedCount = 1234,
-        ///                                             }
-        ///                                         },
-        ///                                     }
-        ///                                 },
-        ///                             },
-        ///                             displayText = "<displayText>",
-        ///                         }
-        ///                     },
-        ///                 },
-        ///                 activeLearningSuggestions = new[] {
-        ///                     new {
-        ///                         clusterHead = "<clusterHead>",
-        ///                         suggestedQuestions = new[] {
-        ///                             new {
-        ///                                 question = "<question>",
-        ///                                 userSuggestedCount = 1234,
-        ///                                 autoSuggestedCount = 1234,
-        ///                             }
-        ///                         },
-        ///                     }
-        ///                 },
-        ///             }
-        ///         },
-        ///     },
-        ///     fileUri = "<fileUri>",
-        /// };
-        /// 
-        /// var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>ImportJobOptions</c>:
-        /// <code>{
-        ///   metadata: {
-        ///     description: string, # Optional. Description of the project.
-        ///     language: string, # Required. Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.
-        ///     multilingualResource: boolean, # Optional. Set to true to enable creating knowledgebases in different languages for the same resource.
-        ///     settings: {
-        ///       defaultAnswer: string, # Optional. Default Answer response when no good match is found in the knowledge base.
-        ///     }, # Optional. Configurable settings of the Project.
-        ///   }, # Optional. Parameters needed to create the project.
-        ///   assets: {
-        ///     synonyms: [
-        ///       {
-        ///         alterations: [string], # Required. Collection of word alterations.
-        ///       }
-        ///     ], # Optional. Collection of synonyms.
-        ///     qnas: [
-        ///       {
-        ///         id: number, # Optional. Unique ID for the QnA.
-        ///         answer: string, # Optional. Answer text.
-        ///         source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///         questions: [string], # Optional. List of questions associated with the answer.
-        ///         metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///         dialog: {
-        ///           isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///           prompts: [
-        ///             {
-        ///               displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///               qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///               qna: {
-        ///                 id: number, # Optional. Unique ID for the QnA.
-        ///                 answer: string, # Optional. Answer text.
-        ///                 source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///                 questions: [string], # Optional. List of questions associated with the answer.
-        ///                 metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///                 dialog: QnaDialog, # Optional. Context of a QnA.
-        ///                 activeLearningSuggestions: [
-        ///                   {
-        ///                     clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///                     suggestedQuestions: [
-        ///                       {
-        ///                         question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                         userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                         autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                       }
-        ///                     ], # Optional. List of all suggested questions for the QnA.
-        ///                   }
-        ///                 ], # Optional. List of Active Learning suggestions for the QnA.
-        ///               }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///               displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///             }
-        ///           ], # Optional. List of prompts associated with the answer.
-        ///         }, # Optional. Context of a QnA.
-        ///         activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///       }
-        ///     ], # Optional. List of QnA records to import.
-        ///   }, # Optional. All assets for this project.
-        ///   fileUri: string, # Optional. Import data File URI.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
-        /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        /// }
-        /// </code>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='Import(WaitUntil,String,RequestContent,String,String,RequestContext)']/*" />
         public virtual Operation<BinaryData> Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -3125,36 +1113,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeployProjectAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-        /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("deploymentName").ToString());
-        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectDeployment</c>:
-        /// <code>{
-        ///   deploymentName: string, # Optional. Name of the deployment.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeployProjectAsync(WaitUntil,String,String,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -3183,36 +1142,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call DeployProject with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-        /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("deploymentName").ToString());
-        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ProjectDeployment</c>:
-        /// <code>{
-        ///   deploymentName: string, # Optional. Name of the deployment.
-        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='DeployProject(WaitUntil,String,String,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -3241,73 +1171,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="AsyncPageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateSourcesAsync with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new[] {
-        ///     new {
-        ///         op = "add",
-        ///         value = new {
-        ///             displayName = "<displayName>",
-        ///             source = "<source>",
-        ///             sourceUri = "<sourceUri>",
-        ///             sourceKind = "file",
-        ///             contentStructureKind = "unstructured",
-        ///         },
-        ///     }
-        /// };
-        /// 
-        /// var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// 
-        /// var response = await operation.WaitForCompletionAsync();
-        /// await foreach (var data in response.Value)
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload and one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>UpdateSourceRecord</c>:
-        /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-        ///   value: {
-        ///     displayName: string, # Optional. Friendly name of the Source.
-        ///     source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///     sourceUri: string, # Required. URI location for the file or url.
-        ///     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///     contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///   }, # Required. Update source record.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaSourcesMetadata</c>:
-        /// <code>{
-        ///   displayName: string, # Optional. Friendly name of the Source.
-        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///   sourceUri: string, # Required. URI location for the file or url.
-        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSourcesAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<AsyncPageable<BinaryData>>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -3354,73 +1218,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="Pageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateSources with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new[] {
-        ///     new {
-        ///         op = "add",
-        ///         value = new {
-        ///             displayName = "<displayName>",
-        ///             source = "<source>",
-        ///             sourceUri = "<sourceUri>",
-        ///             sourceKind = "file",
-        ///             contentStructureKind = "unstructured",
-        ///         },
-        ///     }
-        /// };
-        /// 
-        /// var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// 
-        /// var response = operation.WaitForCompletion();
-        /// foreach (var data in response.Value)
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload and one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>UpdateSourceRecord</c>:
-        /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-        ///   value: {
-        ///     displayName: string, # Optional. Friendly name of the Source.
-        ///     source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///     sourceUri: string, # Required. URI location for the file or url.
-        ///     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///     contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///   }, # Required. Update source record.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaSourcesMetadata</c>:
-        /// <code>{
-        ///   displayName: string, # Optional. Friendly name of the Source.
-        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
-        ///   sourceUri: string, # Required. URI location for the file or url.
-        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
-        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateSources(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual Operation<Pageable<BinaryData>> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -3467,170 +1265,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="AsyncPageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateQnasAsync with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new[] {
-        ///     new {
-        ///         op = "add",
-        ///         value = new {
-        ///             id = 1234,
-        ///             answer = "<answer>",
-        ///             source = "<source>",
-        ///             questions = new[] {
-        ///                 "<String>"
-        ///             },
-        ///             metadata = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             dialog = new {
-        ///                 isContextOnly = true,
-        ///                 prompts = new[] {
-        ///                     new {
-        ///                         displayOrder = 1234,
-        ///                         qnaId = 1234,
-        ///                         displayText = "<displayText>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///             activeLearningSuggestions = new[] {
-        ///                 new {
-        ///                     clusterHead = "<clusterHead>",
-        ///                     suggestedQuestions = new[] {
-        ///                         new {
-        ///                             question = "<question>",
-        ///                             userSuggestedCount = 1234,
-        ///                             autoSuggestedCount = 1234,
-        ///                         }
-        ///                     },
-        ///                 }
-        ///             },
-        ///         },
-        ///     }
-        /// };
-        /// 
-        /// var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// 
-        /// var response = await operation.WaitForCompletionAsync();
-        /// await foreach (var data in response.Value)
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload and one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>UpdateQnaRecord</c>:
-        /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-        ///   value: {
-        ///     id: number, # Optional. Unique ID for the QnA.
-        ///     answer: string, # Optional. Answer text.
-        ///     source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///     questions: [string], # Optional. List of questions associated with the answer.
-        ///     metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///     dialog: {
-        ///       isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///       prompts: [
-        ///         {
-        ///           displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///           qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///           qna: QnaRecord, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///           displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///         }
-        ///       ], # Optional. List of prompts associated with the answer.
-        ///     }, # Optional. Context of a QnA.
-        ///     activeLearningSuggestions: [
-        ///       {
-        ///         clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///         suggestedQuestions: [
-        ///           {
-        ///             question: string, # Optional. Question suggested by the Active Learning feature.
-        ///             userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///             autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///           }
-        ///         ], # Optional. List of all suggested questions for the QnA.
-        ///       }
-        ///     ], # Optional. List of Active Learning suggestions for the QnA.
-        ///   }, # Required. QnA record.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaAsset</c>:
-        /// <code>{
-        ///   id: number, # Optional. Unique ID for the QnA.
-        ///   answer: string, # Optional. Answer text.
-        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///   questions: [string], # Optional. List of questions associated with the answer.
-        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///   dialog: {
-        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///     prompts: [
-        ///       {
-        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///         qna: {
-        ///           id: number, # Optional. Unique ID for the QnA.
-        ///           answer: string, # Optional. Answer text.
-        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///           questions: [string], # Optional. List of questions associated with the answer.
-        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///           dialog: QnaDialog, # Optional. Context of a QnA.
-        ///           activeLearningSuggestions: [
-        ///             {
-        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///               suggestedQuestions: [
-        ///                 {
-        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                 }
-        ///               ], # Optional. List of all suggested questions for the QnA.
-        ///             }
-        ///           ], # Optional. List of Active Learning suggestions for the QnA.
-        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///       }
-        ///     ], # Optional. List of prompts associated with the answer.
-        ///   }, # Optional. Context of a QnA.
-        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateQnasAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<AsyncPageable<BinaryData>>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -3677,170 +1312,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="Pageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call UpdateQnas with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
-        /// 
-        /// var data = new[] {
-        ///     new {
-        ///         op = "add",
-        ///         value = new {
-        ///             id = 1234,
-        ///             answer = "<answer>",
-        ///             source = "<source>",
-        ///             questions = new[] {
-        ///                 "<String>"
-        ///             },
-        ///             metadata = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             dialog = new {
-        ///                 isContextOnly = true,
-        ///                 prompts = new[] {
-        ///                     new {
-        ///                         displayOrder = 1234,
-        ///                         qnaId = 1234,
-        ///                         displayText = "<displayText>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///             activeLearningSuggestions = new[] {
-        ///                 new {
-        ///                     clusterHead = "<clusterHead>",
-        ///                     suggestedQuestions = new[] {
-        ///                         new {
-        ///                             question = "<question>",
-        ///                             userSuggestedCount = 1234,
-        ///                             autoSuggestedCount = 1234,
-        ///                         }
-        ///                     },
-        ///                 }
-        ///             },
-        ///         },
-        ///     }
-        /// };
-        /// 
-        /// var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-        /// 
-        /// var response = operation.WaitForCompletion();
-        /// foreach (var data in response.Value)
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request payload and one item in the pageable response.
-        /// Additional information can be found in the service REST API documentation:
-        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>UpdateQnaRecord</c>:
-        /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
-        ///   value: {
-        ///     id: number, # Optional. Unique ID for the QnA.
-        ///     answer: string, # Optional. Answer text.
-        ///     source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///     questions: [string], # Optional. List of questions associated with the answer.
-        ///     metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///     dialog: {
-        ///       isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///       prompts: [
-        ///         {
-        ///           displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///           qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///           qna: QnaRecord, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///           displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///         }
-        ///       ], # Optional. List of prompts associated with the answer.
-        ///     }, # Optional. Context of a QnA.
-        ///     activeLearningSuggestions: [
-        ///       {
-        ///         clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///         suggestedQuestions: [
-        ///           {
-        ///             question: string, # Optional. Question suggested by the Active Learning feature.
-        ///             userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///             autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///           }
-        ///         ], # Optional. List of all suggested questions for the QnA.
-        ///       }
-        ///     ], # Optional. List of Active Learning suggestions for the QnA.
-        ///   }, # Required. QnA record.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>QnaAsset</c>:
-        /// <code>{
-        ///   id: number, # Optional. Unique ID for the QnA.
-        ///   answer: string, # Optional. Answer text.
-        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///   questions: [string], # Optional. List of questions associated with the answer.
-        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///   dialog: {
-        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
-        ///     prompts: [
-        ///       {
-        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
-        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
-        ///         qna: {
-        ///           id: number, # Optional. Unique ID for the QnA.
-        ///           answer: string, # Optional. Answer text.
-        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
-        ///           questions: [string], # Optional. List of questions associated with the answer.
-        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
-        ///           dialog: QnaDialog, # Optional. Context of a QnA.
-        ///           activeLearningSuggestions: [
-        ///             {
-        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
-        ///               suggestedQuestions: [
-        ///                 {
-        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
-        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
-        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
-        ///                 }
-        ///               ], # Optional. List of all suggested questions for the QnA.
-        ///             }
-        ///           ], # Optional. List of Active Learning suggestions for the QnA.
-        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
-        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
-        ///       }
-        ///     ], # Optional. List of prompts associated with the answer.
-        ///   }, # Optional. Context of a QnA.
-        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/QuestionAnsweringAuthoringClient.xml" path="doc/members/member[@name='UpdateQnas(WaitUntil,String,RequestContent,RequestContext)']/*" />
         public virtual Operation<Pageable<BinaryData>> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -3878,7 +1350,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3888,18 +1360,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/query-knowledgebases/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -3941,7 +1401,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -4097,7 +1557,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4109,24 +1569,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSynonymsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4138,18 +1586,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4174,7 +1610,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSourcesRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4186,18 +1622,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -4240,7 +1664,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetQnasRequest(string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQnasRequest(string projectName, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4255,18 +1679,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             if (source != null)
             {
                 uri.AppendQuery("source", source, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -4329,7 +1741,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4343,7 +1755,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4357,7 +1769,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4371,7 +1783,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4385,7 +1797,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -4431,6 +1843,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
         private static ResponseClassifier _responseClassifier204;

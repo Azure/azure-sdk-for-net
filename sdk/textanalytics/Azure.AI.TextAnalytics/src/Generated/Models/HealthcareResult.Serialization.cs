@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static HealthcareResult DeserializeHealthcareResult(JsonElement element)
         {
             IList<HealthcareResultDocumentsItem> documents = default;
-            IList<DocumentError> errors = default;
+            IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -61,10 +61,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("errors"))
                 {
-                    List<DocumentError> array = new List<DocumentError>();
+                    List<InputError> array = new List<InputError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentError.DeserializeDocumentError(item));
+                        array.Add(InputError.DeserializeInputError(item));
                     }
                     errors = array;
                     continue;

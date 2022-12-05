@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -22,26 +23,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/> or <paramref name="clientIp"/> is null. </exception>
         internal ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, DateTimeOffset? openedOn)
         {
-            if (handleId == null)
-            {
-                throw new ArgumentNullException(nameof(handleId));
-            }
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (fileId == null)
-            {
-                throw new ArgumentNullException(nameof(fileId));
-            }
-            if (sessionId == null)
-            {
-                throw new ArgumentNullException(nameof(sessionId));
-            }
-            if (clientIp == null)
-            {
-                throw new ArgumentNullException(nameof(clientIp));
-            }
+            Argument.AssertNotNull(handleId, nameof(handleId));
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(fileId, nameof(fileId));
+            Argument.AssertNotNull(sessionId, nameof(sessionId));
+            Argument.AssertNotNull(clientIp, nameof(clientIp));
 
             HandleId = handleId;
             Path = path;

@@ -34,16 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AccountKey": return AccountKeyDatastoreSecrets.DeserializeAccountKeyDatastoreSecrets(element);
                 }
             }
-            SecretsType secretsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("secretsType"))
-                {
-                    secretsType = new SecretsType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDatastoreSecrets(secretsType);
+            return UnknownDatastoreSecrets.DeserializeUnknownDatastoreSecrets(element);
         }
     }
 }

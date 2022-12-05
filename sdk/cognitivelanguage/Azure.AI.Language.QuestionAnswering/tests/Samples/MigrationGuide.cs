@@ -144,7 +144,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
+            Operation deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
         }
 

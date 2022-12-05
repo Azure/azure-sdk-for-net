@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Automation
         /// <param name="configuration"> Gets or sets the configuration of the node. </param>
         /// <param name="source"> Source of node configuration. </param>
         /// <param name="nodeCount"> Number of nodes with this node configuration assigned. </param>
-        /// <param name="incrementNodeConfigurationBuild"> If a new build version of NodeConfiguration is required. </param>
-        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? incrementNodeConfigurationBuild) : base(id, name, resourceType, systemData)
+        /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
+        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             CreatedOn = createdOn;
             Configuration = configuration;
             Source = source;
             NodeCount = nodeCount;
-            IncrementNodeConfigurationBuild = incrementNodeConfigurationBuild;
+            IsIncrementNodeConfigurationBuildRequired = isIncrementNodeConfigurationBuildRequired;
         }
 
         /// <summary> Gets or sets the last modified time. </summary>
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Number of nodes with this node configuration assigned. </summary>
         public long? NodeCount { get; set; }
         /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IncrementNodeConfigurationBuild { get; set; }
+        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
     }
 }

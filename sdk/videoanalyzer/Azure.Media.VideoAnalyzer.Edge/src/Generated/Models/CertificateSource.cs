@@ -7,7 +7,11 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for certificate sources. </summary>
+    /// <summary>
+    /// Base class for certificate sources.
+    /// Please note <see cref="CertificateSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="PemCertificateList"/>.
+    /// </summary>
     public partial class CertificateSource
     {
         /// <summary> Initializes a new instance of CertificateSource. </summary>

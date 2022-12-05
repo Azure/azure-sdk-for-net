@@ -42,18 +42,16 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="NotImplementedException"></exception>
         public static MediaStreamingPackageBase Parse(string stringJson)
         {
-            if (stringJson.Contains("format"))
+            JsonElement package = JsonDocument.Parse(stringJson).RootElement;
+            if (package.GetProperty("kind").ToString() == "AudioMetadata")
             {
-                MediaStreamingMetadataInternal metadataInternal = JsonSerializer.Deserialize<MediaStreamingMetadataInternal>(stringJson);
-                MediaStreamingFormat mediaStreamingFormat = new MediaStreamingFormat(
-                    metadataInternal.Format.Encoding, metadataInternal.Format.SampleRate, metadataInternal.Format.Channels, metadataInternal.Format.Length);
-                return new MediaStreamingMetadata(metadataInternal.MediaSubscriptionId, mediaStreamingFormat);
+                return JsonSerializer.Deserialize<MediaStreamingMetadata>(package.GetProperty("audioMetadata").ToString());
             }
-            else if (stringJson.Contains("data"))
+            else if (package.GetProperty("kind").ToString() == "AudioData")
             {
-                MediaStreamingAudioInternal audioInternal = JsonSerializer.Deserialize<MediaStreamingAudioInternal>(stringJson);
-                return new MediaStreamingAudio(
-                    audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantId, audioInternal.IsSilence);
+                MediaStreamingAudioDataInternal audioInternal = JsonSerializer.Deserialize<MediaStreamingAudioDataInternal>(package.GetProperty("audioData").ToString());
+                return new MediaStreamingAudioData(
+                    audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent);
             }
             else
                 throw new NotSupportedException(stringJson);

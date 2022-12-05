@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             Optional<JobEntity> jobTask = default;
-            string instanceType = default;
+            string instanceType = "JobTaskDetails";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobTask"))

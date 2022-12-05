@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dns
     public partial class PtrRecordResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PtrRecordResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string ptrRecordName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{relativeRecordSetName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/PTR/{ptrRecordName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _recordSetPtrRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetPtrRecordSetsRestClient;
+        private readonly ClientDiagnostics _ptrRecordInfoRecordSetsClientDiagnostics;
+        private readonly PtrRecordRestOperations _ptrRecordInfoRecordSetsRestClient;
         private readonly PtrRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PtrRecordResource"/> class for mocking. </summary>
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PtrRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetPtrRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recordSetPtrRecordSetsApiVersion);
-            _recordSetPtrRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetPtrRecordSetsApiVersion);
+            _ptrRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string ptrRecordInfoRecordSetsApiVersion);
+            _ptrRecordInfoRecordSetsRestClient = new PtrRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ptrRecordInfoRecordSetsApiVersion);
 #if DEBUG
-            ValidateResourceId(Id);
+			ValidateResourceId(Id);
 #endif
         }
 
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PtrRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Get");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _recordSetPtrRecordSetsRestClient.GetPtrRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _ptrRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PtrRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Get");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _recordSetPtrRecordSetsRestClient.GetPtrRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _ptrRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
@@ -140,16 +140,16 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Delete");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _recordSetPtrRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _ptrRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -167,16 +167,16 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Delete");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _recordSetPtrRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _ptrRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Update");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _recordSetPtrRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _ptrRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Update");
+            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PtrRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _recordSetPtrRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _ptrRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "PTR".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(new PtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -47,27 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "UriFolder": return UriFolderJobInput.DeserializeUriFolderJobInput(element);
                 }
             }
-            Optional<string> description = default;
-            JobInputType jobInputType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("description"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobInputType"))
-                {
-                    jobInputType = new JobInputType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownJobInput(description.Value, jobInputType);
+            return UnknownJobInput.DeserializeUnknownJobInput(element);
         }
     }
 }

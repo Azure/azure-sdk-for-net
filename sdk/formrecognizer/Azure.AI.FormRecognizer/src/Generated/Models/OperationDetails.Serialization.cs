@@ -5,10 +5,8 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -25,85 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element);
                 }
             }
-            string operationId = default;
-            DocumentOperationStatus status = default;
-            Optional<int> percentCompleted = default;
-            DateTimeOffset createdDateTime = default;
-            DateTimeOffset lastUpdatedDateTime = default;
-            DocumentOperationKind kind = default;
-            Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<JsonElement> error = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("operationId"))
-                {
-                    operationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("status"))
-                {
-                    status = property.Value.GetString().ToDocumentOperationStatus();
-                    continue;
-                }
-                if (property.NameEquals("percentCompleted"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    percentCompleted = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("createdDateTime"))
-                {
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("lastUpdatedDateTime"))
-                {
-                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("kind"))
-                {
-                    kind = new DocumentOperationKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceLocation"))
-                {
-                    resourceLocation = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("apiVersion"))
-                {
-                    apiVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("error"))
-                {
-                    error = property.Value.Clone();
-                    continue;
-                }
-            }
-            return new OperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error);
+            return UnknownOperationDetails.DeserializeUnknownOperationDetails(element);
         }
     }
 }

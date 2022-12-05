@@ -56,9 +56,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// class that is in the main definition file, which will override the
         /// 'className' of the spark job definition you provide. Type: string
         /// (or Expression with resultType string).</param>
-        /// <param name="files">Additional files used for reference in the main
-        /// definition file, which will override the 'files' of the spark job
-        /// definition you provide.</param>
+        /// <param name="files">(Deprecated. Please use pythonCodeReference and
+        /// filesV2) Additional files used for reference in the main definition
+        /// file, which will override the 'files' of the spark job definition
+        /// you provide.</param>
+        /// <param name="pythonCodeReference">Additional python code files used
+        /// for reference in the main definition file, which will override the
+        /// 'pyFiles' of the spark job definition you provide.</param>
+        /// <param name="filesV2">Additional files used for reference in the
+        /// main definition file, which will override the 'jars' and 'files' of
+        /// the spark job definition you provide.</param>
         /// <param name="targetBigDataPool">The name of the big data pool which
         /// will be used to execute the spark batch job, which will override
         /// the 'targetBigDataPool' of the spark job definition you
@@ -79,7 +86,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="numExecutors">Number of executors to launch for this
         /// job, which will override the 'numExecutors' of the spark job
         /// definition you provide.</param>
-        public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> arguments = default(IList<object>), object file = default(object), object className = default(object), IList<object> files = default(IList<object>), BigDataPoolParametrizationReference targetBigDataPool = default(BigDataPoolParametrizationReference), object executorSize = default(object), object conf = default(object), object driverSize = default(object), int? numExecutors = default(int?))
+        public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> arguments = default(IList<object>), object file = default(object), object className = default(object), IList<object> files = default(IList<object>), IList<object> pythonCodeReference = default(IList<object>), IList<object> filesV2 = default(IList<object>), BigDataPoolParametrizationReference targetBigDataPool = default(BigDataPoolParametrizationReference), object executorSize = default(object), object conf = default(object), object driverSize = default(object), int? numExecutors = default(int?))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
@@ -87,6 +94,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             File = file;
             ClassName = className;
             Files = files;
+            PythonCodeReference = pythonCodeReference;
+            FilesV2 = filesV2;
             TargetBigDataPool = targetBigDataPool;
             ExecutorSize = executorSize;
             Conf = conf;
@@ -131,12 +140,29 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object ClassName { get; set; }
 
         /// <summary>
-        /// Gets or sets additional files used for reference in the main
-        /// definition file, which will override the 'files' of the spark job
-        /// definition you provide.
+        /// Gets or sets (Deprecated. Please use pythonCodeReference and
+        /// filesV2) Additional files used for reference in the main definition
+        /// file, which will override the 'files' of the spark job definition
+        /// you provide.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.files")]
         public IList<object> Files { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional python code files used for reference in the
+        /// main definition file, which will override the 'pyFiles' of the
+        /// spark job definition you provide.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.pythonCodeReference")]
+        public IList<object> PythonCodeReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional files used for reference in the main
+        /// definition file, which will override the 'jars' and 'files' of the
+        /// spark job definition you provide.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.filesV2")]
+        public IList<object> FilesV2 { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the big data pool which will be used to
