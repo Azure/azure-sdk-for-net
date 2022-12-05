@@ -234,11 +234,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private ParameterBindingData CreateParameterBindingData(string connection, string blobName, string containerName)
         {
-            var client = _blobServiceClientProvider.Get(connection);
+            var connectionSection = _blobServiceClientProvider.GetWebJobsConnectionStringSection(connection);
 
             var blobDetails = new BlobParameterBindingDataContent()
             {
-                Connection = client.connectionString,
+                Connection = connectionSection.Value,
                 BlobName = blobName,
                 ContainerName = containerName
             };

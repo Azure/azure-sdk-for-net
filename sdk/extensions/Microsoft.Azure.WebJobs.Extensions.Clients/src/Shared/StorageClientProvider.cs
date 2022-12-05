@@ -67,6 +67,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
         /// <returns>Client that was created.</returns>
         public virtual TClient Get(string name)
         {
+            IConfigurationSection connectionSection = GetWebJobsConnectionStringSection(name);
+            var credential = _componentFactory.CreateTokenCredential(connectionSection);
+            var options = CreateClientOptions(connectionSection);
+            return CreateClient(connectionSection, credential, options);
+        }
+
+        public IConfigurationSection GetWebJobsConnectionStringSection(string name)
+        {
             if (string.IsNullOrWhiteSpace(name))
             {
                 name = ConnectionStringNames.Storage; // default
@@ -80,9 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            var credential = _componentFactory.CreateTokenCredential(connectionSection);
-            var options = CreateClientOptions(connectionSection);
-            return CreateClient(connectionSection, credential, options);
+            return connectionSection;
         }
 
         /// <summary>
