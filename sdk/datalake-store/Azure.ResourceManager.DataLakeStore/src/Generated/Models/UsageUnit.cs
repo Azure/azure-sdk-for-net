@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> Gets the unit of measurement. </summary>
+    /// <summary>
+    /// Gets the unit of measurement.
+    /// Serialized Name: UsageUnit
+    /// </summary>
     public enum UsageUnit
     {
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: UsageUnit.Count
+        /// </summary>
         Count,
-        /// <summary> Bytes. </summary>
+        /// <summary>
+        /// Bytes
+        /// Serialized Name: UsageUnit.Bytes
+        /// </summary>
         Bytes,
-        /// <summary> Seconds. </summary>
+        /// <summary>
+        /// Seconds
+        /// Serialized Name: UsageUnit.Seconds
+        /// </summary>
         Seconds,
-        /// <summary> Percent. </summary>
+        /// <summary>
+        /// Percent
+        /// Serialized Name: UsageUnit.Percent
+        /// </summary>
         Percent,
-        /// <summary> CountsPerSecond. </summary>
+        /// <summary>
+        /// CountsPerSecond
+        /// Serialized Name: UsageUnit.CountsPerSecond
+        /// </summary>
         CountsPerSecond,
-        /// <summary> BytesPerSecond. </summary>
+        /// <summary>
+        /// BytesPerSecond
+        /// Serialized Name: UsageUnit.BytesPerSecond
+        /// </summary>
         BytesPerSecond
     }
 }

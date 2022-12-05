@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The subscription state. </summary>
+    /// <summary>
+    /// The subscription state.
+    /// Serialized Name: SubscriptionState
+    /// </summary>
     public readonly partial struct SubscriptionState : IEquatable<SubscriptionState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         private const string UnregisteredValue = "Unregistered";
         private const string WarnedValue = "Warned";
 
-        /// <summary> Registered. </summary>
+        /// <summary>
+        /// Registered
+        /// Serialized Name: SubscriptionState.Registered
+        /// </summary>
         public static SubscriptionState Registered { get; } = new SubscriptionState(RegisteredValue);
-        /// <summary> Suspended. </summary>
+        /// <summary>
+        /// Suspended
+        /// Serialized Name: SubscriptionState.Suspended
+        /// </summary>
         public static SubscriptionState Suspended { get; } = new SubscriptionState(SuspendedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: SubscriptionState.Deleted
+        /// </summary>
         public static SubscriptionState Deleted { get; } = new SubscriptionState(DeletedValue);
-        /// <summary> Unregistered. </summary>
+        /// <summary>
+        /// Unregistered
+        /// Serialized Name: SubscriptionState.Unregistered
+        /// </summary>
         public static SubscriptionState Unregistered { get; } = new SubscriptionState(UnregisteredValue);
-        /// <summary> Warned. </summary>
+        /// <summary>
+        /// Warned
+        /// Serialized Name: SubscriptionState.Warned
+        /// </summary>
         public static SubscriptionState Warned { get; } = new SubscriptionState(WarnedValue);
         /// <summary> Determines if two <see cref="SubscriptionState"/> values are the same. </summary>
         public static bool operator ==(SubscriptionState left, SubscriptionState right) => left.Equals(right);

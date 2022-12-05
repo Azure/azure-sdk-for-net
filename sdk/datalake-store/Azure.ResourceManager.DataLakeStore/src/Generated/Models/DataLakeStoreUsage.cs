@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> Describes the Resource Usage. </summary>
+    /// <summary>
+    /// Describes the Resource Usage.
+    /// Serialized Name: Usage
+    /// </summary>
     public partial class DataLakeStoreUsage
     {
         /// <summary> Initializes a new instance of DataLakeStoreUsage. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreUsage. </summary>
-        /// <param name="unit"> Gets the unit of measurement. </param>
-        /// <param name="id"> Resource identifier. </param>
-        /// <param name="currentValue"> Gets the current count of the allocated resources in the subscription. </param>
-        /// <param name="limit"> Gets the maximum count of the resources that can be allocated in the subscription. </param>
-        /// <param name="name"> Gets the name of the type of usage. </param>
+        /// <param name="unit">
+        /// Gets the unit of measurement.
+        /// Serialized Name: Usage.unit
+        /// </param>
+        /// <param name="id">
+        /// Resource identifier.
+        /// Serialized Name: Usage.id
+        /// </param>
+        /// <param name="currentValue">
+        /// Gets the current count of the allocated resources in the subscription.
+        /// Serialized Name: Usage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// Gets the maximum count of the resources that can be allocated in the subscription.
+        /// Serialized Name: Usage.limit
+        /// </param>
+        /// <param name="name">
+        /// Gets the name of the type of usage.
+        /// Serialized Name: Usage.name
+        /// </param>
         internal DataLakeStoreUsage(UsageUnit? unit, string id, int? currentValue, int? limit, UsageName name)
         {
             Unit = unit;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Name = name;
         }
 
-        /// <summary> Gets the unit of measurement. </summary>
+        /// <summary>
+        /// Gets the unit of measurement.
+        /// Serialized Name: Usage.unit
+        /// </summary>
         public UsageUnit? Unit { get; }
-        /// <summary> Resource identifier. </summary>
+        /// <summary>
+        /// Resource identifier.
+        /// Serialized Name: Usage.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Gets the current count of the allocated resources in the subscription. </summary>
+        /// <summary>
+        /// Gets the current count of the allocated resources in the subscription.
+        /// Serialized Name: Usage.currentValue
+        /// </summary>
         public int? CurrentValue { get; }
-        /// <summary> Gets the maximum count of the resources that can be allocated in the subscription. </summary>
+        /// <summary>
+        /// Gets the maximum count of the resources that can be allocated in the subscription.
+        /// Serialized Name: Usage.limit
+        /// </summary>
         public int? Limit { get; }
-        /// <summary> Gets the name of the type of usage. </summary>
+        /// <summary>
+        /// Gets the name of the type of usage.
+        /// Serialized Name: Usage.name
+        /// </summary>
         public UsageName Name { get; }
     }
 }

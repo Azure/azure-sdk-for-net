@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. </summary>
+    /// <summary>
+    /// The current state of the trusted identity provider feature for this Data Lake Store account.
+    /// Serialized Name: TrustedIdProviderState
+    /// </summary>
     public enum TrustedIdProviderState
     {
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: TrustedIdProviderState.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: TrustedIdProviderState.Disabled
+        /// </summary>
         Disabled
     }
 }

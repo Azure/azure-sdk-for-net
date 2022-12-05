@@ -30,27 +30,90 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The Key Vault encryption identity, if any. </param>
-        /// <param name="accountId"> The unique identifier associated with this Data Lake Store account. </param>
-        /// <param name="provisioningState"> The provisioning status of the Data Lake Store account. </param>
-        /// <param name="state"> The state of the Data Lake Store account. </param>
-        /// <param name="createdOn"> The account creation time. </param>
-        /// <param name="lastModifiedOn"> The account last modified time. </param>
-        /// <param name="endpoint"> The full CName endpoint for this account. </param>
-        /// <param name="defaultGroup"> The default owner group for all new folders and files created in the Data Lake Store account. </param>
-        /// <param name="encryptionConfig"> The Key Vault encryption configuration. </param>
-        /// <param name="encryptionState"> The current state of encryption for this Data Lake Store account. </param>
-        /// <param name="encryptionProvisioningState"> The current state of encryption provisioning for this Data Lake Store account. </param>
-        /// <param name="firewallRules"> The list of firewall rules associated with this Data Lake Store account. </param>
-        /// <param name="virtualNetworkRules"> The list of virtual network rules associated with this Data Lake Store account. </param>
-        /// <param name="firewallState"> The current state of the IP address firewall for this Data Lake Store account. </param>
-        /// <param name="firewallAllowAzureIPs"> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </param>
-        /// <param name="trustedIdProviders"> The list of trusted identity providers associated with this Data Lake Store account. </param>
-        /// <param name="trustedIdProviderState"> The current state of the trusted identity provider feature for this Data Lake Store account. </param>
-        /// <param name="newTier"> The commitment tier to use for next month. </param>
-        /// <param name="currentTier"> The commitment tier in use for the current month. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="identity">
+        /// The Key Vault encryption identity, if any.
+        /// Serialized Name: DataLakeStoreAccount.identity
+        /// </param>
+        /// <param name="accountId">
+        /// The unique identifier associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.accountId
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning status of the Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.provisioningState
+        /// </param>
+        /// <param name="state">
+        /// The state of the Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.state
+        /// </param>
+        /// <param name="createdOn">
+        /// The account creation time.
+        /// Serialized Name: DataLakeStoreAccount.properties.creationTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The account last modified time.
+        /// Serialized Name: DataLakeStoreAccount.properties.lastModifiedTime
+        /// </param>
+        /// <param name="endpoint">
+        /// The full CName endpoint for this account.
+        /// Serialized Name: DataLakeStoreAccount.properties.endpoint
+        /// </param>
+        /// <param name="defaultGroup">
+        /// The default owner group for all new folders and files created in the Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.defaultGroup
+        /// </param>
+        /// <param name="encryptionConfig">
+        /// The Key Vault encryption configuration.
+        /// Serialized Name: DataLakeStoreAccount.properties.encryptionConfig
+        /// </param>
+        /// <param name="encryptionState">
+        /// The current state of encryption for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.encryptionState
+        /// </param>
+        /// <param name="encryptionProvisioningState">
+        /// The current state of encryption provisioning for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.encryptionProvisioningState
+        /// </param>
+        /// <param name="firewallRules">
+        /// The list of firewall rules associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.firewallRules
+        /// </param>
+        /// <param name="virtualNetworkRules">
+        /// The list of virtual network rules associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.virtualNetworkRules
+        /// </param>
+        /// <param name="firewallState">
+        /// The current state of the IP address firewall for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.firewallState
+        /// </param>
+        /// <param name="firewallAllowAzureIPs">
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: DataLakeStoreAccount.properties.firewallAllowAzureIps
+        /// </param>
+        /// <param name="trustedIdProviders">
+        /// The list of trusted identity providers associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.trustedIdProviders
+        /// </param>
+        /// <param name="trustedIdProviderState">
+        /// The current state of the trusted identity provider feature for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.trustedIdProviderState
+        /// </param>
+        /// <param name="newTier">
+        /// The commitment tier to use for next month.
+        /// Serialized Name: DataLakeStoreAccount.properties.newTier
+        /// </param>
+        /// <param name="currentTier">
+        /// The commitment tier in use for the current month.
+        /// Serialized Name: DataLakeStoreAccount.properties.currentTier
+        /// </param>
+        /// <param name="location">
+        /// The resource location.
+        /// Serialized Name: Resource.location
+        /// </param>
+        /// <param name="tags">
+        /// The resource tags.
+        /// Serialized Name: Resource.tags
+        /// </param>
         internal DataLakeStoreAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, Guid? accountId, DataLakeStoreAccountStatus? provisioningState, DataLakeStoreAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultGroup, EncryptionConfig encryptionConfig, EncryptionState? encryptionState, EncryptionProvisioningState? encryptionProvisioningState, IReadOnlyList<FirewallRuleData> firewallRules, IReadOnlyList<VirtualNetworkRuleData> virtualNetworkRules, FirewallState? firewallState, FirewallAllowAzureIPsState? firewallAllowAzureIPs, IReadOnlyList<TrustedIdProviderData> trustedIdProviders, TrustedIdProviderState? trustedIdProviderState, TierType? newTier, TierType? currentTier, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
@@ -76,47 +139,110 @@ namespace Azure.ResourceManager.DataLakeStore
             Tags = tags;
         }
 
-        /// <summary> The Key Vault encryption identity, if any. </summary>
+        /// <summary>
+        /// The Key Vault encryption identity, if any.
+        /// Serialized Name: DataLakeStoreAccount.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; }
-        /// <summary> The unique identifier associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The unique identifier associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.accountId
+        /// </summary>
         public Guid? AccountId { get; }
-        /// <summary> The provisioning status of the Data Lake Store account. </summary>
+        /// <summary>
+        /// The provisioning status of the Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.provisioningState
+        /// </summary>
         public DataLakeStoreAccountStatus? ProvisioningState { get; }
-        /// <summary> The state of the Data Lake Store account. </summary>
+        /// <summary>
+        /// The state of the Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.state
+        /// </summary>
         public DataLakeStoreAccountState? State { get; }
-        /// <summary> The account creation time. </summary>
+        /// <summary>
+        /// The account creation time.
+        /// Serialized Name: DataLakeStoreAccount.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The account last modified time. </summary>
+        /// <summary>
+        /// The account last modified time.
+        /// Serialized Name: DataLakeStoreAccount.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The full CName endpoint for this account. </summary>
+        /// <summary>
+        /// The full CName endpoint for this account.
+        /// Serialized Name: DataLakeStoreAccount.properties.endpoint
+        /// </summary>
         public string Endpoint { get; }
-        /// <summary> The default owner group for all new folders and files created in the Data Lake Store account. </summary>
+        /// <summary>
+        /// The default owner group for all new folders and files created in the Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.defaultGroup
+        /// </summary>
         public string DefaultGroup { get; }
-        /// <summary> The Key Vault encryption configuration. </summary>
+        /// <summary>
+        /// The Key Vault encryption configuration.
+        /// Serialized Name: DataLakeStoreAccount.properties.encryptionConfig
+        /// </summary>
         public EncryptionConfig EncryptionConfig { get; }
-        /// <summary> The current state of encryption for this Data Lake Store account. </summary>
+        /// <summary>
+        /// The current state of encryption for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.encryptionState
+        /// </summary>
         public EncryptionState? EncryptionState { get; }
-        /// <summary> The current state of encryption provisioning for this Data Lake Store account. </summary>
+        /// <summary>
+        /// The current state of encryption provisioning for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.encryptionProvisioningState
+        /// </summary>
         public EncryptionProvisioningState? EncryptionProvisioningState { get; }
-        /// <summary> The list of firewall rules associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of firewall rules associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.firewallRules
+        /// </summary>
         public IReadOnlyList<FirewallRuleData> FirewallRules { get; }
-        /// <summary> The list of virtual network rules associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of virtual network rules associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.virtualNetworkRules
+        /// </summary>
         public IReadOnlyList<VirtualNetworkRuleData> VirtualNetworkRules { get; }
-        /// <summary> The current state of the IP address firewall for this Data Lake Store account. </summary>
+        /// <summary>
+        /// The current state of the IP address firewall for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.firewallState
+        /// </summary>
         public FirewallState? FirewallState { get; }
-        /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
+        /// <summary>
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: DataLakeStoreAccount.properties.firewallAllowAzureIps
+        /// </summary>
         public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; }
-        /// <summary> The list of trusted identity providers associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of trusted identity providers associated with this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.trustedIdProviders
+        /// </summary>
         public IReadOnlyList<TrustedIdProviderData> TrustedIdProviders { get; }
-        /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. </summary>
+        /// <summary>
+        /// The current state of the trusted identity provider feature for this Data Lake Store account.
+        /// Serialized Name: DataLakeStoreAccount.properties.trustedIdProviderState
+        /// </summary>
         public TrustedIdProviderState? TrustedIdProviderState { get; }
-        /// <summary> The commitment tier to use for next month. </summary>
+        /// <summary>
+        /// The commitment tier to use for next month.
+        /// Serialized Name: DataLakeStoreAccount.properties.newTier
+        /// </summary>
         public TierType? NewTier { get; }
-        /// <summary> The commitment tier in use for the current month. </summary>
+        /// <summary>
+        /// The commitment tier in use for the current month.
+        /// Serialized Name: DataLakeStoreAccount.properties.currentTier
+        /// </summary>
         public TierType? CurrentTier { get; }
-        /// <summary> The resource location. </summary>
+        /// <summary>
+        /// The resource location.
+        /// Serialized Name: Resource.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> The resource tags. </summary>
+        /// <summary>
+        /// The resource tags.
+        /// Serialized Name: Resource.tags
+        /// </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

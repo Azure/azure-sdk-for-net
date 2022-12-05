@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> Data Lake Store account information to update. </summary>
+    /// <summary>
+    /// Data Lake Store account information to update.
+    /// Serialized Name: UpdateDataLakeStoreAccountParameters
+    /// </summary>
     public partial class DataLakeStoreAccountPatch
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountPatch. </summary>
@@ -22,13 +25,25 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             TrustedIdProviders = new ChangeTrackingList<UpdateTrustedIdProviderWithAccountParameters>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The default owner group for all new folders and files created in the Data Lake Store account. </summary>
+        /// <summary>
+        /// The default owner group for all new folders and files created in the Data Lake Store account.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.defaultGroup
+        /// </summary>
         public string DefaultGroup { get; set; }
-        /// <summary> Used for rotation of user managed Key Vault keys. Can only be used to rotate a user managed encryption Key Vault key. </summary>
+        /// <summary>
+        /// Used for rotation of user managed Key Vault keys. Can only be used to rotate a user managed encryption Key Vault key.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.encryptionConfig
+        /// </summary>
         internal UpdateEncryptionConfig EncryptionConfig { get; set; }
-        /// <summary> The version of the user managed encryption key to update through a key rotation. </summary>
+        /// <summary>
+        /// The version of the user managed encryption key to update through a key rotation.
+        /// Serialized Name: UpdateKeyVaultMetaInfo.encryptionKeyVersion
+        /// </summary>
         public string EncryptionKeyVersion
         {
             get => EncryptionConfig is null ? default : EncryptionConfig.EncryptionKeyVersion;
@@ -40,19 +55,40 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
         }
 
-        /// <summary> The list of firewall rules associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of firewall rules associated with this Data Lake Store account.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.firewallRules
+        /// </summary>
         public IList<UpdateFirewallRuleWithAccountParameters> FirewallRules { get; }
-        /// <summary> The list of virtual network rules associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of virtual network rules associated with this Data Lake Store account.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.virtualNetworkRules
+        /// </summary>
         public IList<UpdateVirtualNetworkRuleWithAccountParameters> VirtualNetworkRules { get; }
-        /// <summary> The current state of the IP address firewall for this Data Lake Store account. Disabling the firewall does not remove existing rules, they will just be ignored until the firewall is re-enabled. </summary>
+        /// <summary>
+        /// The current state of the IP address firewall for this Data Lake Store account. Disabling the firewall does not remove existing rules, they will just be ignored until the firewall is re-enabled.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.firewallState
+        /// </summary>
         public FirewallState? FirewallState { get; set; }
-        /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
+        /// <summary>
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.firewallAllowAzureIps
+        /// </summary>
         public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
-        /// <summary> The list of trusted identity providers associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of trusted identity providers associated with this Data Lake Store account.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.trustedIdProviders
+        /// </summary>
         public IList<UpdateTrustedIdProviderWithAccountParameters> TrustedIdProviders { get; }
-        /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. Disabling trusted identity provider functionality does not remove the providers, they will just be ignored until this feature is re-enabled. </summary>
+        /// <summary>
+        /// The current state of the trusted identity provider feature for this Data Lake Store account. Disabling trusted identity provider functionality does not remove the providers, they will just be ignored until this feature is re-enabled.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.trustedIdProviderState
+        /// </summary>
         public TrustedIdProviderState? TrustedIdProviderState { get; set; }
-        /// <summary> The commitment tier to use for next month. </summary>
+        /// <summary>
+        /// The commitment tier to use for next month.
+        /// Serialized Name: UpdateDataLakeStoreAccountParameters.properties.newTier
+        /// </summary>
         public TierType? NewTier { get; set; }
     }
 }

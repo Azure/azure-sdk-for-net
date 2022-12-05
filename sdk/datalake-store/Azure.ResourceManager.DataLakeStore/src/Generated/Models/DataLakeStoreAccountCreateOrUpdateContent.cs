@@ -11,11 +11,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The DataLakeStoreAccountCreateOrUpdateContent. </summary>
+    /// <summary>
+    /// The CreateDataLakeStoreAccountParameters.
+    /// Serialized Name: CreateDataLakeStoreAccountParameters
+    /// </summary>
     public partial class DataLakeStoreAccountCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountCreateOrUpdateContent. </summary>
-        /// <param name="location"> The resource location. </param>
+        /// <param name="location">
+        /// The resource location.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.location
+        /// </param>
         public DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location)
         {
             Location = location;
@@ -25,31 +31,70 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             TrustedIdProviders = new ChangeTrackingList<CreateTrustedIdProviderWithAccountParameters>();
         }
 
-        /// <summary> The resource location. </summary>
+        /// <summary>
+        /// The resource location.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.location
+        /// </summary>
         public AzureLocation Location { get; }
-        /// <summary> The resource tags. </summary>
+        /// <summary>
+        /// The resource tags.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The Key Vault encryption identity, if any. </summary>
+        /// <summary>
+        /// The Key Vault encryption identity, if any.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The default owner group for all new folders and files created in the Data Lake Store account. </summary>
+        /// <summary>
+        /// The default owner group for all new folders and files created in the Data Lake Store account.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.defaultGroup
+        /// </summary>
         public string DefaultGroup { get; set; }
-        /// <summary> The Key Vault encryption configuration. </summary>
+        /// <summary>
+        /// The Key Vault encryption configuration.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.encryptionConfig
+        /// </summary>
         public EncryptionConfig EncryptionConfig { get; set; }
-        /// <summary> The current state of encryption for this Data Lake Store account. </summary>
+        /// <summary>
+        /// The current state of encryption for this Data Lake Store account.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.encryptionState
+        /// </summary>
         public EncryptionState? EncryptionState { get; set; }
-        /// <summary> The list of firewall rules associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of firewall rules associated with this Data Lake Store account.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallRules
+        /// </summary>
         public IList<CreateFirewallRuleWithAccountParameters> FirewallRules { get; }
-        /// <summary> The list of virtual network rules associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of virtual network rules associated with this Data Lake Store account.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.virtualNetworkRules
+        /// </summary>
         public IList<CreateVirtualNetworkRuleWithAccountParameters> VirtualNetworkRules { get; }
-        /// <summary> The current state of the IP address firewall for this Data Lake Store account. </summary>
+        /// <summary>
+        /// The current state of the IP address firewall for this Data Lake Store account.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallState
+        /// </summary>
         public FirewallState? FirewallState { get; set; }
-        /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
+        /// <summary>
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallAllowAzureIps
+        /// </summary>
         public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
-        /// <summary> The list of trusted identity providers associated with this Data Lake Store account. </summary>
+        /// <summary>
+        /// The list of trusted identity providers associated with this Data Lake Store account.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.trustedIdProviders
+        /// </summary>
         public IList<CreateTrustedIdProviderWithAccountParameters> TrustedIdProviders { get; }
-        /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. </summary>
+        /// <summary>
+        /// The current state of the trusted identity provider feature for this Data Lake Store account.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.trustedIdProviderState
+        /// </summary>
         public TrustedIdProviderState? TrustedIdProviderState { get; set; }
-        /// <summary> The commitment tier to use for next month. </summary>
+        /// <summary>
+        /// The commitment tier to use for next month.
+        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.newTier
+        /// </summary>
         public TierType? NewTier { get; set; }
     }
 }

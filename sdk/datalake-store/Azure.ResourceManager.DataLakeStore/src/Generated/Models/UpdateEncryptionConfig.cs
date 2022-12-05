@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The encryption configuration used to update a user managed Key Vault key. </summary>
+    /// <summary>
+    /// The encryption configuration used to update a user managed Key Vault key.
+    /// Serialized Name: UpdateEncryptionConfig
+    /// </summary>
     internal partial class UpdateEncryptionConfig
     {
         /// <summary> Initializes a new instance of UpdateEncryptionConfig. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
         }
 
-        /// <summary> The updated Key Vault key to use in user managed key rotation. </summary>
+        /// <summary>
+        /// The updated Key Vault key to use in user managed key rotation.
+        /// Serialized Name: UpdateEncryptionConfig.keyVaultMetaInfo
+        /// </summary>
         internal UpdateKeyVaultMetaInfo KeyVaultMetaInfo { get; set; }
-        /// <summary> The version of the user managed encryption key to update through a key rotation. </summary>
+        /// <summary>
+        /// The version of the user managed encryption key to update through a key rotation.
+        /// Serialized Name: UpdateKeyVaultMetaInfo.encryptionKeyVersion
+        /// </summary>
         public string EncryptionKeyVersion
         {
             get => KeyVaultMetaInfo is null ? default : KeyVaultMetaInfo.EncryptionKeyVersion;

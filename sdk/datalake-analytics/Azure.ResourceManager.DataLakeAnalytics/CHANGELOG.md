@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2022-11-25)
+## 1.0.0 (2022-12-05)
 
 This package is the first stable release of the Microsoft Azure Data Lake Analytics management client library.
 

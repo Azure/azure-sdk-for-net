@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The parameters used to create a new trusted identity provider. </summary>
+    /// <summary>
+    /// The parameters used to create a new trusted identity provider.
+    /// Serialized Name: CreateOrUpdateTrustedIdProviderParameters
+    /// </summary>
     public partial class TrustedIdProviderCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of TrustedIdProviderCreateOrUpdateContent. </summary>
-        /// <param name="idProvider"> The URL of this trusted identity provider. </param>
+        /// <param name="idProvider">
+        /// The URL of this trusted identity provider.
+        /// Serialized Name: CreateOrUpdateTrustedIdProviderParameters.properties.idProvider
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="idProvider"/> is null. </exception>
         public TrustedIdProviderCreateOrUpdateContent(string idProvider)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             IdProvider = idProvider;
         }
 
-        /// <summary> The URL of this trusted identity provider. </summary>
+        /// <summary>
+        /// The URL of this trusted identity provider.
+        /// Serialized Name: CreateOrUpdateTrustedIdProviderParameters.properties.idProvider
+        /// </summary>
         public string IdProvider { get; }
     }
 }

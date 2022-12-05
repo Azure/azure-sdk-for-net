@@ -11,7 +11,10 @@ using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> Data Lake Store trusted identity provider list information. </summary>
+    /// <summary>
+    /// Data Lake Store trusted identity provider list information.
+    /// Serialized Name: TrustedIdProviderListResult
+    /// </summary>
     internal partial class TrustedIdProviderListResult
     {
         /// <summary> Initializes a new instance of TrustedIdProviderListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of TrustedIdProviderListResult. </summary>
-        /// <param name="value"> The results of the list operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// The results of the list operation.
+        /// Serialized Name: TrustedIdProviderListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: TrustedIdProviderListResult.nextLink
+        /// </param>
         internal TrustedIdProviderListResult(IReadOnlyList<TrustedIdProviderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The results of the list operation. </summary>
+        /// <summary>
+        /// The results of the list operation.
+        /// Serialized Name: TrustedIdProviderListResult.value
+        /// </summary>
         public IReadOnlyList<TrustedIdProviderData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: TrustedIdProviderListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

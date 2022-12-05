@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The parameters used to update a virtual network rule. </summary>
+    /// <summary>
+    /// The parameters used to update a virtual network rule.
+    /// Serialized Name: UpdateVirtualNetworkRuleParameters
+    /// </summary>
     public partial class VirtualNetworkRulePatch
     {
         /// <summary> Initializes a new instance of VirtualNetworkRulePatch. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
         }
 
-        /// <summary> The resource identifier for the subnet. </summary>
+        /// <summary>
+        /// The resource identifier for the subnet.
+        /// Serialized Name: UpdateVirtualNetworkRuleParameters.properties.subnetId
+        /// </summary>
         public string SubnetId { get; set; }
     }
 }

@@ -7,28 +7,46 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The encryption configuration for the account. </summary>
+    /// <summary>
+    /// The encryption configuration for the account.
+    /// Serialized Name: EncryptionConfig
+    /// </summary>
     public partial class EncryptionConfig
     {
         /// <summary> Initializes a new instance of EncryptionConfig. </summary>
-        /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </param>
+        /// <param name="configType">
+        /// The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;.
+        /// Serialized Name: EncryptionConfig.type
+        /// </param>
         public EncryptionConfig(EncryptionConfigType configType)
         {
             ConfigType = configType;
         }
 
         /// <summary> Initializes a new instance of EncryptionConfig. </summary>
-        /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </param>
-        /// <param name="keyVaultMetaInfo"> The Key Vault information for connecting to user managed encryption keys. </param>
+        /// <param name="configType">
+        /// The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;.
+        /// Serialized Name: EncryptionConfig.type
+        /// </param>
+        /// <param name="keyVaultMetaInfo">
+        /// The Key Vault information for connecting to user managed encryption keys.
+        /// Serialized Name: EncryptionConfig.keyVaultMetaInfo
+        /// </param>
         internal EncryptionConfig(EncryptionConfigType configType, KeyVaultMetaInfo keyVaultMetaInfo)
         {
             ConfigType = configType;
             KeyVaultMetaInfo = keyVaultMetaInfo;
         }
 
-        /// <summary> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </summary>
+        /// <summary>
+        /// The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;.
+        /// Serialized Name: EncryptionConfig.type
+        /// </summary>
         public EncryptionConfigType ConfigType { get; set; }
-        /// <summary> The Key Vault information for connecting to user managed encryption keys. </summary>
+        /// <summary>
+        /// The Key Vault information for connecting to user managed encryption keys.
+        /// Serialized Name: EncryptionConfig.keyVaultMetaInfo
+        /// </summary>
         public KeyVaultMetaInfo KeyVaultMetaInfo { get; set; }
     }
 }

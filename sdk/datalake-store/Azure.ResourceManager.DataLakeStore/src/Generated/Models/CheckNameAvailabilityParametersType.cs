@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts. </summary>
+    /// <summary>
+    /// The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts
+    /// Serialized Name: CheckNameAvailabilityParametersType
+    /// </summary>
     public readonly partial struct CheckNameAvailabilityParametersType : IEquatable<CheckNameAvailabilityParametersType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         private const string MicrosoftDataLakeStoreAccountsValue = "Microsoft.DataLakeStore/accounts";
 
-        /// <summary> Microsoft.DataLakeStore/accounts. </summary>
+        /// <summary>
+        /// Microsoft.DataLakeStore/accounts
+        /// Serialized Name: CheckNameAvailabilityParametersType.Microsoft.DataLakeStore/accounts
+        /// </summary>
         public static CheckNameAvailabilityParametersType MicrosoftDataLakeStoreAccounts { get; } = new CheckNameAvailabilityParametersType(MicrosoftDataLakeStoreAccountsValue);
         /// <summary> Determines if two <see cref="CheckNameAvailabilityParametersType"/> values are the same. </summary>
         public static bool operator ==(CheckNameAvailabilityParametersType left, CheckNameAvailabilityParametersType right) => left.Equals(right);

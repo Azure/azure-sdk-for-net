@@ -23,13 +23,19 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        /// <param name="subnetId">
+        /// The resource identifier for the subnet.
+        /// Serialized Name: VirtualNetworkRule.properties.subnetId
+        /// </param>
         internal VirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subnetId) : base(id, name, resourceType, systemData)
         {
             SubnetId = subnetId;
         }
 
-        /// <summary> The resource identifier for the subnet. </summary>
+        /// <summary>
+        /// The resource identifier for the subnet.
+        /// Serialized Name: VirtualNetworkRule.properties.subnetId
+        /// </summary>
         public string SubnetId { get; }
     }
 }

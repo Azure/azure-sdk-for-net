@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> Data Lake Store account name availability result information. </summary>
+    /// <summary>
+    /// Data Lake Store account name availability result information.
+    /// Serialized Name: NameAvailabilityInformation
+    /// </summary>
     public partial class NameAvailabilityInformation
     {
         /// <summary> Initializes a new instance of NameAvailabilityInformation. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of NameAvailabilityInformation. </summary>
-        /// <param name="nameAvailable"> The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not. </param>
-        /// <param name="reason"> The reason why the Data Lake Store account name is not available, if nameAvailable is false. </param>
-        /// <param name="message"> The message describing why the Data Lake Store account name is not available, if nameAvailable is false. </param>
+        /// <param name="nameAvailable">
+        /// The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not.
+        /// Serialized Name: NameAvailabilityInformation.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the Data Lake Store account name is not available, if nameAvailable is false.
+        /// Serialized Name: NameAvailabilityInformation.reason
+        /// </param>
+        /// <param name="message">
+        /// The message describing why the Data Lake Store account name is not available, if nameAvailable is false.
+        /// Serialized Name: NameAvailabilityInformation.message
+        /// </param>
         internal NameAvailabilityInformation(bool? nameAvailable, string reason, string message)
         {
             NameAvailable = nameAvailable;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Message = message;
         }
 
-        /// <summary> The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not. </summary>
+        /// <summary>
+        /// The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not.
+        /// Serialized Name: NameAvailabilityInformation.nameAvailable
+        /// </summary>
         public bool? NameAvailable { get; }
-        /// <summary> The reason why the Data Lake Store account name is not available, if nameAvailable is false. </summary>
+        /// <summary>
+        /// The reason why the Data Lake Store account name is not available, if nameAvailable is false.
+        /// Serialized Name: NameAvailabilityInformation.reason
+        /// </summary>
         public string Reason { get; }
-        /// <summary> The message describing why the Data Lake Store account name is not available, if nameAvailable is false. </summary>
+        /// <summary>
+        /// The message describing why the Data Lake Store account name is not available, if nameAvailable is false.
+        /// Serialized Name: NameAvailabilityInformation.message
+        /// </summary>
         public string Message { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The parameters used to update a trusted identity provider. </summary>
+    /// <summary>
+    /// The parameters used to update a trusted identity provider.
+    /// Serialized Name: UpdateTrustedIdProviderParameters
+    /// </summary>
     public partial class TrustedIdProviderPatch
     {
         /// <summary> Initializes a new instance of TrustedIdProviderPatch. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
         }
 
-        /// <summary> The URL of this trusted identity provider. </summary>
+        /// <summary>
+        /// The URL of this trusted identity provider.
+        /// Serialized Name: UpdateTrustedIdProviderParameters.properties.idProvider
+        /// </summary>
         public string IdProvider { get; set; }
     }
 }

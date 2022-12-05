@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The parameters used to update a firewall rule. </summary>
+    /// <summary>
+    /// The parameters used to update a firewall rule.
+    /// Serialized Name: UpdateFirewallRuleParameters
+    /// </summary>
     public partial class FirewallRulePatch
     {
         /// <summary> Initializes a new instance of FirewallRulePatch. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
         }
 
-        /// <summary> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
+        /// <summary>
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleParameters.properties.startIpAddress
+        /// </summary>
         public string StartIPAddress { get; set; }
-        /// <summary> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
+        /// <summary>
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleParameters.properties.endIpAddress
+        /// </summary>
         public string EndIPAddress { get; set; }
     }
 }

@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> The parameters used to create a new firewall rule while creating a new Data Lake Store account. </summary>
+    /// <summary>
+    /// The parameters used to create a new firewall rule while creating a new Data Lake Store account.
+    /// Serialized Name: CreateFirewallRuleWithAccountParameters
+    /// </summary>
     public partial class CreateFirewallRuleWithAccountParameters
     {
         /// <summary> Initializes a new instance of CreateFirewallRuleWithAccountParameters. </summary>
-        /// <param name="name"> The unique name of the firewall rule to create. </param>
-        /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
-        /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="name">
+        /// The unique name of the firewall rule to create.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.name
+        /// </param>
+        /// <param name="startIPAddress">
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.properties.startIpAddress
+        /// </param>
+        /// <param name="endIPAddress">
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.properties.endIpAddress
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public CreateFirewallRuleWithAccountParameters(string name, string startIPAddress, string endIPAddress)
         {
@@ -29,11 +41,20 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary> The unique name of the firewall rule to create. </summary>
+        /// <summary>
+        /// The unique name of the firewall rule to create.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
+        /// <summary>
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.properties.startIpAddress
+        /// </summary>
         public string StartIPAddress { get; }
-        /// <summary> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
+        /// <summary>
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.properties.endIpAddress
+        /// </summary>
         public string EndIPAddress { get; }
     }
 }

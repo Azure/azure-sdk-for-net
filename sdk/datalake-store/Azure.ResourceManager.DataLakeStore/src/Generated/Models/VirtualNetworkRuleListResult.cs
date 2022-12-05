@@ -11,7 +11,10 @@ using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> Data Lake Store virtual network rule list information. </summary>
+    /// <summary>
+    /// Data Lake Store virtual network rule list information.
+    /// Serialized Name: VirtualNetworkRuleListResult
+    /// </summary>
     internal partial class VirtualNetworkRuleListResult
     {
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
-        /// <param name="value"> The results of the list operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// The results of the list operation.
+        /// Serialized Name: VirtualNetworkRuleListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: VirtualNetworkRuleListResult.nextLink
+        /// </param>
         internal VirtualNetworkRuleListResult(IReadOnlyList<VirtualNetworkRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The results of the list operation. </summary>
+        /// <summary>
+        /// The results of the list operation.
+        /// Serialized Name: VirtualNetworkRuleListResult.value
+        /// </summary>
         public IReadOnlyList<VirtualNetworkRuleData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: VirtualNetworkRuleListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
