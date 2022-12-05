@@ -143,7 +143,7 @@ namespace Azure.Data.Tables
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps && !Uri.IsLoopback)
             {
-                throw new ArgumentException("Cannot use AzureSasCredential without HTTPS.", nameof(endpoint));
+                throw new ArgumentException($"Cannot use {nameof(AzureSasCredential)} without HTTPS.", nameof(endpoint));
             }
 
             Argument.AssertNotNull(credential, nameof(credential));
