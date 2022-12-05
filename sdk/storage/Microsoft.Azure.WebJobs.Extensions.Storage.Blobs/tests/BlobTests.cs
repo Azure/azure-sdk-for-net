@@ -149,7 +149,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
             Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
 
-            Assert.True(ConnectionName, resultConnection);
+            Assert.AreEqual(ConnectionName, resultConnection);
             Assert.AreEqual(ContainerName, resultContainerName);
             Assert.AreEqual(BlobName, resultBlobName);
         }
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
                 Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
 
-                Assert.True(ConnectionName, resultConnection);
+                Assert.AreEqual(ConnectionName, resultConnection);
                 Assert.AreEqual(ContainerName, resultContainerName);
                 Assert.AreEqual(BlobName, resultBlobName);
             }
