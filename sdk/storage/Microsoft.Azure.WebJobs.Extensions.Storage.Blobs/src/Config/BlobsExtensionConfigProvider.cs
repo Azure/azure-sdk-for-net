@@ -24,6 +24,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
@@ -48,6 +49,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private readonly HttpRequestProcessor _httpRequestProcessor;
         private readonly IFunctionDataCache _functionDataCache;
 
+        private readonly IConfiguration _configuration;
+
         public BlobsExtensionConfigProvider(
             BlobServiceClientProvider blobServiceClientProvider,
             BlobTriggerAttributeBindingProvider triggerBinder,
@@ -57,8 +60,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
             IFunctionDataCache functionDataCache,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IConfiguration configuration)
         {
+            _configuration = configuration;
             _blobServiceClientProvider = blobServiceClientProvider;
             _triggerBinder = triggerBinder;
             _blobWrittenWatcherGetter = contextAccessor;
@@ -78,7 +83,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             IConverterManager converterManager,
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
-            ILoggerFactory loggerFactory) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory)
+            ILoggerFactory loggerFactory,
+            IConfiguration configuration) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory, configuration)
         {
         }
 
@@ -229,7 +235,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private ParameterBindingData CreateParameterBindingData(string connection, string blobName, string containerName)
         {
-            var connectionSection = _blobServiceClientProvider.GetWebJobsConnectionStringSection(connection);
+            string connectionName = !string.IsNullOrEmpty(connection) ? _nameResolver.ResolveWholeString(connection) : string.Empty;
+            var connectionSection = _blobServiceClientProvider.GetWebJobsConnectionStringSection(connectionName);
 
             var blobDetails = new BlobParameterBindingDataContent()
             {
