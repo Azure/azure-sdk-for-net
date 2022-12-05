@@ -13,16 +13,16 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the PrivateZone data model. </summary>
-    public partial class PrivateZoneData : TrackedResourceData
+    /// <summary> A class representing the PrivateDnsZone data model. </summary>
+    public partial class PrivateDnsZoneData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateZoneData. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsZoneData. </summary>
         /// <param name="location"> The location. </param>
-        public PrivateZoneData(AzureLocation location) : base(location)
+        public PrivateDnsZoneData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateZoneData. </summary>
+        /// <summary> Initializes a new instance of PrivateDnsZoneData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="numberOfVirtualNetworkLinksWithRegistration"> The current number of virtual networks that are linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="internalId"> Private zone internal Id. </param>
-        internal PrivateZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId) : base(id, name, resourceType, systemData, tags, location)
+        internal PrivateDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             MaxNumberOfRecords = maxNumberOfRecords;
