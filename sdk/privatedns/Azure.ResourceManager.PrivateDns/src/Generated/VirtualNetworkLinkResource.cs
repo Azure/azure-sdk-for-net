@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PrivateDns
     /// A Class representing a VirtualNetworkLink along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualNetworkLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetVirtualNetworkLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetVirtualNetworkLink method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateDnsZoneResource" /> using the GetVirtualNetworkLink method.
     /// </summary>
     public partial class VirtualNetworkLinkResource : ArmResource
     {

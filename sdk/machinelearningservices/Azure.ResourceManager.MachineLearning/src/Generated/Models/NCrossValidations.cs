@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// N-Cross validations value.
+    /// Serialized Name: NCrossValidations
     /// Please note <see cref="NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of NCrossValidations. </summary>
-        /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
+        /// <param name="mode">
+        /// [Required] Mode for determining N-Cross validations.
+        /// Serialized Name: NCrossValidations.mode
+        /// </param>
         internal NCrossValidations(NCrossValidationsMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> [Required] Mode for determining N-Cross validations. </summary>
+        /// <summary>
+        /// [Required] Mode for determining N-Cross validations.
+        /// Serialized Name: NCrossValidations.mode
+        /// </summary>
         internal NCrossValidationsMode Mode { get; set; }
     }
 }

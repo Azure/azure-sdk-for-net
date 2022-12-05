@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
     internal class PrivateDnsTests : PrivateDnsManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private PrivateZoneCollection _privateZoneResource;
+        private PrivateDnsZoneCollection _privateZoneResource;
 
         public PrivateDnsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            _privateZoneResource = _resourceGroup.GetPrivateZones();
+            _privateZoneResource = _resourceGroup.GetPrivateDnsZones();
         }
 
         [RecordedTest]
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.AreEqual(0, privateZone.Data.Tags.Count);
         }
 
-        private void ValidatePrivateZone(PrivateZoneResource privateZone, string privateZoneName)
+        private void ValidatePrivateZone(PrivateDnsZoneResource privateZone, string privateZoneName)
         {
             Assert.IsNotNull(privateZone);
             Assert.IsNotNull(privateZone.Data.Id);
