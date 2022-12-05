@@ -4,7 +4,7 @@
 
 ### Package Name
 
-The package name has been changed from `Microsoft.Azure.Management.AnalysisServices` to `Azure.ResourceManager.AnalysisServices`
+The package name has been changed from `Microsoft.Azure.Management.AnalysisServices` to `Azure.ResourceManager.Analysis`
 
 ### Breaking Changes
 
