@@ -12,11 +12,13 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
         private const string UniqueDomainRegEx = @"\.[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}\.";
+        protected readonly TestData TestData;
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(UniqueDomainRegEx, "."));
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            TestData = new TestData(TestEnvironment.Mode);
         }
 
         public bool SkipSipRoutingLiveTests
