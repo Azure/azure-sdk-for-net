@@ -10,7 +10,7 @@ copying customer data.
 
 Currently this version of the Data Movement library only supports Blobs.
 
-[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
+[Source code][source] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -92,7 +92,6 @@ additional questions or comments.
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/src
-[package]: https://www.nuget.org/packages/Azure.Storage.Data/
 [docs]: https://docs.microsoft.com/dotnet/api/azure.storage
 [rest_docs]: https://docs.microsoft.com/rest/api/storageservices/
 [product_docs]: https://docs.microsoft.com/azure/storage/
