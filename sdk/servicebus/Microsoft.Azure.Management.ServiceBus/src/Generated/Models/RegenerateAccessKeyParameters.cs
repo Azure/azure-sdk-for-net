@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// include: 'PrimaryKey', 'SecondaryKey'</param>
         /// <param name="key">Optional, if the key value provided, is reset for
         /// KeyType value or autogenerate Key value set for keyType</param>
-        public RegenerateAccessKeyParameters(KeyType keyType, string key = default(string))
+        public RegenerateAccessKeyParameters(string keyType, string key = default(string))
         {
             KeyType = keyType;
             Key = key;
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'PrimaryKey', 'SecondaryKey'
         /// </summary>
         [JsonProperty(PropertyName = "keyType")]
-        public KeyType KeyType { get; set; }
+        public string KeyType { get; set; }
 
         /// <summary>
         /// Gets or sets optional, if the key value provided, is reset for
@@ -65,11 +66,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (KeyType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeyType");
+            }
         }
     }
 }

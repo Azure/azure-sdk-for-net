@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Batch.Models
     {
         /// <summary> Initializes a new instance of TaskSchedulingPolicy. </summary>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
-        public TaskSchedulingPolicy(ComputeNodeFillType nodeFillType)
+        public TaskSchedulingPolicy(BatchNodeFillType nodeFillType)
         {
             NodeFillType = nodeFillType;
         }
 
         /// <summary> How tasks should be distributed across compute nodes. </summary>
-        public ComputeNodeFillType NodeFillType { get; set; }
+        public BatchNodeFillType NodeFillType { get; set; }
     }
 }

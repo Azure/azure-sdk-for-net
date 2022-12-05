@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
         public WaitActivity(string name, BinaryData waitTimeInSeconds) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (waitTimeInSeconds == null)
-            {
-                throw new ArgumentNullException(nameof(waitTimeInSeconds));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(waitTimeInSeconds, nameof(waitTimeInSeconds));
 
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = "Wait";
@@ -40,13 +35,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
-        internal WaitActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData waitTimeInSeconds) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal WaitActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData waitTimeInSeconds) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = activityType ?? "Wait";
         }
 
-        /// <summary> Duration in seconds. </summary>
+        /// <summary>
+        /// Duration in seconds.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData WaitTimeInSeconds { get; set; }
     }
 }

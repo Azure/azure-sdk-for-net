@@ -13,7 +13,7 @@
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" />
@@ -28,8 +28,9 @@
     <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
-
+  
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
+  <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
   <!-- Remove all projects except the ones included by the SDKType filter -->
   <ItemGroup Condition="'$(SDKType)' != 'all'">
@@ -46,6 +47,14 @@
   <Target Name="GenerateCode">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="GenerateTests">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="GenerateTest"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
@@ -71,4 +80,24 @@
             SkipNonexistentProjects="false"
             SkipNonexistentTargets="true" />
   </Target>
+
+  <Target Name="ProjectDependsOn">
+    <MSBuild Projects="@(ProjectReference)"
+            Targets="ProjectDependsOn"
+            BuildInParallel="$(BuildInParallel)"
+            SkipNonexistentProjects="false"
+            SkipNonexistentTargets="true">
+      <Output ItemName="ProjectsToInclude" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+    <RemoveDuplicates Inputs="@(ProjectsToInclude->Replace($(RepoRoot), ''))">
+      <Output TaskParameter="Filtered" ItemName="ProjectsToIncludeFitered"/>
+    </RemoveDuplicates>
+    <Message Text="Write to file $(OutputProjectFilePath)" Importance="high"/>
+    <Message Text="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
+    <ItemGroup>
+      <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
+  </Target>
+
 </Project>

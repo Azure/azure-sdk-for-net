@@ -12,6 +12,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using Microsoft.Azure.Management.Network;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
+    using Microsoft.Azure.Test.HttpRecorder;
 
     public partial class ScenarioTests 
     {
@@ -27,7 +28,13 @@ namespace ServiceBus.Tests.ScenarioTests
         public string Location { get; set; }
         public string ResourceGroupName { get; set; }
         public string NamespaceName { get; set; }
-               
+
+        static ScenarioTests()
+        {
+            RecorderUtilities.JsonPathSanitizers.Add("$..key");
+            RecorderUtilities.JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
+            RecorderUtilities.JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
+        }
 
         protected void InitializeClients(MockContext context)
         {

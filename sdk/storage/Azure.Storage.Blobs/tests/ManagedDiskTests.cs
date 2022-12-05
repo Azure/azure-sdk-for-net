@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
-        [RetryOnException(5, typeof(AssertionException))]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/30035")]
         public async Task CanDiffPagesBetweenSnapshots()
         {
             // Arrange

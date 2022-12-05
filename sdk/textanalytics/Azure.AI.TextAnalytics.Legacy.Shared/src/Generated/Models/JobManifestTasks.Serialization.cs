@@ -65,46 +65,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExtractiveSummarizationTasks))
-            {
-                writer.WritePropertyName("extractiveSummarizationTasks");
-                writer.WriteStartArray();
-                foreach (var item in ExtractiveSummarizationTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CustomEntityRecognitionTasks))
-            {
-                writer.WritePropertyName("customEntityRecognitionTasks");
-                writer.WriteStartArray();
-                foreach (var item in CustomEntityRecognitionTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CustomSingleClassificationTasks))
-            {
-                writer.WritePropertyName("customSingleClassificationTasks");
-                writer.WriteStartArray();
-                foreach (var item in CustomSingleClassificationTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CustomMultiClassificationTasks))
-            {
-                writer.WritePropertyName("customMultiClassificationTasks");
-                writer.WriteStartArray();
-                foreach (var item in CustomMultiClassificationTasks)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
     }

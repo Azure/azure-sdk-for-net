@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, VirtualMachineData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, VirtualMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, VirtualMachineData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, VirtualMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01";
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.AccountFilterCollection>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaServicesAccountFilterListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        Models.AccountFilterCollection value = default;
+                        MediaServicesAccountFilterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AccountFilterCollection.DeserializeAccountFilterCollection(document.RootElement);
+                        value = MediaServicesAccountFilterListResult.DeserializeMediaServicesAccountFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.AccountFilterCollection> List(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<MediaServicesAccountFilterListResult> List(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        Models.AccountFilterCollection value = default;
+                        MediaServicesAccountFilterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AccountFilterCollection.DeserializeAccountFilterCollection(document.RootElement);
+                        value = MediaServicesAccountFilterListResult.DeserializeMediaServicesAccountFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountFilterData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string filterName, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaServicesAccountFilterData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AccountFilterData value = default;
+                        MediaServicesAccountFilterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountFilterData.DeserializeAccountFilterData(document.RootElement);
+                        value = MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountFilterData)null, message.Response);
+                    return Response.FromValue((MediaServicesAccountFilterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountFilterData> Get(string subscriptionId, string resourceGroupName, string accountName, string filterName, CancellationToken cancellationToken = default)
+        public Response<MediaServicesAccountFilterData> Get(string subscriptionId, string resourceGroupName, string accountName, string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AccountFilterData value = default;
+                        MediaServicesAccountFilterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountFilterData.DeserializeAccountFilterData(document.RootElement);
+                        value = MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountFilterData)null, message.Response);
+                    return Response.FromValue((MediaServicesAccountFilterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string filterName, AccountFilterData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string filterName, MediaServicesAccountFilterData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountFilterData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string filterName, AccountFilterData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaServicesAccountFilterData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string filterName, MediaServicesAccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.Media
                 case 200:
                 case 201:
                     {
-                        AccountFilterData value = default;
+                        MediaServicesAccountFilterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountFilterData.DeserializeAccountFilterData(document.RootElement);
+                        value = MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountFilterData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string filterName, AccountFilterData data, CancellationToken cancellationToken = default)
+        public Response<MediaServicesAccountFilterData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string filterName, MediaServicesAccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.Media
                 case 200:
                 case 201:
                     {
-                        AccountFilterData value = default;
+                        MediaServicesAccountFilterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountFilterData.DeserializeAccountFilterData(document.RootElement);
+                        value = MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string filterName, AccountFilterData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string filterName, MediaServicesAccountFilterData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountFilterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string filterName, AccountFilterData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaServicesAccountFilterData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string filterName, MediaServicesAccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AccountFilterData value = default;
+                        MediaServicesAccountFilterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountFilterData.DeserializeAccountFilterData(document.RootElement);
+                        value = MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountFilterData> Update(string subscriptionId, string resourceGroupName, string accountName, string filterName, AccountFilterData data, CancellationToken cancellationToken = default)
+        public Response<MediaServicesAccountFilterData> Update(string subscriptionId, string resourceGroupName, string accountName, string filterName, MediaServicesAccountFilterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -456,9 +456,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        AccountFilterData value = default;
+                        MediaServicesAccountFilterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountFilterData.DeserializeAccountFilterData(document.RootElement);
+                        value = MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.AccountFilterCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaServicesAccountFilterListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -501,9 +501,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        Models.AccountFilterCollection value = default;
+                        MediaServicesAccountFilterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AccountFilterCollection.DeserializeAccountFilterCollection(document.RootElement);
+                        value = MediaServicesAccountFilterListResult.DeserializeMediaServicesAccountFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.AccountFilterCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<MediaServicesAccountFilterListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -532,9 +532,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        Models.AccountFilterCollection value = default;
+                        MediaServicesAccountFilterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AccountFilterCollection.DeserializeAccountFilterCollection(document.RootElement);
+                        value = MediaServicesAccountFilterListResult.DeserializeMediaServicesAccountFilterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

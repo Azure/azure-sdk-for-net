@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendProxyContract DeserializeBackendProxyContract(JsonElement element)
         {
-            Uri url = default;
+            Uri uri = default;
             Optional<string> username = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("username"))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new BackendProxyContract(url, username.Value, password.Value);
+            return new BackendProxyContract(uri, username.Value, password.Value);
         }
     }
 }

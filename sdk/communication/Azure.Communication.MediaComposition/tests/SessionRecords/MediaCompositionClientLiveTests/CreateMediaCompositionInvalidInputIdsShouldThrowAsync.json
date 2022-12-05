@@ -1,68 +1,63 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dev-test-resource.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview1",
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview1",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "333",
+        "Content-Length": "321",
         "Content-Type": "application/json",
-        "traceparent": "00-4337d94d194ced468647928dddcd063b-377ed3a7c95ead4c-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220622.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1fe420a3278145fcaf1980c3285c2341",
+        "traceparent": "00-85a2807c3c85604e8ad0872cc43409a8-0223ccb29f092445-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220810.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "464ad8f853bd85dd57548d00f7b02afc",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 22 Jun 2022 21:53:53 GMT",
+        "x-ms-date": "Wed, 10 Aug 2022 23:37:15 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "id": "presentation",
         "layout": {
+          "rows": 2,
+          "columns": 2,
+          "inputIds": [
+            [
+              "InvalidInputId"
+            ]
+          ],
+          "kind": "grid",
           "resolution": {
             "width": 1920,
             "height": 1080
-          },
-          "grid": {
-            "rows": 2,
-            "columns": 2,
-            "inputIds": [
-              [
-                "InvalidInputId"
-              ]
-            ]
           }
         },
         "inputs": {
           "teamsMeeting": {
-            "teamsMeeting": {
-              "teamsJoinUrl": "https://teamsJoinUrl"
-            }
+            "teamsJoinUrl": "https://teamsJoinUrl",
+            "kind": "teamsMeeting"
           }
         },
         "outputs": {
           "acsGroupCall": {
-            "groupCall": {
-              "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193"
-            }
+            "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193",
+            "kind": "groupCall"
           }
-        },
-        "streamState": "notStarted"
+        }
       },
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
-        "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Jun 2022 21:53:54 GMT",
+        "Date": "Wed, 10 Aug 2022 23:37:15 GMT",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20220622T215354Z-1bg6fa1het14p22xyk86nb7gq800000001m000000001c1zz",
+        "X-Azure-Ref": "0K0H0YgAAAABNyZdeoZy3TpsSUMHI2aK4WVZSMzExMDAwMTE2MDIxAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Input with id: InvalidInputId not defined in inputs. If using a selector, check if your syntax is correct.\u0022"
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://dev-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1104458906"
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "887059241"
   }
 }

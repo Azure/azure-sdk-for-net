@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerPipelineReference pipeline = default;
             string type = default;
             Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<FactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
-            IList<PipelineReference> dependsOn = default;
+            IList<FactoryPipelineReference> dependsOn = default;
             string runDimension = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runtimeState = new TriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"))
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("dependsOn"))
                         {
-                            List<PipelineReference> array = new List<PipelineReference>();
+                            List<FactoryPipelineReference> array = new List<FactoryPipelineReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PipelineReference.DeserializePipelineReference(item));
+                                array.Add(FactoryPipelineReference.DeserializeFactoryPipelineReference(item));
                             }
                             dependsOn = array;
                             continue;

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ElasticSanProvisioningState> provisioningState = default;
             Optional<StorageTargetType> protocolType = default;
             Optional<ElasticSanEncryptionType> encryption = default;
             Optional<NetworkRuleSet> networkAcls = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ElasticSanProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("protocolType"))

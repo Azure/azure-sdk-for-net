@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public CosmosDBSqlTriggerResourceInfo(string triggerName)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
+            Argument.AssertNotNull(triggerName, nameof(triggerName));
 
             TriggerName = triggerName;
         }

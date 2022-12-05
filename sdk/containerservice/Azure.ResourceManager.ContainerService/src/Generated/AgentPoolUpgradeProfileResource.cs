@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
     /// A Class representing an AgentPoolUpgradeProfile along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgentPoolUpgradeProfileResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAgentPoolUpgradeProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AgentPoolResource" /> using the GetAgentPoolUpgradeProfile method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceAgentPoolResource" /> using the GetAgentPoolUpgradeProfile method.
     /// </summary>
     public partial class AgentPoolUpgradeProfileResource : ArmResource
     {

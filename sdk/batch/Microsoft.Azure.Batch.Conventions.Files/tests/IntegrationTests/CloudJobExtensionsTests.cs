@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+using BlobTestUtils = Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities.BlobUtils;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
@@ -48,11 +49,11 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
 
-                await job.OutputStorage(StorageAccount).SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"));
+                await job.OutputStorage(blobClient).SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"));
 
-                var blobs = job.OutputStorage(StorageAccount).ListOutputs(JobOutputKind.JobOutput).ToList();
+                var blobs = job.OutputStorage(blobClient).ListOutputs(JobOutputKind.JobOutput).ToList();
                 Assert.NotEmpty(blobs);
-                Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/Files/TestText1.txt"));
+                Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobOutput/Files/TestText1.txt"));
             }
         }
 
@@ -64,7 +65,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
 
-                var url = job.GetOutputStorageContainerUrl(StorageAccount, TimeSpan.FromMinutes(5));
+                var url = job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(5));
 
                 // Write something using the SAS URL
 
@@ -75,11 +76,11 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                 // And retrieve that same thing using the account credentials to verify
                 // it was successfully written (and to the correct place)
 
-                var jobOutputStorageFromAccount = job.OutputStorage(StorageAccount);
+                var jobOutputStorageFromAccount = job.OutputStorage(blobClient);
 
                 var blobs = jobOutputStorageFromAccount.ListOutputs(JobOutputKind.JobPreview).ToList();
                 Assert.NotEmpty(blobs);
-                Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobPreview/SavedViaSas.txt"));
+                Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobPreview/SavedViaSas.txt"));
             }
         }
     }
@@ -109,19 +110,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
 
-                var blobClient = StorageAccount.CreateCloudBlobClient();
+                var blobClient = base.blobClient;
 
                 var expectedContainer = ContainerNameUtils.GetSafeContainerName(_jobId);
 
-                var expectedContainerExists = await blobClient.GetContainerReference(expectedContainer).ExistsAsync();
+                var expectedContainerExists = await base.blobClient.GetBlobContainerClient(expectedContainer).ExistsAsync();
 
                 Assert.False(expectedContainerExists, $"Output storage container for {_jobId} should not have existed before test ran");
 
-                await job.PrepareOutputStorageAsync(StorageAccount);
+                await job.PrepareOutputStorageAsync(base.blobClient);
 
-                expectedContainerExists = await blobClient.GetContainerReference(expectedContainer).ExistsAsync();
+                expectedContainerExists = await base.blobClient.GetBlobContainerClient(expectedContainer).ExistsAsync();
 
                 Assert.True(expectedContainerExists, $"Output storage container for {_jobId} should have existed after test ran");
+
             }
         }
     }

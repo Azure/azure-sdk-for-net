@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element)
         {
-            Optional<Filters> filters = default;
-            IList<Codec> codecs = default;
-            IList<Format> formats = default;
+            Optional<FilteringOperations> filters = default;
+            IList<MediaCodecBase> codecs = default;
+            IList<MediaFormatBase> formats = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,25 +55,25 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    filters = Filters.DeserializeFilters(property.Value);
+                    filters = FilteringOperations.DeserializeFilteringOperations(property.Value);
                     continue;
                 }
                 if (property.NameEquals("codecs"))
                 {
-                    List<Codec> array = new List<Codec>();
+                    List<MediaCodecBase> array = new List<MediaCodecBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Codec.DeserializeCodec(item));
+                        array.Add(MediaCodecBase.DeserializeMediaCodecBase(item));
                     }
                     codecs = array;
                     continue;
                 }
                 if (property.NameEquals("formats"))
                 {
-                    List<Format> array = new List<Format>();
+                    List<MediaFormatBase> array = new List<MediaFormatBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Format.DeserializeFormat(item));
+                        array.Add(MediaFormatBase.DeserializeMediaFormatBase(item));
                     }
                     formats = array;
                     continue;

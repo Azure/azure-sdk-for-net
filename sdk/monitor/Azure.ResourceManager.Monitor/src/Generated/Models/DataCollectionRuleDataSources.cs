@@ -25,7 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>
         /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
-        internal DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions) : base(performanceCounters, windowsEventLogs, syslog, extensions)
+        /// <param name="logFiles"> The list of Log files source configurations. </param>
+        /// <param name="iisLogs"> The list of IIS logs source configurations. </param>
+        internal DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs) : base(performanceCounters, windowsEventLogs, syslog, extensions, logFiles, iisLogs)
         {
         }
     }

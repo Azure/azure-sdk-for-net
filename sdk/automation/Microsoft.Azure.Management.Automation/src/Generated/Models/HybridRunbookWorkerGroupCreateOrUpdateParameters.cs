@@ -10,13 +10,16 @@
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The parameters supplied to the create or update hybrid runbook worker
-    /// group operation.
+    /// The parameters supplied to the create hybrid runbook worker group
+    /// operation.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class HybridRunbookWorkerGroupCreateOrUpdateParameters
     {
         /// <summary>
@@ -34,9 +37,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="credential">Sets the credential of a worker
         /// group.</param>
-        public HybridRunbookWorkerGroupCreateOrUpdateParameters(RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty))
+        /// <param name="name">Gets or sets the name of the resource.</param>
+        public HybridRunbookWorkerGroupCreateOrUpdateParameters(RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty), string name = default(string))
         {
             Credential = credential;
+            Name = name;
             CustomInit();
         }
 
@@ -48,8 +53,14 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Gets or sets sets the credential of a worker group.
         /// </summary>
-        [JsonProperty(PropertyName = "credential")]
+        [JsonProperty(PropertyName = "properties.credential")]
         public RunAsCredentialAssociationProperty Credential { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
     }
 }

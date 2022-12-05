@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of ArcSettingData. </summary>
         public ArcSettingData()
         {
-            PerNodeDetails = new ChangeTrackingList<PerNodeState>();
+            PerNodeDetails = new ChangeTrackingList<PerNodeArcState>();
         }
 
         /// <summary> Initializes a new instance of ArcSettingData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, BinaryData connectivityProperties) : base(id, name, resourceType, systemData)
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HciProvisioningState? ProvisioningState { get; }
         /// <summary> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </summary>
         public string ArcInstanceResourceGroup { get; set; }
         /// <summary> App id of arc AAD identity. </summary>
@@ -64,8 +64,37 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
         public ArcSettingAggregateState? AggregateState { get; }
         /// <summary> State of Arc agent in each of the nodes. </summary>
-        public IReadOnlyList<PerNodeState> PerNodeDetails { get; }
-        /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        public IReadOnlyList<PerNodeArcState> PerNodeDetails { get; }
+        /// <summary>
+        /// contains connectivity related configuration for ARC resources
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData ConnectivityProperties { get; set; }
     }
 }

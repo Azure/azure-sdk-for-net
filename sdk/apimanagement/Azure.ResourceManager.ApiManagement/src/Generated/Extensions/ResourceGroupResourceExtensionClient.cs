@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets a collection of ApiManagementServiceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
-        public virtual ApiManagementServiceResourceCollection GetApiManagementServiceResources()
+        public virtual ApiManagementServiceCollection GetApiManagementServices()
         {
-            return GetCachedClient(Client => new ApiManagementServiceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new ApiManagementServiceCollection(Client, Id));
         }
     }
 }

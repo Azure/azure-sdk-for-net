@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("transparentHugePageDefrag");
                 writer.WriteStringValue(TransparentHugePageDefrag);
             }
-            if (Optional.IsDefined(SwapFileSizeMB))
+            if (Optional.IsDefined(SwapFileSizeInMB))
             {
                 writer.WritePropertyName("swapFileSizeMB");
-                writer.WriteNumberValue(SwapFileSizeMB.Value);
+                writer.WriteNumberValue(SwapFileSizeInMB.Value);
             }
             writer.WriteEndObject();
         }

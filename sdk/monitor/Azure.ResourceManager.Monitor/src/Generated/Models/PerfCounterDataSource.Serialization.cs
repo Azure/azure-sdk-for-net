@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element)
         {
-            Optional<IList<KnownPerfCounterDataSourceStream>> streams = default;
+            Optional<IList<PerfCounterDataSourceStream>> streams = default;
             Optional<int> samplingFrequencyInSeconds = default;
             Optional<IList<string>> counterSpecifiers = default;
             Optional<string> name = default;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownPerfCounterDataSourceStream> array = new List<KnownPerfCounterDataSourceStream>();
+                    List<PerfCounterDataSourceStream> array = new List<PerfCounterDataSourceStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownPerfCounterDataSourceStream(item.GetString()));
+                        array.Add(new PerfCounterDataSourceStream(item.GetString()));
                     }
                     streams = array;
                     continue;

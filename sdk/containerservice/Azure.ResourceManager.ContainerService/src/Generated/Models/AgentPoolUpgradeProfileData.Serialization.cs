@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             string kubernetesVersion = default;
-            OSType osType = default;
+            ContainerServiceOSType osType = default;
             Optional<IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem>> upgrades = default;
             Optional<string> latestNodeImageVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService
                         }
                         if (property0.NameEquals("osType"))
                         {
-                            osType = new OSType(property0.Value.GetString());
+                            osType = new ContainerServiceOSType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("upgrades"))

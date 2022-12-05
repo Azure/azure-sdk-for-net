@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="partitionCount"> The partition count of the event hub data source. Range 1 - 256. </param>
         /// <param name="consumerGroupName"> The name of an Event Hub Consumer Group that should be used to read events from the Event Hub. Specifying distinct consumer group names for multiple inputs allows each of those inputs to receive the same events from the Event Hub. If not specified, the input uses the Event Hub’s default consumer group. </param>
         /// <param name="prefetchCount"> The number of messages that the message receiver can simultaneously request. </param>
-        internal EventHubV2StreamInputDataSource(string streamInputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, AuthenticationMode? authenticationMode, string eventHubName, int? partitionCount, string consumerGroupName, int? prefetchCount) : base(streamInputDataSourceType)
+        internal EventHubV2StreamInputDataSource(string streamInputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string eventHubName, int? partitionCount, string consumerGroupName, int? prefetchCount) : base(streamInputDataSourceType)
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </summary>
         public string SharedAccessPolicyKey { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
         /// <summary> The name of the Event Hub. Required on PUT (CreateOrReplace) requests. </summary>
         public string EventHubName { get; set; }
         /// <summary> The partition count of the event hub data source. Range 1 - 256. </summary>

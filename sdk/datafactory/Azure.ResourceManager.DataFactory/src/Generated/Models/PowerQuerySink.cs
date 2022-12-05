@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PowerQuerySink(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
         }
 
         /// <summary> Initializes a new instance of PowerQuerySink. </summary>
@@ -32,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
         /// <param name="rejectedDataLinkedService"> Rejected data linked service reference. </param>
         /// <param name="script"> sink script. </param>
-        internal PowerQuerySink(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService, LinkedServiceReference rejectedDataLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService, rejectedDataLinkedService)
+        internal PowerQuerySink(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService, FactoryLinkedServiceReference rejectedDataLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService, rejectedDataLinkedService)
         {
             Script = script;
         }

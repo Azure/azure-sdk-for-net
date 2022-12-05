@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteVirtualNetworkConnectionGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteVirtualNetworkConnectionGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SiteVirtualNetworkConnectionGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteVirtualNetworkConnectionGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));

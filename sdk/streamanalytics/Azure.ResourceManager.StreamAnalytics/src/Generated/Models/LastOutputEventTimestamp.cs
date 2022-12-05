@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> An output event timestamp. </summary>
@@ -16,17 +18,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of LastOutputEventTimestamp. </summary>
-        /// <param name="lastOutputEventTime"> The last output event time. </param>
-        /// <param name="lastUpdateTime"> The time that the last update happened. </param>
-        internal LastOutputEventTimestamp(string lastOutputEventTime, string lastUpdateTime)
+        /// <param name="lastOutputEventOn"> The last output event time. </param>
+        /// <param name="lastUpdatedOn"> The time that the last update happened. </param>
+        internal LastOutputEventTimestamp(DateTimeOffset? lastOutputEventOn, DateTimeOffset? lastUpdatedOn)
         {
-            LastOutputEventTime = lastOutputEventTime;
-            LastUpdateTime = lastUpdateTime;
+            LastOutputEventOn = lastOutputEventOn;
+            LastUpdatedOn = lastUpdatedOn;
         }
 
         /// <summary> The last output event time. </summary>
-        public string LastOutputEventTime { get; }
+        public DateTimeOffset? LastOutputEventOn { get; }
         /// <summary> The time that the last update happened. </summary>
-        public string LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

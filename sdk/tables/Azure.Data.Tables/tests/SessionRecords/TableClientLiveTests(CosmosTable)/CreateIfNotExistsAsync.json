@@ -1,170 +1,150 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-dcd6335fa893704ab0216c5fa71ed63a-f9c09b68d91f8f45-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "e7c69152c2f75db4fe87f1213b543952",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:52 GMT",
+        "traceparent": "00-d8f9c3fd71f1057b6259e0dd9f839c89-34df8719cf805a46-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "aac01a3cd462903c016fe565a503a8bc",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
-        "TableName": "testtableisofu3f1"
+        "TableName": "testtableb1a7g1fu"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:28:55 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A55.6108808Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.cosmos.azure.com/Tables(\u0027testtableisofu3f1\u0027)",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "e7c69152-c2f7-5db4-fe87-f1213b543952"
+        "Date": "Mon, 29 Aug 2022 22:56:24 GMT",
+        "ETag": "W/\u0022datetime\u00272022-08-29T22%3A56%3A23.9236103Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtableb1a7g1fu\u0027)",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
-        "TableName": "testtableisofu3f1",
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "TableName": "testtableb1a7g1fu",
+        "odata.metadata": "https://chrisstablesprim.table.cosmos.azure.com/$metadata#Tables/@Element"
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
         "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
+        "Content-Type": "application/json;odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-0cb9743b7d25f2488c25c8c9f67bcd14-672ae3e2eb0ea040-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "8fe686d7ae212b6528bb471002f50e22",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:53 GMT",
+        "Prefer": "return-no-content",
+        "traceparent": "00-ef340a79a9a7e66c0b3fa8d1f65fdcfe-227744e946531068-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f05cd65071ac0a2e28e0e5e84630b839",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": {
-        "TableName": "testtableisofu3f1"
+        "TableName": "testtableb1a7g1fu"
       },
       "StatusCode": 409,
       "ResponseHeaders": {
-        "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:28:55 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "8fe686d7-ae21-2b65-28bb-471002f50e22"
-      },
-      "ResponseBody": [
-        "{\u0022odata.error\u0022:{\u0022code\u0022:\u0022TableAlreadyExists\u0022,\u0022message\u0022:{\u0022lang\u0022:\u0022en-us\u0022,\u0022value\u0022:\u0022The specified table already exists.\\nRequestID:8fe686d7-ae21-2b65-28bb-471002f50e22\\n\u0022}}}\r\n"
-      ]
-    },
-    {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json; odata=minimalmetadata",
-        "Authorization": "Sanitized",
-        "Content-Length": "33",
-        "Content-Type": "application/json; odata=nometadata",
-        "DataServiceVersion": "3.0",
-        "traceparent": "00-b842f88b7c30e64baee7893c1ed2decc-c67754b158d9f945-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "4ced22c7a5f011843a5507a2cdc7aaa3",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:53 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
-      },
-      "RequestBody": {
-        "TableName": "testtableirxmsuzx"
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; odata=minimalmetadata",
-        "Date": "Tue, 23 Mar 2021 18:28:56 GMT",
-        "ETag": "W/\u0022datetime\u00272021-03-23T18%3A28%3A56.0661512Z\u0027\u0022",
-        "Location": "https://jverazsdkprim.table.cosmos.azure.com/Tables(\u0027testtableirxmsuzx\u0027)",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "4ced22c7-a5f0-1184-3a55-07a2cdc7aaa3"
+        "Content-Type": "application/json; odata=fullmetadata",
+        "Date": "Mon, 29 Aug 2022 22:56:24 GMT",
+        "Transfer-Encoding": "chunked"
       },
       "ResponseBody": {
-        "TableName": "testtableirxmsuzx",
-        "odata.metadata": "https://jverazsdkprim.table.cosmos.azure.com/$metadata#Tables/@Element"
+        "odata.error": {
+          "code": "TableAlreadyExists",
+          "message": {
+            "lang": "en-us",
+            "value": "The specified table already exists.\nRequestID:6d63e1b2-7442-4b7d-aefb-1c7d279c27d0\n"
+          }
+        }
       }
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/Tables(\u0027testtableirxmsuzx\u0027)",
-      "RequestMethod": "DELETE",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables?$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+      "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
+        "Accept": "application/json;odata=minimalmetadata",
         "Authorization": "Sanitized",
-        "traceparent": "00-7aeb791189a92d4b832e8dd4ac4b6e7e-ba59bfdc4d521346-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "3bbe9b2ca37a095b79cf4e9f546cce0e",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:53 GMT",
+        "Content-Length": "33",
+        "Content-Type": "application/json;odata=nometadata",
+        "DataServiceVersion": "3.0",
+        "Prefer": "return-no-content",
+        "traceparent": "00-57977ad67cf0c743e4ad95358acc339b-ff970944ee101609-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4110941ca716abcb3227e75b2119ffcb",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
-      "RequestBody": null,
+      "RequestBody": {
+        "TableName": "testtablews2gjyu3"
+      },
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:28:56 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "3bbe9b2c-a37a-095b-79cf-4e9f546cce0e"
+        "Content-Type": "application/json",
+        "Date": "Mon, 29 Aug 2022 22:56:24 GMT",
+        "ETag": "W/\u0022datetime\u00272022-08-29T22%3A56%3A24.3933191Z\u0027\u0022",
+        "Location": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtablews2gjyu3\u0027)",
+        "Preference-Applied": "return-no-content"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://jverazsdkprim.table.cosmos.azure.com/Tables(\u0027testtableisofu3f1\u0027)",
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtablews2gjyu3\u0027)",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9b3a74cc55ab7d4092c8902d11d227bc-e58773fd48b3de4c-00",
-        "User-Agent": [
-          "azsdk-net-Data.Tables/12.0.0-alpha.20210323.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "fec8879318c0823a3736d6aded6c540b",
-        "x-ms-date": "Tue, 23 Mar 2021 18:28:53 GMT",
+        "traceparent": "00-428dce9c239003ffdc7c9865f0bfe5ea-f1c006080c1cca9d-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8282b6eb54eed149b6ab6bd4ef2c08ee",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:24 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Tue, 23 Mar 2021 18:28:56 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "fec88793-18c0-823a-3736-d6aded6c540b"
+        "Content-Type": "application/json",
+        "Date": "Mon, 29 Aug 2022 22:56:24 GMT"
       },
-      "ResponseBody": []
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://chrisstablesprim.table.cosmos.azure.com/Tables(\u0027testtableb1a7g1fu\u0027)",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1f1b9e7f494ab834818c98e8b164ff2e-4850ebe312b41bc7-00",
+        "User-Agent": "azsdk-net-Data.Tables/12.7.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "18d4fba8ed6180f4143ab51e485d18e1",
+        "x-ms-date": "Mon, 29 Aug 2022 22:56:24 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-12-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Mon, 29 Aug 2022 22:56:25 GMT"
+      },
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "COSMOS_TABLES_ENDPOINT_SUFFIX": null,
-    "RandomSeed": "705608732",
-    "TABLES_COSMOS_ACCOUNT_NAME": "jverazsdkprim",
+    "COSMOS_TABLES_ENDPOINT_SUFFIX": "cosmos.azure.com",
+    "RandomSeed": "1881705556",
+    "TABLES_COSMOS_ACCOUNT_NAME": "chrisstablesprim",
     "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
   }
 }

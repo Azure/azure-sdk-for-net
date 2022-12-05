@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="queryStatisticId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QueryStatisticData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string queryStatisticId, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlQueryStatisticData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string queryStatisticId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        QueryStatisticData value = default;
+                        MySqlQueryStatisticData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueryStatisticData.DeserializeQueryStatisticData(document.RootElement);
+                        value = MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((QueryStatisticData)null, message.Response);
+                    return Response.FromValue((MySqlQueryStatisticData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="queryStatisticId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QueryStatisticData> Get(string subscriptionId, string resourceGroupName, string serverName, string queryStatisticId, CancellationToken cancellationToken = default)
+        public Response<MySqlQueryStatisticData> Get(string subscriptionId, string resourceGroupName, string serverName, string queryStatisticId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        QueryStatisticData value = default;
+                        MySqlQueryStatisticData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueryStatisticData.DeserializeQueryStatisticData(document.RootElement);
+                        value = MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((QueryStatisticData)null, message.Response);
+                    return Response.FromValue((MySqlQueryStatisticData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListByServerRequest(string subscriptionId, string resourceGroupName, string serverName, TopQueryStatisticsInput input)
+        internal HttpMessage CreateListByServerRequest(string subscriptionId, string resourceGroupName, string serverName, MySqlTopQueryStatisticsInput input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TopQueryStatisticsResultList>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, TopQueryStatisticsInput input, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlTopQueryStatisticsListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, MySqlTopQueryStatisticsInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        TopQueryStatisticsResultList value = default;
+                        MySqlTopQueryStatisticsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TopQueryStatisticsResultList.DeserializeTopQueryStatisticsResultList(document.RootElement);
+                        value = MySqlTopQueryStatisticsListResult.DeserializeMySqlTopQueryStatisticsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TopQueryStatisticsResultList> ListByServer(string subscriptionId, string resourceGroupName, string serverName, TopQueryStatisticsInput input, CancellationToken cancellationToken = default)
+        public Response<MySqlTopQueryStatisticsListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, MySqlTopQueryStatisticsInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        TopQueryStatisticsResultList value = default;
+                        MySqlTopQueryStatisticsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TopQueryStatisticsResultList.DeserializeTopQueryStatisticsResultList(document.RootElement);
+                        value = MySqlTopQueryStatisticsListResult.DeserializeMySqlTopQueryStatisticsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MySql
             }
         }
 
-        internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, TopQueryStatisticsInput input)
+        internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, MySqlTopQueryStatisticsInput input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TopQueryStatisticsResultList>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, TopQueryStatisticsInput input, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlTopQueryStatisticsListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, MySqlTopQueryStatisticsInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        TopQueryStatisticsResultList value = default;
+                        MySqlTopQueryStatisticsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TopQueryStatisticsResultList.DeserializeTopQueryStatisticsResultList(document.RootElement);
+                        value = MySqlTopQueryStatisticsListResult.DeserializeMySqlTopQueryStatisticsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TopQueryStatisticsResultList> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, TopQueryStatisticsInput input, CancellationToken cancellationToken = default)
+        public Response<MySqlTopQueryStatisticsListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, MySqlTopQueryStatisticsInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.MySql
             {
                 case 200:
                     {
-                        TopQueryStatisticsResultList value = default;
+                        MySqlTopQueryStatisticsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TopQueryStatisticsResultList.DeserializeTopQueryStatisticsResultList(document.RootElement);
+                        value = MySqlTopQueryStatisticsListResult.DeserializeMySqlTopQueryStatisticsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

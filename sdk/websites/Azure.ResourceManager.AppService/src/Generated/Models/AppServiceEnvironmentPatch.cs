@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
         public AppServiceEnvironmentPatch()
         {
-            ClusterSettings = new ChangeTrackingList<NameValuePair>();
+            ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
             UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
         /// <param name="multiSize"> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </param>
         /// <param name="multiRoleCount"> Number of front-end instances. </param>
-        /// <param name="ipsslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
+        /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
         /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
         /// <param name="maximumNumberOfMachines"> Maximum number of VMs in the App Service Environment. </param>
         /// <param name="frontEndScaleFactor"> Scale factor for front-ends. </param>
-        /// <param name="suspended">
+        /// <param name="isSuspended">
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         ///  (most likely because NSG blocked the incoming traffic).
         /// </param>
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
-        /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.AppService.Models
             InternalLoadBalancingMode = internalLoadBalancingMode;
             MultiSize = multiSize;
             MultiRoleCount = multiRoleCount;
-            IpsslAddressCount = ipsslAddressCount;
+            IPSslAddressCount = ipSslAddressCount;
             DnsSuffix = dnsSuffix;
             MaximumNumberOfMachines = maximumNumberOfMachines;
             FrontEndScaleFactor = frontEndScaleFactor;
-            Suspended = suspended;
+            IsSuspended = isSuspended;
             ClusterSettings = clusterSettings;
             UserWhitelistedIPRanges = userWhitelistedIPRanges;
             HasLinuxWorkers = hasLinuxWorkers;
             DedicatedHostCount = dedicatedHostCount;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             Kind = kind;
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Current status of the App Service Environment. </summary>
         public HostingEnvironmentStatus? Status { get; }
         /// <summary> Description of the Virtual Network. </summary>
-        public VirtualNetworkProfile VirtualNetwork { get; set; }
+        public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
         /// <summary> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Number of front-end instances. </summary>
         public int? MultiRoleCount { get; }
         /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
-        public int? IpsslAddressCount { get; set; }
+        public int? IPSslAddressCount { get; set; }
         /// <summary> DNS suffix of the App Service Environment. </summary>
         public string DnsSuffix { get; set; }
         /// <summary> Maximum number of VMs in the App Service Environment. </summary>
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         ///  (most likely because NSG blocked the incoming traffic).
         /// </summary>
-        public bool? Suspended { get; }
+        public bool? IsSuspended { get; }
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
-        public IList<NameValuePair> ClusterSettings { get; }
+        public IList<AppServiceNameValuePair> ClusterSettings { get; }
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
         public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Dedicated Host Count. </summary>
         public int? DedicatedHostCount { get; set; }
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

@@ -21,12 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceWebAppId"/> is null. </exception>
-        public CloningInfo(string sourceWebAppId)
+        public CloningInfo(ResourceIdentifier sourceWebAppId)
         {
-            if (sourceWebAppId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceWebAppId));
-            }
+            Argument.AssertNotNull(sourceWebAppId, nameof(sourceWebAppId));
 
             SourceWebAppId = sourceWebAppId;
             AppSettingsOverrides = new ChangeTrackingDictionary<string, string>();
@@ -37,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
         /// </param>
-        /// <param name="overwrite"> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="canOverwrite"> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cloneCustomHostNames"> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cloneSourceControl"> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="sourceWebAppId">
@@ -57,10 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </param>
         /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
-        internal CloningInfo(Guid? correlationId, bool? overwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, string sourceWebAppId, string sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, string trafficManagerProfileId, string trafficManagerProfileName)
+        internal CloningInfo(Guid? correlationId, bool? canOverwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName)
         {
             CorrelationId = correlationId;
-            Overwrite = overwrite;
+            CanOverwrite = canOverwrite;
             CloneCustomHostNames = cloneCustomHostNames;
             CloneSourceControl = cloneSourceControl;
             SourceWebAppId = sourceWebAppId;
@@ -78,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public Guid? CorrelationId { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Overwrite { get; set; }
+        public bool? CanOverwrite { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? CloneCustomHostNames { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -88,9 +85,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
-        public string SourceWebAppId { get; set; }
+        public ResourceIdentifier SourceWebAppId { get; set; }
         /// <summary> Location of source app ex: West US or North Europe. </summary>
-        public string SourceWebAppLocation { get; set; }
+        public AzureLocation? SourceWebAppLocation { get; set; }
         /// <summary> App Service Environment. </summary>
         public string HostingEnvironment { get; set; }
         /// <summary>
@@ -104,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </summary>
-        public string TrafficManagerProfileId { get; set; }
+        public ResourceIdentifier TrafficManagerProfileId { get; set; }
         /// <summary> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </summary>
         public string TrafficManagerProfileName { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -18,20 +19,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="namespace"> The namespace of the pod identity. </param>
         /// <param name="identity"> The user assigned identity details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="namespace"/> or <paramref name="identity"/> is null. </exception>
-        public ManagedClusterPodIdentity(string name, string @namespace, UserAssignedIdentity identity)
+        public ManagedClusterPodIdentity(string name, string @namespace, ContainerServiceUserAssignedIdentity identity)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (@namespace == null)
-            {
-                throw new ArgumentNullException(nameof(@namespace));
-            }
-            if (identity == null)
-            {
-                throw new ArgumentNullException(nameof(identity));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(@namespace, nameof(@namespace));
+            Argument.AssertNotNull(identity, nameof(identity));
 
             Name = name;
             Namespace = @namespace;
@@ -45,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="identity"> The user assigned identity details. </param>
         /// <param name="provisioningState"> The current provisioning state of the pod identity. </param>
         /// <param name="provisioningInfo"></param>
-        internal ManagedClusterPodIdentity(string name, string @namespace, string bindingSelector, UserAssignedIdentity identity, ManagedClusterPodIdentityProvisioningState? provisioningState, ManagedClusterPodIdentityProvisioningInfo provisioningInfo)
+        internal ManagedClusterPodIdentity(string name, string @namespace, string bindingSelector, ContainerServiceUserAssignedIdentity identity, ManagedClusterPodIdentityProvisioningState? provisioningState, ManagedClusterPodIdentityProvisioningInfo provisioningInfo)
         {
             Name = name;
             Namespace = @namespace;
@@ -62,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The binding selector to use for the AzureIdentityBinding resource. </summary>
         public string BindingSelector { get; set; }
         /// <summary> The user assigned identity details. </summary>
-        public UserAssignedIdentity Identity { get; set; }
+        public ContainerServiceUserAssignedIdentity Identity { get; set; }
         /// <summary> The current provisioning state of the pod identity. </summary>
         public ManagedClusterPodIdentityProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the provisioning info. </summary>

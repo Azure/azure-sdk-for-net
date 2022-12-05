@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A class representing a collection of <see cref="MySqlPrivateLinkResource" /> and their operations.
-    /// Each <see cref="MySqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ServerResource" />.
-    /// To get a <see cref="MySqlPrivateLinkResourceCollection" /> instance call the GetMySqlPrivateLinkResources method from an instance of <see cref="ServerResource" />.
+    /// Each <see cref="MySqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="MySqlServerResource" />.
+    /// To get a <see cref="MySqlPrivateLinkResourceCollection" /> instance call the GetMySqlPrivateLinkResources method from an instance of <see cref="MySqlServerResource" />.
     /// </summary>
     public partial class MySqlPrivateLinkResourceCollection : ArmCollection, IEnumerable<MySqlPrivateLinkResource>, IAsyncEnumerable<MySqlPrivateLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MySql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerResource.ResourceType), nameof(id));
+            if (id.ResourceType != MySqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MySqlServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>

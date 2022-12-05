@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The HLS setting for a text track. </summary>
+    /// <summary> The HLS setting for a track. </summary>
     public partial class HlsSettings
     {
         /// <summary> Initializes a new instance of HlsSettings. </summary>
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Initializes a new instance of HlsSettings. </summary>
-        /// <param name="default"> The default for the HLS setting. </param>
-        /// <param name="forced"> The forced for the HLS setting. </param>
+        /// <param name="isDefault"> The default for the HLS setting. </param>
+        /// <param name="isForced"> The forced for the HLS setting. </param>
         /// <param name="characteristics"> The characteristics for the HLS setting. </param>
-        internal HlsSettings(bool? @default, bool? forced, string characteristics)
+        internal HlsSettings(bool? isDefault, bool? isForced, string characteristics)
         {
-            Default = @default;
-            Forced = forced;
+            IsDefault = isDefault;
+            IsForced = isForced;
             Characteristics = characteristics;
         }
 
         /// <summary> The default for the HLS setting. </summary>
-        public bool? Default { get; set; }
+        public bool? IsDefault { get; set; }
         /// <summary> The forced for the HLS setting. </summary>
-        public bool? Forced { get; set; }
+        public bool? IsForced { get; set; }
         /// <summary> The characteristics for the HLS setting. </summary>
         public string Characteristics { get; set; }
     }

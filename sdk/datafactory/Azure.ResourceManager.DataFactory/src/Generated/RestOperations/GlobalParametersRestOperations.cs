@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="globalParameterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataFactoryGlobalParameterData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryGlobalParameterData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryGlobalParameterData value = default;
+                        FactoryGlobalParameterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataFactoryGlobalParameterData.DeserializeDataFactoryGlobalParameterData(document.RootElement);
+                        value = FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataFactoryGlobalParameterData)null, message.Response);
+                    return Response.FromValue((FactoryGlobalParameterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="globalParameterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataFactoryGlobalParameterData> Get(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, CancellationToken cancellationToken = default)
+        public Response<FactoryGlobalParameterData> Get(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryGlobalParameterData value = default;
+                        FactoryGlobalParameterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataFactoryGlobalParameterData.DeserializeDataFactoryGlobalParameterData(document.RootElement);
+                        value = FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataFactoryGlobalParameterData)null, message.Response);
+                    return Response.FromValue((FactoryGlobalParameterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, DataFactoryGlobalParameterData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, FactoryGlobalParameterData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="globalParameterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataFactoryGlobalParameterData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, DataFactoryGlobalParameterData data, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryGlobalParameterData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, FactoryGlobalParameterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryGlobalParameterData value = default;
+                        FactoryGlobalParameterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataFactoryGlobalParameterData.DeserializeDataFactoryGlobalParameterData(document.RootElement);
+                        value = FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="globalParameterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataFactoryGlobalParameterData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, DataFactoryGlobalParameterData data, CancellationToken cancellationToken = default)
+        public Response<FactoryGlobalParameterData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string globalParameterName, FactoryGlobalParameterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryGlobalParameterData value = default;
+                        FactoryGlobalParameterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataFactoryGlobalParameterData.DeserializeDataFactoryGlobalParameterData(document.RootElement);
+                        value = FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

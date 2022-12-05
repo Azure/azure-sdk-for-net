@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUri");
-                writer.WriteStringValue(EndpointUri.AbsoluteUri);
+                writer.WriteStringValue(Endpoint);
             }
             if (Optional.IsDefined(EntityPath))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             Optional<Guid> id = default;
             Optional<string> connectionString = default;
-            Optional<Uri> endpointUri = default;
+            Optional<string> endpointUri = default;
             Optional<string> entityPath = default;
             Optional<IotHubAuthenticationType> authenticationType = default;
             Optional<ManagedIdentity> identity = default;
@@ -91,12 +91,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("endpointUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endpointUri = null;
-                        continue;
-                    }
-                    endpointUri = new Uri(property.Value.GetString());
+                    endpointUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("entityPath"))

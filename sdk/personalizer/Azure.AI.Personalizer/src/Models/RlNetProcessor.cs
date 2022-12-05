@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.Json;
 using Rl.Net;
 
@@ -57,7 +58,7 @@ namespace Azure.AI.Personalizer
             }
 
             // Convert options to the compatible parameter for ChooseRank
-            var contextJson = RlObjectConverter.ConvertToContextJson(options.ContextFeatures, rankableActions);
+            var contextJson = RlObjectConverter.ConvertToContextJson(options.ContextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList(), rankableActions);
             ActionFlags flags = options.DeferActivation == true ? ActionFlags.Deferred : ActionFlags.Default;
 
             // Call ChooseRank of local RL.Net
@@ -88,7 +89,15 @@ namespace Azure.AI.Personalizer
 
             // Convert options to the compatible parameter for ChooseRank
             DecisionContext decisionContext = new DecisionContext(options, slotIdToFeatures);
-            var contextJson = JsonSerializer.Serialize(decisionContext);
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                     new JsonBinaryDataConverter(),
+                },
+                IgnoreNullValues = true
+            };
+            var contextJson = JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
             ActionFlags flags = options.DeferActivation == true ? ActionFlags.Deferred : ActionFlags.Default;
             int[] baselineActions = RlObjectConverter.ExtractBaselineActionsFromRankRequest(options);
 

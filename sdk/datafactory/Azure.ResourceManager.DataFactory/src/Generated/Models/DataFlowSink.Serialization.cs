@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowSink DeserializeDataFlowSink(JsonElement element)
         {
-            Optional<LinkedServiceReference> schemaLinkedService = default;
-            Optional<LinkedServiceReference> rejectedDataLinkedService = default;
+            Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
+            Optional<FactoryLinkedServiceReference> rejectedDataLinkedService = default;
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;
-            Optional<LinkedServiceReference> linkedService = default;
+            Optional<FactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schemaLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    schemaLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rejectedDataLinkedService"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rejectedDataLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    rejectedDataLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("flowlet"))

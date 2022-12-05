@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
-        internal SnapshotRecoverySource(AzureLocation? location, string id)
+        internal SnapshotRecoverySource(AzureLocation? location, ResourceIdentifier id)
         {
             Location = location;
             Id = id;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

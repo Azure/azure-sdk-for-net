@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("privateEndpoint");
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(RedisPrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue(RedisPrivateLinkServiceConnectionState);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

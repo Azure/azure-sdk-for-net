@@ -1216,10 +1216,10 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
             {
                 Range = new HttpRange(offset, count),
-                TransferValidationOptions = new DownloadTransferValidationOptions
+                TransferValidation = new DownloadTransferValidationOptions
                 {
-                    Algorithm = ValidationAlgorithm.MD5,
-                    Validate = false
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                    AutoValidateChecksum = false
                 }
             });
 
@@ -1539,6 +1539,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task DownloadTo_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1562,6 +1563,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task DownloadContent_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1586,6 +1588,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task DownloadStreaming_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2205,6 +2208,33 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task StartCopyFromUriAsync_AccessTier_Cold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(
+                srcBlob.Uri,
+                options);
+
+            // data copied within an account, so copy should be instantaneous
+            await operation.WaitForCompletionAsync();
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
         }
 
         [RecordedTest]
@@ -2931,6 +2961,31 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(AccessTier.Cool, response.Value.AccessTier);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task SyncCopyFromUriAsync_AccessTier_Cold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            await destBlob.SyncCopyFromUriAsync(
+                srcBlob.Uri,
+                options);
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual("Cold", response.Value.AccessTier);
         }
 
         [RecordedTest]
@@ -5701,6 +5756,48 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task SetTierAsync_Cold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetAccessTierAsync(AccessTier.Cold);
+
+            // We are also going to test that get blob properties and list blobs return cold tier correctly.
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual("Cold", response.Value.AccessTier);
+
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.AreEqual(AccessTier.Cold, blobItems[0].Properties.AccessTier);
+
+            // Act
+            List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+            await foreach (BlobHierarchyItem blobHierarchyItem in test.Container.GetBlobsByHierarchyAsync())
+            {
+                blobHierarchyItems.Add(blobHierarchyItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobHierarchyItems.Count);
+            Assert.AreEqual(AccessTier.Cold, blobHierarchyItems[0].Blob.Properties.AccessTier);
         }
 
         [RecordedTest]

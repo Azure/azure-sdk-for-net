@@ -21,19 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
         public WebActivity(string name, WebActivityMethod method, BinaryData uri) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Method = method;
             Uri = uri;
             Datasets = new ChangeTrackingList<DatasetReference>();
-            LinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            LinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
             ActivityType = "WebActivity";
         }
 
@@ -55,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
         /// <param name="linkedServices"> List of linked services passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
-        internal WebActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, BinaryData uri, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, BinaryData uri, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<FactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Uri = uri;
@@ -71,11 +65,98 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Rest API method for target endpoint. </summary>
         public WebActivityMethod Method { get; set; }
-        /// <summary> Web activity target endpoint and path. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Web activity target endpoint and path. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Uri { get; set; }
-        /// <summary> Represents the headers that will be sent to the request. For example, to set the language and type on a request: &quot;headers&quot; : { &quot;Accept-Language&quot;: &quot;en-us&quot;, &quot;Content-Type&quot;: &quot;application/json&quot; }. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Represents the headers that will be sent to the request. For example, to set the language and type on a request: &quot;headers&quot; : { &quot;Accept-Language&quot;: &quot;en-us&quot;, &quot;Content-Type&quot;: &quot;application/json&quot; }. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Headers { get; set; }
-        /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>
         public WebActivityAuthentication Authentication { get; set; }
@@ -84,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> List of datasets passed to web endpoint. </summary>
         public IList<DatasetReference> Datasets { get; }
         /// <summary> List of linked services passed to web endpoint. </summary>
-        public IList<LinkedServiceReference> LinkedServices { get; }
+        public IList<FactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
     }

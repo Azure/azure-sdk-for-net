@@ -175,8 +175,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// availability. Not applicable to a Hyperscale database within an
         /// elastic pool.</param>
         /// <param name="secondaryType">The secondary type of the database if
-        /// it is a secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'</param>
+        /// it is a secondary.  Valid values are Geo, Named and Standby.
+        /// Possible values include: 'Geo', 'Named', 'Standby'</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
         /// <param name="autoPauseDelay">Time in minutes after which database
         /// is automatically paused. A value of -1 means that automatic pause
@@ -209,13 +209,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="sourceResourceId">The resource identifier of the
         /// source associated with the create operation of this database.
         ///
+        /// This property is only supported for DataWarehouse edition and
+        /// allows to restore across subscriptions.
+        ///
         /// When sourceResourceId is specified, sourceDatabaseId,
         /// recoverableDatabaseId, restorableDroppedDatabaseId and
         /// sourceDatabaseDeletionDate must not be specified and CreateMode
         /// must be PointInTimeRestore, Restore or Recover.
         ///
         /// When createMode is PointInTimeRestore, sourceResourceId must be the
-        /// resource ID of an existing database or existing sql pool, and
+        /// resource ID of the existing database or existing sql pool, and
         /// restorePointInTime must be specified.
         ///
         /// When createMode is Restore, sourceResourceId must be the resource
@@ -223,9 +226,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         ///
         /// When createMode is Recover, sourceResourceId must be the resource
         /// ID of recoverable database or recoverable sql pool.
-        ///
-        /// This property allows to restore across subscriptions which is only
-        /// supported for DataWarehouse edition.
         ///
         /// When source subscription belongs to a different tenant than target
         /// subscription, “x-ms-authorization-auxiliary” header must contain
@@ -554,8 +554,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the secondary type of the database if it is a
-        /// secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'
+        /// secondary.  Valid values are Geo, Named and Standby. Possible
+        /// values include: 'Geo', 'Named', 'Standby'
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryType")]
         public string SecondaryType { get; set; }
@@ -644,13 +644,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets the resource identifier of the source associated with
         /// the create operation of this database.
         ///
+        /// This property is only supported for DataWarehouse edition and
+        /// allows to restore across subscriptions.
+        ///
         /// When sourceResourceId is specified, sourceDatabaseId,
         /// recoverableDatabaseId, restorableDroppedDatabaseId and
         /// sourceDatabaseDeletionDate must not be specified and CreateMode
         /// must be PointInTimeRestore, Restore or Recover.
         ///
         /// When createMode is PointInTimeRestore, sourceResourceId must be the
-        /// resource ID of an existing database or existing sql pool, and
+        /// resource ID of the existing database or existing sql pool, and
         /// restorePointInTime must be specified.
         ///
         /// When createMode is Restore, sourceResourceId must be the resource
@@ -658,9 +661,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         ///
         /// When createMode is Recover, sourceResourceId must be the resource
         /// ID of recoverable database or recoverable sql pool.
-        ///
-        /// This property allows to restore across subscriptions which is only
-        /// supported for DataWarehouse edition.
         ///
         /// When source subscription belongs to a different tenant than target
         /// subscription, “x-ms-authorization-auxiliary” header must contain

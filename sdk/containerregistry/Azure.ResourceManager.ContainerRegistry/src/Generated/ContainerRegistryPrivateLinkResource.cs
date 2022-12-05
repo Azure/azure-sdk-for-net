@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// A Class representing a ContainerRegistryPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerRegistryPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetContainerRegistryPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RegistryResource" /> using the GetContainerRegistryPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetContainerRegistryPrivateLinkResource method.
     /// </summary>
     public partial class ContainerRegistryPrivateLinkResource : ArmResource
     {

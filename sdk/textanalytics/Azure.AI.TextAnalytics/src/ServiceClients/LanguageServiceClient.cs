@@ -21,19 +21,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal class LanguageServiceClient : ServiceClient
     {
-        private static readonly TextAnalyticsRequestOptions s_defaultRequestOptions = new();
-        private static readonly RecognizePiiEntitiesOptions s_piiEntitiesOptions = new();
-        private static readonly AnalyzeSentimentOptions s_analyzeSentimentOptions = new();
-        private static readonly AnalyzeHealthcareEntitiesOptions s_analyzeHealthcareEntitiesOptions = new();
-
-        private readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
-        private readonly TextAnalyticsClientOptions _options;
+        private readonly MicrosoftCognitiveLanguageServiceTextAnalysisRestClient _languageRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _baseUri;
 
         public override ClientDiagnostics Diagnostics => _clientDiagnostics;
 
         public LanguageServiceClient(Uri endpoint, TokenCredential credential, string authorizationScope, string serviceVersion, TextAnalyticsClientOptions options)
+            : base(options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -44,13 +39,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, authorizationScope));
-            _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
+            _languageRestClient = new MicrosoftCognitiveLanguageServiceTextAnalysisRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
         public LanguageServiceClient(Uri endpoint, AzureKeyCredential credential, string serviceVersion, TextAnalyticsClientOptions options)
+            : base(options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -60,10 +55,9 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
+            _languageRestClient = new MicrosoftCognitiveLanguageServiceTextAnalysisRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
         #region Detect Language
@@ -146,7 +140,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = DocumentsToLanguageDetection(documents, countryHint);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
@@ -155,7 +148,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = DocumentsToLanguageDetection(documents, countryHint);
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
@@ -163,7 +155,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = LanguageInputToLanguageDetection(documents);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
@@ -172,7 +163,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             LanguageDetectionAnalysisInput detectLanguageInputs = LanguageInputToLanguageDetection(documents);
 
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
@@ -180,6 +170,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(LanguageDetectionAnalysisInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
             scope.Start();
 
@@ -208,6 +200,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private Response<DetectLanguageResultCollection> DetectLanguageBatch(LanguageDetectionAnalysisInput batchInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
             scope.Start();
 
@@ -348,7 +342,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
@@ -357,7 +350,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
@@ -366,7 +358,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
@@ -375,7 +366,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
@@ -383,6 +373,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
             scope.Start();
 
@@ -418,6 +410,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
             scope.Start();
 
@@ -458,7 +452,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<PiiEntityCollection>> RecognizePiiEntitiesAsync(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= s_piiEntitiesOptions;
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.AddAttribute("document", document);
@@ -504,7 +498,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<PiiEntityCollection> RecognizePiiEntities(string document, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= s_piiEntitiesOptions;
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.AddAttribute("document", document);
@@ -549,7 +543,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_piiEntitiesOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
@@ -558,7 +551,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<string> documents, string language = default, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_piiEntitiesOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return RecognizePiiEntitiesBatch(input, options, cancellationToken);
@@ -567,7 +559,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_piiEntitiesOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
@@ -576,7 +567,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<TextDocumentInput> documents, RecognizePiiEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_piiEntitiesOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return RecognizePiiEntitiesBatch(input, options, cancellationToken);
@@ -584,6 +574,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
             scope.Start();
 
@@ -616,6 +608,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(MultiLanguageAnalysisInput multiLanguageInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
             scope.Start();
 
@@ -665,12 +659,120 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
+        #region Recognize Custom Entities
+
+        public override RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return StartRecognizeCustomEntities(input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return StartRecognizeCustomEntities(input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return await StartRecognizeCustomEntitiesAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return await StartRecognizeCustomEntitiesAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private static CustomEntitiesLROTask CreateCustomEntitiesTask(string projectName, string deploymentName, RecognizeCustomEntitiesOptions options)
+        {
+            return new CustomEntitiesLROTask()
+            {
+                Parameters = new CustomEntitiesTaskParameters(projectName, deploymentName)
+                {
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = options.DisableServiceLogs,
+                }
+            };
+        }
+
+        private RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new RecognizeCustomEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartRecognizeCustomEntities)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomEntitiesTask(projectName, deploymentName, options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new RecognizeCustomEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new RecognizeCustomEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartRecognizeCustomEntities)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomEntitiesTask(projectName, deploymentName, options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new RecognizeCustomEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
         #region Analyze Sentiment
 
         public override async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= s_analyzeSentimentOptions;
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -712,7 +814,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
-            options ??= s_analyzeSentimentOptions;
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -754,7 +856,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_analyzeSentimentOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -763,7 +864,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_analyzeSentimentOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
@@ -772,7 +872,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_analyzeSentimentOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -781,7 +880,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_analyzeSentimentOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
@@ -789,6 +887,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeSentimentOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
             scope.Start();
 
@@ -821,6 +921,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeSentimentOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
             scope.Start();
 
@@ -945,7 +1047,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -954,7 +1055,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
@@ -963,7 +1063,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -972,7 +1071,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
@@ -980,6 +1078,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
             scope.Start();
 
@@ -1012,6 +1112,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
             scope.Start();
 
@@ -1135,7 +1237,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return await RecognizeLinkedEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
@@ -1144,7 +1245,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return RecognizeLinkedEntitiesBatch(input, options, cancellationToken);
@@ -1153,7 +1253,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return await RecognizeLinkedEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
@@ -1162,7 +1261,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return RecognizeLinkedEntitiesBatch(input, options, cancellationToken);
@@ -1170,6 +1268,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
             scope.Start();
 
@@ -1205,6 +1305,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         private Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
+            options ??= new();
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
             scope.Start();
 
@@ -1245,7 +1347,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_analyzeHealthcareEntitiesOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -1254,7 +1355,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= s_analyzeHealthcareEntitiesOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
@@ -1263,7 +1363,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
-            options ??= s_analyzeHealthcareEntitiesOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
@@ -1272,7 +1371,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
-            options ??= s_analyzeHealthcareEntitiesOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -1287,27 +1385,32 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     ModelVersion = options.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
                     LoggingOptOut = options.DisableServiceLogs,
-                    FhirVersion = options.FhirVersion ?? (FhirVersion?)null
+                    FhirVersion = options.FhirVersion,
+                    DocumentType = options.DocumentType,
                 }
             };
         }
 
-        private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageAnalysisInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AnalyzeHealthcareEntitiesOptions();
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
             scope.Start();
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } );
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } )
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1318,22 +1421,26 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageAnalysisInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AnalyzeHealthcareEntitiesOptions();
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
             scope.Start();
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) });
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1621,22 +1728,26 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            options ??= new AnalyzeActionsOptions();
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
             scope.Start();
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+                AnalyzeTextJobsInput input = new(multiLanguageInput, CreateTasks(actions))
+                {
+                    DisplayName = actions.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1647,22 +1758,26 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            options ??= new AnalyzeActionsOptions();
+            options ??= new();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
             scope.Start();
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+                AnalyzeTextJobsInput input = new(multiLanguageInput, CreateTasks(actions))
+                {
+                    DisplayName = actions.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
 
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
             }
@@ -1673,7 +1788,55 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private static IList<AnalyzeTextLROTask> CreateTasks(TextAnalyticsActions actions)
+        public override async Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelAnalyzeActionsJob)}");
+            scope.Start();
+
+            try
+            {
+                await _languageRestClient.AnalyzeBatchCancelJobAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            {
+                Argument.AssertNotNull(jobId, nameof(jobId));
+
+                if (!Guid.TryParse(jobId, out var id))
+                {
+                    throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+                }
+
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelAnalyzeActionsJob)}");
+                scope.Start();
+
+                try
+                {
+                    _languageRestClient.AnalyzeBatchCancelJob(id, cancellationToken);
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+        }
+
+        private IList<AnalyzeTextLROTask> CreateTasks(TextAnalyticsActions actions)
         {
             List<AnalyzeTextLROTask> analyzeTasks = new();
 
@@ -1701,20 +1864,799 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 analyzeTasks.AddRange(Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions));
             }
+            if (actions.SingleLabelClassifyActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromSingleLabelClassifyActionsToTasks(actions.SingleLabelClassifyActions));
+            }
+            if (actions.MultiLabelClassifyActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromMultiLabelClassifyActionsToTasks(actions.MultiLabelClassifyActions));
+            }
+            if (actions.AnalyzeHealthcareEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromAnalyzeHealthcareEntitiesActionsToTasks(actions.AnalyzeHealthcareEntitiesActions));
+            }
             if (actions.ExtractSummaryActions != null)
             {
                 analyzeTasks.AddRange(Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions));
             }
-            if (actions.SingleCategoryClassifyActions != null)
+            if (actions.AbstractSummaryActions != null)
             {
-                analyzeTasks.AddRange(Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions));
+                analyzeTasks.AddRange(Transforms.ConvertFromAbstractSummaryActionsToTasks(actions.AbstractSummaryActions));
             }
-            if (actions.MultiCategoryClassifyActions != null)
+
+            // Validate supported version.
+            if (actions.ExtractSummaryActions != null && actions.ExtractSummaryActions.Count > 0)
             {
-                analyzeTasks.AddRange(Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions));
+                Validation.SupportsOperation(nameof(ExtractSummaryAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
             }
 
             return analyzeTasks;
+        }
+
+        #endregion
+
+        #region Single Label Classify
+
+        public override ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return StartSingleLabelClassify(input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return StartSingleLabelClassify(input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return await StartSingleLabelClassifyAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return await StartSingleLabelClassifyAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private static CustomSingleLabelClassificationLROTask CreateCustomSingleLabelClassificationTask(string projectName, string deploymentName, SingleLabelClassifyOptions options)
+        {
+            return new CustomSingleLabelClassificationLROTask()
+            {
+                Parameters = new CustomSingleLabelClassificationTaskParameters(projectName, deploymentName)
+                {
+                    LoggingOptOut = options.DisableServiceLogs,
+                }
+            };
+        }
+
+        private ClassifyDocumentOperation StartSingleLabelClassify(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, SingleLabelClassifyOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new SingleLabelClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartSingleLabelClassify)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomSingleLabelClassificationTask(projectName, deploymentName, options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, SingleLabelClassifyOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new SingleLabelClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartSingleLabelClassify)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomSingleLabelClassificationTask(projectName, deploymentName, options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Multi Label Classify
+
+        public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return StartMultiLabelClassify(input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return StartMultiLabelClassify(input, projectName, deploymentName, options, cancellationToken);
+        }
+
+        public override async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return await StartMultiLabelClassifyAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return await StartMultiLabelClassifyAsync(input, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private static CustomMultiLabelClassificationLROTask CreateCustomMultiLabelClassificationTask(string projectName, string deploymentName, MultiLabelClassifyOptions options)
+        {
+            return new CustomMultiLabelClassificationLROTask()
+            {
+                Parameters = new CustomMultiLabelClassificationTaskParameters(projectName, deploymentName)
+                {
+                    LoggingOptOut = options.DisableServiceLogs,
+                }
+            };
+        }
+
+        private ClassifyDocumentOperation StartMultiLabelClassify(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, MultiLabelClassifyOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new MultiLabelClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomMultiLabelClassificationTask(projectName, deploymentName, options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(MultiLanguageAnalysisInput multiLanguageInput, string projectName, string deploymentName, MultiLabelClassifyOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new MultiLabelClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartMultiLabelClassify)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomMultiLabelClassificationTask(projectName, deploymentName, options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Dynamic Classify
+
+        public override Response<ClassificationCategoryCollection> DynamicClassify(
+            string document,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
+
+            options ??= new DynamicClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassify)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                MultiLanguageAnalysisInput multiLanguageInput = new();
+                multiLanguageInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
+
+                AnalyzeTextDynamicClassificationInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new DynamicClassificationTaskParameters(
+                        options.DisableServiceLogs,
+                        options.ModelVersion,
+                        options.ClassificationType,
+                        categories.ToList())
+                };
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken);
+
+                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (taskResult.Results.Errors.Count > 0)
+                {
+                    // Only one document, so we can ignore the ID and grab the first error message.
+                    TextAnalyticsError error = Transforms.ConvertToError(taskResult.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+
+                return Response.FromValue(Transforms.ConvertToClassificationCategoryCollection(taskResult.Results.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return DynamicClassifyBatch(documentInputs, categories, options, cancellationToken);
+        }
+
+        public override Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return DynamicClassifyBatch(documentInputs, categories, options, cancellationToken);
+        }
+
+        public override async Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
+            string document,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
+
+            options ??= new DynamicClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassify)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
+
+            try
+            {
+                MultiLanguageAnalysisInput multiLanguageInput = new();
+                multiLanguageInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
+
+                AnalyzeTextDynamicClassificationInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new DynamicClassificationTaskParameters(
+                        options.DisableServiceLogs,
+                        options.ModelVersion,
+                        options.ClassificationType,
+                        categories.ToList())
+                };
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (taskResult.Results.Errors.Count > 0)
+                {
+                    // Only one document, so we can ignore the ID and grab the first error message.
+                    TextAnalyticsError error = Transforms.ConvertToError(taskResult.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                }
+
+                return Response.FromValue(Transforms.ConvertToClassificationCategoryCollection(taskResult.Results.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<string> documents,
+            IEnumerable<string> categories,
+            string language = default,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return await DynamicClassifyBatchAsync(documentInputs, categories, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            IEnumerable<TextDocumentInput> documents,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return await DynamicClassifyBatchAsync(documentInputs, categories, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
+            MultiLanguageAnalysisInput multiLanguageInput,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options,
+            CancellationToken cancellationToken)
+        {
+            options ??= new DynamicClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassifyBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextDynamicClassificationInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new DynamicClassificationTaskParameters(
+                        options.DisableServiceLogs,
+                        options.ModelVersion,
+                        options.ClassificationType,
+                        categories.ToList())
+                };
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken);
+
+                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                DynamicClassifyDocumentResultCollection results = Transforms.ConvertToDynamicClassifyDocumentResultCollection(taskResult.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
+            MultiLanguageAnalysisInput multiLanguageInput,
+            IEnumerable<string> categories,
+            DynamicClassifyOptions options,
+            CancellationToken cancellationToken)
+        {
+            options ??= new DynamicClassifyOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassifyBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextDynamicClassificationInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new DynamicClassificationTaskParameters(
+                        options.DisableServiceLogs,
+                        options.ModelVersion,
+                        options.ClassificationType,
+                        categories.ToList())
+                };
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                DynamicClassifyDocumentResultCollection results = Transforms.ConvertToDynamicClassifyDocumentResultCollection(taskResult.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Extract Summary
+
+        public override ExtractSummaryOperation StartExtractSummary(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return StartExtractSummary(input, options, cancellationToken);
+        }
+
+        public override ExtractSummaryOperation StartExtractSummary(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return StartExtractSummary(input, options, cancellationToken);
+        }
+
+        public override async Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<string> documents, string language = default, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return await StartExtractSummaryAsync(input, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<ExtractSummaryOperation> StartExtractSummaryAsync(IEnumerable<TextDocumentInput> documents, ExtractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return await StartExtractSummaryAsync(input, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private static ExtractiveSummarizationLROTask CreateExtractiveSummarizationTask(ExtractSummaryOptions options)
+        {
+            return new ExtractiveSummarizationLROTask()
+            {
+                Parameters = new ExtractiveSummarizationTaskParameters()
+                {
+                    ModelVersion = options.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = options.DisableServiceLogs,
+                    SentenceCount = options.MaxSentenceCount,
+                    SortBy = options.OrderBy,
+                }
+            };
+        }
+
+        private ExtractSummaryOperation StartExtractSummary(MultiLanguageAnalysisInput multiLanguageInput, ExtractSummaryOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new ExtractSummaryOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartExtractSummary)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateExtractiveSummarizationTask(options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+                string location = response.Headers.OperationLocation;
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new ExtractSummaryOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<ExtractSummaryOperation> StartExtractSummaryAsync(MultiLanguageAnalysisInput multiLanguageInput, ExtractSummaryOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new ExtractSummaryOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartExtractSummary)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateExtractiveSummarizationTask(options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+                string location = response.Headers.OperationLocation;
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new ExtractSummaryOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Abstract Summary
+
+        public override AbstractSummaryOperation StartAbstractSummary(IEnumerable<string> documents, string language = default, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return StartAbstractSummary(input, options, cancellationToken);
+        }
+
+        public override AbstractSummaryOperation StartAbstractSummary(IEnumerable<TextDocumentInput> documents, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return StartAbstractSummary(input, options, cancellationToken);
+        }
+
+        public override async Task<AbstractSummaryOperation> StartAbstractSummaryAsync(IEnumerable<string> documents, string language = default, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
+
+            return await StartAbstractSummaryAsync(input, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task<AbstractSummaryOperation> StartAbstractSummaryAsync(IEnumerable<TextDocumentInput> documents, AbstractSummaryOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
+
+            return await StartAbstractSummaryAsync(input, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private static AbstractiveSummarizationLROTask CreateAbstractiveSummarizationTask(AbstractSummaryOptions options)
+        {
+            AbstractiveSummarizationTaskParameters parameters = new()
+            {
+                ModelVersion = options.ModelVersion,
+                StringIndexType = Constants.DefaultStringIndexType,
+                LoggingOptOut = options.DisableServiceLogs,
+                SentenceCount = options.MaxSentenceCount,
+            };
+
+            return new AbstractiveSummarizationLROTask(parameters);
+        }
+
+        private AbstractSummaryOperation StartAbstractSummary(MultiLanguageAnalysisInput multiLanguageInput, AbstractSummaryOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new AbstractSummaryOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAbstractSummary)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateAbstractiveSummarizationTask(options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+                string location = response.Headers.OperationLocation;
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new AbstractSummaryOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<AbstractSummaryOperation> StartAbstractSummaryAsync(MultiLanguageAnalysisInput multiLanguageInput, AbstractSummaryOptions options, CancellationToken cancellationToken)
+        {
+            options ??= new AbstractSummaryOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAbstractSummary)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateAbstractiveSummarizationTask(options) })
+                {
+                    DisplayName = options.DisplayName,
+                    DefaultLanguage = options.AutoDetectionDefaultLanguage
+                };
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+                string location = response.Headers.OperationLocation;
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
+
+                return new AbstractSummaryOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Long Running Operations
+
+        public override async Task<Response<AnalyzeTextJobState>> AnalyzeTextJobStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            // Issue https://github.com/Azure/azure-sdk-for-net/issues/28355
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeTextJobStatus)}");
+            scope.Start();
+
+            try
+            {
+                return await _languageRestClient.AnalyzeBatchJobStatusAsync(id, showStats, top, skip, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<AnalyzeTextJobState> AnalyzeTextJobStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeTextJobStatus)}");
+            scope.Start();
+
+            try
+            {
+                return _languageRestClient.AnalyzeBatchJobStatus(id, showStats, top, skip, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override async Task<Response<AnalyzeTextJobState>> AnalyzeTextJobStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeTextJobStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                return await _languageRestClient.AnalyzeBatchNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<AnalyzeTextJobState> AnalyzeTextJobStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeTextJobStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                return _languageRestClient.AnalyzeBatchNextPage(nextLink, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -1742,7 +2684,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         }
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
-            => new MultiLanguageInput(id.ToString(CultureInfo.InvariantCulture), document) { Language = language ?? _options.DefaultLanguage };
+            => new MultiLanguageInput(id.ToString(CultureInfo.InvariantCulture), document) { Language = language ?? Options.DefaultLanguage };
 
         private MultiLanguageAnalysisInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
         {
@@ -1760,13 +2702,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             MultiLanguageAnalysisInput input = new MultiLanguageAnalysisInput();
             foreach (var document in documents)
             {
-                input.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _options.DefaultLanguage });
+                input.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? Options.DefaultLanguage });
             }
             return input;
         }
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
-            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? Options.DefaultCountryHint };
 
         private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error) =>
             (string.IsNullOrEmpty(error.Target))

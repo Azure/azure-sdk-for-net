@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/fabrikam/names?api-version=2022-07-01-preview",
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/fabrikam/names?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-85cb6b794ea2e14ba5e04b73c50bcfce-4c44adfbbb74b54c-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "be938b34d011d4d145678553741848d2",
+        "traceparent": "00-4306c32e07d30d45be383e3ded418498-6e7aeb192328e54c-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220901.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c91a9e5d564a7a7829fca2b32c08250d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,9 +16,9 @@
       "ResponseHeaders": {
         "Content-Length": "20",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 21:48:04 GMT",
-        "mise-correlation-id": "f343aab0-539e-4b84-b1d8-d3bef562edfa",
-        "traceparent": "00-85cb6b794ea2e14ba5e04b73c50bcfce-4c44adfbbb74b54c-00"
+        "Date": "Thu, 01 Sep 2022 20:26:20 GMT",
+        "mise-correlation-id": "68639ce4-55b6-4fab-aba6-125d7509aaf5",
+        "traceparent": "00-4306c32e07d30d45be383e3ded418498-6e7aeb192328e54c-00"
       },
       "ResponseBody": {
         "value": [
@@ -28,8 +28,9 @@
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "549044256"
+    "RandomSeed": "1992679305"
   }
 }

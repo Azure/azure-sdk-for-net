@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,14 +23,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryName"> The name of the data factory for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryLocation"> The location of the data factory for which the linked integration runtime belong to. </param>
-        /// <param name="createOn"> The creating time of the linked integration runtime. </param>
-        internal LinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, DateTimeOffset? createOn)
+        /// <param name="createdOn"> The creating time of the linked integration runtime. </param>
+        internal LinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, AzureLocation? dataFactoryLocation, DateTimeOffset? createdOn)
         {
             Name = name;
             SubscriptionId = subscriptionId;
             DataFactoryName = dataFactoryName;
             DataFactoryLocation = dataFactoryLocation;
-            CreateOn = createOn;
+            CreatedOn = createdOn;
         }
 
         /// <summary> The name of the linked integration runtime. </summary>
@@ -39,8 +40,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of the data factory for which the linked integration runtime belong to. </summary>
         public string DataFactoryName { get; }
         /// <summary> The location of the data factory for which the linked integration runtime belong to. </summary>
-        public string DataFactoryLocation { get; }
+        public AzureLocation? DataFactoryLocation { get; }
         /// <summary> The creating time of the linked integration runtime. </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        HDInsightApplicationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationData)null, message.Response);
+                    return Response.FromValue((HDInsightApplicationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        public Response<HDInsightApplicationData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        ApplicationData value = default;
+                        HDInsightApplicationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApplicationData.DeserializeApplicationData(document.RootElement);
+                        value = HDInsightApplicationData.DeserializeHDInsightApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApplicationData)null, message.Response);
+                    return Response.FromValue((HDInsightApplicationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ApplicationData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, HDInsightApplicationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ApplicationData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, HDInsightApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ApplicationData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, HDInsightApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AsyncOperationResult>> GetAzureAsyncOperationStatusAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightAsyncOperationResult>> GetAzureAsyncOperationStatusAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -411,9 +411,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        AsyncOperationResult value = default;
+                        HDInsightAsyncOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AsyncOperationResult.DeserializeAsyncOperationResult(document.RootElement);
+                        value = HDInsightAsyncOperationResult.DeserializeHDInsightAsyncOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AsyncOperationResult> GetAzureAsyncOperationStatus(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string operationId, CancellationToken cancellationToken = default)
+        public Response<HDInsightAsyncOperationResult> GetAzureAsyncOperationStatus(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -444,9 +444,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        AsyncOperationResult value = default;
+                        HDInsightAsyncOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AsyncOperationResult.DeserializeAsyncOperationResult(document.RootElement);
+                        value = HDInsightAsyncOperationResult.DeserializeHDInsightAsyncOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

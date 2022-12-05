@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         internal GroupContractProperties(string displayName)
         {
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
             DisplayName = displayName;
         }
@@ -28,15 +26,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GroupContractProperties. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <param name="description"> Group description. Can contain HTML formatting tags. </param>
-        /// <param name="builtIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
-        /// <param name="groupType"> Group type. </param>
+        /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
+        /// <param name="apiManagementGroupType"> Group type. </param>
         /// <param name="externalId"> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
-        internal GroupContractProperties(string displayName, string description, bool? builtIn, GroupType? groupType, string externalId)
+        internal GroupContractProperties(string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? apiManagementGroupType, string externalId)
         {
             DisplayName = displayName;
             Description = description;
-            BuiltIn = builtIn;
-            GroupType = groupType;
+            IsBuiltIn = isBuiltIn;
+            ApiManagementGroupType = apiManagementGroupType;
             ExternalId = externalId;
         }
 
@@ -45,9 +43,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Group description. Can contain HTML formatting tags. </summary>
         public string Description { get; }
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
-        public bool? BuiltIn { get; }
+        public bool? IsBuiltIn { get; }
         /// <summary> Group type. </summary>
-        public GroupType? GroupType { get; }
+        public ApiManagementGroupType? ApiManagementGroupType { get; }
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         public string ExternalId { get; }
     }

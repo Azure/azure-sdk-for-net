@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         protected bool UseCosmos { get; }
 
-        protected TablesLiveTestBase(bool isAsync, bool useCosmos, bool createTable = true): base(isAsync: isAsync)
+        protected TablesLiveTestBase(bool isAsync, bool useCosmos, bool createTable = true) : base(isAsync: isAsync)
         {
             UseCosmos = useCosmos;
             _createTable = createTable;

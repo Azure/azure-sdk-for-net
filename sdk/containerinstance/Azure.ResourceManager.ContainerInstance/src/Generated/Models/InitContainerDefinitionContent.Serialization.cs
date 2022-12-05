@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             Optional<string> image = default;
             Optional<IList<string>> command = default;
-            Optional<IList<EnvironmentVariable>> environmentVariables = default;
+            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
             Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
-            Optional<IList<VolumeMount>> volumeMounts = default;
+            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                            List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item));
+                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item));
                             }
                             environmentVariables = array;
                             continue;
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VolumeMount> array = new List<VolumeMount>();
+                            List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VolumeMount.DeserializeVolumeMount(item));
+                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item));
                             }
                             volumeMounts = array;
                             continue;

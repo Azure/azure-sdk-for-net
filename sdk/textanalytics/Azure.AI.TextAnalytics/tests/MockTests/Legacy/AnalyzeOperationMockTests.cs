@@ -19,21 +19,24 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
         private static readonly string s_apiKey = "FakeapiKey";
-        private static readonly string FakeProjectName = "FakeProjectName";
-        private static readonly string FakeDeploymentName = "FakeDeploymentName";
 
         public AnalyzeOperationMockTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
+        private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport, TextAnalyticsClientOptions.ServiceVersion version = TextAnalyticsClientOptions.ServiceVersion.V3_1, bool instrument = false)
         {
-            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)
+            var options = new TextAnalyticsClientOptions(version)
             {
                 Transport = transport
             };
 
             var client = new TextAnalyticsClient(new Uri(s_endpoint), new AzureKeyCredential(s_apiKey), options);
+
+            if (instrument)
+            {
+                return InstrumentClient(client);
+            }
 
             return client;
         }
@@ -237,42 +240,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         #endregion entities
-
-        #region Custom Entities
-
-        [Test]
-        public async Task AnalyzeOperationRecognizeCustomEntitiesWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName)
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-        #endregion
 
         #region linked entities
 
@@ -595,115 +562,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
         #endregion Analyze sentiment
 
-        #region Extract summary
-
-        [Test]
-        public async Task AnalyzeOperationExtractSummaryWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new ExtractSummaryAction()
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-
-        #endregion Extract summary
-
-        #region Multi Category Classify
-
-        [Test]
-        public async Task AnalyzeOperationMultiCategoryClassifyWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-        #endregion
-
-        #region Single Category Classify
-
-        [Test]
-        public async Task AnalyzeOperationSingleCategoryClassifyWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new SingleCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-        #endregion
-
         [Test]
         public async Task AnalyzeOperationWithActionsError()
         {
@@ -740,26 +598,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
                         ""target"": ""#/tasks/sentimentAnalysisTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/extractiveSummarizationTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/customEntityRecognitionTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/customSingleClassificationTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/customMultiClassificationTasks/0""
                       }
                     ],
                     ""tasks"": {
@@ -805,34 +643,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
                           ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
-                      ],
-                      ""extractiveSummarizationTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
-                      ],
-                     ""customEntityRecognitionTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
-                      ],
-                     ""customSingleClassificationTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
-                      ],
-                      ""customMultiClassificationTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
                       ]
                     }
                 }"));
@@ -859,10 +669,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             RecognizePiiEntitiesActionResult piiActionsResults = resultCollection.RecognizePiiEntitiesResults.FirstOrDefault();
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
-            ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
             RecognizeCustomEntitiesActionResult recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults.FirstOrDefault();
-            SingleCategoryClassifyActionResult singleCategoryClassifyActionResult = resultCollection.SingleCategoryClassifyResults.FirstOrDefault();
-            MultiCategoryClassifyActionResult multiCategoryClassifyActionResult = resultCollection.MultiCategoryClassifyResults.FirstOrDefault();
+            SingleLabelClassifyActionResult singleLabelClassifyActionResult = resultCollection.SingleLabelClassifyResults.FirstOrDefault();
+            MultiLabelClassifyActionResult multiLabelClassifyActionResult = resultCollection.MultiLabelClassifyResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -878,18 +687,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             Assert.IsTrue(analyzeSentimentActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => analyzeSentimentActionsResults.DocumentsResults.GetType());
-
-            Assert.IsTrue(extractSummaryActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => extractSummaryActionsResults.DocumentsResults.GetType());
-
-            Assert.IsTrue(recognizeCustomEntitiesActionResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => recognizeCustomEntitiesActionResults.DocumentsResults.GetType());
-
-            Assert.IsTrue(singleCategoryClassifyActionResult.HasError);
-            Assert.Throws<InvalidOperationException>(() => singleCategoryClassifyActionResult.DocumentsResults.GetType());
-
-            Assert.IsTrue(multiCategoryClassifyActionResult.HasError);
-            Assert.Throws<InvalidOperationException>(() => multiCategoryClassifyActionResult.DocumentsResults.GetType());
         }
 
         [Test]
@@ -939,6 +736,84 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InternalServerError", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Some error"));
+        }
+
+        [Test]
+        public void AnalyzeActionsNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(new[] { "test" }, new TextAnalyticsActions
+            {
+                AnalyzeSentimentActions = new[]
+                {
+                    new AnalyzeSentimentAction(),
+                },
+            }));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActionsAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActions is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void RecognizePiiEntitiesNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizePiiEntitiesAsync("test"));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void RecognizePiiEntitiesBatchNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizePiiEntitiesBatchAsync(new[] { "test" }));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatchAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatch is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void StartAnalyzeHealthcareEntitiesNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(new[] { "test" }));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
         }
 
         private static string GetString(RequestContent content)

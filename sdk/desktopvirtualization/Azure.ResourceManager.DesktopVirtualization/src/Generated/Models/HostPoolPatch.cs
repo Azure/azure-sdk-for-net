@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="personalDesktopAssignmentType"> PersonalDesktopAssignment type for HostPool. </param>
         /// <param name="loadBalancerType"> The type of the load balancer. </param>
         /// <param name="ring"> The ring number of HostPool. </param>
-        /// <param name="validationEnvironment"> Is validation environment. </param>
+        /// <param name="isValidationEnvironment"> Is validation environment. </param>
         /// <param name="registrationInfo"> The registration info of HostPool. </param>
         /// <param name="vmTemplate"> VM template for sessionhosts configuration within hostpool. </param>
-        /// <param name="ssoadfsAuthority"> URL to customer ADFS server for signing WVD SSO certificates. </param>
+        /// <param name="ssoAdfsAuthority"> URL to customer ADFS server for signing WVD SSO certificates. </param>
         /// <param name="ssoClientId"> ClientId for the registered Relying Party used to issue WVD SSO certificates. </param>
         /// <param name="ssoClientSecretKeyVaultPath"> Path to Azure KeyVault storing the secret used for communication to ADFS. </param>
         /// <param name="ssoSecretType"> The type of single sign on Secret Type. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
         /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
-        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, LoadBalancerType? loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfoPatch registrationInfo, string vmTemplate, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect) : base(id, name, resourceType, systemData)
+        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             FriendlyName = friendlyName;
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             PersonalDesktopAssignmentType = personalDesktopAssignmentType;
             LoadBalancerType = loadBalancerType;
             Ring = ring;
-            ValidationEnvironment = validationEnvironment;
+            IsValidationEnvironment = isValidationEnvironment;
             RegistrationInfo = registrationInfo;
             VmTemplate = vmTemplate;
-            SsoadfsAuthority = ssoadfsAuthority;
+            SsoAdfsAuthority = ssoAdfsAuthority;
             SsoClientId = ssoClientId;
             SsoClientSecretKeyVaultPath = ssoClientSecretKeyVaultPath;
             SsoSecretType = ssoSecretType;
@@ -76,23 +76,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> PersonalDesktopAssignment type for HostPool. </summary>
         public PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get; set; }
         /// <summary> The type of the load balancer. </summary>
-        public LoadBalancerType? LoadBalancerType { get; set; }
+        public HostPoolLoadBalancerType? LoadBalancerType { get; set; }
         /// <summary> The ring number of HostPool. </summary>
         public int? Ring { get; set; }
         /// <summary> Is validation environment. </summary>
-        public bool? ValidationEnvironment { get; set; }
+        public bool? IsValidationEnvironment { get; set; }
         /// <summary> The registration info of HostPool. </summary>
-        public RegistrationInfoPatch RegistrationInfo { get; set; }
+        public HostPoolRegistrationInfoPatch RegistrationInfo { get; set; }
         /// <summary> VM template for sessionhosts configuration within hostpool. </summary>
         public string VmTemplate { get; set; }
         /// <summary> URL to customer ADFS server for signing WVD SSO certificates. </summary>
-        public string SsoadfsAuthority { get; set; }
+        public string SsoAdfsAuthority { get; set; }
         /// <summary> ClientId for the registered Relying Party used to issue WVD SSO certificates. </summary>
         public string SsoClientId { get; set; }
         /// <summary> Path to Azure KeyVault storing the secret used for communication to ADFS. </summary>
         public string SsoClientSecretKeyVaultPath { get; set; }
         /// <summary> The type of single sign on Secret Type. </summary>
-        public SsoSecretType? SsoSecretType { get; set; }
+        public HostPoolSsoSecretType? SsoSecretType { get; set; }
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
         public PreferredAppGroupType? PreferredAppGroupType { get; set; }
         /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>

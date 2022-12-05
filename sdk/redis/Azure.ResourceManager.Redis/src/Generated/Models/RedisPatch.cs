@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </summary>
-        public RedisCommonPropertiesRedisConfiguration RedisConfiguration { get; set; }
-        /// <summary> Redis version. Only major version will be used in PUT/PATCH request with current valid values: (4, 6). </summary>
+        public RedisCommonConfiguration RedisConfiguration { get; set; }
+        /// <summary> Redis version. This should be in the form &apos;major[.minor]&apos; (only &apos;major&apos; is required) or the value &apos;latest&apos; which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is &apos;latest&apos;. </summary>
         public string RedisVersion { get; set; }
         /// <summary> Specifies whether the non-ssl Redis server port (6379) is enabled. </summary>
         public bool? EnableNonSslPort { get; set; }
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> The number of shards to be created on a Premium Cluster Cache. </summary>
         public int? ShardCount { get; set; }
         /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;). </summary>
-        public TlsVersion? MinimumTlsVersion { get; set; }
+        public RedisTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. If &apos;Disabled&apos;, private endpoints are the exclusive access method. Default value is &apos;Enabled&apos;. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public RedisPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The SKU of the Redis cache to deploy. </summary>
         public RedisSku Sku { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
-            Optional<UsageName> name = default;
+            Optional<ContainerInstanceUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(property.Value);
                     continue;
                 }
             }

@@ -96,9 +96,8 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2021_08_06) { }
-        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2021_12_02) { }
+        public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -115,6 +114,8 @@ namespace Azure.Storage.Files.Shares
             V2021_04_10 = 11,
             V2021_06_08 = 12,
             V2021_08_06 = 13,
+            V2021_10_04 = 14,
+            V2021_12_02 = 15,
         }
     }
     public partial class ShareDirectoryClient
@@ -688,7 +689,7 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileDownloadOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public Azure.HttpRange Range { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class ShareFileGetRangeListDiffOptions
     {
@@ -784,7 +785,7 @@ namespace Azure.Storage.Files.Shares.Models
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class ShareFileOpenWriteOptions
     {
@@ -793,7 +794,7 @@ namespace Azure.Storage.Files.Shares.Models
         public long? MaxSize { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions OpenConditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class ShareFileProperties
     {
@@ -875,7 +876,8 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareFileUploadOptions() { }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions Conditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class ShareFileUploadRangeFromUriOptions
     {
@@ -892,7 +894,7 @@ namespace Azure.Storage.Files.Shares.Models
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public byte[] TransactionalContentHash { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class ShareInfo
     {

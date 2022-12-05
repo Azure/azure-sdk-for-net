@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -20,10 +21,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal PhoneNumberOperation(PhoneNumberOperationType operationType, PhoneNumberOperationStatus status, DateTimeOffset createdDateTime, string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             OperationType = operationType;
             Status = status;

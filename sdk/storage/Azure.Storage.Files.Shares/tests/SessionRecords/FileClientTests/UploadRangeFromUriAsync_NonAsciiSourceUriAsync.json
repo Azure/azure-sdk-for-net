@@ -186,7 +186,7 @@
         "traceparent": "00-50d200ed1a011e429c894fe3d03e52ea-626540bedab5ca4b-00",
         "User-Agent": "azsdk-net-Storage.Files.Shares/12.9.0-alpha.20220107.1 (.NET Framework 4.8.4340.0; Microsoft Windows 10.0.19044 )",
         "x-ms-client-request-id": "bcefd5f3-8386-87a8-6d6e-4a8f01342e70",
-        "x-ms-copy-source": "https://0c2xscnapby3pev24a.file.preprod.core.windows.net/test-share-352fd6cc-7e2d-c502-5074-6dd263e5df2a/test-directory-386e176d-0331-6804-91a9-39d3cc7d27e3/test-%C6%92%C2%A1%C2%A3%E2%82%AC%E2%80%BD%253A-f8df8b37-4daa-fc2f-3541-f8bcd736729e?sv=2021-08-06\u0026st=2022-01-07T20:35:46Z\u0026se=2022-01-07T22:35:46Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized",
+        "x-ms-copy-source": "https://0c2xscnapby3pev24a.file.preprod.core.windows.net/test-share-352fd6cc-7e2d-c502-5074-6dd263e5df2a/test-directory-386e176d-0331-6804-91a9-39d3cc7d27e3/test-%C6%92%C2%A1%C2%A3%E2%82%AC%E2%80%BD%253A-f8df8b37-4daa-fc2f-3541-f8bcd736729e?sv=2021-12-02\u0026st=2022-01-07T20:35:46Z\u0026se=2022-01-07T22:35:46Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized",
         "x-ms-date": "Fri, 07 Jan 2022 21:35:46 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",

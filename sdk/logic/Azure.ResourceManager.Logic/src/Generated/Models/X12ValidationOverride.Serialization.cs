@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("messageId");
             writer.WriteStringValue(MessageId);
             writer.WritePropertyName("validateEDITypes");
-            writer.WriteBooleanValue(ValidateEDITypes);
+            writer.WriteBooleanValue(ValidateEdiTypes);
             writer.WritePropertyName("validateXSDTypes");
-            writer.WriteBooleanValue(ValidateXSDTypes);
+            writer.WriteBooleanValue(ValidateXsdTypes);
             writer.WritePropertyName("allowLeadingAndTrailingSpacesAndZeroes");
             writer.WriteBooleanValue(AllowLeadingAndTrailingSpacesAndZeroes);
             writer.WritePropertyName("validateCharacterSet");
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Logic.Models
         internal static X12ValidationOverride DeserializeX12ValidationOverride(JsonElement element)
         {
             string messageId = default;
-            bool validateEDITypes = default;
-            bool validateXSDTypes = default;
+            bool validateEdiTypes = default;
+            bool validateXsdTypes = default;
             bool allowLeadingAndTrailingSpacesAndZeroes = default;
             bool validateCharacterSet = default;
             bool trimLeadingAndTrailingSpacesAndZeroes = default;
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("validateEDITypes"))
                 {
-                    validateEDITypes = property.Value.GetBoolean();
+                    validateEdiTypes = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("validateXSDTypes"))
                 {
-                    validateXSDTypes = property.Value.GetBoolean();
+                    validateXsdTypes = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("allowLeadingAndTrailingSpacesAndZeroes"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new X12ValidationOverride(messageId, validateEDITypes, validateXSDTypes, allowLeadingAndTrailingSpacesAndZeroes, validateCharacterSet, trimLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy);
+            return new X12ValidationOverride(messageId, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, validateCharacterSet, trimLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy);
         }
     }
 }

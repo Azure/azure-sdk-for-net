@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, string principalId, PrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleEligibilityScheduleInstanceStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, MemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The role definition ID. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> The principal ID. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
         /// <summary> The principal type of the assigned principal ID. </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Id of the master role eligibility schedule. </summary>
         public ResourceIdentifier RoleEligibilityScheduleId { get; }
         /// <summary> The status of the role eligibility schedule instance. </summary>
-        public RoleEligibilityScheduleInstanceStatus? Status { get; }
+        public RoleManagementScheduleStatus? Status { get; }
         /// <summary> The startDateTime of the role eligibility schedule instance. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The endDateTime of the role eligibility schedule instance. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> Membership type of the role eligibility schedule. </summary>
-        public MemberType? MemberType { get; }
+        public RoleManagementScheduleMemberType? MemberType { get; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
         public string Condition { get; }
         /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> DateTime when role eligibility schedule was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Additional properties of principal, scope and role definition. </summary>
-        public ExpandedProperties ExpandedProperties { get; }
+        public RoleManagementExpandedProperties ExpandedProperties { get; }
     }
 }

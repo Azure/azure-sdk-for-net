@@ -22,7 +22,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
         /// <param name="packagePath"> The SSIS package path. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of SSIS package location. </param>
-        /// <param name="packagePassword"> Password of the package. </param>
+        /// <param name="packagePassword">
+        /// Password of the package.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="accessCredential"> The package access credential. </param>
         /// <param name="configurationPath"> The configuration file of the package execution. Type: string (or Expression with resultType string). </param>
         /// <param name="configurationAccessCredential"> The configuration file access credential. </param>
@@ -48,7 +52,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object PackagePath { get; set; }
         /// <summary> The type of SSIS package location. </summary>
         public SsisPackageLocationType? Type { get; set; }
-        /// <summary> Password of the package. </summary>
+        /// <summary>
+        /// Password of the package.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase PackagePassword { get; set; }
         /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }

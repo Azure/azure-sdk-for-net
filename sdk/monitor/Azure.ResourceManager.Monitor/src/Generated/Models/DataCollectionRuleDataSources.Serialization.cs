@@ -56,6 +56,26 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(LogFiles))
+            {
+                writer.WritePropertyName("logFiles");
+                writer.WriteStartArray();
+                foreach (var item in LogFiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IisLogs))
+            {
+                writer.WritePropertyName("iisLogs");
+                writer.WriteStartArray();
+                foreach (var item in IisLogs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -65,6 +85,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
             Optional<IList<SyslogDataSource>> syslog = default;
             Optional<IList<ExtensionDataSource>> extensions = default;
+            Optional<IList<LogFilesDataSource>> logFiles = default;
+            Optional<IList<IisLogsDataSource>> iisLogs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("performanceCounters"))
@@ -127,8 +149,38 @@ namespace Azure.ResourceManager.Monitor.Models
                     extensions = array;
                     continue;
                 }
+                if (property.NameEquals("logFiles"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<LogFilesDataSource> array = new List<LogFilesDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LogFilesDataSource.DeserializeLogFilesDataSource(item));
+                    }
+                    logFiles = array;
+                    continue;
+                }
+                if (property.NameEquals("iisLogs"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<IisLogsDataSource> array = new List<IisLogsDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IisLogsDataSource.DeserializeIisLogsDataSource(item));
+                    }
+                    iisLogs = array;
+                    continue;
+                }
             }
-            return new DataCollectionRuleDataSources(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions));
+            return new DataCollectionRuleDataSources(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs));
         }
     }
 }

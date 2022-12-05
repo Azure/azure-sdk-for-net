@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated");
-                writer.WriteStringValue(LastUpdated.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(PackageApplications))
             {

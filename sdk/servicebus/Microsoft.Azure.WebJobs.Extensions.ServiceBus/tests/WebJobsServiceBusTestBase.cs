@@ -72,6 +72,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static EventWaitHandle _drainValidationPreDelay;
         protected static EventWaitHandle _drainValidationPostDelay;
 
+        protected static int ExpectedRemainingMessages { get; set; }
+
         protected WebJobsServiceBusTestBase(bool isSession)
         {
             _isSession = isSession;
@@ -85,6 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [SetUp]
         public async Task FixtureSetUp()
         {
+            ExpectedRemainingMessages = 0;
             FirstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             SecondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
@@ -191,7 +194,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Subject = "subject",
                 To = "to",
                 ReplyTo = "replyTo",
-                ApplicationProperties = {{ "key", "value"}}
+                ApplicationProperties = {{ "key", "value"}},
+                PartitionKey = "partitionKey"
             };
             if (!string.IsNullOrEmpty(sessionId))
             {
@@ -319,11 +323,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public async Task StopAsync(CancellationToken cancellationToken)
             {
                 var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
-                var errors = logs.Where(
-                    p => p.Level == LogLevel.Error &&
-                         (p.FormattedMessage == null ||
-                         // Ignore this error that the SDK logs when cancelling batch receive
-                         !p.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException")));
+                var errors = logs.Where(IsError);
                 Assert.IsEmpty(errors, string.Join(
                     ",",
                     errors.Select(e => e.Exception != null ? e.Exception.StackTrace : e.FormattedMessage)));
@@ -334,7 +334,29 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(FirstQueueScope.QueueName, CancellationToken.None);
-                Assert.AreEqual(0, properties.TotalMessageCount);
+                Assert.AreEqual(ExpectedRemainingMessages, properties.TotalMessageCount);
+            }
+
+            private static bool IsError(LogMessage logMessage)
+            {
+                if (logMessage.Level < LogLevel.Error)
+                {
+                    return false;
+                }
+                // if the inner exception message contains "Test exception" then it's an expected exception
+                if (logMessage.Exception != null && logMessage.Exception.InnerException != null &&
+                    logMessage.Exception.InnerException.Message.Contains("Test exception"))
+                {
+                    return false;
+                }
+                // if the formatted message is not null and it contains "ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"
+                // then it's an expected exception
+                if (logMessage.FormattedMessage != null && logMessage.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"))
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
     }

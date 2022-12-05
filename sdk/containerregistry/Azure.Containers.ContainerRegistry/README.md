@@ -173,9 +173,6 @@ image.UpdateTagProperties("latest", new ArtifactTagProperties()
 ### Delete images
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -285,10 +282,6 @@ await image.UpdateTagPropertiesAsync("latest", new ArtifactTagProperties()
 ### Delete images asynchronously
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-using System.Linq;
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -349,33 +342,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint,
 
 ## Troubleshooting
 
-All container registry service operations will throw a
-[RequestFailedException][RequestFailedException] on failure.
-
-```C# Snippet:ContainerRegistry_Tests_Samples_HandleErrors
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-
-// Create a ContainerRepository class for an invalid repository
-string fakeRepositoryName = "doesnotexist";
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-    new ContainerRegistryClientOptions()
-    {
-        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-    });
-ContainerRepository repository = client.GetRepository(fakeRepositoryName);
-
-try
-{
-    repository.GetProperties();
-}
-catch (RequestFailedException ex) when (ex.Status == 404)
-{
-    Console.WriteLine("Repository wasn't found.");
-}
-```
-
-You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
-deeper into the requests you're making against the service.
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
 
 ## Next steps
 

@@ -5,19 +5,19 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a Service Bus Queue output data source. </summary>
-    public partial class ServiceBusQueueOutputDataSource : OutputDataSource
+    public partial class ServiceBusQueueOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of ServiceBusQueueOutputDataSource. </summary>
         public ServiceBusQueueOutputDataSource()
         {
             PropertyColumns = new ChangeTrackingList<string>();
+            SystemPropertyColumns = new ChangeTrackingDictionary<string, string>();
             OutputDataSourceType = "Microsoft.ServiceBus/Queue";
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="queueName"> The name of the Service Bus Queue. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="propertyColumns"> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </param>
         /// <param name="systemPropertyColumns"> The system properties associated with the Service Bus Queue. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </param>
-        internal ServiceBusQueueOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, AuthenticationMode? authenticationMode, string queueName, IList<string> propertyColumns, BinaryData systemPropertyColumns) : base(outputDataSourceType)
+        internal ServiceBusQueueOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string queueName, IList<string> propertyColumns, IDictionary<string, string> systemPropertyColumns) : base(outputDataSourceType)
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </summary>
         public string SharedAccessPolicyKey { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
         /// <summary> The name of the Service Bus Queue. Required on PUT (CreateOrReplace) requests. </summary>
         public string QueueName { get; set; }
         /// <summary> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </summary>
         public IList<string> PropertyColumns { get; }
         /// <summary> The system properties associated with the Service Bus Queue. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </summary>
-        public BinaryData SystemPropertyColumns { get; set; }
+        public IDictionary<string, string> SystemPropertyColumns { get; }
     }
 }

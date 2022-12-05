@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
         public TimeSpan? WindowSize { get; set; }
         /// <summary> the resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public string TargetResourceType { get; set; }
+        public ResourceType? TargetResourceType { get; set; }
         /// <summary> the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public string TargetResourceRegion { get; set; }
+        public AzureLocation? TargetResourceRegion { get; set; }
         /// <summary>
         /// defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
         /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
-        public bool? IsAutoMitigate { get; set; }
+        public bool? IsAutoMitigateEnabled { get; set; }
         /// <summary> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
         public IList<MetricAlertAction> Actions { get; }
         /// <summary> Last time the rule was updated in ISO8601 format. </summary>

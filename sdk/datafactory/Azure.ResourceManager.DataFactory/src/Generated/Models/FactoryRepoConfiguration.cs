@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
     /// </summary>
-    public partial class FactoryRepoConfiguration
+    public abstract partial class FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
         /// <param name="accountName"> Account name. </param>
@@ -22,24 +23,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="repositoryName"/>, <paramref name="collaborationBranch"/> or <paramref name="rootFolder"/> is null. </exception>
-        public FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder)
+        protected FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (repositoryName == null)
-            {
-                throw new ArgumentNullException(nameof(repositoryName));
-            }
-            if (collaborationBranch == null)
-            {
-                throw new ArgumentNullException(nameof(collaborationBranch));
-            }
-            if (rootFolder == null)
-            {
-                throw new ArgumentNullException(nameof(rootFolder));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
+            Argument.AssertNotNull(collaborationBranch, nameof(collaborationBranch));
+            Argument.AssertNotNull(rootFolder, nameof(rootFolder));
 
             AccountName = accountName;
             RepositoryName = repositoryName;

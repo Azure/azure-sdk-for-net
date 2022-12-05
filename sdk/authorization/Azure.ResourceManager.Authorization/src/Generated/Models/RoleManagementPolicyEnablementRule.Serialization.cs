@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Authorization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EnabledRules))
+            if (Optional.IsCollectionDefined(EnablementRules))
             {
                 writer.WritePropertyName("enabledRules");
                 writer.WriteStartArray();
-                foreach (var item in EnabledRules)
+                foreach (var item in EnablementRules)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyEnablementRule DeserializeRoleManagementPolicyEnablementRule(JsonElement element)
         {
-            Optional<IList<EnablementRule>> enabledRules = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
@@ -56,22 +56,17 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnablementRule> array = new List<EnablementRule>();
+                    List<RoleAssignmentEnablementRuleType> array = new List<RoleAssignmentEnablementRuleType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new EnablementRule(item.GetString()));
+                        array.Add(new RoleAssignmentEnablementRuleType(item.GetString()));
                     }
                     enabledRules = array;
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ruleType"))

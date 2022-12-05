@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountGetKeysResult
+    internal partial class StorageAccountGetKeysResult
     {
         internal static StorageAccountGetKeysResult DeserializeStorageAccountGetKeysResult(JsonElement element)
         {

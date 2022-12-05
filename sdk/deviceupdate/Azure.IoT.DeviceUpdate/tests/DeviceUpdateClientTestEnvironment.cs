@@ -16,7 +16,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
 
         public string UpdateName => "vacuum";
 
-        public string UpdateVersion => "2022.401.504.6";
+        public string UpdateVersion => "2022.809.131.21";
 
         public string DeviceGroup => "dpokluda-test";
     }

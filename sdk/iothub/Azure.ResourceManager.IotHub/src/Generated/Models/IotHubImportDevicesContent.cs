@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inputBlobContainerUri"/> or <paramref name="outputBlobContainerUri"/> is null. </exception>
         public IotHubImportDevicesContent(Uri inputBlobContainerUri, Uri outputBlobContainerUri)
         {
-            if (inputBlobContainerUri == null)
-            {
-                throw new ArgumentNullException(nameof(inputBlobContainerUri));
-            }
-            if (outputBlobContainerUri == null)
-            {
-                throw new ArgumentNullException(nameof(outputBlobContainerUri));
-            }
+            Argument.AssertNotNull(inputBlobContainerUri, nameof(inputBlobContainerUri));
+            Argument.AssertNotNull(outputBlobContainerUri, nameof(outputBlobContainerUri));
 
             InputBlobContainerUri = inputBlobContainerUri;
             OutputBlobContainerUri = outputBlobContainerUri;
@@ -44,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Managed identity properties of storage endpoint for import devices. </summary>
         internal ManagedIdentity Identity { get; set; }
         /// <summary> The user assigned identity. </summary>
-        public string UserAssignedIdentity
+        public ResourceIdentifier UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
             set

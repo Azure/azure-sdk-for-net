@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < line.BoundingPolygon.Length; j++)
+                    for (int j = 0; j < line.BoundingPolygon.Count; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
                     }
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                     Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < selectionMark.BoundingPolygon.Length; j++)
+                    for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
                     }
@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     foreach (DocumentSpan span in style.Spans)
                     {
-                        Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+                        Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
                     }
                 }
             }

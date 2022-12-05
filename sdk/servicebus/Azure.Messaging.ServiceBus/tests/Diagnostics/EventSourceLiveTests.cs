@@ -9,8 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
@@ -48,7 +50,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<ServiceBusMessage>();
+                //IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -76,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
                         Assert.AreEqual(item.DeliveryCount, 1);
                         lockTokens.Add(item.LockToken);
                     }
@@ -109,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var item in await receiver.PeekMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.MessageId.ToString(), item.MessageId);
                 }
 
                 _listener.SingleEventById(ServiceBusEventSource.CreateManagementLinkStartEvent, e => e.Payload.Contains(receiver.Identifier));
@@ -163,7 +166,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<ServiceBusMessage>();
+                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<AmqpMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -279,8 +282,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     ServiceBusEventSource.StartProcessingCompleteEvent,
                     e => e.Payload.Contains(processor.Identifier));
                 _listener.SingleEventById(
+                    ServiceBusEventSource.ReceiveMessageStartEvent,
+                    e => e.Payload.Contains($"{processor.Identifier}-Receiver"));
+                _listener.SingleEventById(
                     ServiceBusEventSource.ReceiveMessageCompleteEvent,
-                    e => e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
+                    e => e.Payload.Contains($"{processor.Identifier}-Receiver") && e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
                 _listener.SingleEventById(
                     ServiceBusEventSource.ProcessorMessageHandlerStartEvent,
                     e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
@@ -332,7 +338,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await Task.Delay(ShortLockDuration.Add(ShortLockDuration));
 
                 var errors = _listener.EventData.Where(e => e.Level == EventLevel.Error && e.EventId != ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent).ToList();
-                Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.Message)));
+                Assert.IsEmpty(errors, string.Join(",", errors.Select(EventSourceEventFormatting.Format)));
             }
         }
 
@@ -408,6 +414,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageStartEvent, e => e.Payload.Contains($"{processor.Identifier}-SsessionId"));
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageCompleteEvent, e => e.Payload.Contains($"{processor.Identifier}-SsessionId"));
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent, args => args.Payload.Contains(processor.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent, args => args.Payload.Contains(processor.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorErrorHandlerThrewExceptionEvent, args => args.Payload.Contains(processor.Identifier));

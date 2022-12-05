@@ -41,15 +41,21 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("drm");
                 writer.WriteObjectValue(Drm);
             }
+            if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
+            {
+                writer.WritePropertyName("clearKeyEncryptionConfiguration");
+                writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
+            }
             writer.WriteEndObject();
         }
 
         internal static CommonEncryptionCenc DeserializeCommonEncryptionCenc(JsonElement element)
         {
-            Optional<EnabledProtocols> enabledProtocols = default;
-            Optional<IList<TrackSelection>> clearTracks = default;
+            Optional<MediaEnabledProtocols> enabledProtocols = default;
+            Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
             Optional<CencDrmConfiguration> drm = default;
+            Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"))
@@ -59,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enabledProtocols = EnabledProtocols.DeserializeEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"))
@@ -69,10 +75,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TrackSelection> array = new List<TrackSelection>();
+                    List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackSelection.DeserializeTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
                     }
                     clearTracks = array;
                     continue;
@@ -97,8 +103,18 @@ namespace Azure.ResourceManager.Media.Models
                     drm = CencDrmConfiguration.DeserializeCencDrmConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("clearKeyEncryptionConfiguration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value);
+                    continue;
+                }
             }
-            return new CommonEncryptionCenc(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value);
+            return new CommonEncryptionCenc(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value);
         }
     }
 }

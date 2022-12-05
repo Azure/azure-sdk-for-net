@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
-        /// <param name="signalAvailability"> Is there a health signal for the resource. </param>
+        /// <param name="isSignalAvailable"> Is there a health signal for the resource. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string category, bool? signalAvailability, string kind) : base(id, name, resourceType, systemData)
+        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string category, bool? isSignalAvailable, string kind) : base(id, name, resourceType, systemData)
         {
             Category = category;
-            SignalAvailability = signalAvailability;
+            IsSignalAvailable = isSignalAvailable;
             Kind = kind;
         }
 
         /// <summary> The category that the resource matches in the RHC Policy File. </summary>
         public string Category { get; set; }
         /// <summary> Is there a health signal for the resource. </summary>
-        public bool? SignalAvailability { get; set; }
+        public bool? IsSignalAvailable { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

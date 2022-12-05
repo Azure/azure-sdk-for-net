@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="checkCertificateRevocationListOnSend"> The value indicating whether to check for certificate revocation list on send. </param>
         /// <param name="checkCertificateRevocationListOnReceive"> The value indicating whether to check for certificate revocation list on receive. </param>
         /// <param name="encryptionAlgorithm"> The encryption algorithm. </param>
-        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, EncryptionAlgorithm encryptionAlgorithm)
+        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, AS2EncryptionAlgorithm encryptionAlgorithm)
         {
             OverrideMessageProperties = overrideMessageProperties;
             EncryptMessage = encryptMessage;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="checkCertificateRevocationListOnReceive"> The value indicating whether to check for certificate revocation list on receive. </param>
         /// <param name="encryptionAlgorithm"> The encryption algorithm. </param>
         /// <param name="signingAlgorithm"> The signing algorithm. </param>
-        internal AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, EncryptionAlgorithm encryptionAlgorithm, SigningAlgorithm? signingAlgorithm)
+        internal AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, AS2EncryptionAlgorithm encryptionAlgorithm, AS2SigningAlgorithm? signingAlgorithm)
         {
             OverrideMessageProperties = overrideMessageProperties;
             EncryptMessage = encryptMessage;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The value indicating whether to check for certificate revocation list on receive. </summary>
         public bool CheckCertificateRevocationListOnReceive { get; set; }
         /// <summary> The encryption algorithm. </summary>
-        public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
+        public AS2EncryptionAlgorithm EncryptionAlgorithm { get; set; }
         /// <summary> The signing algorithm. </summary>
-        public SigningAlgorithm? SigningAlgorithm { get; set; }
+        public AS2SigningAlgorithm? SigningAlgorithm { get; set; }
     }
 }

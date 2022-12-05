@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
         /// <param name="dualStandbyPairName"> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, SecureString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, FactorySecretString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
@@ -42,12 +42,41 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The administrator user name of catalog database. </summary>
         public string CatalogAdminUserName { get; set; }
         /// <summary> The password of the administrator user account of the catalog database. </summary>
-        public SecureString CatalogAdminPassword { get; set; }
+        public FactorySecretString CatalogAdminPassword { get; set; }
         /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
         public IntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get; set; }
         /// <summary> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </summary>
         public string DualStandbyPairName { get; set; }
-        /// <summary> Additional Properties. </summary>
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

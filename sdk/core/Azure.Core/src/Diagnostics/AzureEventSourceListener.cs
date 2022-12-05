@@ -11,7 +11,7 @@ using Azure.Core.Shared;
 namespace Azure.Core.Diagnostics
 {
     /// <summary>
-    /// Implementation of <see cref="EventListener"/> that listens to events produces by Azure SDK Client libraries.
+    /// Implementation of <see cref="EventListener"/> that listens to events produced by Azure SDK client libraries.
     /// </summary>
     public class AzureEventSourceListener: EventListener
     {

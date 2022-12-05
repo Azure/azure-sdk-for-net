@@ -15,21 +15,18 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class ActivityLogAlertActionGroup
     {
         /// <summary> Initializes a new instance of ActivityLogAlertActionGroup. </summary>
-        /// <param name="actionGroupId"> The resourceId of the action group. This cannot be null or empty. </param>
+        /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupId"/> is null. </exception>
         public ActivityLogAlertActionGroup(ResourceIdentifier actionGroupId)
         {
-            if (actionGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(actionGroupId));
-            }
+            Argument.AssertNotNull(actionGroupId, nameof(actionGroupId));
 
             ActionGroupId = actionGroupId;
             WebhookProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ActivityLogAlertActionGroup. </summary>
-        /// <param name="actionGroupId"> The resourceId of the action group. This cannot be null or empty. </param>
+        /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
         /// <param name="webhookProperties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
         internal ActivityLogAlertActionGroup(ResourceIdentifier actionGroupId, IDictionary<string, string> webhookProperties)
         {
@@ -37,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
             WebhookProperties = webhookProperties;
         }
 
-        /// <summary> The resourceId of the action group. This cannot be null or empty. </summary>
+        /// <summary> The resource ID of the Action Group. This cannot be null or empty. </summary>
         public ResourceIdentifier ActionGroupId { get; set; }
         /// <summary> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </summary>
         public IDictionary<string, string> WebhookProperties { get; }

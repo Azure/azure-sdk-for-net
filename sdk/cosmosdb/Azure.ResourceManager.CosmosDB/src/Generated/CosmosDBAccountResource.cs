@@ -281,6 +281,80 @@ namespace Azure.ResourceManager.CosmosDB
             return GetMongoDBDatabases().Get(databaseName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of MongoDBRoleDefinitionResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of MongoDBRoleDefinitionResources and their operations over a MongoDBRoleDefinitionResource. </returns>
+        public virtual MongoDBRoleDefinitionCollection GetMongoDBRoleDefinitions()
+        {
+            return GetCachedClient(Client => new MongoDBRoleDefinitionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo Role Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoRoleDefinition
+        /// </summary>
+        /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MongoDBRoleDefinitionResource>> GetMongoDBRoleDefinitionAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return await GetMongoDBRoleDefinitions().GetAsync(mongoRoleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo Role Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoRoleDefinition
+        /// </summary>
+        /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MongoDBRoleDefinitionResource> GetMongoDBRoleDefinition(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return GetMongoDBRoleDefinitions().Get(mongoRoleDefinitionId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MongoDBUserDefinitionResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of MongoDBUserDefinitionResources and their operations over a MongoDBUserDefinitionResource. </returns>
+        public virtual MongoDBUserDefinitionCollection GetMongoDBUserDefinitions()
+        {
+            return GetCachedClient(Client => new MongoDBUserDefinitionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// </summary>
+        /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoUserDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoUserDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MongoDBUserDefinitionResource>> GetMongoDBUserDefinitionAsync(string mongoUserDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return await GetMongoDBUserDefinitions().GetAsync(mongoUserDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}
+        /// Operation Id: MongoDBResources_GetMongoUserDefinition
+        /// </summary>
+        /// <param name="mongoUserDefinitionId"> The ID for the User Definition {dbName.userName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoUserDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoUserDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MongoDBUserDefinitionResource> GetMongoDBUserDefinition(string mongoUserDefinitionId, CancellationToken cancellationToken = default)
+        {
+            return GetMongoDBUserDefinitions().Get(mongoUserDefinitionId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CosmosDBTableResources in the CosmosDBAccount. </summary>
         /// <returns> An object representing collection of CosmosDBTableResources and their operations over a CosmosDBTableResource. </returns>
         public virtual CosmosDBTableCollection GetCosmosDBTables()
@@ -464,6 +538,43 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<CosmosDBPrivateLinkResource> GetCosmosDBPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
             return GetCosmosDBPrivateLinkResources().Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CosmosDBServiceResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of CosmosDBServiceResources and their operations over a CosmosDBServiceResource. </returns>
+        public virtual CosmosDBServiceCollection GetCosmosDBServices()
+        {
+            return GetCachedClient(Client => new CosmosDBServiceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the status of service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}
+        /// Operation Id: Service_Get
+        /// </summary>
+        /// <param name="serviceName"> Cosmos DB service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CosmosDBServiceResource>> GetCosmosDBServiceAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            return await GetCosmosDBServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the status of service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}
+        /// Operation Id: Service_Get
+        /// </summary>
+        /// <param name="serviceName"> Cosmos DB service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBServiceResource> GetCosmosDBService(string serviceName, CancellationToken cancellationToken = default)
+        {
+            return GetCosmosDBServices().Get(serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -2326,11 +2437,26 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cosmosDBAccountDatabaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _cosmosDBAccountDatabaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new CosmosDBAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2357,11 +2483,26 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cosmosDBAccountDatabaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _cosmosDBAccountDatabaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new CosmosDBAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2386,12 +2527,23 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cosmosDBAccountDatabaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _cosmosDBAccountDatabaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new CosmosDBAccountPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2416,12 +2568,23 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cosmosDBAccountDatabaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _cosmosDBAccountDatabaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new CosmosDBAccountPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2446,11 +2609,26 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cosmosDBAccountDatabaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _cosmosDBAccountDatabaseAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new CosmosDBAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2475,11 +2653,26 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cosmosDBAccountDatabaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _cosmosDBAccountDatabaseAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new CosmosDBAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new CosmosDBAccountPatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PostgreSql
     /// A Class representing a PostgreSqlPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServerResource" /> using the GetPostgreSqlPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource" /> using the GetPostgreSqlPrivateEndpointConnection method.
     /// </summary>
     public partial class PostgreSqlPrivateEndpointConnectionResource : ArmResource
     {

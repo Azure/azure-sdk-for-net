@@ -549,10 +549,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 KeyPolicy.Validate();
             }
-            if (Encryption != null)
-            {
-                Encryption.Validate();
-            }
             if (AzureFilesIdentityBasedAuthentication != null)
             {
                 AzureFilesIdentityBasedAuthentication.Validate();

@@ -37,6 +37,16 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("recordingFormatType");
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ChannelAffinity))
+            {
+                writer.WritePropertyName("channelAffinity");
+                writer.WriteStartArray();
+                foreach (var item in ChannelAffinity)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
     }

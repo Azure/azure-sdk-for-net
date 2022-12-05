@@ -18,20 +18,25 @@ namespace Azure.ResourceManager.FluidRelay.Models
         {
             OrdererEndpoints = new ChangeTrackingList<string>();
             StorageEndpoints = new ChangeTrackingList<string>();
+            ServiceEndpoints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FluidRelayEndpoints. </summary>
         /// <param name="ordererEndpoints"> The Fluid Relay Orderer endpoints. </param>
         /// <param name="storageEndpoints"> The Fluid Relay storage endpoints. </param>
-        internal FluidRelayEndpoints(IReadOnlyList<string> ordererEndpoints, IReadOnlyList<string> storageEndpoints)
+        /// <param name="serviceEndpoints"> The Fluid Relay service endpoints. </param>
+        internal FluidRelayEndpoints(IReadOnlyList<string> ordererEndpoints, IReadOnlyList<string> storageEndpoints, IReadOnlyList<string> serviceEndpoints)
         {
             OrdererEndpoints = ordererEndpoints;
             StorageEndpoints = storageEndpoints;
+            ServiceEndpoints = serviceEndpoints;
         }
 
         /// <summary> The Fluid Relay Orderer endpoints. </summary>
         public IReadOnlyList<string> OrdererEndpoints { get; }
         /// <summary> The Fluid Relay storage endpoints. </summary>
         public IReadOnlyList<string> StorageEndpoints { get; }
+        /// <summary> The Fluid Relay service endpoints. </summary>
+        public IReadOnlyList<string> ServiceEndpoints { get; }
     }
 }

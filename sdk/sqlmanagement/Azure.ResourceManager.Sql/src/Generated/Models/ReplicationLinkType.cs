@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Link type (GEO, NAMED). </summary>
+    /// <summary> Link type (GEO, NAMED, STANDBY). </summary>
     public readonly partial struct ReplicationLinkType : IEquatable<ReplicationLinkType>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         private const string GeoValue = "GEO";
         private const string NamedValue = "NAMED";
+        private const string StandbyValue = "STANDBY";
 
         /// <summary> GEO. </summary>
         public static ReplicationLinkType Geo { get; } = new ReplicationLinkType(GeoValue);
         /// <summary> NAMED. </summary>
         public static ReplicationLinkType Named { get; } = new ReplicationLinkType(NamedValue);
+        /// <summary> STANDBY. </summary>
+        public static ReplicationLinkType Standby { get; } = new ReplicationLinkType(StandbyValue);
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are the same. </summary>
         public static bool operator ==(ReplicationLinkType left, ReplicationLinkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are not the same. </summary>

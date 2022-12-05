@@ -259,6 +259,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+rename-mapping:
+  PolicyAssignment.identity: ManagedIdentity
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById

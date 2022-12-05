@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://amandadev2.queue.core.windows.net/test-queue-7aeb642d-3d87-a1a1-eed5-100a677aea83",
+      "RequestUri": "https://seancanaryversioning.queue.core.windows.net/test-queue-04bd9f8a-f318-8917-ad3f-e9503f4f2bfb",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-2acbdc915c6d5f3c7a6e82548a05718c-dda3b61d26419075-00",
-        "User-Agent": "azsdk-net-Storage.Queues/12.11.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0968b6b7-32fc-1e58-a29b-dfae3cfab9bc",
-        "x-ms-date": "Wed, 22 Jun 2022 05:40:09 GMT",
+        "traceparent": "00-4971a9457b2ead1b9dc629255828d12d-f760957b0e8f81a6-00",
+        "User-Agent": "azsdk-net-Storage.Queues/12.12.0-alpha.20220714.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "1d72cbff-55d5-3fb2-ae82-a5795ec060c8",
+        "x-ms-date": "Thu, 14 Jul 2022 15:22:33 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -18,27 +18,27 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 22 Jun 2022 05:40:11 GMT",
+        "Date": "Thu, 14 Jul 2022 15:22:33 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "e8392e78-f003-003b-5ffa-853045000000",
+        "x-ms-request-id": "31980a9f-0003-0080-2195-97b2a6000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev2.queue.core.windows.net/test-queue-7aeb642d-3d87-a1a1-eed5-100a677aea83",
+      "RequestUri": "https://seancanaryversioning.queue.core.windows.net/test-queue-04bd9f8a-f318-8917-ad3f-e9503f4f2bfb",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-26caa32ad772a807568a135c24096ca1-1308063aa57da97b-00",
-        "User-Agent": "azsdk-net-Storage.Queues/12.11.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "b052d75e-e111-7487-b104-c3936e4a08ae",
-        "x-ms-date": "Wed, 22 Jun 2022 05:40:09 GMT",
+        "traceparent": "00-a1f5f7e50d392be062e61ebf42936ad1-52c0ca5721631743-00",
+        "User-Agent": "azsdk-net-Storage.Queues/12.12.0-alpha.20220714.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "7451c12a-0ddd-8825-8639-a3c8d6caacdd",
+        "x-ms-date": "Thu, 14 Jul 2022 15:22:33 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -46,24 +46,24 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 22 Jun 2022 05:40:11 GMT",
+        "Date": "Thu, 14 Jul 2022 15:22:33 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "e8392ea5-f003-003b-03fa-853045000000",
+        "x-ms-request-id": "31980aa6-0003-0080-2795-97b2a6000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev2.queue.core.windows.net/test-queue-7aeb642d-3d87-a1a1-eed5-100a677aea83?sv=2021-08-06\u0026ss=qb\u0026srt=sco\u0026se=2022-06-23T05%3A40%3A10Z\u0026sp=rwdylacuptfi\u0026sig=Sanitized\u0026comp=metadata",
+      "RequestUri": "https://seancanaryversioning.queue.core.windows.net/test-queue-04bd9f8a-f318-8917-ad3f-e9503f4f2bfb?sv=2021-12-02\u0026ss=qb\u0026srt=sco\u0026se=2022-07-15T15%3A22%3A33Z\u0026sp=rwdylacuptfi\u0026sig=Sanitized\u0026comp=metadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
-        "traceparent": "00-a1fc01f1421e2ff8c4c0a760f4a62218-c233516b56360c06-00",
-        "User-Agent": "azsdk-net-Storage.Queues/12.11.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "6450794d-09a7-16aa-1c55-5a8154297121",
+        "traceparent": "00-ba9c2bece0048bf76915814f1fe7292c-a521485ec2b33332-00",
+        "User-Agent": "azsdk-net-Storage.Queues/12.12.0-alpha.20220714.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "9c4f1d31-eb6f-06ea-df1c-0d5c07743790",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -72,27 +72,27 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 22 Jun 2022 05:40:11 GMT",
+        "Date": "Thu, 14 Jul 2022 15:22:33 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-approximate-messages-count": "0",
-        "x-ms-request-id": "e8392ee1-f003-003b-37fa-853045000000",
+        "x-ms-request-id": "31980aa9-0003-0080-2a95-97b2a6000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandadev2.queue.core.windows.net/test-queue-7aeb642d-3d87-a1a1-eed5-100a677aea83",
+      "RequestUri": "https://seancanaryversioning.queue.core.windows.net/test-queue-04bd9f8a-f318-8917-ad3f-e9503f4f2bfb",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-4335aec5ae8570b07fa01d6884076e66-c1db1f09cfeddbc4-00",
-        "User-Agent": "azsdk-net-Storage.Queues/12.11.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "f546d9f9-a4f9-e706-c3da-93680f304ad0",
-        "x-ms-date": "Wed, 22 Jun 2022 05:40:10 GMT",
+        "traceparent": "00-14b509541cc1e70022787549a7c66a44-9c86ebf05703ad8c-00",
+        "User-Agent": "azsdk-net-Storage.Queues/12.12.0-alpha.20220714.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "b9969fff-0f7b-356e-3b52-546373354c1a",
+        "x-ms-date": "Thu, 14 Jul 2022 15:22:33 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -100,20 +100,20 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 22 Jun 2022 05:40:11 GMT",
+        "Date": "Thu, 14 Jul 2022 15:22:33 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "e8392f1e-f003-003b-72fa-853045000000",
+        "x-ms-request-id": "31980ab6-0003-0080-3795-97b2a6000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2022-06-21T22:40:10.0333363-07:00",
-    "RandomSeed": "2139539996",
-    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttps://amandadev2.blob.core.windows.net\nhttps://amandadev2.file.core.windows.net\nhttps://amandadev2.queue.core.windows.net\nhttps://amandadev2.table.core.windows.net\n\n\n\n\nhttps://amandadev2-secondary.core.windows.net\nhttps://amandadev2-secondary.file.core.windows.net\nhttps://amandadev2-secondary.queue.core.windows.net\nhttps://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://amandadev2.blob.core.windows.net/;QueueEndpoint=https://amandadev2.queue.core.windows.net/;FileEndpoint=https://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=https://amandadev2-secondary.core.windows.net/;QueueSecondaryEndpoint=https://amandadev2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Sanitized\nencryptionScope1\n\n"
+    "DateTimeOffsetNow": "2022-07-14T10:22:33.9208685-05:00",
+    "RandomSeed": "897895264",
+    "Storage_TestConfigDefault": "ProductionTenant\nseancanaryversioning\nU2FuaXRpemVk\nhttps://seancanaryversioning.blob.core.windows.net\nhttps://seancanaryversioning.file.preprod.core.windows.net\nhttps://seancanaryversioning.queue.core.windows.net\nhttps://seancanaryversioning.table.core.windows.net\n\n\n\n\nhttps://seancanaryversioning-secondary.blob.core.windows.net\nhttps://seancanaryversioning-secondary.file.preprod.core.windows.net\nhttps://seancanaryversioning-secondary.queue.core.windows.net\nhttps://seancanaryversioning-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seancanaryversioning.blob.core.windows.net/;QueueEndpoint=https://seancanaryversioning.queue.core.windows.net/;FileEndpoint=https://seancanaryversioning.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://seancanaryversioning-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seancanaryversioning-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seancanaryversioning-secondary.file.preprod.core.windows.net/;AccountName=seancanaryversioning;AccountKey=Sanitized\nseanscope1\n\n"
   }
 }

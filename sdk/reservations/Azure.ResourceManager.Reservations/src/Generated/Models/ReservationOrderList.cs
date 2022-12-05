@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationOrderList. </summary>
         internal ReservationOrderList()
         {
-            Value = new ChangeTrackingList<ReservationOrderResponseData>();
+            Value = new ChangeTrackingList<ReservationOrderData>();
         }
 
         /// <summary> Initializes a new instance of ReservationOrderList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page of reservationOrders. </param>
-        internal ReservationOrderList(IReadOnlyList<ReservationOrderResponseData> value, string nextLink)
+        internal ReservationOrderList(IReadOnlyList<ReservationOrderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<ReservationOrderResponseData> Value { get; }
+        public IReadOnlyList<ReservationOrderData> Value { get; }
         /// <summary> Url to get the next page of reservationOrders. </summary>
         public string NextLink { get; }
     }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettingsData throughtput = await container.GetMongoDBCollectionThroughputAsync();
+            //ThroughputSettingData throughtput = await container.GetMongoDBCollectionThroughputAsync();
             CosmosDBSqlContainerResource container2 = await SqlContainerCollection.GetAsync(_containerName);
             Assert.AreEqual(_containerName, container2.Data.Resource.ContainerName);
             //Assert.AreEqual(TestThroughput1, container2.Data.Options.Throughput);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CosmosDBSqlContainerThroughputSettingResource throughput = await container.GetCosmosDBSqlContainerThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateSqlContainerToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CosmosDBSqlContainerThroughputSettingResource throughput = await container.GetCosmosDBSqlContainerThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateSqlContainerToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 

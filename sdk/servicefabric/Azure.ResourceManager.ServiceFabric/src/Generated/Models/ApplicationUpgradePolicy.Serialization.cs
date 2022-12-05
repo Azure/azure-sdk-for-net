@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout");
-                writer.WriteStringValue(UpgradeReplicaSetCheckTimeout);
+                writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "c");
             }
             if (Optional.IsDefined(ForceRestart))
             {
@@ -50,17 +51,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element)
         {
-            Optional<string> upgradeReplicaSetCheckTimeout = default;
+            Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
             Optional<bool> forceRestart = default;
             Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
             Optional<ArmApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<RollingUpgradeMode> upgradeMode = default;
+            Optional<ApplicationRollingUpgradeMode> upgradeMode = default;
             Optional<bool> recreateApplication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("upgradeReplicaSetCheckTimeout"))
                 {
-                    upgradeReplicaSetCheckTimeout = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    upgradeReplicaSetCheckTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("forceRestart"))
@@ -100,7 +106,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    upgradeMode = new RollingUpgradeMode(property.Value.GetString());
+                    upgradeMode = new ApplicationRollingUpgradeMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recreateApplication"))
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ApplicationUpgradePolicy(upgradeReplicaSetCheckTimeout.Value, Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, applicationHealthPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(recreateApplication));
+            return new ApplicationUpgradePolicy(Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, applicationHealthPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(recreateApplication));
         }
     }
 }

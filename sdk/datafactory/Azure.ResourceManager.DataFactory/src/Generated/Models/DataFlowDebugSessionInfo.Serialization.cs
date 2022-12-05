@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<int> coreCount = default;
             Optional<int> nodeCount = default;
             Optional<string> integrationRuntimeName = default;
-            Optional<string> sessionId = default;
+            Optional<Guid> sessionId = default;
             Optional<string> startTime = default;
             Optional<int> timeToLiveInMinutes = default;
-            Optional<string> lastActivityTime = default;
+            Optional<DateTimeOffset> lastActivityTime = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -66,7 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("sessionId"))
                 {
-                    sessionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sessionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -86,13 +91,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("lastActivityTime"))
                 {
-                    lastActivityTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastActivityTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, sessionId.Value, startTime.Value, Optional.ToNullable(timeToLiveInMinutes), lastActivityTime.Value, additionalProperties);
+            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Optional.ToNullable(sessionId), startTime.Value, Optional.ToNullable(timeToLiveInMinutes), Optional.ToNullable(lastActivityTime), additionalProperties);
         }
     }
 }

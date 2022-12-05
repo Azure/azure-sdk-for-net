@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Calculate exchange request properties. </summary>
-        public CalculateExchangeRequestProperties Properties { get; set; }
+        public CalculateExchangeContentProperties Properties { get; set; }
     }
 }

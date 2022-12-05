@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteUserProvidedFunctionAppResource" /> and their operations.
-    /// Each <see cref="StaticSiteUserProvidedFunctionAppResource" /> in the collection will belong to the same instance of <see cref="StaticSiteARMResource" />.
-    /// To get a <see cref="StaticSiteUserProvidedFunctionAppCollection" /> instance call the GetStaticSiteUserProvidedFunctionApps method from an instance of <see cref="StaticSiteARMResource" />.
+    /// Each <see cref="StaticSiteUserProvidedFunctionAppResource" /> in the collection will belong to the same instance of <see cref="StaticSiteResource" />.
+    /// To get a <see cref="StaticSiteUserProvidedFunctionAppCollection" /> instance call the GetStaticSiteUserProvidedFunctionApps method from an instance of <see cref="StaticSiteResource" />.
     /// </summary>
     public partial class StaticSiteUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteUserProvidedFunctionAppResource>, IAsyncEnumerable<StaticSiteUserProvidedFunctionAppResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != StaticSiteARMResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteARMResource.ResourceType), nameof(id));
+            if (id.ResourceType != StaticSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteUserProvidedFunctionAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteUserProvidedFunctionAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
             Argument.AssertNotNull(data, nameof(data));
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteUserProvidedFunctionAppResource> CreateOrUpdate(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteUserProvidedFunctionAppResource> CreateOrUpdate(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
             Argument.AssertNotNull(data, nameof(data));

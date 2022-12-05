@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("needTechnicalAcknowledgement");
             writer.WriteBooleanValue(NeedTechnicalAcknowledgement);
             writer.WritePropertyName("batchTechnicalAcknowledgements");
-            writer.WriteBooleanValue(BatchTechnicalAcknowledgements);
+            writer.WriteBooleanValue(BatchTechnicalAcknowledgement);
             writer.WritePropertyName("needFunctionalAcknowledgement");
             writer.WriteBooleanValue(NeedFunctionalAcknowledgement);
             writer.WritePropertyName("batchFunctionalAcknowledgements");
-            writer.WriteBooleanValue(BatchFunctionalAcknowledgements);
+            writer.WriteBooleanValue(BatchFunctionalAcknowledgement);
             writer.WritePropertyName("needLoopForValidMessages");
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement");

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListBySqlVmGroupRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName)
+        internal HttpMessage CreateListBySqlVmGroupRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
-            uri.AppendPath(sqlVirtualMachineGroupName, true);
+            uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/sqlVirtualMachines", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -61,25 +61,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Gets the list of sql virtual machines in a SQL virtual machine group. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlVirtualMachineListResult>> ListBySqlVmGroupAsync(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SqlVmListResult>> ListBySqlVmGroupAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineGroupName, nameof(sqlVirtualMachineGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListBySqlVmGroupRequest(subscriptionId, resourceGroupName, sqlVirtualMachineGroupName);
+            using var message = CreateListBySqlVmGroupRequest(subscriptionId, resourceGroupName, sqlVmGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -90,25 +90,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Gets the list of sql virtual machines in a SQL virtual machine group. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlVirtualMachineListResult> ListBySqlVmGroup(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SqlVmListResult> ListBySqlVmGroup(string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineGroupName, nameof(sqlVirtualMachineGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListBySqlVmGroupRequest(subscriptionId, resourceGroupName, sqlVirtualMachineGroupName);
+            using var message = CreateListBySqlVmGroupRequest(subscriptionId, resourceGroupName, sqlVmGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlVirtualMachineListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlVmListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlVirtualMachineListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SqlVmListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlVmName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
-            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath(sqlVmName, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -210,30 +210,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Gets a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlVirtualMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SqlVmData>> GetAsync(string subscriptionId, string resourceGroupName, string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlVirtualMachineData value = default;
+                        SqlVmData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlVirtualMachineData.DeserializeSqlVirtualMachineData(document.RootElement);
+                        value = SqlVmData.DeserializeSqlVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlVirtualMachineData)null, message.Response);
+                    return Response.FromValue((SqlVmData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -242,36 +242,36 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Gets a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlVirtualMachineData> Get(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SqlVmData> Get(string subscriptionId, string resourceGroupName, string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlVirtualMachineData value = default;
+                        SqlVmData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlVirtualMachineData.DeserializeSqlVirtualMachineData(document.RootElement);
+                        value = SqlVmData.DeserializeSqlVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlVirtualMachineData)null, message.Response);
+                    return Response.FromValue((SqlVmData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachineData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVmName, SqlVmData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
-            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath(sqlVmName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -298,19 +298,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Creates or updates a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="data"> The SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVirtualMachineName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachineData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string sqlVmName, SqlVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVmName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -325,19 +325,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Creates or updates a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="data"> The SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVirtualMachineName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachineData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string sqlVmName, SqlVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVmName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlVmName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
-            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath(sqlVmName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             _userAgent.Apply(message);
@@ -371,17 +371,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Deletes a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sqlVmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVmName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -397,17 +397,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Deletes a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string sqlVmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVmName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachinePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVmName, SqlVmPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
-            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath(sqlVmName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -447,19 +447,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Updates a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="patch"> The SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVirtualMachineName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachinePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string sqlVmName, SqlVmPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sqlVmName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -473,19 +473,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Updates a SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="patch"> The SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVirtualMachineName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, SqlVirtualMachinePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string sqlVmName, SqlVmPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sqlVmName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlVirtualMachineListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlVmListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -532,9 +532,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlVirtualMachineListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SqlVmListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateRedeployRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName)
+        internal HttpMessage CreateRedeployRequest(string subscriptionId, string resourceGroupName, string sqlVmName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
-            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath(sqlVmName, true);
             uri.AppendPath("/redeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -592,17 +592,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Uninstalls and reinstalls the SQL Iaas Extension. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RedeployAsync(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RedeployAsync(string subscriptionId, string resourceGroupName, string sqlVmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateRedeployRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName);
+            using var message = CreateRedeployRequest(subscriptionId, resourceGroupName, sqlVmName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -617,17 +617,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Uninstalls and reinstalls the SQL Iaas Extension. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Redeploy(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Redeploy(string subscriptionId, string resourceGroupName, string sqlVmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateRedeployRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName);
+            using var message = CreateRedeployRequest(subscriptionId, resourceGroupName, sqlVmName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateStartAssessmentRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName)
+        internal HttpMessage CreateStartAssessmentRequest(string subscriptionId, string resourceGroupName, string sqlVmName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
-            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath(sqlVmName, true);
             uri.AppendPath("/startAssessment", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -662,17 +662,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Starts Assessment on SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartAssessmentAsync(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StartAssessmentAsync(string subscriptionId, string resourceGroupName, string sqlVmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateStartAssessmentRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName);
+            using var message = CreateStartAssessmentRequest(subscriptionId, resourceGroupName, sqlVmName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -687,17 +687,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Starts Assessment on SQL virtual machine. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineName"> Name of the SQL virtual machine. </param>
+        /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response StartAssessment(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response StartAssessment(string subscriptionId, string resourceGroupName, string sqlVmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
-            using var message = CreateStartAssessmentRequest(subscriptionId, resourceGroupName, sqlVirtualMachineName);
+            using var message = CreateStartAssessmentRequest(subscriptionId, resourceGroupName, sqlVmName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
-        internal HttpMessage CreateListBySqlVmGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName)
+        internal HttpMessage CreateListBySqlVmGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -727,26 +727,26 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlVirtualMachineListResult>> ListBySqlVmGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SqlVmListResult>> ListBySqlVmGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineGroupName, nameof(sqlVirtualMachineGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListBySqlVmGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVirtualMachineGroupName);
+            using var message = CreateListBySqlVmGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVmGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -758,26 +758,26 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlVirtualMachineGroupName"> Name of the SQL virtual machine group. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVirtualMachineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlVirtualMachineListResult> ListBySqlVmGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SqlVmListResult> ListBySqlVmGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVirtualMachineGroupName, nameof(sqlVirtualMachineGroupName));
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
-            using var message = CreateListBySqlVmGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVirtualMachineGroupName);
+            using var message = CreateListBySqlVmGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVmGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlVirtualMachineListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlVmListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -816,9 +816,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlVirtualMachineListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SqlVmListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -843,9 +843,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlVirtualMachineListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlVmListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -886,9 +886,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlVirtualMachineListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SqlVmListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -915,9 +915,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case 200:
                     {
-                        SqlVirtualMachineListResult value = default;
+                        SqlVmListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlVirtualMachineListResult.DeserializeSqlVirtualMachineListResult(document.RootElement);
+                        value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

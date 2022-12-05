@@ -1,17 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://unifiedlanguage-qa-test-aue.cognitiveservices.azure.com/language/:query-text?api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-text?api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
         "Content-Length": "690",
         "Content-Type": "application/json",
-        "traceparent": "00-8b25f415da722842a7e22fdb86b468da-e61fe69563c2d047-00",
-        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220708.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "a4c3f50305ef5e4b878a01e120892eab",
+        "traceparent": "00-595e4b5c802c638d6579f4cdb2236062-c2f9747cd5f3f52a-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "67b61b55c381b21dd014d0ec3af2c55f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d0ce2153-d546-4caa-93a2-5c122356b655",
+        "apim-request-id": "b2a30c62-718a-4c23-bbc8-2f259ffe3316",
         "Content-Length": "1476",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=2",
-        "Date": "Fri, 08 Jul 2022 09:28:52 GMT",
+        "Date": "Thu, 22 Sep 2022 00:25:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "234"
+        "x-envoy-upstream-service-time": "434"
       },
       "ResponseBody": {
         "answers": [
@@ -70,7 +69,7 @@
           },
           {
             "answer": "It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.",
-            "confidenceScore": 0.11520539969205856,
+            "confidenceScore": 0.11520536988973618,
             "id": "1",
             "answerSpan": {
               "text": "longer",
@@ -86,8 +85,9 @@
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://unifiedlanguage-qa-test-aue.cognitiveservices.azure.com/",
+    "AZURE_AUTHORITY_HOST": null,
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "RandomSeed": "1722265061"
+    "RandomSeed": "1119387684"
   }
 }

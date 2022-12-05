@@ -36,11 +36,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// advertise the routes to.</param>
         /// <param name="vnetRoutes">List of routes that control routing from
         /// VirtualHub into a virtual network connection.</param>
-        public RoutingConfiguration(SubResource associatedRouteTable = default(SubResource), PropagatedRouteTable propagatedRouteTables = default(PropagatedRouteTable), VnetRoute vnetRoutes = default(VnetRoute))
+        /// <param name="inboundRouteMap">The resource id of the RouteMap
+        /// associated with this RoutingConfiguration for inbound learned
+        /// routes.</param>
+        /// <param name="outboundRouteMap">The resource id of theRouteMap
+        /// associated with this RoutingConfiguration for outbound advertised
+        /// routes.</param>
+        public RoutingConfiguration(SubResource associatedRouteTable = default(SubResource), PropagatedRouteTable propagatedRouteTables = default(PropagatedRouteTable), VnetRoute vnetRoutes = default(VnetRoute), SubResource inboundRouteMap = default(SubResource), SubResource outboundRouteMap = default(SubResource))
         {
             AssociatedRouteTable = associatedRouteTable;
             PropagatedRouteTables = propagatedRouteTables;
             VnetRoutes = vnetRoutes;
+            InboundRouteMap = inboundRouteMap;
+            OutboundRouteMap = outboundRouteMap;
             CustomInit();
         }
 
@@ -68,6 +76,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "vnetRoutes")]
         public VnetRoute VnetRoutes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource id of the RouteMap associated with this
+        /// RoutingConfiguration for inbound learned routes.
+        /// </summary>
+        [JsonProperty(PropertyName = "inboundRouteMap")]
+        public SubResource InboundRouteMap { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource id of theRouteMap associated with this
+        /// RoutingConfiguration for outbound advertised routes.
+        /// </summary>
+        [JsonProperty(PropertyName = "outboundRouteMap")]
+        public SubResource OutboundRouteMap { get; set; }
 
     }
 }

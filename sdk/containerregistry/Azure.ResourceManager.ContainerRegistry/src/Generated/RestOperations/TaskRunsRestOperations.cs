@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TaskRunData>> GetAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryTaskRunData>> GetAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, taskRunName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunData value = default;
+                        ContainerRegistryTaskRunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TaskRunData.DeserializeTaskRunData(document.RootElement);
+                        value = ContainerRegistryTaskRunData.DeserializeContainerRegistryTaskRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TaskRunData)null, message.Response);
+                    return Response.FromValue((ContainerRegistryTaskRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TaskRunData> Get(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryTaskRunData> Get(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, taskRunName);
             _pipeline.Send(message, cancellationToken);
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunData value = default;
+                        ContainerRegistryTaskRunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TaskRunData.DeserializeTaskRunData(document.RootElement);
+                        value = ContainerRegistryTaskRunData.DeserializeContainerRegistryTaskRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TaskRunData)null, message.Response);
+                    return Response.FromValue((ContainerRegistryTaskRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, TaskRunData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, ContainerRegistryTaskRunData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,13 +160,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, TaskRunData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, ContainerRegistryTaskRunData data, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
-            Core.Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, registryName, taskRunName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, TaskRunData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, ContainerRegistryTaskRunData data, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
-            Core.Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, registryName, taskRunName, data);
             _pipeline.Send(message, cancellationToken);
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, taskRunName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, taskRunName);
             _pipeline.Send(message, cancellationToken);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, TaskRunPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, ContainerRegistryTaskRunPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskRunName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, TaskRunPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, ContainerRegistryTaskRunPatch patch, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
-            Core.Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, taskRunName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -351,13 +351,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskRunName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, TaskRunPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, ContainerRegistryTaskRunPatch patch, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
-            Core.Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, taskRunName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -402,12 +402,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TaskRunData>> GetDetailsAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryTaskRunData>> GetDetailsAsync(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
 
             using var message = CreateGetDetailsRequest(subscriptionId, resourceGroupName, registryName, taskRunName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -415,9 +415,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunData value = default;
+                        ContainerRegistryTaskRunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TaskRunData.DeserializeTaskRunData(document.RootElement);
+                        value = ContainerRegistryTaskRunData.DeserializeContainerRegistryTaskRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -433,12 +433,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TaskRunData> GetDetails(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryTaskRunData> GetDetails(string subscriptionId, string resourceGroupName, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Core.Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(taskRunName, nameof(taskRunName));
 
             using var message = CreateGetDetailsRequest(subscriptionId, resourceGroupName, registryName, taskRunName);
             _pipeline.Send(message, cancellationToken);
@@ -446,9 +446,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunData value = default;
+                        ContainerRegistryTaskRunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TaskRunData.DeserializeTaskRunData(document.RootElement);
+                        value = ContainerRegistryTaskRunData.DeserializeContainerRegistryTaskRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,11 +484,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TaskRunListResult>> ListAsync(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryTaskRunListResult>> ListAsync(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunListResult value = default;
+                        ContainerRegistryTaskRunListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TaskRunListResult.DeserializeTaskRunListResult(document.RootElement);
+                        value = ContainerRegistryTaskRunListResult.DeserializeContainerRegistryTaskRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -513,11 +513,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TaskRunListResult> List(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryTaskRunListResult> List(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName);
             _pipeline.Send(message, cancellationToken);
@@ -525,9 +525,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunListResult value = default;
+                        ContainerRegistryTaskRunListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TaskRunListResult.DeserializeTaskRunListResult(document.RootElement);
+                        value = ContainerRegistryTaskRunListResult.DeserializeContainerRegistryTaskRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -557,12 +557,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TaskRunListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryTaskRunListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -570,9 +570,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunListResult value = default;
+                        ContainerRegistryTaskRunListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TaskRunListResult.DeserializeTaskRunListResult(document.RootElement);
+                        value = ContainerRegistryTaskRunListResult.DeserializeContainerRegistryTaskRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -588,12 +588,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TaskRunListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryTaskRunListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            Core.Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Core.Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Core.Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Core.Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName);
             _pipeline.Send(message, cancellationToken);
@@ -601,9 +601,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        TaskRunListResult value = default;
+                        ContainerRegistryTaskRunListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TaskRunListResult.DeserializeTaskRunListResult(document.RootElement);
+                        value = ContainerRegistryTaskRunListResult.DeserializeContainerRegistryTaskRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

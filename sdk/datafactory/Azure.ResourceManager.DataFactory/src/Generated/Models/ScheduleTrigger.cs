@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
         public ScheduleTrigger(ScheduleTriggerRecurrence recurrence)
         {
-            if (recurrence == null)
-            {
-                throw new ArgumentNullException(nameof(recurrence));
-            }
+            Argument.AssertNotNull(recurrence, nameof(recurrence));
 
             Recurrence = recurrence;
             TriggerType = "ScheduleTrigger";
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
-        internal ScheduleTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, ScheduleTriggerRecurrence recurrence) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal ScheduleTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, ScheduleTriggerRecurrence recurrence) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             Recurrence = recurrence;
             TriggerType = triggerType ?? "ScheduleTrigger";

@@ -1233,7 +1233,7 @@ namespace Azure.Storage.Blobs.Specialized
             UploadPagesInternal(
                 content,
                 offset,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 false, // async
@@ -1281,7 +1281,7 @@ namespace Azure.Storage.Blobs.Specialized
             await UploadPagesInternal(
                 content,
                 offset,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
@@ -1306,7 +1306,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// to be written as a page.  Given that pages must be aligned with
         /// 512-byte boundaries, the start offset must be a modulus of 512.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Optional transfer validation options for uploading the page range.
         /// </param>
         /// <param name="conditions">
@@ -1333,13 +1333,13 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<PageInfo>> UploadPagesInternal(
             Stream content,
             long offset,
-            UploadTransferValidationOptions validationOptionsOverride,
+            UploadTransferValidationOptions transferValidationOverride,
             PageBlobRequestConditions conditions,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -1376,8 +1376,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.UploadPagesAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -1400,8 +1400,8 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.UploadPages(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -4225,7 +4225,7 @@ namespace Azure.Storage.Blobs.Specialized
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.TransferValidationOptions
+                    options?.TransferValidation
                     );
             }
             catch (Exception ex)

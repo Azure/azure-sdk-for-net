@@ -1,0 +1,335 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Redmond\u0026entityType=Municipality",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-57f96da1a7ef917ca173e6b6012d0b68-6d8f2972daf670bf-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "d6d44242af26f7fed7fb88d839b61396",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "4418",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 08 Sep 2022 18:56:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: D41E4C211C6C495AAB211AD8E82593B5 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:31Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "redmond",
+          "queryType": "NON_NEAR",
+          "queryTime": 6,
+          "numResults": 6,
+          "offset": 0,
+          "totalResults": 6,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/19277",
+            "score": 2.4457623959,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "King",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Redmond, WA"
+            },
+            "position": {
+              "lat": 47.67491,
+              "lon": -122.124
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 47.734,
+                "lon": -122.165
+              },
+              "btmRightPoint": {
+                "lat": 47.60034,
+                "lon": -121.95058
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 47.734,
+                "lon": -122.165
+              },
+              "btmRightPoint": {
+                "lat": 47.60034,
+                "lon": -121.95058
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005557-4100-3c00-0000-0000596ae571"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/68376",
+            "score": 2.4162247181,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "Deschutes",
+              "countrySubdivision": "OR",
+              "countrySubdivisionName": "Oregon",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Redmond, OR"
+            },
+            "position": {
+              "lat": 44.27255,
+              "lon": -121.17431
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 44.3671,
+                "lon": -121.40474
+              },
+              "btmRightPoint": {
+                "lat": 44.18051,
+                "lon": -121.08062
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 44.3671,
+                "lon": -121.40474
+              },
+              "btmRightPoint": {
+                "lat": 44.18051,
+                "lon": -121.08062
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "0000554f-5200-3c00-0000-00005968aa7a"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/89924",
+            "score": 2.3835597038,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "Sevier",
+              "countrySubdivision": "UT",
+              "countrySubdivisionName": "Utah",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Redmond, UT"
+            },
+            "position": {
+              "lat": 39.00598,
+              "lon": -111.86264
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 39.04564,
+                "lon": -111.90907
+              },
+              "btmRightPoint": {
+                "lat": 38.97359,
+                "lon": -111.829
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 39.04564,
+                "lon": -111.90907
+              },
+              "btmRightPoint": {
+                "lat": 38.97359,
+                "lon": -111.829
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005555-5400-3c00-0000-00005968f988"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "US/GEO/p0/41475",
+            "score": 2.3822901249,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "Mountrail",
+              "countrySubdivision": "ND",
+              "countrySubdivisionName": "North Dakota",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Redmond, ND"
+            },
+            "position": {
+              "lat": 48.43002,
+              "lon": -102.16886
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 48.45948,
+                "lon": -102.23431
+              },
+              "btmRightPoint": {
+                "lat": 48.37221,
+                "lon": -102.10353
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 48.45948,
+                "lon": -102.23431
+              },
+              "btmRightPoint": {
+                "lat": 48.37221,
+                "lon": -102.10353
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005858-5800-1200-0000-00007d2bdb3f"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "AU/GEO/p0/5519",
+            "score": 2.3821973801,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "municipality": "Redmond",
+              "countrySecondarySubdivision": "The Great Southern Wine Region",
+              "countrySubdivision": "Western Australia",
+              "countryCode": "AU",
+              "country": "Australia",
+              "countryCodeISO3": "AUS",
+              "freeformAddress": "Redmond, Western Australia"
+            },
+            "position": {
+              "lat": -34.88843,
+              "lon": 117.69144
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -34.83592,
+                "lon": 117.61383
+              },
+              "btmRightPoint": {
+                "lat": -34.94183,
+                "lon": 117.78795
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -34.83592,
+                "lon": 117.61383
+              },
+              "btmRightPoint": {
+                "lat": -34.94183,
+                "lon": 117.78795
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d3226c4"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "AU/GEO/p0/1242",
+            "score": 2.3586585522,
+            "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.9183469351716372
+            },
+            "address": {
+              "municipality": "Redmond West",
+              "countrySecondarySubdivision": "The Great Southern Wine Region",
+              "countrySubdivision": "Western Australia",
+              "countryCode": "AU",
+              "country": "Australia",
+              "countryCodeISO3": "AUS",
+              "freeformAddress": "Redmond West, Western Australia"
+            },
+            "position": {
+              "lat": -34.89892,
+              "lon": 117.5496
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -34.8289,
+                "lon": 117.47217
+              },
+              "btmRightPoint": {
+                "lat": -34.94495,
+                "lon": 117.63049
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -34.8289,
+                "lon": 117.47217
+              },
+              "btmRightPoint": {
+                "lat": -34.94495,
+                "lon": 117.63049
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d322575"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1629239529"
+  }
+}

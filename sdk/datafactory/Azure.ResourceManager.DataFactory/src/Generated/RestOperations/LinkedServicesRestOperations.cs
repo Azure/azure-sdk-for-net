@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, LinkedServiceResourceData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, FactoryLinkedServiceData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LinkedServiceResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, LinkedServiceResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryLinkedServiceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, FactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        LinkedServiceResourceData value = default;
+                        FactoryLinkedServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LinkedServiceResourceData.DeserializeLinkedServiceResourceData(document.RootElement);
+                        value = FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LinkedServiceResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, LinkedServiceResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<FactoryLinkedServiceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, FactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        LinkedServiceResourceData value = default;
+                        FactoryLinkedServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LinkedServiceResourceData.DeserializeLinkedServiceResourceData(document.RootElement);
+                        value = FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LinkedServiceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryLinkedServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        LinkedServiceResourceData value = default;
+                        FactoryLinkedServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LinkedServiceResourceData.DeserializeLinkedServiceResourceData(document.RootElement);
+                        value = FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((LinkedServiceResourceData)null, message.Response);
+                    return Response.FromValue((FactoryLinkedServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LinkedServiceResourceData> Get(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<FactoryLinkedServiceData> Get(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        LinkedServiceResourceData value = default;
+                        FactoryLinkedServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LinkedServiceResourceData.DeserializeLinkedServiceResourceData(document.RootElement);
+                        value = FactoryLinkedServiceData.DeserializeFactoryLinkedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((LinkedServiceResourceData)null, message.Response);
+                    return Response.FromValue((FactoryLinkedServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

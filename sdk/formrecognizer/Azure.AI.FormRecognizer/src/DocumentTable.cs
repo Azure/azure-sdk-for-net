@@ -9,10 +9,5 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     [CodeGenModel("DocumentTable")]
     public partial class DocumentTable
     {
-        /// <summary> Caption associated with the table. </summary>
-        internal DocumentCaption Caption { get; }
-
-        /// <summary> Footnotes associated with the table. </summary>
-        internal IReadOnlyList<DocumentFootnote> Footnotes { get; }
     }
 }

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of OpenIdAuthenticationSettingsContract. </summary>
         public OpenIdAuthenticationSettingsContract()
         {
-            BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethodContract>();
+            BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
         }
 
         /// <summary> Initializes a new instance of OpenIdAuthenticationSettingsContract. </summary>
-        /// <param name="openidProviderId"> OAuth authorization server identifier. </param>
+        /// <param name="openIdProviderId"> OAuth authorization server identifier. </param>
         /// <param name="bearerTokenSendingMethods"> How to send token to the server. </param>
-        internal OpenIdAuthenticationSettingsContract(string openidProviderId, IList<BearerTokenSendingMethodContract> bearerTokenSendingMethods)
+        internal OpenIdAuthenticationSettingsContract(string openIdProviderId, IList<BearerTokenSendingMethod> bearerTokenSendingMethods)
         {
-            OpenidProviderId = openidProviderId;
+            OpenIdProviderId = openIdProviderId;
             BearerTokenSendingMethods = bearerTokenSendingMethods;
         }
 
         /// <summary> OAuth authorization server identifier. </summary>
-        public string OpenidProviderId { get; set; }
+        public string OpenIdProviderId { get; set; }
         /// <summary> How to send token to the server. </summary>
-        public IList<BearerTokenSendingMethodContract> BearerTokenSendingMethods { get; }
+        public IList<BearerTokenSendingMethod> BearerTokenSendingMethods { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -17,20 +18,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
         public AzureDataLakeGen1Datastore(DatastoreCredentials credentials, string storeName) : base(credentials)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
-            if (storeName == null)
-            {
-                throw new ArgumentNullException(nameof(storeName));
-            }
+            Argument.AssertNotNull(credentials, nameof(credentials));
+            Argument.AssertNotNull(storeName, nameof(storeName));
 
             StoreName = storeName;
             DatastoreType = DatastoreType.AzureDataLakeGen1;
@@ -43,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="DatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/> and <see cref="ServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>

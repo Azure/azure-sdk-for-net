@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -182,59 +185,43 @@ namespace Azure.Data.AppConfiguration
             return ReadSetting(root);
         }
 
-        public static async Task<SettingBatch> ParseBatchAsync(Response response, CancellationToken cancellation)
-        {
-            Stream content = response.ContentStream;
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
-            {
-                return ParseSettingBatch(response, json);
-            }
-        }
-
         public static SettingBatch ParseBatch(Response response)
         {
             Stream content = response.ContentStream;
             using (JsonDocument json = JsonDocument.Parse(content))
             {
-                return ParseSettingBatch(response, json);
+                return ParseSettingBatch(json.RootElement);
             }
         }
 
-        private static SettingBatch ParseSettingBatch(Response response, JsonDocument json)
+        internal static SettingBatch ParseSettingBatch(JsonElement element)
         {
-            TryGetNextAfterValue(ref response, out string nextBatchUri);
-
-            JsonElement itemsArray = json.RootElement.GetProperty("items");
-            int length = itemsArray.GetArrayLength();
-            ConfigurationSetting[] settings = new ConfigurationSetting[length];
-
-            int i = 0;
-            foreach (JsonElement item in itemsArray.EnumerateArray())
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ConfigurationSetting>> value = default;
+            foreach (var property in element.EnumerateObject())
             {
-                settings[i++] = ReadSetting(item);
+                if (property.NameEquals("@nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("items"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ConfigurationSetting> array = new List<ConfigurationSetting>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ReadSetting(item));
+                    }
+                    value = array;
+                    continue;
+                }
             }
-
-            return new SettingBatch(settings, nextBatchUri);
-        }
-
-        private const string Link = "Link";
-        private const string After = "after=";
-        private static bool TryGetNextAfterValue(ref Response response, out string afterValue)
-        {
-            afterValue = default;
-            if (!response.Headers.TryGetValue(Link, out var headerValue))
-                return false;
-
-            // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
-            var afterIndex = headerValue.IndexOf(After, StringComparison.Ordinal);
-            if (afterIndex < 0)
-                return false;
-
-            int beginingToken = afterIndex + After.Length;
-            int endToken = headerValue.IndexOf(">", StringComparison.Ordinal);
-            int tokenLength = endToken - beginingToken;
-            afterValue = headerValue.Substring(beginingToken, tokenLength);
-            return true;
+            return new SettingBatch(Optional.ToList(value).ToArray(), nextLink.Value);
         }
     }
 }

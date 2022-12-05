@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Factory&apos;s git repo information. </summary>
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The factory resource id. </summary>
-        public string FactoryResourceId { get; set; }
+        public ResourceIdentifier FactoryResourceId { get; set; }
         /// <summary>
         /// Git repo information of the factory.
         /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

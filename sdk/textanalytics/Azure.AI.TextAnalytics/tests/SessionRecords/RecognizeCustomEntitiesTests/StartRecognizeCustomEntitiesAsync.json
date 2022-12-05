@@ -1,0 +1,248 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "525",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d89545aaeb3580c3b94b7cc349dbf94c-a8ceb8e454e9d69d-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221103.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7b033f9c4e0c9c8dbd43d9494dbb0c43",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "A recent report by the Government Accountability Office found a dramatic increase in oil.",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Un informe reciente de la Oficina de Responsabilidad del Gobierno encontr\u00F3 un aumento dram\u00E1tico en el petr\u00F3leo.",
+              "language": "es"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit",
+              "projectName": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+              "deploymentName": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+            },
+            "kind": "CustomEntityRecognition"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "7630a839-0fa6-4646-8556-c01ee1886b87",
+        "Content-Length": "0",
+        "Date": "Fri, 04 Nov 2022 06:17:33 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/4ec9f492-38df-4c83-8845-22802ee9bb16?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "194",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/4ec9f492-38df-4c83-8845-22802ee9bb16?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221103.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6e3ab5394f9217ee6060611123b9a471",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5a1a47bc-4e6d-49b2-a77b-7eca56de65a3",
+        "Content-Length": "282",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 04 Nov 2022 06:17:33 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "9",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "4ec9f492-38df-4c83-8845-22802ee9bb16",
+        "lastUpdateDateTime": "2022-11-04T06:17:33Z",
+        "createdDateTime": "2022-11-04T06:17:33Z",
+        "expirationDateTime": "2022-11-05T06:17:33Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/4ec9f492-38df-4c83-8845-22802ee9bb16?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221103.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a7674dce5a42cae6218ab4e40a670f93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "382a4cea-4e6d-499b-99d8-72915dc3ecc4",
+        "Content-Length": "1718",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 04 Nov 2022 06:17:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "48",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "4ec9f492-38df-4c83-8845-22802ee9bb16",
+        "lastUpdateDateTime": "2022-11-04T06:17:34Z",
+        "createdDateTime": "2022-11-04T06:17:33Z",
+        "expirationDateTime": "2022-11-05T06:17:33Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "CustomEntityRecognitionLROResults",
+              "lastUpdateDateTime": "2022-11-04T06:17:34.5337933Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "recent",
+                        "category": "object_select",
+                        "offset": 2,
+                        "length": 6,
+                        "confidenceScore": 0.08
+                      },
+                      {
+                        "text": "Government",
+                        "category": "restaurant_name",
+                        "offset": 23,
+                        "length": 10,
+                        "confidenceScore": 0.05
+                      },
+                      {
+                        "text": "Accountability",
+                        "category": "geographic_poi",
+                        "offset": 34,
+                        "length": 14,
+                        "confidenceScore": 0.07
+                      },
+                      {
+                        "text": "Office",
+                        "category": "restaurant_name",
+                        "offset": 49,
+                        "length": 6,
+                        "confidenceScore": 0.11
+                      },
+                      {
+                        "text": "dramatic",
+                        "category": "sort",
+                        "offset": 64,
+                        "length": 8,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "oil",
+                        "category": "music_item",
+                        "offset": 85,
+                        "length": 3,
+                        "confidenceScore": 0.06
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "reciente",
+                        "category": "object_select",
+                        "offset": 11,
+                        "length": 8,
+                        "confidenceScore": 0.05
+                      },
+                      {
+                        "text": "Responsabilidad",
+                        "category": "state",
+                        "offset": 37,
+                        "length": 15,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "del",
+                        "category": "restaurant_name",
+                        "offset": 53,
+                        "length": 3,
+                        "confidenceScore": 0.06
+                      },
+                      {
+                        "text": "Gobierno",
+                        "category": "location_name",
+                        "offset": 57,
+                        "length": 8,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "dram\u00E1tico",
+                        "category": "sort",
+                        "offset": 86,
+                        "length": 9,
+                        "confidenceScore": 0.03
+                      },
+                      {
+                        "text": "petr\u00F3leo",
+                        "category": "timeRange",
+                        "offset": 102,
+                        "length": 8,
+                        "confidenceScore": 0.02
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "projectName": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+                "deploymentName": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "332737407",
+    "TEXTANALYTICS_CUSTOM_ENTITIES_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+    "TEXTANALYTICS_CUSTOM_ENTITIES_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+    "TEXT_ANALYTICS_STATIC_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_STATIC_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

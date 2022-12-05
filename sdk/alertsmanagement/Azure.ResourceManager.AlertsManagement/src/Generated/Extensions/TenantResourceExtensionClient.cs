@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertsMetaData>> MetaDataAlertAsync(InformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("TenantResourceExtensionClient.MetaDataAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetServiceAlertMetadata");
             scope.Start();
             try
             {
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertsMetaData> MetaDataAlert(InformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertMetadata> GetServiceAlertMetadata(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("TenantResourceExtensionClient.MetaDataAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetServiceAlertMetadata");
             scope.Start();
             try
             {

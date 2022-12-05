@@ -12,10 +12,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
     /// </summary>
-    public partial class SapConfiguration
+    public abstract partial class SapConfiguration
     {
         /// <summary> Initializes a new instance of SapConfiguration. </summary>
-        public SapConfiguration()
+        protected SapConfiguration()
         {
         }
 

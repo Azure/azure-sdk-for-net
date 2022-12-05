@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Batch management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.Batch --prerelease
+dotnet add package Azure.ResourceManager.Batch
 ```
 
 ### Prerequisites

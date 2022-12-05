@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12OneWayAgreement DeserializeX12OneWayAgreement(JsonElement element)
         {
-            BusinessIdentity senderBusinessIdentity = default;
-            BusinessIdentity receiverBusinessIdentity = default;
+            IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
+            IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             X12ProtocolSettings protocolSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("senderBusinessIdentity"))
                 {
-                    senderBusinessIdentity = BusinessIdentity.DeserializeBusinessIdentity(property.Value);
+                    senderBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("receiverBusinessIdentity"))
                 {
-                    receiverBusinessIdentity = BusinessIdentity.DeserializeBusinessIdentity(property.Value);
+                    receiverBusinessIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protocolSettings"))

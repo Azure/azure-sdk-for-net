@@ -1,5 +1,14 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 25.0.0
+- Upgrade to rest api version 2022-05-01.
+- Support Create or Update Storage Account with AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions as 'AADKERB'.
+
+**Breaking changes**
+
+- new ActiveDirectoryProperties() parameter change: "domainGuid" moved from the 3rd to the 2nd parameter; "netBiosDomainName", "forestName", "domainSid", "azureStorageSid" changed from required to optional.
+- new Encryption() parameter change: "keySource" changed from required to optional, and moved from the 1st to the 2nd parameter; "services" moved from the 2nd to the 1st parameter.
+
 ### Changes in 24.0.0
 - Upgrade to rest api version 2021-09-01.
 - Support create/update Storage account with new property dnsEndpointType.

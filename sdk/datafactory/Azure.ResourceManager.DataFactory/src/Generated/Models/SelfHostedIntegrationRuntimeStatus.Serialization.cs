@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> dataFactoryName = default;
             Optional<IntegrationRuntimeState> state = default;
             Optional<DateTimeOffset> createTime = default;
-            Optional<string> taskQueueId = default;
+            Optional<Guid> taskQueueId = default;
             Optional<IntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
             Optional<string> version = default;
             Optional<IReadOnlyList<SelfHostedIntegrationRuntimeNode>> nodes = default;
             Optional<DateTimeOffset> scheduledUpdateDate = default;
-            Optional<string> updateDelayOffset = default;
-            Optional<string> localTimeZoneOffset = default;
+            Optional<TimeSpan> updateDelayOffset = default;
+            Optional<TimeSpan> localTimeZoneOffset = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<string>> serviceUrls = default;
+            Optional<IReadOnlyList<Uri>> serviceUrls = default;
             Optional<IntegrationRuntimeAutoUpdate> autoUpdate = default;
             Optional<string> versionStatus = default;
             Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
             Optional<string> pushedVersion = default;
             Optional<string> latestVersion = default;
-            Optional<DateTimeOffset> autoUpdateETA = default;
+            Optional<DateTimeOffset> autoUpdateEta = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("taskQueueId"))
                         {
-                            taskQueueId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            taskQueueId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("internalChannelEncryption"))
@@ -125,12 +130,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("updateDelayOffset"))
                         {
-                            updateDelayOffset = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            updateDelayOffset = property0.Value.GetTimeSpan("P");
                             continue;
                         }
                         if (property0.NameEquals("localTimeZoneOffset"))
                         {
-                            localTimeZoneOffset = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            localTimeZoneOffset = property0.Value.GetTimeSpan("P");
                             continue;
                         }
                         if (property0.NameEquals("capabilities"))
@@ -155,10 +170,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new Uri(item.GetString()));
                             }
                             serviceUrls = array;
                             continue;
@@ -210,7 +225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoUpdateETA = property0.Value.GetDateTimeOffset("O");
+                            autoUpdateEta = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
@@ -219,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), taskQueueId.Value, Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), updateDelayOffset.Value, localTimeZoneOffset.Value, Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateETA));
+            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta));
         }
     }
 }

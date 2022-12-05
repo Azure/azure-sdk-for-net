@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterAddonProfile
     {
         /// <summary> Initializes a new instance of ManagedClusterAddonProfile. </summary>
-        /// <param name="enabled"> Whether the add-on is enabled or not. </param>
-        public ManagedClusterAddonProfile(bool enabled)
+        /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
+        public ManagedClusterAddonProfile(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Config = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterAddonProfile. </summary>
-        /// <param name="enabled"> Whether the add-on is enabled or not. </param>
+        /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
         /// <param name="config"> Key-value pairs for configuring an add-on. </param>
         /// <param name="identity"> Information of user assigned identity used by this add-on. </param>
-        internal ManagedClusterAddonProfile(bool enabled, IDictionary<string, string> config, ManagedClusterAddonProfileIdentity identity)
+        internal ManagedClusterAddonProfile(bool isEnabled, IDictionary<string, string> config, ManagedClusterAddonProfileIdentity identity)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Config = config;
             Identity = identity;
         }
 
         /// <summary> Whether the add-on is enabled or not. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> Key-value pairs for configuring an add-on. </summary>
         public IDictionary<string, string> Config { get; }
         /// <summary> Information of user assigned identity used by this add-on. </summary>

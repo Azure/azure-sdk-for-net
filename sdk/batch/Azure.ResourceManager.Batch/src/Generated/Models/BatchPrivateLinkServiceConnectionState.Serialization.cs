@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchPrivateLinkServiceConnectionState DeserializeBatchPrivateLinkServiceConnectionState(JsonElement element)
         {
-            PrivateLinkServiceConnectionStatus status = default;
+            BatchPrivateLinkServiceConnectionStatus status = default;
             Optional<string> description = default;
-            Optional<string> actionRequired = default;
+            Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString().ToPrivateLinkServiceConnectionStatus();
+                    status = property.Value.GetString().ToBatchPrivateLinkServiceConnectionStatus();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.Batch.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionRequired"))
+                if (property.NameEquals("actionsRequired"))
                 {
-                    actionRequired = property.Value.GetString();
+                    actionsRequired = property.Value.GetString();
                     continue;
                 }
             }
-            return new BatchPrivateLinkServiceConnectionState(status, description.Value, actionRequired.Value);
+            return new BatchPrivateLinkServiceConnectionState(status, description.Value, actionsRequired.Value);
         }
     }
 }

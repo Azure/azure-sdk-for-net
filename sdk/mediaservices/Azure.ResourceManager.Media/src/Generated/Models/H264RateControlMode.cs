@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ABRValue = "ABR";
-        private const string CBRValue = "CBR";
-        private const string CRFValue = "CRF";
+        private const string AbrValue = "ABR";
+        private const string CbrValue = "CBR";
+        private const string CrfValue = "CRF";
 
         /// <summary> Average Bitrate (ABR) mode that hits the target bitrate: Default mode. </summary>
-        public static H264RateControlMode ABR { get; } = new H264RateControlMode(ABRValue);
+        public static H264RateControlMode Abr { get; } = new H264RateControlMode(AbrValue);
         /// <summary> Constant Bitrate (CBR) mode that tightens bitrate variations around target bitrate. </summary>
-        public static H264RateControlMode CBR { get; } = new H264RateControlMode(CBRValue);
+        public static H264RateControlMode Cbr { get; } = new H264RateControlMode(CbrValue);
         /// <summary> Constant Rate Factor (CRF) mode that targets at constant subjective quality. </summary>
-        public static H264RateControlMode CRF { get; } = new H264RateControlMode(CRFValue);
+        public static H264RateControlMode Crf { get; } = new H264RateControlMode(CrfValue);
         /// <summary> Determines if two <see cref="H264RateControlMode"/> values are the same. </summary>
         public static bool operator ==(H264RateControlMode left, H264RateControlMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H264RateControlMode"/> values are not the same. </summary>

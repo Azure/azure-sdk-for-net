@@ -22,7 +22,7 @@ For the best development experience, developers should use the official Microsof
 Install the Device Update for IoT Hub client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.IoT.DeviceUpdate --prerelease
+dotnet add package Azure.IoT.DeviceUpdate
 ```
 
 ### Authenticate the Client

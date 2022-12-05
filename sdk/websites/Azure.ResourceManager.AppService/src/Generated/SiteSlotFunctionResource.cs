@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteSlotFunction along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotFunctionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotFunctionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotFunction method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotFunction method.
     /// </summary>
     public partial class SiteSlotFunctionResource : ArmResource
     {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        public virtual async Task<Response<KeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppKeyInfo>> CreateOrUpdateFunctionSecretSlotAsync(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(info, nameof(info));
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
-        public virtual Response<KeyInfo> CreateOrUpdateFunctionSecretSlot(string keyName, KeyInfo info, CancellationToken cancellationToken = default)
+        public virtual Response<WebAppKeyInfo> CreateOrUpdateFunctionSecretSlot(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(info, nameof(info));
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListFunctionKeysSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StringDictionary>> GetFunctionKeysSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceConfigurationDictionary>> GetFunctionKeysSlotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionResource.GetFunctionKeysSlot");
             scope.Start();
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListFunctionKeysSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StringDictionary> GetFunctionKeysSlot(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceConfigurationDictionary> GetFunctionKeysSlot(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionResource.GetFunctionKeysSlot");
             scope.Start();

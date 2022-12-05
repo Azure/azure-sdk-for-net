@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
 
@@ -62,7 +62,7 @@ namespace Azure.AI.TextAnalytics
         /// will contain the result of this analysis.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
 

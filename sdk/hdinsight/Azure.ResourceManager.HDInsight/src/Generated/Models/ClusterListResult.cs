@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new ChangeTrackingList<ClusterData>();
+            Value = new ChangeTrackingList<HDInsightClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         /// <param name="value"> The list of Clusters. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ClusterListResult(IReadOnlyList<ClusterData> value, string nextLink)
+        internal ClusterListResult(IReadOnlyList<HDInsightClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of Clusters. </summary>
-        public IReadOnlyList<ClusterData> Value { get; }
+        public IReadOnlyList<HDInsightClusterData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

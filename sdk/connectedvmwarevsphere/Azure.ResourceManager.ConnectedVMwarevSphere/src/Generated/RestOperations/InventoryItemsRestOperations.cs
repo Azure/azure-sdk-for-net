@@ -55,13 +55,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (data != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -73,14 +70,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,14 +103,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData data = null, CancellationToken cancellationToken = default)
+        public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
             _pipeline.Send(message, cancellationToken);

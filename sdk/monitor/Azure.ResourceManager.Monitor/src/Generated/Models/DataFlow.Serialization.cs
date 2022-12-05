@@ -36,13 +36,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TransformKql))
+            {
+                writer.WritePropertyName("transformKql");
+                writer.WriteStringValue(TransformKql);
+            }
+            if (Optional.IsDefined(OutputStream))
+            {
+                writer.WritePropertyName("outputStream");
+                writer.WriteStringValue(OutputStream);
+            }
             writer.WriteEndObject();
         }
 
         internal static DataFlow DeserializeDataFlow(JsonElement element)
         {
-            Optional<IList<KnownDataFlowStream>> streams = default;
+            Optional<IList<DataFlowStream>> streams = default;
             Optional<IList<string>> destinations = default;
+            Optional<string> transformKql = default;
+            Optional<string> outputStream = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"))
@@ -52,10 +64,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownDataFlowStream> array = new List<KnownDataFlowStream>();
+                    List<DataFlowStream> array = new List<DataFlowStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownDataFlowStream(item.GetString()));
+                        array.Add(new DataFlowStream(item.GetString()));
                     }
                     streams = array;
                     continue;
@@ -75,8 +87,18 @@ namespace Azure.ResourceManager.Monitor.Models
                     destinations = array;
                     continue;
                 }
+                if (property.NameEquals("transformKql"))
+                {
+                    transformKql = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("outputStream"))
+                {
+                    outputStream = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations));
+            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value);
         }
     }
 }

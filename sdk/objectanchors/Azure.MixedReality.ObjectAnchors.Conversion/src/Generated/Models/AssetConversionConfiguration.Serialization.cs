@@ -84,6 +84,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             writer.WritePropertyName("scale");
             writer.WriteNumberValue(Scale);
+            if (Optional.IsDefined(DisableDetectScaleUnits))
+            {
+                writer.WritePropertyName("disableDetectScaleUnits");
+                writer.WriteBooleanValue(DisableDetectScaleUnits);
+            }
             if (Optional.IsDefined(SupportingPlaneWrapper))
             {
                 if (SupportingPlaneWrapper != null)
@@ -118,6 +123,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<IReadOnlyList<TrajectoryPose>> gtTrajectory = default;
             Optional<Quaternion> principalAxis = default;
             float scale = default;
+            Optional<bool> disableDetectScaleUnits = default;
             Optional<Vector4> supportingPlane = default;
             Optional<IReadOnlyList<TrajectoryPose>> testTrajectory = default;
             foreach (var property in element.EnumerateObject())
@@ -192,6 +198,16 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     scale = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("disableDetectScaleUnits"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    disableDetectScaleUnits = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("supportingPlane"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -218,7 +234,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Optional.ToList(keyFrameIndexes), Optional.ToList(gtTrajectory), principalAxis.Value, scale, supportingPlane.Value, Optional.ToList(testTrajectory));
+            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Optional.ToList(keyFrameIndexes), Optional.ToList(gtTrajectory), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, Optional.ToList(testTrajectory));
         }
     }
 }

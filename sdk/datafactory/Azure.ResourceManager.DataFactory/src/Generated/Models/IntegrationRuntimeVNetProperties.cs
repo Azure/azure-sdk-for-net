@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
-        /// <param name="vNetId"> The ID of the VNet that this integration runtime will join. </param>
+        /// <param name="vnetId"> The ID of the VNet that this integration runtime will join. </param>
         /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
         /// <param name="subnetId"> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, string subnetId, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeVNetProperties(Guid? vnetId, string subnet, IList<string> publicIPs, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalProperties)
         {
-            VNetId = vNetId;
+            VnetId = vnetId;
             Subnet = subnet;
             PublicIPs = publicIPs;
             SubnetId = subnetId;
@@ -37,14 +37,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of the VNet that this integration runtime will join. </summary>
-        public string VNetId { get; set; }
+        public Guid? VnetId { get; set; }
         /// <summary> The name of the subnet this integration runtime will join. </summary>
         public string Subnet { get; set; }
         /// <summary> Resource IDs of the public IP addresses that this integration runtime will use. </summary>
         public IList<string> PublicIPs { get; }
         /// <summary> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </summary>
-        public string SubnetId { get; set; }
-        /// <summary> Additional Properties. </summary>
+        public ResourceIdentifier SubnetId { get; set; }
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

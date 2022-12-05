@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("defaultValue");
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required");
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (Optional.IsCollectionDefined(Values))
             {

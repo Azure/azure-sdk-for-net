@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
         /// <param name="networkConfiguration"> The network configuration. </param>
         /// <param name="encryptionConfiguration"> The encryption configuration. </param>
-        internal IntegrationServiceEnvironmentProperties(WorkflowProvisioningState? provisioningState, WorkflowState? state, string integrationServiceEnvironmentId, FlowEndpointsConfiguration endpointsConfiguration, NetworkConfiguration networkConfiguration, IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration)
+        internal IntegrationServiceEnvironmentProperties(LogicWorkflowProvisioningState? provisioningState, LogicWorkflowState? state, string integrationServiceEnvironmentId, FlowEndpointsConfiguration endpointsConfiguration, IntegrationServiceNetworkConfiguration networkConfiguration, IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration)
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The provisioning state. </summary>
-        public WorkflowProvisioningState? ProvisioningState { get; set; }
+        public LogicWorkflowProvisioningState? ProvisioningState { get; set; }
         /// <summary> The integration service environment state. </summary>
-        public WorkflowState? State { get; set; }
+        public LogicWorkflowState? State { get; set; }
         /// <summary> Gets the tracking id. </summary>
         public string IntegrationServiceEnvironmentId { get; set; }
         /// <summary> The endpoints configuration. </summary>
         public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
         /// <summary> The network configuration. </summary>
-        public NetworkConfiguration NetworkConfiguration { get; set; }
+        public IntegrationServiceNetworkConfiguration NetworkConfiguration { get; set; }
         /// <summary> The encryption configuration. </summary>
         internal IntegrationServiceEnvironmenEncryptionConfiguration EncryptionConfiguration { get; set; }
         /// <summary> The encryption key reference. </summary>

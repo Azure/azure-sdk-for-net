@@ -12,8 +12,27 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    public partial class HDInsightPrivateLinkResourceData
+    public partial class HDInsightPrivateLinkResourceData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            {
+                writer.WritePropertyName("requiredZoneNames");
+                writer.WriteStartArray();
+                foreach (var item in RequiredZoneNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static HDInsightPrivateLinkResourceData DeserializeHDInsightPrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
@@ -22,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight
             Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, GetCallbackUrlParameters getCallbackUrlParameters)
+        internal HttpMessage CreateListCallbackUrlRequest(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, ListOperationCallbackUrlParameterInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Logic
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (getCallbackUrlParameters != null)
+            if (info != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(getCallbackUrlParameters);
+                content.JsonWriter.WriteObjectValue(info);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Logic
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="triggerName"> The workflow trigger name. </param>
-        /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
+        /// <param name="info"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="versionId"/> or <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="versionId"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowTriggerCallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, GetCallbackUrlParameters getCallbackUrlParameters = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicWorkflowTriggerCallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,15 +87,15 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, versionId, triggerName, getCallbackUrlParameters);
+            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, versionId, triggerName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicWorkflowTriggerCallbackUri value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Logic
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="versionId"> The workflow versionId. </param>
         /// <param name="triggerName"> The workflow trigger name. </param>
-        /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
+        /// <param name="info"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="versionId"/> or <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="versionId"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowTriggerCallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, GetCallbackUrlParameters getCallbackUrlParameters = null, CancellationToken cancellationToken = default)
+        public Response<LogicWorkflowTriggerCallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string workflowName, string versionId, string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, versionId, triggerName, getCallbackUrlParameters);
+            using var message = CreateListCallbackUrlRequest(subscriptionId, resourceGroupName, workflowName, versionId, triggerName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicWorkflowTriggerCallbackUri value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicWorkflowTriggerCallbackUri.DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

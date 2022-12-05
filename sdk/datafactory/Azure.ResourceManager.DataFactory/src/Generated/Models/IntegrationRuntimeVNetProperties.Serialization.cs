@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VNetId))
+            if (Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vNetId");
-                writer.WriteStringValue(VNetId);
+                writer.WriteStringValue(VnetId.Value);
             }
             if (Optional.IsDefined(Subnet))
             {
@@ -56,17 +56,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeVNetProperties DeserializeIntegrationRuntimeVNetProperties(JsonElement element)
         {
-            Optional<string> vNetId = default;
+            Optional<Guid> vNetId = default;
             Optional<string> subnet = default;
             Optional<IList<string>> publicIPs = default;
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vNetId"))
                 {
-                    vNetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vNetId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("subnet"))
@@ -91,13 +96,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeVNetProperties(vNetId.Value, subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
+            return new IntegrationRuntimeVNetProperties(Optional.ToNullable(vNetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
         }
     }
 }

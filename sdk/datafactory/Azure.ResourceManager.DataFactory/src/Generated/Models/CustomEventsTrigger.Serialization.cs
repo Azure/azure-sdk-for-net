@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<TriggerPipelineReference>> pipelines = default;
             string type = default;
             Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<FactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<string> subjectBeginsWith = default;
             Optional<string> subjectEndsWith = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runtimeState = new TriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"))

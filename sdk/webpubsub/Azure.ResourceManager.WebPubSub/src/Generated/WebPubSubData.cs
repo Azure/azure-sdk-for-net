@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The billing information of the resource.(e.g. Free, Standard). </param>
-        /// <param name="identity"> The managed identity response. Current supported identity types: SystemAssigned, UserAssigned, None. </param>
+        /// <param name="identity"> The managed identity response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> The billing information of the resource.(e.g. Free, Standard). </summary>
         public BillingInfoSku Sku { get; set; }
-        /// <summary> The managed identity response. Current supported identity types: SystemAssigned, UserAssigned, None. </summary>
+        /// <summary> The managed identity response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public WebPubSubProvisioningState? ProvisioningState { get; }

@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -35,10 +37,10 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var testProcess = new TestProcess { Output = processOutput };
-            var options = new VisualStudioCredentialOptions();
+            var options = new VisualStudioCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint }};
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
             var token = await credential.GetTokenAsync(context, default);
 
@@ -48,6 +50,28 @@ namespace Azure.Identity.Tests
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Contain(expectedTenantId));
             }
+        }
+
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
+            var testProcess = new TestProcess { Output = processOutput };
+            var vsOptions = new VisualStudioCredentialOptions
+            {
+                TenantId = parameters.TenantId
+            };
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                vsOptions.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var cred = InstrumentClient(new VisualStudioCredential(parameters.TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         [Test]
@@ -228,6 +252,17 @@ namespace Azure.Identity.Tests
 
             Assert.ThrowsAsync<CredentialUnavailableException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }), CancellationToken.None));
+        }
+
+        [Test]
+        public void ConfigureVisualStudioProcessTimeout_ProcessTimeout()
+        {
+            var testProcess = new TestProcess { Timeout = 10000 };
+            var processService = new TestProcessService(testProcess);
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio(0, 1);
+            VisualStudioCredential credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, new VisualStudioCredentialOptions() { VisualStudioProcessTimeout = TimeSpan.Zero }));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), CancellationToken.None));
+            Assert.True(ex.Message.Contains("has failed to get access token in 0 seconds."));
         }
     }
 }

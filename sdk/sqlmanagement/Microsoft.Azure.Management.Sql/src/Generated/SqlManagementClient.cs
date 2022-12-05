@@ -298,16 +298,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedDatabaseQueriesOperations ManagedDatabaseQueries { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
-        /// </summary>
-        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
-
-        /// <summary>
-        /// Gets the IManagedDatabasesOperations.
-        /// </summary>
-        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseSchemasOperations.
         /// </summary>
         public virtual IManagedDatabaseSchemasOperations ManagedDatabaseSchemas { get; private set; }
@@ -638,11 +628,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IEndpointCertificatesOperations EndpointCertificates { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseSensitivityLabelsOperations.
         /// </summary>
         public virtual IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; private set; }
@@ -696,6 +681,111 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedServerDnsAliasesOperations.
         /// </summary>
         public virtual IManagedServerDnsAliasesOperations ManagedServerDnsAliases { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentBaselinesOperations.
+        /// </summary>
+        public virtual IDatabaseSqlVulnerabilityAssessmentBaselinesOperations DatabaseSqlVulnerabilityAssessmentBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentExecuteScanOperations.
+        /// </summary>
+        public virtual IDatabaseSqlVulnerabilityAssessmentExecuteScanOperations DatabaseSqlVulnerabilityAssessmentExecuteScan { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        public virtual IDatabaseSqlVulnerabilityAssessmentRuleBaselinesOperations DatabaseSqlVulnerabilityAssessmentRuleBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentScanResultOperations.
+        /// </summary>
+        public virtual IDatabaseSqlVulnerabilityAssessmentScanResultOperations DatabaseSqlVulnerabilityAssessmentScanResult { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual IDatabaseSqlVulnerabilityAssessmentScansOperations DatabaseSqlVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentsSettingsOperations.
+        /// </summary>
+        public virtual IDatabaseSqlVulnerabilityAssessmentsSettingsOperations DatabaseSqlVulnerabilityAssessmentsSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceDtcsOperations.
+        /// </summary>
+        public virtual IManagedInstanceDtcsOperations ManagedInstanceDtcs { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseAdvancedThreatProtectionSettingsOperations ManagedDatabaseAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IManagedInstanceAdvancedThreatProtectionSettingsOperations ManagedInstanceAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentBaselineOperations SqlVulnerabilityAssessmentBaseline { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselinesOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentBaselinesOperations SqlVulnerabilityAssessmentBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentExecuteScanOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentExecuteScanOperations SqlVulnerabilityAssessmentExecuteScan { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentRuleBaselineOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentRuleBaselineOperations SqlVulnerabilityAssessmentRuleBaseline { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentRuleBaselinesOperations SqlVulnerabilityAssessmentRuleBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScanResultOperations SqlVulnerabilityAssessmentScanResult { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentsSettingsOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentsSettingsOperations SqlVulnerabilityAssessmentsSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentsOperations SqlVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -983,8 +1073,6 @@ namespace Microsoft.Azure.Management.Sql
             ManagedBackupShortTermRetentionPolicies = new ManagedBackupShortTermRetentionPoliciesOperations(this);
             ManagedDatabaseColumns = new ManagedDatabaseColumnsOperations(this);
             ManagedDatabaseQueries = new ManagedDatabaseQueriesOperations(this);
-            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
-            ManagedDatabases = new ManagedDatabasesOperations(this);
             ManagedDatabaseSchemas = new ManagedDatabaseSchemasOperations(this);
             ManagedDatabaseSecurityAlertPolicies = new ManagedDatabaseSecurityAlertPoliciesOperations(this);
             ManagedDatabaseSecurityEvents = new ManagedDatabaseSecurityEventsOperations(this);
@@ -1051,7 +1139,6 @@ namespace Microsoft.Azure.Management.Sql
             ServerTrustCertificates = new ServerTrustCertificatesOperations(this);
             IPv6FirewallRules = new IPv6FirewallRulesOperations(this);
             EndpointCertificates = new EndpointCertificatesOperations(this);
-            ReplicationLinks = new ReplicationLinksOperations(this);
             ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
             ManagedDatabaseRecommendedSensitivityLabels = new ManagedDatabaseRecommendedSensitivityLabelsOperations(this);
             SensitivityLabels = new SensitivityLabelsOperations(this);
@@ -1063,6 +1150,27 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseAdvancedThreatProtectionSettings = new DatabaseAdvancedThreatProtectionSettingsOperations(this);
             ServerAdvancedThreatProtectionSettings = new ServerAdvancedThreatProtectionSettingsOperations(this);
             ManagedServerDnsAliases = new ManagedServerDnsAliasesOperations(this);
+            DatabaseSqlVulnerabilityAssessmentBaselines = new DatabaseSqlVulnerabilityAssessmentBaselinesOperations(this);
+            DatabaseSqlVulnerabilityAssessmentExecuteScan = new DatabaseSqlVulnerabilityAssessmentExecuteScanOperations(this);
+            DatabaseSqlVulnerabilityAssessmentRuleBaselines = new DatabaseSqlVulnerabilityAssessmentRuleBaselinesOperations(this);
+            DatabaseSqlVulnerabilityAssessmentScanResult = new DatabaseSqlVulnerabilityAssessmentScanResultOperations(this);
+            DatabaseSqlVulnerabilityAssessmentScans = new DatabaseSqlVulnerabilityAssessmentScansOperations(this);
+            DatabaseSqlVulnerabilityAssessmentsSettings = new DatabaseSqlVulnerabilityAssessmentsSettingsOperations(this);
+            ManagedInstanceDtcs = new ManagedInstanceDtcsOperations(this);
+            ManagedDatabaseAdvancedThreatProtectionSettings = new ManagedDatabaseAdvancedThreatProtectionSettingsOperations(this);
+            ManagedInstanceAdvancedThreatProtectionSettings = new ManagedInstanceAdvancedThreatProtectionSettingsOperations(this);
+            ReplicationLinks = new ReplicationLinksOperations(this);
+            SqlVulnerabilityAssessmentBaseline = new SqlVulnerabilityAssessmentBaselineOperations(this);
+            SqlVulnerabilityAssessmentBaselines = new SqlVulnerabilityAssessmentBaselinesOperations(this);
+            SqlVulnerabilityAssessmentExecuteScan = new SqlVulnerabilityAssessmentExecuteScanOperations(this);
+            SqlVulnerabilityAssessmentRuleBaseline = new SqlVulnerabilityAssessmentRuleBaselineOperations(this);
+            SqlVulnerabilityAssessmentRuleBaselines = new SqlVulnerabilityAssessmentRuleBaselinesOperations(this);
+            SqlVulnerabilityAssessmentScanResult = new SqlVulnerabilityAssessmentScanResultOperations(this);
+            SqlVulnerabilityAssessmentScans = new SqlVulnerabilityAssessmentScansOperations(this);
+            SqlVulnerabilityAssessmentsSettings = new SqlVulnerabilityAssessmentsSettingsOperations(this);
+            SqlVulnerabilityAssessments = new SqlVulnerabilityAssessmentsOperations(this);
+            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
+            ManagedDatabases = new ManagedDatabasesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

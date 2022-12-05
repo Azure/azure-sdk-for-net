@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PowerQuerySource(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
         }
 
         /// <summary> Initializes a new instance of PowerQuerySource. </summary>
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
         /// <param name="script"> source script. </param>
-        internal PowerQuerySource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService)
+        internal PowerQuerySource(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService)
         {
             Script = script;
         }

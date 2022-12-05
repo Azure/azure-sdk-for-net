@@ -52,6 +52,7 @@ namespace Azure.Storage.Test.Shared
         public string GetNewBlobName() => BlobsClientBuilder.GetNewBlobName();
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
         public string GetNewNonAsciiBlobName() => BlobsClientBuilder.GetNewNonAsciiBlobName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(BlobsClientBuilder.Tenants.TestConfigDefault.BlobServiceEndpoint);
 
         public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,

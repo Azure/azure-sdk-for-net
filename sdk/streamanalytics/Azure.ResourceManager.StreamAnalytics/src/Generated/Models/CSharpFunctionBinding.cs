@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The binding to a CSharp function. </summary>
-    public partial class CSharpFunctionBinding : FunctionBinding
+    public partial class CSharpFunctionBinding : StreamingJobFunctionBinding
     {
         /// <summary> Initializes a new instance of CSharpFunctionBinding. </summary>
         public CSharpFunctionBinding()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="class"> The Csharp code containing a single function definition. </param>
         /// <param name="method"> The Csharp code containing a single function definition. </param>
         /// <param name="updateMode"> Refresh modes for Stream Analytics functions. </param>
-        internal CSharpFunctionBinding(string functionBindingType, string dllPath, string @class, string method, UpdateMode? updateMode) : base(functionBindingType)
+        internal CSharpFunctionBinding(string functionBindingType, string dllPath, string @class, string method, StreamingJobFunctionUpdateMode? updateMode) : base(functionBindingType)
         {
             DllPath = dllPath;
             Class = @class;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The Csharp code containing a single function definition. </summary>
         public string Method { get; set; }
         /// <summary> Refresh modes for Stream Analytics functions. </summary>
-        public UpdateMode? UpdateMode { get; set; }
+        public StreamingJobFunctionUpdateMode? UpdateMode { get; set; }
     }
 }

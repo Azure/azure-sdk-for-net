@@ -34,7 +34,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-902ce323-c1df-40b1-b275-1bc63ecf8194/test-directory-f4a86e93-c4d8-9841-4f01-f9cbf5d30c42?sv=2021-08-06&se=2021-02-20T18%3A58%3A47Z&sr=c&sp=racwdlmeop&sig=Sanitized&resource=directory",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-902ce323-c1df-40b1-b275-1bc63ecf8194/test-directory-f4a86e93-c4d8-9841-4f01-f9cbf5d30c42?sv=2021-12-02&se=2021-02-20T18%3A58%3A47Z&sr=c&sp=racwdlmeop&sig=Sanitized&resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -65,7 +65,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-902ce323-c1df-40b1-b275-1bc63ecf8194?sv=2021-08-06&se=2021-02-20T18%3A58%3A47Z&sr=c&sp=racwdlmeop&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-902ce323-c1df-40b1-b275-1bc63ecf8194?sv=2021-12-02&se=2021-02-20T18%3A58%3A47Z&sr=c&sp=racwdlmeop&sig=Sanitized&resource=filesystem&recursive=false&upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

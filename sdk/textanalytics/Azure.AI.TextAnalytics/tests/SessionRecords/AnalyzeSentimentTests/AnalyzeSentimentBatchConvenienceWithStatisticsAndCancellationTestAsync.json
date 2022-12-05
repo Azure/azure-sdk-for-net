@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=true",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "316",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e3d9e8b9a06c7441a4f35a1d488ea1e5-103e9494f6137e4f-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220504.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "b40719aab453565b115b41ba30137445",
+        "traceparent": "00-ab75026630bd46a2c7f0a4152a44bf58-18c13a40a796bfa9-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "51c9238c2c2d86870503014a77f96606",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -35,14 +35,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8542237a-8012-4259-aedd-af115ab569b2",
-        "Content-Length": "1216",
+        "apim-request-id": "dffc192f-cbc3-4e63-83a2-69397341c2fb",
+        "Content-Length": "1211",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Wed, 04 May 2022 23:39:23 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:55 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "18"
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "kind": "SentimentAnalysisResults",
@@ -62,15 +63,15 @@
                 "transactionsCount": 1
               },
               "confidenceScores": {
-                "positive": 0.98,
-                "neutral": 0.01,
-                "negative": 0.01
+                "positive": 0.95,
+                "neutral": 0.05,
+                "negative": 0.0
               },
               "sentences": [
                 {
                   "sentiment": "positive",
                   "confidenceScores": {
-                    "positive": 0.99,
+                    "positive": 1.0,
                     "neutral": 0.0,
                     "negative": 0.0
                   },
@@ -81,8 +82,8 @@
                 {
                   "sentiment": "positive",
                   "confidenceScores": {
-                    "positive": 0.97,
-                    "neutral": 0.02,
+                    "positive": 0.9,
+                    "neutral": 0.09,
                     "negative": 0.01
                   },
                   "offset": 35,
@@ -100,17 +101,17 @@
                 "transactionsCount": 1
               },
               "confidenceScores": {
-                "positive": 0.04,
-                "neutral": 0.27,
-                "negative": 0.69
+                "positive": 0.0,
+                "neutral": 0.06,
+                "negative": 0.94
               },
               "sentences": [
                 {
                   "sentiment": "neutral",
                   "confidenceScores": {
-                    "positive": 0.04,
-                    "neutral": 0.74,
-                    "negative": 0.22
+                    "positive": 0.03,
+                    "neutral": 0.85,
+                    "negative": 0.12
                   },
                   "offset": 0,
                   "length": 44,
@@ -119,9 +120,9 @@
                 {
                   "sentiment": "negative",
                   "confidenceScores": {
-                    "positive": 0.04,
-                    "neutral": 0.27,
-                    "negative": 0.69
+                    "positive": 0.0,
+                    "neutral": 0.06,
+                    "negative": 0.94
                   },
                   "offset": 44,
                   "length": 18,
@@ -132,13 +133,13 @@
             }
           ],
           "errors": [],
-          "modelVersion": "2021-10-01"
+          "modelVersion": "2022-10-01"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "840943668",
+    "RandomSeed": "1268475965",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

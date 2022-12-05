@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyContentKeys DeserializeStreamingPolicyContentKeys(JsonElement element)
         {
-            Optional<DefaultKey> defaultKey = default;
+            Optional<EncryptionSchemeDefaultKey> defaultKey = default;
             Optional<IList<StreamingPolicyContentKey>> keyToTrackMappings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultKey = DefaultKey.DeserializeDefaultKey(property.Value);
+                    defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyToTrackMappings"))

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceFabric
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _clusterClientDiagnostics;
-        private ClustersRestOperations _clusterRestClient;
+        private ClientDiagnostics _serviceFabricClusterClustersClientDiagnostics;
+        private ClustersRestOperations _serviceFabricClusterClustersRestClient;
         private ClientDiagnostics _clusterVersionsClientDiagnostics;
         private ClusterVersionsRestOperations _clusterVersionsRestClient;
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ServiceFabric
         {
         }
 
-        private ClientDiagnostics ClusterClientDiagnostics => _clusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations ClusterRestClient => _clusterRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
+        private ClientDiagnostics ServiceFabricClusterClustersClientDiagnostics => _serviceFabricClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations ServiceFabricClusterClustersRestClient => _serviceFabricClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceFabricClusterResource.ResourceType));
         private ClientDiagnostics ClusterVersionsClientDiagnostics => _clusterVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ClusterVersionsRestOperations ClusterVersionsRestClient => _clusterVersionsRestClient ??= new ClusterVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServiceFabricClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = ServiceFabricClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceFabricClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ClusterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), null, response.GetRawResponse());
+                    var response = await ServiceFabricClusterClustersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricClusterResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(CancellationToken cancellationToken = default)
         {
-            Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
+            Page<ServiceFabricClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = ServiceFabricClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceFabricClusters");
                 scope.Start();
                 try
                 {
-                    var response = ClusterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), null, response.GetRawResponse());
+                    var response = ServiceFabricClusterClustersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricClusterResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
-        public virtual ArmOperation<HybridIdentityMetadataResource> CreateOrUpdate(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<HybridIdentityMetadataResource> CreateOrUpdate(WaitUntil waitUntil, string metadataName, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.CreateOrUpdate");
             scope.Start();

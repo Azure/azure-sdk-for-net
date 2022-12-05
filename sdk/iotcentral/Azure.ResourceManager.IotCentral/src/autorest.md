@@ -15,8 +15,37 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+override-operation-name:
+  Apps_CheckNameAvailability: CheckIotCentralAppNameAvailability
+  Apps_CheckSubdomainAvailability: CheckIotCentralAppSubdomainAvailability
+
+rename-mapping:
+  AppAvailabilityInfo.nameAvailable: IsNameAvailable
+  AppTemplateLocations: IotCentralAppTemplateLocation
+  OperationInputs: IotCentralAppNameAvailabilityContent
+  AppAvailabilityInfo: IotCentralAppNameAvailabilityResponse
+  AppAvailabilityInfo.reason: IotCentralAppNameUnavailableReason
+  NetworkRuleSets.applyToIoTCentral: ApplyToIotCentral
+  AppTemplateLocations.id: location
+
+prepend-rp-prefix:
+  - App
+  - Applications
+  - AppListResult
+  - AppSku
+  - AppSkuInfo
+  - AppState
+  - AppTemplate
+  - AppTemplatesResult
+  - NetworkAction
+  - NetworkRuleSetIPRule
+  - NetworkRuleSets
+  - ProvisioningState
+  - PublicNetworkAccess
+
 format-by-name-rules:
   'tenantId': 'uuid'
+  'applicationId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
@@ -46,7 +75,9 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  - rename-model:
-      from: App
-      to: IotCentralApp
+  - from: iotcentral.json
+    where: $.definitions
+    transform: >
+      $.AppTemplate.properties.order['type'] = 'integer';
+
 ```

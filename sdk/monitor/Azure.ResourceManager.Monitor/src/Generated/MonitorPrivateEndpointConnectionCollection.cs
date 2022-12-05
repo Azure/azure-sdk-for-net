@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing a collection of <see cref="MonitorPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="MonitorPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="PrivateLinkScopeResource" />.
-    /// To get a <see cref="MonitorPrivateEndpointConnectionCollection" /> instance call the GetMonitorPrivateEndpointConnections method from an instance of <see cref="PrivateLinkScopeResource" />.
+    /// Each <see cref="MonitorPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource" />.
+    /// To get a <see cref="MonitorPrivateEndpointConnectionCollection" /> instance call the GetMonitorPrivateEndpointConnections method from an instance of <see cref="MonitorPrivateLinkScopeResource" />.
     /// </summary>
     public partial class MonitorPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MonitorPrivateEndpointConnectionResource>, IAsyncEnumerable<MonitorPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Monitor
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateLinkScopeResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkScopeResource.ResourceType), nameof(id));
+            if (id.ResourceType != MonitorPrivateLinkScopeResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MonitorPrivateLinkScopeResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByPrivateLinkScopeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,22 +201,7 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            async Task<Page<MonitorPrivateEndpointConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MonitorPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByPrivateLinkScopeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -235,7 +220,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByPrivateLinkScope(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,22 +228,7 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            Page<MonitorPrivateEndpointConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MonitorPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _monitorPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListByPrivateLinkScopeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>

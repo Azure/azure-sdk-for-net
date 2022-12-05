@@ -1,36 +1,33 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://e2e_test.communication.azure.com/sip?api-version=2021-05-01-preview1",
+      "RequestUri": "https://jb-sdk-e2e-test.communication.azure.com/sip?api-version=2021-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "traceparent": "00-64dbf7637f89b4488f342a4b87a11e01-733ebdb5fa285c4c-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20220425.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1ca5261f43d122eab7731624f1866477",
+        "traceparent": "00-1a6f587870b19c7f12fced67e171cd74-930ddd073d53d80f-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221010.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7196b22c68f1a923a522dc6b8f5390c0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Apr 2022 11:46:11 GMT",
-        "MS-CV": "ktSVGjXze0O813eUWitfWg.0",
+        "Date": "Mon, 10 Oct 2022 08:24:26 GMT",
+        "MS-CV": "PSHw\u002BAGgRE6YqUkq/4adJg.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0A4pmYgAAAAAvc3A5uvsJRZbjrVZxMTZeUFJHMDFFREdFMDcxNQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0u9ZDYwAAAAC6twW/Uhf5Q744saVJUgOVTFRTRURHRTEyMTAAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "462ms"
+        "X-Processing-Time": "69ms"
       },
       "ResponseBody": {
         "trunks": {
           "sbs1.sipconfigtest.com": {
-            "sipSignalingPort": 5555
-          },
-          "sbs2.sipconfigtest.com": {
-            "sipSignalingPort": 1123
+            "sipSignalingPort": 1122
           }
         },
         "routes": [
@@ -47,7 +44,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://e2e_test.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "980012997"
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://jb-sdk-e2e-test.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "527535578"
   }
 }

@@ -32,14 +32,14 @@
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
             },
 
-            "macOS-10.15_NETCore3.1": {
-                "OSVmImage": "macOS-10.15",
+            "macos-11_NETCore3.1": {
+                "OSVmImage": "macos-11",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "netcoreapp3.1",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
             },
-            "macOS-10.15_NET6.0": {
-                "OSVmImage": "macOS-10.15",
+            "macos-11_NET6.0": {
+                "OSVmImage": "macos-11",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "net6.0",
                 "AZURE_TEST_AGENT": "MACOS_1015_NET60",

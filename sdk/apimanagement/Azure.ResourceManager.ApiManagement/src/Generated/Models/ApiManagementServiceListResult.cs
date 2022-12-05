@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementServiceListResult. </summary>
         /// <param name="value"> Result of the List API Management services operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ApiManagementServiceListResult(IEnumerable<ApiManagementServiceResourceData> value)
+        internal ApiManagementServiceListResult(IEnumerable<ApiManagementServiceData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,14 +29,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementServiceListResult. </summary>
         /// <param name="value"> Result of the List API Management services operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
-        internal ApiManagementServiceListResult(IReadOnlyList<ApiManagementServiceResourceData> value, string nextLink)
+        internal ApiManagementServiceListResult(IReadOnlyList<ApiManagementServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List API Management services operation. </summary>
-        public IReadOnlyList<ApiManagementServiceResourceData> Value { get; }
+        public IReadOnlyList<ApiManagementServiceData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
         public string NextLink { get; }
     }

@@ -22,27 +22,17 @@ namespace Azure.Communication.MediaComposition
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string GroupCallValue = "groupCall";
-        private const string RoomValue = "room";
-        private const string TeamsMeetingValue = "teamsMeeting";
-        private const string SrtValue = "srt";
-        private const string RtmpValue = "rtmp";
         private const string ParticipantValue = "participant";
         private const string ScreenShareValue = "screenShare";
         private const string DominantSpeakerValue = "dominantSpeaker";
         private const string ActivePresenterValue = "activePresenter";
         private const string ImageValue = "image";
+        private const string GroupCallValue = "groupCall";
+        private const string RoomValue = "room";
+        private const string TeamsMeetingValue = "teamsMeeting";
+        private const string SrtValue = "srt";
+        private const string RtmpValue = "rtmp";
 
-        /// <summary> groupCall. </summary>
-        public static MediaInputType GroupCall { get; } = new MediaInputType(GroupCallValue);
-        /// <summary> room. </summary>
-        public static MediaInputType Room { get; } = new MediaInputType(RoomValue);
-        /// <summary> teamsMeeting. </summary>
-        public static MediaInputType TeamsMeeting { get; } = new MediaInputType(TeamsMeetingValue);
-        /// <summary> srt. </summary>
-        public static MediaInputType Srt { get; } = new MediaInputType(SrtValue);
-        /// <summary> rtmp. </summary>
-        public static MediaInputType Rtmp { get; } = new MediaInputType(RtmpValue);
         /// <summary> participant. </summary>
         public static MediaInputType Participant { get; } = new MediaInputType(ParticipantValue);
         /// <summary> screenShare. </summary>
@@ -53,6 +43,16 @@ namespace Azure.Communication.MediaComposition
         public static MediaInputType ActivePresenter { get; } = new MediaInputType(ActivePresenterValue);
         /// <summary> image. </summary>
         public static MediaInputType Image { get; } = new MediaInputType(ImageValue);
+        /// <summary> groupCall. </summary>
+        public static MediaInputType GroupCall { get; } = new MediaInputType(GroupCallValue);
+        /// <summary> room. </summary>
+        public static MediaInputType Room { get; } = new MediaInputType(RoomValue);
+        /// <summary> teamsMeeting. </summary>
+        public static MediaInputType TeamsMeeting { get; } = new MediaInputType(TeamsMeetingValue);
+        /// <summary> srt. </summary>
+        public static MediaInputType Srt { get; } = new MediaInputType(SrtValue);
+        /// <summary> rtmp. </summary>
+        public static MediaInputType Rtmp { get; } = new MediaInputType(RtmpValue);
         /// <summary> Determines if two <see cref="MediaInputType"/> values are the same. </summary>
         public static bool operator ==(MediaInputType left, MediaInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaInputType"/> values are not the same. </summary>

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
         public FlowAccessControlConfigurationPolicy()
         {
-            AllowedCallerIPAddresses = new ChangeTrackingList<IPAddressRange>();
+            AllowedCallerIPAddresses = new ChangeTrackingList<FlowAccessControlIPAddressRange>();
         }
 
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
         /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
         /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
-        internal FlowAccessControlConfigurationPolicy(IList<IPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies)
+        internal FlowAccessControlConfigurationPolicy(IList<FlowAccessControlIPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies)
         {
             AllowedCallerIPAddresses = allowedCallerIPAddresses;
             OpenAuthenticationPolicies = openAuthenticationPolicies;
         }
 
         /// <summary> The allowed caller IP address ranges. </summary>
-        public IList<IPAddressRange> AllowedCallerIPAddresses { get; }
+        public IList<FlowAccessControlIPAddressRange> AllowedCallerIPAddresses { get; }
         /// <summary> The authentication policies for workflow. </summary>
         internal OpenAuthenticationAccessPolicies OpenAuthenticationPolicies { get; set; }
         /// <summary> Open authentication policies. </summary>

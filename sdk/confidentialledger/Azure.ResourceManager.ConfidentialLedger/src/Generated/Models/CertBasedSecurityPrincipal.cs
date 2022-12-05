@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of CertBasedSecurityPrincipal. </summary>
         /// <param name="cert"> Public key of the user cert (.pem or .cer). </param>
         /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        internal CertBasedSecurityPrincipal(string cert, LedgerRoleName? ledgerRoleName)
+        internal CertBasedSecurityPrincipal(string cert, ConfidentialLedgerRoleName? ledgerRoleName)
         {
             Cert = cert;
             LedgerRoleName = ledgerRoleName;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Public key of the user cert (.pem or .cer). </summary>
         public string Cert { get; set; }
         /// <summary> LedgerRole associated with the Security Principal of Ledger. </summary>
-        public LedgerRoleName? LedgerRoleName { get; set; }
+        public ConfidentialLedgerRoleName? LedgerRoleName { get; set; }
     }
 }

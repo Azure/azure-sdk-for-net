@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>
         internal HybridConnectionListResult()
         {
-            Value = new ChangeTrackingList<HybridConnectionData>();
+            Value = new ChangeTrackingList<RelayHybridConnectionData>();
         }
 
         /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>
         /// <param name="value"> Result of the list hybrid connections. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list hybrid connection operation. </param>
-        internal HybridConnectionListResult(IReadOnlyList<HybridConnectionData> value, string nextLink)
+        internal HybridConnectionListResult(IReadOnlyList<RelayHybridConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the list hybrid connections. </summary>
-        public IReadOnlyList<HybridConnectionData> Value { get; }
+        public IReadOnlyList<RelayHybridConnectionData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if value contains incomplete list hybrid connection operation. </summary>
         public string NextLink { get; }
     }

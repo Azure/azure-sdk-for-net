@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.MySql
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServerResources and their operations over a ServerResource. </returns>
-        public virtual ServerCollection GetServers()
+        /// <summary> Gets a collection of MySqlServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MySqlServerResources and their operations over a MySqlServerResource. </returns>
+        public virtual MySqlServerCollection GetMySqlServers()
         {
-            return GetCachedClient(Client => new ServerCollection(Client, Id));
+            return GetCachedClient(Client => new MySqlServerCollection(Client, Id));
         }
     }
 }

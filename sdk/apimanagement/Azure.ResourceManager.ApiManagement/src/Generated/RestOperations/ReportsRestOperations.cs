@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByApiRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByApiRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -78,26 +78,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByApiAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByApiAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByApiRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByApiRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,26 +112,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByApi(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByApi(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByApiRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByApiRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByUserRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByUserRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -180,26 +180,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByUserAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByUserAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -214,26 +214,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByUser(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByUser(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByUserRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByOperationRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -282,26 +282,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByOperationAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByOperationAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByOperationRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByOperationRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -316,26 +316,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByOperation(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByOperation(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByOperationRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByOperationRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByProductRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -384,26 +384,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByProductAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByProductAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByProductRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByProductRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,26 +418,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByProduct(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByProduct(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByProductRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByProductRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByGeoAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByGeoAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -498,9 +498,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByGeo(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByGeo(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -531,9 +531,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -564,9 +564,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -582,26 +582,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListBySubscriptionAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListBySubscriptionAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListBySubscriptionRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -616,26 +616,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListBySubscription(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListBySubscription(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListBySubscriptionRequest(subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByTimeRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByTimeRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -666,9 +666,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             uri.AppendQuery("interval", interval, "P", true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -686,26 +686,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByTimeAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByTimeAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByTimeRequest(subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderby);
+            using var message = CreateListByTimeRequest(subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -721,26 +721,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByTime(string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByTime(string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByTimeRequest(subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderby);
+            using var message = CreateListByTimeRequest(subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RequestReportCollection>> ListByRequestAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RequestReportListResult>> ListByRequestAsync(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -801,9 +801,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        RequestReportCollection value = default;
+                        RequestReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RequestReportCollection.DeserializeRequestReportCollection(document.RootElement);
+                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RequestReportCollection> ListByRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<RequestReportListResult> ListByRequest(string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -834,9 +834,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        RequestReportCollection value = default;
+                        RequestReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RequestReportCollection.DeserializeRequestReportCollection(document.RootElement);
+                        value = RequestReportListResult.DeserializeRequestReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByApiNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByApiNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -866,11 +866,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByApiNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByApiNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -878,15 +878,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByApiNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByApiNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -902,11 +902,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByApiNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByApiNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -914,15 +914,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByApiNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByApiNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByUserNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByUserNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -952,11 +952,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByUserNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByUserNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -964,15 +964,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -988,11 +988,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByUserNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByUserNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1000,15 +1000,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByUserNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByOperationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByOperationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1038,11 +1038,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByOperationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByOperationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1050,15 +1050,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByOperationNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByOperationNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1074,11 +1074,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByOperationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByOperationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1086,15 +1086,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByOperationNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByOperationNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByProductNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByProductNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1124,11 +1124,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByProductNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByProductNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1136,15 +1136,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1160,11 +1160,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByProductNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByProductNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1172,15 +1172,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListByProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByGeoNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByGeoNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1227,9 +1227,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByGeoNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByGeoNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1262,9 +1262,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1294,11 +1294,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1306,15 +1306,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1330,11 +1330,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1342,15 +1342,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderby);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByTimeNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top, int? skip, string orderby)
+        internal HttpMessage CreateListByTimeNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top, int? skip, string orderBy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1381,11 +1381,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReportCollection>> ListByTimeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportListResult>> ListByTimeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1393,15 +1393,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByTimeNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderby);
+            using var message = CreateListByTimeNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1418,11 +1418,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReportCollection> ListByTimeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<ReportListResult> ListByTimeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1430,15 +1430,15 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            using var message = CreateListByTimeNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderby);
+            using var message = CreateListByTimeNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, filter, interval, top, skip, orderBy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ReportCollection value = default;
+                        ReportListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportCollection.DeserializeReportCollection(document.RootElement);
+                        value = ReportListResult.DeserializeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The IP address range in the CIDR scheme. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="name"> The friendly name for the IP address range. </param>
         /// <param name="address"> The IP address. </param>
         /// <param name="subnetPrefixLength"> The subnet mask prefix length (see CIDR notation). </param>
-        internal IPRange(string name, string address, int? subnetPrefixLength)
+        internal IPRange(string name, IPAddress address, int? subnetPrefixLength)
         {
             Name = name;
             Address = address;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The friendly name for the IP address range. </summary>
         public string Name { get; set; }
         /// <summary> The IP address. </summary>
-        public string Address { get; set; }
+        public IPAddress Address { get; set; }
         /// <summary> The subnet mask prefix length (see CIDR notation). </summary>
         public int? SubnetPrefixLength { get; set; }
     }

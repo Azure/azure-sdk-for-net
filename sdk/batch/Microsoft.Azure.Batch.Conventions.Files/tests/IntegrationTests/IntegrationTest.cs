@@ -14,7 +14,7 @@
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
 using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage;
+using Azure.Storage.Blobs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         public IntegrationTest(JobIdFixture jobIdFixture, ITestOutputHelper output)
         {
             Output = output;
-            StorageAccount = StorageConfiguration.GetAccount(output);
+            blobClient = StorageConfiguration.GetAccount(output);
             FileBase = new DirectoryInfo("Files");
             _jobIdFixture = jobIdFixture;
         }
 
         protected ITestOutputHelper Output { get; }
 
-        protected CloudStorageAccount StorageAccount { get; }
+        protected BlobServiceClient blobClient { get; }
 
         public void CancelTeardown() => _jobIdFixture.CancelTeardown();
 

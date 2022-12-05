@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIP");
-                writer.WriteStringValue(StaticIP);
+                writer.WriteStringValue(StaticIP.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

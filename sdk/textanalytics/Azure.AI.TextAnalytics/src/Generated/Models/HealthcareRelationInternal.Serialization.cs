@@ -19,6 +19,11 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("relationType");
             writer.WriteStringValue(RelationType.ToString());
+            if (Optional.IsDefined(ConfidenceScore))
+            {
+                writer.WritePropertyName("confidenceScore");
+                writer.WriteNumberValue(ConfidenceScore.Value);
+            }
             writer.WritePropertyName("entities");
             writer.WriteStartArray();
             foreach (var item in Entities)
@@ -32,12 +37,23 @@ namespace Azure.AI.TextAnalytics.Models
         internal static HealthcareRelationInternal DeserializeHealthcareRelationInternal(JsonElement element)
         {
             HealthcareEntityRelationType relationType = default;
+            Optional<double> confidenceScore = default;
             IList<HealthcareRelationEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relationType"))
                 {
                     relationType = new HealthcareEntityRelationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("confidenceScore"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    confidenceScore = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("entities"))
@@ -51,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareRelationInternal(relationType, entities);
+            return new HealthcareRelationInternal(relationType, Optional.ToNullable(confidenceScore), entities);
         }
     }
 }

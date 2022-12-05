@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyName");
-            writer.WriteStringValue(KeyName.ToSerialString());
+            writer.WriteStringValue(KeyType.ToSerialString());
             writer.WriteEndObject();
         }
     }

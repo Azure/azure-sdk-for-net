@@ -102,20 +102,27 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return ChangeFeed.Empty();
             }
 
-            JsonDocument jsonMetaSegment;
-            if (async)
+            JsonDocument jsonMetaSegment = null;
+            try
             {
-                jsonMetaSegment = await JsonDocument.ParseAsync(
-                    blobDownloadInfo.Content,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            else
-            {
-                jsonMetaSegment = JsonDocument.Parse(blobDownloadInfo.Content);
-            }
+                if (async)
+                {
+                    jsonMetaSegment = await JsonDocument.ParseAsync(
+                        blobDownloadInfo.Content,
+                        cancellationToken: cancellationToken
+                        ).ConfigureAwait(false);
+                }
+                else
+                {
+                    jsonMetaSegment = JsonDocument.Parse(blobDownloadInfo.Content);
+                }
 
-            lastConsumable = jsonMetaSegment.RootElement.GetProperty("lastConsumable").GetDateTimeOffset();
+                lastConsumable = jsonMetaSegment.RootElement.GetProperty("lastConsumable").GetDateTimeOffset();
+            }
+            finally
+            {
+                jsonMetaSegment?.Dispose();
+            }
 
             // Get year paths
             years = await GetYearPathsInternal(

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration service environment sku definition. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="capacity"> The sku capacity. </param>
-        internal IntegrationServiceEnvironmentSkuDefinition(string resourceType, IntegrationServiceEnvironmentSkuDefinitionSku sku, IntegrationServiceEnvironmentSkuCapacity capacity)
+        internal IntegrationServiceEnvironmentSkuDefinition(ResourceType? resourceType, IntegrationServiceEnvironmentSkuDefinitionSku sku, IntegrationServiceEnvironmentSkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The sku. </summary>
         public IntegrationServiceEnvironmentSkuDefinitionSku Sku { get; }
         /// <summary> The sku capacity. </summary>

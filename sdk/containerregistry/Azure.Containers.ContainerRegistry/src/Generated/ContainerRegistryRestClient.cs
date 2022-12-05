@@ -30,13 +30,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="apiVersion"/> is null. </exception>
         public ContainerRegistryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string apiVersion = "2021-07-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
-            _apiVersion = apiVersion;
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateCheckDockerV2SupportRequest()

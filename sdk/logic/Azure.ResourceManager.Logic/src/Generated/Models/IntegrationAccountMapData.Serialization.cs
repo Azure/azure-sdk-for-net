@@ -44,12 +44,16 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content");
-                writer.WriteStringValue(Content);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
+                writer.WriteStringValue(ContentType.Value.ToString());
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -72,13 +76,13 @@ namespace Azure.ResourceManager.Logic
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            MapType mapType = default;
+            IntegrationAccountMapType mapType = default;
             Optional<IntegrationAccountMapPropertiesParametersSchema> parametersSchema = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
-            Optional<string> content = default;
-            Optional<string> contentType = default;
-            Optional<ContentLink> contentLink = default;
+            Optional<BinaryData> content = default;
+            Optional<ContentType> contentType = default;
+            Optional<LogicContentLink> contentLink = default;
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -138,7 +142,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         if (property0.NameEquals("mapType"))
                         {
-                            mapType = new MapType(property0.Value.GetString());
+                            mapType = new IntegrationAccountMapType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("parametersSchema"))
@@ -173,12 +177,22 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("content"))
                         {
-                            content = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            content = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("contentType"))
                         {
-                            contentType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            contentType = new ContentType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("contentLink"))
@@ -188,7 +202,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contentLink = ContentLink.DeserializeContentLink(property0.Value);
+                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metadata"))
@@ -205,7 +219,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountMapData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, mapType, parametersSchema.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), content.Value, contentType.Value, contentLink.Value, metadata.Value);
+            return new IntegrationAccountMapData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, mapType, parametersSchema.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), content.Value, Optional.ToNullable(contentType), contentLink.Value, metadata.Value);
         }
     }
 }

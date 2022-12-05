@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<long> folderId = default;
             Optional<long> projectVersion = default;
             Optional<long> projectId = default;
-            Optional<IReadOnlyList<SsisParameter>> parameters = default;
+            Optional<IReadOnlyList<SsisParameterInfo>> parameters = default;
             SsisObjectMetadataType type = default;
             Optional<long> id = default;
             Optional<string> name = default;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SsisParameter> array = new List<SsisParameter>();
+                    List<SsisParameterInfo> array = new List<SsisParameterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisParameter.DeserializeSsisParameter(item));
+                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item));
                     }
                     parameters = array;
                     continue;

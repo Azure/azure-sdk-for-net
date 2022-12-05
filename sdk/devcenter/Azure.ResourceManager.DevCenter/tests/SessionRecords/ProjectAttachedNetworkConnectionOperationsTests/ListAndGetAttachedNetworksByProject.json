@@ -1,0 +1,122 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/attachednetworks?api-version=2022-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-a6f54b6b9646214daec7f7914e9543cc-10114a1bc119ed41-00",
+        "User-Agent": "azsdk-net-ResourceManager.DevCenter/1.0.0-alpha.20220903.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b8f71813fc1dd394c542adc39bce3c28",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "875",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 04 Sep 2022 05:59:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b8f71813fc1dd394c542adc39bce3c28",
+        "x-ms-correlation-request-id": "20f44b1a-7f8d-43ea-bc5d-24b8b3e4e913",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "40412aac-f1b2-4975-bf95-529348bf4460",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220904T055941Z:20f44b1a-7f8d-43ea-bc5d-24b8b3e4e913",
+        "X-Rate-Limit-Limit": "1m",
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2022-09-04T06:00:40.3220696Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/attachednetworks/sdk-default-networkconnection",
+            "name": "sdk-default-networkconnection",
+            "type": "Microsoft.DevCenter/projects/attachednetworks",
+            "systemData": {
+              "createdBy": "tbyfield@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2022-08-30T18:12:13.952278Z",
+              "lastModifiedBy": "2dc3760b-4713-48b1-a383-1dfe3e449ec2",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-08-30T22:13:33.336617Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "networkConnectionId": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/networkConnections/sdk-default-networkconnection",
+              "networkConnectionLocation": "australiaeast",
+              "healthCheckStatus": "Passed",
+              "domainJoinType": "AzureADJoin"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/attachednetworks/sdk-default-networkconnection?api-version=2022-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7b465f12c894054fadd724b73e098a5b-6614d3c9b315d34b-00",
+        "User-Agent": "azsdk-net-ResourceManager.DevCenter/1.0.0-alpha.20220903.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7550899a26ca2d9cb8a5706c7ab910c9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "863",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 04 Sep 2022 05:59:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7550899a26ca2d9cb8a5706c7ab910c9",
+        "x-ms-correlation-request-id": "c5b561b8-498c-435d-8143-6a5244645598",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "ddc1b5de-55de-4193-9df2-19cc7f0996fb",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220904T055947Z:c5b561b8-498c-435d-8143-6a5244645598",
+        "X-Rate-Limit-Limit": "1m",
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2022-09-04T06:00:44.5543185Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project/attachednetworks/sdk-default-networkconnection",
+        "name": "sdk-default-networkconnection",
+        "type": "Microsoft.DevCenter/projects/attachednetworks",
+        "systemData": {
+          "createdBy": "tbyfield@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2022-08-30T18:12:13.952278Z",
+          "lastModifiedBy": "2dc3760b-4713-48b1-a383-1dfe3e449ec2",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-30T22:13:33.336617Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "networkConnectionId": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/networkConnections/sdk-default-networkconnection",
+          "networkConnectionLocation": "australiaeast",
+          "healthCheckStatus": "Passed",
+          "domainJoinType": "AzureADJoin"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DEFAULT_PROJECT_ID": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/projects/sdk-default-project",
+    "RandomSeed": "234168197",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "62e47139-66d0-4b0b-a000-1e8a412890c1"
+  }
+}

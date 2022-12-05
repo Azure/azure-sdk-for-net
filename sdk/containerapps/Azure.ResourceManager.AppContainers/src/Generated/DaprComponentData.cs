@@ -33,15 +33,17 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="ignoreErrors"> Boolean describing if the component errors are ignores. </param>
         /// <param name="initTimeout"> Initialization timeout. </param>
         /// <param name="secrets"> Collection of secrets used by a Dapr component. </param>
+        /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
         /// <param name="metadata"> Component metadata. </param>
         /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
-        internal DaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<AppSecret> secrets, IList<DaprMetadata> metadata, IList<string> scopes) : base(id, name, resourceType, systemData)
+        internal DaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<AppSecret> secrets, string secretStoreComponent, IList<DaprMetadata> metadata, IList<string> scopes) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
             Version = version;
             IgnoreErrors = ignoreErrors;
             InitTimeout = initTimeout;
             Secrets = secrets;
+            SecretStoreComponent = secretStoreComponent;
             Metadata = metadata;
             Scopes = scopes;
         }
@@ -56,6 +58,8 @@ namespace Azure.ResourceManager.AppContainers
         public string InitTimeout { get; set; }
         /// <summary> Collection of secrets used by a Dapr component. </summary>
         public IList<AppSecret> Secrets { get; }
+        /// <summary> Name of a Dapr component to retrieve component secrets from. </summary>
+        public string SecretStoreComponent { get; set; }
         /// <summary> Component metadata. </summary>
         public IList<DaprMetadata> Metadata { get; }
         /// <summary> Names of container apps that can use this Dapr component. </summary>

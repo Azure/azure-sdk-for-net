@@ -142,9 +142,12 @@ namespace Azure.ResourceManager.Tests
             });
         }
 
-        [RecordedTest]
-        public async Task AddTag()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg1 = rg1Op.Value;
@@ -164,9 +167,12 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(400, ex.Status);
         }
 
-        [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg1 = rg1Op.Value;
@@ -187,9 +193,12 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.SetTagsAsync(null));
         }
 
-        [RecordedTest]
-        public async Task RemoveTag()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroupResource rg1 = rg1Op.Value;

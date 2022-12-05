@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
+        protected ComputeTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         [SetUp]
         public async Task CreateCommonClient()
         {

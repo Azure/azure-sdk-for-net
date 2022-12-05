@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
 using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models;
-using NUnit.Framework;
+
+#pragma warning disable IDE0051 // Remove unused private members
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
@@ -78,7 +79,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Uri endpoint = new Uri("{LanguageQnaEndpoint}");
             AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
-            QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
@@ -116,7 +117,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, "{ProjectName}", updateSourcesRequestContent);
+            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, "{ProjectName}", updateSourcesRequestContent);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeSource
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
@@ -135,7 +136,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(WaitUntil.Completed, "{ProjectName}", updateQnasRequestContent);
+            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await client.UpdateQnasAsync(WaitUntil.Completed, "{ProjectName}", updateQnasRequestContent);
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
@@ -143,7 +144,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
 
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-            Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
+            Operation deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
             #endregion Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
         }
 

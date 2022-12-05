@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Grafana
         public GrafanaRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("");
-            _apiVersion = apiVersion ?? "2021-09-01-preview";
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> List all resources of workspaces for Grafana under the specified subscription. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> List all resources of workspaces for Grafana under the specified subscription. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> List all resources of workspaces for Grafana under the specified resource group. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> List all resources of workspaces for Grafana under the specified resource group. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Get the properties of a specific workspace for Grafana resource. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Get the properties of a specific workspace for Grafana resource. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Create or update a workspace for Grafana resource. This API is idempotent, so user can either create a new grafana or update an existing grafana. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="data"> The ManagedGrafana to use. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Create or update a workspace for Grafana resource. This API is idempotent, so user can either create a new grafana or update an existing grafana. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="data"> The ManagedGrafana to use. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Update a workspace for Grafana resource. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="patch"> The ManagedGrafanaPatch to use. </param>
@@ -381,6 +381,7 @@ namespace Azure.ResourceManager.Grafana
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     {
                         ManagedGrafanaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -393,7 +394,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Update a workspace for Grafana resource. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="patch"> The ManagedGrafanaPatch to use. </param>
@@ -412,6 +413,7 @@ namespace Azure.ResourceManager.Grafana
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     {
                         ManagedGrafanaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -444,7 +446,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Delete a workspace for Grafana resource. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -470,7 +472,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> Delete a workspace for Grafana resource. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -511,7 +513,7 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary> List all resources of workspaces for Grafana under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -538,7 +540,7 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary> List all resources of workspaces for Grafana under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -579,7 +581,7 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary> List all resources of workspaces for Grafana under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -608,7 +610,7 @@ namespace Azure.ResourceManager.Grafana
 
         /// <summary> List all resources of workspaces for Grafana under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

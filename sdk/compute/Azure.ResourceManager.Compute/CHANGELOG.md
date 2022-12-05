@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.0.1 (2022-11-29)
+
+### Bugs Fixed
+
+- Fixes [a bug](https://github.com/Azure/azure-sdk-for-net/issues/32599) that exceptions are thrown during serialization when constructor `VirtualMachineScaleSetExtensionData(string name)` is called
+
 ## 1.0.0 (2022-07-11)
 
 This is the first stable release of the Compute Management client library.
@@ -23,11 +29,11 @@ This is the first stable release of the Compute Management client library.
 Polishing since last public beta release:
 - Prepended `Compute` / `VirtualMachine` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
-- Corrected the format of all `ResourceIdentifier` type properteis / parameters.
-- Corrected the format of all `ResouceType` type properteis / parameters.
-- Corrected the format of all `ETag` type properteis / parameters.
-- Corrected the format of all `AzureLocation` type properteis / parameters.
-- Corrected the format of all binary type properteis / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
 - Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.

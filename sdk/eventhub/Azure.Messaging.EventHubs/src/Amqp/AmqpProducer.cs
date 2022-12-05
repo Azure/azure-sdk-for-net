@@ -465,6 +465,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var failedAttemptCount = 0;
             var logPartition = PartitionId ?? partitionKey;
             var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+            var stopWatch = ValueStopwatch.StartNew();
 
             TimeSpan? retryDelay;
             SendingAmqpLink link;
@@ -479,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     try
                     {
-                        using AmqpMessage batchMessage = MessageConverter.CreateBatchFromMessages(messages);
+                        using AmqpMessage batchMessage = MessageConverter.CreateBatchFromMessages(messages, partitionKey);
 
                         if (!SendLink.TryGetOpenedObject(out link))
                         {
@@ -553,7 +554,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, operationId, failedAttemptCount);
+                EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, operationId, failedAttemptCount, stopWatch.GetElapsedTime().TotalSeconds);
             }
         }
 

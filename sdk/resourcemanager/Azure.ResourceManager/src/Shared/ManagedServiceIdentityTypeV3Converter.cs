@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Models
     /// <summary> JsonConverter for managed service identity type v3. </summary>
     internal class ManagedServiceIdentityTypeV3Converter : JsonConverter<ManagedServiceIdentityType>
     {
-        internal const string systemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
+        internal const string SystemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
 
         /// <summary> Serialize managed service identity type to v3 format. </summary>
         /// <param name="writer"> The writer. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Models
             writer.WritePropertyName("type");
             if (model == ManagedServiceIdentityType.SystemAssignedUserAssigned)
             {
-                writer.WriteStringValue(systemAssignedUserAssignedV3Value);
+                writer.WriteStringValue(SystemAssignedUserAssignedV3Value);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Models
             foreach (var property in document.RootElement.EnumerateObject())
             {
                 var typeValue = property.Value.GetString();
-                if (typeValue.Equals(systemAssignedUserAssignedV3Value, StringComparison.OrdinalIgnoreCase))
+                if (typeValue.Equals(SystemAssignedUserAssignedV3Value, StringComparison.OrdinalIgnoreCase))
                 {
                     return ManagedServiceIdentityType.SystemAssignedUserAssigned;
                 }

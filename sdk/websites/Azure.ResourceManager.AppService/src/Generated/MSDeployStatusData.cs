@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="startOn"> Start time of deploy operation. </param>
         /// <param name="endOn"> End time of deploy operation. </param>
-        /// <param name="complete"> Whether the deployment operation has completed. </param>
+        /// <param name="isComplete"> Whether the deployment operation has completed. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? complete, string kind) : base(id, name, resourceType, systemData)
+        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, string kind) : base(id, name, resourceType, systemData)
         {
             Deployer = deployer;
             ProvisioningState = provisioningState;
             StartOn = startOn;
             EndOn = endOn;
-            Complete = complete;
+            IsComplete = isComplete;
             Kind = kind;
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> End time of deploy operation. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> Whether the deployment operation has completed. </summary>
-        public bool? Complete { get; }
+        public bool? IsComplete { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

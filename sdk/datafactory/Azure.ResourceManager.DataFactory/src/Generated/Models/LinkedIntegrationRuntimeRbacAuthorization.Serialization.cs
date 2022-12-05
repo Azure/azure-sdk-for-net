@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static LinkedIntegrationRuntimeRbacAuthorization DeserializeLinkedIntegrationRuntimeRbacAuthorization(JsonElement element)
         {
             string resourceId = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    credential = CredentialReference.DeserializeCredentialReference(property.Value);
+                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"))

@@ -19,8 +19,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
+                if (Kind != null)
+                {
+                    writer.WritePropertyName("kind");
+                    writer.WriteStringValue(Kind.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("kind");
+                }
             }
             if (Optional.IsDefined(Name))
             {
@@ -44,24 +51,31 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsDefined(AssignmentType))
             {
-                writer.WritePropertyName("assignmentType");
-                writer.WriteStringValue(AssignmentType.Value.ToString());
+                if (AssignmentType != null)
+                {
+                    writer.WritePropertyName("assignmentType");
+                    writer.WriteStringValue(AssignmentType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("assignmentType");
+                }
             }
-            if (Optional.IsCollectionDefined(ConfigurationParameter))
+            if (Optional.IsCollectionDefined(ConfigurationParameters))
             {
                 writer.WritePropertyName("configurationParameter");
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationParameter)
+                foreach (var item in ConfigurationParameters)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedParameter))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
             {
                 writer.WritePropertyName("configurationProtectedParameter");
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationProtectedParameter)
+                foreach (var item in ConfigurationProtectedParameters)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -72,24 +86,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationNavigation DeserializeGuestConfigurationNavigation(JsonElement element)
         {
-            Optional<GuestConfigurationKind> kind = default;
+            Optional<GuestConfigurationKind?> kind = default;
             Optional<string> name = default;
             Optional<string> version = default;
             Optional<Uri> contentUri = default;
             Optional<string> contentHash = default;
-            Optional<AssignmentType> assignmentType = default;
+            Optional<GuestConfigurationAssignmentType?> assignmentType = default;
             Optional<string> assignmentSource = default;
             Optional<string> contentType = default;
-            Optional<IList<ConfigurationParameter>> configurationParameter = default;
-            Optional<IList<ConfigurationParameter>> configurationProtectedParameter = default;
-            Optional<ConfigurationSetting> configurationSetting = default;
+            Optional<IList<GuestConfigurationParameter>> configurationParameter = default;
+            Optional<IList<GuestConfigurationParameter>> configurationProtectedParameter = default;
+            Optional<LcmConfigurationSetting> configurationSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        kind = null;
                         continue;
                     }
                     kind = new GuestConfigurationKind(property.Value.GetString());
@@ -124,10 +138,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        assignmentType = null;
                         continue;
                     }
-                    assignmentType = new AssignmentType(property.Value.GetString());
+                    assignmentType = new GuestConfigurationAssignmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("assignmentSource"))
@@ -157,10 +171,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
                     }
                     configurationParameter = array;
                     continue;
@@ -172,10 +186,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationParameter> array = new List<ConfigurationParameter>();
+                    List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationParameter.DeserializeConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
                     }
                     configurationProtectedParameter = array;
                     continue;
@@ -184,10 +198,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        configurationSetting = null;
                         continue;
                     }
-                    configurationSetting = ConfigurationSetting.DeserializeConfigurationSetting(property.Value);
+                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value);
                     continue;
                 }
             }

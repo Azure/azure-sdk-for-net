@@ -52,10 +52,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            var operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId);
+            var operation = await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId);
             Assert.IsNotNull(operation.GetRawResponse());
 
-            var sameOperation = InstrumentOperation(new BuildModelOperation(operation.Id, nonInstrumentedClient));
+            var sameOperation = InstrumentOperation(new BuildDocumentModelOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            var operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId);
+            var operation = await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId);
             Assert.Throws<InvalidOperationException>(() => _ = operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();
@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelOperationCanPollFromNewObject()
+        public async Task CopyModelToOperationCanPollFromNewObject()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var modelId = Recording.GenerateId();
@@ -87,12 +87,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
-            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
+            DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
+            var operation = await client.CopyDocumentModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
             Assert.IsNotNull(operation.GetRawResponse());
 
-            var sameOperation = InstrumentOperation(new CopyModelOperation(operation.Id, nonInstrumentedClient));
+            var sameOperation = InstrumentOperation(new CopyDocumentModelToOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelOperationPercentageCompletedValue()
+        public async Task CopyModelToOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
@@ -108,9 +108,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
-            CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
+            DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
+            var operation = await client.CopyDocumentModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
             Assert.Throws<InvalidOperationException>(() => _ = operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();

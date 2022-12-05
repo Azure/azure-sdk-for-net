@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a Power BI output data source. </summary>
-    public partial class PowerBIOutputDataSource : OutputDataSource
+    public partial class PowerBIOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of PowerBIOutputDataSource. </summary>
         public PowerBIOutputDataSource()
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="groupId"> The ID of the Power BI group. </param>
         /// <param name="groupName"> The name of the Power BI group. Use this property to help remember which specific Power BI group id was used. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal PowerBIOutputDataSource(string outputDataSourceType, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string dataset, string table, string groupId, string groupName, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal PowerBIOutputDataSource(string outputDataSourceType, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string dataset, string table, Guid? groupId, string groupName, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             RefreshToken = refreshToken;
             TokenUserPrincipalName = tokenUserPrincipalName;
@@ -50,10 +52,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The name of the Power BI table under the specified dataset. Required on PUT (CreateOrReplace) requests. </summary>
         public string Table { get; set; }
         /// <summary> The ID of the Power BI group. </summary>
-        public string GroupId { get; set; }
+        public Guid? GroupId { get; set; }
         /// <summary> The name of the Power BI group. Use this property to help remember which specific Power BI group id was used. </summary>
         public string GroupName { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

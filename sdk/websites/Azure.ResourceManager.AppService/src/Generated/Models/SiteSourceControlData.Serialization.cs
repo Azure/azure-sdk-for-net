@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("isGitHubAction");
                 writer.WriteBooleanValue(IsGitHubAction.Value);
             }
-            if (Optional.IsDefined(DeploymentRollbackEnabled))
+            if (Optional.IsDefined(IsDeploymentRollbackEnabled))
             {
                 writer.WritePropertyName("deploymentRollbackEnabled");
-                writer.WriteBooleanValue(DeploymentRollbackEnabled.Value);
+                writer.WriteBooleanValue(IsDeploymentRollbackEnabled.Value);
             }
             if (Optional.IsDefined(IsMercurial))
             {

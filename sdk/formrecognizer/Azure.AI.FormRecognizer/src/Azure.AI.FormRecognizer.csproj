@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Form Recognizer client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.FormRecognizer client library</AssemblyTitle>
-    <Version>4.0.0-beta.5</Version>
+    <Version>4.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>3.1.1</ApiCompatVersion>
+    <ApiCompatVersion>4.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
@@ -20,6 +20,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicSku. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
-        internal LogicSku(LogicSkuName name, ResourceReference plan)
+        internal LogicSku(LogicSkuName name, LogicResourceReference plan)
         {
             Name = name;
             Plan = plan;
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The name. </summary>
         public LogicSkuName Name { get; }
         /// <summary> The reference to plan. </summary>
-        public ResourceReference Plan { get; }
+        public LogicResourceReference Plan { get; }
     }
 }

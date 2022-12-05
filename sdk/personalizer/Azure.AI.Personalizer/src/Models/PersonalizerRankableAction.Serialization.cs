@@ -15,7 +15,8 @@ namespace Azure.AI.Personalizer
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("features");
-            JsonDocument.Parse(JsonSerializer.Serialize(Features)).WriteTo(writer);
+            using var jsonDocument = JsonDocument.Parse(JsonSerializer.Serialize(Features));
+            jsonDocument.WriteTo(writer);
             writer.WriteEndObject();
         }
     }

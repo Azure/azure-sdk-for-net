@@ -19,6 +19,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -1625,6 +1626,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task AppendBlockFromUriAsync_SourceBearerToken()
         {
             // Arrange

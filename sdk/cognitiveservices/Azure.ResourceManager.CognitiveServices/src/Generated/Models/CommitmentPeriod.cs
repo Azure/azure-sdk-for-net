@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services account commitment period. </summary>
@@ -19,15 +21,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tier"> Commitment period commitment tier. </param>
         /// <param name="count"> Commitment period commitment count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
-        /// <param name="startDate"> Commitment period start date. </param>
-        /// <param name="endDate"> Commitment period end date. </param>
-        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, string startDate, string endDate)
+        /// <param name="startOn"> Commitment period start date. </param>
+        /// <param name="endOn"> Commitment period end date. </param>
+        internal CommitmentPeriod(string tier, int? count, CommitmentQuota quota, DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
             Tier = tier;
             Count = count;
             Quota = quota;
-            StartDate = startDate;
-            EndDate = endDate;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> Commitment period commitment tier. </summary>
@@ -37,8 +39,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Cognitive Services account commitment quota. </summary>
         public CommitmentQuota Quota { get; }
         /// <summary> Commitment period start date. </summary>
-        public string StartDate { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> Commitment period end date. </summary>
-        public string EndDate { get; }
+        public DateTimeOffset? EndOn { get; }
     }
 }

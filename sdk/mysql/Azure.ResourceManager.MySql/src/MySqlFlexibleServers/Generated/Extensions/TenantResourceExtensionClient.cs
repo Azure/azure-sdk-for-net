@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Operation Id: GetPrivateDnsZoneSuffix_Execute
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GetPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
         {
             using var scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("TenantResourceExtensionClient.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Operation Id: GetPrivateDnsZoneSuffix_Execute
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GetPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
         {
             using var scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("TenantResourceExtensionClient.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();

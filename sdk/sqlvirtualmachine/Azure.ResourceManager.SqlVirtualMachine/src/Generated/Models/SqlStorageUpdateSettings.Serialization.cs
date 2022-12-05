@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         {
             Optional<int> diskCount = default;
             Optional<int> startingDeviceId = default;
-            Optional<DiskConfigurationType> diskConfigurationType = default;
+            Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskCount"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskConfigurationType = new DiskConfigurationType(property.Value.GetString());
+                    diskConfigurationType = new SqlVmDiskConfigurationType(property.Value.GetString());
                     continue;
                 }
             }

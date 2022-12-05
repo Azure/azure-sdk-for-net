@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         internal ApplicationListResult()
         {
-            Value = new ChangeTrackingList<ApplicationData>();
+            Value = new ChangeTrackingList<HDInsightApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         /// <param name="value"> The list of HDInsight applications installed on HDInsight cluster. </param>
         /// <param name="nextLink"> The URL to get the next set of operation list results if there are any. </param>
-        internal ApplicationListResult(IReadOnlyList<ApplicationData> value, string nextLink)
+        internal ApplicationListResult(IReadOnlyList<HDInsightApplicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of HDInsight applications installed on HDInsight cluster. </summary>
-        public IReadOnlyList<ApplicationData> Value { get; }
+        public IReadOnlyList<HDInsightApplicationData> Value { get; }
         /// <summary> The URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }

@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static ManagedIdentity DeserializeManagedIdentity(JsonElement element)
         {
-            Optional<string> userAssignedIdentity = default;
+            Optional<ResourceIdentifier> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"))
                 {
-                    userAssignedIdentity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

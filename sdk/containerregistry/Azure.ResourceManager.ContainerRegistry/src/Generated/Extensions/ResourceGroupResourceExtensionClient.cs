@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ContainerRegistry
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of RegistryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RegistryResources and their operations over a RegistryResource. </returns>
-        public virtual RegistryCollection GetRegistries()
+        /// <summary> Gets a collection of ContainerRegistryResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ContainerRegistryResources and their operations over a ContainerRegistryResource. </returns>
+        public virtual ContainerRegistryCollection GetContainerRegistries()
         {
-            return GetCachedClient(Client => new RegistryCollection(Client, Id));
+            return GetCachedClient(Client => new ContainerRegistryCollection(Client, Id));
         }
     }
 }

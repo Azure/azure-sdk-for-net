@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -18,6 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionData. </summary>
         public CognitiveServicesPrivateEndpointConnectionData()
         {
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionData. </summary>
@@ -25,20 +28,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
         /// <param name="location"> The location of the private endpoint connection. </param>
+        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="groupIds"> The private link resource group ids. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, AzureLocation? location, ETag? etag) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SubResource privateEndpoint, CognitiveServicesPrivateLinkServiceConnectionState connectionState, CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState, IList<string> groupIds, ETag? etag) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             Location = location;
+            PrivateEndpoint = privateEndpoint;
+            ConnectionState = connectionState;
+            ProvisioningState = provisioningState;
+            GroupIds = groupIds;
             ETag = etag;
         }
 
-        /// <summary> Resource properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
         /// <summary> The location of the private endpoint connection. </summary>
         public AzureLocation? Location { get; set; }
+        /// <summary> The resource of private end point. </summary>
+        internal SubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        public CognitiveServicesPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        public CognitiveServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        /// <summary> The private link resource group ids. </summary>
+        public IList<string> GroupIds { get; }
         /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
     }

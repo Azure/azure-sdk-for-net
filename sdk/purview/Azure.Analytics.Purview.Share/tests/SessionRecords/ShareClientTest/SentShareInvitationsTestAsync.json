@@ -1,0 +1,160 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/sentShare1/sentShareInvitations/invitation1?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "83",
+        "Content-Type": "application/json",
+        "traceparent": "00-3ea6f5649c846b4db9837eb06921db36-98271b094d62d54e-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4daa0057268943cf3931b4d36c1c804a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "invitationKind": "User",
+        "properties": {
+          "targetEmail": "faisalaltell@microsoft.com"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "455",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 20:12:31 GMT",
+        "Location": "/sentShares/sentShare1/sentShareInvitations/invitation1/invitation1",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "b7ff6856-506b-4179-be14-9edf2b2adb8d"
+      },
+      "ResponseBody": {
+        "properties": {
+          "targetEmail": "faisalaltell@microsoft.com",
+          "sentAt": "2022-07-14T20:12:31.2681416Z",
+          "invitationStatus": "Pending",
+          "invitationId": "73960798-ae90-4e3a-8b86-c6e8aceb77f5",
+          "senderName": "SyMS",
+          "senderTenantName": "Microsoft",
+          "senderEmail": null,
+          "provisioningState": "Succeeded",
+          "shareKind": "InPlace"
+        },
+        "invitationKind": "User",
+        "id": "/sentShares/sentShare1/sentShareInvitations/invitation1",
+        "name": "invitation1",
+        "type": "sentShares/sentShareInvitations"
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/sentShare1/sentShareInvitations/invitation1?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-928346d32862044da412a16f1db473f8-7dd63a66f01ba749-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d324c78df2da9cdbd4449bc81390e470",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "455",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 20:12:31 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "5826eb6a-ce45-4788-8807-b632296ac0b7"
+      },
+      "ResponseBody": {
+        "properties": {
+          "targetEmail": "faisalaltell@microsoft.com",
+          "sentAt": "2022-07-14T20:12:31.2681416Z",
+          "invitationStatus": "Pending",
+          "invitationId": "73960798-ae90-4e3a-8b86-c6e8aceb77f5",
+          "senderName": "SyMS",
+          "senderTenantName": "Microsoft",
+          "senderEmail": null,
+          "provisioningState": "Succeeded",
+          "shareKind": "InPlace"
+        },
+        "invitationKind": "User",
+        "id": "/sentShares/sentShare1/sentShareInvitations/invitation1",
+        "name": "invitation1",
+        "type": "sentShares/sentShareInvitations"
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/sentShare1/sentShareInvitations?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-776b83ca7b2efa43a74680a464ff0208-ed64ea29165fd344-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "570ee4178087d517cac26695a938bc7d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "467",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 20:12:32 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "13a10f43-1a1f-4336-ab32-17cbe2a3c697"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "targetEmail": "faisalaltell@microsoft.com",
+              "sentAt": "2022-07-14T20:12:31.2681416Z",
+              "invitationStatus": "Pending",
+              "invitationId": "73960798-ae90-4e3a-8b86-c6e8aceb77f5",
+              "senderName": "SyMS",
+              "senderTenantName": "Microsoft",
+              "senderEmail": null,
+              "provisioningState": "Succeeded",
+              "shareKind": "InPlace"
+            },
+            "invitationKind": "User",
+            "id": "/sentShares/sentShare1/sentShareInvitations/invitation1",
+            "name": "invitation1",
+            "type": "sentShares/sentShareInvitations"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/sentShare1/sentShareInvitations/invitation1?api-version=2021-09-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-cee2bc4d575af84989c8792f1eb2392f-c6bc7ab4c651d240-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8707103b49f46408250e79448b0630a8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 14 Jul 2022 20:12:32 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "ec8107af-426b-48ba-b0a1-91c2c9ce9726"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "805558491"
+  }
+}

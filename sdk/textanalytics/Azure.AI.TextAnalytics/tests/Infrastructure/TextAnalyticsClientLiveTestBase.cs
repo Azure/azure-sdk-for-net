@@ -12,8 +12,8 @@ namespace Azure.AI.TextAnalytics.Tests
     [ClientTestFixture(
     TextAnalyticsClientOptions.ServiceVersion.V3_0,
     TextAnalyticsClientOptions.ServiceVersion.V3_1,
-    TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2,
-    TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview)]
+    TextAnalyticsClientOptions.ServiceVersion.V2022_05_01,
+    TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
         internal const int MaxRetriesCount = 12;
@@ -22,26 +22,29 @@ namespace Azure.AI.TextAnalytics.Tests
         /// The version of the REST API to test against.  This will be passed
         /// to the .ctor via ClientTestFixture's values.
         /// </summary>
-        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
+        protected TextAnalyticsClientOptions.ServiceVersion ServiceVersion { get; }
 
         public TextAnalyticsClientLiveTestBase(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync)
         {
-            _serviceVersion = serviceVersion;
+            ServiceVersion = serviceVersion;
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
-        protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default)
-            => GetClient(out _, credential, options, useTokenCredential);
+        protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default, bool useStaticResource = default)
+            => GetClient(out _, credential, options, useTokenCredential, useStaticResource);
 
         public TextAnalyticsClient GetClient(
             out TextAnalyticsClient nonInstrumentedClient,
             AzureKeyCredential credential = default,
             TextAnalyticsClientOptions options = default,
-            bool useTokenCredential = default)
+            bool useTokenCredential = default,
+            bool useStaticResource = default)
         {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
-            options ??= new TextAnalyticsClientOptions(_serviceVersion);
+            Uri endpoint = new(useStaticResource
+                ? TestEnvironment.StaticEndpoint
+                : TestEnvironment.Endpoint);
+            options ??= new TextAnalyticsClientOptions(ServiceVersion);
 
             // While we use a persistent resource for live tests, we need to increase our retries.
             // We should remove when having dynamic resource again
@@ -54,7 +57,9 @@ namespace Azure.AI.TextAnalytics.Tests
             }
             else
             {
-                credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
+                credential ??= new AzureKeyCredential(useStaticResource
+                    ? TestEnvironment.StaticApiKey
+                    : TestEnvironment.ApiKey);
                 nonInstrumentedClient = new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
             }
             return InstrumentClient(nonInstrumentedClient);
@@ -63,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Tests
         // This has been added to stop the custom tests to run forever while we
         // get more reliable information on which scenarios cause timeouts.
         // Issue https://github.com/Azure/azure-sdk-for-net/issues/25152
-        internal async Task PollUntilTimeout(AnalyzeActionsOperation operation, int timeoutInMinutes = 20)
+        internal async Task PollUntilTimeout<T>(Operation<T> operation, int timeoutInMinutes = 20)
         {
             TimeSpan pollingInterval = TimeSpan.FromSeconds(10);
             var timeout = TimeSpan.FromMinutes(timeoutInMinutes);

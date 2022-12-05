@@ -62,6 +62,18 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (Optional.IsDefined(PredictiveAutoscalePolicy))
+            {
+                if (PredictiveAutoscalePolicy != null)
+                {
+                    writer.WritePropertyName("predictiveAutoscalePolicy");
+                    writer.WriteObjectValue(PredictiveAutoscalePolicy);
+                }
+                else
+                {
+                    writer.WriteNull("predictiveAutoscalePolicy");
+                }
+            }
             if (Optional.IsDefined(AutoscaleSettingName))
             {
                 writer.WritePropertyName("name");
@@ -92,6 +104,7 @@ namespace Azure.ResourceManager.Monitor
             IList<AutoscaleProfile> profiles = default;
             Optional<IList<AutoscaleNotification>> notifications = default;
             Optional<bool> enabled = default;
+            Optional<PredictiveAutoscalePolicy> predictiveAutoscalePolicy = default;
             Optional<string> name0 = default;
             Optional<ResourceIdentifier> targetResourceUri = default;
             Optional<AzureLocation> targetResourceLocation = default;
@@ -186,6 +199,16 @@ namespace Azure.ResourceManager.Monitor
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("predictiveAutoscalePolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                predictiveAutoscalePolicy = null;
+                                continue;
+                            }
+                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("name"))
                         {
                             name0 = property0.Value.GetString();
@@ -215,7 +238,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation));
+            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation));
         }
     }
 }

@@ -8,18 +8,56 @@ azure-arm: true
 csharp: true
 library-name: Redis
 namespace: Azure.ResourceManager.Redis
-require: https://github.com/Azure/azure-rest-api-specs/blob/5419bfc41fe7a45955df3f342c4d5d81ea785a35/specification/redis/resource-manager/readme.md
-tag: package-2021-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/68847d6ae901f0cb2efa62ae2c523ad8cf5c2ea3/specification/redis/resource-manager/readme.md 
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  CheckNameAvailabilityParameters: RedisNameAvailabilityContent
+  RedisCommonPropertiesRedisConfiguration: RedisCommonConfiguration
+  RedisCommonPropertiesRedisConfiguration.authnotrequired: AuthNotRequired
+  RedisCommonPropertiesRedisConfiguration.maxclients: MaxClients
+  RedisCommonPropertiesRedisConfiguration.maxmemory-delta: MaxMemoryDelta
+  RedisCommonPropertiesRedisConfiguration.maxmemory-reserved: MaxMemoryReserved
+  RedisCommonPropertiesRedisConfiguration.maxmemory-policy: MaxMemoryPolicy
+  RedisCommonPropertiesRedisConfiguration.maxfragmentationmemory-reserved: MaxFragmentationMemoryReserved
+  PrivateEndpointConnection.properties.privateLinkServiceConnectionState: RedisPrivateLinkServiceConnectionState
+  PrivateEndpointConnection.properties.provisioningState: RedisProvisioningState
+  SkuFamily.C: BasicOrStandard
+  SkuFamily.P: Premium
+  ScheduleEntries: RedisPatchScheduleSettings
+  ScheduleEntry: RedisPatchScheduleSetting
+  DefaultName: RedisPatchScheduleDefaultName
+  UpgradeNotification: RedisUpgradeNotification
+  NotificationListResponse: RedisUpgradeNotificationListResponse
+  RedisKeyType: RedisRegenerateKeyType
+  ReplicationRole: RedisLinkedServerRole
+  RedisCommonPropertiesRedisConfiguration.rdb-backup-enabled: IsRdbBackupEnabled|boolean
+  RedisCommonPropertiesRedisConfiguration.aof-backup-enabled: IsAofBackupEnabled|boolean
+  RedisCommonPropertiesRedisConfiguration.rdb-backup-max-snapshot-count: -|integer
+  RedisForceRebootResponse: RedisForceRebootResult
+
+prepend-rp-prefix:
+  - OperationStatus
+  - ProvisioningState
+  - PublicNetworkAccess
+  - RebootType
+  - TlsVersion
+  - DayOfWeek
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'staticIP': 'ip-address'
+  'startIP': 'ip-address'
+  'endIP': 'ip-address'
+  'subnetId': 'arm-id'
+  'linkedRedisCacheId': 'arm-id'
+  'linkedRedisCacheLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -45,6 +83,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  RDB: Rdb
 
 override-operation-name:
   Redis_CheckNameAvailability: CheckRedisNameAvailability
@@ -64,12 +103,13 @@ directive:
         }
       ];
       $.RedisResource['x-ms-client-name'] = 'Redis';
-      delete $.OperationStatus.allOf; 
-
-  # This must be revmoved after https://github.com/Azure/azure-sdk-for-net/issues/29636 was fixed
+      $.CheckNameAvailabilityParameters.properties.type['x-ms-format'] = 'resource-type';
+  - from: types.json
+    where: $.definitions.OperationStatusResult
+    transform: >
+      $.properties.id['x-ms-format'] = 'arm-id';
   - from: redis.json
     where: $.definitions
     transform: >
-      delete $.OperationStatus.allOf; 
-
+      $.RedisProperties.properties.accessKeys["x-nullable"] = true;
 ```

@@ -23,13 +23,13 @@ namespace Azure.Storage.Blobs.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None,
             BlobClientOptions options = null)
         {
             options ??= ClientBuilder.GetOptions();
-            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
-            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            options.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
+            options.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
 
             container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
             var appendBlob = InstrumentClient(container.GetAppendBlobClient(resourceName ?? GetNewResourceName()));
@@ -43,12 +43,12 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<Stream> OpenWriteAsync(
             AppendBlobClient client,
-            UploadTransferValidationOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             int internalBufferSize)
         {
             return await client.OpenWriteAsync(true, new AppendBlobOpenWriteOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = transferValidation,
                 BufferSize = internalBufferSize
             });
         }
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override Task ParallelUploadAsync(
             AppendBlobClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             StorageTransferOptions transferOptions)
         {
             TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "AppendBlobClient contains no definition for parallel upload.");
@@ -66,11 +66,11 @@ namespace Azure.Storage.Blobs.Tests
         protected override async Task<Response> UploadPartitionAsync(
             AppendBlobClient client,
             Stream source,
-            UploadTransferValidationOptions hashingOptions)
+            UploadTransferValidationOptions transferValidation)
         {
             return (await client.AppendBlockAsync(source, new AppendBlobAppendBlockOptions
             {
-                TransferValidationOptions = hashingOptions
+                TransferValidation = transferValidation
             })).GetRawResponse();
         }
 

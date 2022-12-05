@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string image = default;
             Optional<IList<string>> command = default;
             Optional<IList<ContainerPort>> ports = default;
-            Optional<IList<EnvironmentVariable>> environmentVariables = default;
-            Optional<ContainerPropertiesInstanceView> instanceView = default;
-            ResourceRequirements resources = default;
-            Optional<IList<VolumeMount>> volumeMounts = default;
+            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
+            Optional<ContainerInstanceView> instanceView = default;
+            ContainerResourceRequirements resources = default;
+            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
             Optional<ContainerProbe> livenessProbe = default;
             Optional<ContainerProbe> readinessProbe = default;
             foreach (var property in element.EnumerateObject())
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                            List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item));
+                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item));
                             }
                             environmentVariables = array;
                             continue;
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            instanceView = ContainerPropertiesInstanceView.DeserializeContainerPropertiesInstanceView(property0.Value);
+                            instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resources"))
                         {
-                            resources = ResourceRequirements.DeserializeResourceRequirements(property0.Value);
+                            resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("volumeMounts"))
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VolumeMount> array = new List<VolumeMount>();
+                            List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VolumeMount.DeserializeVolumeMount(item));
+                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item));
                             }
                             volumeMounts = array;
                             continue;

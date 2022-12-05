@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -18,16 +19,10 @@ namespace Azure.ResourceManager.Redis
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
-        public RedisFirewallRuleData(string startIP, string endIP)
+        public RedisFirewallRuleData(IPAddress startIP, IPAddress endIP)
         {
-            if (startIP == null)
-            {
-                throw new ArgumentNullException(nameof(startIP));
-            }
-            if (endIP == null)
-            {
-                throw new ArgumentNullException(nameof(endIP));
-            }
+            Argument.AssertNotNull(startIP, nameof(startIP));
+            Argument.AssertNotNull(endIP, nameof(endIP));
 
             StartIP = startIP;
             EndIP = endIP;
@@ -40,15 +35,15 @@ namespace Azure.ResourceManager.Redis
         /// <param name="systemData"> The systemData. </param>
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
-        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startIP, string endIP) : base(id, name, resourceType, systemData)
+        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIP, IPAddress endIP) : base(id, name, resourceType, systemData)
         {
             StartIP = startIP;
             EndIP = endIP;
         }
 
         /// <summary> lowest IP address included in the range. </summary>
-        public string StartIP { get; set; }
+        public IPAddress StartIP { get; set; }
         /// <summary> highest IP address included in the range. </summary>
-        public string EndIP { get; set; }
+        public IPAddress EndIP { get; set; }
     }
 }

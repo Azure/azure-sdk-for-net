@@ -7,9 +7,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
+using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
@@ -315,10 +319,96 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public async Task CallingCloseAsyncUpdatesIsClosed()
         {
-            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
-            var receiver = new ServiceBusReceiver(mockConnection, "fake", default, new ServiceBusReceiverOptions());
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            var receiver = client.CreateReceiver("queue");
             await receiver.CloseAsync();
             Assert.IsTrue(receiver.IsClosed);
+
+            Assert.IsTrue(((AmqpReceiver)receiver.InnerReceiver).RequestResponseLockedMessages.IsDisposed);
+        }
+
+        [Test]
+        public async Task CreatingReceiverWithoutOptionsGeneratesIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var receiver = client.CreateReceiver("fake");
+
+            var identifier = receiver.Identifier;
+            Assert.That(identifier, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task CreatingReceiverWithIdentifierSetsIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            var setIdentifier = "UniqueIdentifier-abcedefg";
+
+            var options = new ServiceBusReceiverOptions
+            {
+                Identifier = setIdentifier
+            };
+
+            await using var receiver = client.CreateReceiver("fake", options);
+
+            var identifier = receiver.Identifier;
+            Assert.AreEqual(setIdentifier, identifier);
+        }
+
+        [Test]
+        public async Task DeadLetterMessageChecksArguments()
+        {
+            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
+
+            mockReceiver.Setup(r =>
+            r.DeadLetterInternalAsync(
+                It.IsAny<ServiceBusReceivedMessage>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            mockReceiver.Setup(r => r.CloseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var receiver = mockReceiver.Object;
+
+            var properties = new Dictionary<string, object>();
+            properties.Add(AmqpMessageConstants.DeadLetterReasonHeader, "header-1");
+
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(default);
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await receiver.DeadLetterMessageAsync(message, properties, "header-2"));
+            await receiver.CloseAsync();
+        }
+
+        [Test]
+        public async Task DeadLetterMessageAllowsSameHeaders()
+        {
+            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
+
+            mockReceiver.Setup(r =>
+            r.DeadLetterInternalAsync(
+                It.IsAny<ServiceBusReceivedMessage>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            mockReceiver.Setup(r => r.CloseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var receiver = mockReceiver.Object;
+
+            var properties = new Dictionary<string, object>();
+            properties.Add(AmqpMessageConstants.DeadLetterReasonHeader, "header");
+            properties.Add(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, "description");
+
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(default);
+
+            Assert.DoesNotThrowAsync(async () => await receiver.DeadLetterMessageAsync(message, properties, "header", "description"));
+            await receiver.CloseAsync();
         }
     }
 }

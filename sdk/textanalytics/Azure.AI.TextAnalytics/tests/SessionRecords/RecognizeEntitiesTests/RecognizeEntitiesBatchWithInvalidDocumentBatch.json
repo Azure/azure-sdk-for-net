@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "391",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b83223361748794292b4f7f87bad7243-380ce8f458a84343-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "5a3e86fcc88b02d84d416bb64d36f51f",
+        "traceparent": "00-12f7d9a75f40923e875f2d232ea4d5eb-15f2e966d72ec3f8-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "afc0bf36d00f799d26fae225093e618b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -55,18 +55,18 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "f8cd4c45-560b-4d3d-be77-23cd3b161609",
+        "apim-request-id": "289d2717-1774-476f-acbf-4aba9fc67305",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 Apr 2022 23:18:21 GMT",
+        "Date": "Fri, 14 Oct 2022 22:22:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "4"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidRequest",
-          "message": "Invalid document in request.",
+          "message": "Invalid Document in request.",
           "innererror": {
             "code": "InvalidDocumentBatch",
             "message": "Batch request contains too many records. Max 5 records are permitted."
@@ -76,7 +76,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1001128243",
+    "RandomSeed": "858606581",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

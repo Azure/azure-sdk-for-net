@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerPipelineReference pipeline = default;
             string type = default;
             Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<FactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runtimeState = new TriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"))

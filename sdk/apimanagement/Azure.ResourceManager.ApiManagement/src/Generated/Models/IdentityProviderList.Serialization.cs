@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static IdentityProviderList DeserializeIdentityProviderList(JsonElement element)
         {
-            Optional<IReadOnlyList<IdentityProviderContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementIdentityProviderData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IdentityProviderContractData> array = new List<IdentityProviderContractData>();
+                    List<ApiManagementIdentityProviderData> array = new List<ApiManagementIdentityProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdentityProviderContractData.DeserializeIdentityProviderContractData(item));
+                        array.Add(ApiManagementIdentityProviderData.DeserializeApiManagementIdentityProviderData(item));
                     }
                     value = array;
                     continue;

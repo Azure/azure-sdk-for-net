@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Request body structure for data flow debug command. </summary>
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
         /// <summary> The command type. </summary>
         public DataFlowDebugCommandType? Command { get; set; }
         /// <summary> The command payload object. </summary>

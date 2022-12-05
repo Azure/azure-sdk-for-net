@@ -83,7 +83,7 @@ namespace Azure.Identity.Tests
             var fileSystemService = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             using IDisposable fixture = await CredentialTestHelpers.CreateRefreshTokenFixtureAsync(TestEnvironment, Mode, ExpectedServiceName, cloudName);
 
-            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = Guid.NewGuid().ToString() });
+            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = "e0bd2321-07fa-4cf0-87b8-00aa2a747329" });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, default));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);

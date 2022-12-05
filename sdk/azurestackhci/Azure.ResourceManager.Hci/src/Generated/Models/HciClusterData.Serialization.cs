@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<HciProvisioningState> provisioningState = default;
             Optional<HciClusterStatus> status = default;
             Optional<Guid> cloudId = default;
             Optional<string> cloudManagementEndpoint = default;
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Hci
             Optional<Guid> aadTenantId = default;
             Optional<Guid> aadApplicationObjectId = default;
             Optional<Guid> aadServicePrincipalObjectId = default;
-            Optional<ClusterDesiredProperties> desiredProperties = default;
-            Optional<ClusterReportedProperties> reportedProperties = default;
+            Optional<HciClusterDesiredProperties> desiredProperties = default;
+            Optional<HciClusterReportedProperties> reportedProperties = default;
             Optional<float> trialDaysRemaining = default;
             Optional<string> billingModel = default;
             Optional<DateTimeOffset> registrationTimestamp = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            desiredProperties = ClusterDesiredProperties.DeserializeClusterDesiredProperties(property0.Value);
+                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("reportedProperties"))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reportedProperties = ClusterReportedProperties.DeserializeClusterReportedProperties(property0.Value);
+                            reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trialDaysRemaining"))

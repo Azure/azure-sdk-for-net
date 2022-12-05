@@ -40,6 +40,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public string GetNewNonAsciiDirectoryName() => SharesClientBuilder.GetNewNonAsciiDirectoryName();
         public string GetNewFileName() => SharesClientBuilder.GetNewFileName();
         public string GetNewNonAsciiFileName() => SharesClientBuilder.GetNewNonAsciiFileName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(SharesClientBuilder.Tenants.TestConfigDefault.FileServiceEndpoint);
 
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,

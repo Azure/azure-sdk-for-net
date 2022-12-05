@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <PackageReference Include="Azure.Core.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Amqp" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
+    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
+    <ProjectReference Include="..\src\Azure.Communication.CallAutomation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\tests.yml" Link="\tests.yml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecordedEvents\" />
+    <Folder Include="SessionRecordedEvents\CallAutomationClientAutomatedLiveTests\" />
+    <Folder Include="SessionRecordedEvents\CallConnectionAutomatedLiveTests\" />
+    <Folder Include="SessionRecordedEvents\CallRecordingAutomatedLiveTests\" />
+    <Folder Include="SessionRecords\CallAutomationClientAutomatedLiveTests\" />
+    <Folder Include="SessionRecords\CallConnectionAutomatedLiveTests\" />
+    <Folder Include="SessionRecords\CallRecordingAutomatedLiveTests\" />
+  </ItemGroup>
+</Project>
