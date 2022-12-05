@@ -240,7 +240,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             var blobDetails = new BlobParameterBindingDataContent()
             {
-                Connection = connectionSection.Value,
+                Connection = connectionSection.Key,
                 BlobName = blobName,
                 ContainerName = containerName
             };

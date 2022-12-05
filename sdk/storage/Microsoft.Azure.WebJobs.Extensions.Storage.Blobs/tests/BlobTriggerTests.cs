@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     public class BlobTriggerTests
     {
-        private const string ConnectionName = "DefaultEndpointsProtocol";
+        private const string ConnectionName = "AzureWebJobsStorage";
         private const string ContainerName = "container-blobtriggertests";
         private const string BlobName = "blob";
         private const string BlobPath = ContainerName + "/" + BlobName;
