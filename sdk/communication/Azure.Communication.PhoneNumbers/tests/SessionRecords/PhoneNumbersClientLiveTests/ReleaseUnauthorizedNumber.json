@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0417fc69e7f7a04d9f33a915fde6b2b1-391b6261e9250243-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0e4c5e0552cce88590c90eb429c27b8e",
+        "traceparent": "00-479b293bce8d80439077b63a42abd0ef-b7f20e2bd4f62048-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d1b52aa8bccfb0788f08de6c44678119",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:09:10 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 16:22:35 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -19,13 +19,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 05 Dec 2022 16:09:09 GMT",
-        "MS-CV": "1egqgOOQX02t\u002B\u002BB203dPLA.0",
+        "Date": "Mon, 05 Dec 2022 16:22:36 GMT",
+        "MS-CV": "XSctPjsXdk6yC\u002BZQmVI8VQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0pheOYwAAAAARWs9aaBX1TaDl\u002BcADECOETUVYMzFFREdFMDMwOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0zBqOYwAAAADv4aQkVat6SI/Rx6oex3AuTUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "524ms"
+        "X-Processing-Time": "645ms"
       },
       "ResponseBody": {
         "error": {
@@ -41,6 +41,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1409243123"
+    "RandomSeed": "26579622"
   }
 }

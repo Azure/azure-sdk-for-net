@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "30",
         "Content-Type": "application/json",
-        "traceparent": "00-97e3c2599d838744978108d048c1c596-6cb50304b1be3544-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "13ebd71eb0b87532c0dfdb848a8de7ca",
+        "traceparent": "00-8c240aed202ce3449abc741c8b6e84b6-9d16542fdcc5ce46-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ec10f4eda546de46d0c6e494b0479eb0",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:09:50 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 16:23:22 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -23,13 +23,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 05 Dec 2022 16:09:50 GMT",
-        "MS-CV": "Z09PPOw/NUeTfQYs9lQv0A.0",
+        "Date": "Mon, 05 Dec 2022 16:23:22 GMT",
+        "MS-CV": "so/xfENQG0K7rY9vQYCk9g.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0zheOYwAAAACJkkzno9N5R723Fq9ZSxgrTUVYMzFFREdFMDMwOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0\u002BhqOYwAAAADrgWlJQRzZQZ0bQs2idanLTUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "151ms"
+        "X-Processing-Time": "148ms"
       },
       "ResponseBody": {
         "error": {
@@ -42,6 +42,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "989284545"
+    "RandomSeed": "1463525915"
   }
 }
