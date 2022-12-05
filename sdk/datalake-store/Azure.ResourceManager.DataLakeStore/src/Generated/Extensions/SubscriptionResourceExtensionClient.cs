@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Store account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailabilityInformation>> CheckNameAvailabilityAccountAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreAccountNameAvailabilityResult>> CheckDataLakeStoreAccountNameAvailabilityAsync(AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityAccount");
+            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataLakeStoreAccountNameAvailability");
             scope.Start();
             try
             {
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Store account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailabilityInformation> CheckNameAvailabilityAccount(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreAccountNameAvailabilityResult> CheckDataLakeStoreAccountNameAvailability(AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityAccount");
+            using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataLakeStoreAccountNameAvailability");
             scope.Start();
             try
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CapabilityInformation>> GetCapabilityLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreCapabilityInformation>> GetCapabilityLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilityLocation");
             scope.Start();
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CapabilityInformation> GetCapabilityLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreCapabilityInformation> GetCapabilityLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilityLocation");
             scope.Start();

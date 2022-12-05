@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataLakeStore
 
             // invoke the operation
             AzureLocation location = new AzureLocation("EastUS2");
-            CapabilityInformation result = await subscriptionResource.GetCapabilityLocationAsync(location);
+            DataLakeStoreCapabilityInformation result = await subscriptionResource.GetCapabilityLocationAsync(location);
 
             Console.WriteLine($"Succeeded: {result}");
         }

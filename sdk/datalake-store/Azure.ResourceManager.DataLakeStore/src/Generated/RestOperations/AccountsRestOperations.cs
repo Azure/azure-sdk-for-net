@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameAvailabilityInformation>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeStoreAccountNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -669,9 +669,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        NameAvailabilityInformation value = default;
+                        DataLakeStoreAccountNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NameAvailabilityInformation.DeserializeNameAvailabilityInformation(document.RootElement);
+                        value = DataLakeStoreAccountNameAvailabilityResult.DeserializeDataLakeStoreAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameAvailabilityInformation> CheckNameAvailability(string subscriptionId, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<DataLakeStoreAccountNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -697,9 +697,9 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case 200:
                     {
-                        NameAvailabilityInformation value = default;
+                        DataLakeStoreAccountNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NameAvailabilityInformation.DeserializeNameAvailabilityInformation(document.RootElement);
+                        value = DataLakeStoreAccountNameAvailabilityResult.DeserializeDataLakeStoreAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

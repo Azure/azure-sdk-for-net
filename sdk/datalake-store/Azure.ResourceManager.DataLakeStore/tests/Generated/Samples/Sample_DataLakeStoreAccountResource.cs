@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.DataLakeStore
 },
                 DefaultGroup = "test_default_group",
                 EncryptionKeyVersion = "encryption_key_version",
-                FirewallState = FirewallState.Enabled,
-                FirewallAllowAzureIPs = FirewallAllowAzureIPsState.Enabled,
-                TrustedIdProviderState = TrustedIdProviderState.Enabled,
-                NewTier = TierType.Consumption,
+                FirewallState = DataLakeStoreFirewallState.Enabled,
+                FirewallAllowAzureIPs = DataLakeStoreFirewallAllowAzureIPsState.Enabled,
+                TrustedIdProviderState = DataLakeStoreTrustedIdProviderState.Enabled,
+                NewTier = DataLakeStoreCommitmentTierType.Consumption,
             };
             ArmOperation<DataLakeStoreAccountResource> lro = await dataLakeStoreAccount.UpdateAsync(WaitUntil.Completed, patch);
             DataLakeStoreAccountResource result = lro.Value;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataLakeStore
         // Checks whether the specified account name is available or taken
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityAccount_ChecksWhetherTheSpecifiedAccountNameIsAvailableOrTaken()
+        public async Task CheckDataLakeStoreAccountNameAvailability_ChecksWhetherTheSpecifiedAccountNameIsAvailableOrTaken()
         {
             // Generated from example definition: specification/datalake-store/resource-manager/Microsoft.DataLakeStore/stable/2016-11-01/examples/Accounts_CheckNameAvailability.json
             // this example is just showing the usage of "Accounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.DataLakeStore
 
             // invoke the operation
             AzureLocation location = new AzureLocation("EastUS2");
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent("contosoadla", CheckNameAvailabilityParametersType.MicrosoftDataLakeStoreAccounts);
-            NameAvailabilityInformation result = await subscriptionResource.CheckNameAvailabilityAccountAsync(location, content);
+            DataLakeStoreAccountNameAvailabilityContent content = new DataLakeStoreAccountNameAvailabilityContent("contosoadla", DataLakeStoreResourceType.MicrosoftDataLakeStoreAccounts);
+            DataLakeStoreAccountNameAvailabilityResult result = await subscriptionResource.CheckDataLakeStoreAccountNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

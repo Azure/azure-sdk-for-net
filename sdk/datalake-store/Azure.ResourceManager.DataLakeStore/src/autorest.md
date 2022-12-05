@@ -27,6 +27,63 @@ operation-positions:
 
 override-operation-name:
   Accounts_ListByResourceGroup: GetAll
+  Accounts_CheckNameAvailability: CheckDataLakeStoreAccountNameAvailability
+
+rename-mapping:
+  CheckNameAvailabilityParameters: DataLakeStoreAccountNameAvailabilityContent
+  CheckNameAvailabilityParametersType: DataLakeStoreResourceType
+  CreateFirewallRuleWithAccountParameters: FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent
+  CreateVirtualNetworkRuleWithAccountParameters: VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent
+  CreateTrustedIdProviderWithAccountParameters: TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent
+  UpdateFirewallRuleWithAccountParameters: FirewallRuleForDataLakeStoreAccountUpdateContent
+  UpdateTrustedIdProviderWithAccountParameters: TrustedIdProviderForDataLakeStoreAccountUpdateContent
+  UpdateVirtualNetworkRuleWithAccountParameters: VirtualNetworkRuleForDataLakeStoreAccountUpdateContent
+  TierType: DataLakeStoreCommitmentTierType
+  EncryptionConfig: DataLakeStoreAccountEncryptionConfig
+  EncryptionConfigType: DataLakeStoreAccountEncryptionConfigType
+  KeyVaultMetaInfo: DataLakeStoreAccountKeyVaultMetaInfo
+  NameAvailabilityInformation: DataLakeStoreAccountNameAvailabilityResult
+  Usage.id: -|arm-id
+  FirewallRule.properties.startIpAddress: -|ip-address
+  FirewallRule.properties.endIpAddress: -|ip-address
+  CreateOrUpdateFirewallRuleParameters.properties.startIpAddress: -|ip-address
+  CreateOrUpdateFirewallRuleParameters.properties.endIpAddress: -|ip-address
+  UpdateFirewallRuleParameters.properties.startIpAddress: -|ip-address
+  UpdateFirewallRuleParameters.properties.endIpAddress: -|ip-address
+  CreateFirewallRuleWithAccountParameters.properties.startIpAddress: -|ip-address
+  CreateFirewallRuleWithAccountParameters.properties.endIpAddress: -|ip-address
+  UpdateFirewallRuleWithAccountParameters.properties.startIpAddress: -|ip-address
+  UpdateFirewallRuleWithAccountParameters.properties.endIpAddress: -|ip-address
+  NameAvailabilityInformation.nameAvailable: IsNameAvailable
+  VirtualNetworkRule.properties.subnetId: -|arm-id
+  CreateOrUpdateVirtualNetworkRuleParameters.properties.subnetId: -|arm-id
+  UpdateVirtualNetworkRuleParameters.properties.subnetId: -|arm-id
+  CreateVirtualNetworkRuleWithAccountParameters.properties.subnetId: -|arm-id
+  UpdateVirtualNetworkRuleWithAccountParameters.properties.subnetId: -|arm-id
+  TrustedIdProvider.properties.idProvider: -|uri
+  CreateOrUpdateTrustedIdProviderParameters.properties.idProvider: -|uri
+  UpdateTrustedIdProviderParameters.properties.idProvider: -|uri
+  CreateTrustedIdProviderWithAccountParameters.properties.idProvider: -|uri
+  UpdateTrustedIdProviderWithAccountParameters.properties.idProvider: -|uri
+  CapabilityInformation.migrationState: IsUnderMigrationState
+
+prepend-rp-prefix:
+  - FirewallRule
+  - TrustedIdProvider
+  - VirtualNetworkRule
+  - VirtualNetworkRuleListResult
+  - CapabilityInformation
+  - FirewallState
+  - FirewallAllowAzureIPsState
+  - EncryptionProvisioningState
+  - EncryptionState
+  - FirewallRuleListResult
+  - TrustedIdProviderListResult
+  - TrustedIdProviderState
+  - SubscriptionState
+  - UsageListResult
+  - UsageName
+  - UsageUnit
 
 format-by-name-rules:
   'tenantId': 'uuid'

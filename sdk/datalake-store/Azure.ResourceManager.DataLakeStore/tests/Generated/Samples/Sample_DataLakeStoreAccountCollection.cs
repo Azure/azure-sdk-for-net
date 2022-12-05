@@ -86,23 +86,23 @@ namespace Azure.ResourceManager.DataLakeStore
 },
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 DefaultGroup = "test_default_group",
-                EncryptionConfig = new EncryptionConfig(EncryptionConfigType.UserManaged)
+                EncryptionConfig = new DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType.UserManaged)
                 {
-                    KeyVaultMetaInfo = new KeyVaultMetaInfo("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", "test_encryption_key_name", "encryption_key_version"),
+                    KeyVaultMetaInfo = new DataLakeStoreAccountKeyVaultMetaInfo("34adfa4f-cedf-4dc0-ba29-b6d1a69ab345", "test_encryption_key_name", "encryption_key_version"),
                 },
-                EncryptionState = EncryptionState.Enabled,
+                EncryptionState = DataLakeStoreEncryptionState.Enabled,
                 FirewallRules =
 {
-new CreateFirewallRuleWithAccountParameters("test_rule","1.1.1.1","2.2.2.2")
+new FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent("test_rule","1.1.1.1","2.2.2.2")
 },
-                FirewallState = FirewallState.Enabled,
-                FirewallAllowAzureIPs = FirewallAllowAzureIPsState.Enabled,
+                FirewallState = DataLakeStoreFirewallState.Enabled,
+                FirewallAllowAzureIPs = DataLakeStoreFirewallAllowAzureIPsState.Enabled,
                 TrustedIdProviders =
 {
-new CreateTrustedIdProviderWithAccountParameters("test_trusted_id_provider_name","https://sts.windows.net/ea9ec534-a3e3-4e45-ad36-3afc5bb291c1")
+new TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent("test_trusted_id_provider_name",new Uri("https://sts.windows.net/ea9ec534-a3e3-4e45-ad36-3afc5bb291c1"))
 },
-                TrustedIdProviderState = TrustedIdProviderState.Enabled,
-                NewTier = TierType.Consumption,
+                TrustedIdProviderState = DataLakeStoreTrustedIdProviderState.Enabled,
+                NewTier = DataLakeStoreCommitmentTierType.Consumption,
             };
             ArmOperation<DataLakeStoreAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, content);
             DataLakeStoreAccountResource result = lro.Value;

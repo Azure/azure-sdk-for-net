@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
-            FirewallRules = new ChangeTrackingList<CreateFirewallRuleWithAccountParameters>();
-            VirtualNetworkRules = new ChangeTrackingList<CreateVirtualNetworkRuleWithAccountParameters>();
-            TrustedIdProviders = new ChangeTrackingList<CreateTrustedIdProviderWithAccountParameters>();
+            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+            TrustedIdProviders = new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>();
         }
 
         /// <summary>
@@ -55,46 +55,46 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// The Key Vault encryption configuration.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.encryptionConfig
         /// </summary>
-        public EncryptionConfig EncryptionConfig { get; set; }
+        public DataLakeStoreAccountEncryptionConfig EncryptionConfig { get; set; }
         /// <summary>
         /// The current state of encryption for this Data Lake Store account.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.encryptionState
         /// </summary>
-        public EncryptionState? EncryptionState { get; set; }
+        public DataLakeStoreEncryptionState? EncryptionState { get; set; }
         /// <summary>
         /// The list of firewall rules associated with this Data Lake Store account.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallRules
         /// </summary>
-        public IList<CreateFirewallRuleWithAccountParameters> FirewallRules { get; }
+        public IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> FirewallRules { get; }
         /// <summary>
         /// The list of virtual network rules associated with this Data Lake Store account.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.virtualNetworkRules
         /// </summary>
-        public IList<CreateVirtualNetworkRuleWithAccountParameters> VirtualNetworkRules { get; }
+        public IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> VirtualNetworkRules { get; }
         /// <summary>
         /// The current state of the IP address firewall for this Data Lake Store account.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallState
         /// </summary>
-        public FirewallState? FirewallState { get; set; }
+        public DataLakeStoreFirewallState? FirewallState { get; set; }
         /// <summary>
         /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallAllowAzureIps
         /// </summary>
-        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public DataLakeStoreFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary>
         /// The list of trusted identity providers associated with this Data Lake Store account.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.trustedIdProviders
         /// </summary>
-        public IList<CreateTrustedIdProviderWithAccountParameters> TrustedIdProviders { get; }
+        public IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> TrustedIdProviders { get; }
         /// <summary>
         /// The current state of the trusted identity provider feature for this Data Lake Store account.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.trustedIdProviderState
         /// </summary>
-        public TrustedIdProviderState? TrustedIdProviderState { get; set; }
+        public DataLakeStoreTrustedIdProviderState? TrustedIdProviderState { get; set; }
         /// <summary>
         /// The commitment tier to use for next month.
         /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.newTier
         /// </summary>
-        public TierType? NewTier { get; set; }
+        public DataLakeStoreCommitmentTierType? NewTier { get; set; }
     }
 }
