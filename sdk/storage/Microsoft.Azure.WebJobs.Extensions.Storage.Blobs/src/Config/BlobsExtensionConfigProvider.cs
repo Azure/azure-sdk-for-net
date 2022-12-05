@@ -234,11 +234,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private ParameterBindingData CreateParameterBindingData(string connection, string blobName, string containerName)
         {
-            var connectionString = ResolveConnection(connection);
+            var client = _blobServiceClientProvider.Get(connection);
 
             var blobDetails = new BlobParameterBindingDataContent()
             {
-                Connection = connectionString,
+                Connection = client.connectionString,
                 BlobName = blobName,
                 ContainerName = containerName
             };
@@ -246,19 +246,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             var blobDetailsBinaryData = new BinaryData(blobDetails);
             var bindingData = new ParameterBindingData("1.0", Constants.WebJobsBlobExtensionName, blobDetailsBinaryData, "application/json");
             return bindingData;
-        }
-
-        private string ResolveConnection(string connection)
-        {
-            string connectionName = !string.IsNullOrEmpty(connection) ? _nameResolver.ResolveWholeString(connection) : Constants.DefaultAzureStorageConnectionName;
-            IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSection(connectionName);
-
-            if (!connectionSection.Exists())
-            {
-                throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(connectionName)}' does not exist. Make sure that it is a defined App Setting.");
-            }
-
-            return connectionSection.Value;
         }
 
         #endregion
