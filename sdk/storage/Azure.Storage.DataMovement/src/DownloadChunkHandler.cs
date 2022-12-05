@@ -47,39 +47,39 @@ namespace Azure.Storage.DataMovement
         private long _expectedLength;
 
         /// <summary>
-        /// Holds all ranges
+        /// List that holds all ranges of chunks to process.
         /// </summary>
         private readonly IList<HttpRange> _ranges;
         private int _rangesCount;
         /// <summary>
-        /// To hold which Range we are currently waiting on to download
+        /// Holds which range we are currently waiting on to download.
         /// </summary>
         private int _currentRangeIndex;
 
         /// <summary>
         /// If any download chunks come in early before the chunk before it
-        /// to copy to the file, let's hold it in order here before we copy it over
+        /// to copy to the file, let's hold it in order here before we copy it over.
         /// </summary>
         private ConcurrentDictionary<long, string> _rangesCompleted;
         private CancellationToken _cancellationToken;
 
         /// <summary>
-        /// Constructing controller for downloading the chunks to each file
+        /// The controller for downloading the chunks to each file.
         /// </summary>
         /// <param name="currentTransferred">
-        /// The initial amount of bytes that have already been transferred
+        /// The amount of data that has already been transferred in bytes.
         /// </param>
         /// <param name="expectedLength">
-        /// Expected Bytes Length.
+        /// The expected length of the content to be downloaded in bytes.
         /// </param>
         /// <param name="ranges">
-        /// Expected ranges the chunk ranges will come back as
+        /// List that holds the expected ranges the chunk ranges will come back as.
         /// </param>
         /// <param name="behaviors">
-        /// Function calls
+        /// Contains all the supported function calls.
         /// </param>
         /// <param name="cancellationToken">
-        /// Cancellation Token
+        /// The cancellation token to propagate notifications that the operation should be cancelled.
         /// </param>
         /// <exception cref="ArgumentException"></exception>
         public DownloadChunkHandler(
@@ -282,7 +282,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Updates Progress handler and the current Range we are waiting on
+        /// Update the progress handler and the current range we are waiting on.
         /// </summary>
         /// <param name="bytesDownloaded"></param>
         private void UpdateBytesAndRange(long bytesDownloaded)
