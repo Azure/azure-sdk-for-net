@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Tests
             var subscription = await client.GetDefaultSubscriptionAsync();
             var resourceProviders = subscription.GetResourceProviders();
             var subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
-            var resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.resources/resourceGroups");
+            var resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.Resources/resourcegroups");
             Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
             Assert.AreEqual(resourceGroupApiVersion, "2019-10-01");
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Tests
             var subscription = await client.GetDefaultSubscriptionAsync();
             var resourceProviders = subscription.GetResourceProviders();
             subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
-            resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.resources/resourceGroups");
+            resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.Resources/resourcegroups");
             Assert.AreEqual(subscriptionApiVersion, "2021-01-01");
             Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
         }

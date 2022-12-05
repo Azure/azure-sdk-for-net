@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -113,26 +114,40 @@ namespace Azure.ResourceManager
             if (options.ApiVersionProfile != null)
             {
                 // Refer to https://github.com/Azure/azure-rest-api-specs/tree/main/profile#file-structure for data structure.
-                var allProfile = options.ApiVersionProfile.ToObjectFromJson() as Dictionary<string, object>;
-                var armProfile = allProfile["resource-manager"] as Dictionary<string, object>;
+                var allProfile = options.ApiVersionProfile.ToObjectFromJson<Dictionary<string, Dictionary<string, object>>>();
+                if (!allProfile.TryGetValue("resource-manager", out var armProfile))
+                {
+                    throw new InvalidOperationException("The ApiVersionProfile does not contain resource-manager section.");
+                }
                 foreach (var keyValuePair in armProfile)
                 {
                     var namespaceName = keyValuePair.Key;
                     if (!ResourceApiVersionCache.TryGetValue(namespaceName, out var apiVersionCache))
                     {
-                        apiVersionCache = new Dictionary<string, string>();
+                        apiVersionCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                         ResourceApiVersionCache.TryAdd(namespaceName, apiVersionCache);
                     }
-                    foreach (var resourceTypeKeyValue in keyValuePair.Value as Dictionary<string, object>)
+                    if (!(keyValuePair.Value is JsonElement element))
                     {
-                        var apiVersion = resourceTypeKeyValue.Key;
-                        var resourceTypes = resourceTypeKeyValue.Value;
-                        foreach (var resourceType in resourceTypes as IList<object>)
+                        throw new InvalidOperationException("The input ApiVersionProfile option does not have a valid JSON format.");
+                    }
+
+                    foreach (var apiVersionProperty in element.EnumerateObject())
+                    {
+                        var apiVersion = apiVersionProperty.Name;
+                        foreach (var resourceTypeItem in apiVersionProperty.Value.EnumerateArray())
                         {
-                            var resourceTypeDict = resourceType as Dictionary<string, object>;
-                            var type = resourceTypeDict["resourceType"] as string;
-                            ApiVersionOverrides[$"{namespaceName}/{type}"] = apiVersion;
-                            apiVersionCache[type] = apiVersion;
+                            string resourceType = default;
+                            foreach (var property in resourceTypeItem.EnumerateObject())
+                            {
+                                if (property.NameEquals("resourceType"))
+                                {
+                                    resourceType = property.Value.GetString();
+                                    break;
+                                }
+                            }
+                            ApiVersionOverrides[$"{namespaceName}/{resourceType}"] = apiVersion;
+                            apiVersionCache[resourceType] = apiVersion;
                         }
                     }
                 }
@@ -143,7 +158,7 @@ namespace Azure.ResourceManager
                 ApiVersionOverrides[keyValuePair.Key] = keyValuePair.Value;
                 if (!ResourceApiVersionCache.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
                 {
-                    apiVersionCache = new Dictionary<string, string>();
+                    apiVersionCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     ResourceApiVersionCache.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
                 }
                 apiVersionCache[keyValuePair.Key.Type] = keyValuePair.Value;
