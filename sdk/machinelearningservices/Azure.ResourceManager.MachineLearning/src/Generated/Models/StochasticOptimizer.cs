@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Stochastic optimizer for image models. </summary>
+    /// <summary>
+    /// Stochastic optimizer for image models.
+    /// Serialized Name: StochasticOptimizer
+    /// </summary>
     public readonly partial struct StochasticOptimizer : IEquatable<StochasticOptimizer>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AdamValue = "Adam";
         private const string AdamwValue = "Adamw";
 
-        /// <summary> No optimizer selected. </summary>
+        /// <summary>
+        /// No optimizer selected.
+        /// Serialized Name: StochasticOptimizer.None
+        /// </summary>
         public static StochasticOptimizer None { get; } = new StochasticOptimizer(NoneValue);
-        /// <summary> Stochastic Gradient Descent optimizer. </summary>
+        /// <summary>
+        /// Stochastic Gradient Descent optimizer.
+        /// Serialized Name: StochasticOptimizer.Sgd
+        /// </summary>
         public static StochasticOptimizer Sgd { get; } = new StochasticOptimizer(SgdValue);
-        /// <summary> Adam is algorithm the optimizes stochastic objective functions based on adaptive estimates of moments. </summary>
+        /// <summary>
+        /// Adam is algorithm the optimizes stochastic objective functions based on adaptive estimates of moments
+        /// Serialized Name: StochasticOptimizer.Adam
+        /// </summary>
         public static StochasticOptimizer Adam { get; } = new StochasticOptimizer(AdamValue);
-        /// <summary> AdamW is a variant of the optimizer Adam that has an improved implementation of weight decay. </summary>
+        /// <summary>
+        /// AdamW is a variant of the optimizer Adam that has an improved implementation of weight decay.
+        /// Serialized Name: StochasticOptimizer.Adamw
+        /// </summary>
         public static StochasticOptimizer Adamw { get; } = new StochasticOptimizer(AdamwValue);
         /// <summary> Determines if two <see cref="StochasticOptimizer"/> values are the same. </summary>
         public static bool operator ==(StochasticOptimizer left, StochasticOptimizer right) => left.Equals(right);
