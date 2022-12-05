@@ -776,10 +776,8 @@ namespace Azure.Messaging.WebPubSub.Clients
                 return;
             }
 
-            var uri = BuildRecoveryUri();
-
             // Can't recovery
-            if (uri == null)
+            if (!TryBuildRecoveryUri(out var uri))
             {
                 WebPubSubClientEventSource.Log.StopRecovery(_connectionId, "Connection id or reconnection token is not availble");
                 await HandleConnectionCloseAndNoRecovery(_latestDisconnectedMessage, token).ConfigureAwait(false);
@@ -961,7 +959,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             }
         }
 
-        private Uri BuildRecoveryUri()
+        private bool TryBuildRecoveryUri(out Uri uri)
         {
             if (_connectionId != null && _reconnectionToken != null)
             {
@@ -970,9 +968,11 @@ namespace Azure.Messaging.WebPubSub.Clients
                 query.Add(RecoverConnectionIdQuery, _connectionId);
                 query.Add(RecoverReconnectionTokenQuery, _reconnectionToken);
                 builder.Query = query.ToString();
-                return builder.Uri;
+                uri = builder.Uri;
+                return true;
             }
-            return null;
+            uri = null;
+            return false;
         }
 
         private AckEntity CreateAckEntity(ulong ackId)
@@ -1059,6 +1059,9 @@ namespace Azure.Messaging.WebPubSub.Clients
             {
                 lock (_lock)
                 {
+                    // Every time we got a message with sequence-id, we need to response a sequence ack after a period.
+                    // Consider we receive 1,2,3 and connection drops. After recovery, we may get id 2. We need to also
+                    // response 3 to tell the service what we've got.
                     _updated = true;
 
                     if (sequenceId > _sequenceId)
