@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b9a877593a53be4db0f53d4451c784e9-a7e42d0aaa75474b-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "db3cbaec8519a151b8696c4a97937e67",
+        "traceparent": "00-c1413d2fee415242803124852955d985-6d8b99bc75b27841-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1760859329b610649622644f025e1a62",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:22:32 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 17:47:36 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -19,13 +19,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 05 Dec 2022 16:22:32 GMT",
-        "MS-CV": "uoKmu0kvx0uxB3KxyFQqNg.0",
+        "Date": "Mon, 05 Dec 2022 17:47:36 GMT",
+        "MS-CV": "eVSiD4d870Sg4HwBPwUuGQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0yBqOYwAAAADf572RscBEQ6rb25uuzbxkTUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0uC6OYwAAAAD9ZOYG\u002B\u002B7MS4NK2bsRzceMTUVYMzFFREdFMDMyMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "471ms"
+        "X-Processing-Time": "968ms"
       },
       "ResponseBody": {
         "error": {
@@ -38,6 +38,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1618834601"
+    "RandomSeed": "678601644"
   }
 }

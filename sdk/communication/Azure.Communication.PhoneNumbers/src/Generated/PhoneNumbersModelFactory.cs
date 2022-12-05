@@ -25,9 +25,19 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of PhoneNumberCountry. </summary>
         /// <param name="localizedName"> Represents the name of the country. </param>
         /// <param name="countryCode"> Represents the abbreviated name of the country. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="countryCode"/> is null. </exception>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCountry"/> instance for mocking. </returns>
         public static PhoneNumberCountry PhoneNumberCountry(string localizedName = null, string countryCode = null)
         {
+            if (localizedName == null)
+            {
+                throw new ArgumentNullException(nameof(localizedName));
+            }
+            if (countryCode == null)
+            {
+                throw new ArgumentNullException(nameof(countryCode));
+            }
+
             return new PhoneNumberCountry(localizedName, countryCode);
         }
 
@@ -43,9 +53,19 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of PhoneNumberAdministrativeDivision. </summary>
         /// <param name="localizedName"> Represents the localized name of the administrative division of the locality. e.g. state or province localized name. </param>
         /// <param name="abbreviatedName"> Represents the abbreviated name of the administrative division of the locality. e.g. state or province abbreviation such as WA (Washington). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="abbreviatedName"/> is null. </exception>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAdministrativeDivision"/> instance for mocking. </returns>
         public static PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null)
         {
+            if (localizedName == null)
+            {
+                throw new ArgumentNullException(nameof(localizedName));
+            }
+            if (abbreviatedName == null)
+            {
+                throw new ArgumentNullException(nameof(abbreviatedName));
+            }
+
             return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName);
         }
 

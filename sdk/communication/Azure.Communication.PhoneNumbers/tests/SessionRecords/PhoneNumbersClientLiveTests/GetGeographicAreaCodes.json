@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-35580b9544c8ed47b8ae5e74253e0ed6-6cc898962a805a4e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "7b1e5929db0e000c2ac857162e7217f5",
+        "traceparent": "00-bf7f785b307eb246acf254a2216cc3a9-e223a9805ab88047-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "16d0480ddc8ccd3e86193a19f59c371d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:22:24 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 17:47:23 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -19,13 +19,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-12-01",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Dec 2022 16:22:24 GMT",
-        "MS-CV": "lPKqwrltckO/1mAZ0GPFuw.0",
+        "Date": "Mon, 05 Dec 2022 17:47:24 GMT",
+        "MS-CV": "M9WkMkz6T0CP0MVrKLWDhA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0wBqOYwAAAAAuaz5BHploSYlBKTv1GUD1TUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0rC6OYwAAAADOUugetsTjSL5I4fJ/j2AmTUVYMzFFREdFMDMyMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "456ms"
+        "X-Processing-Time": "985ms"
       },
       "ResponseBody": {
         "phoneNumberLocalities": [
@@ -604,13 +604,6 @@
             }
           },
           {
-            "localizedName": "Lowell",
-            "administrativeDivision": {
-              "localizedName": "MA",
-              "abbreviatedName": "MA"
-            }
-          },
-          {
             "localizedName": "Lynn",
             "administrativeDivision": {
               "localizedName": "MA",
@@ -728,6 +721,13 @@
               "localizedName": "MN",
               "abbreviatedName": "MN"
             }
+          },
+          {
+            "localizedName": "Mankato",
+            "administrativeDivision": {
+              "localizedName": "MN",
+              "abbreviatedName": "MN"
+            }
           }
         ],
         "nextLink": "/availablePhoneNumbers/countries/US/localities?api-version=2022-12-01\u0026skip=100\u0026maxPageSize=100"
@@ -739,11 +739,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-addaa9f68ec2454081f6a8f223b613ca-47702f7f0b1ec243-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "2d2b86dcb4ff565116c7381bfd5cd4a1",
+        "traceparent": "00-d271ee04bcf7a940b7378a17d80b1de6-fa7a3b7c6873ed48-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8523cd773de971aa9f835f446ea37984",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:22:25 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 17:47:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -752,13 +752,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-12-01",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Dec 2022 16:22:26 GMT",
-        "MS-CV": "wefxf8jflkyjaa/5HJgPMA.0",
+        "Date": "Mon, 05 Dec 2022 17:47:26 GMT",
+        "MS-CV": "Wg/M6vTcrE2vwOooqZWiHA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0wRqOYwAAAAAibQ4Tn5VNT4kpgWHxk4BUTUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0rS6OYwAAAABE0dtZ16NHTIrY9kB/4oYyTUVYMzFFREdFMDMyMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1222ms"
+        "X-Processing-Time": "2270ms"
       },
       "ResponseBody": {
         "areaCodes": [
@@ -772,6 +772,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "911452618"
+    "RandomSeed": "864387752"
   }
 }

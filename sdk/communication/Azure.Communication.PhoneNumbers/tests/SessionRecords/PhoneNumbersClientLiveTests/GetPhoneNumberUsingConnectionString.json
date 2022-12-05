@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-53c306c1965683409e9c778f4bccf9ff-b315dda633492e4d-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "1b98537cc7940e24ce124731e7ca386d",
+        "traceparent": "00-3d186cb8ecd3b7468700b9ef4b1ce680-4d3d981f4428924a-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b02f378250e5b1f7d98ea3af2d7ce4b8",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:22:48 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 17:47:56 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -19,13 +19,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Dec 2022 16:22:49 GMT",
-        "MS-CV": "g0seq/8m4USorHWp81I5lw.0",
+        "Date": "Mon, 05 Dec 2022 17:47:58 GMT",
+        "MS-CV": "LaGL03aHakaQUwQuLRXieQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "02BqOYwAAAADWDBSFdULIQYvBh37rX1BZTUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0zC6OYwAAAACO6u391bKOTKOAdntEZFxuTUVYMzFFREdFMDMyMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1480ms"
+        "X-Processing-Time": "1661ms"
       },
       "ResponseBody": {
         "id": "Sanitized",
@@ -49,6 +49,6 @@
   "Variables": {
     "AZURE_PHONE_NUMBER_1": "\u002B14255550123",
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1738776973"
+    "RandomSeed": "127365628"
   }
 }

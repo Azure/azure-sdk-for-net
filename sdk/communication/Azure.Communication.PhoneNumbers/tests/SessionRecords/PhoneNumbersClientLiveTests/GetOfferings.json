@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cca6d90f1a00cc4ea4ee74795eb13943-93fa7ac9aa2b9b4d-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "a44fd9d89ca13f8541372e77367df2ff",
+        "traceparent": "00-b04402a36846a2478e88970b9d2c9009-534fcc36c42f874e-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "30ee81513a829a98111e984d6d81c715",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:22:28 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 17:47:30 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -19,13 +19,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-12-01",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Dec 2022 16:22:29 GMT",
-        "MS-CV": "glqAkhwVgECym4TJstZw/w.0",
+        "Date": "Mon, 05 Dec 2022 17:47:31 GMT",
+        "MS-CV": "HSQl27lvLkS9OfuH\u002BeAusQ.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xBqOYwAAAAB6rbSK7wvpQoYnOO1lXkxmTUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0si6OYwAAAADedGWA95nBSr7n2vXQGvfXTUVYMzFFREdFMDMyMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "921ms"
+        "X-Processing-Time": "1211ms"
       },
       "ResponseBody": {
         "phoneNumberOfferings": [
@@ -75,6 +75,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1766349715"
+    "RandomSeed": "710557991"
   }
 }

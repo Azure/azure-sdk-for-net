@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "137",
         "Content-Type": "application/json",
-        "traceparent": "00-42eca9fc889a3f4b8153e35e55724853-4f8c67ce47bda84c-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "2f636bd274cfa6c546e8f189d5111524",
+        "traceparent": "00-d7fafd20c65eee49a0378444ba7faeb4-12779763205bd249-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221205.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b7739ea2aa5386f439dcab911de7b2af",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Dec 2022 16:22:20 GMT",
+        "x-ms-date": "Mon, 05 Dec 2022 17:47:19 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-useragent": "acs-test"
       },
@@ -30,13 +30,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 05 Dec 2022 16:22:21 GMT",
-        "MS-CV": "fksLzfhWt0q0I\u002BS1CKLFfA.0",
+        "Date": "Mon, 05 Dec 2022 17:47:20 GMT",
+        "MS-CV": "ydvPPG8xck\u002Bq7On5/w/nrw.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0vBqOYwAAAAAZnd6jTKREQKxjGh/9\u002B2ZQTUVYMzFFREdFMDQyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0py6OYwAAAAAJ/3ukyUCxTIflJWqn0/oLTUVYMzFFREdFMDMyMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "940ms"
+        "X-Processing-Time": "1239ms"
       },
       "ResponseBody": {
         "error": {
@@ -52,6 +52,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1433511240"
+    "RandomSeed": "944917897"
   }
 }
