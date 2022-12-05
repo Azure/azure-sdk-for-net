@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Status of gateway is live. </summary>
-    public partial class GatewayListStatusLive
+    public partial class AnalysisGatewayStatus
     {
-        /// <summary> Initializes a new instance of GatewayListStatusLive. </summary>
-        internal GatewayListStatusLive()
+        /// <summary> Initializes a new instance of AnalysisGatewayStatus. </summary>
+        internal AnalysisGatewayStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayListStatusLive. </summary>
+        /// <summary> Initializes a new instance of AnalysisGatewayStatus. </summary>
         /// <param name="status"> Live message of list gateway. Status: 0 - Live. </param>
-        internal GatewayListStatusLive(AnalysisStatus? status)
+        internal AnalysisGatewayStatus(AnalysisStatus? status)
         {
             Status = status;
         }

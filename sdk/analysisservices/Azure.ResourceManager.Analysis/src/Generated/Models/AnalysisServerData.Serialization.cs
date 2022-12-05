@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Analysis
                 writer.WritePropertyName("serverMonitorMode");
                 writer.WriteStringValue(ServerMonitorMode.Value.ToString());
             }
-            if (Optional.IsDefined(AnalysisServerSKU))
+            if (Optional.IsDefined(AnalysisServerSku))
             {
                 writer.WritePropertyName("sku");
-                writer.WriteObjectValue(AnalysisServerSKU);
+                writer.WriteObjectValue(AnalysisServerSku);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

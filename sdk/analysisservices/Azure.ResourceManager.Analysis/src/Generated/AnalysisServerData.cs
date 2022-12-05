@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="state"> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="serverFullName"> The full name of the Analysis Services resource. </param>
-        /// <param name="analysisServerSKU"> The SKU of the Analysis Services resource. </param>
+        /// <param name="analysisServerSku"> The SKU of the Analysis Services resource. </param>
         /// <param name="analysisSku"> The SKU of the Analysis Services resource. </param>
-        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSKU, AnalysisResourceSku analysisSku) : base(id, name, resourceType, systemData, tags, location)
+        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSku, AnalysisResourceSku analysisSku) : base(id, name, resourceType, systemData, tags, location)
         {
             AsAdministrators = asAdministrators;
             BackupBlobContainerUri = backupBlobContainerUri;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Analysis
             State = state;
             ProvisioningState = provisioningState;
             ServerFullName = serverFullName;
-            AnalysisServerSKU = analysisServerSKU;
+            AnalysisServerSku = analysisServerSku;
             AnalysisSku = analysisSku;
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Analysis
         /// <summary> The full name of the Analysis Services resource. </summary>
         public string ServerFullName { get; }
         /// <summary> The SKU of the Analysis Services resource. </summary>
-        public AnalysisResourceSku AnalysisServerSKU { get; set; }
+        public AnalysisResourceSku AnalysisServerSku { get; set; }
         /// <summary> The SKU of the Analysis Services resource. </summary>
         public AnalysisResourceSku AnalysisSku { get; set; }
     }

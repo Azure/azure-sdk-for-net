@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class GatewayListStatusLive
+    public partial class AnalysisGatewayStatus
     {
-        internal static GatewayListStatusLive DeserializeGatewayListStatusLive(JsonElement element)
+        internal static AnalysisGatewayStatus DeserializeAnalysisGatewayStatus(JsonElement element)
         {
             Optional<AnalysisStatus> status = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new GatewayListStatusLive(Optional.ToNullable(status));
+            return new AnalysisGatewayStatus(Optional.ToNullable(status));
         }
     }
 }

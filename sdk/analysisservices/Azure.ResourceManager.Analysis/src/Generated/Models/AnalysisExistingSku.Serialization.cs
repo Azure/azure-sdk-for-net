@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AsExistingResourceSkuDetails
+    public partial class AnalysisExistingSku
     {
-        internal static AsExistingResourceSkuDetails DeserializeAsExistingResourceSkuDetails(JsonElement element)
+        internal static AnalysisExistingSku DeserializeAnalysisExistingSku(JsonElement element)
         {
             Optional<AnalysisResourceSku> sku = default;
             Optional<ResourceType> resourceType = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AsExistingResourceSkuDetails(sku.Value, Optional.ToNullable(resourceType));
+            return new AnalysisExistingSku(sku.Value, Optional.ToNullable(resourceType));
         }
     }
 }

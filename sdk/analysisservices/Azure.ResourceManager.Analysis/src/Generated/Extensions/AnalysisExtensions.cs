@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AnalysisResourceSku> GetSkusForNewServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSkusForNewServersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEligibleSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AnalysisResourceSku> GetSkusForNewServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<AnalysisResourceSku> GetEligibleSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSkusForNewServers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEligibleSkus(cancellationToken);
         }
 
         /// <summary>
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<AnalysisServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityServerAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAnalysisServerNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<AnalysisServerNameAvailabilityResult> CheckNameAvailabilityServer(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityServer(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAnalysisServerNameAvailability(location, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)

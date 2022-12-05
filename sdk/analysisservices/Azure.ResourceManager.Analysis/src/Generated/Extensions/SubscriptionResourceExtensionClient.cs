@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Analysis
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AnalysisResourceSku> GetSkusForNewServersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AnalysisResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
+                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEligibleSkus");
                 scope.Start();
                 try
                 {
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.Analysis
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AnalysisResourceSku> GetSkusForNewServers(CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalysisResourceSku> GetEligibleSkus(CancellationToken cancellationToken = default)
         {
             Page<AnalysisResourceSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusForNewServers");
+                using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEligibleSkus");
                 scope.Start();
                 try
                 {
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalysisServerNameAvailabilityResult>> CheckNameAvailabilityServerAsync(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
+            using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAnalysisServerNameAvailability");
             scope.Start();
             try
             {
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="location"> The region name which the operation will lookup into. </param>
         /// <param name="content"> Contains the information used to provision the Analysis Services server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalysisServerNameAvailabilityResult> CheckNameAvailabilityServer(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityServer");
+            using var scope = AnalysisServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAnalysisServerNameAvailability");
             scope.Start();
             try
             {

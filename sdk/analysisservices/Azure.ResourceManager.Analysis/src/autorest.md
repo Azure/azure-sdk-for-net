@@ -16,7 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-
 rename-mapping:
   State: AnalysisState
   Status: AnalysisStatus
@@ -24,11 +23,11 @@ rename-mapping:
   AnalysisServicesServers.value: AnalysisResources
 #   SkuEnumerationForNewResourceResult.value: SKUs
   Resource.sku: AnalysisSku
-  AnalysisServicesServer.properties.sku: AnalysisServerSKU
+  AnalysisServicesServer.properties.sku: AnalysisServerSku
   ServerAdministrators.members: AsAdministratorIdentities
   CheckServerNameAvailabilityResult.nameAvailable: IsNameAvailable
   IPv4FirewallSettings.enablePowerBIService: IsPowerBIServiceEnabled
-  SkuDetailsForExistingResource: AsExistingResourceSkuDetails
+  SkuDetailsForExistingResource: AnalysisExistingSku
   SkuEnumerationForExistingResourceResult: ExistingResourceResultSkuEnumeration
   SkuEnumerationForNewResourceResult: NewResourceResultSkuEnumeration
   CheckServerNameAvailabilityContent: AnalysisServicesServerNameAvailabilityContent
@@ -50,6 +49,7 @@ rename-mapping:
   AnalysisServicesServerData: AnalysisServerData
   AnalysisServicesServerResource: AnalysisServerResource
   AnalysisServicesServerCollection: AnalysisServerCollection
+  GatewayListStatusLive: AnalysisGatewayStatus
   Status.0: Zero
 
 
@@ -85,6 +85,8 @@ rename-rules:
 
 override-operation-name:
   Servers_ListSkusForExisting: GetExistingSkus
+  Servers_CheckNameAvailability: CheckAnalysisServerNameAvailability
+  Servers_ListSkusForNew: GetEligibleSkus
 
 directive:
   - remove-operation: Servers_ListOperationResults

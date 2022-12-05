@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
         internal ExistingResourceResultSkuEnumeration()
         {
-            Value = new ChangeTrackingList<AsExistingResourceSkuDetails>();
+            Value = new ChangeTrackingList<AnalysisExistingSku>();
         }
 
         /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
         /// <param name="value"> The collection of available SKUs for existing resources. </param>
-        internal ExistingResourceResultSkuEnumeration(IReadOnlyList<AsExistingResourceSkuDetails> value)
+        internal ExistingResourceResultSkuEnumeration(IReadOnlyList<AnalysisExistingSku> value)
         {
             Value = value;
         }
 
         /// <summary> The collection of available SKUs for existing resources. </summary>
-        public IReadOnlyList<AsExistingResourceSkuDetails> Value { get; }
+        public IReadOnlyList<AnalysisExistingSku> Value { get; }
     }
 }

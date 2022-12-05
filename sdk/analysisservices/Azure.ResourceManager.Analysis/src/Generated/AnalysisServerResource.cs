@@ -359,10 +359,10 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListSkusForExisting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AsExistingResourceSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AsExistingResourceSkuDetails> GetExistingSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AnalysisExistingSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AnalysisExistingSku> GetExistingSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AsExistingResourceSkuDetails>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AnalysisExistingSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.GetExistingSkus");
                 scope.Start();
@@ -386,10 +386,10 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListSkusForExisting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AsExistingResourceSkuDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AsExistingResourceSkuDetails> GetExistingSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AnalysisExistingSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AnalysisExistingSku> GetExistingSkus(CancellationToken cancellationToken = default)
         {
-            Page<AsExistingResourceSkuDetails> FirstPageFunc(int? pageSizeHint)
+            Page<AnalysisExistingSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.GetExistingSkus");
                 scope.Start();
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListGatewayStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GatewayListStatusLive>> GetGatewayStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalysisGatewayStatus>> GetGatewayStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.GetGatewayStatus");
             scope.Start();
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Analysis
         /// Operation Id: Servers_ListGatewayStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GatewayListStatusLive> GetGatewayStatus(CancellationToken cancellationToken = default)
+        public virtual Response<AnalysisGatewayStatus> GetGatewayStatus(CancellationToken cancellationToken = default)
         {
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.GetGatewayStatus");
             scope.Start();
