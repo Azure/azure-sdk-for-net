@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             return lro.Value;
         }
 
-        protected async Task<PrivateZoneResource> CreatePrivateZone(ResourceGroupResource resourceGroup,string zoneName)
+        protected async Task<PrivateDnsZoneResource> CreatePrivateZone(ResourceGroupResource resourceGroup,string zoneName)
         {
-            var data = new PrivateZoneData("global")
+            var data = new PrivateDnsZoneData("global")
             {
             };
-            var privateZone = await resourceGroup.GetPrivateZones().CreateOrUpdateAsync(WaitUntil.Completed,zoneName,data);
+            var privateZone = await resourceGroup.GetPrivateDnsZones().CreateOrUpdateAsync(WaitUntil.Completed,zoneName,data);
             return privateZone.Value;
         }
     }

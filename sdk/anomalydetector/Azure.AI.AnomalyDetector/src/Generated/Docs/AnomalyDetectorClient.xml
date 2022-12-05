@@ -7,7 +7,7 @@ This sample shows how to call DetectUnivariateEntireSeriesAsync with required re
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -32,7 +32,7 @@ This sample shows how to call DetectUnivariateEntireSeriesAsync with all request
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -73,7 +73,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DetectRequest</c>:
+Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
@@ -93,7 +93,7 @@ Schema for <c>DetectRequest</c>:
 
 Response Body:
 
-Schema for <c>EntireDetectResponse</c>:
+Schema for <c>UnivariateDetectionResult</c>:
 <code>{
   period: number, # Required.
   expectedValues: [number], # Required.
@@ -114,7 +114,7 @@ This sample shows how to call DetectUnivariateEntireSeries with required request
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -139,7 +139,7 @@ This sample shows how to call DetectUnivariateEntireSeries with all request cont
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -180,7 +180,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DetectRequest</c>:
+Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
@@ -200,7 +200,7 @@ Schema for <c>DetectRequest</c>:
 
 Response Body:
 
-Schema for <c>EntireDetectResponse</c>:
+Schema for <c>UnivariateDetectionResult</c>:
 <code>{
   period: number, # Required.
   expectedValues: [number], # Required.
@@ -221,7 +221,7 @@ This sample shows how to call DetectUnivariateLastPointAsync with required reque
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -247,7 +247,7 @@ This sample shows how to call DetectUnivariateLastPointAsync with all request co
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -287,7 +287,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DetectRequest</c>:
+Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
@@ -307,7 +307,7 @@ Schema for <c>DetectRequest</c>:
 
 Response Body:
 
-Schema for <c>LastDetectResponse</c>:
+Schema for <c>UnivariateLastDetectionResult</c>:
 <code>{
   period: number, # Required.
   suggestedWindow: number, # Required.
@@ -329,7 +329,7 @@ This sample shows how to call DetectUnivariateLastPoint with required request co
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -355,7 +355,7 @@ This sample shows how to call DetectUnivariateLastPoint with all request content
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -395,7 +395,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DetectRequest</c>:
+Schema for <c>UnivariateDetectionOptions</c>:
 <code>{
   series: [
     {
@@ -415,7 +415,7 @@ Schema for <c>DetectRequest</c>:
 
 Response Body:
 
-Schema for <c>LastDetectResponse</c>:
+Schema for <c>UnivariateLastDetectionResult</c>:
 <code>{
   period: number, # Required.
   suggestedWindow: number, # Required.
@@ -437,7 +437,7 @@ This sample shows how to call DetectUnivariateChangePointAsync with required req
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -457,7 +457,7 @@ This sample shows how to call DetectUnivariateChangePointAsync with all request 
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -488,7 +488,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>ChangePointDetectRequest</c>:
+Schema for <c>UnivariateChangePointDetectionOptions</c>:
 <code>{
   series: [
     {
@@ -506,7 +506,7 @@ Schema for <c>ChangePointDetectRequest</c>:
 
 Response Body:
 
-Schema for <c>ChangePointDetectResponse</c>:
+Schema for <c>UnivariateChangePointDetectionResult</c>:
 <code>{
   period: number, # Optional.
   isChangePoint: [boolean], # Optional.
@@ -522,7 +522,7 @@ This sample shows how to call DetectUnivariateChangePoint with required request 
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -542,7 +542,7 @@ This sample shows how to call DetectUnivariateChangePoint with all request conte
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     series = new[] {
@@ -573,7 +573,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>ChangePointDetectRequest</c>:
+Schema for <c>UnivariateChangePointDetectionOptions</c>:
 <code>{
   series: [
     {
@@ -591,7 +591,7 @@ Schema for <c>ChangePointDetectRequest</c>:
 
 Response Body:
 
-Schema for <c>ChangePointDetectResponse</c>:
+Schema for <c>UnivariateChangePointDetectionResult</c>:
 <code>{
   period: number, # Optional.
   isChangePoint: [boolean], # Optional.
@@ -607,7 +607,7 @@ This sample shows how to call GetMultivariateBatchDetectionResultAsync with requ
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = await client.GetMultivariateBatchDetectionResultAsync("<resultId>");
 
@@ -644,7 +644,7 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>DetectionResult</c>:
+Schema for <c>MultivariateDetectionResult</c>:
 <code>{
   resultId: string, # Required.
   summary: {
@@ -681,7 +681,7 @@ This sample shows how to call GetMultivariateBatchDetectionResult with required 
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = client.GetMultivariateBatchDetectionResult("<resultId>");
 
@@ -718,7 +718,7 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>DetectionResult</c>:
+Schema for <c>MultivariateDetectionResult</c>:
 <code>{
   resultId: string, # Required.
   summary: {
@@ -749,13 +749,13 @@ Schema for <c>DetectionResult</c>:
 
 </remarks>
     </member>
-    <member name="CreateAndTrainMultivariateModelAsync(RequestContent,RequestContext)">
+    <member name="TrainMultivariateModelAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateAndTrainMultivariateModelAsync with required request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModelAsync with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -763,18 +763,18 @@ var data = new {
     endTime = "2022-05-10T14:57:31.2311892-04:00",
 };
 
-Response response = await client.CreateAndTrainMultivariateModelAsync(RequestContent.Create(data));
+Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
 ]]></code>
-This sample shows how to call CreateAndTrainMultivariateModelAsync with all request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModelAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -822,7 +822,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateAndTrainMultivariateModelAsync(RequestContent.Create(data));
+Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -898,7 +898,7 @@ Schema for <c>ModelInfo</c>:
 
 Response Body:
 
-Schema for <c>Model</c>:
+Schema for <c>AnomalyDetectionModel</c>:
 <code>{
   modelId: string, # Required.
   createdTime: string (date &amp; time), # Required.
@@ -937,13 +937,13 @@ Schema for <c>Model</c>:
 
 </remarks>
     </member>
-    <member name="CreateAndTrainMultivariateModel(RequestContent,RequestContext)">
+    <member name="TrainMultivariateModel(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateAndTrainMultivariateModel with required request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModel with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -951,18 +951,18 @@ var data = new {
     endTime = "2022-05-10T14:57:31.2311892-04:00",
 };
 
-Response response = client.CreateAndTrainMultivariateModel(RequestContent.Create(data));
+Response response = client.TrainMultivariateModel(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
 ]]></code>
-This sample shows how to call CreateAndTrainMultivariateModel with all request content, and how to parse the result.
+This sample shows how to call TrainMultivariateModel with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -1010,7 +1010,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateAndTrainMultivariateModel(RequestContent.Create(data));
+Response response = client.TrainMultivariateModel(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -1086,7 +1086,7 @@ Schema for <c>ModelInfo</c>:
 
 Response Body:
 
-Schema for <c>Model</c>:
+Schema for <c>AnomalyDetectionModel</c>:
 <code>{
   modelId: string, # Required.
   createdTime: string (date &amp; time), # Required.
@@ -1131,7 +1131,7 @@ This sample shows how to call DeleteMultivariateModelAsync with required paramet
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = await client.DeleteMultivariateModelAsync("<modelId>");
 Console.WriteLine(response.Status);
@@ -1147,7 +1147,7 @@ This sample shows how to call DeleteMultivariateModel with required parameters.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = client.DeleteMultivariateModel("<modelId>");
 Console.WriteLine(response.Status);
@@ -1163,7 +1163,7 @@ This sample shows how to call GetMultivariateModelAsync with required parameters
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = await client.GetMultivariateModelAsync("<modelId>");
 
@@ -1202,7 +1202,7 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>Model</c>:
+Schema for <c>AnomalyDetectionModel</c>:
 <code>{
   modelId: string, # Required.
   createdTime: string (date &amp; time), # Required.
@@ -1247,7 +1247,7 @@ This sample shows how to call GetMultivariateModel with required parameters and 
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 Response response = client.GetMultivariateModel("<modelId>");
 
@@ -1286,7 +1286,7 @@ Below is the JSON schema for the response payload.
 
 Response Body:
 
-Schema for <c>Model</c>:
+Schema for <c>AnomalyDetectionModel</c>:
 <code>{
   modelId: string, # Required.
   createdTime: string (date &amp; time), # Required.
@@ -1331,7 +1331,7 @@ This sample shows how to call DetectMultivariateBatchAnomalyAsync with required 
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -1379,7 +1379,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DetectionRequest</c>:
+Schema for <c>MultivariateDetectionOptions</c>:
 <code>{
   dataSource: string, # Required.
   topContributorCount: number, # Required.
@@ -1390,7 +1390,7 @@ Schema for <c>DetectionRequest</c>:
 
 Response Body:
 
-Schema for <c>DetectionResult</c>:
+Schema for <c>MultivariateDetectionResult</c>:
 <code>{
   resultId: string, # Required.
   summary: {
@@ -1427,7 +1427,7 @@ This sample shows how to call DetectMultivariateBatchAnomaly with required param
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     dataSource = "<dataSource>",
@@ -1475,7 +1475,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>DetectionRequest</c>:
+Schema for <c>MultivariateDetectionOptions</c>:
 <code>{
   dataSource: string, # Required.
   topContributorCount: number, # Required.
@@ -1486,7 +1486,7 @@ Schema for <c>DetectionRequest</c>:
 
 Response Body:
 
-Schema for <c>DetectionResult</c>:
+Schema for <c>MultivariateDetectionResult</c>:
 <code>{
   resultId: string, # Required.
   summary: {
@@ -1523,7 +1523,7 @@ This sample shows how to call DetectMultivariateLastAnomalyAsync with required p
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     variables = new[] {
@@ -1569,7 +1569,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>LastDetectionRequest</c>:
+Schema for <c>MultivariateLastDetectionOptions</c>:
 <code>{
   variables: [
     {
@@ -1584,7 +1584,7 @@ Schema for <c>LastDetectionRequest</c>:
 
 Response Body:
 
-Schema for <c>LastDetectionResult</c>:
+Schema for <c>MultivariateLastDetectionResult</c>:
 <code>{
   variableStates: [
     {
@@ -1607,7 +1607,7 @@ This sample shows how to call DetectMultivariateLastAnomaly with required parame
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 var data = new {
     variables = new[] {
@@ -1653,7 +1653,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>LastDetectionRequest</c>:
+Schema for <c>MultivariateLastDetectionOptions</c>:
 <code>{
   variables: [
     {
@@ -1668,7 +1668,7 @@ Schema for <c>LastDetectionRequest</c>:
 
 Response Body:
 
-Schema for <c>LastDetectionResult</c>:
+Schema for <c>MultivariateLastDetectionResult</c>:
 <code>{
   variableStates: [
     {
@@ -1691,7 +1691,7 @@ This sample shows how to call GetMultivariateModelsAsync and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 await foreach (var data in client.GetMultivariateModelsAsync())
 {
@@ -1705,7 +1705,7 @@ This sample shows how to call GetMultivariateModelsAsync with all parameters, an
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 await foreach (var data in client.GetMultivariateModelsAsync(1234, 1234))
 {
@@ -1784,7 +1784,7 @@ This sample shows how to call GetMultivariateModels and parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 foreach (var data in client.GetMultivariateModels())
 {
@@ -1798,7 +1798,7 @@ This sample shows how to call GetMultivariateModels with all parameters, and how
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new AnomalyDetectorClient(endpoint, "<apiVersion>", credential);
+var client = new AnomalyDetectorClient(endpoint, credential);
 
 foreach (var data in client.GetMultivariateModels(1234, 1234))
 {
