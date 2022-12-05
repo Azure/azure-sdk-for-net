@@ -115,9 +115,9 @@ namespace Azure.Data.Tables
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, default, default, options)
         {
-            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            if (endpoint.Scheme != Uri.UriSchemeHttps && !Uri.IsLoopback)
             {
-                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+                throw new ArgumentException("Cannot use a SAS token without HTTPS.", nameof(endpoint));
             }
             if (string.IsNullOrEmpty(endpoint.Query))
             {
@@ -141,9 +141,9 @@ namespace Azure.Data.Tables
         public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, default, credential, options)
         {
-            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            if (endpoint.Scheme != Uri.UriSchemeHttps && !Uri.IsLoopback)
             {
-                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+                throw new ArgumentException($"Cannot use {nameof(AzureSasCredential)} without HTTPS.", nameof(endpoint));
             }
 
             Argument.AssertNotNull(credential, nameof(credential));

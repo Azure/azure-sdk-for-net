@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SavedSearchesListResult DeserializeSavedSearchesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SavedSearchData>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsSavedSearchData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SavedSearchData> array = new List<SavedSearchData>();
+                    List<OperationalInsightsSavedSearchData> array = new List<OperationalInsightsSavedSearchData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavedSearchData.DeserializeSavedSearchData(item));
+                        array.Add(OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(item));
                     }
                     value = array;
                     continue;

@@ -74,9 +74,3 @@ ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new Servi
     PrefetchCount = 10
 });
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample13_AdvancedConfiguration.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample13_AdvancedConfiguration.cs)

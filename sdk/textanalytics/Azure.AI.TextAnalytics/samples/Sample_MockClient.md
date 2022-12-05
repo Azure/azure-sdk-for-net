@@ -1,6 +1,6 @@
 # Mock a client for testing using the Moq library
 
-This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `TextAnalyticsClient` method. For more examples of mocking, see [Moq samples][moq_samples].
+This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `TextAnalyticsClient` method.
 
 ## Define method that uses TextAnalyticsClient
 To show the usage of mocks, define a method that will be tested with mocked objects. For this case, we are going to create a method that will verify if a document is writen in Spanish.
@@ -40,4 +40,3 @@ Assert.IsTrue(result);
 ```
 
 [moq]: https://github.com/Moq/moq4/
-[moq_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/SampleMoq.cs

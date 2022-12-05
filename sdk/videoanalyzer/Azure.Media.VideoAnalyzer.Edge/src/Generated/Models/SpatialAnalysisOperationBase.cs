@@ -12,10 +12,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
     /// </summary>
-    public partial class SpatialAnalysisOperationBase
+    public abstract partial class SpatialAnalysisOperationBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
-        public SpatialAnalysisOperationBase()
+        protected SpatialAnalysisOperationBase()
         {
         }
 

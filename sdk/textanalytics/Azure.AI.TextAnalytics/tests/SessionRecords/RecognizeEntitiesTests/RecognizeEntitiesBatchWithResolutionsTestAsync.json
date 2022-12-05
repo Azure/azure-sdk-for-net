@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "803",
+        "Content-Length": "770",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c935a60a9f88a2e532ce0c78f26b1bc3-d764ea23b52ee140-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221102.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "dc329498ba04204671408b769f8fc6ba",
+        "traceparent": "00-305b7eed2ebacfdfce2d7d65f042d749-71a7016dcfb1bf8f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221123.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6e6de3f7fa19ad69b87381d3457ea41e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,7 +23,7 @@
             },
             {
               "id": "2",
-              "text": "This is the first aircraft of its kind. It can fly at over 1,300 meter per second and carry 65-80 passengers.",
+              "text": "This is the first aircraft of its kind. It can fly at over 1,300 mph and carry 65-80 passengers.",
               "language": "en"
             },
             {
@@ -38,7 +38,7 @@
             },
             {
               "id": "5",
-              "text": "They retrieved 200 terabytes of data between October 24th, 2022 and October 28th, 2022.",
+              "text": "They retrieved 200 terabytes of data from 10/24/2022 to 10/28/2022.",
               "language": "en"
             }
           ]
@@ -51,15 +51,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1c4c60ee-7a91-4943-984e-4bf8ceffa436",
-        "Content-Length": "4190",
+        "apim-request-id": "7dd40011-e066-4fbf-8599-14a8f0bb1c6a",
+        "Content-Length": "4148",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=5,CognitiveServices.TextAnalytics.TextRecords=5",
-        "Date": "Thu, 03 Nov 2022 05:04:39 GMT",
+        "Date": "Wed, 23 Nov 2022 19:56:07 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "319",
+        "x-envoy-upstream-service-time": "253",
         "x-ms-region": "West US 2"
       },
       "ResponseBody": {
@@ -144,16 +144,16 @@
                   "confidenceScore": 0.8
                 },
                 {
-                  "text": "1,300 meter per second",
+                  "text": "1,300 mph",
                   "category": "Quantity",
                   "subcategory": "Dimension",
                   "offset": 59,
-                  "length": 22,
+                  "length": 9,
                   "confidenceScore": 0.8,
                   "resolutions": [
                     {
                       "resolutionKind": "SpeedResolution",
-                      "unit": "MeterPerSecond",
+                      "unit": "MilePerHour",
                       "value": 1300.0
                     }
                   ]
@@ -162,9 +162,9 @@
                   "text": "65-80",
                   "category": "Quantity",
                   "subcategory": "NumberRange",
-                  "offset": 92,
+                  "offset": 79,
                   "length": 5,
-                  "confidenceScore": 0.85,
+                  "confidenceScore": 0.83,
                   "resolutions": [
                     {
                       "resolutionKind": "NumericRangeResolution",
@@ -177,9 +177,9 @@
                 {
                   "text": "passengers",
                   "category": "PersonType",
-                  "offset": 98,
+                  "offset": 85,
                   "length": 10,
-                  "confidenceScore": 0.96
+                  "confidenceScore": 0.92
                 }
               ],
               "warnings": []
@@ -270,21 +270,6 @@
               "id": "4",
               "entities": [
                 {
-                  "text": "1 cup",
-                  "category": "Quantity",
-                  "subcategory": "Dimension",
-                  "offset": 4,
-                  "length": 5,
-                  "confidenceScore": 0.8,
-                  "resolutions": [
-                    {
-                      "resolutionKind": "VolumeResolution",
-                      "unit": "Cup",
-                      "value": 1.0
-                    }
-                  ]
-                },
-                {
                   "text": "1",
                   "category": "Quantity",
                   "subcategory": "Number",
@@ -295,6 +280,21 @@
                     {
                       "resolutionKind": "NumberResolution",
                       "numberKind": "Integer",
+                      "value": 1.0
+                    }
+                  ]
+                },
+                {
+                  "text": "1 cup",
+                  "category": "Quantity",
+                  "subcategory": "Dimension",
+                  "offset": 4,
+                  "length": 5,
+                  "confidenceScore": 0.8,
+                  "resolutions": [
+                    {
+                      "resolutionKind": "VolumeResolution",
+                      "unit": "Cup",
                       "value": 1.0
                     }
                   ]
@@ -364,12 +364,12 @@
                   ]
                 },
                 {
-                  "text": "between October 24th, 2022 and October 28th, 2022",
+                  "text": "10/24/2022 to 10/28/2022",
                   "category": "DateTime",
                   "subcategory": "DateRange",
-                  "offset": 37,
-                  "length": 49,
-                  "confidenceScore": 0.69,
+                  "offset": 42,
+                  "length": 24,
+                  "confidenceScore": 0.85,
                   "resolutions": [
                     {
                       "resolutionKind": "TemporalSpanResolution",
@@ -390,7 +390,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "53167487",
+    "RandomSeed": "1195462607",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

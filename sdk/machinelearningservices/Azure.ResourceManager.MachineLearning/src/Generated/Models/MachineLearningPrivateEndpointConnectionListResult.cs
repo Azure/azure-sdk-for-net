@@ -11,7 +11,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> List of private endpoint connection associated with the specified workspace. </summary>
+    /// <summary>
+    /// List of private endpoint connection associated with the specified workspace
+    /// Serialized Name: PrivateEndpointConnectionListResult
+    /// </summary>
     internal partial class MachineLearningPrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionListResult. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionListResult. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <param name="value">
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </param>
         internal MachineLearningPrivateEndpointConnectionListResult(IReadOnlyList<MachineLearningPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
+        /// <summary>
+        /// Array of private endpoint connections
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </summary>
         public IReadOnlyList<MachineLearningPrivateEndpointConnectionData> Value { get; }
     }
 }

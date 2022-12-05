@@ -14,6 +14,7 @@ trigger:
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
+    - sdk/analysisservices/Azure.ResourceManager.Analysis
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -90,7 +91,7 @@ trigger:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
-    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
@@ -173,6 +174,7 @@ pr:
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
+    - sdk/analysisservices/Azure.ResourceManager.Analysis
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -249,7 +251,7 @@ pr:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
-    - sdk/loadtestservice/Azure.ResourceManager.LoadTestService
+    - sdk/loadtestservice/Azure.ResourceManager.LoadTesting
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning

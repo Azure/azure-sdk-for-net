@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        public ExtractiveSummarizationResult(IEnumerable<InputError> errors, string modelVersion, IEnumerable<ExtractiveSummarizationResultDocumentsItem> documents) : base(errors, modelVersion)
+        public ExtractiveSummarizationResult(IEnumerable<InputError> errors, string modelVersion, IEnumerable<ExtractedSummaryDocumentResultWithDetectedLanguage> documents) : base(errors, modelVersion)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
@@ -35,12 +35,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        internal ExtractiveSummarizationResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<ExtractiveSummarizationResultDocumentsItem> documents) : base(errors, statistics, modelVersion)
+        internal ExtractiveSummarizationResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<ExtractedSummaryDocumentResultWithDetectedLanguage> documents) : base(errors, statistics, modelVersion)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<ExtractiveSummarizationResultDocumentsItem> Documents { get; }
+        public IList<ExtractedSummaryDocumentResultWithDetectedLanguage> Documents { get; }
     }
 }

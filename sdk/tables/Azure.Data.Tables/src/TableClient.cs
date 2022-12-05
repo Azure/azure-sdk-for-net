@@ -91,7 +91,7 @@ namespace Azure.Data.Tables
         public TableClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, null, default, default, options)
         {
-            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            if (endpoint.Scheme != Uri.UriSchemeHttps && !Uri.IsLoopback)
             {
                 throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
             }
@@ -117,7 +117,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            if (endpoint.Scheme != Uri.UriSchemeHttps && !Uri.IsLoopback)
             {
                 throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
             }
@@ -478,7 +478,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409.</returns>
         public virtual Response<TableItem> CreateIfNotExists(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");
@@ -517,7 +517,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409.</returns>
         public virtual async Task<Response<TableItem>> CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(CreateIfNotExists)}");

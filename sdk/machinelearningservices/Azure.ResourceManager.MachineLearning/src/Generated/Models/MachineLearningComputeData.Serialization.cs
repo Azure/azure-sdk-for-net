@@ -26,8 +26,15 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
+                if (Sku != null)
+                {
+                    writer.WritePropertyName("sku");
+                    writer.WriteObjectValue(Sku);
+                }
+                else
+                {
+                    writer.WriteNull("sku");
+                }
             }
             if (Optional.IsDefined(Properties))
             {
@@ -54,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
-            Optional<Compute> properties = default;
+            Optional<MachineLearningComputeProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -78,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        sku = null;
                         continue;
                     }
                     sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
@@ -91,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = Compute.DeserializeCompute(property.Value);
+                    properties = MachineLearningComputeProperties.DeserializeMachineLearningComputeProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

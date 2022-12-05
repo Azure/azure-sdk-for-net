@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The type of compute. </summary>
+    /// <summary>
+    /// The type of compute
+    /// Serialized Name: ComputeType
+    /// </summary>
     internal readonly partial struct ComputeType : IEquatable<ComputeType>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DataLakeAnalyticsValue = "DataLakeAnalytics";
         private const string SynapseSparkValue = "SynapseSpark";
 
-        /// <summary> AKS. </summary>
+        /// <summary>
+        /// AKS
+        /// Serialized Name: ComputeType.AKS
+        /// </summary>
         public static ComputeType Aks { get; } = new ComputeType(AksValue);
-        /// <summary> Kubernetes. </summary>
+        /// <summary>
+        /// Kubernetes
+        /// Serialized Name: ComputeType.Kubernetes
+        /// </summary>
         public static ComputeType Kubernetes { get; } = new ComputeType(KubernetesValue);
-        /// <summary> AmlCompute. </summary>
+        /// <summary>
+        /// AmlCompute
+        /// Serialized Name: ComputeType.AmlCompute
+        /// </summary>
         public static ComputeType AmlCompute { get; } = new ComputeType(AmlComputeValue);
-        /// <summary> ComputeInstance. </summary>
+        /// <summary>
+        /// ComputeInstance
+        /// Serialized Name: ComputeType.ComputeInstance
+        /// </summary>
         public static ComputeType ComputeInstance { get; } = new ComputeType(ComputeInstanceValue);
-        /// <summary> DataFactory. </summary>
+        /// <summary>
+        /// DataFactory
+        /// Serialized Name: ComputeType.DataFactory
+        /// </summary>
         public static ComputeType DataFactory { get; } = new ComputeType(DataFactoryValue);
-        /// <summary> VirtualMachine. </summary>
+        /// <summary>
+        /// VirtualMachine
+        /// Serialized Name: ComputeType.VirtualMachine
+        /// </summary>
         public static ComputeType VirtualMachine { get; } = new ComputeType(VirtualMachineValue);
-        /// <summary> HDInsight. </summary>
+        /// <summary>
+        /// HDInsight
+        /// Serialized Name: ComputeType.HDInsight
+        /// </summary>
         public static ComputeType HDInsight { get; } = new ComputeType(HDInsightValue);
-        /// <summary> Databricks. </summary>
+        /// <summary>
+        /// Databricks
+        /// Serialized Name: ComputeType.Databricks
+        /// </summary>
         public static ComputeType Databricks { get; } = new ComputeType(DatabricksValue);
-        /// <summary> DataLakeAnalytics. </summary>
+        /// <summary>
+        /// DataLakeAnalytics
+        /// Serialized Name: ComputeType.DataLakeAnalytics
+        /// </summary>
         public static ComputeType DataLakeAnalytics { get; } = new ComputeType(DataLakeAnalyticsValue);
-        /// <summary> SynapseSpark. </summary>
+        /// <summary>
+        /// SynapseSpark
+        /// Serialized Name: ComputeType.SynapseSpark
+        /// </summary>
         public static ComputeType SynapseSpark { get; } = new ComputeType(SynapseSparkValue);
         /// <summary> Determines if two <see cref="ComputeType"/> values are the same. </summary>
         public static bool operator ==(ComputeType left, ComputeType right) => left.Equals(right);

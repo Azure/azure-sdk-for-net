@@ -233,7 +233,9 @@ function DeployStressPackage(
                 $dockerBuildDir = Split-Path $dockerFilePath
             }
             $dockerBuildDir = [System.IO.Path]::GetFullPath($dockerBuildDir).Trim()
-            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath; "dockerBuildDir"=$dockerBuildDir}
+            $dockerBuildConfigs += @{"dockerFilePath"=$dockerFilePath;
+                                    "dockerBuildDir"=$dockerBuildDir;
+                                    "scenario"=$scenario}
         }
     }
     if ($pkg.Dockerfile -or $pkg.DockerBuildDir) {
@@ -256,8 +258,15 @@ function DeployStressPackage(
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             $dockerFile = Get-ChildItem $dockerFilePath
 
-            Run docker build -t $imageTag -f $dockerFile $dockerBuildFolder
+            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
+                $dockerBuildCmd += "--build-arg"
+                $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"
+            }
+            $dockerBuildCmd += $dockerBuildFolder
 
+            Run @dockerBuildCmd
+            
             Write-Host "`nContainer image '$imageTag' successfully built. To run commands on the container locally:" -ForegroundColor Blue
             Write-Host "  docker run -it $imageTag" -ForegroundColor DarkBlue
             Write-Host "  docker run -it $imageTag <shell, e.g. 'bash' 'pwsh' 'sh'>" -ForegroundColor DarkBlue
@@ -315,10 +324,10 @@ function DeployStressPackage(
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
     # specific releases (thereby enabling filtering on `helm list`) is to label the underlying secret resources.
     # There is not currently support for setting these labels via the helm cli.
-    $helmReleaseConfig = kubectl get secrets `
-        -n $pkg.Namespace `
-        -l status=deployed,name=$($pkg.ReleaseName) `
-        -o jsonpath='{.items[0].metadata.name}'
+    $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
+                                                -n $pkg.Namespace `
+                                                -l "status=deployed,name=$($pkg.ReleaseName)" `
+                                                -o jsonpath='{.items[0].metadata.name}'
 
     Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
 }
