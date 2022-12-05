@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> endTime = default;
             Optional<string> startTime = default;
             Optional<string> timeZone = default;
-            TriggerType triggerType = default;
+            MachineLearningTriggerType triggerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expression"))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("triggerType"))
                 {
-                    triggerType = new TriggerType(property.Value.GetString());
+                    triggerType = new MachineLearningTriggerType(property.Value.GetString());
                     continue;
                 }
             }
