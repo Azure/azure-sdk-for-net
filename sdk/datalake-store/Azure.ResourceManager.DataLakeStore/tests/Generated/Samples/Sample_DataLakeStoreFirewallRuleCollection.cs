@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeStore
 
             // invoke the operation
             string firewallRuleName = "test_rule";
-            DataLakeStoreFirewallRuleCreateOrUpdateContent content = new DataLakeStoreFirewallRuleCreateOrUpdateContent("1.1.1.1", "2.2.2.2");
+            DataLakeStoreFirewallRuleCreateOrUpdateContent content = new DataLakeStoreFirewallRuleCreateOrUpdateContent(System.Net.IPAddress.Parse("1.1.1.1"), System.Net.IPAddress.Parse("2.2.2.2"));
             ArmOperation<DataLakeStoreFirewallRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, content);
             DataLakeStoreFirewallRuleResource result = lro.Value;
 

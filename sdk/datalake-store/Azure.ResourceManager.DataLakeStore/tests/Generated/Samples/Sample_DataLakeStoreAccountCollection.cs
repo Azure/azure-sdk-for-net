@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 EncryptionState = DataLakeStoreEncryptionState.Enabled,
                 FirewallRules =
 {
-new FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent("test_rule","1.1.1.1","2.2.2.2")
+new FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent("test_rule",System.Net.IPAddress.Parse("1.1.1.1"),System.Net.IPAddress.Parse("2.2.2.2"))
 },
                 FirewallState = DataLakeStoreFirewallState.Enabled,
                 FirewallAllowAzureIPs = DataLakeStoreFirewallAllowAzureIPsState.Enabled,

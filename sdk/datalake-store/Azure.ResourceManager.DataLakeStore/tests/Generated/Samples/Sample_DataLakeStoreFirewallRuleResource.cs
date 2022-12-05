@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.DataLakeStore
             // invoke the operation
             DataLakeStoreFirewallRulePatch patch = new DataLakeStoreFirewallRulePatch()
             {
-                StartIPAddress = "1.1.1.1",
-                EndIPAddress = "2.2.2.2",
+                StartIPAddress = System.Net.IPAddress.Parse("1.1.1.1"),
+                EndIPAddress = System.Net.IPAddress.Parse("2.2.2.2"),
             };
             DataLakeStoreFirewallRuleResource result = await dataLakeStoreFirewallRule.UpdateAsync(patch);
 
