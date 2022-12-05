@@ -447,7 +447,7 @@ namespace Compute.Tests
                 VirtualMachineScaleSet inputVMScaleSet;
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                     EnsureClientsInitialized(context);
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
