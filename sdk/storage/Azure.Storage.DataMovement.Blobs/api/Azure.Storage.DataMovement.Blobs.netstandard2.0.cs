@@ -4,6 +4,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         public AppendBlobStorageResource(Azure.Storage.Blobs.Specialized.AppendBlobClient blobClient, Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
         public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
@@ -75,6 +76,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         public BlockBlobStorageResource(Azure.Storage.Blobs.Specialized.BlockBlobClient blobClient, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
         public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
@@ -123,6 +125,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         public PageBlobStorageResource(Azure.Storage.Blobs.Specialized.PageBlobClient blobClient, Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceOptions options = null) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
         public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }

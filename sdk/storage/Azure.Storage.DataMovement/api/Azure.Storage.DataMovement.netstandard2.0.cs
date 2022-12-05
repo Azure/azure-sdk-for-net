@@ -28,6 +28,7 @@ namespace Azure.Storage.DataMovement
     {
         public LocalFileStorageResource(string path) { }
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
         public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
@@ -58,6 +59,7 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResource() { }
         public override bool IsContainer { get { throw null; } }
+        public abstract long? Length { get; }
         public abstract long MaxChunkSize { get; }
         public abstract Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get; }
         public abstract Azure.Storage.DataMovement.TransferType TransferType { get; }
