@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/7b68a8cd8cb3f2328d4830fbbac41d8ad5febb67/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9842de8f8f11c09511fc00e903eb947f76cba0e6/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -429,3 +429,11 @@ directive:
       where: $.definitions
       transform: >
           $.JobSchedule.properties.interval['format'] = 'duration';
+    - from: DatabaseSqlVulnerabilityAssessmentsSettings.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}'].get.parameters[3]['x-ms-enum'].name = 'SQlVulnerabilityAssessmentName';
+    - from: SqlVulnerabilityAssessmentsSettings.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}'].get.parameters[2]['x-ms-enum'].name = 'SQlVulnerabilityAssessmentName';

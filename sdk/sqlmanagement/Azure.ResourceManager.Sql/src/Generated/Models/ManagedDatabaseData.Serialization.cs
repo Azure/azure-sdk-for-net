@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("restorableDroppedDatabaseId");
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
+            if (Optional.IsDefined(StorageContainerIdentity))
+            {
+                writer.WritePropertyName("storageContainerIdentity");
+                writer.WriteStringValue(StorageContainerIdentity);
+            }
             if (Optional.IsDefined(StorageContainerSasToken))
             {
                 writer.WritePropertyName("storageContainerSasToken");
@@ -117,6 +122,7 @@ namespace Azure.ResourceManager.Sql
             Optional<Uri> storageContainerUri = default;
             Optional<ResourceIdentifier> sourceDatabaseId = default;
             Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
+            Optional<string> storageContainerIdentity = default;
             Optional<string> storageContainerSasToken = default;
             Optional<ResourceIdentifier> failoverGroupId = default;
             Optional<ResourceIdentifier> recoverableDatabaseId = default;
@@ -284,6 +290,11 @@ namespace Azure.ResourceManager.Sql
                             restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("storageContainerIdentity"))
+                        {
+                            storageContainerIdentity = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("storageContainerSasToken"))
                         {
                             storageContainerSasToken = property0.Value.GetString();
@@ -338,7 +349,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
+            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
         }
     }
 }
