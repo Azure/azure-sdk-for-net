@@ -2,17 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
+        private const string UniqueDomainRegEx = @"\.[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}\.";
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(UniqueDomainRegEx, "."));
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
         }
