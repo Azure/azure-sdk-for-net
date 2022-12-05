@@ -29,7 +29,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         protected SipRoutingClient CreateClient(bool isInstrumented = true)
         {
             var client = new SipRoutingClient(
-                    TestEnvironment.LiveTestStaticConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -45,7 +45,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         protected SipRoutingClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new SipRoutingClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestStaticConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestDynamicConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 
