@@ -225,13 +225,13 @@ namespace Azure.AI.AnomalyDetector
         /// are used to determine whether it is an anomaly. The entire detection can give
         /// user an overall status of the time series.
         /// </remarks>
-        public virtual async Task<Response<UnivariateDetectionResult>> DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UnivariateEntireDetectionResult>> DetectUnivariateEntireSeriesAsync(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DetectUnivariateEntireSeriesAsync(options.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(UnivariateDetectionResult.FromResponse(response), response);
+            return Response.FromValue(UnivariateEntireDetectionResult.FromResponse(response), response);
         }
 
         /// <summary> Detect anomalies for the entire series in batch. </summary>
@@ -244,13 +244,13 @@ namespace Azure.AI.AnomalyDetector
         /// are used to determine whether it is an anomaly. The entire detection can give
         /// user an overall status of the time series.
         /// </remarks>
-        public virtual Response<UnivariateDetectionResult> DetectUnivariateEntireSeries(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<UnivariateEntireDetectionResult> DetectUnivariateEntireSeries(UnivariateDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DetectUnivariateEntireSeries(options.ToRequestContent(), context);
-            return Response.FromValue(UnivariateDetectionResult.FromResponse(response), response);
+            return Response.FromValue(UnivariateEntireDetectionResult.FromResponse(response), response);
         }
 
         /// <summary> Detect anomalies for the entire series in batch. </summary>
@@ -829,7 +829,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect Multivariate Anomaly. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateDetectionOptions to use. </param>
+        /// <param name="options"> The MultivariateBatchDetectionOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -841,7 +841,7 @@ namespace Azure.AI.AnomalyDetector
         /// externally accessible Azure storage Uri, either pointed to an Azure blob
         /// storage folder, or pointed to a CSV file in Azure blob storage.
         /// </remarks>
-        public virtual async Task<Response<MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));
@@ -853,7 +853,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Detect Multivariate Anomaly. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="options"> The MultivariateDetectionOptions to use. </param>
+        /// <param name="options"> The MultivariateBatchDetectionOptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -865,7 +865,7 @@ namespace Azure.AI.AnomalyDetector
         /// externally accessible Azure storage Uri, either pointed to an Azure blob
         /// storage folder, or pointed to a CSV file in Azure blob storage.
         /// </remarks>
-        public virtual Response<MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateDetectionOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));

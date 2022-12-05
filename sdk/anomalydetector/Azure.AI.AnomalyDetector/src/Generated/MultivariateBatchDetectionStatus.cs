@@ -7,7 +7,7 @@
 
 namespace Azure.AI.AnomalyDetector
 {
-    public enum MultivariateDetectionStatus
+    public enum MultivariateBatchDetectionStatus
     {
         /// <summary> CREATED. </summary>
         Created,
