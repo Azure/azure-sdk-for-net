@@ -26,10 +26,7 @@ namespace Azure
         public string Signature
         {
             get => Volatile.Read(ref _signature);
-            private set
-            {
-                Volatile.Write(ref _signature, value);
-            }
+            private set => Volatile.Write(ref _signature, value);
         }
 
         /// <summary>
