@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
-        internal UnknownTimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, ManagedIdentityReference identity) : base(connectionType, provisioningState, identity)
+        internal UnknownTimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity) : base(connectionType, provisioningState, identity)
         {
             ConnectionType = connectionType;
         }

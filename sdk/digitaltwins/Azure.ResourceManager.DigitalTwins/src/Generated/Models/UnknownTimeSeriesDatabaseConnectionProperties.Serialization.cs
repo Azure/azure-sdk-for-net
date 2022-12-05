@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         {
             ConnectionType connectionType = "Unknown";
             Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<ManagedIdentityReference> identity = default;
+            Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionType"))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = ManagedIdentityReference.DeserializeManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
                     continue;
                 }
             }

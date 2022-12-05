@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<string> eventHubConsumerGroup = default;
             ConnectionType connectionType = default;
             Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<ManagedIdentityReference> identity = default;
+            Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adxResourceId"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = ManagedIdentityReference.DeserializeManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
                     continue;
                 }
             }

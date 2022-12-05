@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class ManagedIdentityReference : IUtf8JsonSerializable
+    public partial class DigitalTwinsManagedIdentityReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedIdentityReference DeserializeManagedIdentityReference(JsonElement element)
+        internal static DigitalTwinsManagedIdentityReference DeserializeDigitalTwinsManagedIdentityReference(JsonElement element)
         {
-            Optional<IdentityType> type = default;
+            Optional<DigitalTwinsManagedIdentityType> type = default;
             Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new IdentityType(property.Value.GetString());
+                    type = new DigitalTwinsManagedIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentity"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new ManagedIdentityReference(Optional.ToNullable(type), userAssignedIdentity.Value);
+            return new DigitalTwinsManagedIdentityReference(Optional.ToNullable(type), userAssignedIdentity.Value);
         }
     }
 }

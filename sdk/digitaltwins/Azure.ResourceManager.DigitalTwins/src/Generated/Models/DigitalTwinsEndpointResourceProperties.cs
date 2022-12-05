@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
         /// <param name="identity"> Managed identity properties for the endpoint. </param>
-        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, ManagedIdentityReference identity)
+        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity)
         {
             EndpointType = endpointType;
             ProvisioningState = provisioningState;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Dead letter storage URL for identity-based authentication. </summary>
         public Uri DeadLetterUri { get; set; }
         /// <summary> Managed identity properties for the endpoint. </summary>
-        public ManagedIdentityReference Identity { get; set; }
+        public DigitalTwinsManagedIdentityReference Identity { get; set; }
     }
 }

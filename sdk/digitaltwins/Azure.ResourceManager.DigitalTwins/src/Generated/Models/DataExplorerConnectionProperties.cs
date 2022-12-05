@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="eventHubEntityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
         /// <param name="eventHubNamespaceResourceId"> The resource ID of the EventHub namespace. </param>
         /// <param name="eventHubConsumerGroup"> The EventHub consumer group to use when ADX reads from EventHub. Defaults to $Default. </param>
-        internal DataExplorerConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, ManagedIdentityReference identity, ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, string adxTableName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId, string eventHubConsumerGroup) : base(connectionType, provisioningState, identity)
+        internal DataExplorerConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, string adxTableName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId, string eventHubConsumerGroup) : base(connectionType, provisioningState, identity)
         {
             AdxResourceId = adxResourceId;
             AdxEndpointUri = adxEndpointUri;

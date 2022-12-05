@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the ServiceBus namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </param>
         /// <param name="entityPath"> The ServiceBus Topic name for identity-based authentication. </param>
-        internal DigitalTwinsServiceBusProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, ManagedIdentityReference identity, string primaryConnectionString, string secondaryConnectionString, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
+        internal DigitalTwinsServiceBusProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string primaryConnectionString, string secondaryConnectionString, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;

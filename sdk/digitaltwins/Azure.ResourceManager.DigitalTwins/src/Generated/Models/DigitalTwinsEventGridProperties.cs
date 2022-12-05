@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <param name="accessKey2"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
-        internal DigitalTwinsEventGridProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, ManagedIdentityReference identity, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
+        internal DigitalTwinsEventGridProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
         {
             TopicEndpoint = topicEndpoint;
             AccessKey1 = accessKey1;

@@ -38,6 +38,8 @@ rename-mapping:
   EventHub: DigitalTwinsEventHubProperties
   ServiceBus: DigitalTwinsServiceBusProperties
   ResourceType: DigitalTwinsResourceType
+  ManagedIdentityReference: DigitalTwinsManagedIdentityReference
+  IdentityType: DigitalTwinsManagedIdentityType
 
 override-operation-name:
   PrivateLinkResources_Get: GetPrivateLinkResourceGroupIdInformation
