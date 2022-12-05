@@ -28,6 +28,20 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             return client;
         }
 
+        [TearDown]
+        public void ClearConfiguration()
+        {
+            var client = CreateClient();
+            if (client.GetRoutesAsync().Result.Value.Count > 0)
+            {
+                client.SetRoutesAsync(new List<SipTrunkRoute>()).Wait();
+            }
+            if (client.GetTrunksAsync().Result.Value.Count > 0)
+            {
+                client.SetTrunksAsync(new List<SipTrunk>()).Wait();
+            }
+        }
+
         [Test]
         public async Task GetFunctionUsingTokenAuthentication()
         {
