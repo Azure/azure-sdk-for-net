@@ -19,7 +19,7 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Storage Resource class for the a Blob Virtual Directory Client
+    /// The Storage Resource class for the Blob Virtual Directory Client.
     /// </summary>
     public class BlobDirectoryStorageResourceContainer : StorageResourceContainer
     {
@@ -28,19 +28,19 @@ namespace Azure.Storage.DataMovement.Blobs
         private BlobStorageResourceContainerOptions _options;
 
         /// <summary>
-        /// Can produce uri
+        /// Defines whether the storage resource type can produce a SAS URL.
         /// </summary>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Returns the path
+        /// Gets the path of the storage resource.
         /// </summary>
         public override string Path => _directoryPrefix;
 
         internal Uri _uri;
 
         /// <summary>
-        /// Obtains the Uri of the blob directory resource, which means we can list
+        /// Gets the URL of the storage resource. If the URL can be obtained, this storage resource can be listed.
         /// </summary>
         public override Uri Uri => _uri;
 
@@ -55,9 +55,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// to perform the transfer source or destination.
         /// </param>
         /// <param name="directoryPrefix">
-        /// The directory path of the blob virtual directory
+        /// The directory path of the blob virtual directory.
         /// </param>
-        /// <param name="options"></param>
+        /// <param name="options">Options for the storage resource. See <see cref="BlobStorageResourceContainerOptions"/>.</param>
         public BlobDirectoryStorageResourceContainer(
             BlobContainerClient containerClient,
             string directoryPrefix,
@@ -75,9 +75,9 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Retrieves a single blob resoruce based on this respective resource.
+        /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath"></param>
+        /// <param name="encodedPath">A URL-encoded path as it would appear in a request URI.</param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
@@ -96,10 +96,10 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Retrieves a single blob resoruce based on this respective resource.
+        /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath"></param>
-        /// <param name="type"></param>
+        /// <param name="encodedPath">A URL-encoded path as it would appear in a request URI.</param>
+        /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
@@ -168,7 +168,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Retrieves a directory blob resource based on this respective resource.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An instance of <see cref="StorageResourceContainer"/>.</returns>
         public override StorageResourceContainer GetParentStorageResourceContainer()
         {
             // TODO: if there's no parent directory, that means we should return the BlobStorageResourceContainer instead
@@ -187,7 +187,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Retrieves a directory blob resource based on this respective resource.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An instance of <see cref="StorageResourceContainer"/>.</returns>
         internal StorageResourceContainer GetStorageResourceParentContainer()
         {
             // Recreate the blobName using the existing parent directory path
@@ -195,10 +195,12 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Lists the child paths in the resource
+        /// Lists the child paths in the storage resource.
         /// </summary>
-        /// <param name="cancellationToken">Cancellation Token</param>
-        /// <returns>List of the child resources in the storage container</returns>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>List of the child resources in the storage container.</returns>
         public override async IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
