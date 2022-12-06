@@ -15,7 +15,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class Sample_ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection
+    public partial class Sample_NestedResourceTypeThirdSkuCollection
     {
         // Skus_GetNestedResourceTypeThird
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeThirdSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
             string nestedResourceTypeSecond = "nestedResourceTypeSecond";
             string nestedResourceTypeThird = "nestedResourceTypeThird";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            NestedResourceTypeThirdSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
 
             // invoke the operation
             string sku = "testSku";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource result = await collection.GetAsync(sku);
+            NestedResourceTypeThirdSkuResource result = await collection.GetAsync(sku);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeThirdSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
             string nestedResourceTypeSecond = "nestedResourceTypeSecond";
             string nestedResourceTypeThird = "nestedResourceTypeThird";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            NestedResourceTypeThirdSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
 
             // invoke the operation
             string sku = "testSku";
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeThirdSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
             string nestedResourceTypeSecond = "nestedResourceTypeSecond";
             string nestedResourceTypeThird = "nestedResourceTypeThird";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            NestedResourceTypeThirdSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
 
             // invoke the operation
             string sku = "testSku";
@@ -131,8 +131,8 @@ new SkuCost("xxx")
 }
             }),
             };
-            ArmOperation<ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource result = lro.Value;
+            ArmOperation<NestedResourceTypeThirdSkuResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
+            NestedResourceTypeThirdSkuResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -160,14 +160,14 @@ new SkuCost("xxx")
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeThirdSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
             string nestedResourceTypeSecond = "nestedResourceTypeSecond";
             string nestedResourceTypeThird = "nestedResourceTypeThird";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
+            NestedResourceTypeThirdSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeThirdSkus(nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
 
             // invoke the operation and iterate over the result
-            await foreach (ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource item in collection.GetAllAsync())
+            await foreach (NestedResourceTypeThirdSkuResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

@@ -15,7 +15,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class Sample_ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+    public partial class Sample_NestedResourceTypeFirstSkuResource
     {
         // Skus_GetNestedResourceTypeFirst
         [NUnit.Framework.Test]
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.ProviderHub
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource created on azure
-            // for more information of creating ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource, please refer to the document of ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // this example assumes you already have this NestedResourceTypeFirstSkuResource created on azure
+            // for more information of creating NestedResourceTypeFirstSkuResource, please refer to the document of NestedResourceTypeFirstSkuResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
             string sku = "testSku";
-            ResourceIdentifier providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResourceId = ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSku = client.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResourceId);
+            ResourceIdentifier nestedResourceTypeFirstSkuResourceId = NestedResourceTypeFirstSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
+            NestedResourceTypeFirstSkuResource nestedResourceTypeFirstSku = client.GetNestedResourceTypeFirstSkuResource(nestedResourceTypeFirstSkuResourceId);
 
             // invoke the operation
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource result = await providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSku.GetAsync();
+            NestedResourceTypeFirstSkuResource result = await nestedResourceTypeFirstSku.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.ProviderHub
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource created on azure
-            // for more information of creating ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource, please refer to the document of ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // this example assumes you already have this NestedResourceTypeFirstSkuResource created on azure
+            // for more information of creating NestedResourceTypeFirstSkuResource, please refer to the document of NestedResourceTypeFirstSkuResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
             string sku = "testSku";
-            ResourceIdentifier providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResourceId = ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSku = client.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResourceId);
+            ResourceIdentifier nestedResourceTypeFirstSkuResourceId = NestedResourceTypeFirstSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
+            NestedResourceTypeFirstSkuResource nestedResourceTypeFirstSku = client.GetNestedResourceTypeFirstSkuResource(nestedResourceTypeFirstSkuResourceId);
 
             // invoke the operation
             SkuResourceData data = new SkuResourceData()
@@ -89,8 +89,8 @@ new SkuCost("xxx")
 }
             }),
             };
-            ArmOperation<ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource> lro = await providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSku.UpdateAsync(WaitUntil.Completed, data);
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource result = lro.Value;
+            ArmOperation<NestedResourceTypeFirstSkuResource> lro = await nestedResourceTypeFirstSku.UpdateAsync(WaitUntil.Completed, data);
+            NestedResourceTypeFirstSkuResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -110,18 +110,18 @@ new SkuCost("xxx")
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource created on azure
-            // for more information of creating ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource, please refer to the document of ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // this example assumes you already have this NestedResourceTypeFirstSkuResource created on azure
+            // for more information of creating NestedResourceTypeFirstSkuResource, please refer to the document of NestedResourceTypeFirstSkuResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
             string sku = "testSku";
-            ResourceIdentifier providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResourceId = ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSku = client.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResourceId);
+            ResourceIdentifier nestedResourceTypeFirstSkuResourceId = NestedResourceTypeFirstSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
+            NestedResourceTypeFirstSkuResource nestedResourceTypeFirstSku = client.GetNestedResourceTypeFirstSkuResource(nestedResourceTypeFirstSkuResourceId);
 
             // invoke the operation
-            await providerRegistrationResourcetypeRegistrationResourcetypeRegistrationSku.DeleteAsync(WaitUntil.Completed);
+            await nestedResourceTypeFirstSku.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

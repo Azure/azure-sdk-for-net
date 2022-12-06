@@ -15,15 +15,15 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class Sample_ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection
+    public partial class Sample_NestedResourceTypeSecondSkuCollection
     {
-        // Skus_GetNestedResourceTypeFirst
+        // Skus_GetNestedResourceTypeSecond
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_SkusGetNestedResourceTypeFirst()
+        public async Task Get_SkusGetNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_GetNestedResourceTypeFirst.json
-            // this example is just showing the usage of "Skus_GetNestedResourceTypeFirst" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_GetNestedResourceTypeSecond.json
+            // this example is just showing the usage of "Skus_GetNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -36,13 +36,14 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeSecondSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst);
+            string nestedResourceTypeSecond = "nestedResourceTypeSecond";
+            NestedResourceTypeSecondSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSecondSkus(nestedResourceTypeFirst, nestedResourceTypeSecond);
 
             // invoke the operation
             string sku = "testSku";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource result = await collection.GetAsync(sku);
+            NestedResourceTypeSecondSkuResource result = await collection.GetAsync(sku);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -51,13 +52,13 @@ namespace Azure.ResourceManager.ProviderHub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_GetNestedResourceTypeFirst
+        // Skus_GetNestedResourceTypeSecond
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_SkusGetNestedResourceTypeFirst()
+        public async Task Exists_SkusGetNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_GetNestedResourceTypeFirst.json
-            // this example is just showing the usage of "Skus_GetNestedResourceTypeFirst" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_GetNestedResourceTypeSecond.json
+            // this example is just showing the usage of "Skus_GetNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -70,9 +71,10 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeSecondSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst);
+            string nestedResourceTypeSecond = "nestedResourceTypeSecond";
+            NestedResourceTypeSecondSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSecondSkus(nestedResourceTypeFirst, nestedResourceTypeSecond);
 
             // invoke the operation
             string sku = "testSku";
@@ -81,13 +83,13 @@ namespace Azure.ResourceManager.ProviderHub
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Skus_CreateOrUpdateNestedResourceTypeFirst
+        // Skus_CreateOrUpdateNestedResourceTypeSecond
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_SkusCreateOrUpdateNestedResourceTypeFirst()
+        public async Task CreateOrUpdate_SkusCreateOrUpdateNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_CreateOrUpdateNestedResourceTypeFirst.json
-            // this example is just showing the usage of "Skus_CreateOrUpdateNestedResourceTypeFirst" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_CreateOrUpdateNestedResourceTypeSecond.json
+            // this example is just showing the usage of "Skus_CreateOrUpdateNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -100,9 +102,10 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeSecondSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst);
+            string nestedResourceTypeSecond = "nestedResourceTypeSecond";
+            NestedResourceTypeSecondSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSecondSkus(nestedResourceTypeFirst, nestedResourceTypeSecond);
 
             // invoke the operation
             string sku = "testSku";
@@ -125,8 +128,8 @@ new SkuCost("xxx")
 }
             }),
             };
-            ArmOperation<ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource result = lro.Value;
+            ArmOperation<NestedResourceTypeSecondSkuResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
+            NestedResourceTypeSecondSkuResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -135,13 +138,13 @@ new SkuCost("xxx")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Skus_ListByResourceTypeRegistrationsNestedResourceTypeFirst
+        // Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_SkusListByResourceTypeRegistrationsNestedResourceTypeFirst()
+        public async Task GetAll_SkusListByResourceTypeRegistrationsNestedResourceTypeSecond()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeFirst.json
-            // this example is just showing the usage of "Skus_ListByResourceTypeRegistrationsNestedResourceTypeFirst" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond.json
+            // this example is just showing the usage of "Skus_ListByResourceTypeRegistrationsNestedResourceTypeSecond" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -154,12 +157,13 @@ new SkuCost("xxx")
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+            // get the collection of this NestedResourceTypeSecondSkuResource
             string nestedResourceTypeFirst = "nestedResourceTypeFirst";
-            ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuCollection collection = resourceTypeRegistration.GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkus(nestedResourceTypeFirst);
+            string nestedResourceTypeSecond = "nestedResourceTypeSecond";
+            NestedResourceTypeSecondSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSecondSkus(nestedResourceTypeFirst, nestedResourceTypeSecond);
 
             // invoke the operation and iterate over the result
-            await foreach (ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource item in collection.GetAllAsync())
+            await foreach (NestedResourceTypeSecondSkuResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
