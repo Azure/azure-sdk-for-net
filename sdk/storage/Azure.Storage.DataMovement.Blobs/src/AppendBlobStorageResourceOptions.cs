@@ -8,7 +8,8 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Options for <see cref="AppendBlobStorageResource"/>.
+    /// Options parameters for
+    /// <see cref="AppendBlobStorageResource"/>.
     /// </summary>
     public class AppendBlobStorageResourceOptions
     {

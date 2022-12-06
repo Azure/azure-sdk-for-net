@@ -45,7 +45,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override Uri Uri => _uri;
 
         /// <summary>
-        /// Constructor for directory client.
+        /// The constructor to create an instance of the BlobDirectoryStorageResourceContainer.
         ///
         /// Listing is a container level operation, which is why the constructor
         /// accepts a container client rather than a base blob client.
