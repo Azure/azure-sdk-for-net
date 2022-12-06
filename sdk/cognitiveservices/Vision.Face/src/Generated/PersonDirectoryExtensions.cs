@@ -33,13 +33,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='start'>
+            /// List persons from the least personId greater than the "start". It contains
+            /// no more than 64 characters. Default is empty.
             /// </param>
             /// <param name='top'>
+            /// The number of persons to list, ranging in [1, 1000]. Default is 1000.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EnrollmentResponse>> GetPersonsAsync(this IPersonDirectory operations, System.Guid? start = null, string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EnrollmentResponse>> GetPersonsAsync(this IPersonDirectory operations, System.Guid? start = default(System.Guid?), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetPersonsWithHttpMessagesAsync(start, top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -54,8 +57,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='start'>
+            /// List persons from the least personId greater than the "start". It contains
+            /// no more than 64 characters. Default is empty.
             /// </param>
             /// <param name='top'>
+            /// The number of persons to list, ranging in [1, 1000]. Default is 1000.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -604,7 +610,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DynamicPersonGroupListPersonsResponse> ListDynamicPersonGroupPersonsAsync(this IPersonDirectory operations, string dynamicPersonGroupId, System.Guid? start = null, string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DynamicPersonGroupListPersonsResponse> ListDynamicPersonGroupPersonsAsync(this IPersonDirectory operations, string dynamicPersonGroupId, System.Guid? start = default(System.Guid?), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListDynamicPersonGroupPersonsWithHttpMessagesAsync(dynamicPersonGroupId, start, top, null, cancellationToken).ConfigureAwait(false))
                 {
