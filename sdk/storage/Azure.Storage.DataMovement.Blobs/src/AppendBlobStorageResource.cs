@@ -18,7 +18,7 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// The BlobStorageResource class.
+    /// The AppendBlobStorageResource class.
     /// </summary>
     public class AppendBlobStorageResource : StorageResource
     {
@@ -98,7 +98,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Consumes the readable stream to upload.
         /// </summary>
         /// <param name="position">
-        /// The offset at which the stream will be copied to.
+        /// The offset at which the stream will be copied to. Default value is 0.
         /// </param>
         /// <param name="length">
         /// The length of the content stream.
@@ -123,9 +123,9 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Consumes stream to upload.
+        /// Consumes the readable stream to upload.
         /// </summary>
-        /// <param name="position">The offset at which the stream will be copied to.</param>
+        /// <param name="position">The offset at which which the stream will be copied to. Default value is 0.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
@@ -269,7 +269,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/></returns>
+        /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);

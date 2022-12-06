@@ -10,12 +10,13 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Options for the <see cref="BlockBlobStorageResource"/>
+    /// Optional parameters for
+    /// <see cref="BlockBlobStorageResource"/>.
     /// </summary>
     public class BlockBlobStorageResourceOptions
     {
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
+        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
         public BlockBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 
