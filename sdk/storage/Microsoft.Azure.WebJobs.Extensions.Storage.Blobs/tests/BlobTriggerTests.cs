@@ -10,6 +10,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
@@ -159,7 +160,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             await blob.UploadAsync(BinaryData.FromString("hello world"));
 
             // Act
-            ParameterBindingData result = await RunTriggerAsync<ParameterBindingData>(typeof(BlobTriggerParameterBindingData),
+            ParameterBindingData result = await RunTriggerAsyncWithConfiguration<ParameterBindingData>(typeof(BlobTriggerParameterBindingData),
                 (s) => BlobTriggerParameterBindingData.TaskSource = s);
 
             var blobData = result.Content.ToObjectFromJson<Dictionary<string,string>>();
@@ -198,10 +199,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 b.AddAzureStorageBlobs();
                 b.UseStorageServices(blobServiceClient, queueServiceClient);
-            }, programType, setTaskSource, settings: new Dictionary<string, string>() {
-                // This takes precedence over env variables.
-                { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
-            });
+            }, programType, setTaskSource);
+        }
+
+        private async Task<TResult> RunTriggerAsyncWithConfiguration<TResult>(Type programType,
+            Action<TaskCompletionSource<TResult>> setTaskSource)
+        {
+            string connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
+            var configuration = new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        { "ConnectionStrings:AzureWebJobsStorage", connectionString }
+                    }).Build();
+
+            return await FunctionalTest.RunTriggerAsync<TResult>(b =>
+            {
+                b.AddAzureStorageBlobs();
+                b.UseStorageServicesWithConfiguration(blobServiceClient, queueServiceClient, configuration);
+            }, programType, setTaskSource);
         }
     }
 }

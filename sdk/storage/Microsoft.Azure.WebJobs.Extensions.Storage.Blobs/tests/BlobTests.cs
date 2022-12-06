@@ -117,20 +117,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         [Test]
         public async Task Blob_IfBoundToParameterBindingData_CreatesParameterBindingData()
         {
+            string connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
+            var configuration = new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        { "ConnectionStrings:AzureWebJobsStorage", connectionString }
+                    }).Build();
+
             // Arrange
             var program = new BindToParameterBindingData();
             IHost host = new HostBuilder()
-                .ConfigureAppConfiguration(cb =>
-                {
-                    cb.AddInMemoryCollection(new Dictionary<string, string>()
-                    {
-                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
-                    });
-                })
                 .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
-                    .UseStorageServices(blobServiceClient, queueServiceClient);
+                    .UseStorageServicesWithConfiguration(blobServiceClient, queueServiceClient, configuration);
                 })
                 .Build();
 
