@@ -17,7 +17,8 @@ namespace Azure.Storage.DataMovement
         public int CompletedCount { get; internal set; }
 
         /// <summary>
-        /// Number of files that were skipped in transfer due to files already existing in the destination and overwite policy set to not overwrite existing files.
+        /// Number of files that were skipped in transfer due to files already existing in the destination. Files will be skipped if
+        /// the overwrite policy is set to not overwrite existing files.
         /// </summary>
         public int SkippedCount { get; internal set; }
 

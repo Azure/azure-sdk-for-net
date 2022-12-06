@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
         public abstract Uri Uri { get; }
 
         /// <summary>
-        /// Gets the path split up.
+        /// Gets the path.
         /// </summary>
         public abstract string Path { get; }
 
