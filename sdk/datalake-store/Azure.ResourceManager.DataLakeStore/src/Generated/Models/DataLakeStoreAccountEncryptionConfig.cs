@@ -7,46 +7,28 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The encryption configuration for the account.
-    /// Serialized Name: EncryptionConfig
-    /// </summary>
+    /// <summary> The encryption configuration for the account. </summary>
     public partial class DataLakeStoreAccountEncryptionConfig
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
-        /// <param name="configType">
-        /// The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;.
-        /// Serialized Name: EncryptionConfig.type
-        /// </param>
+        /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </param>
         public DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType)
         {
             ConfigType = configType;
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
-        /// <param name="configType">
-        /// The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;.
-        /// Serialized Name: EncryptionConfig.type
-        /// </param>
-        /// <param name="keyVaultMetaInfo">
-        /// The Key Vault information for connecting to user managed encryption keys.
-        /// Serialized Name: EncryptionConfig.keyVaultMetaInfo
-        /// </param>
+        /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </param>
+        /// <param name="keyVaultMetaInfo"> The Key Vault information for connecting to user managed encryption keys. </param>
         internal DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType, DataLakeStoreAccountKeyVaultMetaInfo keyVaultMetaInfo)
         {
             ConfigType = configType;
             KeyVaultMetaInfo = keyVaultMetaInfo;
         }
 
-        /// <summary>
-        /// The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;.
-        /// Serialized Name: EncryptionConfig.type
-        /// </summary>
+        /// <summary> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </summary>
         public DataLakeStoreAccountEncryptionConfigType ConfigType { get; set; }
-        /// <summary>
-        /// The Key Vault information for connecting to user managed encryption keys.
-        /// Serialized Name: EncryptionConfig.keyVaultMetaInfo
-        /// </summary>
+        /// <summary> The Key Vault information for connecting to user managed encryption keys. </summary>
         public DataLakeStoreAccountKeyVaultMetaInfo KeyVaultMetaInfo { get; set; }
     }
 }

@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> firewallRules = default;
             Optional<DataLakeAnalyticsFirewallState> firewallState = default;
             Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<CommitmentTierType> newTier = default;
-            Optional<CommitmentTierType> currentTier = default;
+            Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
+            Optional<DataLakeAnalyticsCommitmentTierType> currentTier = default;
             Optional<int> maxJobCount = default;
             Optional<int> maxActiveJobCountPerUser = default;
             Optional<int> maxQueuedJobCountPerUser = default;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            newTier = property0.Value.GetString().ToCommitmentTierType();
+                            newTier = property0.Value.GetString().ToDataLakeAnalyticsCommitmentTierType();
                             continue;
                         }
                         if (property0.NameEquals("currentTier"))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentTier = property0.Value.GetString().ToCommitmentTierType();
+                            currentTier = property0.Value.GetString().ToDataLakeAnalyticsCommitmentTierType();
                             continue;
                         }
                         if (property0.NameEquals("maxJobCount"))

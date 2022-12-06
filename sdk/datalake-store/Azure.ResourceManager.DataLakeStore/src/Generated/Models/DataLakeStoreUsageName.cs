@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The usage names that can be used.
-    /// Serialized Name: UsageName
-    /// </summary>
+    /// <summary> The usage names that can be used. </summary>
     public partial class DataLakeStoreUsageName
     {
         /// <summary> Initializes a new instance of DataLakeStoreUsageName. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreUsageName. </summary>
-        /// <param name="value">
-        /// Gets a string describing the resource name.
-        /// Serialized Name: UsageName.value
-        /// </param>
-        /// <param name="localizedValue">
-        /// Gets a localized string describing the resource name.
-        /// Serialized Name: UsageName.localizedValue
-        /// </param>
+        /// <param name="value"> Gets a string describing the resource name. </param>
+        /// <param name="localizedValue"> Gets a localized string describing the resource name. </param>
         internal DataLakeStoreUsageName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary>
-        /// Gets a string describing the resource name.
-        /// Serialized Name: UsageName.value
-        /// </summary>
+        /// <summary> Gets a string describing the resource name. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Gets a localized string describing the resource name.
-        /// Serialized Name: UsageName.localizedValue
-        /// </summary>
+        /// <summary> Gets a localized string describing the resource name. </summary>
         public string LocalizedValue { get; }
     }
 }

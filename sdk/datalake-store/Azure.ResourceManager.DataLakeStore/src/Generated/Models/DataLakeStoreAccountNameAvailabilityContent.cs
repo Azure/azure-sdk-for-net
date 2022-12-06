@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// Data Lake Store account name availability check parameters.
-    /// Serialized Name: CheckNameAvailabilityParameters
-    /// </summary>
+    /// <summary> Data Lake Store account name availability check parameters. </summary>
     public partial class DataLakeStoreAccountNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountNameAvailabilityContent. </summary>
-        /// <param name="name">
-        /// The Data Lake Store name to check availability for.
-        /// Serialized Name: CheckNameAvailabilityParameters.name
-        /// </param>
-        /// <param name="resourceType">
-        /// The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts
-        /// Serialized Name: CheckNameAvailabilityParameters.type
-        /// </param>
+        /// <param name="name"> The Data Lake Store name to check availability for. </param>
+        /// <param name="resourceType"> The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataLakeStoreAccountNameAvailabilityContent(string name, DataLakeStoreResourceType resourceType)
         {
@@ -34,15 +25,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             ResourceType = resourceType;
         }
 
-        /// <summary>
-        /// The Data Lake Store name to check availability for.
-        /// Serialized Name: CheckNameAvailabilityParameters.name
-        /// </summary>
+        /// <summary> The Data Lake Store name to check availability for. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts
-        /// Serialized Name: CheckNameAvailabilityParameters.type
-        /// </summary>
+        /// <summary> The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts. </summary>
         public DataLakeStoreResourceType ResourceType { get; }
     }
 }

@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
-    /// Serialized Name: FirewallAllowAzureIpsState
-    /// </summary>
+    /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
     public enum DataLakeStoreFirewallAllowAzureIPsState
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: FirewallAllowAzureIpsState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: FirewallAllowAzureIpsState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

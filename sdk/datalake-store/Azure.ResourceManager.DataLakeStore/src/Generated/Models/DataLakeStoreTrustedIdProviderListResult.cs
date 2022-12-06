@@ -11,10 +11,7 @@ using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// Data Lake Store trusted identity provider list information.
-    /// Serialized Name: TrustedIdProviderListResult
-    /// </summary>
+    /// <summary> Data Lake Store trusted identity provider list information. </summary>
     internal partial class DataLakeStoreTrustedIdProviderListResult
     {
         /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderListResult. </summary>
-        /// <param name="value">
-        /// The results of the list operation.
-        /// Serialized Name: TrustedIdProviderListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: TrustedIdProviderListResult.nextLink
-        /// </param>
+        /// <param name="value"> The results of the list operation. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal DataLakeStoreTrustedIdProviderListResult(IReadOnlyList<DataLakeStoreTrustedIdProviderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The results of the list operation.
-        /// Serialized Name: TrustedIdProviderListResult.value
-        /// </summary>
+        /// <summary> The results of the list operation. </summary>
         public IReadOnlyList<DataLakeStoreTrustedIdProviderData> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: TrustedIdProviderListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

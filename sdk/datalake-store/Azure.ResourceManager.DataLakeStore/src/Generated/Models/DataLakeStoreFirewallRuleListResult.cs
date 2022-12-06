@@ -11,10 +11,7 @@ using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// Data Lake Store firewall rule list information.
-    /// Serialized Name: FirewallRuleListResult
-    /// </summary>
+    /// <summary> Data Lake Store firewall rule list information. </summary>
     internal partial class DataLakeStoreFirewallRuleListResult
     {
         /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>
-        /// <param name="value">
-        /// The results of the list operation.
-        /// Serialized Name: FirewallRuleListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: FirewallRuleListResult.nextLink
-        /// </param>
+        /// <param name="value"> The results of the list operation. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal DataLakeStoreFirewallRuleListResult(IReadOnlyList<DataLakeStoreFirewallRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The results of the list operation.
-        /// Serialized Name: FirewallRuleListResult.value
-        /// </summary>
+        /// <summary> The results of the list operation. </summary>
         public IReadOnlyList<DataLakeStoreFirewallRuleData> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: FirewallRuleListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

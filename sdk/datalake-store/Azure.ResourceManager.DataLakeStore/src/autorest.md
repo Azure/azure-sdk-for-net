@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}
 
@@ -28,6 +25,8 @@ operation-positions:
 override-operation-name:
   Accounts_ListByResourceGroup: GetAll
   Accounts_CheckNameAvailability: CheckDataLakeStoreAccountNameAvailability
+  Locations_GetCapability: GetCapabilityByLocation
+  Locations_GetUsage: GetUsageByLocation
 
 rename-mapping:
   CheckNameAvailabilityParameters: DataLakeStoreAccountNameAvailabilityContent
@@ -66,6 +65,7 @@ rename-mapping:
   CreateTrustedIdProviderWithAccountParameters.properties.idProvider: -|uri
   UpdateTrustedIdProviderWithAccountParameters.properties.idProvider: -|uri
   CapabilityInformation.migrationState: IsUnderMigrationState
+  DataLakeStoreAccountBasic: DataLakeStoreAccountBasicData
 
 prepend-rp-prefix:
   - FirewallRule
@@ -114,5 +114,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - from: account.json
+    where: $.paths..parameters[?(@.name === '$orderby')]
+    transform: >
+      $['x-ms-client-name'] = 'orderBy';
 
 ```

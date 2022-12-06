@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The subscription state.
-    /// Serialized Name: SubscriptionState
-    /// </summary>
+    /// <summary> The subscription state. </summary>
     public readonly partial struct DataLakeStoreSubscriptionState : IEquatable<DataLakeStoreSubscriptionState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         private const string UnregisteredValue = "Unregistered";
         private const string WarnedValue = "Warned";
 
-        /// <summary>
-        /// Registered
-        /// Serialized Name: SubscriptionState.Registered
-        /// </summary>
+        /// <summary> Registered. </summary>
         public static DataLakeStoreSubscriptionState Registered { get; } = new DataLakeStoreSubscriptionState(RegisteredValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: SubscriptionState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static DataLakeStoreSubscriptionState Suspended { get; } = new DataLakeStoreSubscriptionState(SuspendedValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: SubscriptionState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static DataLakeStoreSubscriptionState Deleted { get; } = new DataLakeStoreSubscriptionState(DeletedValue);
-        /// <summary>
-        /// Unregistered
-        /// Serialized Name: SubscriptionState.Unregistered
-        /// </summary>
+        /// <summary> Unregistered. </summary>
         public static DataLakeStoreSubscriptionState Unregistered { get; } = new DataLakeStoreSubscriptionState(UnregisteredValue);
-        /// <summary>
-        /// Warned
-        /// Serialized Name: SubscriptionState.Warned
-        /// </summary>
+        /// <summary> Warned. </summary>
         public static DataLakeStoreSubscriptionState Warned { get; } = new DataLakeStoreSubscriptionState(WarnedValue);
         /// <summary> Determines if two <see cref="DataLakeStoreSubscriptionState"/> values are the same. </summary>
         public static bool operator ==(DataLakeStoreSubscriptionState left, DataLakeStoreSubscriptionState right) => left.Equals(right);

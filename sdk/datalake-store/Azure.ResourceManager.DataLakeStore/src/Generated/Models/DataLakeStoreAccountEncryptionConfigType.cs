@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;.
-    /// Serialized Name: EncryptionConfigType
-    /// </summary>
+    /// <summary> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </summary>
     public enum DataLakeStoreAccountEncryptionConfigType
     {
-        /// <summary>
-        /// UserManaged
-        /// Serialized Name: EncryptionConfigType.UserManaged
-        /// </summary>
+        /// <summary> UserManaged. </summary>
         UserManaged,
-        /// <summary>
-        /// ServiceManaged
-        /// Serialized Name: EncryptionConfigType.ServiceManaged
-        /// </summary>
+        /// <summary> ServiceManaged. </summary>
         ServiceManaged
     }
 }

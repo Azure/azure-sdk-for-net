@@ -11,17 +11,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The CreateDataLakeStoreAccountParameters.
-    /// Serialized Name: CreateDataLakeStoreAccountParameters
-    /// </summary>
+    /// <summary> The DataLakeStoreAccountCreateOrUpdateContent. </summary>
     public partial class DataLakeStoreAccountCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountCreateOrUpdateContent. </summary>
-        /// <param name="location">
-        /// The resource location.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.location
-        /// </param>
+        /// <param name="location"> The resource location. </param>
         public DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location)
         {
             Location = location;
@@ -31,70 +25,31 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             TrustedIdProviders = new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>();
         }
 
-        /// <summary>
-        /// The resource location.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.location
-        /// </summary>
+        /// <summary> The resource location. </summary>
         public AzureLocation Location { get; }
-        /// <summary>
-        /// The resource tags.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.tags
-        /// </summary>
+        /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The Key Vault encryption identity, if any.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.identity
-        /// </summary>
+        /// <summary> The Key Vault encryption identity, if any. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The default owner group for all new folders and files created in the Data Lake Store account.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.defaultGroup
-        /// </summary>
+        /// <summary> The default owner group for all new folders and files created in the Data Lake Store account. </summary>
         public string DefaultGroup { get; set; }
-        /// <summary>
-        /// The Key Vault encryption configuration.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.encryptionConfig
-        /// </summary>
+        /// <summary> The Key Vault encryption configuration. </summary>
         public DataLakeStoreAccountEncryptionConfig EncryptionConfig { get; set; }
-        /// <summary>
-        /// The current state of encryption for this Data Lake Store account.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.encryptionState
-        /// </summary>
+        /// <summary> The current state of encryption for this Data Lake Store account. </summary>
         public DataLakeStoreEncryptionState? EncryptionState { get; set; }
-        /// <summary>
-        /// The list of firewall rules associated with this Data Lake Store account.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallRules
-        /// </summary>
+        /// <summary> The list of firewall rules associated with this Data Lake Store account. </summary>
         public IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> FirewallRules { get; }
-        /// <summary>
-        /// The list of virtual network rules associated with this Data Lake Store account.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.virtualNetworkRules
-        /// </summary>
+        /// <summary> The list of virtual network rules associated with this Data Lake Store account. </summary>
         public IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> VirtualNetworkRules { get; }
-        /// <summary>
-        /// The current state of the IP address firewall for this Data Lake Store account.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallState
-        /// </summary>
+        /// <summary> The current state of the IP address firewall for this Data Lake Store account. </summary>
         public DataLakeStoreFirewallState? FirewallState { get; set; }
-        /// <summary>
-        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.firewallAllowAzureIps
-        /// </summary>
+        /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
         public DataLakeStoreFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
-        /// <summary>
-        /// The list of trusted identity providers associated with this Data Lake Store account.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.trustedIdProviders
-        /// </summary>
+        /// <summary> The list of trusted identity providers associated with this Data Lake Store account. </summary>
         public IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> TrustedIdProviders { get; }
-        /// <summary>
-        /// The current state of the trusted identity provider feature for this Data Lake Store account.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.trustedIdProviderState
-        /// </summary>
+        /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. </summary>
         public DataLakeStoreTrustedIdProviderState? TrustedIdProviderState { get; set; }
-        /// <summary>
-        /// The commitment tier to use for next month.
-        /// Serialized Name: CreateDataLakeStoreAccountParameters.properties.newTier
-        /// </summary>
+        /// <summary> The commitment tier to use for next month. </summary>
         public DataLakeStoreCommitmentTierType? NewTier { get; set; }
     }
 }

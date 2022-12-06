@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The parameters used to update a trusted identity provider while updating a Data Lake Store account.
-    /// Serialized Name: UpdateTrustedIdProviderWithAccountParameters
-    /// </summary>
+    /// <summary> The parameters used to update a trusted identity provider while updating a Data Lake Store account. </summary>
     public partial class TrustedIdProviderForDataLakeStoreAccountUpdateContent
     {
         /// <summary> Initializes a new instance of TrustedIdProviderForDataLakeStoreAccountUpdateContent. </summary>
-        /// <param name="name">
-        /// The unique name of the trusted identity provider to update.
-        /// Serialized Name: UpdateTrustedIdProviderWithAccountParameters.name
-        /// </param>
+        /// <param name="name"> The unique name of the trusted identity provider to update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public TrustedIdProviderForDataLakeStoreAccountUpdateContent(string name)
         {
@@ -29,15 +23,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The unique name of the trusted identity provider to update.
-        /// Serialized Name: UpdateTrustedIdProviderWithAccountParameters.name
-        /// </summary>
+        /// <summary> The unique name of the trusted identity provider to update. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The URL of this trusted identity provider.
-        /// Serialized Name: UpdateTrustedIdProviderWithAccountParameters.properties.idProvider
-        /// </summary>
+        /// <summary> The URL of this trusted identity provider. </summary>
         public Uri IdProvider { get; set; }
     }
 }

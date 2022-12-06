@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The current state of encryption provisioning for this Data Lake Store account.
-    /// Serialized Name: EncryptionProvisioningState
-    /// </summary>
+    /// <summary> The current state of encryption provisioning for this Data Lake Store account. </summary>
     public enum DataLakeStoreEncryptionProvisioningState
     {
-        /// <summary>
-        /// Creating
-        /// Serialized Name: EncryptionProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         Creating,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: EncryptionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded
     }
 }

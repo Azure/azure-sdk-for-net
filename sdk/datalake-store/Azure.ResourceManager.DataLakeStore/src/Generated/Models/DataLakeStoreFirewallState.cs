@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The current state of the IP address firewall for this Data Lake Store account.
-    /// Serialized Name: FirewallState
-    /// </summary>
+    /// <summary> The current state of the IP address firewall for this Data Lake Store account. </summary>
     public enum DataLakeStoreFirewallState
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: FirewallState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: FirewallState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

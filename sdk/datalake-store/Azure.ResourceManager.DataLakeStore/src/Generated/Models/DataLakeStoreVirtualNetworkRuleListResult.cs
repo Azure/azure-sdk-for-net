@@ -11,10 +11,7 @@ using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// Data Lake Store virtual network rule list information.
-    /// Serialized Name: VirtualNetworkRuleListResult
-    /// </summary>
+    /// <summary> Data Lake Store virtual network rule list information. </summary>
     internal partial class DataLakeStoreVirtualNetworkRuleListResult
     {
         /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleListResult. </summary>
-        /// <param name="value">
-        /// The results of the list operation.
-        /// Serialized Name: VirtualNetworkRuleListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: VirtualNetworkRuleListResult.nextLink
-        /// </param>
+        /// <param name="value"> The results of the list operation. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal DataLakeStoreVirtualNetworkRuleListResult(IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The results of the list operation.
-        /// Serialized Name: VirtualNetworkRuleListResult.value
-        /// </summary>
+        /// <summary> The results of the list operation. </summary>
         public IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: VirtualNetworkRuleListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

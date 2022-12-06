@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class DataLakeAnalyticsNameAccountAvailabilityResult
+    public partial class DataLakeAnalyticsAccountNameAvailabilityResult
     {
-        internal static DataLakeAnalyticsNameAccountAvailabilityResult DeserializeDataLakeAnalyticsNameAccountAvailabilityResult(JsonElement element)
+        internal static DataLakeAnalyticsAccountNameAvailabilityResult DeserializeDataLakeAnalyticsAccountNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsNameAccountAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new DataLakeAnalyticsAccountNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

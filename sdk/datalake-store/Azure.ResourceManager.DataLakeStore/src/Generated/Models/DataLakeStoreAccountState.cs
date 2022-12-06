@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The state of the Data Lake Store account.
-    /// Serialized Name: DataLakeStoreAccountState
-    /// </summary>
+    /// <summary> The state of the Data Lake Store account. </summary>
     public enum DataLakeStoreAccountState
     {
-        /// <summary>
-        /// Active
-        /// Serialized Name: DataLakeStoreAccountState.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         Active,
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: DataLakeStoreAccountState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         Suspended
     }
 }

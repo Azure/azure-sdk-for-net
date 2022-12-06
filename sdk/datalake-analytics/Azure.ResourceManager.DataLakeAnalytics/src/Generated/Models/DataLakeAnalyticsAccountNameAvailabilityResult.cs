@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// Data Lake Analytics account name availability result information.
     /// Serialized Name: NameAvailabilityInformation
     /// </summary>
-    public partial class DataLakeAnalyticsNameAccountAvailabilityResult
+    public partial class DataLakeAnalyticsAccountNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsNameAccountAvailabilityResult. </summary>
-        internal DataLakeAnalyticsNameAccountAvailabilityResult()
+        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
+        internal DataLakeAnalyticsAccountNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsNameAccountAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable">
         /// The Boolean value of true or false to indicate whether the Data Lake Analytics account name is available or not.
         /// Serialized Name: NameAvailabilityInformation.nameAvailable
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The message describing why the Data Lake Analytics account name is not available, if nameAvailable is false.
         /// Serialized Name: NameAvailabilityInformation.message
         /// </param>
-        internal DataLakeAnalyticsNameAccountAvailabilityResult(bool? isNameAvailable, string reason, string message)
+        internal DataLakeAnalyticsAccountNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;

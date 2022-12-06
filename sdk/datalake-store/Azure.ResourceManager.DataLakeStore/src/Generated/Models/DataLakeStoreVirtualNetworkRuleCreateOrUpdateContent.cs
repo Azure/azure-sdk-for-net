@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The parameters used to create a new virtual network rule.
-    /// Serialized Name: CreateOrUpdateVirtualNetworkRuleParameters
-    /// </summary>
+    /// <summary> The parameters used to create a new virtual network rule. </summary>
     public partial class DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent. </summary>
-        /// <param name="subnetId">
-        /// The resource identifier for the subnet.
-        /// Serialized Name: CreateOrUpdateVirtualNetworkRuleParameters.properties.subnetId
-        /// </param>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent(ResourceIdentifier subnetId)
         {
@@ -29,10 +23,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             SubnetId = subnetId;
         }
 
-        /// <summary>
-        /// The resource identifier for the subnet.
-        /// Serialized Name: CreateOrUpdateVirtualNetworkRuleParameters.properties.subnetId
-        /// </summary>
+        /// <summary> The resource identifier for the subnet. </summary>
         public ResourceIdentifier SubnetId { get; }
     }
 }

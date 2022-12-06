@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The current state of encryption for this Data Lake Store account.
-    /// Serialized Name: EncryptionState
-    /// </summary>
+    /// <summary> The current state of encryption for this Data Lake Store account. </summary>
     public enum DataLakeStoreEncryptionState
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: EncryptionState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: EncryptionState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

@@ -24,19 +24,13 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="idProvider">
-        /// The URL of this trusted identity provider.
-        /// Serialized Name: TrustedIdProvider.properties.idProvider
-        /// </param>
+        /// <param name="idProvider"> The URL of this trusted identity provider. </param>
         internal DataLakeStoreTrustedIdProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri idProvider) : base(id, name, resourceType, systemData)
         {
             IdProvider = idProvider;
         }
 
-        /// <summary>
-        /// The URL of this trusted identity provider.
-        /// Serialized Name: TrustedIdProvider.properties.idProvider
-        /// </summary>
+        /// <summary> The URL of this trusted identity provider. </summary>
         public Uri IdProvider { get; }
     }
 }

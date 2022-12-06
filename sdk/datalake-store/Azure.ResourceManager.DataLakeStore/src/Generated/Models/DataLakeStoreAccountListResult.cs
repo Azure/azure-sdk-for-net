@@ -10,42 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// Data Lake Store account list information response.
-    /// Serialized Name: DataLakeStoreAccountListResult
-    /// </summary>
+    /// <summary> Data Lake Store account list information response. </summary>
     internal partial class DataLakeStoreAccountListResult
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountListResult. </summary>
         internal DataLakeStoreAccountListResult()
         {
-            Value = new ChangeTrackingList<DataLakeStoreAccountBasic>();
+            Value = new ChangeTrackingList<DataLakeStoreAccountBasicData>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreAccountListResult. </summary>
-        /// <param name="value">
-        /// The results of the list operation.
-        /// Serialized Name: DataLakeStoreAccountListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: DataLakeStoreAccountListResult.nextLink
-        /// </param>
-        internal DataLakeStoreAccountListResult(IReadOnlyList<DataLakeStoreAccountBasic> value, string nextLink)
+        /// <param name="value"> The results of the list operation. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        internal DataLakeStoreAccountListResult(IReadOnlyList<DataLakeStoreAccountBasicData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The results of the list operation.
-        /// Serialized Name: DataLakeStoreAccountListResult.value
-        /// </summary>
-        public IReadOnlyList<DataLakeStoreAccountBasic> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: DataLakeStoreAccountListResult.nextLink
-        /// </summary>
+        /// <summary> The results of the list operation. </summary>
+        public IReadOnlyList<DataLakeStoreAccountBasicData> Value { get; }
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

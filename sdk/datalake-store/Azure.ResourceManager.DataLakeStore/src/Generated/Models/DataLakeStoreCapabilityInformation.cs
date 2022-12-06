@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// Subscription-level properties and limits for Data Lake Store.
-    /// Serialized Name: CapabilityInformation
-    /// </summary>
+    /// <summary> Subscription-level properties and limits for Data Lake Store. </summary>
     public partial class DataLakeStoreCapabilityInformation
     {
         /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
-        /// <param name="subscriptionId">
-        /// The subscription credentials that uniquely identifies the subscription.
-        /// Serialized Name: CapabilityInformation.subscriptionId
-        /// </param>
-        /// <param name="state">
-        /// The subscription state.
-        /// Serialized Name: CapabilityInformation.state
-        /// </param>
-        /// <param name="maxAccountCount">
-        /// The maximum supported number of accounts under this subscription.
-        /// Serialized Name: CapabilityInformation.maxAccountCount
-        /// </param>
-        /// <param name="accountCount">
-        /// The current number of accounts under this subscription.
-        /// Serialized Name: CapabilityInformation.accountCount
-        /// </param>
-        /// <param name="isUnderMigrationState">
-        /// The Boolean value of true or false to indicate the maintenance state.
-        /// Serialized Name: CapabilityInformation.migrationState
-        /// </param>
+        /// <param name="subscriptionId"> The subscription credentials that uniquely identifies the subscription. </param>
+        /// <param name="state"> The subscription state. </param>
+        /// <param name="maxAccountCount"> The maximum supported number of accounts under this subscription. </param>
+        /// <param name="accountCount"> The current number of accounts under this subscription. </param>
+        /// <param name="isUnderMigrationState"> The Boolean value of true or false to indicate the maintenance state. </param>
         internal DataLakeStoreCapabilityInformation(Guid? subscriptionId, DataLakeStoreSubscriptionState? state, int? maxAccountCount, int? accountCount, bool? isUnderMigrationState)
         {
             SubscriptionId = subscriptionId;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             IsUnderMigrationState = isUnderMigrationState;
         }
 
-        /// <summary>
-        /// The subscription credentials that uniquely identifies the subscription.
-        /// Serialized Name: CapabilityInformation.subscriptionId
-        /// </summary>
+        /// <summary> The subscription credentials that uniquely identifies the subscription. </summary>
         public Guid? SubscriptionId { get; }
-        /// <summary>
-        /// The subscription state.
-        /// Serialized Name: CapabilityInformation.state
-        /// </summary>
+        /// <summary> The subscription state. </summary>
         public DataLakeStoreSubscriptionState? State { get; }
-        /// <summary>
-        /// The maximum supported number of accounts under this subscription.
-        /// Serialized Name: CapabilityInformation.maxAccountCount
-        /// </summary>
+        /// <summary> The maximum supported number of accounts under this subscription. </summary>
         public int? MaxAccountCount { get; }
-        /// <summary>
-        /// The current number of accounts under this subscription.
-        /// Serialized Name: CapabilityInformation.accountCount
-        /// </summary>
+        /// <summary> The current number of accounts under this subscription. </summary>
         public int? AccountCount { get; }
-        /// <summary>
-        /// The Boolean value of true or false to indicate the maintenance state.
-        /// Serialized Name: CapabilityInformation.migrationState
-        /// </summary>
+        /// <summary> The Boolean value of true or false to indicate the maintenance state. </summary>
         public bool? IsUnderMigrationState { get; }
     }
 }

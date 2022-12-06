@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// The commitment tier for the next month.
     /// Serialized Name: TierType
     /// </summary>
-    public enum CommitmentTierType
+    public enum DataLakeAnalyticsCommitmentTierType
     {
         /// <summary>
         /// Consumption

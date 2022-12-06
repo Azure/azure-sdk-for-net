@@ -24,29 +24,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startIPAddress">
-        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
-        /// Serialized Name: FirewallRule.properties.startIpAddress
-        /// </param>
-        /// <param name="endIPAddress">
-        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
-        /// Serialized Name: FirewallRule.properties.endIpAddress
-        /// </param>
+        /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
         internal DataLakeStoreFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress) : base(id, name, resourceType, systemData)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary>
-        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
-        /// Serialized Name: FirewallRule.properties.startIpAddress
-        /// </summary>
+        /// <summary> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
         public IPAddress StartIPAddress { get; }
-        /// <summary>
-        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
-        /// Serialized Name: FirewallRule.properties.endIpAddress
-        /// </summary>
+        /// <summary> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>
         public IPAddress EndIPAddress { get; }
     }
 }

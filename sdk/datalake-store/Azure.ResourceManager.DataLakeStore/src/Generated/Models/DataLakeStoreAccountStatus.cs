@@ -7,66 +7,30 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The provisioning status of the Data Lake Store account.
-    /// Serialized Name: DataLakeStoreAccountStatus
-    /// </summary>
+    /// <summary> The provisioning status of the Data Lake Store account. </summary>
     public enum DataLakeStoreAccountStatus
     {
-        /// <summary>
-        /// Failed
-        /// Serialized Name: DataLakeStoreAccountStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Creating
-        /// Serialized Name: DataLakeStoreAccountStatus.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         Creating,
-        /// <summary>
-        /// Running
-        /// Serialized Name: DataLakeStoreAccountStatus.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         Running,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: DataLakeStoreAccountStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// Patching
-        /// Serialized Name: DataLakeStoreAccountStatus.Patching
-        /// </summary>
+        /// <summary> Patching. </summary>
         Patching,
-        /// <summary>
-        /// Suspending
-        /// Serialized Name: DataLakeStoreAccountStatus.Suspending
-        /// </summary>
+        /// <summary> Suspending. </summary>
         Suspending,
-        /// <summary>
-        /// Resuming
-        /// Serialized Name: DataLakeStoreAccountStatus.Resuming
-        /// </summary>
+        /// <summary> Resuming. </summary>
         Resuming,
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: DataLakeStoreAccountStatus.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         Deleting,
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: DataLakeStoreAccountStatus.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         Deleted,
-        /// <summary>
-        /// Undeleting
-        /// Serialized Name: DataLakeStoreAccountStatus.Undeleting
-        /// </summary>
+        /// <summary> Undeleting. </summary>
         Undeleting,
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: DataLakeStoreAccountStatus.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         Canceled
     }
 }

@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The parameters used to create a new virtual network rule while creating a new Data Lake Store account.
-    /// Serialized Name: CreateVirtualNetworkRuleWithAccountParameters
-    /// </summary>
+    /// <summary> The parameters used to create a new virtual network rule while creating a new Data Lake Store account. </summary>
     public partial class VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent. </summary>
-        /// <param name="name">
-        /// The unique name of the virtual network rule to create.
-        /// Serialized Name: CreateVirtualNetworkRuleWithAccountParameters.name
-        /// </param>
-        /// <param name="subnetId">
-        /// The resource identifier for the subnet.
-        /// Serialized Name: CreateVirtualNetworkRuleWithAccountParameters.properties.subnetId
-        /// </param>
+        /// <param name="name"> The unique name of the virtual network rule to create. </param>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
         public VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent(string name, ResourceIdentifier subnetId)
         {
@@ -35,15 +26,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             SubnetId = subnetId;
         }
 
-        /// <summary>
-        /// The unique name of the virtual network rule to create.
-        /// Serialized Name: CreateVirtualNetworkRuleWithAccountParameters.name
-        /// </summary>
+        /// <summary> The unique name of the virtual network rule to create. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The resource identifier for the subnet.
-        /// Serialized Name: CreateVirtualNetworkRuleWithAccountParameters.properties.subnetId
-        /// </summary>
+        /// <summary> The resource identifier for the subnet. </summary>
         public ResourceIdentifier SubnetId { get; }
     }
 }

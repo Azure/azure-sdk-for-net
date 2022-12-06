@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary>
-    /// The response from the List Usages operation.
-    /// Serialized Name: UsageListResult
-    /// </summary>
+    /// <summary> The response from the List Usages operation. </summary>
     internal partial class DataLakeStoreUsageListResult
     {
         /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>
-        /// <param name="value">
-        /// Gets or sets the list of Storage Resource Usages.
-        /// Serialized Name: UsageListResult.value
-        /// </param>
+        /// <param name="value"> Gets or sets the list of Storage Resource Usages. </param>
         internal DataLakeStoreUsageListResult(IReadOnlyList<DataLakeStoreUsage> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Gets or sets the list of Storage Resource Usages.
-        /// Serialized Name: UsageListResult.value
-        /// </summary>
+        /// <summary> Gets or sets the list of Storage Resource Usages. </summary>
         public IReadOnlyList<DataLakeStoreUsage> Value { get; }
     }
 }
