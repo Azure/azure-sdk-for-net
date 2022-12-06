@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-edb20196aa5c11f70d1e3e6a934fc938-fdea2f931e076324-00",
+        "traceparent": "00-15549b8e414cbf265a03db31ee678a9d-8f06ba87a07a61ce-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "17bd3a0af81ca4aee32abcaaa11535b4",
+        "x-ms-client-request-id": "98379f737e140f47f9ee62a075abc74e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "405",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Dec 2022 07:18:12 GMT",
+        "Date": "Tue, 06 Dec 2022 17:56:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ef3749d9-54d2-4e8c-9d39-7850b35c5963",
+        "x-ms-correlation-request-id": "85cf37cb-cfa5-47a5-8589-19081981a1c2",
         "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "ef3749d9-54d2-4e8c-9d39-7850b35c5963",
-        "x-ms-routing-request-id": "WESTUS2:20221206T071813Z:ef3749d9-54d2-4e8c-9d39-7850b35c5963"
+        "x-ms-request-id": "85cf37cb-cfa5-47a5-8589-19081981a1c2",
+        "x-ms-routing-request-id": "WESTUS2:20221206T175621Z:85cf37cb-cfa5-47a5-8589-19081981a1c2"
       },
       "ResponseBody": {
         "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14",
@@ -48,9 +48,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3e959dbb000fff28b9c0e804d3a3260b-cbda9936d3f7358c-00",
+        "traceparent": "00-db66676da0c77d4d71079bf1f1372a6c-f86ed3335006b4d9-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "79b516ae0e1e0dbc42218e31b02cba4e",
+        "x-ms-client-request-id": "c870dbb9d90d0156841e987f79da8f04",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -59,15 +59,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "352",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Dec 2022 07:18:12 GMT",
+        "Date": "Tue, 06 Dec 2022 17:56:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "92428c60-7597-46f4-8486-18251be7057d",
+        "x-ms-correlation-request-id": "17642e07-c0f4-42aa-b828-8db23c090000",
         "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "92428c60-7597-46f4-8486-18251be7057d",
-        "x-ms-routing-request-id": "WESTUS2:20221206T071813Z:92428c60-7597-46f4-8486-18251be7057d"
+        "x-ms-request-id": "17642e07-c0f4-42aa-b828-8db23c090000",
+        "x-ms-routing-request-id": "WESTUS2:20221206T175621Z:17642e07-c0f4-42aa-b828-8db23c090000"
       },
       "ResponseBody": {
         "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording",
@@ -85,35 +85,35 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments?api-version=2022-07-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9b6e9f84a34ad43426f33cab3a7c246a-c0677a5dcd9918d2-00",
-        "User-Agent": "azsdk-net-ResourceManager.Chaos/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "326d8fb20f8e91011eab24c08044923f",
+        "traceparent": "00-bc8c2ed89abf649f5ebfbfdd584d1f19-1bdf442e9eaeca4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Chaos/1.0.0-alpha.20221206.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "0d18e902cef281779fa8399ce47b17d8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "27580",
+        "Content-Length": "39360",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Dec 2022 07:18:13 GMT",
+        "Date": "Tue, 06 Dec 2022 17:56:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ffdf810e-6f62-4fd8-983c-470b966ae2d5",
+        "x-ms-correlation-request-id": "f81ab6d4-f5cd-4714-af3f-f12477bb0a63",
         "x-ms-original-request-ids": [
           "",
           ""
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": "298",
-        "x-ms-request-id": "ffdf810e-6f62-4fd8-983c-470b966ae2d5",
-        "x-ms-routing-request-id": "WESTUS2:20221206T071814Z:ffdf810e-6f62-4fd8-983c-470b966ae2d5"
+        "x-ms-request-id": "f81ab6d4-f5cd-4714-af3f-f12477bb0a63",
+        "x-ms-routing-request-id": "WESTUS2:20221206T175622Z:f81ab6d4-f5cd-4714-af3f-f12477bb0a63"
       },
       "ResponseBody": {
         "value": [
@@ -1488,6 +1488,594 @@
                 }
               ]
             }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-487",
+            "name": "sdktest-chaos-487",
+            "systemData": {
+              "createdAt": "2022-12-06T07:18:26.2731825\u002B00:00",
+              "lastModifiedAt": "2022-12-06T07:18:26.2731825\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-5/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-8278",
+            "name": "sdktest-chaos-8278",
+            "systemData": {
+              "createdAt": "2022-12-06T07:18:28.2991993\u002B00:00",
+              "lastModifiedAt": "2022-12-06T07:18:28.2991993\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-5/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-5775",
+            "name": "sdktest-chaos-5775",
+            "systemData": {
+              "createdAt": "2022-12-06T17:55:17.0598978\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:55:17.0598978\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-2/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-3023",
+            "name": "sdktest-chaos-3023",
+            "systemData": {
+              "createdAt": "2022-12-06T17:55:19.6759001\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:55:19.6759001\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-2/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-8280",
+            "name": "sdktest-chaos-8280",
+            "systemData": {
+              "createdAt": "2022-12-06T17:55:29.550131\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:55:29.550131\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-3/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-5654",
+            "name": "sdktest-chaos-5654",
+            "systemData": {
+              "createdAt": "2022-12-06T17:55:31.5334861\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:55:31.5334861\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-3/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-4237",
+            "name": "sdktest-chaos-4237",
+            "systemData": {
+              "createdAt": "2022-12-06T17:55:45.7858661\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:55:45.7858661\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-0/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-5004",
+            "name": "sdktest-chaos-5004",
+            "systemData": {
+              "createdAt": "2022-12-06T17:55:48.7135368\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:55:48.7135368\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-0/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-6081",
+            "name": "sdktest-chaos-6081",
+            "systemData": {
+              "createdAt": "2022-12-06T17:55:58.4224471\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:55:58.4224471\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-1/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-8860",
+            "name": "sdktest-chaos-8860",
+            "systemData": {
+              "createdAt": "2022-12-06T17:56:00.6558682\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:56:00.6558682\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-1/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-2401",
+            "name": "sdktest-chaos-2401",
+            "systemData": {
+              "createdAt": "2022-12-06T17:56:18.2501299\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:56:18.2501299\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-4/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/experiments",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Chaos/experiments/sdktest-chaos-7273",
+            "name": "sdktest-chaos-7273",
+            "systemData": {
+              "createdAt": "2022-12-06T17:56:20.6188724\u002B00:00",
+              "lastModifiedAt": "2022-12-06T17:56:20.6188724\u002B00:00",
+              "createdByType": "User"
+            },
+            "location": "westus2",
+            "properties": {
+              "selectors": [
+                {
+                  "type": "List",
+                  "id": "selector1",
+                  "targets": [
+                    {
+                      "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording/providers/Microsoft.Compute/virtualMachineScaleSets/chaossdk-vmss-eastus-4/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet",
+                      "type": "ChaosTarget"
+                    }
+                  ]
+                }
+              ],
+              "steps": [
+                {
+                  "name": "step1",
+                  "branches": [
+                    {
+                      "name": "branch1",
+                      "actions": [
+                        {
+                          "type": "continuous",
+                          "selectorId": "selector1",
+                          "duration": "PT2M",
+                          "parameters": [
+                            {
+                              "key": "abruptShutdown",
+                              "value": "true"
+                            }
+                          ],
+                          "name": "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
           }
         ]
       }
@@ -1496,7 +2084,7 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOCATION": "eastus",
-    "RandomSeed": "246009831",
+    "RandomSeed": "1522301572",
     "RESOURCE_GROUP": "rg-chaos-sdk-test-recording",
     "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "fb74b135-894b-4c1d-9b2e-8a3c231abc14"
