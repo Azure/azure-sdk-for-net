@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Added new APIs from 2022-10-01 API:
+-GetRpUnbilledPrefixes
 
 ## 1.0.0 (2022-09-26)
 

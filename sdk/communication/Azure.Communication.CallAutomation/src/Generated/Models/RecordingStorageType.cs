@@ -22,13 +22,13 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ACSValue = "aCS";
-        private const string ExternalValue = "external";
+        private const string AcsValue = "acs";
+        private const string AzureBlobValue = "azureBlob";
 
-        /// <summary> aCS. </summary>
-        public static RecordingStorageType ACS { get; } = new RecordingStorageType(ACSValue);
-        /// <summary> external. </summary>
-        public static RecordingStorageType External { get; } = new RecordingStorageType(ExternalValue);
+        /// <summary> acs. </summary>
+        public static RecordingStorageType Acs { get; } = new RecordingStorageType(AcsValue);
+        /// <summary> azureBlob. </summary>
+        public static RecordingStorageType AzureBlob { get; } = new RecordingStorageType(AzureBlobValue);
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are the same. </summary>
         public static bool operator ==(RecordingStorageType left, RecordingStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are not the same. </summary>

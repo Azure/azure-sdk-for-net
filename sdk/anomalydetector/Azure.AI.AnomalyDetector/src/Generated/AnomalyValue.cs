@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The AnomalyValue. </summary>
+    /// <summary> Detailed information of the anomalous timestamp. </summary>
     public partial class AnomalyValue
     {
         /// <summary> Initializes a new instance of AnomalyValue. </summary>

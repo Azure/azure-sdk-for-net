@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine forecast horizon selection mode. </summary>
+    /// <summary>
+    /// Enum to determine forecast horizon selection mode.
+    /// Serialized Name: ForecastHorizonMode
+    /// </summary>
     internal readonly partial struct ForecastHorizonMode : IEquatable<ForecastHorizonMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AutoValue = "Auto";
         private const string CustomValue = "Custom";
 
-        /// <summary> Forecast horizon to be determined automatically. </summary>
+        /// <summary>
+        /// Forecast horizon to be determined automatically.
+        /// Serialized Name: ForecastHorizonMode.Auto
+        /// </summary>
         public static ForecastHorizonMode Auto { get; } = new ForecastHorizonMode(AutoValue);
-        /// <summary> Use the custom forecast horizon. </summary>
+        /// <summary>
+        /// Use the custom forecast horizon.
+        /// Serialized Name: ForecastHorizonMode.Custom
+        /// </summary>
         public static ForecastHorizonMode Custom { get; } = new ForecastHorizonMode(CustomValue);
         /// <summary> Determines if two <see cref="ForecastHorizonMode"/> values are the same. </summary>
         public static bool operator ==(ForecastHorizonMode left, ForecastHorizonMode right) => left.Equals(right);

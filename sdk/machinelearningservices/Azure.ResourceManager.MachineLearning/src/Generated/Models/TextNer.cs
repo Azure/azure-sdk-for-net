@@ -14,13 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Text-NER task in AutoML NLP vertical.
     /// NER - Named Entity Recognition.
     /// NLP - Natural Language Processing.
+    /// Serialized Name: TextNer
     /// </summary>
     public partial class TextNer : AutoMLVertical
     {
         /// <summary> Initializes a new instance of TextNer. </summary>
-        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="trainingData">
+        /// [Required] Training data input.
+        /// Serialized Name: AutoMLVertical.trainingData
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
-        public TextNer(MLTableJobInput trainingData) : base(trainingData)
+        public TextNer(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
@@ -28,21 +32,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TextNer. </summary>
-        /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="logVerbosity">
+        /// Log verbosity for the job.
+        /// Serialized Name: AutoMLVertical.logVerbosity
+        /// </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
+        /// Serialized Name: AutoMLVertical.targetColumnName
         /// </param>
-        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="taskType">
+        /// [Required] Task type for AutoMLJob.
+        /// Serialized Name: AutoMLVertical.taskType
+        /// </param>
+        /// <param name="trainingData">
+        /// [Required] Training data input.
+        /// Serialized Name: AutoMLVertical.trainingData
+        /// </param>
         /// <param name="primaryMetric">
         /// Primary metric for Text-NER task.
         /// Only &apos;Accuracy&apos; is supported for Text-NER, so user need not set this explicitly.
+        /// Serialized Name: TextNer.primaryMetric
         /// </param>
-        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
-        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="validationData"> Validation data inputs. </param>
-        internal TextNer(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MLTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        /// <param name="featurizationSettings">
+        /// Featurization inputs needed for AutoML job.
+        /// Serialized Name: NlpVertical.featurizationSettings
+        /// </param>
+        /// <param name="limitSettings">
+        /// Execution constraints for AutoMLJob.
+        /// Serialized Name: NlpVertical.limitSettings
+        /// </param>
+        /// <param name="validationData">
+        /// Validation data inputs.
+        /// Serialized Name: NlpVertical.validationData
+        /// </param>
+        internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             PrimaryMetric = primaryMetric;
             FeaturizationSettings = featurizationSettings;
@@ -54,11 +78,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Primary metric for Text-NER task.
         /// Only &apos;Accuracy&apos; is supported for Text-NER, so user need not set this explicitly.
+        /// Serialized Name: TextNer.primaryMetric
         /// </summary>
         public ClassificationPrimaryMetric? PrimaryMetric { get; }
-        /// <summary> Featurization inputs needed for AutoML job. </summary>
+        /// <summary>
+        /// Featurization inputs needed for AutoML job.
+        /// Serialized Name: NlpVertical.featurizationSettings
+        /// </summary>
         internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
-        /// <summary> Dataset language, useful for the text data. </summary>
+        /// <summary>
+        /// Dataset language, useful for the text data.
+        /// Serialized Name: FeaturizationSettings.datasetLanguage
+        /// </summary>
         public string FeaturizationDatasetLanguage
         {
             get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
@@ -70,9 +101,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Execution constraints for AutoMLJob. </summary>
+        /// <summary>
+        /// Execution constraints for AutoMLJob.
+        /// Serialized Name: NlpVertical.limitSettings
+        /// </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary> Validation data inputs. </summary>
-        public MLTableJobInput ValidationData { get; set; }
+        /// <summary>
+        /// Validation data inputs.
+        /// Serialized Name: NlpVertical.validationData
+        /// </summary>
+        public MachineLearningTableJobInput ValidationData { get; set; }
     }
 }
