@@ -199,7 +199,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 b.AddAzureStorageBlobs();
                 b.UseStorageServices(blobServiceClient, queueServiceClient);
             }, programType, setTaskSource, settings: new Dictionary<string, string>() {
-                // This takes precedence over env variables.
                 {"AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
             });
         }
