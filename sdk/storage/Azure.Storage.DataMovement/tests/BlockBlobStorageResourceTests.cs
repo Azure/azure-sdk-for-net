@@ -180,12 +180,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
             BlockBlobClient blobClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(Constants.KB);
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(stream, false);
+                await storageResource.WriteFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: false);
             }
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync();
@@ -209,7 +213,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(stream, false, position: position);
+                await storageResource.WriteFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: false,
+                    position: position);
             }
             await storageResource.CompleteTransferAsync();
 
@@ -237,13 +245,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
-                await storageResource.WriteFromStreamAsync(stream, false, position: position, streamLength: length);
+                await storageResource.WriteFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: false,
+                    position: position);
             }
             using (var stream = new MemoryStream(data))
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                storageResource.WriteFromStreamAsync(stream, false, position: position, streamLength: length),
+                storageResource.WriteFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: false,
+                    position: position),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("Cannot Stage Block to the specific offset"));
@@ -501,10 +517,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient blobClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);
 
-            var data = GetRandomBuffer(Constants.KB);
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
-                await storageResource.WriteFromStreamAsync(stream, false, position: 0, streamLength: Constants.KB);
+                await storageResource.WriteFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: false,
+                    position: 0);
             }
 
             // Act

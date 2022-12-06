@@ -168,8 +168,8 @@ namespace Azure.Storage.DataMovement.Tests
                     // Act
                     await storageResource.WriteFromStreamAsync(
                         stream,
-                        false,
                         streamLength: length,
+                        false,
                         completeLength: length);
                 }
 
@@ -207,9 +207,9 @@ namespace Azure.Storage.DataMovement.Tests
                     // Act
                     await storageResource.WriteFromStreamAsync(
                         stream,
-                        false,
-                        position: writePosition,
                         streamLength: length,
+                        overwrite: false,
+                        position: writePosition,
                         completeLength: length);
                 }
 
@@ -242,7 +242,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 using (var stream = new MemoryStream(data))
                 {
-                    await storageResource.WriteFromStreamAsync(stream, false);
+                    await storageResource.WriteFromStreamAsync(stream, length, false);
                 }
             }
             catch (IOException ex)

@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Optional parameters for uploading to a Blob.
     ///
-    /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, bool, long, long?, long, DataMovement.Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
+    /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
     /// and <see cref="BlockBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
     /// These options will apply to the blob service requests to complete uploading to the block blob.
     /// </summary>
