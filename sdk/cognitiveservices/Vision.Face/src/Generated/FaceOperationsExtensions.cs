@@ -294,7 +294,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='returnFaceId'>
             /// A value indicating whether the operation should return faceIds of detected
             /// faces. Detecting with this value set to true requires additional
-            /// permissions.
+            /// access approvals at https://aka.ms/facerecognition.
             /// </param>
             /// <param name='returnFaceLandmarks'>
             /// A value indicating whether the operation should return landmarks of the
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='returnFaceId'>
             /// A value indicating whether the operation should return faceIds of detected
             /// faces. Detecting with this value set to true requires additional
-            /// permissions.
+            /// access approvals at https://aka.ms/facerecognition.
             /// </param>
             /// <param name='returnFaceLandmarks'>
             /// A value indicating whether the operation should return landmarks of the
