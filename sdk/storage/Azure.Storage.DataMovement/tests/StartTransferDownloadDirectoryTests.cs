@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var data = GetRandomBuffer(size);
             using Stream originalStream = await CreateLimitedMemoryStream(size);
-            string blobName = string.Concat(sourceBlobDirectory, "\\", sourceFilePath);
+            string blobName = Path.Combine(sourceBlobDirectory, sourceFilePath);
             BlobClient originalBlob = InstrumentClient(containerClient.GetBlobClient(blobName));
             // create a new file and copy contents of stream into it, and then close the FileStream
             // so the StagedUploadAsync call is not prevented from reading using its FileStream.
@@ -130,7 +130,7 @@ namespace Azure.Storage.DataMovement.Tests
             for (int i = 0; i < destinationFiles.Count; i++)
             {
                 // Verify Download
-                string fullSourcePath = string.Concat(sourceFilePrefix, "\\", sourceFiles[i]);
+                string fullSourcePath = Path.Combine(sourceFilePrefix, sourceFiles[i]);
                 CheckDownloadFile(fullSourcePath, destinationFiles[i]);
             }
         }
@@ -163,12 +163,12 @@ namespace Azure.Storage.DataMovement.Tests
                 blobNames.Add(blobName2);
 
                 string subDirName = CreateRandomDirectory(sourceFolderPath).Substring(sourceFolderPath.Length + 1);
-                string blobName3 = string.Concat(subDirName, "\\", GetNewBlobName());
+                string blobName3 = Path.Combine(subDirName, GetNewBlobName());
                 await CreateBlockBlobAndSourceFile(test.Container, sourceFolderPath, sourceBlobDirectoryName, blobName3, size);
                 blobNames.Add(blobName3);
 
                 string subDirName2 = CreateRandomDirectory(sourceFolderPath).Substring(sourceFolderPath.Length + 1);
-                string blobName4 = string.Concat(subDirName2, "\\", GetNewBlobName());
+                string blobName4 = Path.Combine(subDirName2, GetNewBlobName());
                 await CreateBlockBlobAndSourceFile(test.Container, sourceFolderPath, sourceBlobDirectoryName, blobName4, size);
                 blobNames.Add(blobName4);
 

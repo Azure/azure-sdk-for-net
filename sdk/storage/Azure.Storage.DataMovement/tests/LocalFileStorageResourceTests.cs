@@ -153,7 +153,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ReadStreamAsync_Error()
         {
             // Arrange
-            string path = "C:\\FakeFileName";
+            string path = Path.Combine(Path.GetTempPath(), Recording.Random.NewGuid().ToString());
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act without creating the blob
@@ -172,7 +172,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             string tempPath = Path.GetTempPath();
-            string path = string.Concat(tempPath, Path.GetRandomFileName());
+            string path = Path.Combine(tempPath, Path.GetRandomFileName());
             try
             {
                 var length = Constants.KB;

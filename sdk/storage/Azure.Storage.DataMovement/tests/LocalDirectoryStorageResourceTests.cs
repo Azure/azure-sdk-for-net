@@ -28,19 +28,6 @@ namespace Azure.Storage.DataMovement.Tests
             "user1\\Documents\file\\",
         };
 
-        private static string CreateRandomDirectory(string parentPath)
-        {
-            return Directory.CreateDirectory(Path.Combine(parentPath, Path.GetRandomFileName())).FullName;
-        }
-
-        private static string CreateRandomFile(string parentPath)
-        {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, Path.GetRandomFileName())))
-            {
-                return fs.Name;
-            }
-        }
-
         [Test]
         public void Ctor_string()
         {
@@ -65,7 +52,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    paths.Add(CreateRandomFile(folderPath));
+                    paths.Add(await CreateRandomFileAsync(folderPath));
                 }
                 LocalDirectoryStorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
 
@@ -95,14 +82,15 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            string folderPath = CreateRandomDirectory(Path.GetTempPath());
+            string dirName = "foo";
+            string folderPath = CreateRandomDirectory(Path.GetTempPath(), dirName);
             try
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    string fileName = CreateRandomFile(folderPath);
+                    string fileName = await CreateRandomFileAsync(folderPath);
                     paths.Add(fileName);
-                    fileNames.Add(fileName.Substring(folderPath.Length));
+                    fileNames.Add(fileName.Substring(folderPath.Length + 1));
                 }
 
                 StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
@@ -127,19 +115,21 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            string folderPath = CreateRandomDirectory(Path.GetTempPath());
+            string dirName = "foo";
+            string folderPath = CreateRandomDirectory(Path.GetTempPath(), dirName);
             try
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    string fileName = CreateRandomFile(folderPath);
+                    string fileName = await CreateRandomFileAsync(folderPath);
                     paths.Add(fileName);
                     fileNames.Add(fileName.Substring(folderPath.Length + 1));
                 }
-                string subdir = CreateRandomDirectory(folderPath);
+                string subdirName = "bar";
+                string subdir = CreateRandomDirectory(folderPath, subdirName);
                 for (int i = 0; i < 3; i++)
                 {
-                    string fileName = CreateRandomFile(subdir);
+                    string fileName = await CreateRandomFileAsync(subdir);
                     paths.Add(fileName);
                     fileNames.Add(fileName.Substring(folderPath.Length + 1));
                 }

@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // Recreate the blobName using the existing parent directory path
             return new BlockBlobStorageResource(
-                _blobContainerClient.GetBlockBlobClient(string.Concat(_directoryPrefix, "/", encodedPath)),
+                _blobContainerClient.GetBlockBlobClient(System.IO.Path.Combine(_directoryPrefix, encodedPath)),
                 new BlockBlobStorageResourceOptions()
                 {
                     CopyOptions = _options?.CopyOptions,
