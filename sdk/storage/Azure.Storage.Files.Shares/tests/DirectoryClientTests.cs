@@ -312,6 +312,31 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
+        public async Task CreateAsync_TrailingDot()
+        {
+            ShareClientOptions options = GetOptions();
+            options.AllowTrailingDot = true;
+            await using DisposingShare test = await GetTestShareAsync(options: options);
+            ShareClient share = test.Share;
+
+            // Arrange
+            string name = GetNewDirectoryName() + ".";
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directory.CreateAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            var accountName = new ShareUriBuilder(directory.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
+            var shareName = new ShareUriBuilder(directory.Uri).ShareName;
+            TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
+            TestHelper.AssertCacheableProperty(name, () => directory.Name);
+        }
+
+        [RecordedTest]
         public async Task CreateIfNotExists_NotExists()
         {
             // Arrange

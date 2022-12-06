@@ -56,9 +56,10 @@ namespace Azure.Storage.Files.Shares.Tests
             this ShareClientBuilder clientBuilder,
             ShareServiceClient service = default,
             string shareName = default,
-            IDictionary<string, string> metadata = default)
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
         {
-            service ??= clientBuilder.GetServiceClient_SharedKey();
+            service ??= clientBuilder.GetServiceClient_SharedKey(options);
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             shareName ??= clientBuilder.GetNewShareName();
             ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));

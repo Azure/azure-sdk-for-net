@@ -45,8 +45,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,
             string shareName = default,
-            IDictionary<string, string> metadata = default)
-            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata);
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
+            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata, options);
 
         public ShareClientOptions GetOptions()
         {
