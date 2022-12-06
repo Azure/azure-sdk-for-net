@@ -90,6 +90,7 @@
     "skus",
     "structs",
     "uints",
+    "unbilled",
     "unencrypted",
     "unformattable",
     "unhold",
@@ -104,6 +105,12 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": [
         "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/sdk/analysisservices/**/*.cs",
+      "words": [
+        "Dmts"
       ]
     },
     {
@@ -956,7 +963,7 @@
         "Ackable",
         "awps"
         ]
-    }  
+    }
   ],
   "allowCompoundWords": true
 }

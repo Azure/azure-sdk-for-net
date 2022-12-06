@@ -271,7 +271,10 @@ namespace Azure.Core.TestFramework
             while (true)
             {
                 var assetsJsonPresent = File.Exists(Path.Combine(path, "assets.json"));
-                var isGitRoot = Directory.Exists(Path.Combine(path, ".git"));
+
+                // Check for root .git directory or, less commonly, a .git file for git worktrees.
+                string gitRootPath = Path.Combine(path, ".git");
+                var isGitRoot = Directory.Exists(gitRootPath) || File.Exists(gitRootPath);
 
                 if (assetsJsonPresent)
                 {

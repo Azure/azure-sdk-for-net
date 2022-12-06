@@ -10,27 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of SkuResource entities. </summary>
+    /// <summary>
+    /// A paginated list of SkuResource entities.
+    /// Serialized Name: SkuResourceArmPaginatedResult
+    /// </summary>
     internal partial class SkuResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
         internal SkuResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<SkuResource>();
+            Value = new ChangeTrackingList<MachineLearningSkuDetail>();
         }
 
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of SkuResource objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type SkuResource. </param>
-        internal SkuResourceArmPaginatedResult(string nextLink, IReadOnlyList<SkuResource> value)
+        /// <param name="nextLink">
+        /// The link to the next page of SkuResource objects. If null, there are no additional pages.
+        /// Serialized Name: SkuResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type SkuResource.
+        /// Serialized Name: SkuResourceArmPaginatedResult.value
+        /// </param>
+        internal SkuResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningSkuDetail> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of SkuResource objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of SkuResource objects. If null, there are no additional pages.
+        /// Serialized Name: SkuResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type SkuResource. </summary>
-        public IReadOnlyList<SkuResource> Value { get; }
+        /// <summary>
+        /// An array of objects of type SkuResource.
+        /// Serialized Name: SkuResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningSkuDetail> Value { get; }
     }
 }

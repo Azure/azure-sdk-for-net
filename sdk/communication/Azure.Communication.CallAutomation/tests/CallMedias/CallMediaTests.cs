@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             SourceLocale = "en-US",
             TargetLocale = "en-US",
-            VoiceGender = GenderType.F,
+            VoiceGender = GenderType.Female,
             VoiceName = "LULU"
         };
         private static readonly PlayOptions _options = new PlayOptions()

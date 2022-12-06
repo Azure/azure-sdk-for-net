@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
+    /// <summary>
+    /// The desired maximum forecast horizon in units of time-series frequency.
+    /// Serialized Name: CustomForecastHorizon
+    /// </summary>
     public partial class CustomForecastHorizon : ForecastHorizon
     {
         /// <summary> Initializes a new instance of CustomForecastHorizon. </summary>
-        /// <param name="value"> [Required] Forecast horizon value. </param>
+        /// <param name="value">
+        /// [Required] Forecast horizon value.
+        /// Serialized Name: CustomForecastHorizon.value
+        /// </param>
         public CustomForecastHorizon(int value)
         {
             Value = value;
@@ -19,15 +25,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CustomForecastHorizon. </summary>
-        /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
-        /// <param name="value"> [Required] Forecast horizon value. </param>
+        /// <param name="mode">
+        /// [Required] Set forecast horizon value selection mode.
+        /// Serialized Name: ForecastHorizon.mode
+        /// </param>
+        /// <param name="value">
+        /// [Required] Forecast horizon value.
+        /// Serialized Name: CustomForecastHorizon.value
+        /// </param>
         internal CustomForecastHorizon(ForecastHorizonMode mode, int value) : base(mode)
         {
             Value = value;
             Mode = mode;
         }
 
-        /// <summary> [Required] Forecast horizon value. </summary>
+        /// <summary>
+        /// [Required] Forecast horizon value.
+        /// Serialized Name: CustomForecastHorizon.value
+        /// </summary>
         public int Value { get; set; }
     }
 }
