@@ -88,7 +88,7 @@ namespace Azure.Core.Shared
             // GeoRedundantReadFallbackPolicy.SetHostAffinity(secondMessage, true);
             // ...
             // _pipeline.Send(secondMessage);
-            if (message.HasResponse || GetHostAffinity(message))
+            if (message.HasResponse || GetHostAffinity(message) || message.Request.Uri.Host == null)
                 return;
 
             bool isRead = message.Request.Method == RequestMethod.Get || message.Request.Method == RequestMethod.Head;
@@ -106,8 +106,8 @@ namespace Azure.Core.Shared
             int current = fallbackIndex;
 
             // we should only advance if another thread hasn't already done so
-            if ((current == -1 && message.Request.Uri.Host == GetPrimaryHost(message)) ||
-                (current != -1 && message.Request.Uri.Host == fallbackHosts[current]))
+            if ((current == -1 && message.Request.Uri.Host.Equals(GetPrimaryHost(message), StringComparison.Ordinal)) ||
+                (current != -1 && message.Request.Uri.Host.Equals(fallbackHosts[current], StringComparison.Ordinal)))
             {
                 if (current == -1)
                     _timer.Change(_primaryCoolDown, Timeout.InfiniteTimeSpan);
