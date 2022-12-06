@@ -9,19 +9,19 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Event Argument for any Storage Transfer Event Handler.
+    /// Event Arguments for any Storage Transfer Event Handler.
     /// </summary>
     public abstract class StorageTransferEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Job Id.
+        /// Job ID.
         /// </summary>
         public string TransferId { get; internal set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageTransferEventArgs"/>.
         /// </summary>
-        /// <param name="transferId"></param>
+        /// <param name="transferId">The transfer ID.</param>
         /// <param name="isRunningSynchronously">
         /// A value indicating whether the event handler was invoked
         /// synchronously or asynchronously.  Please see

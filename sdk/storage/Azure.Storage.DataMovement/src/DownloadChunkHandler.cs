@@ -79,7 +79,8 @@ namespace Azure.Storage.DataMovement
         /// Contains all the supported function calls.
         /// </param>
         /// <param name="cancellationToken">
-        /// The cancellation token to propagate notifications that the operation should be cancelled.
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
         /// </param>
         /// <exception cref="ArgumentException"></exception>
         public DownloadChunkHandler(
