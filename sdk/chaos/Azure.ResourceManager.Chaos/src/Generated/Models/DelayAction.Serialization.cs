@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("duration");
-            writer.WriteStringValue(Duration, "P");
+            writer.WriteStringValue(Duration, "c");
             writer.WritePropertyName("type");
             writer.WriteStringValue(ActionType);
             writer.WritePropertyName("name");
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (property.NameEquals("duration"))
                 {
-                    duration = property.Value.GetTimeSpan("P");
+                    duration = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("type"))
