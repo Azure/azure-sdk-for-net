@@ -7,11 +7,13 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    [JsonConverter(typeof(KeyVaultSecretReferenceConverter))]
     public partial class KeyVaultSecretReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -41,6 +43,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new KeyVaultSecretReference(secretUrl, sourceVault);
+        }
+        
+        private class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
+        {
+            public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return KeyVaultSecretReference.DeserializeKeyVaultSecretReference(document.RootElement);
+            }
+
+            public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference value, JsonSerializerOptions options)
+            {
+                ((IUtf8JsonSerializable)value).Write(writer);
+            }
         }
     }
 }
