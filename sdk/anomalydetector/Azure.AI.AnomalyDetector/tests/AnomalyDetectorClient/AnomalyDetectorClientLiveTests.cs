@@ -81,5 +81,19 @@ namespace Azure.AI.AnomalyDetector.Tests
             Assert.IsNotNull(result.Value.IsChangePoint);
             Assert.IsNotNull(result.Value.ConfidenceScores);
         }
+
+        [Test]
+        public async Task GetResultForMultivariateListModel()
+        {
+            var client = CreateAnomalyDetectorClient();
+
+            int model_number = 0;
+            await foreach (var multivariateModel in client.GetMultivariateModelsAsync())
+            {
+                model_number++;
+            }
+
+            Assert.IsTrue(model_number >= 0);
+        }
     }
 }
