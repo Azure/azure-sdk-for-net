@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class MultivariateDetectionResultSummary
+    public partial class MultivariateBatchDetectionResultSummary
     {
-        internal static MultivariateDetectionResultSummary DeserializeMultivariateDetectionResultSummary(JsonElement element)
+        internal static MultivariateBatchDetectionResultSummary DeserializeMultivariateBatchDetectionResultSummary(JsonElement element)
         {
-            MultivariateDetectionStatus status = default;
+            MultivariateBatchDetectionStatus status = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<IReadOnlyList<VariableState>> variableStates = default;
-            MultivariateDetectionOptions setupInfo = default;
+            MultivariateBatchDetectionOptions setupInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString().ToMultivariateDetectionStatus();
+                    status = property.Value.GetString().ToMultivariateBatchDetectionStatus();
                     continue;
                 }
                 if (property.NameEquals("errors"))
@@ -59,19 +59,19 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (property.NameEquals("setupInfo"))
                 {
-                    setupInfo = MultivariateDetectionOptions.DeserializeMultivariateDetectionOptions(property.Value);
+                    setupInfo = MultivariateBatchDetectionOptions.DeserializeMultivariateBatchDetectionOptions(property.Value);
                     continue;
                 }
             }
-            return new MultivariateDetectionResultSummary(status, Optional.ToList(errors), Optional.ToList(variableStates), setupInfo);
+            return new MultivariateBatchDetectionResultSummary(status, Optional.ToList(errors), Optional.ToList(variableStates), setupInfo);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MultivariateDetectionResultSummary FromResponse(Response response)
+        internal static MultivariateBatchDetectionResultSummary FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMultivariateDetectionResultSummary(document.RootElement);
+            return DeserializeMultivariateBatchDetectionResultSummary(document.RootElement);
         }
     }
 }

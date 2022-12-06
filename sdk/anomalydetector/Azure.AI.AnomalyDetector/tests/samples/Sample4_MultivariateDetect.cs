@@ -154,7 +154,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             try
             {
                 Console.WriteLine("Start batch detect...");
-                MultivariateDetectionOptions request = new MultivariateDetectionOptions(datasource, 10, start_time, end_time);
+                MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, start_time, end_time);
 
                 TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
                 MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(model_id, request);
@@ -163,9 +163,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
                 // get detection result
                 MultivariateDetectionResult resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
-                MultivariateDetectionStatus result_status = resultResponse.Summary.Status;
+                MultivariateBatchDetectionStatus result_status = resultResponse.Summary.Status;
                 int tryout_count = 0;
-                while (tryout_count < max_tryout & result_status != MultivariateDetectionStatus.Ready & result_status != MultivariateDetectionStatus.Failed)
+                while (tryout_count < max_tryout & result_status != MultivariateBatchDetectionStatus.Ready & result_status != MultivariateBatchDetectionStatus.Failed)
                 {
                     System.Threading.Thread.Sleep(1000);
                     resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
@@ -174,7 +174,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     Console.Out.Flush();
                 }
 
-                if (result_status == MultivariateDetectionStatus.Failed)
+                if (result_status == MultivariateBatchDetectionStatus.Failed)
                 {
                     Console.WriteLine("Detection failed.");
                     Console.WriteLine("Errors:");
