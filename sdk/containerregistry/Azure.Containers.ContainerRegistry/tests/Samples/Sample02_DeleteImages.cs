@@ -20,11 +20,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             #region Snippet:ContainerRegistry_Tests_Samples_DeleteImage
-#if SNIPPET
-            using Azure.Containers.ContainerRegistry;
-            using Azure.Identity;
-#endif
-
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -43,7 +38,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
                 // Obtain the images ordered from newest to oldest
                 Pageable<ArtifactManifestProperties> imageManifests =
-                    repository.GetManifestPropertiesCollection(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+                    repository.GetAllManifestProperties(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
                 // Delete images older than the first three.
                 foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
@@ -69,12 +64,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             #region Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-#if SNIPPET
-            using System.Linq;
-            using Azure.Containers.ContainerRegistry;
-            using Azure.Identity;
-#endif
-
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -93,7 +82,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
                 // Obtain the images ordered from newest to oldest
                 AsyncPageable<ArtifactManifestProperties> imageManifests =
-                    repository.GetManifestPropertiesCollectionAsync(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+                    repository.GetAllManifestPropertiesAsync(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
                 // Delete images older than the first three.
                 await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
@@ -109,7 +98,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                     await image.DeleteAsync();
                 }
             }
-
             #endregion
         }
     }

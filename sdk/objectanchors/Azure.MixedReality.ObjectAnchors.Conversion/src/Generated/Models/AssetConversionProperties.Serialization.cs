@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -51,6 +52,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<string> inputAssetUri = default;
             Optional<Guid> accountId = default;
             Optional<AssetConversionConfiguration> ingestionConfiguration = default;
+            Optional<Vector3> scaledAssetDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientErrorDetails"))
@@ -128,8 +130,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     ingestionConfiguration = AssetConversionConfiguration.DeserializeAssetConversionConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("scaledAssetDimensions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scaledAssetDimensions = null;
+                        continue;
+                    }
+                    scaledAssetDimensions = Vector3.DeserializeVector3(property.Value);
+                    continue;
+                }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value);
+            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
         }
     }
 }

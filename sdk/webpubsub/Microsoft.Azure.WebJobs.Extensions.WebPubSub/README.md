@@ -4,7 +4,7 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src) |
 [Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub) |
-[API reference documentation](https://azure.github.io/azure-webpubsub/references/functions-bindings) |
+[API reference documentation](https://docs.microsoft.com/dotnet/api/microsoft.azure.webjobs.extensions.webpubsub) |
 [Product documentation](https://aka.ms/awps/doc) |
 [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/samples)
 
@@ -30,13 +30,13 @@ You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal]
 
 The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
 
-For the local development use the `local.settings.json` file to store the connection string, `<connection_name>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection_name>` in function binding attributes:
+For the local development use the `local.settings.json` file to store the connection string, `<connection-string>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `Connection = <connection-string>` in function binding attributes:
 
 ```json
 {
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "<connection_name>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
+    "<connection-string>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
   }
 }
 ```

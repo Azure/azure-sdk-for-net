@@ -41,8 +41,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("TLXDWCAR")]
-        [TestCase("racwdxlt")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [TestCase("IFTPUCALYXDWR")]
+        [TestCase("rwdxylacuptfi")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -59,6 +60,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await test.FileSystem.GetPropertiesAsync();
 
             accountSasBuilder.SetPermissions(permissionsString);
+
+            Assert.AreEqual("rwdxylacuptfi", accountSasBuilder.Permissions);
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(Tenants.TestConfigHierarchicalNamespace.AccountName, Tenants.TestConfigHierarchicalNamespace.AccountKey);
 

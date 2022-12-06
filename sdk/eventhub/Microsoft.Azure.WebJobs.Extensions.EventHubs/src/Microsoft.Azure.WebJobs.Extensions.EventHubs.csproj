@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
-    <Version>5.1.0-beta.1</Version>
+    <Version>5.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.0.0</ApiCompatVersion>
+    <ApiCompatVersion>5.1.2</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
@@ -15,20 +15,19 @@
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-
     <PackageReference Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="SharedSource" />
-    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Processor/StorageManager.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/BasicRetryPolicy.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/EventHubsRetryOptionsExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/*.cs" LinkBase="SharedSource" />
     <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/WebJobsConfigurationExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/StorageClientProvider.cs" LinkBase="SharedSource" />
+
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -17,21 +17,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     public static class ExportResultFormat
     {
         /// <summary>
-        /// The Api Definition is exported in OpenApi Specification 2.0 format
+        /// The API Definition is exported in OpenAPI Specification 2.0 format
         /// to the Storage Blob.
         /// </summary>
         public const string Swagger = "swagger-link-json";
         /// <summary>
-        /// The Api Definition is exported in WSDL Schema to Storage Blob. This
+        /// The API Definition is exported in WSDL Schema to Storage Blob. This
         /// is only supported for APIs of Type `soap`
         /// </summary>
         public const string Wsdl = "wsdl-link+xml";
         /// <summary>
-        /// Export the Api Definition in WADL Schema to Storage Blob.
+        /// Export the API Definition in WADL Schema to Storage Blob.
         /// </summary>
         public const string Wadl = "wadl-link-json";
         /// <summary>
-        /// Export the Api Definition in OpenApi Specification 3.0 to Storage
+        /// Export the API Definition in OpenAPI Specification 3.0 to Storage
         /// Blob.
         /// </summary>
         public const string OpenApi = "openapi-link";

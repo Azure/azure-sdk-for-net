@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the StorageQueue data model. </summary>
-    public partial class StorageQueueData : Resource
+    public partial class StorageQueueData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageQueueData. </summary>
         public StorageQueueData()
@@ -24,10 +23,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of StorageQueueData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="metadata"> A name-value pair that represents queue metadata. </param>
         /// <param name="approximateMessageCount"> Integer indicating an approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher. </param>
-        internal StorageQueueData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> metadata, int? approximateMessageCount) : base(id, name, type)
+        internal StorageQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> metadata, int? approximateMessageCount) : base(id, name, resourceType, systemData)
         {
             Metadata = metadata;
             ApproximateMessageCount = approximateMessageCount;

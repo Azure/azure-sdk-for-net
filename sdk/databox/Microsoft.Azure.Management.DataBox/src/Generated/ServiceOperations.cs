@@ -881,11 +881,8 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='scheduleAvailabilityRequest'>
-        /// Request body to get the availability for scheduling orders.
-        /// </param>
-        /// <param name='transportAvailabilityRequest'>
-        /// Request body to get the transport availability for given sku.
+        /// <param name='regionConfigurationRequest'>
+        /// Request body to get the configuration for the region.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -908,7 +905,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationWithHttpMessagesAsync(string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationWithHttpMessagesAsync(string location, RegionConfigurationRequest regionConfigurationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -922,15 +919,13 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (scheduleAvailabilityRequest != null)
+            if (regionConfigurationRequest == null)
             {
-                scheduleAvailabilityRequest.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "regionConfigurationRequest");
             }
-            RegionConfigurationRequest regionConfigurationRequest = new RegionConfigurationRequest();
-            if (scheduleAvailabilityRequest != null || transportAvailabilityRequest != null)
+            if (regionConfigurationRequest != null)
             {
-                regionConfigurationRequest.ScheduleAvailabilityRequest = scheduleAvailabilityRequest;
-                regionConfigurationRequest.TransportAvailabilityRequest = transportAvailabilityRequest;
+                regionConfigurationRequest.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1090,11 +1085,9 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='scheduleAvailabilityRequest'>
-        /// Request body to get the availability for scheduling orders.
-        /// </param>
-        /// <param name='transportAvailabilityRequest'>
-        /// Request body to get the transport availability for given sku.
+        /// <param name='regionConfigurationRequest'>
+        /// Request body to get the configuration for the region at resource group
+        /// level.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1117,7 +1110,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, ScheduleAvailabilityRequest scheduleAvailabilityRequest = default(ScheduleAvailabilityRequest), TransportAvailabilityRequest transportAvailabilityRequest = default(TransportAvailabilityRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegionConfigurationResponse>> RegionConfigurationByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, RegionConfigurationRequest regionConfigurationRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1135,15 +1128,13 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (scheduleAvailabilityRequest != null)
+            if (regionConfigurationRequest == null)
             {
-                scheduleAvailabilityRequest.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "regionConfigurationRequest");
             }
-            RegionConfigurationRequest regionConfigurationRequest = new RegionConfigurationRequest();
-            if (scheduleAvailabilityRequest != null || transportAvailabilityRequest != null)
+            if (regionConfigurationRequest != null)
             {
-                regionConfigurationRequest.ScheduleAvailabilityRequest = scheduleAvailabilityRequest;
-                regionConfigurationRequest.TransportAvailabilityRequest = transportAvailabilityRequest;
+                regionConfigurationRequest.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

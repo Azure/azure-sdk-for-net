@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.AppPlatform
     using System.Net.Http;
 
     /// <summary>
-    /// REST API for Azure Spring Cloud
+    /// REST API for Azure Spring Apps
     /// </summary>
     public partial class AppPlatformManagementClient : ServiceClient<AppPlatformManagementClient>, IAppPlatformManagementClient, IAzureClient
     {
@@ -87,6 +87,36 @@ namespace Microsoft.Azure.Management.AppPlatform
         public virtual IConfigServersOperations ConfigServers { get; private set; }
 
         /// <summary>
+        /// Gets the IConfigurationServicesOperations.
+        /// </summary>
+        public virtual IConfigurationServicesOperations ConfigurationServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IServiceRegistriesOperations.
+        /// </summary>
+        public virtual IServiceRegistriesOperations ServiceRegistries { get; private set; }
+
+        /// <summary>
+        /// Gets the IBuildServiceOperations.
+        /// </summary>
+        public virtual IBuildServiceOperations BuildService { get; private set; }
+
+        /// <summary>
+        /// Gets the IBuildpackBindingOperations.
+        /// </summary>
+        public virtual IBuildpackBindingOperations BuildpackBinding { get; private set; }
+
+        /// <summary>
+        /// Gets the IBuildServiceBuilderOperations.
+        /// </summary>
+        public virtual IBuildServiceBuilderOperations BuildServiceBuilder { get; private set; }
+
+        /// <summary>
+        /// Gets the IBuildServiceAgentPoolOperations.
+        /// </summary>
+        public virtual IBuildServiceAgentPoolOperations BuildServiceAgentPool { get; private set; }
+
+        /// <summary>
         /// Gets the IMonitoringSettingsOperations.
         /// </summary>
         public virtual IMonitoringSettingsOperations MonitoringSettings { get; private set; }
@@ -100,6 +130,11 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the IBindingsOperations.
         /// </summary>
         public virtual IBindingsOperations Bindings { get; private set; }
+
+        /// <summary>
+        /// Gets the IStoragesOperations.
+        /// </summary>
+        public virtual IStoragesOperations Storages { get; private set; }
 
         /// <summary>
         /// Gets the ICertificatesOperations.
@@ -130,6 +165,31 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the ISkusOperations.
         /// </summary>
         public virtual ISkusOperations Skus { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewaysOperations.
+        /// </summary>
+        public virtual IGatewaysOperations Gateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayRouteConfigsOperations.
+        /// </summary>
+        public virtual IGatewayRouteConfigsOperations GatewayRouteConfigs { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayCustomDomainsOperations.
+        /// </summary>
+        public virtual IGatewayCustomDomainsOperations GatewayCustomDomains { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiPortalsOperations.
+        /// </summary>
+        public virtual IApiPortalsOperations ApiPortals { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiPortalCustomDomainsOperations.
+        /// </summary>
+        public virtual IApiPortalCustomDomainsOperations ApiPortalCustomDomains { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AppPlatformManagementClient class.
@@ -374,17 +434,29 @@ namespace Microsoft.Azure.Management.AppPlatform
         {
             Services = new ServicesOperations(this);
             ConfigServers = new ConfigServersOperations(this);
+            ConfigurationServices = new ConfigurationServicesOperations(this);
+            ServiceRegistries = new ServiceRegistriesOperations(this);
+            BuildService = new BuildServiceOperations(this);
+            BuildpackBinding = new BuildpackBindingOperations(this);
+            BuildServiceBuilder = new BuildServiceBuilderOperations(this);
+            BuildServiceAgentPool = new BuildServiceAgentPoolOperations(this);
             MonitoringSettings = new MonitoringSettingsOperations(this);
             Apps = new AppsOperations(this);
             Bindings = new BindingsOperations(this);
+            Storages = new StoragesOperations(this);
             Certificates = new CertificatesOperations(this);
             CustomDomains = new CustomDomainsOperations(this);
             Deployments = new DeploymentsOperations(this);
             Operations = new Operations(this);
             RuntimeVersions = new RuntimeVersionsOperations(this);
             Skus = new SkusOperations(this);
+            Gateways = new GatewaysOperations(this);
+            GatewayRouteConfigs = new GatewayRouteConfigsOperations(this);
+            GatewayCustomDomains = new GatewayCustomDomainsOperations(this);
+            ApiPortals = new ApiPortalsOperations(this);
+            ApiPortalCustomDomains = new ApiPortalCustomDomainsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-11-01-preview";
+            ApiVersion = "2022-05-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -413,6 +485,16 @@ namespace Microsoft.Azure.Management.AppPlatform
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CustomPersistentDiskProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomPersistentDiskProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CertificateProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CertificateProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StorageProperties>("storageType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StorageProperties>("storageType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UserSourceInfo>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UserSourceInfo>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProbeAction>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProbeAction>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }

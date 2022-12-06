@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Perf
             // groups with 5 instances each, so that readers can reserve one without
             // exceeding the concurrent reader limit.
 
-            Scope = await EventHubScope.CreateAsync(4, consumerGroups).ConfigureAwait(false);
+            Scope = await EventHubScope.CreateAsync(Options.PartitionCount, consumerGroups).ConfigureAwait(false);
             ConsumerGroups = new ConcurrentQueue<string>(consumerGroups.SelectMany(group => Repeat(group, 5)));
 
             // Select the first available partition to use for operations.

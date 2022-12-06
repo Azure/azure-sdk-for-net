@@ -34,13 +34,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             KeyRotationPolicy policy = new KeyRotationPolicy()
             {
-                ExpiresIn = TimeSpan.FromDays(90),
+                ExpiresIn = "P90D",
                 LifetimeActions =
                 {
-                    new KeyRotationLifetimeAction()
+                    new KeyRotationLifetimeAction(KeyRotationPolicyAction.Rotate)
                     {
-                        Action = KeyRotationPolicyAction.Rotate,
-                        TimeBeforeExpiry = TimeSpan.FromDays(30)
+                        TimeBeforeExpiry = "P30D"
                     }
                 }
             };

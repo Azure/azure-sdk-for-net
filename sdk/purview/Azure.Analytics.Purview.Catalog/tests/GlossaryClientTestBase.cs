@@ -13,13 +13,9 @@ namespace Azure.Analytics.Purview.Catalog.Tests
 {
     public class GlossaryClientTestBase : RecordedTestBase<PurviewCatalogTestEnvironment>
     {
-        public GlossaryClientTestBase(bool isAsync) : base(isAsync)
+        public GlossaryClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
-        }
-        public GlossaryClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new PurviewRecordedTestSanitizer();
+            this.AddPurviewSanitizers();
         }
         public PurviewGlossaries GetGlossariesClient()
         {

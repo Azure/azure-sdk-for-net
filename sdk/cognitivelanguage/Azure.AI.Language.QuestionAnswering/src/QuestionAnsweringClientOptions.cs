@@ -4,11 +4,13 @@
 using System;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType(nameof(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions))]
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary>
     /// Client options for <see cref="QuestionAnsweringClient"/>.
     /// </summary>
+    [CodeGenType("QuestionAnsweringAuthoringClientOptions")]
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_01;
@@ -40,6 +42,12 @@ namespace Azure.AI.Language.QuestionAnswering
         public string DefaultLanguage { get; set; } = "en";
 
         internal string Version { get; }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="QuestionAnsweringAudience.AzurePublicCloud" /> will be assumed.</value>
+        public QuestionAnsweringAudience? Audience { get; set; }
 
         /// <summary>
         /// Initializes new instance of QuestionAnsweringClientOptions.

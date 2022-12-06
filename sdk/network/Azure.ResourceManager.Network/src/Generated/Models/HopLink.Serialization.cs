@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> nextHopId = default;
             Optional<string> linkType = default;
-            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
             Optional<IReadOnlyDictionary<string, string>> context = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<long> roundTripTimeMin = default;
             Optional<long> roundTripTimeAvg = default;
             Optional<long> roundTripTimeMax = default;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectivityIssue> array = new List<ConnectivityIssue>();
+                    List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
                     }
                     issues = array;
                     continue;
@@ -67,7 +67,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -18,23 +18,25 @@ namespace Azure.DigitalTwins.Core
 {
     internal partial class DigitalTwinModelsRestClient
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of DigitalTwinModelsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-05-31")
         {
-            this.endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://digitaltwins-hostname");
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateAddRequest(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions)
@@ -43,23 +45,20 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (models != null)
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStartArray();
+            foreach (var item in models)
             {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (var item in models)
-                {
-                    content.JsonWriter.WriteObjectValue(item);
-                }
-                content.JsonWriter.WriteEndArray();
-                request.Content = content;
+                content.JsonWriter.WriteObjectValue(item);
             }
+            content.JsonWriter.WriteEndArray();
+            request.Content = content;
             return message;
         }
 
@@ -78,8 +77,14 @@ namespace Azure.DigitalTwins.Core
         /// <param name="models"> An array of models to add. </param>
         /// <param name="digitalTwinModelsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<object> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="models"/> is null. </exception>
+        public async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
+            if (models == null)
+            {
+                throw new ArgumentNullException(nameof(models));
+            }
+
             using var message = CreateAddRequest(models, digitalTwinModelsAddOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -97,7 +102,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -116,8 +121,14 @@ namespace Azure.DigitalTwins.Core
         /// <param name="models"> An array of models to add. </param>
         /// <param name="digitalTwinModelsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<object> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="models"/> is null. </exception>
+        public Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
+            if (models == null)
+            {
+                throw new ArgumentNullException(nameof(models));
+            }
+
             using var message = CreateAddRequest(models, digitalTwinModelsAddOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -135,7 +146,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -145,7 +156,7 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
             if (dependenciesFor != null)
             {
@@ -158,7 +169,7 @@ namespace Azure.DigitalTwins.Core
             {
                 uri.AppendQuery("includeModelDefinition", includeModelDefinition.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
             {
@@ -196,7 +207,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -228,7 +239,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -238,14 +249,14 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/models/", false);
             uri.AppendPath(id, true);
             if (includeModelDefinition != null)
             {
                 uri.AppendQuery("includeModelDefinition", includeModelDefinition.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -285,7 +296,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -323,7 +334,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -333,10 +344,10 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/models/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json-patch+json");
@@ -387,7 +398,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -427,7 +438,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -437,10 +448,10 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/models/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -476,7 +487,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -510,7 +521,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -520,7 +531,7 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
@@ -566,7 +577,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -605,7 +616,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

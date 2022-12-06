@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PerformanceLevelUnit"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerformanceLevelUnit"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PerformanceLevelUnit(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DTUValue = "DTU";
+        private const string DtuValue = "DTU";
         private const string VCoresValue = "VCores";
 
         /// <summary> DTU. </summary>
-        public static PerformanceLevelUnit DTU { get; } = new PerformanceLevelUnit(DTUValue);
+        public static PerformanceLevelUnit Dtu { get; } = new PerformanceLevelUnit(DtuValue);
         /// <summary> VCores. </summary>
         public static PerformanceLevelUnit VCores { get; } = new PerformanceLevelUnit(VCoresValue);
         /// <summary> Determines if two <see cref="PerformanceLevelUnit"/> values are the same. </summary>

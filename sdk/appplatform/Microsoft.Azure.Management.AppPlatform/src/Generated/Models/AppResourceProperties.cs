@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,31 +34,36 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="publicProperty">Indicates whether the App exposes
         /// public endpoint</param>
         /// <param name="url">URL of the App</param>
+        /// <param name="addonConfigs">Collection of addons</param>
         /// <param name="provisioningState">Provisioning state of the App.
         /// Possible values include: 'Succeeded', 'Failed', 'Creating',
-        /// 'Updating'</param>
-        /// <param name="activeDeploymentName">Name of the active deployment of
-        /// the App</param>
+        /// 'Updating', 'Deleting'</param>
         /// <param name="fqdn">Fully qualified dns Name.</param>
         /// <param name="httpsOnly">Indicate if only https is allowed.</param>
-        /// <param name="createdTime">Date time when the resource is
-        /// created</param>
         /// <param name="temporaryDisk">Temporary disk settings</param>
         /// <param name="persistentDisk">Persistent disk settings</param>
+        /// <param name="customPersistentDisks">List of custom persistent
+        /// disks</param>
         /// <param name="enableEndToEndTLS">Indicate if end to end TLS is
         /// enabled.</param>
-        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), string provisioningState = default(string), string activeDeploymentName = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), System.DateTime? createdTime = default(System.DateTime?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk), bool? enableEndToEndTLS = default(bool?))
+        /// <param name="loadedCertificates">Collection of loaded
+        /// certificates</param>
+        /// <param name="vnetAddons">Additional App settings in vnet injection
+        /// instance</param>
+        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), IDictionary<string, IDictionary<string, object>> addonConfigs = default(IDictionary<string, IDictionary<string, object>>), string provisioningState = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk), IList<CustomPersistentDiskResource> customPersistentDisks = default(IList<CustomPersistentDiskResource>), bool? enableEndToEndTLS = default(bool?), IList<LoadedCertificate> loadedCertificates = default(IList<LoadedCertificate>), AppVNetAddons vnetAddons = default(AppVNetAddons))
         {
             PublicProperty = publicProperty;
             Url = url;
+            AddonConfigs = addonConfigs;
             ProvisioningState = provisioningState;
-            ActiveDeploymentName = activeDeploymentName;
             Fqdn = fqdn;
             HttpsOnly = httpsOnly;
-            CreatedTime = createdTime;
             TemporaryDisk = temporaryDisk;
             PersistentDisk = persistentDisk;
+            CustomPersistentDisks = customPersistentDisks;
             EnableEndToEndTLS = enableEndToEndTLS;
+            LoadedCertificates = loadedCertificates;
+            VnetAddons = vnetAddons;
             CustomInit();
         }
 
@@ -78,17 +85,17 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public string Url { get; private set; }
 
         /// <summary>
+        /// Gets or sets collection of addons
+        /// </summary>
+        [JsonProperty(PropertyName = "addonConfigs")]
+        public IDictionary<string, IDictionary<string, object>> AddonConfigs { get; set; }
+
+        /// <summary>
         /// Gets provisioning state of the App. Possible values include:
-        /// 'Succeeded', 'Failed', 'Creating', 'Updating'
+        /// 'Succeeded', 'Failed', 'Creating', 'Updating', 'Deleting'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets name of the active deployment of the App
-        /// </summary>
-        [JsonProperty(PropertyName = "activeDeploymentName")]
-        public string ActiveDeploymentName { get; set; }
 
         /// <summary>
         /// Gets or sets fully qualified dns Name.
@@ -103,12 +110,6 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public bool? HttpsOnly { get; set; }
 
         /// <summary>
-        /// Gets date time when the resource is created
-        /// </summary>
-        [JsonProperty(PropertyName = "createdTime")]
-        public System.DateTime? CreatedTime { get; private set; }
-
-        /// <summary>
         /// Gets or sets temporary disk settings
         /// </summary>
         [JsonProperty(PropertyName = "temporaryDisk")]
@@ -121,10 +122,28 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public PersistentDisk PersistentDisk { get; set; }
 
         /// <summary>
+        /// Gets or sets list of custom persistent disks
+        /// </summary>
+        [JsonProperty(PropertyName = "customPersistentDisks")]
+        public IList<CustomPersistentDiskResource> CustomPersistentDisks { get; set; }
+
+        /// <summary>
         /// Gets or sets indicate if end to end TLS is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "enableEndToEndTLS")]
         public bool? EnableEndToEndTLS { get; set; }
+
+        /// <summary>
+        /// Gets or sets collection of loaded certificates
+        /// </summary>
+        [JsonProperty(PropertyName = "loadedCertificates")]
+        public IList<LoadedCertificate> LoadedCertificates { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional App settings in vnet injection instance
+        /// </summary>
+        [JsonProperty(PropertyName = "vnetAddons")]
+        public AppVNetAddons VnetAddons { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -141,6 +160,26 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
             if (PersistentDisk != null)
             {
                 PersistentDisk.Validate();
+            }
+            if (CustomPersistentDisks != null)
+            {
+                foreach (var element in CustomPersistentDisks)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (LoadedCertificates != null)
+            {
+                foreach (var element1 in LoadedCertificates)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

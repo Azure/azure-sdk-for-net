@@ -13,11 +13,11 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
     [ClientTestFixture(
-        CertificateClientOptions.ServiceVersion.V7_0,
-        CertificateClientOptions.ServiceVersion.V7_1,
+        CertificateClientOptions.ServiceVersion.V7_4_Preview_1,
+        CertificateClientOptions.ServiceVersion.V7_3,
         CertificateClientOptions.ServiceVersion.V7_2,
-        CertificateClientOptions.ServiceVersion.V7_3_Preview)]
-    [NonParallelizable]
+        CertificateClientOptions.ServiceVersion.V7_1,
+        CertificateClientOptions.ServiceVersion.V7_0)]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
@@ -65,9 +65,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     InstrumentClientOptions(options)));
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
@@ -75,11 +75,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]

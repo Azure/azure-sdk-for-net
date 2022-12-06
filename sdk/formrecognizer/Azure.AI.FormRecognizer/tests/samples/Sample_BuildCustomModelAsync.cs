@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task BuildCustomModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -20,38 +19,44 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerSampleBuildModel
             // For this sample, you can use the training documents found in the `trainingFiles` folder.
-            // Upload the forms to your storage container and then generate a container SAS URL.
-            // For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-            // https://aka.ms/azsdk/formrecognizer/buildtrainingset
+            // Upload the documents to your storage container and then generate a container SAS URL. Note
+            // that a container URI without SAS is accepted only when the container is public or has a
+            // managed identity configured.
+            //
+            // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+            // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri blobContainerUri = new Uri("<blobContainerUri>");
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            // We are selecting the Template build mode in this sample. For more information about the available
+            // build modes and their differences, please see:
+            // https://aka.ms/azsdk/formrecognizer/buildmode
+
+            BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+            DocumentModelDetails model = operation.Value;
 
             Console.WriteLine($"  Model Id: {model.ModelId}");
             if (string.IsNullOrEmpty(model.Description))
                 Console.WriteLine($"  Model description: {model.Description}");
             Console.WriteLine($"  Created on: {model.CreatedOn}");
             Console.WriteLine("  Doc types the model can recognize:");
-            foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+            foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
             {
-                Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
-                foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+                Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+                foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
                 {
-                    Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+                    Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
                 }
             }
             #endregion
 
             // Delete the model on completion to clean environment.
-            await client.DeleteModelAsync(model.ModelId);
+            await client.DeleteDocumentModelAsync(model.ModelId);
         }
     }
 }

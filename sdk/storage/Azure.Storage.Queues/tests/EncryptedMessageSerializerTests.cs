@@ -20,10 +20,21 @@ using static Moq.It;
 
 namespace Azure.Storage.Queues.Test
 {
+#pragma warning disable CS0618 // obsolete
+    [TestFixture(ClientSideEncryptionVersion.V1_0)]
+    [TestFixture(ClientSideEncryptionVersion.V2_0)]
+#pragma warning restore CS0618 // obsolete
     public class EncryptedMessageSerializerTests // doesn't inherit our test base because there are no network tests
     {
         private const string TestMessage = "This can technically be a valid encrypted message.";
         private const string KeyWrapAlgorithm = "my_key_wrap_algorithm";
+
+        private readonly ClientSideEncryptionVersion _version;
+
+        public EncryptedMessageSerializerTests(ClientSideEncryptionVersion version)
+        {
+            _version = version;
+        }
 
         private Mock<IKeyEncryptionKey> GetIKeyEncryptionKey(byte[] userKeyBytes = default, string keyId = default)
         {
@@ -31,7 +42,11 @@ namespace Azure.Storage.Queues.Test
             {
                 const int keySizeBits = 256;
                 var bytes = new byte[keySizeBits >> 3];
+#if NET6_0_OR_GREATER
+                RandomNumberGenerator.Create().GetBytes(bytes);
+#else
                 new RNGCryptoServiceProvider().GetBytes(bytes);
+#endif
                 userKeyBytes = bytes;
             }
             keyId ??= Guid.NewGuid().ToString();
@@ -64,7 +79,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void SerializeEncryptedMessage()
         {
-            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var result = new ClientSideEncryptorV1_0(new ClientSideEncryptionOptions(_version)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyWrapAlgorithm = KeyWrapAlgorithm
@@ -86,7 +101,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void DeserializeEncryptedMessage()
         {
-            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var result = new ClientSideEncryptorV1_0(new ClientSideEncryptionOptions(_version)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyWrapAlgorithm = KeyWrapAlgorithm
@@ -109,7 +124,7 @@ namespace Azure.Storage.Queues.Test
         [Test]
         public void TryDeserializeEncryptedMessage()
         {
-            var result = new ClientSideEncryptor(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var result = new ClientSideEncryptorV1_0(new ClientSideEncryptionOptions(_version)
             {
                 KeyEncryptionKey = GetIKeyEncryptionKey().Object,
                 KeyWrapAlgorithm = KeyWrapAlgorithm

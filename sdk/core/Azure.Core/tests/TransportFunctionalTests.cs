@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -369,7 +370,7 @@ namespace Azure.Core.Tests
 
             Response response = await ExecuteRequest(request, transport);
 
-            Assert.True(response.Headers.Contains(headerName));
+            Assert.True(response.Headers.Contains(headerName), $"response.Headers contains the following headers: {string.Join(", ", response.Headers.Select(h => $"\"{h.Name}\": \"{h.Value}\""))}");
 
             Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
@@ -878,10 +879,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Retry(3)] // Sometimes is a victim of timeouts on CI, but usually runs sub 100ms
         public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
 
         [Test]
-        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
+        [Retry(3)] // Sometimes is a victim of timeouts on CI, but usually runs sub 100ms
         public Task ThrowsTaskCanceledExceptionWhenCancelledHttps() => ThrowsTaskCanceledExceptionWhenCancelled(true);
 
         private async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)
@@ -924,7 +926,6 @@ namespace Azure.Core.Tests
         public Task CanCancelContentUpload() => CanCancelContentUpload(false);
 
         [Test]
-        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
         public Task CanCancelContentUploadHttps() => CanCancelContentUpload(true);
 
         private async Task CanCancelContentUpload(bool https)
@@ -995,7 +996,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Linux = true, Windows = true, OSX = false, Reason = "https://github.com/Azure/azure-sdk-for-net/issues/17986")]
         public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
         {
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
@@ -1020,7 +1020,7 @@ namespace Azure.Core.Tests
                     {
                         certValidationCalled = true;
                         cert = args.Certificate;
-                        chain = args.X509Chain;
+                        chain = args.CertificateAuthorityChain;
                         return isValidCert;
                     };
                 }
@@ -1062,10 +1062,49 @@ namespace Azure.Core.Tests
                             () =>
                             {
                                 Assert.NotNull(cert, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.Certificate)} should not be null");
-                                Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.X509Chain)} should not be null");
+                                Assert.NotNull(chain, $"{nameof(ServerCertificateCustomValidationArgs)}.{nameof(ServerCertificateCustomValidationArgs.CertificateAuthorityChain)} should not be null");
                             });
                     }
                 }
+            }
+        }
+
+        [Test]
+        public async Task ClientCertificateIsHonored([Values(true, false)] bool setClientCertificate)
+        {
+            // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
+            ServicePointManager.ServerCertificateValidationCallback = null;
+            var clientCert = new X509Certificate2(Convert.FromBase64String(Pfx));
+
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    var cert = context.Connection.ClientCertificate;
+                    if (setClientCertificate)
+                    {
+                        Assert.NotNull(cert);
+                    }
+                    else
+                    {
+                        Assert.Null(cert);
+                    }
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                },
+                true))
+            {
+                var options = new HttpPipelineTransportOptions();
+
+                options.ServerCertificateCustomValidationCallback = args => true;
+                if (setClientCertificate)
+                {
+                    options.ClientCertificates.Add(clientCert);
+                }
+                var transport = GetTransport(true, options);
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                await ExecuteRequest(request, transport);
             }
         }
 
@@ -1111,6 +1150,35 @@ namespace Azure.Core.Tests
                 Response response = await ExecuteRequest(request, transport);
 
                 Assert.AreEqual(444, response.Status);
+            }
+        }
+
+        [Test]
+        public async Task CookiesDisabledByDefault()
+        {
+            using (TestServer testServer = new TestServer(
+                context =>
+                {
+                    Assert.IsFalse(context.Request.Headers.ContainsKey("cookie"));
+                    context.Response.StatusCode = 200;
+                    context.Response.Headers.Add(
+                        "set-cookie",
+                        "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly");
+                }))
+            {
+                var transport = GetTransport();
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
+
+                // create a second request to verify cookies not set
+                request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
             }
         }
 

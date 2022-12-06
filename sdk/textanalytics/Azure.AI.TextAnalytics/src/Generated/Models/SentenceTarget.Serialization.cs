@@ -11,8 +11,31 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentenceTarget
+    internal partial class SentenceTarget : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("sentiment");
+            writer.WriteStringValue(Sentiment);
+            writer.WritePropertyName("confidenceScores");
+            writer.WriteObjectValue(ConfidenceScores);
+            writer.WritePropertyName("offset");
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length");
+            writer.WriteNumberValue(Length);
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("relations");
+            writer.WriteStartArray();
+            foreach (var item in Relations)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
+
         internal static SentenceTarget DeserializeSentenceTarget(JsonElement element)
         {
             string sentiment = default;
@@ -20,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
             int offset = default;
             int length = default;
             string text = default;
-            IReadOnlyList<TargetRelation> relations = default;
+            IList<TargetRelation> relations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"))

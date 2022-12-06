@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -17,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
             string documentA = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
@@ -56,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Samples
             RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{entitiesPerDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Entity Linking\", version: \"{entitiesPerDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesPerDocuments)

@@ -18,12 +18,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="path"> The path of the property. </param>
         /// <param name="propertyChangeType"> The type of property change. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        internal WhatIfPropertyChange(string path, PropertyChangeType propertyChangeType)
+        internal WhatIfPropertyChange(string path, WhatIfPropertyChangeType propertyChangeType)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
+            Argument.AssertNotNull(path, nameof(path));
 
             Path = path;
             PropertyChangeType = propertyChangeType;
@@ -36,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="before"> The value of the property before the deployment is executed. </param>
         /// <param name="after"> The value of the property after the deployment is executed. </param>
         /// <param name="children"> Nested property changes. </param>
-        internal WhatIfPropertyChange(string path, PropertyChangeType propertyChangeType, object before, object after, IReadOnlyList<WhatIfPropertyChange> children)
+        internal WhatIfPropertyChange(string path, WhatIfPropertyChangeType propertyChangeType, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> children)
         {
             Path = path;
             PropertyChangeType = propertyChangeType;
@@ -48,11 +45,69 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The path of the property. </summary>
         public string Path { get; }
         /// <summary> The type of property change. </summary>
-        public PropertyChangeType PropertyChangeType { get; }
-        /// <summary> The value of the property before the deployment is executed. </summary>
-        public object Before { get; }
-        /// <summary> The value of the property after the deployment is executed. </summary>
-        public object After { get; }
+        public WhatIfPropertyChangeType PropertyChangeType { get; }
+        /// <summary>
+        /// The value of the property before the deployment is executed.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Before { get; }
+        /// <summary>
+        /// The value of the property after the deployment is executed.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData After { get; }
         /// <summary> Nested property changes. </summary>
         public IReadOnlyList<WhatIfPropertyChange> Children { get; }
     }

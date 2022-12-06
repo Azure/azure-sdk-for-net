@@ -20,21 +20,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="name"> Name of the test that these availability results represent. </param>
         /// <param name="duration"> Duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
         /// <param name="success"> Success flag. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/>, or <paramref name="duration"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="duration"/> is null. </exception>
         public AvailabilityData(int version, string id, string name, string duration, bool success) : base(version)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (duration == null)
-            {
-                throw new ArgumentNullException(nameof(duration));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(duration, nameof(duration));
 
             Id = id;
             Name = name;

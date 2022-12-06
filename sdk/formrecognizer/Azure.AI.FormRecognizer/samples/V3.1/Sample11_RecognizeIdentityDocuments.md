@@ -24,7 +24,7 @@ To recognize identity documents from a URI, use the `StartRecognizeIdentityDocum
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/iddocumentfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeIdentityDocumentsUri
-Uri sourceUri = "<sourceUri>";
+Uri sourceUri = new Uri("<sourceUri>");
 
 RecognizeIdentityDocumentsOperation operation = await client.StartRecognizeIdentityDocumentsFromUriAsync(sourceUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
@@ -218,11 +218,6 @@ if (identityDocument.Fields.TryGetValue("Sex", out FormField sexfield))
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Recognize identity documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample14_RecognizeIdentityDocumentsFromUri.cs)
-* [Recognize identity documents from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample14_RecognizeIdentityDocumentsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/Sample4_StronglyTypingARecognizedForm.md

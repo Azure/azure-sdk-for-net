@@ -6,36 +6,39 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the ManagedHsm data model. </summary>
-    public partial class ManagedHsmData : ManagedHsmResource
+    public partial class ManagedHsmData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedHsmData. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedHsmData(Location location) : base(location)
+        public ManagedHsmData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of ManagedHsmData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the key vault resource. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
-        internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ManagedHsmSku sku, SystemData systemData, ManagedHsmProperties properties) : base(id, name, type, tags, location, sku, systemData)
+        /// <param name="sku"> SKU details. </param>
+        internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Sku = sku;
         }
 
         /// <summary> Properties of the managed HSM. </summary>
         public ManagedHsmProperties Properties { get; set; }
+        /// <summary> SKU details. </summary>
+        public ManagedHsmSku Sku { get; set; }
     }
 }

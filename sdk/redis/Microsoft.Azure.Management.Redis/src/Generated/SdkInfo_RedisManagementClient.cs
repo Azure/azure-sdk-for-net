@@ -19,23 +19,24 @@ namespace Microsoft.Azure.Management.Redis
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Cache", "FirewallRules", "2020-12-01"),
-                new Tuple<string, string, string>("Cache", "LinkedServer", "2020-12-01"),
-                new Tuple<string, string, string>("Cache", "Operations", "2020-12-01"),
-                new Tuple<string, string, string>("Cache", "PatchSchedules", "2020-12-01"),
-                new Tuple<string, string, string>("Cache", "PrivateEndpointConnections", "2020-12-01"),
-                new Tuple<string, string, string>("Cache", "PrivateLinkResources", "2020-12-01"),
-                new Tuple<string, string, string>("Cache", "Redis", "2020-12-01"),
+                new Tuple<string, string, string>("Cache", "AsyncOperationStatus", "2022-06-01"),
+                new Tuple<string, string, string>("Cache", "FirewallRules", "2022-06-01"),
+                new Tuple<string, string, string>("Cache", "LinkedServer", "2022-06-01"),
+                new Tuple<string, string, string>("Cache", "Operations", "2022-06-01"),
+                new Tuple<string, string, string>("Cache", "PatchSchedules", "2022-06-01"),
+                new Tuple<string, string, string>("Cache", "PrivateEndpointConnections", "2022-06-01"),
+                new Tuple<string, string, string>("Cache", "PrivateLinkResources", "2022-06-01"),
+                new Tuple<string, string, string>("Cache", "Redis", "2022-06-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestVersion = "2.0.4421";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/redis/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/redis/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\austintolani\\Repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "b20011746ef065a8ab6572045de9578c192f2ffd";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "2ecbe51762643c7f6b6c6d8dd604dd934a1cc808";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

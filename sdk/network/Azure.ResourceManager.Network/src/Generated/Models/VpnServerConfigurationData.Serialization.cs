@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -40,11 +41,6 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(NamePropertiesName);
-            }
             if (Optional.IsCollectionDefined(VpnProtocols))
             {
                 writer.WritePropertyName("vpnProtocols");
@@ -105,11 +101,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VpnClientIpsecPolicies))
+            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies");
                 writer.WriteStartArray();
-                foreach (var item in VpnClientIpsecPolicies)
+                foreach (var item in VpnClientIPsecPolicies)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -146,37 +142,45 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnServerConfigurationData DeserializeVpnServerConfigurationData(JsonElement element)
         {
-            Optional<string> etag = default;
-            Optional<string> id = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> name0 = default;
             Optional<IList<VpnGatewayTunnelingProtocol>> vpnProtocols = default;
             Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
             Optional<IList<VpnServerConfigVpnClientRootCertificate>> vpnClientRootCertificates = default;
             Optional<IList<VpnServerConfigVpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
             Optional<IList<VpnServerConfigRadiusServerRootCertificate>> radiusServerRootCertificates = default;
             Optional<IList<VpnServerConfigRadiusClientRootCertificate>> radiusClientRootCertificates = default;
-            Optional<IList<IpsecPolicy>> vpnClientIpsecPolicies = default;
+            Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
             Optional<string> radiusServerAddress = default;
             Optional<string> radiusServerSecret = default;
             Optional<IList<RadiusServer>> radiusServers = default;
             Optional<AadAuthenticationParameters> aadAuthenticationParameters = default;
             Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<P2SVpnGatewayData>> p2SVpnGateways = default;
-            Optional<string> etag0 = default;
+            Optional<IReadOnlyList<P2SVpnGatewayData>> p2sVpnGateways = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -186,12 +190,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -218,11 +232,6 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"))
-                        {
-                            name0 = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("vpnProtocols"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -320,12 +329,12 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpsecPolicy> array = new List<IpsecPolicy>();
+                            List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                             }
-                            vpnClientIpsecPolicies = array;
+                            vpnClientIPsecPolicies = array;
                             continue;
                         }
                         if (property0.NameEquals("radiusServerAddress"))
@@ -380,19 +389,14 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
                             }
-                            p2SVpnGateways = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("etag"))
-                        {
-                            etag0 = property0.Value.GetString();
+                            p2sVpnGateways = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VpnServerConfigurationData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, name0.Value, Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2SVpnGateways), etag0.Value);
+            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2sVpnGateways));
         }
     }
 }

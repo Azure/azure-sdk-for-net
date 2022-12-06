@@ -20,10 +20,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             StringIndexType stringIndexType = default;
             string content = default;
             IReadOnlyList<DocumentPage> pages = default;
+            Optional<IReadOnlyList<DocumentParagraph>> paragraphs = default;
             Optional<IReadOnlyList<DocumentTable>> tables = default;
             Optional<IReadOnlyList<DocumentKeyValuePair>> keyValuePairs = default;
-            Optional<IReadOnlyList<DocumentEntity>> entities = default;
             Optional<IReadOnlyList<DocumentStyle>> styles = default;
+            Optional<IReadOnlyList<DocumentLanguage>> languages = default;
             Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,6 +58,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     pages = array;
                     continue;
                 }
+                if (property.NameEquals("paragraphs"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentParagraph> array = new List<DocumentParagraph>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentParagraph.DeserializeDocumentParagraph(item));
+                    }
+                    paragraphs = array;
+                    continue;
+                }
                 if (property.NameEquals("tables"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -87,21 +103,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     keyValuePairs = array;
                     continue;
                 }
-                if (property.NameEquals("entities"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<DocumentEntity> array = new List<DocumentEntity>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentEntity.DeserializeDocumentEntity(item));
-                    }
-                    entities = array;
-                    continue;
-                }
                 if (property.NameEquals("styles"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +116,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         array.Add(DocumentStyle.DeserializeDocumentStyle(item));
                     }
                     styles = array;
+                    continue;
+                }
+                if (property.NameEquals("languages"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentLanguage> array = new List<DocumentLanguage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
+                    }
+                    languages = array;
                     continue;
                 }
                 if (property.NameEquals("documents"))
@@ -133,7 +149,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, Optional.ToList(tables), Optional.ToList(keyValuePairs), Optional.ToList(entities), Optional.ToList(styles), Optional.ToList(documents));
+            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, Optional.ToList(paragraphs), Optional.ToList(tables), Optional.ToList(keyValuePairs), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents));
         }
     }
 }

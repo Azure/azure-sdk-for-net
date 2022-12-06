@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> Client options for DeviceUpdateClient. </summary>
+    /// <summary> Client options for DeviceUpdate library clients. </summary>
     public partial class DeviceUpdateClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2020_09_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_10_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2020-09-01". </summary>
-            V2020_09_01 = 1,
+            /// <summary> Service version "2022-10-01". </summary>
+            V2022_10_01 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Version = version switch
             {
-                ServiceVersion.V2020_09_01 => "2020-09-01",
+                ServiceVersion.V2022_10_01 => "2022-10-01",
                 _ => throw new NotSupportedException()
             };
         }

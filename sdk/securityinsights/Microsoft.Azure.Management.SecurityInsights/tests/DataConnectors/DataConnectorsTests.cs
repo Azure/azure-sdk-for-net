@@ -2,45 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.SecurityInsights;
 using Microsoft.Azure.Management.SecurityInsights.Models;
+using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using SecurityInsights.Tests.Helpers;
 using Xunit;
 
-namespace SecurityInsights.Tests
+namespace Microsoft.Azure.Management.SecurityInsights.Tests
 {
     public class DataConnectorsTests : TestBase
     {
         #region Test setup
-
-        private static string ResourceGroup = "ndicola-pfsense";
-        private static string WorkspaceName = "ndicola-pfsense";
-
-        public static TestEnvironment TestEnvironment { get; private set; }
-
-        private static SecurityInsightsClient GetSecurityInsightsClient(MockContext context)
-        {
-            if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-            }
-
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
-
-            var SecurityInsightsClient = HttpMockServer.Mode == HttpRecorderMode.Record
-                ? context.GetServiceClient<SecurityInsightsClient>(TestEnvironment, handlers: handler)
-                : context.GetServiceClient<SecurityInsightsClient>(handlers: handler);
-
-            return SecurityInsightsClient;
-        }
 
         #endregion
 
@@ -49,22 +22,20 @@ namespace SecurityInsights.Tests
         [Fact]
         public void DataConnectors_List()
         {
-            Thread.Sleep(3000);
             using (var context = MockContext.Start(this.GetType()))
             {
-                var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var DataConnectorId = Guid.NewGuid().ToString();
                 var DataConnectorBody = new ASCDataConnector()
                 {
                     DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
-                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()
-
+                    SubscriptionId = TestHelper.TestEnvironment.SubscriptionId.ToString()
                 };
 
-                SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
-                var DataConnectors = SecurityInsightsClient.DataConnectors.List(ResourceGroup, WorkspaceName);
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
+                var DataConnectors = SecurityInsightsClient.DataConnectors.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateDataConnectors(DataConnectors);
-                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
             }
         }
 
@@ -74,18 +45,18 @@ namespace SecurityInsights.Tests
             
             using (var context = MockContext.Start(this.GetType()))
             {
-                var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var DataConnectorId = Guid.NewGuid().ToString();
                 var DataConnectorBody = new ASCDataConnector()
                 {
                     DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
-                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()                    
+                    SubscriptionId = TestHelper.TestEnvironment.SubscriptionId.ToString()                    
 
                 };
 
-                var DataConnector = SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
+                var DataConnector = SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
                 ValidateDataConnector(DataConnector);
-                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
             }
         }
 
@@ -94,19 +65,19 @@ namespace SecurityInsights.Tests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var DataConnectorId = Guid.NewGuid().ToString();
                 var DataConnectorBody = new ASCDataConnector()
                 {
                     DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
-                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()
+                    SubscriptionId = TestHelper.TestEnvironment.SubscriptionId.ToString()
 
                 };
 
-                SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
-                var DataConnector = SecurityInsightsClient.DataConnectors.Get(ResourceGroup, WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
+                var DataConnector = SecurityInsightsClient.DataConnectors.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
                 ValidateDataConnector(DataConnector);
-                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
 
             }
         }
@@ -116,17 +87,33 @@ namespace SecurityInsights.Tests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                var SecurityInsightsClient = GetSecurityInsightsClient(context);
+                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var DataConnectorId = Guid.NewGuid().ToString();
                 var DataConnectorBody = new ASCDataConnector()
                 {
                     DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
-                    SubscriptionId = TestEnvironment.SubscriptionId.ToString()
+                    SubscriptionId = TestHelper.TestEnvironment.SubscriptionId.ToString()
 
                 };
 
-                SecurityInsightsClient.DataConnectors.CreateOrUpdate(ResourceGroup, WorkspaceName, DataConnectorId, DataConnectorBody);
-                SecurityInsightsClient.DataConnectors.Delete(ResourceGroup, WorkspaceName, DataConnectorId);
+                SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);
+                SecurityInsightsClient.DataConnectors.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId);
+            }
+        }
+
+        [Fact]
+        public void DataConnectors_CheckRequirements()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
+                var DataConnectorsCheckRequirements = new ASCCheckRequirements()
+                {
+                    SubscriptionId = TestHelper.TestEnvironment.SubscriptionId.ToString()
+                }; 
+
+                var DataConnectorCheckRequirement = SecurityInsightsClient.DataConnectorsCheckRequirements.Post(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorsCheckRequirements);
+                ValidateDataConnectorCheckRequirement(DataConnectorCheckRequirement);
             }
         }
 
@@ -144,6 +131,11 @@ namespace SecurityInsights.Tests
         private void ValidateDataConnector(DataConnector DataConnector)
         {
             Assert.NotNull(DataConnector);
+        }
+
+        private void ValidateDataConnectorCheckRequirement(DataConnectorRequirementsState DataConnectorCheckRequirement)
+        {
+            Assert.NotNull(DataConnectorCheckRequirement);
         }
 
         #endregion

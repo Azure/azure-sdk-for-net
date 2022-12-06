@@ -95,13 +95,12 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// ETag of the certificate. This is required to update an existing
             /// certificate, and ignored while creating a brand new certificate.
             /// </param>
-            /// <param name='certificate'>
-            /// Base-64 representation of the X509 leaf certificate .cer file or just .pem
-            /// file content.
+            /// <param name='properties'>
+            /// properties of a certificate
             /// </param>
-            public static CertificateResponse CreateOrUpdate(this IDpsCertificateOperations operations, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = default(string), string certificate = default(string))
+            public static CertificateResponse CreateOrUpdate(this IDpsCertificateOperations operations, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = default(string), CertificateProperties properties = default(CertificateProperties))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, provisioningServiceName, certificateName, ifMatch, certificate).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, provisioningServiceName, certificateName, ifMatch, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -126,16 +125,15 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// ETag of the certificate. This is required to update an existing
             /// certificate, and ignored while creating a brand new certificate.
             /// </param>
-            /// <param name='certificate'>
-            /// Base-64 representation of the X509 leaf certificate .cer file or just .pem
-            /// file content.
+            /// <param name='properties'>
+            /// properties of a certificate
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateResponse> CreateOrUpdateAsync(this IDpsCertificateOperations operations, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = default(string), string certificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateResponse> CreateOrUpdateAsync(this IDpsCertificateOperations operations, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = default(string), CertificateProperties properties = default(CertificateProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, certificateName, ifMatch, certificate, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, certificateName, ifMatch, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

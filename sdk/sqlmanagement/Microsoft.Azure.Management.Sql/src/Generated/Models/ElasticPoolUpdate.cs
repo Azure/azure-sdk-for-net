@@ -47,8 +47,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="maintenanceConfigurationId">Maintenance configuration
         /// id assigned to the elastic pool. This configuration defines the
         /// period when the maintenance updates will will occur.</param>
+        /// <param name="highAvailabilityReplicaCount">The number of secondary
+        /// replicas associated with the elastic pool that are used to provide
+        /// high availability. Applicable only to Hyperscale elastic
+        /// pools.</param>
         /// <param name="tags">Resource tags.</param>
-        public ElasticPoolUpdate(Sku sku = default(Sku), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), string maintenanceConfigurationId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ElasticPoolUpdate(Sku sku = default(Sku), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), string maintenanceConfigurationId = default(string), int? highAvailabilityReplicaCount = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -56,6 +60,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             ZoneRedundant = zoneRedundant;
             LicenseType = licenseType;
             MaintenanceConfigurationId = maintenanceConfigurationId;
+            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
             Tags = tags;
             CustomInit();
         }
@@ -105,6 +110,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
         public string MaintenanceConfigurationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of secondary replicas associated with the
+        /// elastic pool that are used to provide high availability. Applicable
+        /// only to Hyperscale elastic pools.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.highAvailabilityReplicaCount")]
+        public int? HighAvailabilityReplicaCount { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

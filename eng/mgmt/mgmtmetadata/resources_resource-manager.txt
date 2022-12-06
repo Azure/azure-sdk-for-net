@@ -3,12 +3,15 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --tag=package-features-2021-07 --csharp.output-folder=C:\WorkingSpace\AzureUx\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\Generated\Features
-2021-09-16 23:53:37 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/resources/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --tag=package-resources-2021-04 --csharp.output-folder=C:\dev\azure-sdk-for-net\sdk\resources\Microsoft.Azure.Management.Resource\src\Generated\Resources
+Autorest CSharp Version: 2.3.82
+2022-04-26 05:09:51 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
-Branch:      master
-Commit:      32d5a0348f38da79fafdf14b945df0f9b8119df4
+Branch:      main
+Commit:      b9e6e16643bf008391b990a09995cf00d2f40a9d
 AutoRest information
-Requested version: v2
-Bootstrapper version:    autorest@2.0.4413
+Requested version: 2.0.4421
+Bootstrapper version:    autorest@3.2.1
+npm WARN registry Using stale data from https://registry.npmjs.org/ because the host is inaccessible -- are you offline?
+npm WARN registry Using stale data from https://registry.npmjs.org/ due to a request error during revalidation.

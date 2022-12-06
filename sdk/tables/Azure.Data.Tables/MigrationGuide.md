@@ -38,7 +38,7 @@ and namespaces that begin with `Microsoft.Azure.CosmosDB` or `Microsoft.Azure.St
 
 ### Constructing the clients
 
-Previously in `Microsoft.Azure.Comsmos.Table`, you would create a `CloudStorageAccount` which can be used to get an instance of the `CloudTableClient` in order to
+Previously in `Microsoft.Azure.Cosmos.Table`, you would create a `CloudStorageAccount` which can be used to get an instance of the `CloudTableClient` in order to
 perform service level operations.
 
 ```C#
@@ -96,7 +96,7 @@ tableClient.CreateIfNotExists();
 
 Let's define an office supply entity so that we can add it to the table. To do so, we'll first need to define our custom entity types.
 
-Previously in `Microsoft.Azure.Comsmos.Table`, our entity would inherit from the `TableEntity` base class and look like this:
+Previously in `Microsoft.Azure.Cosmos.Table`, our entity would inherit from the `TableEntity` base class and look like this:
 
 ```c#
 public class OfficeSupplyOld : Microsoft.Azure.Cosmos.Table.TableEntity

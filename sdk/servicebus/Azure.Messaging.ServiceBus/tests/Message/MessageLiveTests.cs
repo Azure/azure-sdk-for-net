@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 var maxMessageSize = (256 * 1024) - 77;     // 77 bytes is the current serialization hit.
                 var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 var maxSizeMessage = new ServiceBusMessage((BinaryData)null);
 
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
@@ -185,7 +185,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: true, enableSession: true))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.TopicName);
                 var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
@@ -204,6 +204,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(scope.TopicName, scope.SubscriptionNames.First());
                 ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
+
+                // defer the message so we can verify that the Message State is cleared as expected by constructor
+                await receiver.DeferMessageAsync(received);
+                received = await receiver.PeekMessageAsync();
                 AmqpAnnotatedMessage rawReceived = received.GetRawAmqpMessage();
                 Assert.IsNotNull(rawReceived.Header.DeliveryCount);
                 Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
@@ -257,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var serializer = new JsonObjectSerializer();
                 var testBody = new TestBody
@@ -285,7 +289,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
@@ -374,7 +378,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
@@ -414,7 +418,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
@@ -452,7 +456,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage();
                 msg.GetRawAmqpMessage().Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[]
@@ -522,7 +526,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey1", "deliveryAnnotationVal1");
                 amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey2", "deliveryAnnotationVal2");
 
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var now = DateTimeOffset.UtcNow;
@@ -570,6 +574,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 // delivery annotations
                 Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey1"], "deliveryAnnotationVal1");
                 Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey2"], "deliveryAnnotationVal2");
+
+                // footer
+                Assert.AreEqual("footerVal1", received.Footer["footerKey1"]);
+                Assert.AreEqual("footerVal2", received.Footer["footerKey2"]);
             }
         }
 
@@ -590,7 +598,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessage.Properties.AbsoluteExpiryTime = expiry;
                 amqpMessage.Properties.CreationTime = creation;
 
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var now = DateTimeOffset.UtcNow;

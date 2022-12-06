@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Describes the data source that output will be written to.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("OutputDataSource")]
     public partial class OutputDataSource
     {
         /// <summary>

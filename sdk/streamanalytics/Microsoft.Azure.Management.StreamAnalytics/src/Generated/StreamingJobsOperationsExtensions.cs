@@ -423,6 +423,49 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
 
             /// <summary>
+            /// Scales a streaming job when the job is running.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the streaming job.
+            /// </param>
+            /// <param name='scaleJobParameters'>
+            /// Parameters applicable to a scale streaming job operation.
+            /// </param>
+            public static void Scale(this IStreamingJobsOperations operations, string resourceGroupName, string jobName, ScaleStreamingJobParameters scaleJobParameters = default(ScaleStreamingJobParameters))
+            {
+                operations.ScaleAsync(resourceGroupName, jobName, scaleJobParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Scales a streaming job when the job is running.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the streaming job.
+            /// </param>
+            /// <param name='scaleJobParameters'>
+            /// Parameters applicable to a scale streaming job operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ScaleAsync(this IStreamingJobsOperations operations, string resourceGroupName, string jobName, ScaleStreamingJobParameters scaleJobParameters = default(ScaleStreamingJobParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ScaleWithHttpMessagesAsync(resourceGroupName, jobName, scaleJobParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates a streaming job or replaces an already existing streaming job.
             /// </summary>
             /// <param name='operations'>
@@ -609,6 +652,49 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             public static async Task BeginStopAsync(this IStreamingJobsOperations operations, string resourceGroupName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, jobName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Scales a streaming job when the job is running.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the streaming job.
+            /// </param>
+            /// <param name='scaleJobParameters'>
+            /// Parameters applicable to a scale streaming job operation.
+            /// </param>
+            public static void BeginScale(this IStreamingJobsOperations operations, string resourceGroupName, string jobName, ScaleStreamingJobParameters scaleJobParameters = default(ScaleStreamingJobParameters))
+            {
+                operations.BeginScaleAsync(resourceGroupName, jobName, scaleJobParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Scales a streaming job when the job is running.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the streaming job.
+            /// </param>
+            /// <param name='scaleJobParameters'>
+            /// Parameters applicable to a scale streaming job operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginScaleAsync(this IStreamingJobsOperations operations, string resourceGroupName, string jobName, ScaleStreamingJobParameters scaleJobParameters = default(ScaleStreamingJobParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginScaleWithHttpMessagesAsync(resourceGroupName, jobName, scaleJobParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

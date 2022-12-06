@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
-                TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
+                TestEnvironment.SubscriptionId,
                 options);
         }
 
@@ -54,18 +54,20 @@ namespace Azure.ResourceManager.TestFramework
             if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
             {
                 _cleanupClient ??= new ArmClient(
-                    TestEnvironment.SubscriptionId,
                     TestEnvironment.Credential,
+                    TestEnvironment.SubscriptionId,
                     new ArmClientOptions());
-                var sub = _cleanupClient.GetSubscriptions().GetIfExists(TestEnvironment.SubscriptionId);
+                SubscriptionResource subscription = _cleanupClient.GetSubscriptions().Exists(TestEnvironment.SubscriptionId)
+                    ? _cleanupClient.GetSubscriptions().Get(TestEnvironment.SubscriptionId)
+                    : null;
                 foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
                 {
-                    await sub.Value?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync();
+                    await subscription?.GetResourceGroups().Get(resourceGroup).Value.DeleteAsync(WaitUntil.Completed);
                 }
             }
         }
 
-        protected async Task<string> GetFirstUsableLocationAsync(ProviderCollection providersClient, string resourceProviderNamespace, string resourceType)
+        protected async Task<string> GetFirstUsableLocationAsync(ResourceProviderCollection providersClient, string resourceProviderNamespace, string resourceType)
         {
             var provider = (await providersClient.GetAsync(resourceProviderNamespace)).Value;
             return provider.Data.ResourceTypes.Where(

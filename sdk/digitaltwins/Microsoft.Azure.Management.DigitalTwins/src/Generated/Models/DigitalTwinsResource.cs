@@ -40,7 +40,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <param name="tags">The resource tags.</param>
         /// <param name="identity">The managed identity for the
         /// DigitalTwinsInstance.</param>
-        public DigitalTwinsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DigitalTwinsIdentity identity = default(DigitalTwinsIdentity))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the DigitalTwinsInstance.</param>
+        public DigitalTwinsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DigitalTwinsIdentity identity = default(DigitalTwinsIdentity), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -48,6 +50,7 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
             Location = location;
             Tags = tags;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -91,6 +94,13 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public DigitalTwinsIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// DigitalTwinsInstance.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

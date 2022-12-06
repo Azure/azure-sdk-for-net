@@ -9,6 +9,8 @@ using System.Web;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -19,6 +21,9 @@ namespace Azure.Identity.Tests
 
         public AuthorizationCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
+
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
+            new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockConfidentialMsalClient));
 
         [SetUp]
         public void Setup()
@@ -54,8 +59,9 @@ namespace Azure.Identity.Tests
         public async Task AuthenticateWithAuthCodeHonorsTenantId([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
+            var options = new AuthorizationCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             AuthorizationCodeCredential cred = InstrumentClient(
                 new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockConfidentialMsalClient));
 
@@ -66,6 +72,30 @@ namespace Azure.Identity.Tests
             AccessToken token2 = await cred.GetTokenAsync(context);
 
             Assert.AreEqual(token2.Token, expectedToken, "Should be the expected token value");
+        }
+
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            // no need to test with null TenantId since we can't construct this credential without it
+            if (parameters.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new AuthorizationCodeCredentialOptions();
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
+
+            var cred = InstrumentClient(new AuthorizationCodeCredential(parameters.TenantId, ClientId, "secret", "authcode", options, msalClientMock));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         [Test]

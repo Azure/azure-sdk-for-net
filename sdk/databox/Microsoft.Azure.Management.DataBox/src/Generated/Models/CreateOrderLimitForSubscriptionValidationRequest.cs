@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// CreateOrderLimitForSubscriptionValidationRequest class.
         /// </summary>
         /// <param name="deviceType">Device type to be used for the job.
-        /// Possible values include: 'DataBox', 'DataBoxDisk',
-        /// 'DataBoxHeavy'</param>
+        /// Possible values include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'</param>
         public CreateOrderLimitForSubscriptionValidationRequest(SkuName deviceType)
         {
             DeviceType = deviceType;
@@ -48,7 +48,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets device type to be used for the job. Possible values
-        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'
+        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy',
+        /// 'DataBoxCustomerDisk'
         /// </summary>
         [JsonProperty(PropertyName = "deviceType")]
         public SkuName DeviceType { get; set; }

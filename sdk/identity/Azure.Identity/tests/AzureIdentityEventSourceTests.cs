@@ -22,6 +22,10 @@ namespace Azure.Identity.Tests
         private const int GetTokenSucceededEvent = 2;
         private const int GetTokenFailedEvent = 3;
 
+#pragma warning disable SYSLIB0026 // X509Certificate2 is immutable
+        private static readonly X509Certificate2 _mockCertificate = new();
+#pragma warning restore // X509Certificate2 is immutable
+
         private TestEventListener _listener;
 
         public AzureIdentityEventSourceTests(bool isAsync) : base(isAsync)
@@ -71,7 +75,7 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.Now + TimeSpan.FromMinutes(10)));
 
-            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), default, default, mockMsalClient));
+            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), _mockCertificate, default, default, mockMsalClient));
 
             var method = "ClientCertificateCredential.GetToken";
 
@@ -139,7 +143,7 @@ namespace Azure.Identity.Tests
 
             var mockMsalClient = new MockMsalConfidentialClient(new MockClientException(expExMessage));
 
-            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), default, default, mockMsalClient));
+            var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), _mockCertificate, default, default, mockMsalClient));
 
             var method = "ClientCertificateCredential.GetToken";
 

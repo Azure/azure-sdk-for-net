@@ -5,10 +5,14 @@
 
 #nullable disable
 
+using System;
+using Azure;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Authentication certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayAuthenticationCertificate : SubResource
+    public partial class ApplicationGatewayAuthenticationCertificate : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
         public ApplicationGatewayAuthenticationCertificate()
@@ -17,29 +21,52 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the authentication certificate that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        internal ApplicationGatewayAuthenticationCertificate(string id, string name, string etag, string type, string data, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            Type = type;
+            ETag = etag;
             Data = data;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the authentication certificate that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string Type { get; }
-        /// <summary> Certificate public data. </summary>
-        public string Data { get; set; }
+        public ETag? ETag { get; }
+        /// <summary>
+        /// Certificate public data.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Data { get; set; }
         /// <summary> The provisioning state of the authentication certificate resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

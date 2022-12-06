@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="serverCertificate">Registered Server
         /// Certificate</param>
         /// <param name="agentVersion">Registered Server Agent Version</param>
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="clusterName">Registered Server clusterName</param>
         /// <param name="serverId">Registered Server serverId</param>
         /// <param name="friendlyName">Friendly Name</param>
-        public RegisteredServerCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), string lastHeartBeat = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string friendlyName = default(string))
-            : base(id, name, type)
+        public RegisteredServerCreateParameters(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string serverCertificate = default(string), string agentVersion = default(string), string serverOSVersion = default(string), string lastHeartBeat = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string friendlyName = default(string))
+            : base(id, name, type, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;

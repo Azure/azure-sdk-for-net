@@ -1,6 +1,6 @@
 # Release History
 
-## 4.3.0-beta.5 (Unreleased)
+## 4.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,93 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.5.0-beta.1 (2022-11-09)
+
+### Features Added
+
+- Added `CreateOkpKeyOptions` to pass key options when creating an Octet Key Pair (OKP) on Managed HSM.
+- Added `KeyClient.CreateOkpKey` and `CreateOkpKeyAsync` to create an Octet Key Pair (OKP) on Managed HSM.
+- Added `KeyType.Okp` and `KeyType.OkpHsm` for `JsonWebKey`.
+- Added `KeyCurveName.Ed25519` to create an Octet Key Pair (OKP) using the Ed25519 curve.
+- Added `SignatureAlgorithm.EdDsa` to support signing and verifying using an Edwards Curve Digital Signature Algorithm (EdDSA) on Managed HSM.
+
+### Bugs Fixed
+
+- Fixed possible "ObjectIsBeingRecovered" error immediately after restoring certificates, keys, or secrets. ([#31581](https://github.com/Azure/azure-sdk-for-net/issues/31581))
+
+### Other Changes
+
+- The default service version is now "7.4-preview.1".
+
+## 4.4.0 (2022-09-20)
+
+### Breaking Changes
+
+- Verify the challenge resource matches the vault domain.
+  This should affect few customers who can set `KeyClientOptions.DisableChallengeResourceVerification` or `CryptographyClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
+
+## 4.3.0 (2022-03-24)
+
+Changes from both the last release and the last beta include:
+
+### Features Added
+
+- Added `Exportable` and `ReleasePolicy` to `CreateKeyOptions`, `ImportKeyOptions`, and `KeyProperties` to support Secure Key Release for Key Vault and Managed HSM.
+- Added `GetRandomBytes` and `GetRandomBytesAsync` to `KeyClient` to get random bytes from a managed HSM.
+- Added `JsonWebKeyConverter` to support serializing and deserializing a `JsonWebKey` to a RFC 7517 JWK. ([#16155](https://github.com/Azure/azure-sdk-for-net/issues/16155))
+- Added `KeyClient.GetCryptographyClient` to get a `CryptographyClient` that uses the same options, policies, and pipeline as the `KeyClient` that created it. ([#23786](https://github.com/Azure/azure-sdk-for-net/issues/23786))
+- Added `KeyReleasePolicy.Immutable` property.
+- Added `KeyRotationPolicy` class and new methods including `KeyClient.GetKeyRotationPolicy`, `KeyClient.RotateKey`, and `KeyClient.UpdateKeyRotationPolicy`.
+- Added `KeyVaultKeyIdentifier.TryCreate` to parse key URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
+- Added `ReleaseKey` and `ReleaseKeyAsync` to `KeyClient` to release a key for Key Vault and Managed HSM.
+- Support multi-tenant authentication against Key Vault and Managed HSM when using Azure.Identity 1.5.0 or newer. ([#18359](https://github.com/Azure/azure-sdk-for-net/issues/18359))
+
+- Changed `KeyRotationLifetimeAction.Action` to read-only and added constructor to set the `KeyRotationPolicyAction`.
+- Renamed `name` parameter in `GetKeyRotationPolicy` and `GetKeyRotationPolicyAsync` to `keyName`.
+- Renamed `name` parameter in `UpdateKeyRotationPolicy` and `UpdateKeyRotationPolicyAsync` to `keyName`.
+
+### Bugs Fixed
+
+- The default service version is now "7.3".
+- Attempt to cache key locally from `KeyClient.GetCryptographyClient`. ([#25254](https://github.com/Azure/azure-sdk-for-net/issues/25254))
+- Added key version to distributed tracing. ([#12907](https://github.com/Azure/azure-sdk-for-net/issues/12907))
+
+### Breaking Changes
+
+- (Since 4.3.0-beta.7) `KeyClient.ReleaseKey` and `ReleaseKeyAsync` now take `name` and `targetAttestationToken`, or a `ReleaseKeyOptions` with a required `name` and `targetAttestationToken` along with additional properties.
+
+### Other Changes
+
+- `KeyProperties.Version` is no longer required when calling `KeyClient.UpdateKeyProperties` or `UpdateKeyPropertiesAsync`.
+
+## 4.3.0-beta.7 (2022-02-08)
+
+### Features Added
+
+- Added `KeyReleasePolicy.Immutable` property.
+
+### Breaking Changes
+
+- `KeyRotationPolicy.ExpiresIn` was changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
+- `KeyRotationLifetimeAction.TimeAfterCreate` and `TimeBeforeExpiry` were changed from a `TimeSpan?` to a `string` to properly round trip. It must be an ISO 8601 duration like "P30D" for 30 days.
+
+### Other Changes
+
+- `KeyProperties.Version` is no longer required when calling `KeyClient.UpdateKeyProperties` or `UpdateKeyPropertiesAsync`.
+
+## 4.3.0-beta.6 (2022-01-12)
+
+### Other Changes
+
+- Package metadata fixed
+
+## 4.3.0-beta.5 (2022-01-11)
+
+### Other Changes
+
+- Bug fixes
 
 ## 4.3.0-beta.4 (2021-11-16)
 

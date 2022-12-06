@@ -28,7 +28,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "authenticationType": "ManagedIdentity"
       },
       "StatusCode": 201,
@@ -80,7 +80,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureBlob",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -134,7 +134,7 @@
         "dataFeedName": "dataFeedsTLmWBJo",
         "dataFeedDescription": "",
         "timestampColumn": "",
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 0,
         "maxConcurrency": -1,
         "minRetryIntervalInSeconds": -1,
@@ -177,7 +177,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureBlob",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

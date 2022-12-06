@@ -118,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public IdempotentProducer(string connectionString,
                                   string eventHubName,
-                                  IdempotentProducerOptions clientOptions) : base(connectionString, eventHubName, clientOptions.ToCoreOptions())
+                                  IdempotentProducerOptions clientOptions) : base(connectionString, eventHubName, clientOptions)
         {
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public IdempotentProducer(string fullyQualifiedNamespace,
                                   string eventHubName,
                                   AzureNamedKeyCredential credential,
-                                  IdempotentProducerOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ToCoreOptions())
+                                  IdempotentProducerOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public IdempotentProducer(string fullyQualifiedNamespace,
                                   string eventHubName,
                                   AzureSasCredential credential,
-                                  IdempotentProducerOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ToCoreOptions())
+                                  IdempotentProducerOptions clientOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public IdempotentProducer(string fullyQualifiedNamespace,
                                   string eventHubName,
                                   TokenCredential credential,
-                                  IdempotentProducerOptions clientOptions = default): base(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ToCoreOptions())
+                                  IdempotentProducerOptions clientOptions = default): base(fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         public IdempotentProducer(EventHubConnection connection,
-                                  IdempotentProducerOptions clientOptions = default) : base(connection, clientOptions.ToCoreOptions())
+                                  IdempotentProducerOptions clientOptions = default) : base(connection, clientOptions)
         {
         }
 
@@ -206,10 +206,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         public virtual new async Task<PartitionPublishingProperties> GetPartitionPublishingPropertiesAsync(string partitionId,
-                                                                                                           CancellationToken cancellationToken = default)
-        {
-            var coreProperties = await base.GetPartitionPublishingPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
-            return new PartitionPublishingProperties(coreProperties.IsIdempotentPublishingEnabled, coreProperties.ProducerGroupId, coreProperties.OwnerLevel, coreProperties.LastPublishedSequenceNumber);
-        }
+                                                                                                           CancellationToken cancellationToken = default) =>
+            await base.GetPartitionPublishingPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
     }
 }

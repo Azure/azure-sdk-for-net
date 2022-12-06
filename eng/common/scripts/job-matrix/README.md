@@ -14,7 +14,7 @@
     * [include/exclude](#includeexclude)
     * [displayNames](#displaynames-1)
     * [Filters](#filters)
-    * [Replace](#replace-values)
+    * [Replace/Modify/Append](#replacemodifyappend-values)
     * [NonSparseParameters](#nonsparseparameters)
     * [Under the hood](#under-the-hood)
 * [Testing](#testing)
@@ -39,13 +39,13 @@ jobs:
     parameters:
       MatrixConfigs:
         - Name: base_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
+          Path: eng/common/scripts/job-matrix/samples/matrix.json
           Selection: all
           NonSparseParameters:
             - framework
           GenerateVMJobs: true
         - Name: sparse_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
+          Path: eng/common/scripts/job-matrix/samples/matrix.json
           Selection: sparse
           GenerateVMJobs: true
       JobTemplatePath: /eng/common/scripts/job-matrix/samples/matrix-job-sample.yml
@@ -56,7 +56,12 @@ jobs:
         Cloud: Public
       MatrixFilters: []
       MatrixReplace: []
+      PreGenerationSteps: []
 ```
+
+### A note regarding PreGenerationSteps
+
+The generation template laid out above runs as its own job. A limitation of this method is that it disallows any runtime matrix customization due to the fact that an individual job clones the targeted build SHA. The stepList `PreGenerationSteps` allows users to update matrix json however they like prior to actually invoking the matrix generation. Injected steps are run after the repository checkout, but before any matrix generation is invoked.
 
 ## Matrix config file syntax
 
@@ -97,7 +102,7 @@ Example:
   "operatingSystem": [
     "windows-2019",
     "ubuntu-18.04",
-    "macOS-10.15"
+    "macos-11"
   ],
   "framework": [
     "net461",
@@ -115,26 +120,49 @@ Example:
 
 The `include` field defines any number of matrices to be appended to the base matrix after processing exclusions.
 
-#### exclude
-
-The `include` field defines any number of matrices to be removed from the base matrix. Exclude parameters can be a partial
-set, meaning as long as all exclude parameters match against a matrix entry (even if the matrix entry has additional parameters),
-then it will be excluded from the matrix. For example, the below entry will match the exclusion and be removed:
-
 ```
-matrix entry:
+# matrix entry format:
 {
     "a": 1,
     "b": 2,
     "c": 3,
 }
 
-"exclude": [
-    {
-        "a": 1,
-        "b": 2
-    }
-]
+# Include field in a matrix config
+{
+    "include": [
+        {
+            "a": 1,
+            "b": 2
+        }
+    ]
+}
+```
+
+
+#### exclude
+
+The `exclude` field defines any number of matrices to be removed from the base matrix. Exclude parameters can be a partial
+set, meaning as long as all exclude parameters match against a matrix entry (even if the matrix entry has additional parameters),
+then it will be excluded from the matrix. For example, the below entry will match the exclusion and be removed:
+
+```
+# matrix entry format:
+{
+    "a": 1,
+    "b": 2,
+    "c": 3,
+}
+
+# Exclude field in a matrix config
+{
+    "exclude": [
+        {
+            "a": 1,
+            "b": 2
+        }
+    ]
+}
 ```
 
 #### displayNames
@@ -169,7 +197,7 @@ To import a matrix, add a parameter with the key `$IMPORT`:
 
 Importing can be useful, for example, in cases where there is a shared base matrix, but there is a need to run it
 once for each instance of a language version. Importing does not support overriding duplicate parameters. To achieve
-this, use the [Replace](#replace-values) argument instead.
+this, use the [Replace](#replacemodifyappend-values) argument instead.
 
 The `Selection` and `NonSparseParameters` parameters are respected when generating an imported matrix.
 
@@ -352,7 +380,7 @@ In the matrix job output that azure pipelines consumes, the format is a dictiona
 {
   "net461_macOS1015": {
     "framework": "net461",
-    "operatingSystem": "macOS-10.15"
+    "operatingSystem": "macos-11"
   },
   "net50_ubuntu1804": {
     "framework": "net50",
@@ -399,7 +427,7 @@ named "ExcludedKey", a framework variable containing either "461" or "5.0", and 
   -Filters @("ExcludedKey=^$", "framework=(461|5\.0)", "SupportedClouds=^$|.*Public.*")
 ```
 
-#### Replace values
+#### Replace/Modify/Append Values
 
 Replacements for values can be passed to the matrix as an array of strings, each matching the format of `<keyRegex>=<valueRegex>/<replacementValue>`.
 The replace argument will find any permutations where the key fully matches the key regex and the value fully matches the value regex, and replace the value with
@@ -484,7 +512,7 @@ Given a matrix like below with `JavaTestVersion` marked as a non-sparse paramete
     "Agent": {
       "windows-2019": { "OSVmImage": "MMS2019", "Pool": "azsdk-pool-mms-win-2019-general" },
       "ubuntu-1804": { "OSVmImage": "MMSUbuntu18.04", "Pool": "azsdk-pool-mms-ubuntu-1804-general" },
-      "macOS-10.15": { "OSVmImage": "macOS-10.15", "Pool": "Azure Pipelines" }
+      "macos-11": { "OSVmImage": "macos-11", "Pool": "Azure Pipelines" }
     },
     "JavaTestVersion": [ "1.8", "1.11" ],
     "AZURE_TEST_HTTP_CLIENTS": "netty",

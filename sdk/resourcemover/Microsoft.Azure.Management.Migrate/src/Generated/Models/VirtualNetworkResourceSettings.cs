@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         /// <param name="targetResourceName">Gets or sets the target Resource
         /// name.</param>
+        /// <param name="tags">Gets or sets the Resource tags.</param>
         /// <param name="enableDdosProtection">Gets or sets a value indicating
         /// whether gets or sets whether the
         /// DDOS protection should be switched on.</param>
@@ -46,9 +47,10 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// deployed in the virtual network.</param>
         /// <param name="subnets">Gets or sets List of subnets in a
         /// VirtualNetwork.</param>
-        public VirtualNetworkResourceSettings(string targetResourceName, bool? enableDdosProtection = default(bool?), IList<string> addressSpace = default(IList<string>), IList<string> dnsServers = default(IList<string>), IList<SubnetResourceSettings> subnets = default(IList<SubnetResourceSettings>))
+        public VirtualNetworkResourceSettings(string targetResourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? enableDdosProtection = default(bool?), IList<string> addressSpace = default(IList<string>), IList<string> dnsServers = default(IList<string>), IList<SubnetResourceSettings> subnets = default(IList<SubnetResourceSettings>))
             : base(targetResourceName)
         {
+            Tags = tags;
             EnableDdosProtection = enableDdosProtection;
             AddressSpace = addressSpace;
             DnsServers = dnsServers;
@@ -60,6 +62,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether gets or sets whether the

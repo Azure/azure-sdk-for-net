@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ListQueueServices. </summary>
-    public partial class ListQueueServices
+    internal partial class ListQueueServices
     {
         /// <summary> Initializes a new instance of ListQueueServices. </summary>
         internal ListQueueServices()

@@ -1,5 +1,35 @@
 # Release History
 
+## 15.0.0 (2022-10-01)
+
+### Features
+
+- Added new custom enum type `NodeCommunicationMode`.
+  - This property determines how a pool communicates with the Batch service.
+  - Possible values: Default, Classic, Simplified.
+- Added properties `CurrentNodeCommunicationMode` and `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `Pool`.
+
+### Breaking Changes
+
+- Modified casing of Username property of the `CIFSMountConfiguration` class to `UserName`.
+- Modified casing of dynamicVNetAssignmentScope property of the `NetworkConfiguration` class to `dynamicVnetAssignmentScope`.
+- Modified casing of ActionRequired property of the `PrivateLinkServiceConnectionState` class to `ActionsRequired`.
+
+### Other Changes
+
+- Modified casing of username parameter of `CIFSMountConfiguration` constructor to `userName`.
+- Modified casing of dynamicVNetAssignmentScope parameter of `NetworkConfiguration` constructor to `dynamicVnetAssignmentScope`.
+- Modified casing of actionRequired parameter of `PrivateLinkServiceConnectionState` constructor to `actionsRequired`.
+- Updated descriptions of Certificate related apis to indicate that the apis will be deprecated by Feb 2024.
+
+## 14.2.0 (2022-01-01)
+
+### Features
+
+- Added operation `GetDetector'`.
+- Added operation `ListDetectors`.
+- Model `NetworkConfiguration` has a new parameter `DynamicVNetAssignmentScope`.
+
 ## 14.1.0 (2021-11-01)
 
 ### Bug Fixes

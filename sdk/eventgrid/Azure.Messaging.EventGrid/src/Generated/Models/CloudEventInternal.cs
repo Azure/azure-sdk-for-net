@@ -20,25 +20,13 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. </param>
         /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="source"/>, <paramref name="type"/>, or <paramref name="specversion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="source"/>, <paramref name="type"/> or <paramref name="specversion"/> is null. </exception>
         public CloudEventInternal(string id, string source, string type, string specversion)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            if (specversion == null)
-            {
-                throw new ArgumentNullException(nameof(specversion));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(specversion, nameof(specversion));
 
             Id = id;
             Source = source;

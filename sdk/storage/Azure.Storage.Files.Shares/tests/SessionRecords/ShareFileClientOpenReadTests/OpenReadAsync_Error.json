@@ -11,7 +11,7 @@
         "x-ms-client-request-id": "00cd42ef-a187-8620-6a4f-7465b388fff2",
         "x-ms-date": "Tue, 09 Nov 2021 23:11:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -23,7 +23,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "00cd42ef-a187-8620-6a4f-7465b388fff2",
         "x-ms-request-id": "f56cb0f7-d01a-0045-74bf-d50f21000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -38,7 +38,7 @@
         "x-ms-client-request-id": "e4b2ae84-dfea-240a-62ce-c552699b44c6",
         "x-ms-date": "Tue, 09 Nov 2021 23:11:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -49,7 +49,7 @@
         "x-ms-client-request-id": "e4b2ae84-dfea-240a-62ce-c552699b44c6",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "f56cb0f9-d01a-0045-75bf-d50f21000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -65,7 +65,7 @@
         "x-ms-date": "Tue, 09 Nov 2021 23:11:38 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -75,7 +75,7 @@
         "Server": "Windows-Azure-File/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "9300de1d-fef0-3375-398b-504012410a7e",
         "x-ms-request-id": "f56cb0fa-d01a-0045-76bf-d50f21000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

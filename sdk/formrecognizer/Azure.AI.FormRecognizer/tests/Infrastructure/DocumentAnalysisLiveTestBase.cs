@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
-    DocumentAnalysisClientOptions.ServiceVersion.V2021_09_30_preview)]
+    DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>
@@ -22,7 +22,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
-            Sanitizer = new DocumentAnalysisRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..containerUrl");
+            SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
 
         /// <summary>
@@ -100,8 +102,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// </summary>
         /// <param name="modelId">Model Id.</param>
         /// <param name="containerType">Type of container to use to execute training.</param>
+        /// <param name="buildMode">The technique to use to build the model. Defaults to <see cref="DocumentBuildMode.Template"/>.</param>
         /// <returns>A <see cref="DisposableBuildModel"/> instance from which the trained model ID can be obtained.</returns>
-        protected async Task<DisposableBuildModel> CreateDisposableBuildModelAsync(string modelId, ContainerType containerType = default)
+        protected async Task<DisposableBuildModel> CreateDisposableBuildModelAsync(string modelId, ContainerType containerType = default, DocumentBuildMode buildMode = default)
         {
             var adminClient = CreateDocumentModelAdministrationClient();
 
@@ -116,7 +119,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
-            return await DisposableBuildModel.BuildModelAsync(adminClient, trainingFilesUri, modelId);
+            buildMode = (buildMode == default)
+                ? DocumentBuildMode.Template
+                : buildMode;
+
+            return await DisposableBuildModel.BuildModelAsync(adminClient, trainingFilesUri, buildMode, modelId);
         }
 
         protected enum ContainerType

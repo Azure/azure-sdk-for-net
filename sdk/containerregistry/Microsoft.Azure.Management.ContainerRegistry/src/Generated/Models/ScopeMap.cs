@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="description">The user friendly description of the
         /// scope map.</param>
         /// <param name="scopeMapType">The type of the scope map. E.g. BuildIn
@@ -49,8 +51,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="provisioningState">Provisioning state of the resource.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed', 'Canceled'</param>
-        public ScopeMap(IList<string> actions, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string scopeMapType = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string))
-            : base(id, name, type)
+        public ScopeMap(IList<string> actions, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string scopeMapType = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string))
+            : base(id, name, type, systemData)
         {
             Description = description;
             ScopeMapType = scopeMapType;

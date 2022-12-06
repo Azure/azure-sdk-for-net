@@ -26,16 +26,15 @@ namespace Azure.Storage.Files.DataLake
                 XElement error = XDocument.Parse(body).Element("Error");
                 string code = error.Element("Code").Value.ToString(CultureInfo.InvariantCulture);
                 string message = error.Element("Message").Value.ToString(CultureInfo.InvariantCulture);
-                return clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                return clientDiagnostics.CreateRequestFailedException(
                     response: response,
-                    message: message,
-                    errorCode: code);
+                    new ResponseError(code, message));
             }
             // json
             else if (response.Headers.ContentType != null
                 && response.Headers.ContentType.Contains("application/json"))
             {
-                JsonDocument json = JsonDocument.Parse(body);
+                using JsonDocument json = JsonDocument.Parse(body);
                 JsonElement error = json.RootElement.GetProperty("error");
 
                 IDictionary<string, string> details = default;
@@ -48,10 +47,12 @@ namespace Azure.Storage.Files.DataLake
                     }
                 }
 
-                return clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                return clientDiagnostics.CreateRequestFailedException(
                     response: response,
-                    message: error.GetProperty("message").GetString(),
-                    errorCode: error.GetProperty("code").GetString(),
+                    new ResponseError(
+                        error.GetProperty("code").GetString(),
+                        error.GetProperty("message").GetString()
+                        ),
                     additionalInfo: details);
             }
             else

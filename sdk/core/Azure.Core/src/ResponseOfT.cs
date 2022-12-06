@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -13,26 +14,29 @@ namespace Azure
     [DebuggerTypeProxy(typeof(ResponseDebugView<>))]
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response<T>
+    public abstract class Response<T> : NullableResponse<T>
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
-        /// <summary>
-        /// Returns the HTTP response returned by the service.
-        /// </summary>
-        /// <returns>The HTTP response returned by the service.</returns>
-        public abstract Response GetRawResponse();
-
-        /// <summary>
-        /// Gets the value returned by the service.
-        /// </summary>
-        public abstract T Value { get; }
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool HasValue => true;
 
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
         /// </summary>
         /// <param name="response">The <see cref="Response{T}"/> instance.</param>
-        public static implicit operator T(Response<T> response) => response.Value;
+        public static implicit operator T(Response<T> response)
+        {
+            if (response == null)
+            {
+#pragma warning disable CA1065 // Don't throw from cast operators
+                throw new ArgumentNullException(nameof(response), $"The implicit cast from Response<{typeof(T)}> to {typeof(T)} failed because the Response<{typeof(T)}> was null.");
+#pragma warning restore CA1065
+            }
+
+            return response.Value;
+        }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -41,11 +45,5 @@ namespace Azure
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return $"Status: {GetRawResponse().Status}, Value: {Value}";
-        }
     }
 }

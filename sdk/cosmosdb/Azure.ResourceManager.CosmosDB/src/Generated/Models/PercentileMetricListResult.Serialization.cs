@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static PercentileMetricListResult DeserializePercentileMetricListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PercentileMetric>> value = default;
+            Optional<IReadOnlyList<CosmosDBPercentileMetric>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PercentileMetric> array = new List<PercentileMetric>();
+                    List<CosmosDBPercentileMetric> array = new List<CosmosDBPercentileMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PercentileMetric.DeserializePercentileMetric(item));
+                        array.Add(CosmosDBPercentileMetric.DeserializeCosmosDBPercentileMetric(item));
                     }
                     value = array;
                     continue;

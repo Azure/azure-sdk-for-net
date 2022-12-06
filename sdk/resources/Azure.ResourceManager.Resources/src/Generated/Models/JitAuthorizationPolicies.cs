@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,24 +16,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of JitAuthorizationPolicies. </summary>
         /// <param name="principalId"> The the principal id that will be granted JIT access. </param>
         /// <param name="roleDefinitionId"> The role definition id that will be granted to the Principal. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public JitAuthorizationPolicies(string principalId, string roleDefinitionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public JitAuthorizationPolicies(Guid principalId, string roleDefinitionId)
         {
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
         }
 
         /// <summary> The the principal id that will be granted JIT access. </summary>
-        public string PrincipalId { get; set; }
+        public Guid PrincipalId { get; set; }
         /// <summary> The role definition id that will be granted to the Principal. </summary>
         public string RoleDefinitionId { get; set; }
     }

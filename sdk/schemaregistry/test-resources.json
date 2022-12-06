@@ -46,7 +46,9 @@
   "variables": {
     "apiVersion": "2018-01-01-preview",
     "schemaRegistryGroup": "azsdk_net_test_group",
-    "schemaRegistryEndpoint": "[format('{0}.servicebus.windows.net', parameters('baseName'))]"
+    "schemaRegistryEndpoint": "[format('{0}.servicebus.windows.net', parameters('baseName'))]",
+    "eventHubName": "azsdk_net_test_hub",
+    "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec"
   },
   "resources": [
     {
@@ -75,6 +77,27 @@
       "properties": {
         "schemaType": "avro"
       }
+    },
+    {
+      "type": "Microsoft.EventHub/namespaces/eventhubs",
+      "apiVersion": "2021-11-01",
+      "name": "[format('{0}/{1}', parameters('baseName'), variables('eventHubName'))]",
+      "properties": {
+        "messageRetentionInDays": 7,
+        "partitionCount": 1
+      },
+      "dependsOn": ["[resourceId('Microsoft.EventHub/namespaces',parameters('baseName'))]"]
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2019-04-01-preview",
+      "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('eventHubsDataOwnerRoleId'))]",
+      "dependsOn": ["[resourceId('Microsoft.EventHub/namespaces',parameters('baseName'))]"],
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
+        "principalId": "[parameters('testApplicationOid')]",
+        "scope": "[resourceGroup().id]"
+      }
     }
   ],
   "outputs": {
@@ -85,6 +108,10 @@
     "SCHEMAREGISTRY_ENDPOINT": {
       "type": "string",
       "value": "[variables('schemaRegistryEndpoint')]"
+    },
+    "SCHEMAREGISTRY_EVENTHUB_NAME": {
+      "type": "string",
+      "value": "[variables('eventHubName')]"
     }
   }
 }

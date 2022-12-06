@@ -36,6 +36,19 @@ namespace Azure.Messaging.ServiceBus.Tests
             return batch;
         }
 
+        internal static List<ServiceBusMessage> AddAndReturnMessages(ServiceBusMessageBatch batch, int count, string sessionId = null, string partitionKey = null)
+        {
+            var messages = new List<ServiceBusMessage>();
+            for (int i = 0; i < count; i++)
+            {
+                var currentMessage = GetMessage(sessionId, partitionKey);
+                Assert.That(() => batch.TryAddMessage(currentMessage), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                messages.Add(currentMessage);
+            }
+
+            return messages;
+        }
+
         internal static Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
             Assert.IsNotNull(eventArgs.CancellationToken);
@@ -66,10 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
 
-            var csp = new RNGCryptoServiceProvider();
-            var bytes = new byte[4];
-            csp.GetBytes(bytes);
-            var random = new Random(BitConverter.ToInt32(bytes, 0));
+            var random = new Random();
             var buffer = new byte[size];
             random.NextBytes(buffer);
             var text = new byte[size];

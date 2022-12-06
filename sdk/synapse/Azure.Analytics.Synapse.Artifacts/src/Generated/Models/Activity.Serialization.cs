@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -80,6 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
                     case "ExecuteSSISPackage": return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element);
                     case "Execution": return ExecutionActivity.DeserializeExecutionActivity(element);
+                    case "Fail": return FailActivity.DeserializeFailActivity(element);
                     case "Filter": return FilterActivity.DeserializeFilterActivity(element);
                     case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
                     case "GetMetadata": return GetMetadataActivity.DeserializeGetMetadataActivity(element);
@@ -90,6 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element);
                     case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
+                    case "Script": return ScriptActivity.DeserializeScriptActivity(element);
                     case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
                     case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
                     case "SqlPoolStoredProcedure": return SqlPoolStoredProcedureActivity.DeserializeSqlPoolStoredProcedureActivity(element);
@@ -103,64 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
                 }
             }
-            string name = default;
-            string type = default;
-            Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dependsOn"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
-                    }
-                    dependsOn = array;
-                    continue;
-                }
-                if (property.NameEquals("userProperties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<UserProperty> array = new List<UserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
-                    }
-                    userProperties = array;
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new Activity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+            return UnknownActivity.DeserializeUnknownActivity(element);
         }
 
         internal partial class ActivityConverter : JsonConverter<Activity>

@@ -1,58 +1,57 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/languages?model-version=2019-10-01\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "67",
+        "Accept": "application/json",
+        "Content-Length": "136",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-995f9b53f69d4842b7c9be3a5fcda01d-17c5b521b9055246-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "1a3b3f53b2eb19e83bb91b78bee10b95",
+        "traceparent": "00-637bf427e1f4627162f904e2d0510f9a-24c7ab6d3d26f13e-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3fdf17d69a1bd3f08198575e1bfb19cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": null,
-            "text": "Hello world",
-            "countryHint": "us"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": null,
+              "text": "Hello world"
+            }
+          ]
+        },
+        "parameters": {
+          "modelVersion": "2019-10-01"
+        },
+        "kind": "LanguageDetection"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "8ff1052b-62f4-4ad4-bc01-f0ce1fd82fcd",
+        "apim-request-id": "45cc89bc-b8e6-4d8d-ae4c-50f5256190ab",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:14:23 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "4"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidRequest",
-          "message": "Invalid document in request.",
+          "message": "Invalid Document in request.",
           "innererror": {
             "code": "InvalidDocument",
-            "message": "At least one document is missing an Id attribute."
+            "message": "At least one input is missing an Id attribute."
           }
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1842668100",
+    "RandomSeed": "1613272234",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

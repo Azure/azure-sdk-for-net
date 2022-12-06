@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    internal partial class QuantumJobQuotaList
+    public partial class QuantumJobQuotaList
     {
         internal static QuantumJobQuotaList DeserializeQuantumJobQuotaList(JsonElement element)
         {

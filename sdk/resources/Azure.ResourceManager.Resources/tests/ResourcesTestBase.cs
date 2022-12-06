@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
+using System.Security.Policy;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -36,18 +37,18 @@ namespace Azure.ResourceManager.Resources.Tests
             Client = GetArmClient();
         }
 
-        protected static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(Location.WestUS2, ApplicationLockLevel.None)
+        protected static ArmApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ArmApplicationDefinitionData(AzureLocation.WestUS2, ArmApplicationLockLevel.None)
         {
             DisplayName = displayName,
             Description = $"{displayName} description",
-            PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
+            PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
         };
 
-        protected static ApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ApplicationData(Location.WestUS2, "ServiceCatalog")
+        protected static ArmApplicationData CreateApplicationData(ResourceIdentifier applicationDefinitionId, ResourceIdentifier managedResourceGroupId, string storageAccountPrefix) => new ArmApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
         {
             ApplicationDefinitionId = applicationDefinitionId,
             ManagedResourceGroupId = managedResourceGroupId,
-            Parameters = new JsonObject()
+            Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
                 {"storageAccountNamePrefix", new JsonObject()
                     {
@@ -59,48 +60,104 @@ namespace Azure.ResourceManager.Resources.Tests
                         {"value", "Standard_LRS" }
                     }
                 }
-            }
+            })
         };
 
-        protected static DeploymentProperties CreateDeploymentProperties()
+        protected static ArmDeploymentProperties CreateDeploymentProperties()
         {
-            DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
-            tmpDeploymentProperties.TemplateLink = new TemplateLink();
-            tmpDeploymentProperties.TemplateLink.Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json";
-            tmpDeploymentProperties.Parameters = new JsonObject()
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
+            tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
                 {"storageAccountType", new JsonObject()
                     {
                         {"value", "Standard_GRS" }
                     }
                 }
-            };
+            });
             return tmpDeploymentProperties;
         }
 
-        protected static DeploymentInput CreateDeploymentData(DeploymentProperties deploymentProperties) => new DeploymentInput(deploymentProperties);
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesAtSub()
+        {
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/emptyrg.json");
+            tmpDeploymentProperties.Parameters = BinaryData.FromObjectAsJson(new JsonObject()
+            {
+                {"rgName", new JsonObject()
+                    {
+                        {"value", "testDeployAtSub" }
+                    }
+                },
+                {"rgLocation", new JsonObject()
+                    {
+                        {"value", $"{AzureLocation.CentralUS}" }
+                    }
+                },
+            });
+            return tmpDeploymentProperties;
+        }
+
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingString()
+        {
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "Scenario",
+            "DeploymentTemplates",
+            $"storage-template.json")));
+            tmpDeploymentProperties.Parameters = BinaryData.FromString(File.ReadAllText(Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "Scenario",
+            "DeploymentTemplates",
+            $"storage-parameters.json")));
+            return tmpDeploymentProperties;
+        }
+
+        protected static ArmDeploymentProperties CreateDeploymentPropertiesUsingJsonElement()
+        {
+            ArmDeploymentProperties tmpDeploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental);
+            tmpDeploymentProperties.TemplateLink = new ArmDeploymentTemplateLink();
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
+            var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
+            //convert this object to JsonElement
+            var parametersString = JsonSerializer.Serialize(parametersObject);
+            using var jsonDocument = JsonDocument.Parse(parametersString);
+            var parameters = jsonDocument.RootElement;
+            tmpDeploymentProperties.Parameters = BinaryData.FromString(parameters.GetRawText());
+            return tmpDeploymentProperties;
+        }
+
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentContent(deploymentProperties);
+
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentContent(deploymentProperties)
+        {
+            Location = location
+        };
 
         private static GenericResourceData ConstructGenericUserAssignedIdentities()
         {
-            var userAssignedIdentities = new GenericResourceData(Location.WestUS2);
+            var userAssignedIdentities = new GenericResourceData(AzureLocation.WestUS2);
             return userAssignedIdentities;
         }
 
-        protected async Task<DeploymentScriptData> GetDeploymentScriptDataAsync()
+        protected async Task<ArmDeploymentScriptData> GetDeploymentScriptDataAsync()
         {
             //The user assigned identities was created firstly in Portal due to the unexpected behavior of using generic resource to create the user assigned identities.
             string rgName4Identities = "rg-for-DeployScript";
-            ResourceGroupData rgData = new ResourceGroupData(Location.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(rgName4Identities, rgData);
-            ResourceGroup rg4Identities = lro.Value;
+            ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
+            SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
+            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName4Identities, rgData);
+            ResourceGroupResource rg4Identities = lro.Value;
             GenericResourceData userAssignedIdentitiesData = ConstructGenericUserAssignedIdentities();
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
-            var lro2 = await sub.GetGenericResources().CreateOrUpdateAsync(userAssignedIdentitiesId, userAssignedIdentitiesData);
+            var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
-            var managedIdentity = new ManagedServiceIdentity()
+            var managedIdentity = new ArmDeploymentScriptManagedIdentity()
             {
-                Type = "UserAssigned",
+                IdentityType = "UserAssigned",
                 UserAssignedIdentities =
                 {
                     {
@@ -113,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Tests
             TimeSpan RetentionInterval = new TimeSpan(1, 2, 0, 0, 0);
             string ScriptContent = "param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld";
             string ScriptArguments = "'Hello World'";
-            return new AzurePowerShellScript(Location.WestUS2, RetentionInterval, AzurePowerShellVersion)
+            return new AzurePowerShellScript(AzureLocation.WestUS2, RetentionInterval, AzurePowerShellVersion)
             {
                 Identity = managedIdentity,
                 ScriptContent = ScriptContent,
@@ -121,20 +178,20 @@ namespace Azure.ResourceManager.Resources.Tests
             };
         }
 
-        protected static TemplateSpecData CreateTemplateSpecData(string displayName) => new TemplateSpecData(Location.WestUS2)
+        protected static TemplateSpecData CreateTemplateSpecData(string displayName) => new TemplateSpecData(AzureLocation.WestUS2)
         {
             Description = "Description of my Template Spec",
             DisplayName = $"{displayName} (Test)"
         };
 
-        protected static TemplateSpecVersionData CreateTemplateSpecVersionData() => new TemplateSpecVersionData(Location.WestUS2)
+        protected static TemplateSpecVersionData CreateTemplateSpecVersionData() => new TemplateSpecVersionData(AzureLocation.WestUS2)
         {
             Description = "My first version",
-            MainTemplate = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+            MainTemplate = BinaryData.FromString(File.ReadAllText(Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "Scenario",
             "DeploymentTemplates",
-            $"simple-storage-account.json"))).RootElement.GetObject()
+            $"simple-storage-account.json")))
         };
     }
 }

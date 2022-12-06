@@ -17,12 +17,15 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             Optional<string> name = default;
             Optional<DateTimeOffset> lastModified = default;
-            Optional<string> eTag = default;
             Optional<string> owner = default;
             Optional<string> group = default;
             Optional<string> permissions = default;
+            Optional<string> encryptionScope = default;
+            Optional<string> creationTime = default;
+            Optional<string> expiryTime = default;
             Optional<string> contentLength = default;
             Optional<string> isDirectory = default;
+            Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -40,11 +43,6 @@ namespace Azure.Storage.Files.DataLake.Models
                     lastModified = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("eTag"))
-                {
-                    eTag = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("owner"))
                 {
                     owner = property.Value.GetString();
@@ -60,6 +58,21 @@ namespace Azure.Storage.Files.DataLake.Models
                     permissions = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("EncryptionScope"))
+                {
+                    encryptionScope = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("creationTime"))
+                {
+                    creationTime = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expiryTime"))
+                {
+                    expiryTime = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("contentLength"))
                 {
                     contentLength = property.Value.GetString();
@@ -70,8 +83,13 @@ namespace Azure.Storage.Files.DataLake.Models
                     isDirectory = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), eTag.Value, owner.Value, group.Value, permissions.Value, contentLength.Value, isDirectory.Value);
+            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, contentLength.Value, isDirectory.Value, etag.Value);
         }
     }
 }

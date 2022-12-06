@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PersonalizerErrorCode"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersonalizerErrorCode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersonalizerErrorCode(string value)
         {
@@ -35,12 +35,18 @@ namespace Azure.AI.Personalizer.Models
         private const string InvalidEventIdToActivateValue = "InvalidEventIdToActivate";
         private const string InvalidRankRequestValue = "InvalidRankRequest";
         private const string InvalidExportLogsRequestValue = "InvalidExportLogsRequest";
+        private const string InvalidRequestValue = "InvalidRequest";
         private const string InvalidContainerValue = "InvalidContainer";
         private const string InvalidModelMetadataValue = "InvalidModelMetadata";
         private const string ApprenticeModeNeverTurnedOnValue = "ApprenticeModeNeverTurnedOn";
         private const string MissingAppIdValue = "MissingAppId";
         private const string InvalidRewardWaitTimeValue = "InvalidRewardWaitTime";
+        private const string InvalidLogRetentionDaysValue = "InvalidLogRetentionDays";
         private const string InvalidMultiSlotApiAccessValue = "InvalidMultiSlotApiAccess";
+        private const string PayloadSizeExceededValue = "PayloadSizeExceeded";
+        private const string InvalidModelImportSignatureValue = "InvalidModelImportSignature";
+        private const string InvalidModelImportFormatValue = "InvalidModelImportFormat";
+        private const string InvalidApiAccessValue = "InvalidApiAccess";
         private const string ModelFileAccessDeniedValue = "ModelFileAccessDenied";
         private const string ProblemTypeIncompatibleWithAutoOptimizationValue = "ProblemTypeIncompatibleWithAutoOptimization";
         private const string ResourceNotFoundValue = "ResourceNotFound";
@@ -84,6 +90,8 @@ namespace Azure.AI.Personalizer.Models
         public static PersonalizerErrorCode InvalidRankRequest { get; } = new PersonalizerErrorCode(InvalidRankRequestValue);
         /// <summary> Invalid request. </summary>
         public static PersonalizerErrorCode InvalidExportLogsRequest { get; } = new PersonalizerErrorCode(InvalidExportLogsRequestValue);
+        /// <summary> Invalid request. </summary>
+        public static PersonalizerErrorCode InvalidRequest { get; } = new PersonalizerErrorCode(InvalidRequestValue);
         /// <summary> SAS Uri must be the Uri to a container that has write permissions. </summary>
         public static PersonalizerErrorCode InvalidContainer { get; } = new PersonalizerErrorCode(InvalidContainerValue);
         /// <summary> Invalid model metadata. </summary>
@@ -92,10 +100,20 @@ namespace Azure.AI.Personalizer.Models
         public static PersonalizerErrorCode ApprenticeModeNeverTurnedOn { get; } = new PersonalizerErrorCode(ApprenticeModeNeverTurnedOnValue);
         /// <summary> AppId is missing in the header. </summary>
         public static PersonalizerErrorCode MissingAppId { get; } = new PersonalizerErrorCode(MissingAppIdValue);
-        /// <summary> Reward wait time should be between 5 seconds and 2 days. </summary>
+        /// <summary> Reward wait time should be either 10 minutes or 4 hours or 12 hours or 24 hours. </summary>
         public static PersonalizerErrorCode InvalidRewardWaitTime { get; } = new PersonalizerErrorCode(InvalidRewardWaitTimeValue);
+        /// <summary> Log Retention Days must be -1 to store indefinitely or must be at least reward wait time plus 1 day (rounded up). </summary>
+        public static PersonalizerErrorCode InvalidLogRetentionDays { get; } = new PersonalizerErrorCode(InvalidLogRetentionDaysValue);
         /// <summary> Multi-slot feature is currently disabled. Please follow multi-slot Personalizer documentation to update your loop settings to enable multi-slot functionality. </summary>
         public static PersonalizerErrorCode InvalidMultiSlotApiAccess { get; } = new PersonalizerErrorCode(InvalidMultiSlotApiAccessValue);
+        /// <summary> Exceeds maximum allowed payload size. </summary>
+        public static PersonalizerErrorCode PayloadSizeExceeded { get; } = new PersonalizerErrorCode(PayloadSizeExceededValue);
+        /// <summary> Given model file is not signed or does not have a valid signature. </summary>
+        public static PersonalizerErrorCode InvalidModelImportSignature { get; } = new PersonalizerErrorCode(InvalidModelImportSignatureValue);
+        /// <summary> Given model file format is invalid. </summary>
+        public static PersonalizerErrorCode InvalidModelImportFormat { get; } = new PersonalizerErrorCode(InvalidModelImportFormatValue);
+        /// <summary> Api is currently disabled for the instance. </summary>
+        public static PersonalizerErrorCode InvalidApiAccess { get; } = new PersonalizerErrorCode(InvalidApiAccessValue);
         /// <summary> Key vault Key used for customer managed key cannot be accessed. </summary>
         public static PersonalizerErrorCode ModelFileAccessDenied { get; } = new PersonalizerErrorCode(ModelFileAccessDeniedValue);
         /// <summary> Auto-optimization is not compatible with multi-slot personalization. </summary>

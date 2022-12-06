@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
@@ -13,27 +14,21 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"> The error Code. </param>
-        /// <param name="message"> A message explaining the error reported by the service. </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The message explaining the error reported by the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorResponse(string code, string message)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;
         }
 
-        /// <summary> The error Code. </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; }
-        /// <summary> A message explaining the error reported by the service. </summary>
+        /// <summary> The message explaining the error reported by the service. </summary>
         public string Message { get; }
     }
 }

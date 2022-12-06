@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Properties of the PrivateEndpointConnection.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PrivateEndpointConnection : Resource
+    public partial class PrivateEndpointConnection : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
@@ -32,9 +32,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="privateEndpoint">The Private Endpoint resource for
         /// this Connection.</param>
         /// <param name="privateLinkServiceConnectionState">Details about the
@@ -44,8 +49,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Updating', 'Deleting', 'Succeeded', 'Canceled', 'Failed'</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), ConnectionState privateLinkServiceConnectionState = default(ConnectionState), string provisioningState = default(string), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), string location = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), ConnectionState privateLinkServiceConnectionState = default(ConnectionState), string provisioningState = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;

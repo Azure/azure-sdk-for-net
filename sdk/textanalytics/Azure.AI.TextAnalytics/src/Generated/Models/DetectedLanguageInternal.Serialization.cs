@@ -6,17 +6,50 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial struct DetectedLanguageInternal
+    internal partial struct DetectedLanguageInternal : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Name != null)
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            else
+            {
+                writer.WriteNull("name");
+            }
+            if (Iso6391Name != null)
+            {
+                writer.WritePropertyName("iso6391Name");
+                writer.WriteStringValue(Iso6391Name);
+            }
+            else
+            {
+                writer.WriteNull("iso6391Name");
+            }
+            writer.WritePropertyName("confidenceScore");
+            writer.WriteNumberValue(ConfidenceScore);
+            if (Optional.IsDefined(Script))
+            {
+                writer.WritePropertyName("script");
+                writer.WriteStringValue(Script.Value.ToString());
+            }
+            writer.WriteEndObject();
+        }
+
         internal static DetectedLanguageInternal DeserializeDetectedLanguageInternal(JsonElement element)
         {
             string name = default;
             string iso6391Name = default;
             double confidenceScore = default;
+            Optional<ScriptKind> script = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,8 +77,18 @@ namespace Azure.AI.TextAnalytics.Models
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("script"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    script = new ScriptKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new DetectedLanguageInternal(name, iso6391Name, confidenceScore);
+            return new DetectedLanguageInternal(name, iso6391Name, confidenceScore, Optional.ToNullable(script));
         }
     }
 }

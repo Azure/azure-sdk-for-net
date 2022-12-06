@@ -58,7 +58,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// enables the log daemon to export
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported</param>
-        public KubeEnvironmentPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), KubeEnvironmentProvisioningState? provisioningState = default(KubeEnvironmentProvisioningState?), string deploymentErrors = default(string), bool? internalLoadBalancerEnabled = default(bool?), string defaultDomain = default(string), string staticIp = default(string), ArcConfiguration arcConfiguration = default(ArcConfiguration), AppLogsConfiguration appLogsConfiguration = default(AppLogsConfiguration), string aksResourceID = default(string))
+        /// <param name="containerAppsConfiguration">Cluster configuration for
+        /// Container Apps Environments to configure Dapr Instrumentation Key
+        /// and VNET Configuration</param>
+        public KubeEnvironmentPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), KubeEnvironmentProvisioningState? provisioningState = default(KubeEnvironmentProvisioningState?), string deploymentErrors = default(string), bool? internalLoadBalancerEnabled = default(bool?), string defaultDomain = default(string), string staticIp = default(string), ArcConfiguration arcConfiguration = default(ArcConfiguration), AppLogsConfiguration appLogsConfiguration = default(AppLogsConfiguration), ContainerAppsConfiguration containerAppsConfiguration = default(ContainerAppsConfiguration), string aksResourceID = default(string))
             : base(id, name, kind, type)
         {
             ProvisioningState = provisioningState;
@@ -68,6 +71,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             StaticIp = staticIp;
             ArcConfiguration = arcConfiguration;
             AppLogsConfiguration = appLogsConfiguration;
+            ContainerAppsConfiguration = containerAppsConfiguration;
             AksResourceID = aksResourceID;
             CustomInit();
         }
@@ -128,6 +132,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.appLogsConfiguration")]
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets cluster configuration for Container Apps Environments
+        /// to configure Dapr Instrumentation Key and VNET Configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerAppsConfiguration")]
+        public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
 
         /// <summary>
         /// </summary>

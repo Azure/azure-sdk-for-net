@@ -44,6 +44,9 @@
   .PARAMETER outputCacheFile
   Path to a file that the script will output all the validated links after running all checks.
 
+  .PARAMETER requestTimeoutSec
+  The number of seconds before we timeout when sending an individual web request. Default is 15 seconds.
+
   .EXAMPLE
   PS> .\Verify-Links.ps1 C:\README.md
 
@@ -67,7 +70,8 @@ param (
   [bool] $checkLinkGuidance = $false,
   [string] $userAgent,
   [string] $inputCacheFile,
-  [string] $outputCacheFile
+  [string] $outputCacheFile,
+  [string] $requestTimeoutSec  = 15
 )
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
@@ -220,14 +224,14 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
       $headRequestSucceeded = $true
       try {
         # Attempt HEAD request first
-        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent
+        $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
       }
       catch {
         $headRequestSucceeded = $false
       }
       if (!$headRequestSucceeded) {
         # Attempt a GET request if the HEAD request failed.
-        $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent
+        $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
       }
       $statusCode = $response.StatusCode
       if ($statusCode -ne 200) {
@@ -328,7 +332,7 @@ function GetLinks([System.Uri]$pageUri)
 {
   if ($pageUri.Scheme.StartsWith("http")) {
     try {
-      $response = Invoke-WebRequest -Uri $pageUri -UserAgent $userAgent
+      $response = Invoke-WebRequest -Uri $pageUri -UserAgent $userAgent -TimeoutSec $requestTimeoutSec -MaximumRetryCount 3
       $content = $response.Content
 
       if ($pageUri.ToString().EndsWith(".md")) {
@@ -337,7 +341,7 @@ function GetLinks([System.Uri]$pageUri)
     }
     catch {
       $statusCode = $_.Exception.Response.StatusCode.value__
-      Write-Error "Invalid page [$statusCode] $pageUri"
+      LogError "Invalid page [$statusCode] $pageUri"
     }
   }
   elseif ($pageUri.IsFile -and (Test-Path $pageUri.LocalPath)) {
@@ -359,7 +363,7 @@ function GetLinks([System.Uri]$pageUri)
     }
   }
   else {
-    Write-Error "Don't know how to process uri $pageUri"
+    LogError "Don't know how to process uri $pageUri"
   }
 
   $links = ParseLinks $pageUri $content
@@ -392,12 +396,12 @@ if ($inputCacheFile)
   $cacheContent = ""
   if ($inputCacheFile.StartsWith("http")) {
     try {
-      $response = Invoke-WebRequest -Uri $inputCacheFile
+      $response = Invoke-WebRequest -Uri $inputCacheFile -TimeoutSec $requestTimeoutSec -MaximumRetryCount 3
       $cacheContent = $response.Content
     }
     catch {
       $statusCode = $_.Exception.Response.StatusCode.value__
-      Write-Error "Failed to read cache file from  page [$statusCode] $inputCacheFile"
+      LogError "Failed to read cache file from  page [$statusCode] $inputCacheFile"
     }
   }
   elseif (Test-Path $inputCacheFile) {

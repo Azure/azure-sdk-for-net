@@ -67,6 +67,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IConnectedRegistriesOperations.
+        /// </summary>
+        public virtual IConnectedRegistriesOperations ConnectedRegistries { get; private set; }
+
+        /// <summary>
         /// Gets the IExportPipelinesOperations.
         /// </summary>
         public virtual IExportPipelinesOperations ExportPipelines { get; private set; }
@@ -102,6 +107,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public virtual IReplicationsOperations Replications { get; private set; }
 
         /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        public virtual IScopeMapsOperations ScopeMaps { get; private set; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        public virtual ITokensOperations Tokens { get; private set; }
+
+        /// <summary>
         /// Gets the IWebhooksOperations.
         /// </summary>
         public virtual IWebhooksOperations Webhooks { get; private set; }
@@ -125,16 +140,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// Gets the ITasksOperations.
         /// </summary>
         public virtual ITasksOperations Tasks { get; private set; }
-
-        /// <summary>
-        /// Gets the IScopeMapsOperations.
-        /// </summary>
-        public virtual IScopeMapsOperations ScopeMaps { get; private set; }
-
-        /// <summary>
-        /// Gets the ITokensOperations.
-        /// </summary>
-        public virtual ITokensOperations Tokens { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ContainerRegistryManagementClient class.
@@ -377,6 +382,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </summary>
         private void Initialize()
         {
+            ConnectedRegistries = new ConnectedRegistriesOperations(this);
             ExportPipelines = new ExportPipelinesOperations(this);
             Registries = new RegistriesOperations(this);
             ImportPipelines = new ImportPipelinesOperations(this);
@@ -384,13 +390,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             PipelineRuns = new PipelineRunsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Replications = new ReplicationsOperations(this);
+            ScopeMaps = new ScopeMapsOperations(this);
+            Tokens = new TokensOperations(this);
             Webhooks = new WebhooksOperations(this);
             AgentPools = new AgentPoolsOperations(this);
             Runs = new RunsOperations(this);
             TaskRuns = new TaskRunsOperations(this);
             Tasks = new TasksOperations(this);
-            ScopeMaps = new ScopeMapsOperations(this);
-            Tokens = new TokensOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

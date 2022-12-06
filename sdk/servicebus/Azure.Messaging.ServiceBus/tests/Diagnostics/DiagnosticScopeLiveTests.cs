@@ -9,7 +9,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Tests;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
@@ -60,6 +62,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     receiver = client.CreateReceiver(scope.QueueName);
                 }
 
+                var peeked = await receiver.PeekMessageAsync();
+                var peekScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PeekActivityName);
+                AssertCommonTags(peekScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[0].ParentId, peekScope.LinkedActivities.First().ParentId);
+
                 var remaining = numMessages;
                 List<ServiceBusReceivedMessage> receivedMsgs = new List<ServiceBusReceivedMessage>();
                 while (remaining > 0)
@@ -71,6 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(receiveScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
 
                     var receiveLinkedActivities = receiveScope.LinkedActivities;
+                    Assert.Greater(receiveLinkedActivities.Count, 0);
                     for (int i = 0; i < receiveLinkedActivities.Count; i++)
                     {
                         Assert.AreEqual(sendActivities[i].ParentId, receiveLinkedActivities[i].ParentId);
@@ -84,21 +92,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.CompleteMessageAsync(completed);
                 var completeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.CompleteActivityName);
                 AssertCommonTags(completeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, completeScope.LinkedActivities.First().ParentId);
 
                 var deferred = receivedMsgs[++msgIndex];
                 await receiver.DeferMessageAsync(deferred);
                 var deferredScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeferActivityName);
                 AssertCommonTags(deferredScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, deferredScope.LinkedActivities.First().ParentId);
 
                 var deadLettered = receivedMsgs[++msgIndex];
                 await receiver.DeadLetterMessageAsync(deadLettered);
                 var deadLetterScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeadLetterActivityName);
                 AssertCommonTags(deadLetterScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, deadLetterScope.LinkedActivities.First().ParentId);
 
                 var abandoned = receivedMsgs[++msgIndex];
                 await receiver.AbandonMessageAsync(abandoned);
                 var abandonScope = _listener.AssertAndRemoveScope(DiagnosticProperty.AbandonActivityName);
                 AssertCommonTags(abandonScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+                Assert.AreEqual(sendActivities[msgIndex].ParentId, abandonScope.LinkedActivities.First().ParentId);
 
                 var receiveDeferMsg = await receiver.ReceiveDeferredMessageAsync(deferred.SequenceNumber);
                 var receiveDeferScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveDeferredActivityName);
@@ -156,19 +168,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 // send a batch
                 var batch = await sender.CreateMessageBatchAsync();
+                var messages = new List<ServiceBusMessage>();
                 for (int i = 0; i < numMessages; i++)
                 {
-                    batch.TryAddMessage(ServiceBusTestUtilities.GetMessage(sessionId));
+                    var currentMessage = ServiceBusTestUtilities.GetMessage(sessionId);
+                    messages.Add(currentMessage);
+                    batch.TryAddMessage(currentMessage);
                 }
                 await sender.SendMessagesAsync(batch);
-                AssertSendActivities(useSessions, sender, batch.AsEnumerable<ServiceBusMessage>());
+                AssertSendActivities(useSessions, sender, messages);
             };
         }
 
         [Test]
         public async Task ProcessorActivities()
         {
-            string[] messageActivities = null;
+            ClientDiagnosticListener.ProducedLink[] messageActivities = null;
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
@@ -179,8 +194,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         Assert.IsNotNull(messageActivities);
                         Assert.AreEqual(
-                            messageActivities[messageProcessedCt],
-                            scope.Links.Single());
+                            messageActivities[messageProcessedCt].Traceparent,
+                            scope.Activity.ParentId);
                         callbackExecuted = true;
                     }
                 });
@@ -192,7 +207,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt);
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
-                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
+                messageActivities = sendActivities.Select(a => new ClientDiagnosticListener.ProducedLink(a.ParentId, a.TraceStateString)).ToArray();
 
                 ServiceBusProcessor processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
@@ -217,6 +232,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessMessageActivityName);
+                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
@@ -226,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task SessionProcessorActivities()
         {
-            string[] messageActivities = null;
+            ClientDiagnosticListener.ProducedLink[] messageActivities = null;
             int messageProcessedCt = 0;
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
@@ -237,8 +253,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         Assert.IsNotNull(messageActivities);
                         Assert.AreEqual(
-                            messageActivities[messageProcessedCt],
-                            scope.Links.Single());
+                            messageActivities[messageProcessedCt].Traceparent,
+                            scope.Activity.ParentId);
                         callbackExecuted = true;
                     }
                 });
@@ -250,7 +266,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt, "sessionId");
                 await sender.SendMessagesAsync(msgs);
                 Activity[] sendActivities = AssertSendActivities(false, sender, msgs);
-                messageActivities = sendActivities.Select(a => a.ParentId).ToArray();
+                messageActivities = sendActivities.Select(a => new ClientDiagnosticListener.ProducedLink(a.ParentId, a.TraceStateString)).ToArray();
 
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName,
                     new ServiceBusSessionProcessorOptions
@@ -276,9 +292,43 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 {
                     _listener.AssertAndRemoveScope(DiagnosticProperty.ReceiveActivityName);
                     var processScope = _listener.AssertAndRemoveScope(DiagnosticProperty.ProcessSessionMessageActivityName);
+                    Assert.AreEqual(messageActivities[i].Traceparent, processScope.Activity.ParentId);
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
+            }
+        }
+
+        [Test]
+        public async Task RuleManagerActivities()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
+                for (int i = 0; i < 100; i++)
+                {
+                    var ruleName = $"CorrelationUserPropertyRule-{i}";
+                    await ruleManager.CreateRuleAsync(new CreateRuleOptions
+                    {
+                        Filter = new CorrelationRuleFilter { ApplicationProperties = { { "color", "red" } } },
+                        Name = ruleName
+                    });
+                    _listener.AssertAndRemoveScope(DiagnosticProperty.CreateRuleActivityName);
+                }
+
+                int ruleCount = 0;
+                await foreach (var rule in ruleManager.GetRulesAsync())
+                {
+                    ruleCount++;
+                }
+
+                // default rule + our added rules
+                Assert.AreEqual(101, ruleCount);
+
+                // two get rule scopes (1st scope for the initial 100 rules, 2nd scope for the final rule)
+                _listener.AssertAndRemoveScope(DiagnosticProperty.GetRulesActivityName);
+                _listener.AssertAndRemoveScope(DiagnosticProperty.GetRulesActivityName);
             }
         }
 
@@ -303,6 +353,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             }
             return sendLinkedActivities.ToArray();
         }
+
         private void AssertCommonTags(Activity activity, string entityName, string fullyQualifiedNamespace)
         {
             var tags = activity.Tags;

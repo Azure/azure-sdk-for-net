@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -16,21 +17,26 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of DnsResourceReference. </summary>
         internal DnsResourceReference()
         {
-            DnsResources = new ChangeTrackingList<SubResource>();
+            DnsResources = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of DnsResourceReference. </summary>
         /// <param name="dnsResources"> A list of dns Records. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        internal DnsResourceReference(IReadOnlyList<SubResource> dnsResources, SubResource targetResource)
+        internal DnsResourceReference(IReadOnlyList<WritableSubResource> dnsResources, WritableSubResource targetResource)
         {
             DnsResources = dnsResources;
             TargetResource = targetResource;
         }
 
         /// <summary> A list of dns Records. </summary>
-        public IReadOnlyList<SubResource> DnsResources { get; }
+        public IReadOnlyList<WritableSubResource> DnsResources { get; }
         /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
-        public SubResource TargetResource { get; }
+        internal WritableSubResource TargetResource { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TargetResourceId
+        {
+            get => TargetResource?.Id;
+        }
     }
 }

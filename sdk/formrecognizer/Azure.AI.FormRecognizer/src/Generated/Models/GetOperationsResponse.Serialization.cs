@@ -15,16 +15,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static GetOperationsResponse DeserializeGetOperationsResponse(JsonElement element)
         {
-            IReadOnlyList<ModelOperationInfo> value = default;
+            IReadOnlyList<OperationSummary> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ModelOperationInfo> array = new List<ModelOperationInfo>();
+                    List<OperationSummary> array = new List<OperationSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelOperationInfo.DeserializeModelOperationInfo(item));
+                        array.Add(OperationSummary.DeserializeOperationSummary(item));
                     }
                     value = array;
                     continue;

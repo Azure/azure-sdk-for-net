@@ -394,6 +394,15 @@ namespace Microsoft.Azure.Management.Reservations
         /// Filters the skus based on the location specified in this parameter. This
         /// can be an azure region or global
         /// </param>
+        /// <param name='publisherId'>
+        /// Publisher id used to get the third party products
+        /// </param>
+        /// <param name='offerId'>
+        /// Offer id used to get the third party products
+        /// </param>
+        /// <param name='planId'>
+        /// Plan id used to get the third party products
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -415,17 +424,13 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType = default(string), string location = default(string), string publisherId = default(string), string offerId = default(string), string planId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            if (reservedResourceType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "reservedResourceType");
-            }
-            string apiVersion = "2020-10-01-preview";
+            string apiVersion = "2022-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -437,6 +442,9 @@ namespace Microsoft.Azure.Management.Reservations
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("reservedResourceType", reservedResourceType);
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("publisherId", publisherId);
+                tracingParameters.Add("offerId", offerId);
+                tracingParameters.Add("planId", planId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetCatalog", tracingParameters);
             }
@@ -456,6 +464,18 @@ namespace Microsoft.Azure.Management.Reservations
             if (location != null)
             {
                 _queryParameters.Add(string.Format("location={0}", System.Uri.EscapeDataString(location)));
+            }
+            if (publisherId != null)
+            {
+                _queryParameters.Add(string.Format("publisherId={0}", System.Uri.EscapeDataString(publisherId)));
+            }
+            if (offerId != null)
+            {
+                _queryParameters.Add(string.Format("offerId={0}", System.Uri.EscapeDataString(offerId)));
+            }
+            if (planId != null)
+            {
+                _queryParameters.Add(string.Format("planId={0}", System.Uri.EscapeDataString(planId)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -614,7 +634,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2020-10-01-preview";
+            string apiVersion = "2022-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

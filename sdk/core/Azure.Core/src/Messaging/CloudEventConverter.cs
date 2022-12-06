@@ -22,7 +22,7 @@ namespace Azure.Messaging
         /// <inheritdoc cref="JsonConverter{CloudEvent}.Read(ref Utf8JsonReader, Type, JsonSerializerOptions)"/>
         public override CloudEvent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            JsonDocument requestDocument = JsonDocument.ParseValue(ref reader);
+            using JsonDocument requestDocument = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudEvent(requestDocument.RootElement, skipValidation: false);
         }
 

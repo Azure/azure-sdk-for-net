@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// from which the source disk for the snapshot was originally
         /// created.</param>
         /// <param name="supportedCapabilities">List of supported capabilities
-        /// (like Accelerated Networking) for the image from which the source
-        /// disk from the snapshot was originally created.</param>
+        /// for the image from which the source disk from the snapshot was
+        /// originally created.</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
         /// this field is mandatory and it indicates the size of the disk to
         /// create. If this field is present for updates or creation with other
@@ -81,6 +81,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="incremental">Whether a snapshot is incremental.
         /// Incremental snapshots on the same disk occupy less space than full
         /// snapshots and can be diffed.</param>
+        /// <param name="incrementalSnapshotFamilyId">Incremental snapshots for
+        /// a disk share an incremental snapshot family id. The Get Page Range
+        /// Diff API can only be called on incremental snapshots with the same
+        /// family id.</param>
         /// <param name="encryption">Encryption property can be used to encrypt
         /// data at rest with customer managed keys or platform managed
         /// keys.</param>
@@ -88,6 +92,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
+        /// <param name="securityProfile">Contains the security related
+        /// information for the resource.</param>
         /// <param name="supportsHibernation">Indicates the OS on a snapshot
         /// supports hibernation.</param>
         /// <param name="publicNetworkAccess">Possible values include:
@@ -95,7 +101,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="completionPercent">Percentage complete for the
         /// background copy when a resource is created via the CopyStart
         /// operation.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), double? completionPercent = default(double?))
+        /// <param name="copyCompletionError">Indicates the error details if
+        /// the background copy of a resource created via the CopyStart
+        /// operation fails.</param>
+        /// <param name="dataAccessAuthMode">Possible values include:
+        /// 'AzureActiveDirectory', 'None'</param>
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), string incrementalSnapshotFamilyId = default(string), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), DiskSecurityProfile securityProfile = default(DiskSecurityProfile), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), double? completionPercent = default(double?), CopyCompletionError copyCompletionError = default(CopyCompletionError), string dataAccessAuthMode = default(string))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -114,12 +125,16 @@ namespace Microsoft.Azure.Management.Compute.Models
             EncryptionSettingsCollection = encryptionSettingsCollection;
             ProvisioningState = provisioningState;
             Incremental = incremental;
+            IncrementalSnapshotFamilyId = incrementalSnapshotFamilyId;
             Encryption = encryption;
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
+            SecurityProfile = securityProfile;
             SupportsHibernation = supportsHibernation;
             PublicNetworkAccess = publicNetworkAccess;
             CompletionPercent = completionPercent;
+            CopyCompletionError = copyCompletionError;
+            DataAccessAuthMode = dataAccessAuthMode;
             CustomInit();
         }
 
@@ -174,9 +189,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets or sets list of supported capabilities (like Accelerated
-        /// Networking) for the image from which the source disk from the
-        /// snapshot was originally created.
+        /// Gets or sets list of supported capabilities for the image from
+        /// which the source disk from the snapshot was originally created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportedCapabilities")]
         public SupportedCapabilities SupportedCapabilities { get; set; }
@@ -241,6 +255,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? Incremental { get; set; }
 
         /// <summary>
+        /// Gets incremental snapshots for a disk share an incremental snapshot
+        /// family id. The Get Page Range Diff API can only be called on
+        /// incremental snapshots with the same family id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.incrementalSnapshotFamilyId")]
+        public string IncrementalSnapshotFamilyId { get; private set; }
+
+        /// <summary>
         /// Gets or sets encryption property can be used to encrypt data at
         /// rest with customer managed keys or platform managed keys.
         /// </summary>
@@ -262,6 +284,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DiskAccessId { get; set; }
 
         /// <summary>
+        /// Gets or sets contains the security related information for the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public DiskSecurityProfile SecurityProfile { get; set; }
+
+        /// <summary>
         /// Gets or sets indicates the OS on a snapshot supports hibernation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHibernation")]
@@ -279,6 +308,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.completionPercent")]
         public double? CompletionPercent { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the error details if the background copy of
+        /// a resource created via the CopyStart operation fails.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.copyCompletionError")]
+        public CopyCompletionError CopyCompletionError { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'AzureActiveDirectory',
+        /// 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataAccessAuthMode")]
+        public string DataAccessAuthMode { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -304,6 +347,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (EncryptionSettingsCollection != null)
             {
                 EncryptionSettingsCollection.Validate();
+            }
+            if (CopyCompletionError != null)
+            {
+                CopyCompletionError.Validate();
             }
         }
     }

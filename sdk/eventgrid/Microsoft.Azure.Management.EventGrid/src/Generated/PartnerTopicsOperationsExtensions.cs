@@ -68,6 +68,58 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
+            /// Create a partner topic.
+            /// </summary>
+            /// <remarks>
+            /// Asynchronously creates a new partner topic with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerTopicName'>
+            /// Name of the partner topic.
+            /// </param>
+            /// <param name='partnerTopicInfo'>
+            /// Partner Topic information.
+            /// </param>
+            public static PartnerTopic CreateOrUpdate(this IPartnerTopicsOperations operations, string resourceGroupName, string partnerTopicName, PartnerTopic partnerTopicInfo)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, partnerTopicName, partnerTopicInfo).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a partner topic.
+            /// </summary>
+            /// <remarks>
+            /// Asynchronously creates a new partner topic with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerTopicName'>
+            /// Name of the partner topic.
+            /// </param>
+            /// <param name='partnerTopicInfo'>
+            /// Partner Topic information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PartnerTopic> CreateOrUpdateAsync(this IPartnerTopicsOperations operations, string resourceGroupName, string partnerTopicName, PartnerTopic partnerTopicInfo, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, partnerTopicName, partnerTopicInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Delete a partner topic.
             /// </summary>
             /// <remarks>

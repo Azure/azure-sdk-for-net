@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,21 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/>, or <paramref name="condition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
         public FilterActivity(string name, Expression items, Expression condition) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(items, nameof(items));
+            Argument.AssertNotNull(condition, nameof(condition));
 
             Items = items;
             Condition = condition;

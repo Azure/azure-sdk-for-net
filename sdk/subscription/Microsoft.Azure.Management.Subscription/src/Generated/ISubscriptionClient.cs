@@ -84,5 +84,15 @@ namespace Microsoft.Azure.Management.Subscription
         /// </summary>
         IAliasOperations Alias { get; }
 
+        /// <summary>
+        /// Gets the ISubscriptionPolicyOperations.
+        /// </summary>
+        ISubscriptionPolicyOperations SubscriptionPolicy { get; }
+
+        /// <summary>
+        /// Gets the IBillingAccountOperations.
+        /// </summary>
+        IBillingAccountOperations BillingAccount { get; }
+
     }
 }

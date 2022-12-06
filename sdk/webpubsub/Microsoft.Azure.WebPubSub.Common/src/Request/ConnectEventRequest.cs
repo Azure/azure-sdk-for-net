@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
@@ -11,11 +11,13 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// <summary>
     /// Connect event request.
     /// </summary>
+    [DataContract]
     [JsonConverter(typeof(ConnectEventRequestJsonConverter))]
     public sealed class ConnectEventRequest : WebPubSubEventRequest
     {
         internal const string ClaimsProperty = "claims";
         internal const string QueryProperty = "query";
+        internal const string HeadersProperty = "headers";
         internal const string SubprotocolsProperty = "subprotocols";
         internal const string ClientCertificatesProperty = "clientCertificates";
 
@@ -23,24 +25,35 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// User Claims.
         /// </summary>
         [JsonPropertyName(ClaimsProperty)]
+        [DataMember(Name = ClaimsProperty)]
         public IReadOnlyDictionary<string, string[]> Claims { get; }
 
         /// <summary>
         /// Request query.
         /// </summary>
         [JsonPropertyName(QueryProperty)]
+        [DataMember(Name = QueryProperty)]
         public IReadOnlyDictionary<string, string[]> Query { get; }
+
+        /// <summary>
+        /// Request headers.
+        /// </summary>
+        [JsonPropertyName(HeadersProperty)]
+        [DataMember(Name = HeadersProperty)]
+        public IReadOnlyDictionary<string, string[]> Headers { get; }
 
         /// <summary>
         /// Supported subprotocols.
         /// </summary>
         [JsonPropertyName(SubprotocolsProperty)]
+        [DataMember(Name = SubprotocolsProperty)]
         public IReadOnlyList<string> Subprotocols { get; }
 
         /// <summary>
         /// Client certificates.
         /// </summary>
         [JsonPropertyName(ClientCertificatesProperty)]
+        [DataMember(Name = ClientCertificatesProperty)]
         public IReadOnlyList<WebPubSubClientCertificate> ClientCertificates { get; }
 
         /// <summary>
@@ -58,6 +71,7 @@ namespace Microsoft.Azure.WebPubSub.Common
 
         /// <summary>
         /// Create <see cref="EventErrorResponse"/>.
+        /// Methods works for Function Extensions. And AspNetCore SDK Hub methods can directly throw exception for error cases.
         /// </summary>
         /// <param name="code"><see cref="WebPubSubErrorCode"/>.</param>
         /// <param name="message">Detail error message.</param>
@@ -68,7 +82,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         }
 
         /// <summary>
-        /// The connect event request
+        /// The connect event request.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="claims"></param>
@@ -89,6 +103,39 @@ namespace Microsoft.Azure.WebPubSub.Common
             if (query != null)
             {
                 Query = query;
+            }
+            Subprotocols = subprotocols?.ToArray();
+            ClientCertificates = certificates?.ToArray();
+        }
+
+        /// <summary>
+        /// The connect event request.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="claims"></param>
+        /// <param name="query"></param>
+        /// <param name="subprotocols"></param>
+        /// <param name="certificates"></param>
+        /// <param name="headers"></param>
+        public ConnectEventRequest(
+            WebPubSubConnectionContext context,
+            IReadOnlyDictionary<string, string[]> claims,
+            IReadOnlyDictionary<string, string[]> query,
+            IEnumerable<string> subprotocols,
+            IEnumerable<WebPubSubClientCertificate> certificates,
+            IReadOnlyDictionary<string, string[]> headers) : base(context)
+        {
+            if (claims != null)
+            {
+                Claims = claims;
+            }
+            if (query != null)
+            {
+                Query = query;
+            }
+            if (headers != null)
+            {
+                Headers = headers;
             }
             Subprotocols = subprotocols?.ToArray();
             ClientCertificates = certificates?.ToArray();

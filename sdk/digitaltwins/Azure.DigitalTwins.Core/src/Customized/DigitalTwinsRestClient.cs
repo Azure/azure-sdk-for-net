@@ -25,10 +25,10 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsAddOptions?.TraceParent != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.DigitalTwins.Core
                     return Response.FromValue<Stream>(null, message.Response);
 
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.DigitalTwins.Core
                     return Response.FromValue<Stream>(null, message.Response);
 
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
+                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
             };
         }
 
@@ -283,7 +283,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw _clientDiagnostics.CreateRequestFailedException(message.Response),
+                _ => throw ClientDiagnostics.CreateRequestFailedException(message.Response),
             };
         }
 
@@ -312,7 +312,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -405,7 +405,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -479,7 +479,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -511,7 +511,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -549,7 +549,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -581,7 +581,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -619,7 +619,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -632,10 +632,10 @@ namespace Azure.DigitalTwins.Core
             Request request = message.Request;
             request.Method = RequestMethod.Patch;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsUpdateOptions?.TraceParent != null)
             {
@@ -665,12 +665,12 @@ namespace Azure.DigitalTwins.Core
             Request request = message.Request;
             request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/", false);
             uri.AppendPath(relationshipId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsAddRelationshipOptions?.TraceParent != null)
             {
@@ -700,12 +700,12 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/relationships/", false);
             uri.AppendPath(relationshipId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsUpdateRelationshipOptions?.TraceParent != null)
             {
@@ -735,12 +735,12 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/components/", false);
             uri.AppendPath(componentPath, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsUpdateComponentOptions?.TraceParent != null)
             {
@@ -770,11 +770,11 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/telemetry", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsSendTelemetryOptions?.TraceParent != null)
             {
@@ -806,13 +806,13 @@ namespace Azure.DigitalTwins.Core
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/digitaltwins/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/components/", false);
             uri.AppendPath(componentPath, true);
             uri.AppendPath("/telemetry", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (digitalTwinsSendComponentTelemetryOptions?.TraceParent != null)
             {

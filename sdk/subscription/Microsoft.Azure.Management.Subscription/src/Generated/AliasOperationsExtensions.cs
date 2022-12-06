@@ -28,11 +28,13 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static PutAliasResponse Create(this IAliasOperations operations, string aliasName, PutAliasRequest body)
+            public static SubscriptionAliasResponse Create(this IAliasOperations operations, string aliasName, PutAliasRequest body)
             {
                 return operations.CreateAsync(aliasName, body).GetAwaiter().GetResult();
             }
@@ -44,14 +46,16 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PutAliasResponse> CreateAsync(this IAliasOperations operations, string aliasName, PutAliasRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionAliasResponse> CreateAsync(this IAliasOperations operations, string aliasName, PutAliasRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(aliasName, body, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -66,9 +70,11 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
-            public static PutAliasResponse Get(this IAliasOperations operations, string aliasName)
+            public static SubscriptionAliasResponse Get(this IAliasOperations operations, string aliasName)
             {
                 return operations.GetAsync(aliasName).GetAwaiter().GetResult();
             }
@@ -80,12 +86,14 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PutAliasResponse> GetAsync(this IAliasOperations operations, string aliasName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionAliasResponse> GetAsync(this IAliasOperations operations, string aliasName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(aliasName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -100,7 +108,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             public static void Delete(this IAliasOperations operations, string aliasName)
             {
@@ -114,7 +124,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -125,18 +137,18 @@ namespace Microsoft.Azure.Management.Subscription
             }
 
             /// <summary>
-            /// Get Alias Subscription.
+            /// List Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static PutAliasListResult List(this IAliasOperations operations)
+            public static SubscriptionAliasListResult List(this IAliasOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get Alias Subscription.
+            /// List Alias Subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -144,7 +156,7 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PutAliasListResult> ListAsync(this IAliasOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionAliasListResult> ListAsync(this IAliasOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -159,11 +171,13 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static PutAliasResponse BeginCreate(this IAliasOperations operations, string aliasName, PutAliasRequest body)
+            public static SubscriptionAliasResponse BeginCreate(this IAliasOperations operations, string aliasName, PutAliasRequest body)
             {
                 return operations.BeginCreateAsync(aliasName, body).GetAwaiter().GetResult();
             }
@@ -175,14 +189,16 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// AliasName is the name for the subscription creation request. Note that this
+            /// is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PutAliasResponse> BeginCreateAsync(this IAliasOperations operations, string aliasName, PutAliasRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionAliasResponse> BeginCreateAsync(this IAliasOperations operations, string aliasName, PutAliasRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(aliasName, body, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -1,139 +1,137 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourcegroups/res7089?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzI0Mzc0NWQtNTBiYi00OGQxLTllNjItM2Y3MmVmYjMxNjZjL3Jlc291cmNlZ3JvdXBzL3JlczcwODk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestUri": "/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/NotExistedRG/providers/Microsoft.HealthcareApis/services/nonExistedAccountName?api-version=2021-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDA5MmZkNDItMTQ1ZS00ZTkxLWFhMTUtOTZmNjZkMmI2ZGViL3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkhlYWx0aGNhcmVBcGlzL3NlcnZpY2VzL25vbkV4aXN0ZWRBY2NvdW50TmFtZT9hcGktdmVyc2lvbj0yMDIxLTExLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "28"
-        ],
         "x-ms-client-request-id": [
-          "89e61421-87a0-4d25-b6a1-946a8f9df00b"
+          "0498e924-b30f-4062-b513-912ac2f8dd51"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+          "FxVersion/4.700.22.16002",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/4.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089\",\r\n  \"name\": \"hca1234\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "167"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Fri, 09 Mar 2018 08:09:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1181"
+        "x-ms-failure-cause": [
+          "gateway"
         ],
         "x-ms-request-id": [
-          "d55f54ca-0ad2-4798-9741-a96462bd1cb8"
+          "a2b3b306-8453-4db2-9197-c99fa2ddcfb9"
         ],
         "x-ms-correlation-request-id": [
-          "9e622289-028e-44a3-bbcd-904ae16adbd3"
+          "a2b3b306-8453-4db2-9197-c99fa2ddcfb9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190618T153235Z:d55f54ca-0ad2-4798-9741-a96462bd1cb8"
+          "WESTUS:20220426T164000Z:a2b3b306-8453-4db2-9197-c99fa2ddcfb9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/NotExistedRG/providers/Microsoft.HealthcareApis/services/nonExistedAccountName?api-version=2020-03-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2MxNDhiZjItNDJmYi00OTEzLWEzZmItMmYyODRhNjllYjg5L3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkhlYWx0aGNhcmVBcGlzL3NlcnZpY2VzL25vbkV4aXN0ZWRBY2NvdW50TmFtZT9hcGktdmVyc2lvbj0yMDIwLTAzLTMw",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
+        ],
+        "Date": [
+          "Tue, 26 Apr 2022 16:40:00 GMT"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "28"
-        ],
-        "x-ms-client-request-id": [
-          "ccfc3a51-0fa5-4fbf-be57-638efc84c3e2"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NotExistedRG' could not be found.\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "104"
         ],
         "Expires": [
           "-1"
         ],
+        "Content-Length": [
+          "104"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NotExistedRG' could not be found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourcegroups/res7089?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDA5MmZkNDItMTQ1ZS00ZTkxLWFhMTUtOTZmNjZkMmI2ZGViL3Jlc291cmNlZ3JvdXBzL3JlczcwODk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e9652780-9665-4174-bc1d-eea8c21ed194"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.16002",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Fri, 26 May 2017 11:20:00 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "f95d41af-fc64-44ae-9d1d-f565c2ec77ac"
+        ],
+        "x-ms-correlation-request-id": [
+          "f95d41af-fc64-44ae-9d1d-f565c2ec77ac"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20220426T164000Z:f95d41af-fc64-44ae-9d1d-f565c2ec77ac"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "X-Content-Type-Options": [
+          "nosniff"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "Date": [
+          "Tue, 26 Apr 2022 16:39:59 GMT"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+        "Content-Length": [
+          "149"
         ],
-        "x-ms-request-id": [
-          "7824fc5b-dcea-46b4-91b8-2992ec8a8bf6"
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
-        "x-ms-correlation-request-id": [
-          "7824fc5b-dcea-46b4-91b8-2992ec8a8bf6"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20170526T112000Z:7824fc5b-dcea-46b4-91b8-2992ec8a8bf6"
+        "Expires": [
+          "-1"
         ]
       },
-      "StatusCode": 404
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupBeingDeleted\",\r\n    \"message\": \"The resource group 'res7089' is in deprovisioning state and cannot perform this operation.\"\r\n  }\r\n}",
+      "StatusCode": 409
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "cc148bf2-42fb-4913-a3fb-2f284a69eb89"
+    "SubscriptionId": "4092fd42-145e-4e91-aa15-96f66d2b6deb"
   }
 }

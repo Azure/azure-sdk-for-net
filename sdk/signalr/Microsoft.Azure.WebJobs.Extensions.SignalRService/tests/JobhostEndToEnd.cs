@@ -121,7 +121,7 @@ namespace SignalRServiceExtension.Tests
         {
             var task = CreateTestTask(typeof(SignalRFunctions), null);
             var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() => task);
-            Assert.Equal(ErrorMessages.EmptyConnectionStringErrorMessageFormat, exception.GetBaseException().Message);
+            Assert.IsType<InvalidOperationException>(exception.GetBaseException());
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace SignalRServiceExtension.Tests
         {
             var task = CreateTestTask(typeof(SignalRConnectionInfoFunctions), null);
             var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() => task);
-            Assert.Equal(ErrorMessages.EmptyConnectionStringErrorMessageFormat, exception.GetBaseException().Message);
+            Assert.IsType<InvalidOperationException>(exception.GetBaseException());
         }
 
         [Fact]

@@ -9,18 +9,18 @@ This extension provides functionality for accessing Azure Service Bus from an Az
 Install the Service Bus extension with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.ServiceBus/):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus --version 5.0.0-beta.1
+dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus
 ```
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Service Bus, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Service Bus, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
 
 - **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for creating a Service Bus namespace using the Azure portal. There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
 
 
 ### Authenticate the Client
@@ -201,6 +201,64 @@ public static async Task Run(
 }
 ```
 
+### Session triggers
+
+To receive messages from a session enabled queue or topic, you can set the `IsSessionsEnabled`
+property on the `ServiceBusTrigger` attribute. When working with sessions, you can bind to the `SessionMessageActions` to get access to the message settlement methods in addition to session-specific functionality.
+
+```C# Snippet:ServiceBusBindingToSessionMessageActions
+[FunctionName("BindingToSessionMessageActions")]
+public static async Task Run(
+    [ServiceBusTrigger("<queue_name>", Connection = "<connection_name>", IsSessionsEnabled = true)]
+    ServiceBusReceivedMessage[] messages,
+    ServiceBusSessionMessageActions sessionActions)
+{
+    foreach (ServiceBusReceivedMessage message in messages)
+    {
+        if (message.MessageId == "1")
+        {
+            await sessionActions.DeadLetterMessageAsync(message);
+        }
+        else
+        {
+            await sessionActions.CompleteMessageAsync(message);
+        }
+    }
+
+    // We can also perform session-specific operations using the actions, such as setting state that is specific to this session.
+    await sessionActions.SetSessionStateAsync(new BinaryData("<session state>"));
+}
+```
+
+### Binding to ReceiveActions
+
+It's possible to receive additional messages from within your function invocation. This may be useful if you need more control over how many messages to process within a function invocation based on some characteristics of the initial message delivered to your function via the binding parameter. Any additional messages that you receive will be subject to the same `AutoCompleteMessages` and `MaxAutoLockRenewalDuration` configuration as the initial message delivered to your function. It is also possible to peek messages. Peeked messages are not subject to the `AutoCompleteMessages` and `MaxAutoLockRenewalDuration` configuration as these messages are not locked and therefore cannot be completed.
+
+```C# Snippet:ServiceBusBindingToReceiveActions
+[FunctionName("BindingToReceiveActions")]
+public static async Task Run(
+    [ServiceBusTrigger("<queue_name>", Connection = "<connection_name>", IsSessionsEnabled = true)]
+    ServiceBusReceivedMessage message,
+    ServiceBusMessageActions messageActions,
+    ServiceBusReceiveActions receiveActions)
+{
+    if (message.MessageId == "1")
+    {
+        await messageActions.DeadLetterMessageAsync(message);
+    }
+    else
+    {
+        await messageActions.CompleteMessageAsync(message);
+
+        // attempt to receive additional messages in this session
+        var receivedMessages = await receiveActions.ReceiveMessagesAsync(maxMessages: 10);
+
+        // you can also use the receive actions to peek messages
+        var peekedMessages = await receiveActions.PeekMessagesAsync(maxMessages: 10);
+    }
+}
+```
+
 ### Binding to ServiceBusClient
 
 There may be times when you want to bind to the same `ServiceBusClient` that the trigger is using. This can be useful if you need to dynamically create a sender based on the message that is received.
@@ -208,7 +266,7 @@ There may be times when you want to bind to the same `ServiceBusClient` that the
 ```C# Snippet:ServiceBusBindingToClient
 [FunctionName("BindingToClient")]
 public static async Task Run(
-    [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")] 
+    [ServiceBus("<queue_or_topic_name>", Connection = "<connection_name>")]
     ServiceBusReceivedMessage message,
     ServiceBusClient client)
 {
@@ -219,7 +277,9 @@ public static async Task Run(
 
 ## Troubleshooting
 
-Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+If your function triggers an unhandled exception and you haven't already settled the message, the extension will attempt to abandon the message so that it becomes available for receiving again immediately.
+
+Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for more troubleshooting guidance.
 
 ## Next steps
 

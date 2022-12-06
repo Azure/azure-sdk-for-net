@@ -6,33 +6,33 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the VirtualMachineScaleSetRollingUpgrade data model. </summary>
-    public partial class VirtualMachineScaleSetRollingUpgradeData : TrackedResource
+    public partial class VirtualMachineScaleSetRollingUpgradeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradeData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineScaleSetRollingUpgradeData(Location location) : base(location)
+        public VirtualMachineScaleSetRollingUpgradeData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="policy"> The rolling upgrade policies applied for this upgrade. </param>
         /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
         /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
         /// <param name="error"> Error details for this upgrade, if there are any. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ApiError error) : base(id, name, type, tags, location)
+        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error) : base(id, name, resourceType, systemData, tags, location)
         {
             Policy = policy;
             RunningStatus = runningStatus;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Information about the number of virtual machine instances in each upgrade state. </summary>
         public RollingUpgradeProgressInfo Progress { get; }
         /// <summary> Error details for this upgrade, if there are any. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="ConnectorOffer"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorOffer"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectorOffer(string value)
         {

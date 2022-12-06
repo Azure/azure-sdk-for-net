@@ -9,12 +9,14 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="ExtractSummaryResult"/> objects corresponding
-    /// to a batch of documents, and information about the batch operation.
+    /// A collection of the results of performing extractive summarization on a given set of documents.
     /// </summary>
     [DebuggerTypeProxy(typeof(ExtractSummaryResultCollectionDebugView))]
     public class ExtractSummaryResultCollection : ReadOnlyCollection<ExtractSummaryResult>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExtractSummaryResultCollection"/> class.
+        /// </summary>
         internal ExtractSummaryResultCollection(IList<ExtractSummaryResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
@@ -22,20 +24,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets statistics about the documents and how it was processed
-        /// by the service.  This property will have a value when IncludeStatistics
-        /// is set to true in the client call.
+        /// The statistics associated with the results and how these were produced by the service. The value is null
+        /// unless <see cref="TextAnalyticsRequestOptions.IncludeStatistics"/> or
+        /// <see cref="AnalyzeActionsOptions.IncludeStatistics"/> was used to explicitly request that these were
+        /// included as part of the results.
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
-        /// Gets the version of the Text Analytics model used by this operation
-        /// on this batch of documents.
+        /// The version of the text analytics model that was used to generate the results. To learn more about the
+        /// supported model versions for each feature, see
+        /// <see href="https://learn.microsoft.com/azure/cognitive-services/language-service/concepts/model-lifecycle"/>.
         /// </summary>
         public string ModelVersion { get; }
 
         /// <summary>
-        /// Debugger Proxy class for <see cref="ExtractSummaryResultCollection"/>.
+        /// A debugger proxy for the <see cref="ExtractSummaryResultCollection"/> class.
         /// </summary>
         internal class ExtractSummaryResultCollectionDebugView
         {

@@ -50,7 +50,7 @@ await foreach (CustomFormModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My new model");
 Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
 CustomFormModel model = operationResponse.Value;
@@ -106,7 +106,7 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 TrainingOperation operation = client.StartTraining(trainingFileUri, useTrainingLabels: false, "My new model");
 Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
 CustomFormModel model = operationResponse.Value;
@@ -133,10 +133,5 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
 // Delete the model from the account.
 client.DeleteModel(model.ModelId);
 ```
-
-To see the full example source files, see:
-
-* [Manage custom models (Asynchronous)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample7_ManageCustomModelsAsync.cs)
-* [Manage custom models (Synchronous)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample7_ManageCustomModels.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

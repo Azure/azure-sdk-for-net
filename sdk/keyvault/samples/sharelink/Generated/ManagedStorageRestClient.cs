@@ -19,23 +19,25 @@ namespace Azure.Security.KeyVault.Storage
 {
     internal partial class ManagedStorageRestClient
     {
-        private string vaultBaseUrl;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _vaultBaseUrl;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of ManagedStorageRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public ManagedStorageRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.1")
         {
-            this.vaultBaseUrl = vaultBaseUrl ?? throw new ArgumentNullException(nameof(vaultBaseUrl));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _vaultBaseUrl = vaultBaseUrl ?? throw new ArgumentNullException(nameof(vaultBaseUrl));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateGetStorageAccountsRequest(int? maxresults)
@@ -44,13 +46,13 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage", false);
             if (maxresults != null)
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -73,7 +75,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -94,7 +96,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -104,21 +106,22 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage", false);
             if (maxresults != null)
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public async Task<Response<DeletedStorageListResult>> GetDeletedStorageAccountsAsync(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeletedStorageAccountsRequest(maxresults);
@@ -133,13 +136,14 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public Response<DeletedStorageListResult> GetDeletedStorageAccounts(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeletedStorageAccountsRequest(maxresults);
@@ -154,7 +158,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -164,19 +168,20 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </summary>
+        /// <summary> Gets the specified deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </remarks>
         public async Task<Response<DeletedStorageBundle>> GetDeletedStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -196,14 +201,15 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </summary>
+        /// <summary> Gets the specified deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </remarks>
         public Response<DeletedStorageBundle> GetDeletedStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -223,7 +229,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -233,19 +239,20 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </summary>
+        /// <summary> Permanently deletes the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </remarks>
         public async Task<Response> PurgeDeletedStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -260,14 +267,15 @@ namespace Azure.Security.KeyVault.Storage
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </summary>
+        /// <summary> Permanently deletes the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </remarks>
         public Response PurgeDeletedStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -282,7 +290,7 @@ namespace Azure.Security.KeyVault.Storage
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -292,20 +300,21 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/recover", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public async Task<Response<StorageBundle>> RecoverDeletedStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -325,14 +334,15 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public Response<StorageBundle> RecoverDeletedStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -352,7 +362,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -362,20 +372,21 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/backup", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </summary>
+        /// <summary> Backs up the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </remarks>
         public async Task<Response<BackupStorageResult>> BackupStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -395,14 +406,15 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </summary>
+        /// <summary> Backs up the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </remarks>
         public Response<BackupStorageResult> BackupStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -422,7 +434,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -432,9 +444,9 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/restore", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -445,10 +457,11 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </summary>
+        /// <summary> Restores a backed up storage account to a vault. </summary>
         /// <param name="storageBundleBackup"> The backup blob associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageBundleBackup"/> is null. </exception>
+        /// <remarks> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </remarks>
         public async Task<Response<StorageBundle>> RestoreStorageAccountAsync(byte[] storageBundleBackup, CancellationToken cancellationToken = default)
         {
             if (storageBundleBackup == null)
@@ -468,14 +481,15 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </summary>
+        /// <summary> Restores a backed up storage account to a vault. </summary>
         /// <param name="storageBundleBackup"> The backup blob associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageBundleBackup"/> is null. </exception>
+        /// <remarks> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </remarks>
         public Response<StorageBundle> RestoreStorageAccount(byte[] storageBundleBackup, CancellationToken cancellationToken = default)
         {
             if (storageBundleBackup == null)
@@ -495,7 +509,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -505,10 +519,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -537,7 +551,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -564,7 +578,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -574,10 +588,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -606,7 +620,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -633,7 +647,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -643,10 +657,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -678,7 +692,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/>, or <paramref name="activeKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/> or <paramref name="activeKeyName"/> is null. </exception>
         public async Task<Response<StorageBundle>> SetStorageAccountAsync(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod = null, StorageAccountAttributes storageAccountAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -706,7 +720,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -719,7 +733,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/>, or <paramref name="activeKeyName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="resourceId"/> or <paramref name="activeKeyName"/> is null. </exception>
         public Response<StorageBundle> SetStorageAccount(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod = null, StorageAccountAttributes storageAccountAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -747,7 +761,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -757,10 +771,10 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -813,7 +827,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -845,7 +859,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -855,11 +869,11 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/regeneratekey", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -898,7 +912,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -930,7 +944,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -940,7 +954,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas", false);
@@ -948,7 +962,7 @@ namespace Azure.Security.KeyVault.Storage
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -978,7 +992,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1006,7 +1020,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1016,7 +1030,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas", false);
@@ -1024,17 +1038,18 @@ namespace Azure.Security.KeyVault.Storage
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public async Task<Response<DeletedSasDefinitionListResult>> GetDeletedSasDefinitionsAsync(string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1054,15 +1069,16 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public Response<DeletedSasDefinitionListResult> GetDeletedSasDefinitions(string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1082,7 +1098,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1092,22 +1108,23 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </summary>
+        /// <summary> Gets the specified deleted sas definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </remarks>
         public async Task<Response<DeletedSasDefinitionBundle>> GetDeletedSasDefinitionAsync(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1131,15 +1148,16 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </summary>
+        /// <summary> Gets the specified deleted sas definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </remarks>
         public Response<DeletedSasDefinitionBundle> GetDeletedSasDefinition(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1163,7 +1181,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1173,23 +1191,24 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/deletedstorage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
             uri.AppendPath("/recover", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted SAS definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public async Task<Response<SasDefinitionBundle>> RecoverDeletedSasDefinitionAsync(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1213,15 +1232,16 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted SAS definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public Response<SasDefinitionBundle> RecoverDeletedSasDefinition(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1245,7 +1265,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1255,12 +1275,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1294,7 +1314,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1326,7 +1346,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1336,12 +1356,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1375,7 +1395,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1407,7 +1427,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1417,12 +1437,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1453,7 +1473,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/>, or <paramref name="validityPeriod"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/> or <paramref name="validityPeriod"/> is null. </exception>
         public async Task<Response<SasDefinitionBundle>> SetSasDefinitionAsync(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1485,7 +1505,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1498,7 +1518,7 @@ namespace Azure.Security.KeyVault.Storage
         /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/>, or <paramref name="validityPeriod"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="sasDefinitionName"/>, <paramref name="templateUri"/> or <paramref name="validityPeriod"/> is null. </exception>
         public Response<SasDefinitionBundle> SetSasDefinition(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1530,7 +1550,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1540,12 +1560,12 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendPath("/storage/", false);
             uri.AppendPath(storageAccountName, true);
             uri.AppendPath("/sas/", false);
             uri.AppendPath(sasDefinitionName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1603,7 +1623,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1640,7 +1660,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1650,7 +1670,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1681,7 +1701,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1709,7 +1729,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1719,18 +1739,19 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public async Task<Response<DeletedStorageListResult>> GetDeletedStorageAccountsNextPageAsync(string nextLink, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1750,15 +1771,16 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public Response<DeletedStorageListResult> GetDeletedStorageAccountsNextPage(string nextLink, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1778,7 +1800,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1788,7 +1810,7 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1824,7 +1846,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1857,7 +1879,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1867,19 +1889,20 @@ namespace Azure.Security.KeyVault.Storage
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRaw(_vaultBaseUrl, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public async Task<Response<DeletedSasDefinitionListResult>> GetDeletedSasDefinitionsNextPageAsync(string nextLink, string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1903,16 +1926,17 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public Response<DeletedSasDefinitionListResult> GetDeletedSasDefinitionsNextPage(string nextLink, string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1936,7 +1960,7 @@ namespace Azure.Security.KeyVault.Storage
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

@@ -52,6 +52,38 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<PartnerTopic>> GetWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create a partner topic.
+        /// </summary>
+        /// <remarks>
+        /// Asynchronously creates a new partner topic with the specified
+        /// parameters.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
+        /// </param>
+        /// <param name='partnerTopicInfo'>
+        /// Partner Topic information.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PartnerTopic>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, PartnerTopic partnerTopicInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Delete a partner topic.
         /// </summary>
         /// <remarks>

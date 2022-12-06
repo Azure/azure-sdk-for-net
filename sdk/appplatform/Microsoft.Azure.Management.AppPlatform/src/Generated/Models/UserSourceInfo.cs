@@ -29,20 +29,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Initializes a new instance of the UserSourceInfo class.
         /// </summary>
-        /// <param name="type">Type of the source uploaded. Possible values
-        /// include: 'Jar', 'NetCoreZip', 'Source'</param>
-        /// <param name="relativePath">Relative path of the storage which
-        /// stores the source</param>
         /// <param name="version">Version of the source</param>
-        /// <param name="artifactSelector">Selector for the artifact to be used
-        /// for the deployment for multi-module projects. This should be
-        /// the relative path to the target module/project.</param>
-        public UserSourceInfo(string type = default(string), string relativePath = default(string), string version = default(string), string artifactSelector = default(string))
+        public UserSourceInfo(string version = default(string))
         {
-            Type = type;
-            RelativePath = relativePath;
             Version = version;
-            ArtifactSelector = artifactSelector;
             CustomInit();
         }
 
@@ -52,31 +42,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of the source uploaded. Possible values include:
-        /// 'Jar', 'NetCoreZip', 'Source'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets relative path of the storage which stores the source
-        /// </summary>
-        [JsonProperty(PropertyName = "relativePath")]
-        public string RelativePath { get; set; }
-
-        /// <summary>
         /// Gets or sets version of the source
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets selector for the artifact to be used for the
-        /// deployment for multi-module projects. This should be
-        /// the relative path to the target module/project.
-        /// </summary>
-        [JsonProperty(PropertyName = "artifactSelector")]
-        public string ArtifactSelector { get; set; }
 
     }
 }

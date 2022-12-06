@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
@@ -12,10 +13,13 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [NonParallelizable]
     public class HttpClientTransportFunctionalTest : TransportFunctionalTests
     {
         private static RemoteCertificateValidationCallback certCallback = (_, _, _, _) => true;
@@ -34,6 +38,7 @@ namespace Azure.Core.Tests
         }
 
 #if NET461
+        // These setup and teardown actions require that entire test class be NonParallelizable.
         [OneTimeSetUp]
         public void TestSetup()
         {
@@ -84,6 +89,59 @@ namespace Azure.Core.Tests
             var transport = HttpClientTransport.Shared;
             transport.Dispose();
             Assert.DoesNotThrow(() => transport.Client.CancelPendingRequests());
+        }
+
+        [Test]
+        public async Task CookiesCanBeEnabledUsingSwitch()
+        {
+            using var appContextSwitch = new TestAppContextSwitch("Azure.Core.Pipeline.HttpClientTransport.EnableCookies", "true");
+
+            await TestCookiesEnabled();
+        }
+
+        [Test]
+        public async Task CookiesCanBeEnabledUsingEnvVar()
+        {
+            using var envVar = new TestEnvVar("AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES", "true");
+
+            await TestCookiesEnabled();
+        }
+
+        private async Task TestCookiesEnabled()
+        {
+            int requestCount = 0;
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    if (requestCount++ == 1)
+                    {
+                        Assert.IsTrue(context.Request.Headers.ContainsKey("cookie"));
+                        Assert.AreEqual("stsservicecookie=estsfd",
+                            context.Request.Headers["cookie"].First());
+                    }
+
+                    context.Response.StatusCode = 200;
+                    context.Response.Headers.Add(
+                        "set-cookie",
+                        "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly");
+                    await context.Response.WriteAsync("");
+                },
+                https: true))
+            {
+                var transport = GetTransport(https: true);
+                Request request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
+
+                // create a second request to verify cookies not set
+                request = transport.CreateRequest();
+                request.Method = RequestMethod.Post;
+                request.Uri.Reset(testServer.Address);
+                request.Content = RequestContent.Create("Hello");
+                await ExecuteRequest(request, transport);
+            }
         }
 
         private static object GetHandler(HttpClient transportClient)

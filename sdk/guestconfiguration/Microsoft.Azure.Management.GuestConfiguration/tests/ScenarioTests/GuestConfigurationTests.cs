@@ -15,13 +15,14 @@ namespace GuestConfiguration.Tests.ScenarioTests
         private const string ResourceGroupName = "GuestConfigurationSDKTestRecord";
         private const string AzureVMName = "SDKTestRecordVM002";
 
-        private const string HybridRG = "gehuan-arc0010";
-        private const string HybridMachineName = "IamPretendingTo";
+        private const string HybridRG = "neela-sdk-rg";
+        private const string HybridMachineName = "LAPTOP-4B77J53J";
         private const string AssignmentName = "AuditSecureProtocol";
 
         private const string VMSSRG = "aashishDeleteRG";
-        private const string VMSSName = "vmss3";
-        private const string VMSSAssignmentName = "EnforcePasswordHistory$pid5im35hvyml6ow";
+        private const string VMSSName = "vmss6";
+        private const string VMSSAssignmentName = "EnforcePasswordHistory$pid23q5eseudwr5y";
+        private const string VMSSReportID = "21a601c0-f39e-48a0-82f2-7eb17e2c899c";
 
         [Fact]
         public void CanCreateGetUpdateGuestConfigurationAssignment()
@@ -157,7 +158,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
                     Assert.NotNull(gcAssignmentReportsRetrieved);
                     Assert.True(gcAssignmentReportsRetrieved.Value.Count >= 0);
                 }
-            }  
+            } 
         }
 
         [Fact]
@@ -230,15 +231,14 @@ namespace GuestConfiguration.Tests.ScenarioTests
             {
                 using (var testFixture = new GuestConfigurationTestBase(context))
                 {
-                    var gcVMSSAssignment = GuestConfigurationAssignmentsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentsVMSS, VMSSRG, VMSSAssignmentName, VMSSName);
+                    var gcVMSSAssignment = GuestConfigurationAssignmentsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentsVMSS, VMSSRG, VMSSName, VMSSAssignmentName);
                     Assert.NotNull(gcVMSSAssignment);
 
-                    var gcVMSSAssignmentReport = GuestConfigurationAssignmentReportsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentReportsVMSS, VMSSRG, VMSSAssignmentName, "93b97ae8-1e02-466e-af61-2eb6c506d9ec", VMSSName);
+                    var gcVMSSAssignmentReport = GuestConfigurationAssignmentReportsVMSSOperationsExtensions.Get(testFixture.GuestConfigurationClient.GuestConfigurationAssignmentReportsVMSS, VMSSRG, VMSSName, VMSSAssignmentName, VMSSReportID);
                     Assert.NotNull(gcVMSSAssignmentReport);
                 }
             }
         }
     }
 }
-
 

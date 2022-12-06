@@ -14,11 +14,11 @@ namespace Azure.Storage
     {
         private const int _streamBufferSize = 4 * Constants.MB;
 
-        private readonly StorageCrc64NonCryptographicHashAlgorithm _nonCryptpgraphicHashAlgorithm;
+        private readonly StorageCrc64HashAlgorithm _nonCryptographicHashAlgorithm;
 
-        public NonCryptographicHashAlgorithmHasher(StorageCrc64NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
+        public NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm nonCryptographicHashAlgorithm)
         {
-            _nonCryptpgraphicHashAlgorithm = nonCryptographicHashAlgorithm;
+            _nonCryptographicHashAlgorithm = nonCryptographicHashAlgorithm;
         }
 
         public byte[] ComputeHash(Stream stream)
@@ -37,12 +37,12 @@ namespace Azure.Storage
                     break;
                 }
 
-                _nonCryptpgraphicHashAlgorithm.Append(new ReadOnlySpan<byte>(buffer, 0, read));
+                _nonCryptographicHashAlgorithm.Append(new ReadOnlySpan<byte>(buffer, 0, read));
             }
 
             ArrayPool<byte>.Shared.Return(buffer);
 
-            return _nonCryptpgraphicHashAlgorithm.GetCurrentHash();
+            return _nonCryptographicHashAlgorithm.GetCurrentHash();
         }
     }
 }

@@ -5,102 +5,48 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "230",
+        "Content-Length": "240",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0ac920134e5ddb41ab6d805925e72590-2e5619a9800b554f-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-054aca8c3c72b71fb893b76c21ba111d-c7331445eaf56da4-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "c01e429010ef5276d0a96ac356e278e1",
+        "x-ms-client-request-id": "16cc0b581d7d008c6cebdeb21309b3eb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+        "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
         "dimensionFilter": {
           "dimension": {
-            "region": "Karachi"
+            "Dim1": "USD"
           }
         },
         "feedbackType": "Anomaly",
-        "startTime": "2021-10-01T00:00:00Z",
-        "endTime": "2021-11-20T00:00:00Z",
+        "startTime": "2022-01-01T00:00:00.0000000Z",
+        "endTime": "2022-04-17T00:00:00.0000000Z",
         "timeMode": "FeedbackCreatedTime"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "572f9f60-8d0b-4a58-91cb-284701669f1b",
-        "Content-Length": "1463",
+        "apim-request-id": "634eab57-de6f-42ec-bd42-9f84851035cd",
+        "Content-Length": "368",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:48 GMT",
+        "Date": "Tue, 19 Apr 2022 04:03:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "104",
-        "X-Request-ID": "572f9f60-8d0b-4a58-91cb-284701669f1b"
+        "x-envoy-upstream-service-time": "145",
+        "X-Request-ID": "634eab57-de6f-42ec-bd42-9f84851035cd"
       },
       "ResponseBody": {
         "value": [
           {
-            "feedbackId": "be5ffb5a-c501-4703-982e-fcff1fa3e692",
-            "createdTime": "2021-11-18T17:43:57.836Z",
+            "feedbackId": "580b062e-f05d-4fd2-b4ba-4779b2e20d39",
+            "createdTime": "2022-04-14T22:12:24.706Z",
             "userPrincipal": "foo@contoso.com",
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
             "dimensionFilter": {
               "dimension": {
-                "region": "Karachi"
-              }
-            },
-            "feedbackType": "Anomaly",
-            "startTime": "2020-02-01T00:00:00Z",
-            "endTime": "2020-02-03T00:00:00Z",
-            "value": {
-              "anomalyValue": "NotAnomaly"
-            }
-          },
-          {
-            "feedbackId": "6fb20ce0-7fe3-46e8-bd61-ff9bb709fc82",
-            "createdTime": "2021-11-18T17:31:46.286Z",
-            "userPrincipal": "foo@contoso.com",
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "dimensionFilter": {
-              "dimension": {
-                "region": "Karachi"
-              }
-            },
-            "feedbackType": "Anomaly",
-            "startTime": "2020-02-01T00:00:00Z",
-            "endTime": "2020-02-03T00:00:00Z",
-            "value": {
-              "anomalyValue": "NotAnomaly"
-            }
-          },
-          {
-            "feedbackId": "fc9a627f-083b-4584-a8ee-01f3dc1f99e3",
-            "createdTime": "2021-11-18T16:46:00.759Z",
-            "userPrincipal": "foo@contoso.com",
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "dimensionFilter": {
-              "dimension": {
-                "region": "Karachi"
-              }
-            },
-            "feedbackType": "Anomaly",
-            "startTime": "2020-02-01T00:00:00Z",
-            "endTime": "2020-02-03T00:00:00Z",
-            "value": {
-              "anomalyValue": "NotAnomaly"
-            }
-          },
-          {
-            "feedbackId": "97d3738d-20cd-46bb-86fc-0a96ebe86509",
-            "createdTime": "2021-11-18T15:24:05.495Z",
-            "userPrincipal": "foo@contoso.com",
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "dimensionFilter": {
-              "dimension": {
-                "region": "Karachi"
+                "Dim1": "USD"
               }
             },
             "feedbackType": "Anomaly",
@@ -119,6 +65,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "189484243"
+    "RandomSeed": "1124646691"
   }
 }

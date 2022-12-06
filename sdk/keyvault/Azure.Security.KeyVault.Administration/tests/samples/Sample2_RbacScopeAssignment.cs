@@ -36,12 +36,6 @@ namespace Azure.Security.KeyVault.Administration.Samples
             List<KeyVaultRoleDefinition> definitions = await client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
             _roleDefinitionId = definitions.First(d => d.RoleName == RoleName).Id;
 
-            // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
-            string definitionIdToAssign = _roleDefinitionId;
-
-            // Replace objectId with the service principal object id.
-            string servicePrincipalObjectId = _objectId;
-
             #region Snippet:CreateRoleAssignmentKeysScope
 #if SNIPPET
             string definitionIdToAssign = "<roleDefinitionId>";
@@ -49,6 +43,12 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 #else
+            // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
+            string definitionIdToAssign = _roleDefinitionId;
+
+            // Replace objectId with the service principal object id.
+            string servicePrincipalObjectId = _objectId;
+
             Guid roleAssignmentName = Recording.Random.NewGuid();
             KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Keys, definitionIdToAssign, servicePrincipalObjectId , roleAssignmentName).ConfigureAwait(false);
 #endif
@@ -59,13 +59,14 @@ namespace Azure.Security.KeyVault.Administration.Samples
             // Make sure we have a key to secure.
             KeyClient keyClient = KeyClient;
             KeyVaultKey createdKey = await keyClient.CreateKeyAsync(Recording.GenerateId(), KeyType.Oct);
-            string keyName = createdKey.Name;
-
-            RegisterKeyForCleanup(keyName);
 
             #region Snippet:CreateRoleAssignmentKeyScope
 #if SNIPPET
             string keyName = "<your-key-name>";
+#else
+            string keyName = createdKey.Name;
+
+            RegisterKeyForCleanup(keyName);
 #endif
             KeyVaultKey key = await keyClient.GetKeyAsync(keyName);
 

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of LinuxParameters. </summary>
         public LinuxParameters()
         {
-            ClassificationsToInclude = new ChangeTrackingList<VMGuestPatchClassificationLinux>();
+            ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationForLinux>();
             PackageNameMasksToInclude = new ChangeTrackingList<string>();
             PackageNameMasksToExclude = new ChangeTrackingList<string>();
         }
 
         /// <summary> The update classifications to select when installing patches for Linux. </summary>
-        public IList<VMGuestPatchClassificationLinux> ClassificationsToInclude { get; }
+        public IList<VmGuestPatchClassificationForLinux> ClassificationsToInclude { get; }
         /// <summary> packages to include in the patch operation. Format: packageName_packageVersion. </summary>
         public IList<string> PackageNameMasksToInclude { get; }
         /// <summary> packages to exclude in the patch operation. Format: packageName_packageVersion. </summary>

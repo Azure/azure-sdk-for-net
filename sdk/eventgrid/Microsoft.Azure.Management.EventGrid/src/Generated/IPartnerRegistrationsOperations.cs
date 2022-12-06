@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerRegistrationName'>
         /// Name of the partner registration.
         /// </param>
-        /// <param name='partnerRegistrationUpdateParameters'>
-        /// Partner registration update information.
+        /// <param name='tags'>
+        /// Tags of the partner registration resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerRegistration>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerRegistration>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List partner registrations under an Azure subscription.
         /// </summary>
@@ -217,6 +217,93 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<PartnerRegistration>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create a partner registration.
+        /// </summary>
+        /// <remarks>
+        /// Creates a new partner registration with the specified parameters.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='partnerRegistrationName'>
+        /// Name of the partner registration.
+        /// </param>
+        /// <param name='partnerRegistrationInfo'>
+        /// PartnerRegistration information.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PartnerRegistration>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, PartnerRegistration partnerRegistrationInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a partner registration.
+        /// </summary>
+        /// <remarks>
+        /// Deletes a partner registration with the specified parameters.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='partnerRegistrationName'>
+        /// Name of the partner registration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update a partner registration.
+        /// </summary>
+        /// <remarks>
+        /// Updates a partner registration with the specified parameters.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='partnerRegistrationName'>
+        /// Name of the partner registration.
+        /// </param>
+        /// <param name='tags'>
+        /// Tags of the partner registration resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PartnerRegistration>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List partner registrations under an Azure subscription.
         /// </summary>

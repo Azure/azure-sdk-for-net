@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("gracePeriod");
                 writer.WriteStringValue(GracePeriod);
             }
+            if (Optional.IsDefined(RepairAction))
+            {
+                writer.WritePropertyName("repairAction");
+                writer.WriteStringValue(RepairAction.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<bool> enabled = default;
             Optional<string> gracePeriod = default;
+            Optional<RepairAction> repairAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -49,8 +55,18 @@ namespace Azure.ResourceManager.Compute.Models
                     gracePeriod = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("repairAction"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    repairAction = new RepairAction(property.Value.GetString());
+                    continue;
+                }
             }
-            return new AutomaticRepairsPolicy(Optional.ToNullable(enabled), gracePeriod.Value);
+            return new AutomaticRepairsPolicy(Optional.ToNullable(enabled), gracePeriod.Value, Optional.ToNullable(repairAction));
         }
     }
 }

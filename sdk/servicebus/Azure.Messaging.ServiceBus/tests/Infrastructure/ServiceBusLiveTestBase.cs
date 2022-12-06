@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus.Amqp;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -11,27 +14,13 @@ namespace Azure.Messaging.ServiceBus.Tests
     [LiveOnly(true)]
     public abstract class ServiceBusLiveTestBase : LiveTestBase<ServiceBusTestEnvironment>
     {
-        private const int DefaultTryTimeout = 10;
+        private const int DefaultTryTimeout = 15;
 
         protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
 
-        protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout)
-        {
-            var options =
-                new ServiceBusClientOptions
-                {
-                    RetryOptions = new ServiceBusRetryOptions
-                    {
-                        TryTimeout = TimeSpan.FromSeconds(tryTimeout),
-                        MaxRetries = 0
-                    }
-                };
-            return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
-                options);
-        }
+        protected ServiceBusClient CreateNoRetryClient(int tryTimeout = DefaultTryTimeout) => CreateClient(tryTimeout, 0);
 
-        protected ServiceBusClient CreateClient(int tryTimeout = DefaultTryTimeout)
+        protected ServiceBusClient CreateClient(int tryTimeout = DefaultTryTimeout, int maxRetries = 3)
         {
             var options =
                 new ServiceBusClientOptions
@@ -39,6 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     RetryOptions = new ServiceBusRetryOptions
                     {
                         TryTimeout = TimeSpan.FromSeconds(tryTimeout),
+                        MaxRetries = maxRetries
                     }
                 };
             return new ServiceBusClient(
@@ -69,6 +59,19 @@ namespace Azure.Messaging.ServiceBus.Tests
                 batch.Dispose();
                 batch = default;
             }
+        }
+
+        protected static void SimulateNetworkFailure(ServiceBusClient client)
+        {
+            var amqpClient = client.Connection.InnerClient;
+            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
+                "ConnectionScope",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
+            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
+                "ActiveConnection",
+                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
+
+            activeConnection.Abort();
         }
     }
 }

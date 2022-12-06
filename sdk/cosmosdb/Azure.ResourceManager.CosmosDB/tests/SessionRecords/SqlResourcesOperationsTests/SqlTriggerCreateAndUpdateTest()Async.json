@@ -20,7 +20,7 @@
         "properties": {
           "resource": {
             "id": "triggerName3476",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('First Hello World');}",
             "triggerType": "Pre",
             "triggerOperation": "All"
           },
@@ -250,12 +250,12 @@
         "properties": {
           "resource": {
             "id": "triggerName3476",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('First Hello World');}",
             "triggerType": "Pre",
             "triggerOperation": "All",
             "_rid": "GmYtAOqoK1gBAAAAAAAAcA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/triggers/GmYtAOqoK1gBAAAAAAAAcA==/",
-            "_etag": "\u002233037f8b-0000-0100-0000-612dfc250000\u0022",
+            "_etag": "\"33037f8b-0000-0100-0000-612dfc250000\"",
             "_ts": 1630403621
           }
         }
@@ -299,12 +299,12 @@
         "properties": {
           "resource": {
             "id": "triggerName3476",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027First Hello World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('First Hello World');}",
             "triggerType": "Pre",
             "triggerOperation": "All",
             "_rid": "GmYtAOqoK1gBAAAAAAAAcA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/triggers/GmYtAOqoK1gBAAAAAAAAcA==/",
-            "_etag": "\u002233037f8b-0000-0100-0000-612dfc250000\u0022",
+            "_etag": "\"33037f8b-0000-0100-0000-612dfc250000\"",
             "_ts": 1630403621
           }
         }
@@ -330,7 +330,7 @@
         "properties": {
           "resource": {
             "id": "triggerName3476",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "triggerType": "Post",
             "triggerOperation": "All"
           },
@@ -593,12 +593,12 @@
         "properties": {
           "resource": {
             "id": "triggerName3476",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "triggerType": "Post",
             "triggerOperation": "All",
             "_rid": "GmYtAOqoK1gBAAAAAAAAcA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/triggers/GmYtAOqoK1gBAAAAAAAAcA==/",
-            "_etag": "\u00223303b48b-0000-0100-0000-612dfc2c0000\u0022",
+            "_etag": "\"3303b48b-0000-0100-0000-612dfc2c0000\"",
             "_ts": 1630403628
           }
         }
@@ -642,12 +642,12 @@
         "properties": {
           "resource": {
             "id": "triggerName3476",
-            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody(\u0027Second Hello World\u0027);}",
+            "body": "function () { var context = getContext(); var response = context.getResponse();response.setBody('Second Hello World');}",
             "triggerType": "Post",
             "triggerOperation": "All",
             "_rid": "GmYtAOqoK1gBAAAAAAAAcA==",
             "_self": "dbs/GmYtAA==/colls/GmYtAOqoK1g=/triggers/GmYtAOqoK1gBAAAAAAAAcA==/",
-            "_etag": "\u00223303b48b-0000-0100-0000-612dfc2c0000\u0022",
+            "_etag": "\"3303b48b-0000-0100-0000-612dfc2c0000\"",
             "_ts": 1630403628
           }
         }

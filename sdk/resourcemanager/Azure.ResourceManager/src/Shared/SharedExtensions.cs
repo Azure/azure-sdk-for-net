@@ -5,11 +5,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// helper class
@@ -51,16 +51,6 @@ namespace Azure.ResourceManager.Core
             }
 
             return dest;
-        }
-
-        public static List<T> Trim<T>(this List<T> list, int numberToTrim)
-        {
-            if (list is null)
-                throw new ArgumentNullException(nameof(list));
-            if (numberToTrim < 0 || numberToTrim > list.Count)
-                throw new ArgumentOutOfRangeException(nameof(numberToTrim));
-            list.RemoveRange(0, numberToTrim);
-            return list;
         }
 
         public static async Task<TSource?> FirstOrDefaultAsync<TSource>(

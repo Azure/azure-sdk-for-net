@@ -54,7 +54,8 @@ namespace Azure.Core.Pipeline
             policies ??= Array.Empty<HttpPipelinePolicy>();
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
-            all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
+            all[policies.Length] = new HttpPipelineTransportPolicy(_transport,
+                ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
             policies.CopyTo(all, 0);
 
             _pipeline = all;
@@ -96,14 +97,25 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+
+        /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <param name="context">Context specifying the message options.</param>
+        /// <param name="classifier"></param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext context)
+        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
             var message = CreateMessage();
-            message.AddPolicies(context);
+            if (classifier != null)
+            {
+                message.ResponseClassifier = classifier;
+            }
+            message.ApplyRequestContext(context, classifier);
             return message;
         }
 
@@ -121,6 +133,7 @@ namespace Azure.Core.Pipeline
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -154,6 +167,7 @@ namespace Azure.Core.Pipeline
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Portal revisions contract details.
+    /// Portal Revision's contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PortalRevisionContract : Resource
@@ -32,19 +32,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the PortalRevisionContract class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="description">Portal revision description.</param>
         /// <param name="statusDetails">Portal revision publishing status
         /// details.</param>
-        /// <param name="status">Portal revision publishing status. Possible
+        /// <param name="status">Status of the portal's revision. Possible
         /// values include: 'pending', 'publishing', 'completed',
         /// 'failed'</param>
-        /// <param name="isCurrent">Indicates if the Portal Revision is
+        /// <param name="isCurrent">Indicates if the portal's revision is
         /// public.</param>
-        /// <param name="createdDateTime">Portal revision creation date and
+        /// <param name="createdDateTime">Portal's revision creation date and
         /// time.</param>
         /// <param name="updatedDateTime">Last updated date and time.</param>
         public PortalRevisionContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string statusDetails = default(string), string status = default(string), bool? isCurrent = default(bool?), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? updatedDateTime = default(System.DateTime?))
@@ -77,20 +79,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string StatusDetails { get; private set; }
 
         /// <summary>
-        /// Gets portal revision publishing status. Possible values include:
+        /// Gets status of the portal's revision. Possible values include:
         /// 'pending', 'publishing', 'completed', 'failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets or sets indicates if the Portal Revision is public.
+        /// Gets or sets indicates if the portal's revision is public.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isCurrent")]
         public bool? IsCurrent { get; set; }
 
         /// <summary>
-        /// Gets portal revision creation date and time.
+        /// Gets portal's revision creation date and time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDateTime")]
         public System.DateTime? CreatedDateTime { get; private set; }

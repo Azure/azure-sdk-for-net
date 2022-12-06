@@ -18,21 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="packageLocation"/>, or <paramref name="connectVia"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="packageLocation"/> or <paramref name="connectVia"/> is null. </exception>
         public ExecuteSsisPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (packageLocation == null)
-            {
-                throw new ArgumentNullException(nameof(packageLocation));
-            }
-            if (connectVia == null)
-            {
-                throw new ArgumentNullException(nameof(connectVia));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(packageLocation, nameof(packageLocation));
+            Argument.AssertNotNull(connectVia, nameof(connectVia));
 
             PackageLocation = packageLocation;
             ConnectVia = connectVia;

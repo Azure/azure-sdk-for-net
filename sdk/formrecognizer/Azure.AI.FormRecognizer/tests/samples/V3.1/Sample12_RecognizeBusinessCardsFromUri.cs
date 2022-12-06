@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task RecognizeBusinessCardsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -23,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
 #if SNIPPET
-            Uri businessCardUri = <businessCardUri>;
+            Uri businessCardUri = new Uri("<businessCardUri>");
 #else
             Uri businessCardUri = FormRecognizerTestEnvironment.CreateUri("businessCard.jpg");
 #endif

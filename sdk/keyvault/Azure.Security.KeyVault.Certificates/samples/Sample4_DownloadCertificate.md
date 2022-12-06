@@ -33,12 +33,12 @@ if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
     keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
 }
 
-DownloadCertificateOptions options = new DownloadCertificateOptions
+DownloadCertificateOptions options = new DownloadCertificateOptions(certificateName)
 {
     KeyStorageFlags = keyStorageFlags
 };
 
-using X509Certificate2 certificate = client.DownloadCertificate(certificateName, options: options);
+using X509Certificate2 certificate = client.DownloadCertificate(options);
 using RSA key = certificate.GetRSAPrivateKey();
 
 byte[] signature = key.SignHash(hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
@@ -61,12 +61,12 @@ if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
     keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
 }
 
-DownloadCertificateOptions options = new DownloadCertificateOptions
+DownloadCertificateOptions options = new DownloadCertificateOptions(certificateName)
 {
     KeyStorageFlags = keyStorageFlags
 };
 
-using X509Certificate2 certificate = await client.DownloadCertificateAsync(certificateName, options: options);
+using X509Certificate2 certificate = await client.DownloadCertificateAsync(options);
 using RSA key = certificate.GetRSAPrivateKey();
 
 byte[] signature = key.SignHash(hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
@@ -86,12 +86,5 @@ using RSA publicKey = publicCertificate.GetRSAPublicKey();
 bool verified = publicKey.VerifyHash(hash, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 Debug.WriteLine($"Signature verified: {verified}");
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample4_DownloadCertificate.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample4_DownloadCertificate.cs)
-* [Asynchronous Sample4_DownloadCertificateAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample4_DownloadCertificateAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

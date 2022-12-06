@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocols = new ChangeTrackingList<AzureFirewallApplicationRuleProtocol>();
             TargetFqdns = new ChangeTrackingList<string>();
             FqdnTags = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallApplicationRule. </summary>
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocols"> Array of ApplicationRuleProtocols. </param>
         /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
         /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
-        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIpGroups)
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
+        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIPGroups)
         {
             Name = name;
             Description = description;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocols = protocols;
             TargetFqdns = targetFqdns;
             FqdnTags = fqdnTags;
-            SourceIpGroups = sourceIpGroups;
+            SourceIPGroups = sourceIPGroups;
         }
 
         /// <summary> Name of the application rule. </summary>
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of FQDN Tags for this rule. </summary>
         public IList<string> FqdnTags { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
     }
 }

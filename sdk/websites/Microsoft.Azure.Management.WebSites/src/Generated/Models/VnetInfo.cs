@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,8 +18,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// <summary>
     /// Virtual Network information contract.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class VnetInfo : ProxyOnlyResource
+    public partial class VnetInfo
     {
         /// <summary>
         /// Initializes a new instance of the VnetInfo class.
@@ -34,10 +31,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the VnetInfo class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="vnetResourceId">The Virtual Network's resource
         /// ID.</param>
         /// <param name="certThumbprint">The client certificate
@@ -55,8 +48,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// addresses.</param>
         /// <param name="isSwift">Flag that is used to denote if this is VNET
         /// injection</param>
-        public VnetInfo(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string vnetResourceId = default(string), string certThumbprint = default(string), string certBlob = default(string), IList<VnetRoute> routes = default(IList<VnetRoute>), bool? resyncRequired = default(bool?), string dnsServers = default(string), bool? isSwift = default(bool?))
-            : base(id, name, kind, type)
+        public VnetInfo(string vnetResourceId = default(string), string certThumbprint = default(string), string certBlob = default(string), IList<VnetRoute> routes = default(IList<VnetRoute>), bool? resyncRequired = default(bool?), string dnsServers = default(string), bool? isSwift = default(bool?))
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;
@@ -76,13 +68,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets the Virtual Network's resource ID.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vnetResourceId")]
+        [JsonProperty(PropertyName = "vnetResourceId")]
         public string VnetResourceId { get; set; }
 
         /// <summary>
         /// Gets the client certificate thumbprint.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.certThumbprint")]
+        [JsonProperty(PropertyName = "certThumbprint")]
         public string CertThumbprint { get; private set; }
 
         /// <summary>
@@ -90,13 +82,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.certBlob")]
+        [JsonProperty(PropertyName = "certBlob")]
         public string CertBlob { get; set; }
 
         /// <summary>
         /// Gets the routes that this Virtual Network connection uses.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.routes")]
+        [JsonProperty(PropertyName = "routes")]
         public IList<VnetRoute> Routes { get; private set; }
 
         /// <summary>
@@ -104,20 +96,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// required; otherwise,
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resyncRequired")]
+        [JsonProperty(PropertyName = "resyncRequired")]
         public bool? ResyncRequired { get; private set; }
 
         /// <summary>
         /// Gets or sets DNS servers to be used by this Virtual Network. This
         /// should be a comma-separated list of IP addresses.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dnsServers")]
+        [JsonProperty(PropertyName = "dnsServers")]
         public string DnsServers { get; set; }
 
         /// <summary>
         /// Gets or sets flag that is used to denote if this is VNET injection
         /// </summary>
-        [JsonProperty(PropertyName = "properties.isSwift")]
+        [JsonProperty(PropertyName = "isSwift")]
         public bool? IsSwift { get; set; }
 
     }

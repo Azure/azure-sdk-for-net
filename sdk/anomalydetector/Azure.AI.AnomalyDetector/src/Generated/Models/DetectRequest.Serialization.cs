@@ -47,6 +47,16 @@ namespace Azure.AI.AnomalyDetector.Models
                 writer.WritePropertyName("sensitivity");
                 writer.WriteNumberValue(Sensitivity.Value);
             }
+            if (Optional.IsDefined(ImputeMode))
+            {
+                writer.WritePropertyName("imputeMode");
+                writer.WriteStringValue(ImputeMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ImputeFixedValue))
+            {
+                writer.WritePropertyName("imputeFixedValue");
+                writer.WriteNumberValue(ImputeFixedValue.Value);
+            }
             writer.WriteEndObject();
         }
     }

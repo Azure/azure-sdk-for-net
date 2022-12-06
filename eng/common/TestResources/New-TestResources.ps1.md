@@ -18,7 +18,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
  [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>]
  [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>]
- [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-CI] [-Force] [-OutFile] [-SuppressVsoCommands] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
@@ -28,7 +28,8 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>]
- [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-SuppressVsoCommands] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -142,7 +143,6 @@ the SecureString to plaintext by another means.
 ### EXAMPLE 5
 ```
 New-TestResources.ps1 `
-    -BaseName 'Generated' `
     -ServiceDirectory '$(ServiceDirectory)' `
     -TenantId '$(TenantId)' `
     -ProvisionerApplicationId '$(ProvisionerId)' `
@@ -422,7 +422,7 @@ Optional location where resources should be created.
 If left empty, the default
 is based on the cloud to which the template is being deployed:
 
-* AzureCloud -\> 'westus2'
+* AzureCloud -\> 'westus'
 * AzureUSGovernment -\> 'usgovvirginia'
 * AzureChinaCloud -\> 'chinaeast2'
 * Dogfood -\> 'westus'
@@ -553,6 +553,24 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SuppressVsoCommands
+By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
+commands that cause them to be redacted.
+For CI environments that don't support this (like 
+stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: ($null -eq $env:SYSTEM_TEAMPROJECTID)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

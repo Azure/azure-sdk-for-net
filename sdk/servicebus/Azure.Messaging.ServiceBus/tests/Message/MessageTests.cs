@@ -111,9 +111,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 PartitionKey = "partition"
             };
-            Assert.That(
-                () => message.SessionId = "session",
-                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            message.SessionId = "session";
+            Assert.AreEqual("session", message.PartitionKey);
+            Assert.AreEqual(message.SessionId, message.PartitionKey);
 
             message = new ServiceBusMessage
             {
@@ -127,33 +127,44 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 PartitionKey = "partition"
             };
-            Assert.That(
-                () => message.SessionId = null,
-                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            message.SessionId = null;
+            Assert.IsNull(message.PartitionKey);
 
             message = new ServiceBusMessage
             {
                 PartitionKey = null,
                 SessionId = "session"
             };
+            Assert.IsNull(message.PartitionKey);
 
             message = new ServiceBusMessage
             {
                 SessionId = null,
                 PartitionKey = "partition"
             };
+            Assert.IsNull(message.SessionId);
 
             message = new ServiceBusMessage
             {
                 SessionId = "partition",
                 PartitionKey = "partition"
             };
+            Assert.AreEqual(message.SessionId, message.PartitionKey);
 
             message = new ServiceBusMessage
             {
                 PartitionKey = "partition",
                 SessionId = "partition"
             };
+            Assert.AreEqual(message.SessionId, message.PartitionKey);
+
+            message = new ServiceBusMessage
+            {
+                PartitionKey = "partition",
+                SessionId = "partition"
+            };
+            message.SessionId = "session";
+            Assert.AreEqual(message.SessionId, message.PartitionKey);
         }
 
         [Test]

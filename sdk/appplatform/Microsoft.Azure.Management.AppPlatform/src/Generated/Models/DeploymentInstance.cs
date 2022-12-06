@@ -37,13 +37,16 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// instance</param>
         /// <param name="startTime">Start time of the deployment
         /// instance</param>
-        public DeploymentInstance(string name = default(string), string status = default(string), string reason = default(string), string discoveryStatus = default(string), string startTime = default(string))
+        /// <param name="zone">Availability zone information of the deployment
+        /// instance</param>
+        public DeploymentInstance(string name = default(string), string status = default(string), string reason = default(string), string discoveryStatus = default(string), string startTime = default(string), string zone = default(string))
         {
             Name = name;
             Status = status;
             Reason = reason;
             DiscoveryStatus = discoveryStatus;
             StartTime = startTime;
+            Zone = zone;
             CustomInit();
         }
 
@@ -81,6 +84,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public string StartTime { get; private set; }
+
+        /// <summary>
+        /// Gets availability zone information of the deployment instance
+        /// </summary>
+        [JsonProperty(PropertyName = "zone")]
+        public string Zone { get; private set; }
 
     }
 }

@@ -24,8 +24,8 @@ namespace Azure.Storage
         /// <param name="range">
         /// Content range to download.
         /// </param>
-        /// <param name="hashingOptions">
-        /// Options for transactional hashing on downloads.
+        /// <param name="transferValidation">
+        /// Optional validation options.
         /// </param>
         /// <param name="async">
         /// Whether to perform the operation asynchronously.
@@ -38,7 +38,7 @@ namespace Azure.Storage
         /// </returns>
         public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
             HttpRange range,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions transferValidation,
             bool async,
             CancellationToken cancellationToken);
 
@@ -55,6 +55,23 @@ namespace Azure.Storage
         /// Resource properties.
         /// </returns>
         public delegate Task<Response<TProperties>> GetPropertiesAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delegate to replicate how a client will alter the download range.
+        /// Used to avoid requesting blob ranges that will result in error after transformation.
+        /// </summary>
+        /// <param name="range">Range this stream will request on download.</param>
+        /// <returns>Range the underlying client will adjust to.</returns>
+        /// <remarks>
+        /// Used by advanced features such as clientside encryption, which alters ranges to
+        /// ensure necessary info for decryption is downloaded.
+        /// </remarks>
+        public delegate HttpRange PredictEncryptedRangeAdjustment(HttpRange range);
+
+        /// <summary>
+        /// No-op for range adjustment.
+        /// </summary>
+        public static PredictEncryptedRangeAdjustment NoRangeAdjustment => range => range;
 
         /// <summary>
         /// The current position within the blob or file.
@@ -109,19 +126,27 @@ namespace Azure.Storage
         /// <summary>
         /// Hashing options to use with <see cref="_downloadInternalFunc"/>.
         /// </summary>
-        private readonly DownloadTransactionalHashingOptions _hashingOptions;
+        private readonly DownloadTransferValidationOptions _validationOptions;
+
+        /// <summary>
+        /// Helper to determine how <see cref="_downloadInternalFunc"/> will adjust the range this class.
+        /// requests.
+        /// </summary>
+        private readonly PredictEncryptedRangeAdjustment _predictEncryptedRangeAdjustment;
 
         public LazyLoadingReadOnlyStream(
             DownloadInternalAsync downloadInternalFunc,
             GetPropertiesAsync getPropertiesFunc,
-            DownloadTransactionalHashingOptions hashingOptions,
+            DownloadTransferValidationOptions transferValidation,
             bool allowModifications,
             long initialLenght,
             long position = 0,
-            int? bufferSize = default)
+            int? bufferSize = default,
+            PredictEncryptedRangeAdjustment rangePredictionFunc = default)
         {
             _downloadInternalFunc = downloadInternalFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
+            _predictEncryptedRangeAdjustment = rangePredictionFunc ?? (range => range);
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
@@ -132,17 +157,17 @@ namespace Azure.Storage
             _bufferInvalidated = false;
 
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            if (!(hashingOptions?.Validate ?? true))
+            if (!(transferValidation?.AutoValidateChecksum ?? true))
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }
             // we defer hash validation on download calls to validate in-place with our existing buffer
-            _hashingOptions = hashingOptions == default
+            _validationOptions = transferValidation == default
                 ? default
-                : new DownloadTransactionalHashingOptions
+                : new DownloadTransferValidationOptions
                 {
-                    Algorithm = hashingOptions.Algorithm,
-                    Validate = false
+                    ChecksumAlgorithm = transferValidation.ChecksumAlgorithm,
+                    AutoValidateChecksum = false
                 };
         }
 
@@ -186,7 +211,7 @@ namespace Azure.Storage
                 }
             }
 
-            if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _bufferInvalidated)
+            if (_bufferPosition == _bufferLength || _bufferInvalidated)
             {
                 int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (lastDownloadedBytes == 0)
@@ -215,7 +240,13 @@ namespace Azure.Storage
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
-            response = await _downloadInternalFunc(range, _hashingOptions, async, cancellationToken).ConfigureAwait(false);
+            // if _downloadInternalFunc is going to produce a range out of bounds response, we're at the end of the blob
+            if (_predictEncryptedRangeAdjustment(range).Offset >= _length)
+            {
+                return 0;
+            }
+
+            response = await _downloadInternalFunc(range, _validationOptions, async, cancellationToken).ConfigureAwait(false);
 
             using Stream networkStream = response.Value.Content;
 
@@ -259,10 +290,10 @@ namespace Azure.Storage
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
 
             // if we deferred transactional hash validation on download, validate now
-            // currently we always do but that may change
-            if (_hashingOptions != default && !_hashingOptions.Validate)
+            // currently we always defer but that may change
+            if (_validationOptions != default && _validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && !_validationOptions.AutoValidateChecksum)
             {
-                ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _hashingOptions.Algorithm, response.GetRawResponse());
+                ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _validationOptions.ChecksumAlgorithm, response.GetRawResponse());
             }
 
             return totalCopiedBytes;
@@ -304,9 +335,7 @@ namespace Azure.Storage
 
         private async Task<long> GetBlobLengthInternal(bool async, CancellationToken cancellationToken)
         {
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             Response<TProperties> response = await _getPropertiesInternalFunc(async, cancellationToken).ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
             response.GetRawResponse().Headers.TryGetValue("Content-Length", out string lengthString);
 
@@ -387,7 +416,7 @@ namespace Azure.Storage
 
             // newPosition is less than _position, but within _buffer.
             long beginningOfBuffer = _position - _bufferPosition;
-            if (newPosition < _position && newPosition > beginningOfBuffer)
+            if (newPosition < _position && newPosition >= beginningOfBuffer)
             {
                 _bufferPosition = (int)(newPosition - beginningOfBuffer);
                 _position = newPosition;

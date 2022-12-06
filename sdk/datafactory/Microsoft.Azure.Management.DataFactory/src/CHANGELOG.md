@@ -1,5 +1,74 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 8.0.0
+###  Feature Additions
+### Breaking Changes
+- Added properties to spark job activity
+- Added disablePublish property into FactoryRepoConfiguration
+- Added scriptBlockExecutionTimeout property into Script Activity
+
+## Version 7.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Stored Procedure Parameters in ADF
+
+## Version 6.4.0
+###  Feature Additions
+- Added GoogleSheets connector in ADF
+- Added Synapse Spark activities in ADF
+
+## Version 6.3.0
+###  Feature Additions
+- Changed FactoryGitHubConfiguration url format for hostName description
+- Added SAP ODP connector in ADF
+- Added support OAuth2ClientCredential auth in RestSevice
+
+## Version 6.2.0
+###  Feature Additions
+- Added globalParameters apis into ADF
+- Added support for running staging on multiple sources in parallel
+- Added purview configuration into ADF
+- Added support rejected data linked service in dataflow sink
+
+## Version 6.1.0
+###  Feature Additions
+- Added Dataworld, AppFigures, Asana, Twilio connectors in ADF
+- Added PrivateEndpoint property Into PrivateLinkConnectionApprovalRequest
+
+## Version 6.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Expression mode for SqlServerStoredProcedureActivity
+- Added Policy property into ExecutePipelineActivity
+
+## Version 5.4.0
+###  Feature Additions
+- Added Web Activity disable cert validation
+
+## Version 5.3.0
+###  Feature Additions
+- Added ScriptActivity in ADF
+- Added TeamDesk, Quickbase, Smartsheet, Zendesk connectors in ADF
+
+## Version 5.2.0
+###  Feature Additions
+- Added FailActivity in ADF
+- Fixed update PublicNetworkAccess not work in Factory Update API
+
+## Version 5.1.0
+###  Feature Additions
+- Added support UAMI M2
+- Added connectionProperties in GoogleAdWordsLinkedService
+- Added servicePrincipalCredentialType and servicePrincipalCredential into AzureBlobFSLinkedService
+
+## Version 5.0.0
+###  Feature Additions
+### Breaking Changes
+- Removed unnecessary additional properties for data flow flowlet for bug fix
+- Added optional property disableChunking in FTP and SFTP read settings
+- Added parameters for dataflow activity
+- Added possible values to pipeline run status description
+
 ## Version 4.28.0
 ###  Feature Additions
 - Supported Dataset and LinkedService for Rest call transform

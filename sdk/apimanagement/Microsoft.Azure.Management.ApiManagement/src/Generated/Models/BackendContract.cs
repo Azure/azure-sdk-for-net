@@ -35,15 +35,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="url">Runtime Url of the Backend.</param>
         /// <param name="protocol">Backend communication protocol. Possible
         /// values include: 'http', 'soap'</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="title">Backend Title.</param>
         /// <param name="description">Backend Description.</param>
         /// <param name="resourceId">Management Uri of the Resource in External
         /// System. This url can be the Arm Resource Id of Logic Apps, Function
-        /// Apps or Api Apps.</param>
+        /// Apps or API Apps.</param>
         /// <param name="properties">Backend Properties contract</param>
         /// <param name="credentials">Backend Credentials Contract
         /// Properties</param>
@@ -84,7 +86,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets management Uri of the Resource in External System.
         /// This url can be the Arm Resource Id of Logic Apps, Function Apps or
-        /// Api Apps.
+        /// API Apps.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceId")]
         public string ResourceId { get; set; }

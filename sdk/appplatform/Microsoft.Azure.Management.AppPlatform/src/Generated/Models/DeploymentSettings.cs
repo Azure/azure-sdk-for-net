@@ -31,26 +31,50 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentSettings class.
         /// </summary>
-        /// <param name="cpu">Required CPU, basic tier should be 1, standard
-        /// tier should be in range (1, 4)</param>
-        /// <param name="memoryInGB">Required Memory size in GB, basic tier
-        /// should be in range (1, 2), standard tier should be in range (1,
-        /// 8)</param>
-        /// <param name="jvmOptions">JVM parameter</param>
-        /// <param name="netCoreMainEntryPath">The path to the .NET executable
-        /// relative to zip root</param>
+        /// <param name="resourceRequests">The requested resource quantity for
+        /// required CPU and Memory. It is recommended that using this field to
+        /// represent the required CPU and Memory, the old field cpu and
+        /// memoryInGB will be deprecated later.</param>
         /// <param name="environmentVariables">Collection of environment
         /// variables</param>
-        /// <param name="runtimeVersion">Runtime version. Possible values
-        /// include: 'Java_8', 'Java_11', 'NetCore_31'</param>
-        public DeploymentSettings(int? cpu = default(int?), int? memoryInGB = default(int?), string jvmOptions = default(string), string netCoreMainEntryPath = default(string), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), string runtimeVersion = default(string))
+        /// <param name="addonConfigs">Collection of addons</param>
+        /// <param name="livenessProbe">Periodic probe of App Instance
+        /// liveness. App Instance will be restarted if the probe fails. More
+        /// info:
+        /// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes</param>
+        /// <param name="readinessProbe">Periodic probe of App Instance service
+        /// readiness. App Instance will be removed from service endpoints if
+        /// the probe fails. More info:
+        /// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes</param>
+        /// <param name="startupProbe">StartupProbe indicates that the App
+        /// Instance has successfully initialized. If specified, no other
+        /// probes are executed until this completes successfully. If this
+        /// probe fails, the Pod will be restarted, just as if the
+        /// livenessProbe failed. This can be used to provide different probe
+        /// parameters at the beginning of a App Instance's lifecycle, when it
+        /// might take a long time to load data or warm a cache, than during
+        /// steady-state operation. This cannot be updated. More info:
+        /// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes</param>
+        /// <param name="terminationGracePeriodSeconds">Optional duration in
+        /// seconds the App Instance needs to terminate gracefully. May be
+        /// decreased in delete request. Value must be non-negative integer.
+        /// The value zero indicates stop immediately via the kill signal (no
+        /// opportunity to shut down). If this value is nil, the default grace
+        /// period will be used instead. The grace period is the duration in
+        /// seconds after the processes running in the App Instance are sent a
+        /// termination signal and the time when the processes are forcibly
+        /// halted with a kill signal. Set this value longer than the expected
+        /// cleanup time for your process. Defaults to 90 seconds.</param>
+        public DeploymentSettings(ResourceRequests resourceRequests = default(ResourceRequests), IDictionary<string, string> environmentVariables = default(IDictionary<string, string>), IDictionary<string, IDictionary<string, object>> addonConfigs = default(IDictionary<string, IDictionary<string, object>>), Probe livenessProbe = default(Probe), Probe readinessProbe = default(Probe), Probe startupProbe = default(Probe), int? terminationGracePeriodSeconds = default(int?), ContainerProbeSettings containerProbeSettings = default(ContainerProbeSettings))
         {
-            Cpu = cpu;
-            MemoryInGB = memoryInGB;
-            JvmOptions = jvmOptions;
-            NetCoreMainEntryPath = netCoreMainEntryPath;
+            ResourceRequests = resourceRequests;
             EnvironmentVariables = environmentVariables;
-            RuntimeVersion = runtimeVersion;
+            AddonConfigs = addonConfigs;
+            LivenessProbe = livenessProbe;
+            ReadinessProbe = readinessProbe;
+            StartupProbe = startupProbe;
+            TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
+            ContainerProbeSettings = containerProbeSettings;
             CustomInit();
         }
 
@@ -60,30 +84,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets required CPU, basic tier should be 1, standard tier
-        /// should be in range (1, 4)
+        /// Gets or sets the requested resource quantity for required CPU and
+        /// Memory. It is recommended that using this field to represent the
+        /// required CPU and Memory, the old field cpu and memoryInGB will be
+        /// deprecated later.
         /// </summary>
-        [JsonProperty(PropertyName = "cpu")]
-        public int? Cpu { get; set; }
-
-        /// <summary>
-        /// Gets or sets required Memory size in GB, basic tier should be in
-        /// range (1, 2), standard tier should be in range (1, 8)
-        /// </summary>
-        [JsonProperty(PropertyName = "memoryInGB")]
-        public int? MemoryInGB { get; set; }
-
-        /// <summary>
-        /// Gets or sets JVM parameter
-        /// </summary>
-        [JsonProperty(PropertyName = "jvmOptions")]
-        public string JvmOptions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the path to the .NET executable relative to zip root
-        /// </summary>
-        [JsonProperty(PropertyName = "netCoreMainEntryPath")]
-        public string NetCoreMainEntryPath { get; set; }
+        [JsonProperty(PropertyName = "resourceRequests")]
+        public ResourceRequests ResourceRequests { get; set; }
 
         /// <summary>
         /// Gets or sets collection of environment variables
@@ -92,11 +99,82 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public IDictionary<string, string> EnvironmentVariables { get; set; }
 
         /// <summary>
-        /// Gets or sets runtime version. Possible values include: 'Java_8',
-        /// 'Java_11', 'NetCore_31'
+        /// Gets or sets collection of addons
         /// </summary>
-        [JsonProperty(PropertyName = "runtimeVersion")]
-        public string RuntimeVersion { get; set; }
+        [JsonProperty(PropertyName = "addonConfigs")]
+        public IDictionary<string, IDictionary<string, object>> AddonConfigs { get; set; }
 
+        /// <summary>
+        /// Gets or sets periodic probe of App Instance liveness. App Instance
+        /// will be restarted if the probe fails. More info:
+        /// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        /// </summary>
+        [JsonProperty(PropertyName = "livenessProbe")]
+        public Probe LivenessProbe { get; set; }
+
+        /// <summary>
+        /// Gets or sets periodic probe of App Instance service readiness. App
+        /// Instance will be removed from service endpoints if the probe fails.
+        /// More info:
+        /// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        /// </summary>
+        [JsonProperty(PropertyName = "readinessProbe")]
+        public Probe ReadinessProbe { get; set; }
+
+        /// <summary>
+        /// Gets or sets startupProbe indicates that the App Instance has
+        /// successfully initialized. If specified, no other probes are
+        /// executed until this completes successfully. If this probe fails,
+        /// the Pod will be restarted, just as if the livenessProbe failed.
+        /// This can be used to provide different probe parameters at the
+        /// beginning of a App Instance's lifecycle, when it might take a long
+        /// time to load data or warm a cache, than during steady-state
+        /// operation. This cannot be updated. More info:
+        /// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+        /// </summary>
+        [JsonProperty(PropertyName = "startupProbe")]
+        public Probe StartupProbe { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional duration in seconds the App Instance needs to
+        /// terminate gracefully. May be decreased in delete request. Value
+        /// must be non-negative integer. The value zero indicates stop
+        /// immediately via the kill signal (no opportunity to shut down). If
+        /// this value is nil, the default grace period will be used instead.
+        /// The grace period is the duration in seconds after the processes
+        /// running in the App Instance are sent a termination signal and the
+        /// time when the processes are forcibly halted with a kill signal. Set
+        /// this value longer than the expected cleanup time for your process.
+        /// Defaults to 90 seconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "terminationGracePeriodSeconds")]
+        public int? TerminationGracePeriodSeconds { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "containerProbeSettings")]
+        public ContainerProbeSettings ContainerProbeSettings { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (LivenessProbe != null)
+            {
+                LivenessProbe.Validate();
+            }
+            if (ReadinessProbe != null)
+            {
+                ReadinessProbe.Validate();
+            }
+            if (StartupProbe != null)
+            {
+                StartupProbe.Validate();
+            }
+        }
     }
 }

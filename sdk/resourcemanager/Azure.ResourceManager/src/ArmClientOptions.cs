@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.ComponentModel;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager
 {
@@ -15,48 +15,25 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
-        private readonly ConcurrentDictionary<Type, object> _overrides = new ConcurrentDictionary<Type, object>();
+        internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         /// <summary>
-        /// Gets the ApiVersions object
+        /// Gets or sets Azure cloud environment.
         /// </summary>
-        public ApiVersions ApiVersions { get; private set; }
+        public ArmEnvironment? Environment { get; set; }
 
         /// <summary>
-        /// Gets the ApiVersions object
+        /// Sets the api version to use for a given resource type.
+        /// To find which API Versions are available in your environment you can use the <see cref="ResourceProviderResource.Get"/> method
+        /// for the provider namespace you are interested in.
         /// </summary>
-        public string Scope { get; set; } = "https://management.core.windows.net/.default";
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
-        /// </summary>
-        public ArmClientOptions()
+        /// <param name="resourceType"> The resource type to set the version for. </param>
+        /// <param name="apiVersion"> The api version to use. </param>
+        public void SetApiVersion(ResourceType resourceType, string apiVersion)
         {
-            ApiVersions = new ApiVersions(this);
-        }
+            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
 
-        /// <summary>
-        /// Gets override object.
-        /// </summary>
-        /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
-        /// <param name="objectConstructor"> A function used to construct a new object if none was found. </param>
-        /// <returns> The override object. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public object GetOverrideObject<T>(Func<object> objectConstructor)
-        {
-            if (objectConstructor is null)
-                throw new ArgumentNullException(nameof(objectConstructor));
-
-            return _overrides.GetOrAdd(typeof(T), objectConstructor());
-        }
-
-        internal ArmClientOptions Clone()
-        {
-            ArmClientOptions copy = new ArmClientOptions();
-
-            copy.ApiVersions = ApiVersions.Clone();
-            copy.Transport = Transport;
-            return copy;
+            ResourceApiVersionOverrides[resourceType] = apiVersion;
         }
     }
 }

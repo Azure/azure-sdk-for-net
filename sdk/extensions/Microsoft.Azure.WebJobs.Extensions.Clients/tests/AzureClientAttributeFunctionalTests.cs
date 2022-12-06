@@ -18,20 +18,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
     {
         public AzureClientAttributeFunctionalTests(bool isAsync) : base(isAsync)
         {
-            Matcher = new RecordMatcher()
-            {
-                IgnoredQueryParameters =
-                {
-                    // Ignore KeyVault client API Version when matching
-                    "api-version"
-                }
-            };
+            // Ignore KeyVault client API Version when matching
+            IgnoredQueryParameters.Add("api-version");
         }
 
         [RecordedTest]
         public async Task CanInjectKeyVaultClient()
         {
-            // We don't controll the client creation
+            // We don't control the client creation
             ValidateClientInstrumentation = false;
             var host = new HostBuilder()
                 .ConfigureServices(services => services.AddAzureClients(builder => builder

@@ -5,24 +5,25 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    /// <summary> The ErrorResponse. </summary>
+    /// <summary> Represents an error response. </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        internal ErrorResponse()
+        /// <param name="error"> The Error object. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
+        internal ErrorResponse(ErrorDetail error)
         {
-        }
+            Argument.AssertNotNull(error, nameof(error));
 
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"></param>
-        internal ErrorResponse(Error error)
-        {
             Error = error;
         }
 
-        /// <summary> Gets the error. </summary>
-        public Error Error { get; }
+        /// <summary> The Error object. </summary>
+        public ErrorDetail Error { get; }
     }
 }

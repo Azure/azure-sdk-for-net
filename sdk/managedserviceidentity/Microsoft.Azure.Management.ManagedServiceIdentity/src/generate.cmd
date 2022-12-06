@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd managedserviceidentity/resource-manager %*
+call %~dp0..\..\..\..\tools\generate.cmd msi/resource-manager v2 %*

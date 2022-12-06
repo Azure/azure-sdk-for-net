@@ -36,7 +36,24 @@ namespace Azure.Identity.Tests.Mock
             AzureCloudInstance,
             string,
             bool,
-            CancellationToken, AuthenticationResult> RefreshTokenFactory { get; set; }
+            CancellationToken, AuthenticationResult> RefreshTokenFactory
+        { get; set; }
+
+        public MockMsalPublicClient() { }
+
+        public MockMsalPublicClient(AuthenticationResult result)
+        {
+            AuthFactory = (_,_) => result;
+            UserPassAuthFactory = (_,_) => result;
+            InteractiveAuthFactory = (_,_,_,_,_,_,_) => result;
+            SilentAuthFactory = (_,_) => result;
+            ExtendedSilentAuthFactory = (_,_,_,_,_,_) => result;
+            DeviceCodeAuthFactory = (_,_) => result;
+            RefreshTokenFactory = (_,_,_,_,_,_,_) => result;
+        }
+
+        public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
+            : base(pipeline, tenantId, clientId, redirectUrl, options) { }
 
         protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool async, CancellationToken cancellationToken)
         {
@@ -47,7 +64,7 @@ namespace Azure.Identity.Tests.Mock
             string[] scopes,
             string claims,
             string username,
-            SecureString password,
+            string password,
             string tenantId,
             bool async,
             CancellationToken cancellationToken)

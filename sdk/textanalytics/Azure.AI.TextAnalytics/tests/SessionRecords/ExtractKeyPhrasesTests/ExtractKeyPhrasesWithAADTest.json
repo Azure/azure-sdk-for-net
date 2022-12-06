@@ -1,56 +1,65 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/keyPhrases",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "92",
+        "Content-Length": "139",
         "Content-Type": "application/json",
-        "traceparent": "00-feefd74e2ffeff488e436e78ffafba91-0c8e959e2f45df49-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "0e2817fb33e29ab963263578057e277d",
+        "traceparent": "00-eed16a7d05f4a99cffe0bb5fed1a5e4a-999970381bcd6081-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221023.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7849c2f92f70dd2b2fd2232f2b4f969e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "My cat might need to see a veterinarian.",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "My cat might need to see a veterinarian.",
+              "language": "en"
+            }
+          ]
+        },
+        "kind": "KeyPhraseExtraction"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d8762a7c-8a25-47ad-a9f7-962d31ad6c71",
+        "apim-request-id": "9bfe3d7a-cfb6-43bc-82c0-cf464649effb",
+        "Content-Length": "164",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Mon, 25 Oct 2021 23:04:33 GMT",
+        "Date": "Mon, 24 Oct 2022 20:14:27 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "14",
+        "x-ms-region": "West US 2"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "id": "0",
-            "keyPhrases": [
-              "cat",
-              "veterinarian"
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2021-06-01"
+        "kind": "KeyPhraseExtractionResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "keyPhrases": [
+                "cat",
+                "veterinarian"
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2022-10-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1552588999",
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "402628126",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

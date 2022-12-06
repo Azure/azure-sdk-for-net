@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Get an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Get an event subscription of a partner topic.
+        /// Get properties of an event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Delete an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Delete an event subscription of a partner topic.
+        /// Delete an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Update event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Update event subscription of a partner topic.
+        /// Update an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -1162,7 +1162,7 @@ namespace Microsoft.Azure.Management.EventGrid
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1205,6 +1205,24 @@ namespace Microsoft.Azure.Management.EventGrid
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventSubscription>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
             if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1233,7 +1251,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Delete an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Delete an event subscription of a partner topic.
+        /// Delete an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -1422,7 +1440,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Update event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Update event subscription of a partner topic.
+        /// Update an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.

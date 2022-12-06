@@ -44,7 +44,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 .ConfigureAwait(false);
 
             IotHubDefinitionDescription returnedHub = updatedInstance.Properties.IotHubs
-                .FirstOrDefault(x => x.ConnectionString.StartsWith($"HostName={iotHub.Name}.azure-devices.net;"));
+                .FirstOrDefault(x => x.Name.Equals($"{iotHub.Name}.azure-devices.net"));
             returnedHub.Should().NotBeNull();
             connectionString = returnedHub.ConnectionString;
 

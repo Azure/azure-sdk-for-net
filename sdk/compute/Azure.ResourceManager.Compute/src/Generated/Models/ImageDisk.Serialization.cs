@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri");
-                writer.WriteStringValue(BlobUri);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -58,10 +59,10 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<WritableSubResource> snapshot = default;
             Optional<WritableSubResource> managedDisk = default;
-            Optional<string> blobUri = default;
-            Optional<CachingTypes> caching = default;
+            Optional<Uri> blobUri = default;
+            Optional<CachingType> caching = default;
             Optional<int> diskSizeGB = default;
-            Optional<StorageAccountTypes> storageAccountType = default;
+            Optional<StorageAccountType> storageAccountType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,7 +88,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("blobUri"))
                 {
-                    blobUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        blobUri = null;
+                        continue;
+                    }
+                    blobUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("caching"))
@@ -97,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingTypes();
+                    caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))
@@ -117,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountTypes(property.Value.GetString());
+                    storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))

@@ -13,11 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class SubnetTests : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
-        public SubnetTests(bool isAsync) : base(isAsync)
+        public SubnetTests(bool isAsync, string apiVersion)
+        : base(isAsync, SubnetResource.ResourceType, apiVersion)
         {
         }
 
@@ -58,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             // Create a Subnet
             // Populate paramters for a Subnet
@@ -69,23 +71,23 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             #region Verification
-            var putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().CreateOrUpdateAsync(subnet2Name, subnet);
+            var putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnet2Name, subnet);
             await putSubnetResponseOperation.WaitForCompletionAsync();;
-            Response<VirtualNetwork> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
+            Response<VirtualNetworkResource> getVnetResponse = await virtualNetworkCollection.GetAsync(vnetName);
             Assert.AreEqual(2, getVnetResponse.Value.Data.Subnets.Count());
 
-            Response<Subnet> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnet2Name);
+            Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnet2Name);
 
             // Verify the getSubnetResponse
             Assert.True(AreSubnetsEqual(getVnetResponse.Value.Data.Subnets[1], getSubnetResponse.Value.Data));
 
-            AsyncPageable<Subnet> getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
-            List<Subnet> getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
+            AsyncPageable<SubnetResource> getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
+            List<SubnetResource> getSubnetListResponse = await getSubnetListResponseAP.ToEnumerableAsync();
             // Verify ListSubnets
             Assert.True(AreSubnetListsEqual(getVnetResponse.Value.Data.Subnets, getSubnetListResponse));
 
             // Delete the subnet "subnet1"
-            await getSubnetResponse.Value.DeleteAsync();
+            await getSubnetResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             // Verify that the deletion was successful
             getSubnetListResponseAP = vnetResponse.Value.GetSubnets().GetAllAsync();
@@ -122,9 +124,9 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
-            Response<Subnet> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
+            Response<SubnetResource> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
             Assert.Null(getSubnetResponse.Value.Data.ResourceNavigationLinks);
 
             //TODO:Need RedisManagementClient
@@ -159,17 +161,44 @@ namespace Azure.ResourceManager.Network.Tests
         private bool AreSubnetsEqual(SubnetData subnet1, SubnetData subnet2)
         {
             return subnet1.Id == subnet2.Id &&
-                   subnet1.Etag == subnet2.Etag &&
+                   subnet1.ETag == subnet2.ETag &&
                    subnet1.ProvisioningState == subnet2.ProvisioningState &&
                    subnet1.Name == subnet2.Name &&
                    subnet1.AddressPrefix == subnet2.AddressPrefix;
         }
 
-        private bool AreSubnetListsEqual(IEnumerable<SubnetData> subnets1, IEnumerable<Subnet> subnets2)
+        private bool AreSubnetListsEqual(IEnumerable<SubnetData> subnets1, IEnumerable<SubnetResource> subnets2)
         {
             var subnetCollection = subnets1.Zip(subnets2, (s1, s2) => new { subnet1 = s1, subnet2 = s2.Data });
 
             return subnetCollection.All(subnets => AreSubnetsEqual(subnets.subnet1, subnets.subnet2));
+        }
+
+        [RecordedTest]
+        public async Task ExpandResourceTest()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
+
+            // Create Vnet
+            string vnetName = Recording.GenerateAssetName("azsmnet");
+            string subnetName = Recording.GenerateAssetName("azsmnet");
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+
+            // Get subnet with expanded ipconfigurations
+            Response<SubnetResource> subnet = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(
+                subnetName,
+                "IPConfigurations");
+
+            foreach (NetworkIPConfiguration ipconfig in subnet.Value.Data.IPConfigurations)
+            {
+                Assert.NotNull(ipconfig.Id);
+                //Assert.NotNull(ipconfig.Name);
+                //Assert.NotNull(ipconfig.Etag);
+                Assert.NotNull(ipconfig.PrivateIPAddress);
+            }
         }
     }
 }

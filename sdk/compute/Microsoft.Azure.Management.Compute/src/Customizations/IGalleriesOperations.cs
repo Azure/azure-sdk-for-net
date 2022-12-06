@@ -13,6 +13,7 @@
     /// </summary>
     public partial interface IGalleriesOperations
     {
+        Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName, string select, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves information about a Shared Image Gallery.
         /// </summary>

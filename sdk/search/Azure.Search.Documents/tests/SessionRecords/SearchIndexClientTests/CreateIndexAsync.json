@@ -1,23 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2021-04-30-Preview",
+      "RequestUri": "https://shreja-search-service.search.windows.net/indexes?api-version=2021-04-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4314",
+        "Content-Length": "4339",
         "Content-Type": "application/json",
-        "traceparent": "00-6df0618f52674d43b178b6fcfbf2694f-3a59aadf02a53d44-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210831.1",
-          "(.NET Framework 4.8.4400.0; Microsoft Windows 10.0.19044 )"
-        ],
-        "x-ms-client-request-id": "aa80379a73db164d8f4210e420ecefbc",
+        "traceparent": "00-337154cf2b78d341b5b0dc526f135de3-b765b87819410349-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220707.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "38c1010150520b5637f8addced91f1ba",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "tkubrcbf",
+        "name": "jnkxivww",
         "fields": [
           {
             "name": "hotelId",
@@ -163,7 +160,8 @@
                 "searchable": true,
                 "filterable": true,
                 "sortable": true,
-                "facetable": true
+                "facetable": true,
+                "normalizer": "lowercase"
               },
               {
                 "name": "stateProvince",
@@ -326,25 +324,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "aa80379a-73db-164d-8f42-10e420ecefbc",
-        "Content-Length": "7122",
+        "client-request-id": "38c10101-5052-0b56-37f8-addced91f1ba",
+        "Content-Length": "7156",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 31 Aug 2021 23:40:31 GMT",
-        "elapsed-time": "652",
-        "ETag": "W/\u00220x8D96CD8B9166457\u0022",
+        "Date": "Thu, 07 Jul 2022 19:16:30 GMT",
+        "elapsed-time": "885",
+        "ETag": "W/\u00220x8DA604D32DEF061\u0022",
         "Expires": "-1",
-        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027tkubrcbf\u0027)?api-version=2021-04-30-Preview",
+        "Location": "https://shreja-search-service.search.windows.net/indexes(\u0027jnkxivww\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "aa80379a-73db-164d-8f42-10e420ecefbc",
+        "request-id": "38c10101-5052-0b56-37f8-addced91f1ba",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "aa80379a-73db-164d-8f42-10e420ecefbc"
+        "x-ms-client-request-id": "38c10101-5052-0b56-37f8-addced91f1ba"
       },
       "ResponseBody": {
-        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D96CD8B9166457\u0022",
-        "name": "tkubrcbf",
+        "@odata.context": "https://shreja-search-service.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8DA604D32DEF061\u0022",
+        "name": "jnkxivww",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -558,7 +556,7 @@
                 "indexAnalyzer": null,
                 "searchAnalyzer": null,
                 "analyzer": null,
-                "normalizer": null,
+                "normalizer": "lowercase",
                 "synonymMaps": []
               },
               {
@@ -791,44 +789,43 @@
           "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
           "k1": null,
           "b": null
-        }
+        },
+        "semantic": null
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027tkubrcbf\u0027)?api-version=2021-04-30-Preview",
+      "RequestUri": "https://shreja-search-service.search.windows.net/indexes(\u0027jnkxivww\u0027)?api-version=2021-04-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-0eaba3a94a78c8489924766722b83729-b946c8e0f31d2945-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210831.1",
-          "(.NET Framework 4.8.4400.0; Microsoft Windows 10.0.19044 )"
-        ],
-        "x-ms-client-request-id": "48422d284ea7facf3728c9c3bc301ed9",
+        "Content-Length": "0",
+        "traceparent": "00-040d416d3c819946910c8d4c6289109b-58ca169c39e51943-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.4.0-alpha.20220707.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "464f38e8d13b8fefe5b9f73b0599787a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "48422d28-4ea7-facf-3728-c9c3bc301ed9",
-        "Date": "Tue, 31 Aug 2021 23:40:31 GMT",
-        "elapsed-time": "135",
+        "client-request-id": "464f38e8-d13b-8fef-e5b9-f73b0599787a",
+        "Date": "Thu, 07 Jul 2022 19:16:30 GMT",
+        "elapsed-time": "200",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "48422d28-4ea7-facf-3728-c9c3bc301ed9",
+        "request-id": "464f38e8-d13b-8fef-e5b9-f73b0599787a",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "48422d28-4ea7-facf-3728-c9c3bc301ed9"
+        "x-ms-client-request-id": "464f38e8-d13b-8fef-e5b9-f73b0599787a"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1121409174",
-    "SearchIndexName": "tkubrcbf",
+    "RandomSeed": "1663429566",
+    "SearchIndexName": "jnkxivww",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_SERVICE_NAME": "shreja-search-service"
   }
 }

@@ -48,12 +48,19 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// integration runtime.</param>
         /// <param name="ssisProperties">SSIS properties for managed
         /// integration runtime.</param>
-        public ManagedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string state = default(string), IntegrationRuntimeComputeProperties computeProperties = default(IntegrationRuntimeComputeProperties), IntegrationRuntimeSsisProperties ssisProperties = default(IntegrationRuntimeSsisProperties))
+        /// <param name="referenceName">The reference name of the managed
+        /// virtual network.</param>
+        /// <param name="type">The type of the managed virtual network.</param>
+        /// <param name="id">The id of the managed virtual network.</param>
+        public ManagedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string state = default(string), IntegrationRuntimeComputeProperties computeProperties = default(IntegrationRuntimeComputeProperties), IntegrationRuntimeSsisProperties ssisProperties = default(IntegrationRuntimeSsisProperties), string referenceName = default(string), string type = default(string), string id = default(string))
             : base(additionalProperties, description)
         {
             State = state;
             ComputeProperties = computeProperties;
             SsisProperties = ssisProperties;
+            ReferenceName = referenceName;
+            Type = type;
+            Id = id;
             CustomInit();
         }
 
@@ -82,6 +89,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.ssisProperties")]
         public IntegrationRuntimeSsisProperties SsisProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference name of the managed virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedVirtualNetwork.referenceName")]
+        public string ReferenceName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the managed virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedVirtualNetwork.type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the managed virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedVirtualNetwork.id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Validate the object.

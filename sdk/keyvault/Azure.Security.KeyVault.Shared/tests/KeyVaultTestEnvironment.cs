@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Tests
         /// <summary>
         /// Gets the default polling interval to use in tests.
         /// </summary>
-        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(10);
+        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// Gets the URI to Key Vault.
@@ -75,10 +75,7 @@ namespace Azure.Security.KeyVault.Tests
         /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
         /// </summary>
-        public Uri AttestationUri => Uri.TryCreate(GetRecordedOptionalVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute, out Uri attestationUri)
-            ? attestationUri
-            // BUGBUG: Make required when https://github.com/Azure/azure-sdk-for-net/issues/22750 is resolved.
-            : throw new IgnoreException($"Required variable 'AZURE_KEYVAULT_ATTESTATION_URL' is not defined");
+        public Uri AttestationUri => new(GetRecordedVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute);
 
         /// <summary>
         /// Throws an <see cref="IgnoreException"/> if <see cref="ManagedHsmUrl"/> is not defined.

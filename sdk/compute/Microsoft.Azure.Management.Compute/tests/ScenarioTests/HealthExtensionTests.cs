@@ -29,8 +29,8 @@ namespace Compute.Tests
                 Settings = new JRaw("{ \"port\": 3389, \"protocol\": \"tcp\" }"),
                 ProtectedSettings = "{}"
             };
-            typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
@@ -56,6 +56,7 @@ namespace Compute.Tests
 
                     // Add an extension to the VM
                     var vmExtension = GetHealthVMExtension();
+                    vmExtension.Location = vm.Location;
                     var response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension.Name, vmExtension);
                     ValidateVMExtension(vmExtension, response);
 

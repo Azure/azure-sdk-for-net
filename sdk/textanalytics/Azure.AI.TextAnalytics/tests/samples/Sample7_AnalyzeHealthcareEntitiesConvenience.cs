@@ -4,13 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
+    public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
         public void AnalyzeHealthcareEntitiesConvenience()
@@ -18,7 +16,8 @@ namespace Azure.AI.TextAnalytics.Samples
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenience
             // get input documents
@@ -72,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // view operation results
             foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
-                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Results of \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
 
                 foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)

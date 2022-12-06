@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -15,26 +16,32 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of KeyVaultAndKeyReference. </summary>
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
-        /// <param name="keyUrl"> Url pointing to a key or secret in KeyVault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="keyUrl"/> is null. </exception>
-        public KeyVaultAndKeyReference(WritableSubResource sourceVault, string keyUrl)
+        /// <param name="keyUri"> Url pointing to a key or secret in KeyVault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="keyUri"/> is null. </exception>
+        public KeyVaultAndKeyReference(WritableSubResource sourceVault, Uri keyUri)
         {
-            if (sourceVault == null)
-            {
-                throw new ArgumentNullException(nameof(sourceVault));
-            }
-            if (keyUrl == null)
-            {
-                throw new ArgumentNullException(nameof(keyUrl));
-            }
+            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
+            Argument.AssertNotNull(keyUri, nameof(keyUri));
 
             SourceVault = sourceVault;
-            KeyUrl = keyUrl;
+            KeyUri = keyUri;
         }
 
         /// <summary> Resource id of the KeyVault containing the key or secret. </summary>
-        public WritableSubResource SourceVault { get; set; }
+        internal WritableSubResource SourceVault { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SourceVaultId
+        {
+            get => SourceVault is null ? default : SourceVault.Id;
+            set
+            {
+                if (SourceVault is null)
+                    SourceVault = new WritableSubResource();
+                SourceVault.Id = value;
+            }
+        }
+
         /// <summary> Url pointing to a key or secret in KeyVault. </summary>
-        public string KeyUrl { get; set; }
+        public Uri KeyUri { get; set; }
     }
 }

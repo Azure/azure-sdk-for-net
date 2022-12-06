@@ -68,15 +68,15 @@ namespace Azure.Communication.PhoneNumbers
         #region private constructors
 
         private PhoneNumbersClient(ConnectionString connectionString, PhoneNumbersClientOptions options)
-            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+            : this(connectionString.GetRequired("endpoint"), options.BuildPhoneNumbersHttpPipeline(connectionString), options)
         { }
 
         private PhoneNumbersClient(string endpoint, AzureKeyCredential keyCredential, PhoneNumbersClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+            : this(endpoint, options.BuildPhoneNumbersHttpPipeline(keyCredential), options)
         { }
 
         private PhoneNumbersClient(string endpoint, TokenCredential tokenCredential, PhoneNumbersClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+            : this(endpoint, options.BuildPhoneNumbersHttpPipeline(tokenCredential), options)
         { }
 
         private PhoneNumbersClient(string endpoint, HttpPipeline httpPipeline, PhoneNumbersClientOptions options)

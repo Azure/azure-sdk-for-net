@@ -187,7 +187,10 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder = new BlobUriBuilder(conn.BlobEndpoint) { BlobContainerName = blobContainerName };
+            var builder = new BlobUriBuilder(conn.BlobEndpoint, options?.TrimBlobNameSlashes ?? Constants.DefaultTrimBlobNameSlashes)
+            {
+                BlobContainerName = blobContainerName
+            };
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
 
@@ -197,7 +200,9 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _containerRestClient = BuildContainerRestClient(_uri);
@@ -256,7 +261,9 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -344,7 +351,9 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -413,7 +422,9 @@ namespace Azure.Storage.Blobs
                     clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
-                    encryptionScope: null),
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 clientSideEncryption: null);
         }
 
@@ -437,7 +448,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected internal virtual BlobBaseClient GetBlobBaseClientCore(string blobName)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
             };
@@ -458,7 +469,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName)
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
             };
@@ -486,7 +497,7 @@ namespace Azure.Storage.Blobs
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
             }
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
             };
@@ -513,7 +524,7 @@ namespace Azure.Storage.Blobs
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
             }
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
             };
@@ -540,7 +551,7 @@ namespace Azure.Storage.Blobs
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
             }
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
             };
@@ -567,7 +578,7 @@ namespace Azure.Storage.Blobs
         {
             if (_name == null || _accountName == null)
             {
-                var builder = new BlobUriBuilder(Uri);
+                var builder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes);
                 _name = builder.BlobContainerName;
                 _accountName = builder.AccountName;
             }
@@ -1204,7 +1215,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified
         /// container for deletion. The container and any blobs contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection which
+        /// could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1219,7 +1231,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1237,7 +1249,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
         /// container for deletion. The container and any blobs contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection which
+        /// could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1252,7 +1265,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1270,7 +1283,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified
         /// container for deletion if it exists. The container and any blobs
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1286,7 +1300,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if container exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1304,7 +1318,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified
         /// container for deletion if it exists. The container and any blobs
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1320,7 +1335,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if container exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1338,7 +1353,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified
         /// container for deletion if it exists. The container and any blobs
-        /// contained within it are later deleted during garbage collection.
+        /// contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1357,7 +1373,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> Returns true if container exists and was
-        /// deleted, return false otherwise.
+        /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1413,7 +1429,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
         /// container for deletion. The container and any blobs contained
-        /// within it are later deleted during garbage collection.
+        /// within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1434,7 +1451,7 @@ namespace Azure.Storage.Blobs
         /// Optional. To indicate if the name of the operation.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3038,7 +3055,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlob"/> operation marks the specified
         /// blob or snapshot for deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3061,7 +3078,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3082,7 +3099,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlobAsync"/> operation marks the specified
         /// blob or snapshot for deletion. The blob is later deleted during
-        /// garbage collection.
+        /// garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3105,7 +3122,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3127,7 +3144,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlobIfExists"/> operation marks the specified
         /// blob or snapshot for deletion, if the blob or snapshot exists. The blob
-        /// is later deleted during garbage collection.
+        /// is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3150,7 +3167,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3171,7 +3188,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="DeleteBlobIfExistsAsync"/> operation marks the specified
         /// blob or snapshot for deletion, if the blob or snapshot exists. The blob
-        /// is later deleted during garbage collection.
+        /// is later deleted during garbage collection which could take several minutes.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -3194,7 +3211,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3336,7 +3353,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri)
+                    BlobUriBuilder uriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
                     {
                         BlobContainerName = destinationContainerName
                     };
@@ -3381,6 +3398,130 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Rename
+
+        #region FilterBlobs
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
+        /// Find Blobs by Tags</see>.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
+            string tagFilterSqlExpression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
+        /// Find Blobs by Tags</see>.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// Example expression: "tagKey"='tagValue'.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
+            string tagFilterSqlExpression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToAsyncCollection(cancellationToken);
+
+        internal async Task<Response<FilterBlobSegment>> FindBlobsByTagsInternal(
+            string marker,
+            string expression,
+            int? pageSizeHint,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(expression)}: {expression}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(FindBlobsByTags)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<FilterBlobSegment, ContainerFilterBlobsHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.FilterBlobsAsync(
+                            where: expression,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.FilterBlobs(
+                            where: expression,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion FilterBlobs
 
         #region GenerateSas
         /// <summary>
@@ -3460,7 +3601,7 @@ namespace Azure.Storage.Blobs
                     nameof(builder.BlobName),
                     nameof(Constants.Blob.Container.Name));
             }
-            BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
@@ -3483,7 +3624,7 @@ namespace Azure.Storage.Blobs
         {
             if (_parentBlobServiceClient == null)
             {
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
                 {
                     // erase parameters unrelated to service
                     BlobContainerName = null,

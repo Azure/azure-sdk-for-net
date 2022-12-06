@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -14,14 +15,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of SynapseNotebookReference. </summary>
         /// <param name="type"> Synapse notebook reference type. </param>
-        /// <param name="referenceName"> Reference notebook name. </param>
+        /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public SynapseNotebookReference(NotebookReferenceType type, string referenceName)
+        public SynapseNotebookReference(NotebookReferenceType type, object referenceName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             Type = type;
             ReferenceName = referenceName;
@@ -29,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Synapse notebook reference type. </summary>
         public NotebookReferenceType Type { get; set; }
-        /// <summary> Reference notebook name. </summary>
-        public string ReferenceName { get; set; }
+        /// <summary> Reference notebook name. Type: string (or Expression with resultType string). </summary>
+        public object ReferenceName { get; set; }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
@@ -11,8 +12,9 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        KeyClientOptions.ServiceVersion.V7_4_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_3,
+        KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmCryptographyClientLiveTests : CryptographyClientLiveTests
     {
         private static readonly IEnumerable<KeyOperation> s_aesKeyOps = new[]
@@ -38,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 // To provision Managed HSM: New-TestResources.ps1 -AdditionalParameters @{enableHsm=$true}
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
-        [Test]
+        [RecordedTest]
         public async Task EncryptLocalDecryptOnManagedHsm([EnumValues(
             nameof(EncryptionAlgorithm.A128Cbc),
             nameof(EncryptionAlgorithm.A192Cbc),
@@ -102,7 +104,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AesGcmEncryptDecrypt([EnumValues(
             nameof(EncryptionAlgorithm.A128Gcm),
             nameof(EncryptionAlgorithm.A192Gcm),
@@ -165,7 +167,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AesKwWrapUnwrapRoundTrip([EnumValues(
             nameof(KeyWrapAlgorithm.A128KW),
             nameof(KeyWrapAlgorithm.A192KW),
@@ -192,6 +194,47 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(decrypted.Key);
 
             CollectionAssert.AreEqual(plaintext, decrypted.Key);
+        }
+
+        [RecordedTest]
+        public async Task EdDSASignVerifyRoundTrip()
+        {
+            SignatureAlgorithm algorithm = SignatureAlgorithm.EdDsa;
+
+            KeyVaultKey key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id);
+
+            byte[] data = new byte[32];
+            Recording.Random.NextBytes(data);
+
+            using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
+            byte[] digest = hashAlgo.ComputeHash(data);
+
+            SignResult signResult = await cryptoClient.SignAsync(algorithm, digest);
+            SignResult signDataResult = await cryptoClient.SignDataAsync(algorithm, data);
+
+            Assert.AreEqual(algorithm, signResult.Algorithm);
+            Assert.AreEqual(algorithm, signDataResult.Algorithm);
+
+            Assert.AreEqual(key.Id, signResult.KeyId);
+            Assert.AreEqual(key.Id, signDataResult.KeyId);
+
+            Assert.NotNull(signResult.Signature);
+            Assert.NotNull(signDataResult.Signature);
+
+            VerifyResult verifyResult = await cryptoClient.VerifyAsync(algorithm, digest, signDataResult.Signature);
+            VerifyResult verifyDataResult = await cryptoClient.VerifyDataAsync(algorithm, data, signResult.Signature);
+
+            Assert.AreEqual(algorithm, verifyResult.Algorithm);
+            Assert.AreEqual(algorithm, verifyDataResult.Algorithm);
+
+            Assert.AreEqual(key.Id, verifyResult.KeyId);
+            Assert.AreEqual(key.Id, verifyDataResult.KeyId);
+
+            Assert.True(verifyResult.IsValid);
+            Assert.True(verifyResult.IsValid);
         }
 
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)

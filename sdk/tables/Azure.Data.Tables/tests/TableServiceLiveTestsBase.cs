@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
@@ -23,16 +25,16 @@ namespace Azure.Data.Tables.Tests
         additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default, bool enableTenantDiscovery = false) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
-        }
-
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType) : base(isAsync)
-        {
-            _endpointType = endpointType;
-            Sanitizer = new TablesRecordedTestSanitizer();
+            _enableTenantDiscovery = enableTenantDiscovery;
+            SanitizedHeaders.Add("My-Custom-Auth-Header");
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                });
         }
 
         protected TableServiceClient service { get; private set; }
@@ -53,6 +55,7 @@ namespace Azure.Data.Tables.Tests
         protected const string DoubleDecimalTypePropertyName = "SomeDoubleProperty1";
         protected const string IntTypePropertyName = "SomeIntProperty";
         protected readonly TableEndpointType _endpointType;
+        private readonly bool _enableTenantDiscovery;
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
@@ -66,7 +69,10 @@ namespace Azure.Data.Tables.Tests
             { "ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
             { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
-            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
+            { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
+            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
+            { "GetEntityAllowsEmptyRowKey", "Empty RowKey values are not supported by Cosmos." },
+            { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
         };
 
         private readonly Dictionary<string, string> _AadIgnoreTests = new()
@@ -112,6 +118,7 @@ namespace Azure.Data.Tables.Tests
                 _ => TestEnvironment.StorageConnectionString,
             };
             var options = InstrumentClientOptions(new TableClientOptions());
+            options.EnableTenantDiscovery = _enableTenantDiscovery;
 
             service = CreateService(ServiceUri, options);
 
@@ -176,7 +183,7 @@ namespace Azure.Data.Tables.Tests
                             { GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}") },
                             { BinaryTypePropertyName, new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } },
                             { Int64TypePropertyName, long.Parse(number) },
-                            { DoubleTypePropertyName, double.Parse($"{number}.0") },
+                            { DoubleTypePropertyName, double.Parse($"{number}.0", CultureInfo.InvariantCulture) },
                             { DoubleDecimalTypePropertyName, n + 0.5 },
                             { IntTypePropertyName, n },
                         };
@@ -241,7 +248,7 @@ namespace Azure.Data.Tables.Tests
                             BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
                             Int64TypeProperty = long.Parse(number),
                             UInt64TypeProperty = ulong.Parse(number),
-                            DoubleTypeProperty = double.Parse($"{number}.0"),
+                            DoubleTypeProperty = double.Parse($"{number}.0", CultureInfo.InvariantCulture),
                             IntTypeProperty = n,
                         };
                     })
@@ -264,8 +271,8 @@ namespace Azure.Data.Tables.Tests
                         return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
                         {
                             String = string.Format("{0:0000}", n),
-                            Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
-                            BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
+                            Binary = new BinaryData(new byte[] { 0x01, 0x02, 0xFF, (byte)n }),
+                            BinaryPrimitive = new byte[] { 0x01, 0x02, 0xFF, (byte)n },
                             Bool = n % 2 == 0,
                             BoolPrimitive = n % 2 == 0,
                             DateTime = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
@@ -274,7 +281,7 @@ namespace Azure.Data.Tables.Tests
                             DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                             DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                             Double = n + 0.5,
-                            DoubleInteger = double.Parse($"{n.ToString()}.0"),
+                            DoubleInteger = double.Parse($"{n.ToString()}.0", CultureInfo.InvariantCulture),
                             DoubleN = n + 0.5,
                             DoublePrimitive = n + 0.5,
                             DoublePrimitiveN = n + 0.5,

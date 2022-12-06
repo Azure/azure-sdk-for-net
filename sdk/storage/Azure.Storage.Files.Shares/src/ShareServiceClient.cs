@@ -131,7 +131,7 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareServiceClient(Uri serviceUri, ShareClientOptions options = default)
-            : this(serviceUri, (HttpPipelinePolicy)null, options, null)
+            : this(serviceUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
         {
         }
 
@@ -192,8 +192,29 @@ namespace Azure.Storage.Files.Shares
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public ShareServiceClient(Uri serviceUri, AzureSasCredential credential, ShareClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy<ShareUriBuilder>(serviceUri), options, null)
+            : this(serviceUri, credential.AsPolicy<ShareUriBuilder>(serviceUri), options, sasCredential:credential)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="ShareClientConfiguration"/>
+        /// </param>
+        internal ShareServiceClient(
+            Uri directoryUri,
+            ShareClientConfiguration clientConfiguration)
+        {
+            _uri = directoryUri;
+            _clientConfiguration = clientConfiguration;
+            _serviceRestClient = BuildServiceRestClient();
         }
 
         /// <summary>
@@ -227,7 +248,42 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
+            _serviceRestClient = BuildServiceRestClient();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the file service.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared access signature used to sign requests.
+        /// </param>
+        internal ShareServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            AzureSasCredential sasCredential)
+        {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            options ??= new ShareClientOptions();
+            _uri = serviceUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sasCredential: sasCredential,
+                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientOptions: options);
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -236,7 +292,7 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 _uri.AbsoluteUri,
-                _clientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString());
         #endregion ctors
 
         /// <summary>
@@ -950,7 +1006,8 @@ namespace Azure.Storage.Files.Shares
         #region DeleteShare
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -970,7 +1027,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -991,7 +1048,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
@@ -1010,7 +1068,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1032,7 +1090,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.
         /// There's no way to specify a separate value for x-ms-delete-snapshots.
@@ -1053,7 +1112,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1075,7 +1134,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
-        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection
+        /// which could take several minutes.
         ///
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
@@ -1095,7 +1155,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully marking for deletion.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

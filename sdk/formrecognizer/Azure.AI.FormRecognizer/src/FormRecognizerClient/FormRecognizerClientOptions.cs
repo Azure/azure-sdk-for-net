@@ -16,6 +16,12 @@ namespace Azure.AI.FormRecognizer
         internal const ServiceVersion LatestVersion = ServiceVersion.V2_1;
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="FormRecognizerAudience.AzurePublicCloud" /> will be assumed.</value>
+        public FormRecognizerAudience? Audience { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class which allows
         /// to configure the behavior of the <see cref="FormRecognizerClient" /> or <see cref="FormTrainingClient"/>.
         /// </summary>

@@ -18,21 +18,12 @@ namespace Azure.Monitor.Query.Models
         /// <param name="id"> The error details. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="workspace"> Workspace Id to be included in the query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="body"/>, or <paramref name="workspace"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="body"/> or <paramref name="workspace"/> is null. </exception>
         public BatchQueryRequest(string id, QueryBody body, string workspace)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-            if (workspace == null)
-            {
-                throw new ArgumentNullException(nameof(workspace));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(workspace, nameof(workspace));
 
             Id = id;
             Headers = new ChangeTrackingDictionary<string, string>();

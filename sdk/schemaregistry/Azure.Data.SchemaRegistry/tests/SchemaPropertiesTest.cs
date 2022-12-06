@@ -10,9 +10,11 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void CanCreateFromCtor()
         {
-            var properties = new SchemaProperties(SchemaFormat.Avro, "schemaId");
+            var properties = new SchemaProperties(SchemaFormat.Avro, "schemaId", "groupName", "name", 1);
             Assert.AreEqual(SchemaFormat.Avro, properties.Format);
             Assert.AreEqual("schemaId", properties.Id);
+            Assert.AreEqual("groupName", properties.GroupName);
+            Assert.AreEqual("name", properties.Name);
         }
 
         [Test]
@@ -21,6 +23,17 @@ namespace Azure.Data.SchemaRegistry.Tests
             var properties = SchemaRegistryModelFactory.SchemaProperties(SchemaFormat.Avro, "schemaId");
             Assert.AreEqual(SchemaFormat.Avro, properties.Format);
             Assert.AreEqual("schemaId", properties.Id);
+        }
+
+        [Test]
+        public void CanCreateFromFactoryCurrent()
+        {
+            var properties = SchemaRegistryModelFactory.SchemaProperties(SchemaFormat.Avro, "schemaId", "groupName", "name", 1);
+            Assert.AreEqual(SchemaFormat.Avro, properties.Format);
+            Assert.AreEqual("schemaId", properties.Id);
+            Assert.AreEqual("groupName", properties.GroupName);
+            Assert.AreEqual("name", properties.Name);
+            Assert.AreEqual(1, properties.Version);
         }
     }
 }

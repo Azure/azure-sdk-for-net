@@ -18,6 +18,7 @@ namespace Azure.Identity
         private readonly Uri _endpoint;
         private readonly string _identityHeaderValue;
         private readonly string _clientId;
+        private readonly string _resourceId;
 
         public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
@@ -44,7 +45,7 @@ namespace Azure.Identity
                 pipeline = new CredentialPipeline(pipeline.AuthorityHost, customSslHttpPipline, pipeline.Diagnostics);
             }
 
-            return new ServiceFabricManagedIdentitySource(pipeline, endpointUri, identityHeader, options.ClientId);
+            return new ServiceFabricManagedIdentitySource(pipeline, endpointUri, identityHeader, options);
         }
 
         internal static HttpClientTransport GetServiceFabricMITransport()
@@ -56,11 +57,16 @@ namespace Azure.Identity
             return new HttpClientTransport(httpHandler);
         }
 
-        private ServiceFabricManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string identityHeaderValue, string clientId) : base(pipeline)
+        private ServiceFabricManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string identityHeaderValue, ManagedIdentityClientOptions options) : base(pipeline)
         {
             _endpoint = endpoint;
             _identityHeaderValue = identityHeaderValue;
-            _clientId = clientId;
+            _clientId = options.ClientId;
+            _resourceId = options.ResourceIdentifier?.ToString();
+            if (!string.IsNullOrEmpty(options.ClientId) || null != options.ResourceIdentifier)
+            {
+                AzureIdentityEventSource.Singleton.ServiceFabricManagedIdentityRuntimeConfigurationNotSupported();
+            }
         }
 
         protected override Request CreateRequest(string[] scopes)
@@ -78,9 +84,12 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(_clientId))
             {
-                request.Uri.AppendQuery("client_id", _clientId);
+                request.Uri.AppendQuery(Constants.ManagedIdentityClientId, _clientId);
             }
-
+            if (!string.IsNullOrEmpty(_resourceId))
+            {
+                request.Uri.AppendQuery(Constants.ManagedIdentityResourceId, _resourceId);
+            }
             return request;
         }
 

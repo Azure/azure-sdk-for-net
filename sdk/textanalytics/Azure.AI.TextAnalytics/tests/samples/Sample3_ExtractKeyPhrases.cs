@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -15,10 +14,10 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:ExtractKeyPhrases
-            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my 
+            string document = @"My cat might need to see a veterinarian. It has been sneezing more than normal, and although my
                                 little sister thinks it is funny, I am worried it has the cold that I got last week.
                                 We are going to call tomorrow and try to schedule an appointment for this week. Hopefully it
                                 will be covered by the cat's insurance.

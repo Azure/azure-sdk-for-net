@@ -20,29 +20,45 @@
     "variables": {},
     "resources": [],
     "outputs": {
-        "CONVERSATIONS_KEY": {
-            "type": "string",
-            "value": ""
-        },
-        "CONVERSATIONS_PROJECT": {
-            "type": "string",
-            "value": ""
-        },
-        "CONVERSATIONS_URI": {
-            "type": "string",
-            "value": ""
-        },
-        "QUESTIONANSWERING_ENDPOINT": {
-            "type": "string",
-            "value": "https://wuppe.api.cognitive.microsoft.com"
-        },
-        "QUESTIONANSWERING_KEY": {
-            "type": "string",
-            "value": ""
-        },
-        "QUESTIONANSWERING_PROJECT": {
-            "type": "string",
-            "value": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c"
-        }
+        // TODO: Uncomment and define when test resources are deployed dynamically.
+        // Developers should define the following environment variables to run tests locally.
+        // Live test CIs will use environment variables defined via tests.yml.
+
+        // "AZURE_CONVERSATIONS_ENDPOINT": {
+        //     "type": "string",
+        //     "value": ""
+        // },
+        // "AZURE_CONVERSATIONS_KEY": {
+        //     "type": "string",
+        //     "value": ""
+        // },
+        // "AZURE_CONVERSATIONS_PROJECT_NAME": {
+        //     "type": "string",
+        //     "value": "antischOne"
+        // },
+        // "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": {
+        //     "type": "string",
+        //     "value": "production"
+        // },
+        // "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": {
+        //     "type": "string",
+        //     "value": "antischTwo"
+        // },
+        // "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": {
+        //     "type": "string",
+        //     "value": "production"
+        // },
+        // "AZURE_QUESTIONANSWERING_ENDPOINT": {
+        //     "type": "string",
+        //     "value": "https://wuppe.api.cognitive.microsoft.com"
+        // },
+        // "AZURE_QUESTIONANSWERING_KEY": {
+        //     "type": "string",
+        //     "value": ""
+        // },
+        // "AZURE_QUESTIONANSWERING_PROJECT": {
+        //     "type": "string",
+        //     "value": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c"
+        // }
     }
 }

@@ -186,6 +186,82 @@ namespace Azure.Graph.Rbac
             }
         }
 
+        /// <summary> Add an owner to a service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal to which to add the owner. </param>
+        /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> AddOwnerAsync(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.AddOwner");
+            scope.Start();
+            try
+            {
+                return await RestClient.AddOwnerAsync(objectId, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add an owner to a service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal to which to add the owner. </param>
+        /// <param name="parameters"> The URL of the owner object, such as https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response AddOwner(string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.AddOwner");
+            scope.Start();
+            try
+            {
+                return RestClient.AddOwner(objectId, parameters, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a member from owners. </summary>
+        /// <param name="objectId"> The object ID of the service principal from which to remove the owner. </param>
+        /// <param name="ownerObjectId"> Owner object id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> RemoveOwnerAsync(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.RemoveOwner");
+            scope.Start();
+            try
+            {
+                return await RestClient.RemoveOwnerAsync(objectId, ownerObjectId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a member from owners. </summary>
+        /// <param name="objectId"> The object ID of the service principal from which to remove the owner. </param>
+        /// <param name="ownerObjectId"> Owner object id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response RemoveOwner(string objectId, string ownerObjectId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.RemoveOwner");
+            scope.Start();
+            try
+            {
+                return RestClient.RemoveOwner(objectId, ownerObjectId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Update the keyCredentials associated with a service principal. </summary>
         /// <param name="objectId"> The object ID for which to get service principal information. </param>
         /// <param name="parameters"> Parameters to update the keyCredentials of an existing service principal. </param>
@@ -327,6 +403,182 @@ namespace Azure.Graph.Rbac
                 try
                 {
                     var response = RestClient.ListNext(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Principals (users, groups, and service principals) that are assigned to this service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public virtual AsyncPageable<AppRoleAssignment> ListAppRoleAssignedToAsync(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            async Task<Page<AppRoleAssignment>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignedTo");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAppRoleAssignedToAsync(objectId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<AppRoleAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignedTo");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAppRoleAssignedToNextPageAsync(nextLink, objectId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Principals (users, groups, and service principals) that are assigned to this service principal. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public virtual Pageable<AppRoleAssignment> ListAppRoleAssignedTo(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            Page<AppRoleAssignment> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignedTo");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListAppRoleAssignedTo(objectId, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AppRoleAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignedTo");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListAppRoleAssignedToNextPage(nextLink, objectId, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Applications that the service principal is assigned to. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public virtual AsyncPageable<AppRoleAssignment> ListAppRoleAssignmentsAsync(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            async Task<Page<AppRoleAssignment>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignments");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAppRoleAssignmentsAsync(objectId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<AppRoleAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignments");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAppRoleAssignmentsNextPageAsync(nextLink, objectId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Applications that the service principal is assigned to. </summary>
+        /// <param name="objectId"> The object ID of the service principal for which to get owners. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public virtual Pageable<AppRoleAssignment> ListAppRoleAssignments(string objectId, CancellationToken cancellationToken = default)
+        {
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+
+            Page<AppRoleAssignment> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignments");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListAppRoleAssignments(objectId, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AppRoleAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.ListAppRoleAssignments");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListAppRoleAssignmentsNextPage(nextLink, objectId, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

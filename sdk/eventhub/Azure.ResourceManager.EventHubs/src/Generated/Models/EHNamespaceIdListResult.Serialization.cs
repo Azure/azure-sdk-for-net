@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EHNamespaceIdListResult
+    internal partial class EHNamespaceIdListResult
     {
         internal static EHNamespaceIdListResult DeserializeEHNamespaceIdListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EHNamespaceIdContainer>> value = default;
+            Optional<IReadOnlyList<SubResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EHNamespaceIdContainer> array = new List<EHNamespaceIdContainer>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EHNamespaceIdContainer.DeserializeEHNamespaceIdContainer(item));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                     }
                     value = array;
                     continue;

@@ -25,9 +25,21 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "eastus2euap",
+      "defaultValue": "eastus",
       "metadata": {
         "description": "The location of the resource. By default, this is the same as the resource group."
+      }
+    },
+    "ConfidentialLedgerPrincipalPEM": {
+      "type": "string",
+      "metadata": {
+        "description": "The certificate to configure as a certBasedSecurityPrincipal."
+      }
+    },
+    "ConfidentialLedgerPrincipalPEMPK": {
+      "type": "string",
+      "metadata": {
+        "description": "The certificate to configure as a certBasedSecurityPrincipal."
       }
     }
   },
@@ -36,12 +48,18 @@
       "type": "Microsoft.ConfidentialLedger/ledgers",
       "apiVersion": "2020-12-01-preview",
       "name": "[parameters('baseName')]",
-      "location": "EASTUS",
+      "location": "eastus",
       "properties": {
         "ledgerType": "Public",
         "aadBasedSecurityPrincipals": [
           {
             "principalId": "[parameters('testApplicationOid')]",
+            "ledgerRoleName": "Administrator"
+          }
+        ],
+        "certBasedSecurityPrincipals": [
+          {
+            "cert": "[parameters('ConfidentialLedgerPrincipalPEM')]",
             "ledgerRoleName": "Administrator"
           }
         ]
@@ -55,11 +73,19 @@
     },
     "CONFIDENTIALLEDGER_IDENTITY_URL": {
       "type": "string",
-      "value": "https://identity.accledger.azure.com/"
+      "value": "https://identity.confidential-ledger.core.azure.com"
     },
     "CONFIDENTIALLEDGER_CLIENT_OBJECTID": {
       "type": "string",
       "value": "[parameters('testApplicationOid')]"
+    },
+    "CONFIDENTIALLEDGER_CLIENT_PEM": {
+      "type": "string",
+      "value": "[parameters('ConfidentialLedgerPrincipalPEM')]"
+    },
+    "CONFIDENTIALLEDGER_CLIENT_PEM_PK": {
+      "type": "string",
+      "value": "[parameters('ConfidentialLedgerPrincipalPEMPK')]"
     }
   }
 }

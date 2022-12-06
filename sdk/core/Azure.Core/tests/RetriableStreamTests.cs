@@ -117,7 +117,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task DoesntRetryCustomerCancellationTokens()
+        [TestCase(typeof(TaskCanceledException), typeof(TaskCanceledException))]
+        [TestCase(typeof(ObjectDisposedException), typeof(TaskCanceledException))]
+        [TestCase(typeof(UnauthorizedAccessException), typeof(UnauthorizedAccessException))]
+        public async Task ThrowsCorrectExceptionOnCustomerCancellationTokens(Type initial, Type translated)
         {
             // not supported on sync
             if (!IsAsync)
@@ -125,7 +128,7 @@ namespace Azure.Core.Tests
                 Assert.Ignore();
             }
 
-            var stream1 = new MockReadStream(100, canSeek: true);
+            var stream1 = new MockReadStream(100, throwAfter: 25, canSeek: true, exceptionType: initial);
 
             MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 });
@@ -141,7 +144,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual(100, reliableStream.Length);
             Assert.AreEqual(25, reliableStream.Position);
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await ReadAsync(reliableStream, _buffer, 0, 25, new CancellationToken(true)));
+            var exception = await AsyncAssert.ThrowsAsync<Exception>(
+                async () => await ReadAsync(reliableStream, _buffer, 25, 25, new CancellationToken(true)));
+            Assert.IsInstanceOf(translated, exception);
 
             AssertReads(_buffer, 25);
         }
@@ -429,8 +434,6 @@ namespace Azure.Core.Tests
 
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                cancellationToken.ThrowIfCancellationRequested();
-
                 var left = (int)Math.Min(count, Length - Position);
 
                 Position += left;

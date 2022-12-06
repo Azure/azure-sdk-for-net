@@ -17,9 +17,10 @@ namespace Azure.ResourceManager.Network.Tests
     public class ApplicationSecurityGroupTests
         : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
-        public ApplicationSecurityGroupTests(bool isAsync) : base(isAsync)
+        public ApplicationSecurityGroupTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -39,22 +40,24 @@ namespace Azure.ResourceManager.Network.Tests
             return resourceGroup.GetApplicationSecurityGroups();
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task ApplicationSecurityGroupApiTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ApplicationSecurityGroupApiTest(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             var collection = await GetCollection();
             var name = Recording.GenerateAssetName("test_application_security_group_");
 
             // create
-            var applicationSecurityGroupResponse = await collection.CreateOrUpdate(name, new ApplicationSecurityGroupData()
+            var applicationSecurityGroupResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ApplicationSecurityGroupData()
             {
                 Location = TestEnvironment.Location,
-            }).WaitForCompletionAsync();
+            })).Value;
 
-            Assert.True(await collection.CheckIfExistsAsync(name));
+            Assert.True(await collection.ExistsAsync(name));
 
-            var applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
+            var applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.IsEmpty(applicationSecurityGroupData.Tags);
 
@@ -62,8 +65,8 @@ namespace Azure.ResourceManager.Network.Tests
             applicationSecurityGroupData.Tags.Add("tag2", "value2");
 
             // update
-            applicationSecurityGroupResponse = await collection.CreateOrUpdate(name, applicationSecurityGroupData).WaitForCompletionAsync();
-            applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
+            applicationSecurityGroupResponse = await (await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, applicationSecurityGroupData)).WaitForCompletionAsync();
+            applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(2));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // get
             applicationSecurityGroupResponse = await collection.GetAsync(name);
-            applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
+            applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(2));
@@ -80,9 +83,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // patch
-            var tags = new TagsObject();
-            tags.Tags.Add("tag2", "value2");
-            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateTagsAsync(tags)).Value.Data;
+            var tags = new Dictionary<string, string>();
+            tags.Add("tag2", "value2");
+            applicationSecurityGroupData = (await applicationSecurityGroupResponse.SetTagsAsync(tags)).Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(1));
@@ -99,9 +102,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await applicationSecurityGroup.DeleteAsync();
+            await applicationSecurityGroup.DeleteAsync(WaitUntil.Completed);
 
-            Assert.False(await collection.CheckIfExistsAsync(name));
+            Assert.False(await collection.ExistsAsync(name));
 
             applicationSecurityGroups = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(applicationSecurityGroups);
@@ -114,7 +117,7 @@ namespace Azure.ResourceManager.Network.Tests
         private void ValidateCommon(ApplicationSecurityGroupData data, string name)
         {
             Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(TestEnvironment.Location, data.Location);
+            Assert.AreEqual(TestEnvironment.Location, data.Location.ToString());
         }
     }
 }

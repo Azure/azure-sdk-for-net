@@ -69,5 +69,12 @@ namespace Azure.Storage.Blobs.Models
         /// Optional.  Source authentication used to access the source blob.
         /// </summary>
         public HttpAuthorization SourceAuthentication { get; set; }
+
+        /// <summary>
+        /// Optional.  Indicates if the source blob's tags should be copied to the destination blob,
+        /// or replaced on the destination blob with the tags specified by <see cref="Tags"/>.
+        /// Default is to replace.
+        /// </summary>
+        public BlobCopySourceTagsMode? CopySourceTagsMode { get; set; }
     }
 }

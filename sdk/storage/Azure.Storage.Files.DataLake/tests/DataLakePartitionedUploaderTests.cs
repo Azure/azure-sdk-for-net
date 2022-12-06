@@ -68,7 +68,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
-                hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -94,7 +94,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 },
-                hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
-                hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -150,7 +150,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 transferOptions: default,
-                hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -179,7 +179,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 100 },
-                hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -213,7 +213,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
                 new StorageTransferOptions() { MaximumTransferLength = 20 },
-                hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -239,7 +239,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.ClientConfiguration.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration.ClientOptions.Version).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
@@ -250,7 +250,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     MaximumTransferSize = blockSize,
                     MaximumConcurrency = 2
                 },
-                hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -264,6 +264,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         private async Task<Response<PathInfo>> InvokeUploadAsync(PartitionedUploader<DataLakeFileUploadOptions, PathInfo> uploader, Stream content)
             => await uploader.UploadInternal(
                 content,
+                expectedContentLength: default,
                 new DataLakeFileUploadOptions
                 {
                     HttpHeaders = s_pathHttpHeaders,
@@ -284,19 +285,32 @@ namespace Azure.Storage.Files.DataLake.Tests
                     default,
                     s_permissions,
                     s_umask,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     s_conditions,
                     _async,
                     s_cancellationToken
-                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
+                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, string, string, IList<PathAccessControlItem>, string, TimeSpan?, TimeSpan?, DateTimeOffset?, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
 
             clientMock.Setup(
                 c => c.AppendInternal(
                     IsAny<Stream>(),
                     IsAny<long>(),
-                    IsAny<DataLakeFileAppendOptions>(),
+                    IsAny<UploadTransferValidationOptions>(),
+                    IsAny<string>(),
+                    IsAny<LeaseAction?>(),
+                    IsAny<TimeSpan?>(),
+                    IsAny<string>(),
+                    IsAny<IProgress<long>>(),
+                    IsAny<bool?>(),
                     _async,
                     s_cancellationToken
-                )).Returns<Stream, long, DataLakeFileAppendOptions, bool, CancellationToken>(sink.AppendInternal);
+                )).Returns<Stream, long, UploadTransferValidationOptions, string, LeaseAction?, TimeSpan?, string, IProgress<long>, bool?, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
@@ -305,9 +319,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                     IsAny<bool?>(),
                     s_pathHttpHeaders,
                     IsAny<DataLakeRequestConditions>(),
+                    IsAny<LeaseAction?>(),
+                    IsAny<TimeSpan?>(),
+                    IsAny<string>(),
                     _async,
                     s_cancellationToken
-                )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, bool, CancellationToken>(sink.FlushInternal);
+                )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, LeaseAction?, TimeSpan?, string, bool, CancellationToken>(sink.FlushInternal);
         }
 
         private static void AssertAppended(AppendSink sink, TestStream stream)
@@ -337,6 +354,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IDictionary<string, string> metadata,
                 string permissions,
                 string umask,
+                string owner,
+                string group,
+                IList<PathAccessControlItem> accessControlList,
+                string leaseId,
+                TimeSpan? leaseDuration,
+                TimeSpan? timeToExpire,
+                DateTimeOffset? expiresOn,
                 DataLakeRequestConditions conditions,
                 bool async,
                 CancellationToken cancellationToken)
@@ -354,6 +378,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 bool? close,
                 PathHttpHeaders httpHeaders,
                 DataLakeRequestConditions conditions,
+                LeaseAction? leaseAction,
+                TimeSpan? leaseDuration,
+                string proposedLeaseId,
                 bool async,
                 CancellationToken cancellationToken)
             {
@@ -367,7 +394,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             public async Task<Response> AppendInternal(
                 Stream stream,
                 long offset,
-                DataLakeFileAppendOptions options,
+                UploadTransferValidationOptions validationOptions,
+                string leaseId,
+                LeaseAction? leaseAction,
+                TimeSpan? leaseDuration,
+                string proposedLeaseId,
+                IProgress<long> progressHandler,
+                bool? flush,
                 bool async,
                 CancellationToken cancellationToken)
             {
@@ -375,7 +408,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     await Task.Delay(25);
                 }
-                options?.ProgressHandler.Report(stream.Length);
+                progressHandler.Report(stream.Length);
 
                 byte[] data = default;
                 if (_saveBytes)

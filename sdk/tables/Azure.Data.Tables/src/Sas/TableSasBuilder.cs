@@ -41,7 +41,7 @@ namespace Azure.Data.Tables.Sas
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
             Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
 
-            TableName = tableName.ToLowerInvariant();
+            TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions.ToLowerInvariant();
         }
@@ -256,7 +256,7 @@ namespace Azure.Data.Tables.Sas
         /// </returns>
         private static string GetCanonicalName(string account, string tableName) =>
             // Table: "/table/account/tablename"
-            string.Join("", new[] { "/table/", account, "/", tableName });
+            string.Join("", new[] { "/table/", account, "/", tableName.ToLowerInvariant() });
 
         /// <summary>
         /// Returns a string that represents the current object.

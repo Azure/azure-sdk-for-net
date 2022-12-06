@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
@@ -66,17 +67,18 @@ namespace Azure.AI.FormRecognizer
                 index++;
             }
 
+            var responseError = new ResponseError(errorCode, errorMessage);
             return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
+                ? await diagnostics.CreateRequestFailedExceptionAsync(response, responseError, errorInfo).ConfigureAwait(false)
+                : diagnostics.CreateRequestFailedException(response, responseError, errorInfo);
         }
 
-        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response,ResponseError error)
+        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, ResponseError error)
         {
             var additionalInfo = new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
             return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, additionalInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, error.Message, error.Code, additionalInfo);
+                ? await diagnostics.CreateRequestFailedExceptionAsync(response, error, additionalInfo).ConfigureAwait(false)
+                : diagnostics.CreateRequestFailedException(response, error, additionalInfo);
         }
 
         public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(V2AnalyzeResult analyzeResult)
@@ -87,6 +89,23 @@ namespace Azure.AI.FormRecognizer
                 forms.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults, default));
             }
             return new RecognizedFormCollection(forms);
+        }
+
+        public static IReadOnlyList<PointF> CovertToListOfPointF(IReadOnlyList<float> coordinates)
+        {
+            if (coordinates == null || coordinates.Count == 0)
+            {
+                return Array.Empty<PointF>();
+            }
+
+            List<PointF> points = new List<PointF>();
+
+            for (int i = 0; i < coordinates.Count; i += 2)
+            {
+                points.Add(new PointF(coordinates[i], coordinates[i + 1]));
+            }
+
+            return points;
         }
     }
 }

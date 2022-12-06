@@ -16,10 +16,14 @@ To get started you will need to have an Azure Subscription. Once you have this y
 
 This client library allows to do following operations:
  - Purchase, configure and release phone numbers.
+ - Manage SIP routing configuration.
 
  #### You can find samples for each of these functions below.
  - Manage phone numbers [synchronously][sample_phonenumbers] or [asynchronously][sample_phonenumbers_async]
+ - Manage SIP routing configuration [synchronously][sample_siprouting] or [asynchronously][sample_siprouting_async]
 
 <!-- LINKS -->
 [sample_phonenumbers]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_PhoneNumbersClient.md
 [sample_phonenumbers_async]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_PhoneNumbersClientAsync.md
+[sample_siprouting]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_SipRoutingClient.md
+[sample_siprouting_async]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples/Sample_SipRoutingClientAsync.md

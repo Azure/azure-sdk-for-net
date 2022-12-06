@@ -14,6 +14,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Test.HttpRecorder;
+using System;
 
 namespace Storage.Tests
 {
@@ -47,10 +48,16 @@ namespace Storage.Tests
                 // implement case
                 try
                 {
+                    // prepare SignedIdentifier
+                    List<TableSignedIdentifier> tableSi = new List<TableSignedIdentifier>();
+                    tableSi.Add(new TableSignedIdentifier("PTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODklMTI", accessPolicy: new TableAccessPolicy("raud", null, DateTime.Now.AddDays(2))));
+                    tableSi.Add(new TableSignedIdentifier("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI", accessPolicy: new TableAccessPolicy("ra", DateTime.Now, DateTime.Now.AddDays(7))));
+
                     //create Table
                     string tableName = TestUtilities.GenerateName("table1");
-                    Table table= storageMgmtClient.Table.Create(rgName, accountName, tableName);
+                    Table table= storageMgmtClient.Table.Create(rgName, accountName, tableName, tableSi);
                     Assert.Equal(tableName, table.TableName);
+                    Assert.Equal(2, table.SignedIdentifiers.Count);
 
                     table = storageMgmtClient.Table.Get(rgName, accountName, tableName);
                     Assert.Equal(tableName, table.TableName);
@@ -58,12 +65,16 @@ namespace Storage.Tests
                     string tableName2 = TestUtilities.GenerateName("table2");
                     Table table2 = storageMgmtClient.Table.Create(rgName, accountName, tableName2);
                     Assert.Equal(tableName2, table2.TableName);
+                    Assert.Equal(2, table.SignedIdentifiers.Count);
 
                     table2 = storageMgmtClient.Table.Get(rgName, accountName, tableName2);
                     Assert.Equal(tableName2, table2.TableName);
 
                     // Update Table: Update still not update any thing, will add update parameter when add things to update
-                    table = storageMgmtClient.Table.Update(rgName, accountName, tableName);
+                    tableSi.Add(new TableSignedIdentifier("eC1tcy1yZXF1ZXN0LWlk", accessPolicy: new TableAccessPolicy("r", DateTime.Now.AddHours(1), DateTime.Now.AddDays(70))));
+                    table = storageMgmtClient.Table.Update(rgName, accountName, tableName, tableSi);
+                    Assert.Equal(tableName, table.TableName);
+                    Assert.Equal(3, table.SignedIdentifiers.Count);
 
                     //list Table
                     IPage<Table> tables = storageMgmtClient.Table.List(rgName, accountName);

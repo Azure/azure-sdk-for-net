@@ -10,8 +10,22 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct LinkedEntityMatch
+    public partial struct LinkedEntityMatch : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("confidenceScore");
+            writer.WriteNumberValue(ConfidenceScore);
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("offset");
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length");
+            writer.WriteNumberValue(Length);
+            writer.WriteEndObject();
+        }
+
         internal static LinkedEntityMatch DeserializeLinkedEntityMatch(JsonElement element)
         {
             double confidenceScore = default;

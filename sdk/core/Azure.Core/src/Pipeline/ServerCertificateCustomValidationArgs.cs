@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// The chain of certificate authorities associated with the remote certificate.
         /// </summary>
-        public X509Chain? X509Chain { get; }
+        public X509Chain? CertificateAuthorityChain { get; }
 
         /// <summary>
         /// One or more errors associated with the remote certificate.
@@ -30,12 +30,12 @@ namespace Azure.Core.Pipeline
         /// Initializes an instance of <see cref="ServerCertificateCustomValidationArgs"/>.
         /// </summary>
         /// <param name="certificate">The certificate</param>
-        /// <param name="x509Chain"></param>
+        /// <param name="certificateAuthorityChain"></param>
         /// <param name="sslPolicyErrors"></param>
-        public ServerCertificateCustomValidationArgs(X509Certificate2? certificate, X509Chain? x509Chain, SslPolicyErrors sslPolicyErrors)
+        public ServerCertificateCustomValidationArgs(X509Certificate2? certificate, X509Chain? certificateAuthorityChain, SslPolicyErrors sslPolicyErrors)
         {
             Certificate = certificate;
-            X509Chain = x509Chain;
+            CertificateAuthorityChain = certificateAuthorityChain;
             SslPolicyErrors = sslPolicyErrors;
         }
     }

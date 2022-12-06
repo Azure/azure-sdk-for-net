@@ -5,12 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -79,12 +82,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri");
-                writer.WriteStringValue(OutputBlobUri);
+                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri");
-                writer.WriteStringValue(ErrorBlobUri);
+                writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -92,11 +95,12 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineRunCommandData DeserializeVirtualMachineRunCommandData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
-            Location location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            Optional<SystemData> systemData = default;
             Optional<VirtualMachineRunCommandScriptSource> source = default;
             Optional<IList<RunCommandInputParameter>> parameters = default;
             Optional<IList<RunCommandInputParameter>> protectedParameters = default;
@@ -104,14 +108,19 @@ namespace Azure.ResourceManager.Compute
             Optional<string> runAsUser = default;
             Optional<string> runAsPassword = default;
             Optional<int> timeoutInSeconds = default;
-            Optional<string> outputBlobUri = default;
-            Optional<string> errorBlobUri = default;
+            Optional<Uri> outputBlobUri = default;
+            Optional<Uri> errorBlobUri = default;
             Optional<string> provisioningState = default;
             Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -122,12 +131,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -137,7 +146,17 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -221,12 +240,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("outputBlobUri"))
                         {
-                            outputBlobUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                outputBlobUri = null;
+                                continue;
+                            }
+                            outputBlobUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("errorBlobUri"))
                         {
-                            errorBlobUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                errorBlobUri = null;
+                                continue;
+                            }
+                            errorBlobUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -248,7 +277,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineRunCommandData(id, name, type, tags, location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, provisioningState.Value, instanceView.Value);
+            return new VirtualMachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, provisioningState.Value, instanceView.Value);
         }
     }
 }

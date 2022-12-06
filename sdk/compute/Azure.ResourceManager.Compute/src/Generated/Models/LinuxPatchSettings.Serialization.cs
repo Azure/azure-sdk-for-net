@@ -25,13 +25,19 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("assessmentMode");
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
+            if (Optional.IsDefined(AutomaticByPlatformSettings))
+            {
+                writer.WritePropertyName("automaticByPlatformSettings");
+                writer.WriteObjectValue(AutomaticByPlatformSettings);
+            }
             writer.WriteEndObject();
         }
 
         internal static LinuxPatchSettings DeserializeLinuxPatchSettings(JsonElement element)
         {
-            Optional<LinuxVMGuestPatchMode> patchMode = default;
+            Optional<LinuxVmGuestPatchMode> patchMode = default;
             Optional<LinuxPatchAssessmentMode> assessmentMode = default;
+            Optional<LinuxVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchMode"))
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    patchMode = new LinuxVMGuestPatchMode(property.Value.GetString());
+                    patchMode = new LinuxVmGuestPatchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("assessmentMode"))
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.Compute.Models
                     assessmentMode = new LinuxPatchAssessmentMode(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("automaticByPlatformSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    automaticByPlatformSettings = LinuxVmGuestPatchAutomaticByPlatformSettings.DeserializeLinuxVmGuestPatchAutomaticByPlatformSettings(property.Value);
+                    continue;
+                }
             }
-            return new LinuxPatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(assessmentMode));
+            return new LinuxPatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value);
         }
     }
 }

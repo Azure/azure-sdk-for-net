@@ -41,6 +41,12 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='restorableMongodbDatabaseRid'>
         /// The resource ID of the MongoDB database.
         /// </param>
+        /// <param name='startTime'>
+        /// Restorable MongoDB collections event feed start time.
+        /// </param>
+        /// <param name='endTime'>
+        /// Restorable MongoDB collections event feed end time.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -56,6 +62,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<RestorableMongodbCollectionGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableMongodbDatabaseRid = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<RestorableMongodbCollectionGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restorableMongodbDatabaseRid = default(string), string startTime = default(string), string endTime = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

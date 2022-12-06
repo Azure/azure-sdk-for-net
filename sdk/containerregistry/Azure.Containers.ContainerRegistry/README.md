@@ -20,7 +20,7 @@ To develop .NET application code that can connect to an Azure Container Registry
 Install the Azure Container Registry client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Containers.ContainerRegistry --prerelease
+dotnet add package Azure.Containers.ContainerRegistry
 ```
 
 ### Prerequisites
@@ -138,7 +138,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Conta
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-Pageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollection();
+Pageable<ArtifactTagProperties> tags = image.GetAllTagProperties();
 
 // Iterate through the image's tags, listing the tagged alias for the image
 Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
@@ -173,9 +173,6 @@ image.UpdateTagProperties("latest", new ArtifactTagProperties()
 ### Delete images
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -194,7 +191,7 @@ foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     Pageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollection(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestProperties(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
@@ -251,7 +248,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new Conta
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // List the set of tags on the hello_world image tagged as "latest"
-AsyncPageable<ArtifactTagProperties> tags = image.GetTagPropertiesCollectionAsync();
+AsyncPageable<ArtifactTagProperties> tags = image.GetAllTagPropertiesAsync();
 
 // Iterate through the image's tags, listing the tagged alias for the image
 Console.WriteLine($"{image.FullyQualifiedReference} has the following aliases:");
@@ -285,10 +282,6 @@ await image.UpdateTagPropertiesAsync("latest", new ArtifactTagProperties()
 ### Delete images asynchronously
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-using System.Linq;
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -307,7 +300,7 @@ await foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     AsyncPageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollectionAsync(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestPropertiesAsync(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
@@ -349,33 +342,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint,
 
 ## Troubleshooting
 
-All container registry service operations will throw a
-[RequestFailedException][RequestFailedException] on failure.
-
-```C# Snippet:ContainerRegistry_Tests_Samples_HandleErrors
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
-
-// Create a ContainerRepository class for an invalid repository
-string fakeRepositoryName = "doesnotexist";
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-    new ContainerRegistryClientOptions()
-    {
-        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-    });
-ContainerRepository repository = client.GetRepository(fakeRepositoryName);
-
-try
-{
-    repository.GetProperties();
-}
-catch (RequestFailedException ex) when (ex.Status == 404)
-{
-    Console.WriteLine("Repository wasn't found.");
-}
-```
-
-You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
-deeper into the requests you're making against the service.
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
 
 ## Next steps
 

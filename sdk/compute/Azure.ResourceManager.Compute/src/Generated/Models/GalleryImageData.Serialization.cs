@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -20,14 +19,17 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -45,32 +47,32 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToSerialString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OsState))
+            if (Optional.IsDefined(OSState))
             {
                 writer.WritePropertyName("osState");
-                writer.WriteStringValue(OsState.Value.ToSerialString());
+                writer.WriteStringValue(OSState.Value.ToSerialString());
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration");
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(EndOfLifeDate))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate");
-                writer.WriteStringValue(EndOfLifeDate.Value, "O");
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(Identifier))
             {
@@ -102,35 +104,47 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture");
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static GalleryImageData DeserializeGalleryImageData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
-            Location location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> eula = default;
-            Optional<string> privacyStatementUri = default;
-            Optional<string> releaseNoteUri = default;
-            Optional<OperatingSystemTypes> osType = default;
-            Optional<OperatingSystemStateTypes> osState = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<Uri> releaseNoteUri = default;
+            Optional<SupportedOperatingSystemType> osType = default;
+            Optional<OperatingSystemStateType> osState = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<GalleryImageIdentifier> identifier = default;
             Optional<RecommendedMachineConfiguration> recommended = default;
             Optional<Disallowed> disallowed = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
-            Optional<GalleryImagePropertiesProvisioningState> provisioningState = default;
+            Optional<GalleryProvisioningState> provisioningState = default;
             Optional<IList<GalleryImageFeature>> features = default;
+            Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -141,12 +155,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -156,7 +170,17 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -180,12 +204,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("privacyStatementUri"))
                         {
-                            privacyStatementUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privacyStatementUri = null;
+                                continue;
+                            }
+                            privacyStatementUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("releaseNoteUri"))
                         {
-                            releaseNoteUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                releaseNoteUri = null;
+                                continue;
+                            }
+                            releaseNoteUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osType"))
@@ -195,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                         if (property0.NameEquals("osState"))
@@ -205,7 +239,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osState = property0.Value.GetString().ToOperatingSystemStateTypes();
+                            osState = property0.Value.GetString().ToOperatingSystemStateType();
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))
@@ -275,7 +309,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new GalleryImagePropertiesProvisioningState(property0.Value.GetString());
+                            provisioningState = new GalleryProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("features"))
@@ -293,11 +327,21 @@ namespace Azure.ResourceManager.Compute
                             features = array;
                             continue;
                         }
+                        if (property0.NameEquals("architecture"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            architecture = new ArchitectureType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new GalleryImageData(id, name, type, tags, location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features));
+            return new GalleryImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features), Optional.ToNullable(architecture));
         }
     }
 }

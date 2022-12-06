@@ -5,23 +5,33 @@
 
 #nullable disable
 
+using System;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PiiTaskResult. </summary>
-    internal partial class PiiTaskResult
+    internal partial class PiiTaskResult : AnalyzeTextTaskResult
     {
         /// <summary> Initializes a new instance of PiiTaskResult. </summary>
-        internal PiiTaskResult()
+        /// <param name="results"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal PiiTaskResult(PiiEntitiesResult results)
         {
+            Argument.AssertNotNull(results, nameof(results));
+
+            Results = results;
+            Kind = AnalyzeTextTaskResultsKind.PiiEntityRecognitionResults;
         }
 
         /// <summary> Initializes a new instance of PiiTaskResult. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis task results. </param>
         /// <param name="results"></param>
-        internal PiiTaskResult(PiiEntitiesResult results)
+        internal PiiTaskResult(AnalyzeTextTaskResultsKind kind, PiiEntitiesResult results) : base(kind)
         {
             Results = results;
+            Kind = kind;
         }
 
         /// <summary> Gets the results. </summary>

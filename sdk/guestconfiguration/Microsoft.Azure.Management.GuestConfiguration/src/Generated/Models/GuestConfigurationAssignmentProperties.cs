@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// compliance status was checked.</param>
         /// <param name="latestReportId">Id of the latest report for the guest
         /// configuration assignment. </param>
+        /// <param name="parameterHash">parameter hash for the guest
+        /// configuration assignment. </param>
         /// <param name="latestAssignmentReport">Last reported guest
         /// configuration assignment report.</param>
         /// <param name="context">The source which initiated the guest
@@ -55,13 +57,14 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="resourceType">Type of the resource - VMSS / VM</param>
         /// <param name="vmssVMList">The list of VM Compliance data for
         /// VMSS</param>
-        public GuestConfigurationAssignmentProperties(string targetResourceId = default(string), GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), System.DateTime? lastComplianceStatusChecked = default(System.DateTime?), string latestReportId = default(string), AssignmentReport latestAssignmentReport = default(AssignmentReport), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string), string resourceType = default(string), IList<VMSSVMInfo> vmssVMList = default(IList<VMSSVMInfo>))
+        public GuestConfigurationAssignmentProperties(string targetResourceId = default(string), GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), System.DateTime? lastComplianceStatusChecked = default(System.DateTime?), string latestReportId = default(string), string parameterHash = default(string), AssignmentReport latestAssignmentReport = default(AssignmentReport), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string), string resourceType = default(string), IList<VMSSVMInfo> vmssVMList = default(IList<VMSSVMInfo>))
         {
             TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
             ComplianceStatus = complianceStatus;
             LastComplianceStatusChecked = lastComplianceStatusChecked;
             LatestReportId = latestReportId;
+            ParameterHash = parameterHash;
             LatestAssignmentReport = latestAssignmentReport;
             Context = context;
             AssignmentHash = assignmentHash;
@@ -108,6 +111,12 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "latestReportId")]
         public string LatestReportId { get; private set; }
+
+        /// <summary>
+        /// Gets parameter hash for the guest configuration assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "parameterHash")]
+        public string ParameterHash { get; private set; }
 
         /// <summary>
         /// Gets or sets last reported guest configuration assignment report.

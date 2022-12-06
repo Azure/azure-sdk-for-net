@@ -59,6 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("useBinaryTransfer");
                 writer.WriteBooleanValue(UseBinaryTransfer.Value);
             }
+            if (Optional.IsDefined(DisableChunking))
+            {
+                writer.WritePropertyName("disableChunking");
+                writer.WriteObjectValue(DisableChunking);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
@@ -84,6 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> deleteFilesAfterCompletion = default;
             Optional<object> fileListPath = default;
             Optional<bool> useBinaryTransfer = default;
+            Optional<object> disableChunking = default;
             string type = default;
             Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
@@ -170,6 +176,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     useBinaryTransfer = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("disableChunking"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    disableChunking = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -188,7 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, Optional.ToNullable(useBinaryTransfer));
+            return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, Optional.ToNullable(useBinaryTransfer), disableChunking.Value);
         }
 
         internal partial class FtpReadSettingsConverter : JsonConverter<FtpReadSettings>

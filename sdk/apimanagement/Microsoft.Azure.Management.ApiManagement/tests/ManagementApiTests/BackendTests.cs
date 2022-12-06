@@ -187,7 +187,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     backendCreateParameters.Properties.ServiceFabricCluster.ManagementEndpoints.Add(urlParameter);
                     backendCreateParameters.Properties.ServiceFabricCluster.MaxPartitionResolutionRetries = 5;
                     backendCreateParameters.Properties.ServiceFabricCluster.ServerX509Names = new List<X509CertificateName>();
-                    backendCreateParameters.Properties.ServiceFabricCluster.ServerX509Names.Add(new X509CertificateName("serverCommonName1", "issuerThumbprint1"));
+                    backendCreateParameters.Properties.ServiceFabricCluster.ServerX509Names.Add(new X509CertificateName("serverCommonName1", cert.Thumbprint));
 
                     var backendContract = testBase.client.Backend.CreateOrUpdate(
                         testBase.rgName,

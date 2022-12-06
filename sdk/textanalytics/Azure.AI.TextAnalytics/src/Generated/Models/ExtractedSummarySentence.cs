@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -18,12 +19,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="offset"> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </param>
         /// <param name="length"> The length of the sentence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal ExtractedSummarySentence(string text, double rankScore, int offset, int length)
+        public ExtractedSummarySentence(string text, double rankScore, int offset, int length)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             RankScore = rankScore;
@@ -32,12 +30,12 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> The extracted sentence text. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
         /// <summary> A double value representing the relevance of the sentence within the summary. Higher values indicate higher importance. </summary>
-        public double RankScore { get; }
+        public double RankScore { get; set; }
         /// <summary> The sentence offset from the start of the document, based on the value of the parameter StringIndexType. </summary>
-        public int Offset { get; }
+        public int Offset { get; set; }
         /// <summary> The length of the sentence. </summary>
-        public int Length { get; }
+        public int Length { get; set; }
     }
 }

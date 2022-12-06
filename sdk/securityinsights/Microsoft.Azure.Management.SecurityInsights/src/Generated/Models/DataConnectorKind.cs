@@ -20,9 +20,21 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string AzureSecurityCenter = "AzureSecurityCenter";
         public const string MicrosoftCloudAppSecurity = "MicrosoftCloudAppSecurity";
         public const string ThreatIntelligence = "ThreatIntelligence";
+        public const string ThreatIntelligenceTaxii = "ThreatIntelligenceTaxii";
         public const string Office365 = "Office365";
+        public const string OfficeATP = "OfficeATP";
+        public const string OfficeIRM = "OfficeIRM";
+        public const string Office365Project = "Office365Project";
+        public const string OfficePowerBI = "OfficePowerBI";
         public const string AmazonWebServicesCloudTrail = "AmazonWebServicesCloudTrail";
+        public const string AmazonWebServicesS3 = "AmazonWebServicesS3";
         public const string AzureAdvancedThreatProtection = "AzureAdvancedThreatProtection";
         public const string MicrosoftDefenderAdvancedThreatProtection = "MicrosoftDefenderAdvancedThreatProtection";
+        public const string Dynamics365 = "Dynamics365";
+        public const string MicrosoftThreatProtection = "MicrosoftThreatProtection";
+        public const string MicrosoftThreatIntelligence = "MicrosoftThreatIntelligence";
+        public const string GenericUI = "GenericUI";
+        public const string APIPolling = "APIPolling";
+        public const string IOT = "IOT";
     }
 }

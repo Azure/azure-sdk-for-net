@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{EA9DBCE0-4918-4683-A2D1-68992BDAF1E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{086D0FD3-FA19-4C72-9E3A-B8570A2BAD11}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.AppConfiguration", "src\Azure.ResourceManager.AppConfiguration.csproj", "{A0135DBA-F25A-4BAB-BA73-D82CEC252937}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.AppConfiguration.Tests", "tests\Azure.ResourceManager.AppConfiguration.Tests.csproj", "{4711F6AE-14AB-4910-A524-80C54F539791}"

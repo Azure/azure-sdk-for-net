@@ -42,8 +42,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// collection in the Azure Cosmos DB service.</param>
         /// <param name="conflictResolutionPolicy">The conflict resolution
         /// policy for the container.</param>
+        /// <param name="clientEncryptionPolicy">The client encryption policy
+        /// for the container.</param>
         /// <param name="analyticalStorageTtl">Analytical TTL.</param>
-        public SqlContainerResource(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), long? analyticalStorageTtl = default(long?))
+        /// <param name="restoreParameters">Parameters to indicate the
+        /// information about the restore</param>
+        /// <param name="createMode">Enum to indicate the mode of resource
+        /// creation. Possible values include: 'Default', 'Restore'</param>
+        public SqlContainerResource(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), ClientEncryptionPolicy clientEncryptionPolicy = default(ClientEncryptionPolicy), long? analyticalStorageTtl = default(long?), ResourceRestoreParameters restoreParameters = default(ResourceRestoreParameters), string createMode = default(string))
         {
             Id = id;
             IndexingPolicy = indexingPolicy;
@@ -51,7 +57,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             DefaultTtl = defaultTtl;
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
+            ClientEncryptionPolicy = clientEncryptionPolicy;
             AnalyticalStorageTtl = analyticalStorageTtl;
+            RestoreParameters = restoreParameters;
+            CreateMode = createMode;
             CustomInit();
         }
 
@@ -102,10 +111,30 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets the client encryption policy for the container.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientEncryptionPolicy")]
+        public ClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
+
+        /// <summary>
         /// Gets or sets analytical TTL.
         /// </summary>
         [JsonProperty(PropertyName = "analyticalStorageTtl")]
         public long? AnalyticalStorageTtl { get; set; }
+
+        /// <summary>
+        /// Gets or sets parameters to indicate the information about the
+        /// restore
+        /// </summary>
+        [JsonProperty(PropertyName = "restoreParameters")]
+        public ResourceRestoreParameters RestoreParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate the mode of resource creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "createMode")]
+        public string CreateMode { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -122,6 +151,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             if (PartitionKey != null)
             {
                 PartitionKey.Validate();
+            }
+            if (ClientEncryptionPolicy != null)
+            {
+                ClientEncryptionPolicy.Validate();
             }
         }
     }

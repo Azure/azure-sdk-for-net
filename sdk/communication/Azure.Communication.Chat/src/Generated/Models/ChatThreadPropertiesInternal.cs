@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -18,21 +19,12 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="createdByCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="topic"/>, or <paramref name="createdByCommunicationIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="topic"/> or <paramref name="createdByCommunicationIdentifier"/> is null. </exception>
         internal ChatThreadPropertiesInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdByCommunicationIdentifier)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (topic == null)
-            {
-                throw new ArgumentNullException(nameof(topic));
-            }
-            if (createdByCommunicationIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(createdByCommunicationIdentifier));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(topic, nameof(topic));
+            Argument.AssertNotNull(createdByCommunicationIdentifier, nameof(createdByCommunicationIdentifier));
 
             Id = id;
             Topic = topic;

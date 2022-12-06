@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.LabServices
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -72,14 +72,9 @@ namespace Microsoft.Azure.Management.LabServices
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IImagesOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the IOperationResultsOperations.
-        /// </summary>
-        public virtual IOperationResultsOperations OperationResults { get; private set; }
+        public virtual IImagesOperations Images { get; private set; }
 
         /// <summary>
         /// Gets the ILabPlansOperations.
@@ -87,14 +82,24 @@ namespace Microsoft.Azure.Management.LabServices
         public virtual ILabPlansOperations LabPlans { get; private set; }
 
         /// <summary>
-        /// Gets the IImagesOperations.
+        /// Gets the IOperations.
         /// </summary>
-        public virtual IImagesOperations Images { get; private set; }
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Gets the ILabsOperations.
         /// </summary>
         public virtual ILabsOperations Labs { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationResultsOperations.
+        /// </summary>
+        public virtual IOperationResultsOperations OperationResults { get; private set; }
+
+        /// <summary>
+        /// Gets the ISchedulesOperations.
+        /// </summary>
+        public virtual ISchedulesOperations Schedules { get; private set; }
 
         /// <summary>
         /// Gets the IUsersOperations.
@@ -107,9 +112,14 @@ namespace Microsoft.Azure.Management.LabServices
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
         /// <summary>
-        /// Gets the ISchedulesOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        public virtual ISchedulesOperations Schedules { get; private set; }
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
+        /// Gets the ISkusOperations.
+        /// </summary>
+        public virtual ISkusOperations Skus { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the LabServicesClient class.
@@ -206,7 +216,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal LabServicesClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public LabServicesClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -233,7 +243,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal LabServicesClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public LabServicesClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -261,7 +271,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal LabServicesClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public LabServicesClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -289,7 +299,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal LabServicesClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public LabServicesClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -325,7 +335,7 @@ namespace Microsoft.Azure.Management.LabServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal LabServicesClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public LabServicesClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -352,16 +362,18 @@ namespace Microsoft.Azure.Management.LabServices
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
-            OperationResults = new OperationResultsOperations(this);
-            LabPlans = new LabPlansOperations(this);
             Images = new ImagesOperations(this);
+            LabPlans = new LabPlansOperations(this);
+            Operations = new Operations(this);
             Labs = new LabsOperations(this);
+            OperationResults = new OperationResultsOperations(this);
+            Schedules = new SchedulesOperations(this);
             Users = new UsersOperations(this);
             VirtualMachines = new VirtualMachinesOperations(this);
-            Schedules = new SchedulesOperations(this);
+            Usages = new UsagesOperations(this);
+            Skus = new SkusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-10-01-preview";
+            ApiVersion = "2021-11-15-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

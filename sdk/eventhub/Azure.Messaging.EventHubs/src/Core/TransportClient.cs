@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract TransportProducer CreateProducer(string partitionId,
                                                          string producerIdentifier,
                                                          TransportProducerFeatures requestedFeatures,
-                                                         PartitionPublishingOptionsInternal partitionOptions,
+                                                         PartitionPublishingOptions partitionOptions,
                                                          EventHubsRetryPolicy retryPolicy);
 
         /// <summary>

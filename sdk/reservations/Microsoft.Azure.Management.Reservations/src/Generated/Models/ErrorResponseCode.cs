@@ -71,5 +71,6 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public const string FulfillmentTransientError = "FulfillmentTransientError";
         public const string FulfillmentError = "FulfillmentError";
         public const string CalculatePriceFailed = "CalculatePriceFailed";
+        public const string AppliedScopesSameAsExisting = "AppliedScopesSameAsExisting";
     }
 }

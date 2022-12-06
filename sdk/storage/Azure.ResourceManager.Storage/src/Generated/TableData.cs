@@ -5,30 +5,38 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the Table data model. </summary>
-    public partial class TableData : Resource
+    public partial class TableData : ResourceData
     {
         /// <summary> Initializes a new instance of TableData. </summary>
         public TableData()
         {
+            SignedIdentifiers = new ChangeTrackingList<StorageTableSignedIdentifier>();
         }
 
         /// <summary> Initializes a new instance of TableData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tableName"> Table name under the specified account. </param>
-        internal TableData(ResourceIdentifier id, string name, ResourceType type, string tableName) : base(id, name, type)
+        /// <param name="signedIdentifiers"> List of stored access policies specified on the table. </param>
+        internal TableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tableName, IList<StorageTableSignedIdentifier> signedIdentifiers) : base(id, name, resourceType, systemData)
         {
             TableName = tableName;
+            SignedIdentifiers = signedIdentifiers;
         }
 
         /// <summary> Table name under the specified account. </summary>
         public string TableName { get; }
+        /// <summary> List of stored access policies specified on the table. </summary>
+        public IList<StorageTableSignedIdentifier> SignedIdentifiers { get; }
     }
 }

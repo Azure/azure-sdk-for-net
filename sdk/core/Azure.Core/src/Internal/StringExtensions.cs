@@ -9,7 +9,7 @@ namespace Azure.Core
     {
         public static int IndexOfOrdinal(this string s, char c)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             return s.IndexOf(c, StringComparison.Ordinal);
 #else
             return s.IndexOf(c);
@@ -20,7 +20,7 @@ namespace Azure.Core
         {
             if (s == null) return 0;
 
-#if NET5_0
+#if NET5_0_OR_GREATER
             return s.GetHashCode(StringComparison.Ordinal);
 #else
             return StringComparer.Ordinal.GetHashCode(s);

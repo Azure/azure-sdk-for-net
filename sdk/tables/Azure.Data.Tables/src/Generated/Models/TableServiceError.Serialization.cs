@@ -13,6 +13,16 @@ namespace Azure.Data.Tables.Models
 {
     internal partial class TableServiceError
     {
+        internal static TableServiceError DeserializeTableServiceError(XElement element)
+        {
+            string message = default;
+            if (element.Element("Message") is XElement messageElement)
+            {
+                message = (string)messageElement;
+            }
+            return new TableServiceError(message);
+        }
+
         internal static TableServiceError DeserializeTableServiceError(JsonElement element)
         {
             Optional<string> message = default;
@@ -25,16 +35,6 @@ namespace Azure.Data.Tables.Models
                 }
             }
             return new TableServiceError(message.Value);
-        }
-
-        internal static TableServiceError DeserializeTableServiceError(XElement element)
-        {
-            string message = default;
-            if (element.Element("Message") is XElement messageElement)
-            {
-                message = (string)messageElement;
-            }
-            return new TableServiceError(message);
         }
     }
 }

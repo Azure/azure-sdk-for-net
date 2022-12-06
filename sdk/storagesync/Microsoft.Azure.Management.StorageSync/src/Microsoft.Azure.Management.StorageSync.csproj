@@ -6,12 +6,12 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>6.0.0</Version>
+        <Version>7.0.0</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
-            This version supports the StorageSync API version 2020-09-01 and includes support for authoritative upload, cloud change enumeration status, and other improvements.
+            This version supports the StorageSync API version 2020-09-01 and contains fixes to bring consistency between the .NET SDK and the StorageSync API specification.
         ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

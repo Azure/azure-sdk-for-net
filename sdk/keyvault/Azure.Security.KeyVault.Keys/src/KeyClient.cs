@@ -39,6 +39,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -53,6 +54,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="KeyClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
@@ -66,7 +68,7 @@ namespace Azure.Security.KeyVault.Keys
             string apiVersion = options.GetVersionString();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential));
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
@@ -318,6 +320,64 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Creates and stores a new Octet Key Pair (OKP) in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="okpKeyOptions">The key options object containing information about the Octet Key Pair (OKP) being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="okpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultKey> CreateOkpKey(CreateOkpKeyOptions okpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(okpKeyOptions, nameof(okpKeyOptions));
+
+            var parameters = new KeyRequestParameters(okpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOkpKey)}");
+            scope.AddAttribute("key", okpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(okpKeyOptions.Name), cancellationToken, KeysPath, okpKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new Octet Key Pair (OKP) in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="okpKeyOptions">The key options object containing information about the Octet Key Pair (OKP) being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="okpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultKey>> CreateOkpKeyAsync(CreateOkpKeyOptions okpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(okpKeyOptions, nameof(okpKeyOptions));
+
+            var parameters = new KeyRequestParameters(okpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOkpKey)}");
+            scope.AddAttribute("key", okpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(okpKeyOptions.Name), cancellationToken, KeysPath, okpKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// The update key operation changes specified attributes of a stored key and
         /// can be applied to any key type and key version stored in Azure Key Vault.
         /// </summary>
@@ -329,12 +389,11 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="properties">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="properties"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="properties"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultKey> UpdateKeyProperties(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
@@ -366,12 +425,11 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="properties">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="properties"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="properties"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> or <paramref name="keyOperations"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultKey>> UpdateKeyPropertiesAsync(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
@@ -1243,7 +1301,6 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
-        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// The key must be exportable.
@@ -1253,41 +1310,33 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
-            ReleaseKey(name, null, targetAttestationToken, options, cancellationToken);
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string targetAttestationToken, CancellationToken cancellationToken = default) =>
+            ReleaseKey(new ReleaseKeyOptions(name, targetAttestationToken), cancellationToken);
 
         /// <summary>
         /// Releases a key.
         /// </summary>
-        /// <param name="name">The name of the key to release.</param>
-        /// <param name="version">Optional version of the key to release.</param>
-        /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
-        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="options"><see cref="ReleaseKeyOptions"/> containing the name, attestation assertion for the target, and additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// The key must be exportable.
         /// This operation requires the keys/release permission.
         /// </remarks>
         /// <returns>The key release result containing the released key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string version, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<ReleaseKeyResult> ReleaseKey(ReleaseKeyOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(targetAttestationToken, nameof(targetAttestationToken));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
-            scope.AddAttribute("key", name);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute("key", options.Name);
+            scope.AddAttribute("version", options.Version);
             scope.Start();
-
-            options ??= new();
-            options.TargetAttestationToken = targetAttestationToken;
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release");
+                return _pipeline.SendRequest(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, options.Name, "/", options.Version, "/release");
             }
             catch (Exception e)
             {
@@ -1301,7 +1350,6 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
-        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// The key must be exportable.
@@ -1311,41 +1359,33 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
-            ReleaseKeyAsync(name, null, targetAttestationToken, options, cancellationToken);
+        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string targetAttestationToken, CancellationToken cancellationToken = default) =>
+            await ReleaseKeyAsync(new ReleaseKeyOptions(name, targetAttestationToken), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Releases a key.
         /// </summary>
-        /// <param name="name">The name of the key to release.</param>
-        /// <param name="version">Optional version of the key to release.</param>
-        /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
-        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="options"><see cref="ReleaseKeyOptions"/> containing the name, attestation assertion for the target, and additional options to release a key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// The key must be exportable.
         /// This operation requires the keys/release permission.
         /// </remarks>
         /// <returns>The key release result containing the released key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string version, string targetAttestationToken, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(ReleaseKeyOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(targetAttestationToken, nameof(targetAttestationToken));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
-            scope.AddAttribute("key", name);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute("key", options.Name);
+            scope.AddAttribute("version", options.Version);
             scope.Start();
-
-            options ??= new();
-            options.TargetAttestationToken = targetAttestationToken;
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, options.Name, "/", options.Version, "/release").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1387,26 +1427,26 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/get permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyRotationPolicy> GetKeyRotationPolicy(string name, CancellationToken cancellationToken = default)
+        public virtual Response<KeyRotationPolicy> GetKeyRotationPolicy(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy");
+                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy");
             }
             catch (Exception e)
             {
@@ -1418,26 +1458,26 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Gets the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/get permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyRotationPolicy>> GetKeyRotationPolicyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyRotationPolicy>> GetKeyRotationPolicyAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1510,29 +1550,30 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
+        /// The new policy will be used for the next version of the key when rotated.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="policy"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> or <paramref name="policy"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyRotationPolicy> UpdateKeyRotationPolicy(string name, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
+        public virtual Response<KeyRotationPolicy> UpdateKeyRotationPolicy(string keyName, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy");
+                return _pipeline.SendRequest(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy");
             }
             catch (Exception e)
             {
@@ -1543,29 +1584,30 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Updates the <see cref="KeyRotationPolicy"/> for the specified key in Key Vault.
+        /// The new policy will be used for the next version of the key when rotated.
         /// </summary>
-        /// <param name="name">The name of the key.</param>
+        /// <param name="keyName">The name of the key.</param>
         /// <param name="policy">The <see cref="KeyRotationPolicy"/> to update.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
         /// This operation requires the keys/update permission.
         /// </remarks>
         /// <returns>A <see cref="KeyRotationPolicy"/> for the specified key.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> contains an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="policy"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="keyName"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="keyName"/> or <paramref name="policy"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyRotationPolicy>> UpdateKeyRotationPolicyAsync(string name, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyRotationPolicy>> UpdateKeyRotationPolicyAsync(string keyName, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
-            scope.AddAttribute("key", name);
+            scope.AddAttribute("key", keyName);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, name, "/rotationpolicy").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Put, policy, () => new KeyRotationPolicy(), cancellationToken, KeysPath, keyName, "/rotationpolicy").ConfigureAwait(false);
             }
             catch (Exception e)
             {

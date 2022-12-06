@@ -61,10 +61,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// image definition. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
-        /// <param name="provisioningState">The current state of the gallery
-        /// image definition.</param>
+        /// <param name="provisioningState">Possible values include:
+        /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
+        /// 'Migrating'</param>
         /// <param name="features">A list of gallery image features.</param>
-        public GalleryImageUpdate(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>))
+        /// <param name="architecture">Possible values include: 'x64',
+        /// 'Arm64'</param>
+        public GalleryImageUpdate(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string eula = default(string), string privacyStatementUri = default(string), string releaseNoteUri = default(string), string hyperVGeneration = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string provisioningState = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), string architecture = default(string))
             : base(id, name, type, tags)
         {
             Description = description;
@@ -81,6 +84,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             PurchasePlan = purchasePlan;
             ProvisioningState = provisioningState;
             Features = features;
+            Architecture = architecture;
             CustomInit();
         }
 
@@ -170,13 +174,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ImagePurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets the current state of the gallery image definition.
-        /// </summary>
-        /// <remarks>
-        /// The provisioning state, which only appears in the response.
-        /// Possible values include: 'Creating', 'Updating', 'Failed',
+        /// Gets possible values include: 'Creating', 'Updating', 'Failed',
         /// 'Succeeded', 'Deleting', 'Migrating'
-        /// </remarks>
+        /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
@@ -185,6 +185,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.features")]
         public IList<GalleryImageFeature> Features { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'x64', 'Arm64'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.architecture")]
+        public string Architecture { get; set; }
 
         /// <summary>
         /// Validate the object.

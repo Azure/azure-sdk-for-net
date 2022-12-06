@@ -108,8 +108,8 @@ function LoginToAzureDevops([string]$devops_pat)
   if (!$devops_pat) {
     return
   }
-  $azCmdStr = "'$devops_pat' | az devops login $($ReleaseDevOpsOrgParameters -join ' ')"
-  Invoke-Expression $azCmdStr
+  # based on the docs at https://aka.ms/azure-devops-cli-auth the recommendation is to set this env variable to login
+  $env:AZURE_DEVOPS_EXT_PAT = $devops_pat
 }
 
 function BuildHashKeyNoNull()
@@ -234,6 +234,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $fields += "Custom.PackagePatchVersions"
   $fields += "Custom.Generated"
   $fields += "Custom.RoadmapState"
+  $fields += "Microsoft.VSTS.Common.StateChangeDate"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Package'"
@@ -411,13 +412,13 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
 
     if ($allowPrompt) {
       if (!$pkg.DisplayName) {
-        Write-Host "We need a package display name to be used in various places and it should be consistent across languages for similar packages."
+        Write-Host "Display name is used to identify this package across languages and is usually the friendly name (i.e. For 'Azure Anomaly Detector' it would be 'Anomaly Detector'. For 'Azure Cognitive Search' it would be 'Search'.). See https://aka.ms/azsdk/mark-release-status for more info."
         while (($readInput = Read-Host -Prompt "Input the display name") -eq "") { }
         $packageInfo.DisplayName = $readInput
       }
 
       if (!$pkg.ServiceName) {
-        Write-Host "We need a package service name to be used in various places and it should be consistent across languages for similar packages."
+        Write-Host "This is the friendly service name for this package that is used to align it with other packages and languages (i.e., no need to include 'Azure' or 'Microsoft' in the title). The service name is sometimes the same as the `Package Display Name` if there is only one package for a service. (i.e. For 'Azure Anomaly Detector' it would be 'Anomaly Detector'). For services that ship multiple packages be sure to list the service only. (i.e. For 'Schema Registry Avro', the service name is just 'Schema Registry'; For 'Key Vault Certificates', the service name is simply Key Vault.). See https://aka.ms/azsdk/mark-release-status for more info."
         while (($readInput = Read-Host -Prompt "Input the service name") -eq "") { }
         $packageInfo.ServiceName = $readInput
       }
@@ -466,7 +467,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     if ($pkgName -ne $existingItem.fields["Custom.Package"]) { $changedField = "Custom.Package" }
     if ($verMajorMinor -ne $existingItem.fields["Custom.PackageVersionMajorMinor"]) { $changedField = "Custom.PackageVersionMajorMinor" }
     if ($pkgDisplayName -ne $existingItem.fields["Custom.PackageDisplayName"]) { $changedField = "Custom.PackageDisplayName" }
-    if ($pkgType -ne $existingItem.fields["Custom.PackageType"]) { $changedField = "Custom.PackageType" }
+    if ($pkgType -ne [string]$existingItem.fields["Custom.PackageType"]) { $changedField = "Custom.PackageType" }
     if ($pkgNewLibrary -ne $existingItem.fields["Custom.PackageTypeNewLibrary"]) { $changedField = "Custom.PackageTypeNewLibrary" }
     if ($pkgRepoPath -ne $existingItem.fields["Custom.PackageRepoPath"]) { $changedField = "Custom.PackageRepoPath" }
     if ($serviceName -ne $existingItem.fields["Custom.ServiceName"]) { $changedField = "Custom.ServiceName" }
@@ -884,6 +885,25 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   "value": "$shippedPackages"
 }
 "@
+
+    # If we shipped a version after we set "In Release" state then reset the state to "Next Release Unknown"
+    if ($pkgWorkItem.fields["System.State"] -eq "In Release")
+    {
+      $lastShippedDate = [DateTime]$newShippedVersions[0].Date
+      $markedInReleaseDate = ([DateTime]$pkgWorkItem.fields["Microsoft.VSTS.Common.StateChangeDate"])
+
+      # We just shipped so lets set the state to "Next Release Unknown"
+      if ($markedInReleaseDate -le $lastShippedDate)
+      {
+        $fieldUpdates += @'
+{
+  "op": "replace",
+  "path": "/fields/State",
+  "value": "Next Release Unknown"
+}
+'@
+      }
+    }
   }
 
   # Full merged version set

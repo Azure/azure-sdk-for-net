@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RestorePointListResult DeserializeRestorePointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestorePoint>> value = default;
+            Optional<IReadOnlyList<SqlServerDatabaseRestorePointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorePoint> array = new List<RestorePoint>();
+                    List<SqlServerDatabaseRestorePointData> array = new List<SqlServerDatabaseRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorePoint.DeserializeRestorePoint(item));
+                        array.Add(SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(item));
                     }
                     value = array;
                     continue;

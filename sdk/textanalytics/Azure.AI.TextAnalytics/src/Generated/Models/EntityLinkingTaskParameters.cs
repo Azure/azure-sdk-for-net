@@ -7,19 +7,24 @@
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The EntityLinkingTaskParameters. </summary>
-    internal partial class EntityLinkingTaskParameters
+    /// <summary> Supported parameters for an Entity Linking task. </summary>
+    internal partial class EntityLinkingTaskParameters : PreBuiltTaskParameters
     {
         /// <summary> Initializes a new instance of EntityLinkingTaskParameters. </summary>
         public EntityLinkingTaskParameters()
         {
         }
 
-        /// <summary> Gets or sets the model version. </summary>
-        public string ModelVersion { get; set; }
-        /// <summary> Gets or sets the logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> Gets or sets the string index type. </summary>
+        /// <summary> Initializes a new instance of EntityLinkingTaskParameters. </summary>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        internal EntityLinkingTaskParameters(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        {
+            StringIndexType = stringIndexType;
+        }
+
+        /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }
 }

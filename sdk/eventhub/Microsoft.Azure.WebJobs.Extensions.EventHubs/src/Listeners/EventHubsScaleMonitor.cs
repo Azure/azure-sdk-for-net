@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly string _functionId;
         private readonly IEventHubConsumerClient _client;
         private readonly ILogger _logger;
-        private readonly BlobsCheckpointStore _checkpointStore;
+        private readonly BlobCheckpointStoreInternal _checkpointStore;
 
         private DateTime _nextPartitionLogTime;
         private DateTime _nextPartitionWarningTime;
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         public EventHubsScaleMonitor(
             string functionId,
             IEventHubConsumerClient client,
-            BlobsCheckpointStore checkpointStore,
+            BlobCheckpointStoreInternal checkpointStore,
             ILogger logger)
         {
             _functionId = functionId;
@@ -69,32 +69,35 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             // Get the PartitionRuntimeInformation for all partitions
             _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
-            var tasks = new Task<PartitionProperties>[partitions.Length];
+            var partitionPropertiesTasks = new Task<PartitionProperties>[partitions.Length];
+            var checkpointTasks = new Task<EventProcessorCheckpoint>[partitionPropertiesTasks.Length];
 
             for (int i = 0; i < partitions.Length; i++)
             {
-                tasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
-            }
+                partitionPropertiesTasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
 
-            await Task.WhenAll(tasks).ConfigureAwait(false);
-
-            IEnumerable<EventProcessorCheckpoint> checkpoints;
-            try
-            {
-                checkpoints = await _checkpointStore.ListCheckpointsAsync(
+                checkpointTasks[i] = _checkpointStore.GetCheckpointAsync(
                         _client.FullyQualifiedNamespace,
                         _client.EventHubName,
                         _client.ConsumerGroup,
-                        default)
-                    .ConfigureAwait(false);
+                        partitions[i],
+                        CancellationToken.None);
+            }
+
+            await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
+            EventProcessorCheckpoint[] checkpoints;
+
+            try
+            {
+                checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
             }
             catch
             {
-                // ListCheckpointsAsync would log
+                // GetCheckpointsAsync would log
                 return metrics;
             }
 
-            return CreateTriggerMetrics(tasks.Select(t => t.Result).ToList(), checkpoints.ToArray());
+            return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
         }
 
         private EventHubsTriggerMetrics CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, EventProcessorCheckpoint[] checkpoints, bool alwaysLog = false)
@@ -111,17 +114,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 var partitionProperties = partitionRuntimeInfo[i];
 
-                var checkpoint = (BlobsCheckpointStore.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c.PartitionId == partitionProperties.Id);
-                if (checkpoint == null)
-                {
-                    partitionErrors.Add($"Unable to find a checkpoint information for partition: {partitionProperties.Id}");
-                    continue;
-                }
+                var checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c?.PartitionId == partitionProperties.Id);
 
                 // Check for the unprocessed messages when there are messages on the event hub partition
                 // In that case, LastEnqueuedSequenceNumber will be >= 0
-                if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != checkpoint.SequenceNumber)
-                    || (checkpoint.Offset == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
+
+                if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != (checkpoint?.SequenceNumber ?? -1))
+                    || (checkpoint == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
                 {
                     long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
                     totalUnprocessedEventCount += partitionUnprocessedEventCount;
@@ -151,35 +150,58 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         }
 
         // Get the number of unprocessed events by deriving the delta between the server side info and the partition lease info,
-        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobsCheckpointStore.BlobStorageCheckpoint partitionLeaseInfo)
+        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobCheckpointStoreInternal.BlobStorageCheckpoint checkpoint)
         {
-            long partitionLeaseInfoSequenceNumber = partitionLeaseInfo.SequenceNumber ?? 0;
+            // If the partition is empty, there are no events to process.
 
-            // This handles two scenarios:
-            //   1. If the partition has received its first message, Offset will be null and LastEnqueuedSequenceNumber will be 0
-            //   2. If there are no instances set to process messages, Offset will be null and LastEnqueuedSequenceNumber will be >= 0
-            if (partitionLeaseInfo.Offset == null && partitionInfo.LastEnqueuedSequenceNumber >= 0)
+            if (partitionInfo.IsEmpty)
             {
-                return (partitionInfo.LastEnqueuedSequenceNumber + 1);
+                return 0;
             }
 
-            if (partitionInfo.LastEnqueuedSequenceNumber > partitionLeaseInfoSequenceNumber)
+            // If there is no checkpoint and the beginning and last sequence numbers for the partition are the same
+            // this partition received its first event.
+
+            if (checkpoint == null
+                && partitionInfo.LastEnqueuedSequenceNumber == partitionInfo.BeginningSequenceNumber)
             {
-                return (partitionInfo.LastEnqueuedSequenceNumber - partitionLeaseInfoSequenceNumber);
+                return 1;
+            }
+
+            var startingSequenceNumber = checkpoint?.SequenceNumber switch
+            {
+                // There was no checkpoint, use the beginning sequence number - 1, since
+                // that event hasn't been processed yet.
+
+                null => partitionInfo.BeginningSequenceNumber - 1,
+
+                // Use the checkpoint.
+
+                long seq => seq
+            };
+
+            // For normal scenarios, the last sequence number will be greater than the starting number and
+            // simple subtraction can be used.
+
+            if (partitionInfo.LastEnqueuedSequenceNumber > startingSequenceNumber)
+            {
+                return (partitionInfo.LastEnqueuedSequenceNumber - startingSequenceNumber);
             }
 
             // Partition is a circular buffer, so it is possible that
-            // LastEnqueuedSequenceNumber < SequenceNumber
+            // LastEnqueuedSequenceNumber < startingSequenceNumber
+
             long count = 0;
             unchecked
             {
-                count = (long.MaxValue - partitionInfo.LastEnqueuedSequenceNumber) + partitionLeaseInfoSequenceNumber;
+                count = (long.MaxValue - partitionInfo.LastEnqueuedSequenceNumber) + startingSequenceNumber;
             }
 
-            // It's possible for checkpointing to be ahead of the partition's LastEnqueuedSequenceNumber,
-            // especially if checkpointing is happening often and load is very low.
-            // If count is negative, we need to know that this read is invalid, so return 0.
+            // It's possible for the starting sequence number to be ahead of the last sequence number,
+            // especially if checkpointing is happening often and load is very low.  If count is negative,
+            // we need to know that this read is invalid, so return 0.
             // e.g., (9223372036854775807 - 10) + 11 = -9223372036854775808
+
             return (count < 0) ? 0 : count;
         }
 

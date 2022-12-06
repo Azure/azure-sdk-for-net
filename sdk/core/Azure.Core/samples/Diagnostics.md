@@ -4,7 +4,7 @@
 
 ## Logging
 
-Azure SDKs produce various log messages that include information about:
+The Azure SDK libraries produce various log messages that include information about:
 1. Requests and responses
 2. Authentication attempts
 3. Retries
@@ -20,6 +20,23 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 In order for the `AzureEventSourceListener` to collect logs, it must be in scope and active while the client library is in use.  If the listener is disposed or otherwise out of scope, logs cannot be collected.  Generally, we recommend creating the listener as a top-level member of the class where the Event Hubs client being inspected is used.
 
+### Capture logs to trace
+
+Logging can also be enabled for `Trace` in the same manner as console logging.
+
+```C# Snippet:TraceLogging
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateTraceLogger();
+```
+### Changing log level 
+
+The `CreateConsoleLogger` and `CreateTraceLogger` methods have an optional parameter that specifies a minimum log level to display messages for.
+
+```C# Snippet:LoggingLevel
+using AzureEventSourceListener consoleListener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Warning);
+using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTraceLogger(EventLevel.Informational);
+```
+
 ### Enabling content logging
 
 By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option:
@@ -32,16 +49,6 @@ SecretClientOptions options = new SecretClientOptions()
         IsLoggingContentEnabled = true
     }
 };
-```
-
-**NOTE:** The content is logged at the `Verbose` level so you might need to change the listener settings for content logs to appear.
-
-### Changing log level
-
-The `CreateConsoleLogger` method has an optional parameter that specifies a minimum log level to display messages for.
-
-```C# Snippet:ConsoleLoggingLevel
-using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Warning);
 ```
 
 ### Logging redacted headers and query parameters
@@ -72,23 +79,86 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
-### ASP.NET Core applications
-
-If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
-
-
 ### Custom logging callback
 
 The `AzureEventSourceListener` class can also be used with a custom callback that allows log messages to be written to destination of your choice.
 
 ```C# Snippet:LoggingCallback
 using AzureEventSourceListener listener = new AzureEventSourceListener(
-    (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, e.Level, message),
+    (args, message) => Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, args.Level, message),
     level: EventLevel.Verbose);
 ```
 
-When targeting .NET Standard 2.1, .NET Core 2.2, or newer, you might instead use `e.TimeStamp` to log the time the event was written instead of rendered, like above. It's in UTC format, so if you want to log the local time like in the example call `ToLocaleTime()` first.
-For help diagnosing multi-threading issues, you might also log `e.OSThreadId` which is also available on those same targets.
+When targeting .NET Standard 2.1, .NET Core 2.2, or newer, you might instead use `args.TimeStamp` to log the time the event was written instead of rendered, like above. It's in UTC format, so if you want to log the local time like in the example call `ToLocaleTime()` first.
+For help diagnosing multi-threading issues, you might also log `args.OSThreadId` which is also available on those same targets.
+
+More information about the `args` parameter for the callback can be found in the [EventWrittenEventArgs](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventwritteneventargs) documentation.
+
+### Applying filtering logic
+
+The custom callback can be used with the listener to help filter log messages to reduce volume and noise when troubleshooting.   
+
+In the following example, `Verbose` messages for the `Azure-Identity` event source are captured and written to `Trace`.  Log messages for the `Azure-Messaging-EventHubs` event source are filtered to capture only a specific set to aid in debugging publishing, which are then written to the console.
+
+```C# Snippet:LoggingWithFilters
+using AzureEventSourceListener listener = new AzureEventSourceListener((args, message) =>
+{
+    if (args.EventSource.Name.StartsWith("Azure-Identity") && args.Level == EventLevel.Verbose)
+    {
+        Trace.WriteLine(message);
+    }
+    else if (args.EventSource.Name.StartsWith("Azure-Messaging-EventHubs"))
+    {
+        switch (args.EventId)
+        {
+            case 3:   // Event Publish Start
+            case 4:   // Event Publish Complete
+            case 5:   // Event Publish Error
+                Console.WriteLine(message);
+                break;
+        }
+    }
+}, EventLevel.LogAlways);
+```
+
+### Capture filtered logs to a file
+
+For scenarios where capturing logs to `Trace` or console isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence. 
+
+The following example demonstrates capturing error logs to a text file so that they can be analyzed later, while capturing non-error information to console.  Its important to note that a simple approach is used for illustration.  This form may be helpful for troubleshooting, but a more robust and performant approach is recommended for long-term production use.
+
+```C# Snippet:FileLogging
+using Stream stream = new FileStream(
+    "<< PATH TO FILE >>",
+    FileMode.OpenOrCreate,
+    FileAccess.Write,
+    FileShare.Read);
+
+using StreamWriter streamWriter = new StreamWriter(stream)
+{
+    AutoFlush = true
+};
+
+using AzureEventSourceListener listener = new AzureEventSourceListener((args, message) =>
+{
+    if (args.EventSource.Name.StartsWith("Azure-Identity"))
+    {
+        switch (args.Level)
+        {
+            case EventLevel.Error:
+                streamWriter.Write(message);
+                break;
+            default:
+                Console.WriteLine(message);
+                break;
+        }
+    }
+}, EventLevel.LogAlways);
+```
+
+### Logging in ASP.NET Core applications
+
+If your are using Azure SDK libraries in ASP.NET Core application consider using the `Microsoft.Extensions.Azure` package that provides integration with `Microsoft.Extensions.Logging` library. See [Microsoft.Extensions.Azure readme](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Microsoft.Extensions.Azure/README.md) for more details.
 
 ## ActivitySource support
 
@@ -162,7 +232,7 @@ To setup ApplicationInsights tracking for your application follow the [Start Mon
 
 ### OpenTelemetry with Azure Monitor, Zipkin and others
 
-OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#ActivitySource support) section before proceeding to OpenTelemetry configuration.
+OpenTelemetry relies on ActivitySource to collect distributed traces. Follow steps in [ActivitySource support](#activitysource-support) section before proceeding to OpenTelemetry configuration.
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 

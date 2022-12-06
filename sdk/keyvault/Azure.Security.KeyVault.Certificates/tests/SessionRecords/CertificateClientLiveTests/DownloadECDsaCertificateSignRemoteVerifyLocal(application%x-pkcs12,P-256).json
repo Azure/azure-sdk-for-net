@@ -1,17 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/create?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/714720751/create?api-version=7.4-preview.1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
-        "traceparent": "00-7a11414079b70044beee36619ef16f28-586b9864bd197a4d-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "831d9b190a238fa42af682b8fe1a26bb",
+        "Content-Length": "0",
+        "traceparent": "00-85b2391d7d78c94a9d2ea5a26daadfe3-951085c02598834b-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Certificates/4.5.0-alpha.20221031.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "82ebcee1dd860d3d64c0cde41d945a41",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,18 +17,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "97",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:23:39 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "831d9b190a238fa42af682b8fe1a26bb",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "0c35becb-71c7-47d8-8dbf-12976729fd8c",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "82ebcee1dd860d3d64c0cde41d945a41",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "f7cae414-e8e7-4100-9b4e-cd03468aff9a"
       },
       "ResponseBody": {
         "error": {
@@ -41,19 +37,16 @@
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/create?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/714720751/create?api-version=7.4-preview.1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "219",
         "Content-Type": "application/json",
-        "traceparent": "00-7a11414079b70044beee36619ef16f28-586b9864bd197a4d-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "831d9b190a238fa42af682b8fe1a26bb",
+        "traceparent": "00-85b2391d7d78c94a9d2ea5a26daadfe3-951085c02598834b-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Certificates/4.5.0-alpha.20221031.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "82ebcee1dd860d3d64c0cde41d945a41",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -80,667 +73,164 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "755",
+        "Content-Length": "757",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:23:40 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:01 GMT",
         "Expires": "-1",
-        "Location": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview\u0026request_id=68fc966c1cd540e0b2906396c07f0e2a",
+        "Location": "https://heathskeyvault.vault.azure.net/certificates/714720751/pending?api-version=7.4-preview.1\u0026request_id=c0b057e46da84c7281c5aaf037625185",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "831d9b190a238fa42af682b8fe1a26bb",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "4f21f5d7-de65-4eb9-b768-0acc4c0ab0da",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "82ebcee1dd860d3d64c0cde41d945a41",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=14;da_age=3411;rd_age=3411;brd_age=11219;ra_notif_age=302;dec_lev=1;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "6935d6a4-223f-4451-8588-cb5a27c892c2"
       },
       "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
+        "id": "https://heathskeyvault.vault.azure.net/certificates/714720751/pending",
         "issuer": {
           "name": "Self"
         },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
+        "csr": "MIIBGDCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETF5yGliSMV7wx7SnaH0V3uLh9eQeR1qDCv5oS6wGYcSpv/lxKNmCRQpeDCGGj\u002BAQRYv7NUdSlIoPzNkiEj8SVaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0gAMEUCIQCmuazOIa4H46kQTjkpFNkPdISxGTyI6FYyPugteGc2fAIgXBiBZpCds8kjxO8xbXngZ1X3M\u002BqNAjyPf8CH0d2/DDs=",
         "cancellation_requested": false,
         "status": "inProgress",
         "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
+        "request_id": "c0b057e46da84c7281c5aaf037625185"
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/714720751/pending?api-version=7.4-preview.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "c395fc924ca95931c4434784cc5a2d1e",
+        "User-Agent": "azsdk-net-Security.KeyVault.Certificates/4.5.0-alpha.20221031.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b1eaf50e113bfb074922b3b2c6ebeb47",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "755",
+        "Content-Length": "757",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:23:40 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c395fc924ca95931c4434784cc5a2d1e",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "5738fa3f-0d22-49e6-942e-ba2f38a3949c",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "b1eaf50e113bfb074922b3b2c6ebeb47",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=14;da_age=3411;rd_age=3411;brd_age=11219;ra_notif_age=303;dec_lev=0;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "a4258ada-31b7-4320-a1ab-5640da48977a"
       },
       "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
+        "id": "https://heathskeyvault.vault.azure.net/certificates/714720751/pending",
         "issuer": {
           "name": "Self"
         },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
+        "csr": "MIIBGDCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETF5yGliSMV7wx7SnaH0V3uLh9eQeR1qDCv5oS6wGYcSpv/lxKNmCRQpeDCGGj\u002BAQRYv7NUdSlIoPzNkiEj8SVaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0gAMEUCIQCmuazOIa4H46kQTjkpFNkPdISxGTyI6FYyPugteGc2fAIgXBiBZpCds8kjxO8xbXngZ1X3M\u002BqNAjyPf8CH0d2/DDs=",
         "cancellation_requested": false,
         "status": "inProgress",
         "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
+        "request_id": "c0b057e46da84c7281c5aaf037625185"
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/714720751/pending?api-version=7.4-preview.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "5340dce7fb7a9742aa541e9c71cf7231",
+        "User-Agent": "azsdk-net-Security.KeyVault.Certificates/4.5.0-alpha.20221031.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "096a3ea2ffd522496424a3e9fbaf60af",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "755",
+        "Content-Length": "665",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:23:50 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5340dce7fb7a9742aa541e9c71cf7231",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "f7bf837f-b37b-42ed-a268-4351c9c1dbbc",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "228167e326e7cd3b69c4bedfc320c2d0",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:24:00 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "228167e326e7cd3b69c4bedfc320c2d0",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "4a0fe206-602d-4fdb-853b-4bce256712c1",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "21d164c9d2d99740b9fe19552d94e7f5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:24:10 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "21d164c9d2d99740b9fe19552d94e7f5",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "003cdd42-3057-41f2-8ec8-cbd32db14c14",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "65a015d10ad9c037a173e9b63c62d389",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:24:20 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "65a015d10ad9c037a173e9b63c62d389",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "62f6aedb-18dd-4f72-b00e-d2b475a87b9f",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "0dd34e9150fe105726ea68e80de59fd5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:24:30 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "0dd34e9150fe105726ea68e80de59fd5",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "16890cef-f906-44ac-9303-d4a61ad2c458",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "ad0ec9dc5d80bef62c108066e98a5a56",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:24:40 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "ad0ec9dc5d80bef62c108066e98a5a56",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "7d1ba281-dcb3-4aa7-a5db-0b8136ff06ef",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "dec38f2adac081f7bd8f3eeea24eb3bb",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:24:50 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "dec38f2adac081f7bd8f3eeea24eb3bb",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "60930ad5-4d0b-4394-bfd5-c4877f368cb9",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "73d913d3255434095715e0eecff1279c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:00 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "73d913d3255434095715e0eecff1279c",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "b5ba5a1f-37b5-4d5a-a763-8b2f88a965cc",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "7ebe1290c0220214d28df0f01e081bde",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:10 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7ebe1290c0220214d28df0f01e081bde",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "84475ee4-e61d-4e1c-9966-404f3363b550",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "d592c55ce6b00401868f87abfa08b2cb",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:20 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "d592c55ce6b00401868f87abfa08b2cb",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "334106d5-6fe9-4323-a80d-3f896132f05f",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "905da16834901298ffd7a0c73518154f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "755",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:30 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "905da16834901298ffd7a0c73518154f",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "2613e8e5-3a90-4c79-ad25-eef6c8b9af8b",
-        "X-Powered-By": "ASP.NET"
-      },
-      "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
-        "issuer": {
-          "name": "Self"
-        },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
-        "cancellation_requested": false,
-        "status": "inProgress",
-        "status_details": "Pending certificate created. Certificate request is in progress. This may take some time based on the issuer provider. Please check again later.",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
-      }
-    },
-    {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/pending?api-version=7.3-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "099101f9515fa9eb10b9f892396907c9",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "661",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:41 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "099101f9515fa9eb10b9f892396907c9",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "fa96a54c-e8a2-420e-8206-abb17bc9d98c",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "096a3ea2ffd522496424a3e9fbaf60af",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=24;da_age=3421;rd_age=3421;brd_age=11229;ra_notif_age=313;dec_lev=0;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "e57a03aa-3f01-4e77-9a09-60fccb083070"
       },
       "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending",
+        "id": "https://heathskeyvault.vault.azure.net/certificates/714720751/pending",
         "issuer": {
           "name": "Self"
         },
-        "csr": "MIIBFzCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6\u002B7UMl5uUa3F/6kZt5A01b1jwxlCWyCAZ/qM8Ylbgb2nqXKBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0cAMEQCIEMqpejChKfoN6eaCtMe4RFiaH5XGfnPcW7VeX5kc3gtAiBo24KzxMI4dODBYp9uA54Nmg3rc2URznczPhOHjPS1Og==",
+        "csr": "MIIBGDCBvwIBADASMRAwDgYDVQQDEwdkZWZhdWx0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETF5yGliSMV7wx7SnaH0V3uLh9eQeR1qDCv5oS6wGYcSpv/lxKNmCRQpeDCGGj\u002BAQRYv7NUdSlIoPzNkiEj8SVaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMAoGCCqGSM49BAMCA0gAMEUCIQCmuazOIa4H46kQTjkpFNkPdISxGTyI6FYyPugteGc2fAIgXBiBZpCds8kjxO8xbXngZ1X3M\u002BqNAjyPf8CH0d2/DDs=",
         "cancellation_requested": false,
         "status": "completed",
-        "target": "https://heathskvtest.vault.azure.net/certificates/578190564",
-        "request_id": "68fc966c1cd540e0b2906396c07f0e2a"
+        "target": "https://heathskeyvault.vault.azure.net/certificates/714720751",
+        "request_id": "c0b057e46da84c7281c5aaf037625185"
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/714720751?api-version=7.4-preview.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "7d8824db8baa284d2c7fd5d9463acf6d",
+        "User-Agent": "azsdk-net-Security.KeyVault.Certificates/4.5.0-alpha.20221031.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8b6f31e8d753d0b4c6ef39642a8a4779",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1746",
+        "Content-Length": "1765",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:41 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7d8824db8baa284d2c7fd5d9463acf6d",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "2e646420-4bbf-49a4-aeed-c0b9565f202a",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "8b6f31e8d753d0b4c6ef39642a8a4779",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=24;da_age=3421;rd_age=3421;brd_age=11230;ra_notif_age=313;dec_lev=1;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "88bb022a-2a61-44b4-8cad-3bdc2f914038"
       },
       "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
-        "kid": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
-        "sid": "https://heathskvtest.vault.azure.net/secrets/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
-        "x5t": "ro9m0oqRQFFMwMCUk5HuYg0JoNQ",
-        "cer": "MIIBnzCCAUSgAwIBAgIQJ7l39mcYRq6Jz0ffyhNDgTAKBggqhkjOPQQDAjASMRAwDgYDVQQDEwdkZWZhdWx0MB4XDTIxMDcxNDAyMTUzM1oXDTIyMDcxNDAyMjUzM1owEjEQMA4GA1UEAxMHZGVmYXVsdDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABAAhcVK4Fd864abcddK9UtEmZpz0Sxd/S/IxMygr\u002Bvu1DJeblGtxf\u002BpGbeQNNW9Y8MZQlsggGf6jPGJW4G9p6lyjfDB6MA4GA1UdDwEB/wQEAwIHgDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBS7O35EyT7G\u002Bzt7RHgzP1sfwPn83DAdBgNVHQ4EFgQUuzt\u002BRMk\u002Bxvs7e0R4Mz9bH8D5/NwwCgYIKoZIzj0EAwIDSQAwRgIhAKHA5aKl9PWFqpxBAhAvRS7kBrhGRn4Dxzx3cjmRISiAAiEAr5/Gk055mQSSaXgM6bPBLzp5R8W5mZrA4u0HC4gOI3M=",
+        "id": "https://heathskeyvault.vault.azure.net/certificates/714720751/910cba39ca9b42608c31dbdc83ebaee1",
+        "kid": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1",
+        "sid": "https://heathskeyvault.vault.azure.net/secrets/714720751/910cba39ca9b42608c31dbdc83ebaee1",
+        "x5t": "rMvjv4v-iuPbmhtXkjKs6vb-Cl4",
+        "cer": "MIIBnzCCAUSgAwIBAgIQUN3o0x4NSkKIahCAHkLkMTAKBggqhkjOPQQDAjASMRAwDgYDVQQDEwdkZWZhdWx0MB4XDTIyMTEwMTE3MTQwM1oXDTIzMTEwMTE3MjQwM1owEjEQMA4GA1UEAxMHZGVmYXVsdDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABExechpYkjFe8Me0p2h9Fd7i4fXkHkdagwr\u002BaEusBmHEqb/5cSjZgkUKXgwhho/gEEWL\u002BzVHUpSKD8zZIhI/ElWjfDB6MA4GA1UdDwEB/wQEAwIHgDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBRHafGhROYfTsmhHfepsD0z3lp1NTAdBgNVHQ4EFgQUR2nxoUTmH07JoR33qbA9M95adTUwCgYIKoZIzj0EAwIDSQAwRgIhALOkvWlUqHq/2nVMuZ5oImDMnmOvHlS\u002BFy115XYHm6jAAiEAiMdXIgqHQnGHTkntkf42JPQqGYZwZISYY0tYp7KEAUU=",
         "attributes": {
           "enabled": true,
-          "nbf": 1626228933,
-          "exp": 1657765533,
-          "created": 1626229533,
-          "updated": 1626229533,
-          "recoveryLevel": "Recoverable\u002BPurgeable",
-          "recoverableDays": 90
+          "nbf": 1667322843,
+          "exp": 1698859443,
+          "created": 1667323443,
+          "updated": 1667323443,
+          "recoveryLevel": "CustomizedRecoverable\u002BPurgeable",
+          "recoverableDays": 7
         },
         "policy": {
-          "id": "https://heathskvtest.vault.azure.net/certificates/578190564/policy",
+          "id": "https://heathskeyvault.vault.azure.net/certificates/714720751/policy",
           "key_props": {
             "exportable": true,
             "kty": "EC",
@@ -780,27 +270,23 @@
           },
           "attributes": {
             "enabled": true,
-            "created": 1626229419,
-            "updated": 1626229419
+            "created": 1667323441,
+            "updated": 1667323441
           }
         },
         "pending": {
-          "id": "https://heathskvtest.vault.azure.net/certificates/578190564/pending"
+          "id": "https://heathskeyvault.vault.azure.net/certificates/714720751/pending"
         }
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1?api-version=7.4-preview.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
-        "traceparent": "00-9a65b6eabaa91749bae1a852745c99d7-8c6fe22c8e032748-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "f8b13879a877166cb5b47fd73c05d996",
+        "traceparent": "00-2c5d7df9d35f2349b4352ca68463d368-a31a3b79c69e174b-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.5.0-alpha.20221101.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "df4286d5502a0f6cacc74d166d1d009a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -809,18 +295,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "97",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:41 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f8b13879a877166cb5b47fd73c05d996",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "ab11c9c7-3a0f-4998-9088-0388c940e1a0",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "df4286d5502a0f6cacc74d166d1d009a",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "e7f0c2bd-b77b-46f3-a460-6a793df06b4e"
       },
       "ResponseBody": {
         "error": {
@@ -830,76 +315,70 @@
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1?api-version=7.4-preview.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "traceparent": "00-9a65b6eabaa91749bae1a852745c99d7-8c6fe22c8e032748-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "f8b13879a877166cb5b47fd73c05d996",
+        "traceparent": "00-2c5d7df9d35f2349b4352ca68463d368-a31a3b79c69e174b-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.5.0-alpha.20221101.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "df4286d5502a0f6cacc74d166d1d009a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "437",
+        "Content-Length": "448",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:41 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f8b13879a877166cb5b47fd73c05d996",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "e9cda34f-f96a-4f50-b565-7e170cb78951",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "df4286d5502a0f6cacc74d166d1d009a",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=24;da_age=3421;rd_age=3421;brd_age=11230;ra_notif_age=313;dec_lev=1;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "75ec87f6-74cf-485c-ad59-78283a0de1bd"
       },
       "ResponseBody": {
         "key": {
-          "kid": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
+          "kid": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1",
           "kty": "EC",
           "key_ops": [
             "sign",
             "verify"
           ],
           "crv": "P-256",
-          "x": "ACFxUrgV3zrhptx10r1S0SZmnPRLF39L8jEzKCv6-7U",
-          "y": "DJeblGtxf-pGbeQNNW9Y8MZQlsggGf6jPGJW4G9p6lw"
+          "x": "TF5yGliSMV7wx7SnaH0V3uLh9eQeR1qDCv5oS6wGYcQ",
+          "y": "qb_5cSjZgkUKXgwhho_gEEWL-zVHUpSKD8zZIhI_ElU"
         },
         "attributes": {
           "enabled": true,
-          "nbf": 1626228933,
-          "exp": 1657765533,
-          "created": 1626229533,
-          "updated": 1626229533,
-          "recoveryLevel": "Recoverable\u002BPurgeable",
-          "recoverableDays": 90
+          "nbf": 1667322843,
+          "exp": 1698859443,
+          "created": 1667323443,
+          "updated": 1667323443,
+          "recoveryLevel": "CustomizedRecoverable\u002BPurgeable",
+          "recoverableDays": 7
         },
         "managed": true
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb/sign?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1/sign?api-version=7.4-preview.1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "69",
         "Content-Type": "application/json",
-        "traceparent": "00-9a65b6eabaa91749bae1a852745c99d7-459ecf845521f543-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "11ecd7cf98906ea4b368dcdf7b1263d6",
+        "traceparent": "00-2c5d7df9d35f2349b4352ca68463d368-7dfa8aa20cb34244-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.5.0-alpha.20221101.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "94ca03c2607bcaf3899943e6c6e5f8d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -909,128 +388,124 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "191",
+        "Content-Length": "193",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:41 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "11ecd7cf98906ea4b368dcdf7b1263d6",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "ab1b5600-f95e-48e0-a9d0-7b1eaa669b3e",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "94ca03c2607bcaf3899943e6c6e5f8d9",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=24;da_age=3421;rd_age=3421;brd_age=11230;ra_notif_age=313;dec_lev=1;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "9809de24-b4c5-418a-9d55-42feaff37fc7"
       },
       "ResponseBody": {
-        "kid": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
-        "value": "CxtFotYX_m1YE2_UNITlTmg4daOFdTPYLRtTLOfpOabDzaXagd2Zh9LWahKtViK8DqZHnBdMl481cmdVYcTOjg"
+        "kid": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1",
+        "value": "Bxgu2-3La_rhN9hnU7YuNdSaVSvffhnEednebv-fjTi8y0foeWcXJMIsPLtcaOTIw1XvURLwR-K1ns7sMxTEnA"
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/certificates/578190564/a4e81014cf7b47d98a0cecd0f06763bb?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/714720751/910cba39ca9b42608c31dbdc83ebaee1?api-version=7.4-preview.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "traceparent": "00-959f7c3cfc671449bf7d5cad96ec479d-710a4b92fd1bbf46-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "01198bea0eb73251b872c7f60b76eb27",
+        "traceparent": "00-a396e90db6e14c4fb6851fefa4287d6c-10ae52e73797ef4c-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Certificates/4.5.0-alpha.20221031.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "75142add806c9784c560de8c899d63a8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1062",
+        "Content-Length": "1077",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:41 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "01198bea0eb73251b872c7f60b76eb27",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "62e204f4-c5c5-4d95-b811-0fe6728cdcef",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "75142add806c9784c560de8c899d63a8",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=24;da_age=3421;rd_age=3421;brd_age=11230;ra_notif_age=313;dec_lev=0;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "52013ee9-781a-4820-b1ea-7e80cbbb870a"
       },
       "ResponseBody": {
-        "id": "https://heathskvtest.vault.azure.net/certificates/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
-        "kid": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
-        "sid": "https://heathskvtest.vault.azure.net/secrets/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
-        "x5t": "ro9m0oqRQFFMwMCUk5HuYg0JoNQ",
-        "cer": "MIIBnzCCAUSgAwIBAgIQJ7l39mcYRq6Jz0ffyhNDgTAKBggqhkjOPQQDAjASMRAwDgYDVQQDEwdkZWZhdWx0MB4XDTIxMDcxNDAyMTUzM1oXDTIyMDcxNDAyMjUzM1owEjEQMA4GA1UEAxMHZGVmYXVsdDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABAAhcVK4Fd864abcddK9UtEmZpz0Sxd/S/IxMygr\u002Bvu1DJeblGtxf\u002BpGbeQNNW9Y8MZQlsggGf6jPGJW4G9p6lyjfDB6MA4GA1UdDwEB/wQEAwIHgDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBS7O35EyT7G\u002Bzt7RHgzP1sfwPn83DAdBgNVHQ4EFgQUuzt\u002BRMk\u002Bxvs7e0R4Mz9bH8D5/NwwCgYIKoZIzj0EAwIDSQAwRgIhAKHA5aKl9PWFqpxBAhAvRS7kBrhGRn4Dxzx3cjmRISiAAiEAr5/Gk055mQSSaXgM6bPBLzp5R8W5mZrA4u0HC4gOI3M=",
+        "id": "https://heathskeyvault.vault.azure.net/certificates/714720751/910cba39ca9b42608c31dbdc83ebaee1",
+        "kid": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1",
+        "sid": "https://heathskeyvault.vault.azure.net/secrets/714720751/910cba39ca9b42608c31dbdc83ebaee1",
+        "x5t": "rMvjv4v-iuPbmhtXkjKs6vb-Cl4",
+        "cer": "MIIBnzCCAUSgAwIBAgIQUN3o0x4NSkKIahCAHkLkMTAKBggqhkjOPQQDAjASMRAwDgYDVQQDEwdkZWZhdWx0MB4XDTIyMTEwMTE3MTQwM1oXDTIzMTEwMTE3MjQwM1owEjEQMA4GA1UEAxMHZGVmYXVsdDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABExechpYkjFe8Me0p2h9Fd7i4fXkHkdagwr\u002BaEusBmHEqb/5cSjZgkUKXgwhho/gEEWL\u002BzVHUpSKD8zZIhI/ElWjfDB6MA4GA1UdDwEB/wQEAwIHgDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBRHafGhROYfTsmhHfepsD0z3lp1NTAdBgNVHQ4EFgQUR2nxoUTmH07JoR33qbA9M95adTUwCgYIKoZIzj0EAwIDSQAwRgIhALOkvWlUqHq/2nVMuZ5oImDMnmOvHlS\u002BFy115XYHm6jAAiEAiMdXIgqHQnGHTkntkf42JPQqGYZwZISYY0tYp7KEAUU=",
         "attributes": {
           "enabled": true,
-          "nbf": 1626228933,
-          "exp": 1657765533,
-          "created": 1626229533,
-          "updated": 1626229533,
-          "recoveryLevel": "Recoverable\u002BPurgeable",
-          "recoverableDays": 90
+          "nbf": 1667322843,
+          "exp": 1698859443,
+          "created": 1667323443,
+          "updated": 1667323443,
+          "recoveryLevel": "CustomizedRecoverable\u002BPurgeable",
+          "recoverableDays": 7
         }
       }
     },
     {
-      "RequestUri": "https://heathskvtest.vault.azure.net/secrets/578190564/a4e81014cf7b47d98a0cecd0f06763bb?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/secrets/714720751/910cba39ca9b42608c31dbdc83ebaee1?api-version=7.4-preview.1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Type": "application/json",
-        "traceparent": "00-959f7c3cfc671449bf7d5cad96ec479d-0a1325b48588f24d-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.3.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "6f093fa6bd4de1dc9343440ecc8c9aa3",
+        "traceparent": "00-a396e90db6e14c4fb6851fefa4287d6c-62b053c47534884f-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Certificates/4.5.0-alpha.20221031.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "26a29eeeb2c074fd927756910d8648c7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1799",
+        "Content-Length": "1812",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Jul 2021 02:25:41 GMT",
+        "Date": "Tue, 01 Nov 2022 17:24:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "6f093fa6bd4de1dc9343440ecc8c9aa3",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
-        "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.9.12.0",
-        "x-ms-request-id": "75b1e4e9-498f-4b8c-9e77-744914fba0d8",
-        "X-Powered-By": "ASP.NET"
+        "x-ms-client-request-id": "26a29eeeb2c074fd927756910d8648c7",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=24.16.19.131;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-rbac-assignment-id": "0ecc3e39-c3aa-550c-9221-2cec9776c051",
+        "x-ms-keyvault-rbac-cache": "ra_age=24;da_age=3421;rd_age=3421;brd_age=11230;ra_notif_age=313;dec_lev=1;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.9.538.1",
+        "x-ms-request-id": "387e4d4d-4482-4750-b7c2-ea72bf396935"
       },
       "ResponseBody": {
-        "value": "MIIEBwIBAzCCA8MGCSqGSIb3DQEHAaCCA7QEggOwMIIDrDCCAW0GCSqGSIb3DQEHAaCCAV4EggFaMIIBVjCCAVIGCyqGSIb3DQEMCgECoIHMMIHJMBwGCiqGSIb3DQEMAQMwDgQIGDpDwRM1m9QCAgfQBIGoKyHXfw/sgmuwNrzqtKrBFdvKoQzSD04xqaNShyoJrbZsnq6SEvSsle\u002BtpNtf12FrxUZswtlPJ6IT8MA2f3BOso3S6PWPi0h4lL3C0cFzKg\u002Bmj8wCwBZ8l1\u002BXXtaqw4uLfWiB01aYQhK6IM9ErmolGMOGacbWbcrEPC84jd\u002Bt9Mo6gQisslyT1TsVGqj0UXDzSoaxnTtNa6tFKuyVTIYIm5uYi8QQZi/8MXQwEwYJKoZIhvcNAQkVMQYEBAEAAAAwXQYJKwYBBAGCNxEBMVAeTgBNAGkAYwByAG8AcwBvAGYAdAAgAFMAbwBmAHQAdwBhAHIAZQAgAEsAZQB5ACAAUwB0AG8AcgBhAGcAZQAgAFAAcgBvAHYAaQBkAGUAcjCCAjcGCSqGSIb3DQEHBqCCAigwggIkAgEAMIICHQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQMwDgQIWINMN8yYJncCAgfQgIIB8K2viUpN9Pyw4OCsAjG\u002BsdCGBELzENISrypsqI6Gbmubsc7WozJJkrvuSP5XS7W5AiWLK62gLXr\u002BI9N9G/oAxoTOfX1Faq7etLmwzz\u002BIuz8zKb5MxwhjZTAEryUNDb/0iOVZoAdu/jv7tHsJhfpgx1J\u002B4cJPk\u002B6vuigcMzxFnNgTxnsUcHTsWC\u002BIxrLTQ7wZAPCnCnhrJJf1p7Z1x1o4NOzEa3LvgMJmVeo1k1aut0TKMfNIQxSx57VVhmGuuwGL5svAhTKHuxl/CM3cNpnRtIwtrgfHiAdOVOvxIqDo29jIWKwjIn6kPDlCZ52FtRtLEL0MRX6cmSHMAhDGAuOVWfzLvCy2HKYv87yC\u002Bwc5v7ZHbAgEs25nL/qSjVi4Cjm\u002BJIKfxppB7KZYlmYzunyrLqHu6wzeLayE9idEOR25\u002BvVL2bMopQMYh30s8/kimwRGpSKMAKJWxzTICC6b4xcTM3PZ07/e4SlIHSTNZbUfioj1CG/qvT9NIEtLAKYFTld5FjH0SKkkYN7JuWCjYx0nPmsnpEcdOcYpGZaiig1atLu9VPm\u002BIEk54\u002BVH9QcoH37RCvPrfEswUc8Kr1BdBzDovhzRsnfMLltzZw3bg1cs4eRQWZkLhamlkd/jzflH3GZQvx1gfyyBb\u002B2\u002B6SuSVaOY7owwOzAfMAcGBSsOAwIaBBSwgd34OyrYdh2qLDzLY52jkCaZKwQUXL9tbMVWtq/YXPXHRrzx44isdikCAgfQ",
+        "value": "MIIEBwIBAzCCA8MGCSqGSIb3DQEHAaCCA7QEggOwMIIDrDCCAW0GCSqGSIb3DQEHAaCCAV4EggFaMIIBVjCCAVIGCyqGSIb3DQEMCgECoIHMMIHJMBwGCiqGSIb3DQEMAQMwDgQIduGaHzGF8sYCAgfQBIGo\u002BCE6K4XQiHZv5fO\u002BvhUgNcOfgdZwbnBEZChA46M5E1Evxg5CzMwEGdt/g2qxOceA1gKNQy6K2grO6ZLCX772k1KTKR3aJUdsqeBXHu5FPCIwdCr1dA9NOwWANZ6cNFw2DMonFj5mOWktRHQrsMZNp0XE74JCI6rVm4QY6RYq2FcUB0bjnKj0sz0xsEGPR/jVlWFT0spB3k3rJ6mGKRkwtxEXLKdDrWBzMXQwEwYJKoZIhvcNAQkVMQYEBAEAAAAwXQYJKwYBBAGCNxEBMVAeTgBNAGkAYwByAG8AcwBvAGYAdAAgAFMAbwBmAHQAdwBhAHIAZQAgAEsAZQB5ACAAUwB0AG8AcgBhAGcAZQAgAFAAcgBvAHYAaQBkAGUAcjCCAjcGCSqGSIb3DQEHBqCCAigwggIkAgEAMIICHQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQMwDgQIKjU3ii3i1xUCAgfQgIIB8FnkuTU4v3rpTLXQiuKK8laoP7cusQBJRaI7dyOki38nQMdoKb4afGlROj5NUIn35Suipy3TaKxWXjZczj0UKnVmMVMcVpNJsC3LMLeJLiilXZqn1U4o0jHUJQbDbroMsIWg8oKZpjqRVTpJ\u002BghjmAtknbtk/zHXOPFOL3s/THmUmkWwpZqQCIW4phWJE0ZCf9sgo\u002BWHMTXGezsrRm7f40/l\u002BhJPV4NPOAbAFAz/6Ix0IMbBAhdc2inD34dUjLA/x2FaWwiGq45d6t9u5KuPnYypkRNXMgLEI3C7kpQV1v7yR7avAbwAuKbIprvqNzt8363mwarYUXCS3kfXvLhemBUbjHVYhBAfuf5ff8CQzH2/h8ntZbvReruFl9W18WVB8LrbjApGcqNwICO2n8Gd1ZEqM37//gea79ORa4z0efaUkk4su2KVJFCiinT59r1NxssvRYVooKT3la3eebAoVHsWXw9IUg8hKpA0f/s/WaOWvqopPRYYxWXqvZHg/2KIpNkSv1OTZLim3QTQOsAwIuwo/jkwUqernTU6pSVBUdoi37DYBW2nRoL4yH6j5Dxa4VcZMhacsp1UoKqPmAXoMrVOrhjLNfPg96xx0g746EaW59EA1Q0TPcQLtkVOUVagC/YYbbdWRYaqIQPW7cR5ScEwOzAfMAcGBSsOAwIaBBTFJuDdhggbW2o35CC\u002BaHWuufqj2gQUxzlmjkyRN1PbFrEtNkh2otFy3U8CAgfQ",
         "contentType": "application/x-pkcs12",
-        "id": "https://heathskvtest.vault.azure.net/secrets/578190564/a4e81014cf7b47d98a0cecd0f06763bb",
+        "id": "https://heathskeyvault.vault.azure.net/secrets/714720751/910cba39ca9b42608c31dbdc83ebaee1",
         "managed": true,
         "attributes": {
           "enabled": true,
-          "nbf": 1626228933,
-          "exp": 1657765533,
-          "created": 1626229533,
-          "updated": 1626229533,
-          "recoveryLevel": "Recoverable\u002BPurgeable",
-          "recoverableDays": 90
+          "nbf": 1667322843,
+          "exp": 1698859443,
+          "created": 1667323443,
+          "updated": 1667323443,
+          "recoveryLevel": "CustomizedRecoverable\u002BPurgeable",
+          "recoverableDays": 7
         },
-        "kid": "https://heathskvtest.vault.azure.net/keys/578190564/a4e81014cf7b47d98a0cecd0f06763bb"
+        "kid": "https://heathskeyvault.vault.azure.net/keys/714720751/910cba39ca9b42608c31dbdc83ebaee1"
       }
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://heathskvtest.vault.azure.net/",
-    "RandomSeed": "968653164"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "AZURE_KEYVAULT_URL": "https://heathskeyvault.vault.azure.net/",
+    "RandomSeed": "820698339"
   }
 }

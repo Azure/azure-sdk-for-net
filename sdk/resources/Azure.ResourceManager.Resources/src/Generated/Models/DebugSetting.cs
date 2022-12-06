@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The debug setting. </summary>
-    public partial class DebugSetting
+    internal partial class DebugSetting
     {
         /// <summary> Initializes a new instance of DebugSetting. </summary>
         public DebugSetting()

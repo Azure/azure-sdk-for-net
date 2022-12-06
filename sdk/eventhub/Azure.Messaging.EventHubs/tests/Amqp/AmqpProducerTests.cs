@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheRetryPolicy()
         {
-            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", null, "fake-id", Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), null, TransportProducerFeatures.IdempotentPublishing, new PartitionPublishingOptionsInternal()), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", null, "fake-id", Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), null, TransportProducerFeatures.IdempotentPublishing, new PartitionPublishingOptions()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CreateLinkAndEnsureProducerStateAsyncRespectsPartitionOptions()
         {
-            var expectedOptions = new PartitionPublishingOptionsInternal { ProducerGroupId = 1, OwnerLevel = 4, StartingSequenceNumber = 88 };
+            var expectedOptions = new PartitionPublishingOptions { ProducerGroupId = 1, OwnerLevel = 4, StartingSequenceNumber = 88 };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
             var producer = new Mock<AmqpProducer>("aHub", null, null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.IdempotentPublishing, expectedOptions)
             {
@@ -121,14 +121,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
 
             await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
 
-            Func<PartitionPublishingOptionsInternal, PartitionPublishingOptionsInternal, bool> areOptionsEqual = (first, second) =>
+            Func<PartitionPublishingOptions, PartitionPublishingOptions, bool> areOptionsEqual = (first, second) =>
                 first.ProducerGroupId == second.ProducerGroupId
                 && first.OwnerLevel == second.OwnerLevel
                 && first.StartingSequenceNumber == second.StartingSequenceNumber;
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.Is<PartitionPublishingOptionsInternal>(options => areOptionsEqual(options, expectedOptions)),
+                    ItExpr.Is<PartitionPublishingOptions>(options => areOptionsEqual(options, expectedOptions)),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CreateLinkAndEnsureProducerStateAsyncClearsTheStartingSequenceNumberAfterInitialization()
         {
-            var expectedOptions = new PartitionPublishingOptionsInternal { ProducerGroupId = 1, OwnerLevel = 4, StartingSequenceNumber = 88 };
+            var expectedOptions = new PartitionPublishingOptions { ProducerGroupId = 1, OwnerLevel = 4, StartingSequenceNumber = 88 };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
             var mockConnectionScope = new Mock<AmqpConnectionScope>();
 
@@ -164,7 +164,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(scope => scope.OpenProducerLinkAsync(
                     It.IsAny<string>(),
                     It.IsAny<TransportProducerFeatures>(),
-                    It.Is<PartitionPublishingOptionsInternal>(options => options.StartingSequenceNumber == expectedOptions.StartingSequenceNumber),
+                    It.Is<PartitionPublishingOptions>(options => options.StartingSequenceNumber == expectedOptions.StartingSequenceNumber),
+                    It.IsAny<TimeSpan>(),
                     It.IsAny<TimeSpan>(),
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
@@ -215,7 +216,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                         ItExpr.IsAny<string>(),
                         ItExpr.IsAny<string>(),
-                        ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                        ItExpr.IsAny<PartitionPublishingOptions>(),
                         ItExpr.IsAny<TimeSpan>(),
                         ItExpr.IsAny<CancellationToken>())
                     .Callback(() => SetMaximumMessageSize(producer.Object, 100))
@@ -275,7 +276,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, 512))
@@ -308,7 +309,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -341,7 +342,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize + 27))
@@ -374,7 +375,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, linkMaximumSize))
@@ -405,7 +406,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, options.MaximumSizeInBytes.Value + 982))
@@ -441,7 +442,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, 100))
@@ -484,7 +485,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                  .Throws(retriableException);
@@ -497,7 +498,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -526,7 +527,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -539,7 +540,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -568,7 +569,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -581,7 +582,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -608,7 +609,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -621,7 +622,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -648,7 +649,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -661,7 +662,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -690,13 +691,13 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                         ItExpr.IsAny<string>(),
                         ItExpr.IsAny<string>(),
-                        ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                        ItExpr.IsAny<PartitionPublishingOptions>(),
                         ItExpr.IsAny<TimeSpan>(),
                         ItExpr.IsAny<CancellationToken>())
                     .Callback(() =>
                     {
                         SetMaximumMessageSize(producer.Object, 100);
-                        SetInitializedPartitionProperties(producer.Object, new PartitionPublishingPropertiesInternal(false, null, null, null));
+                        SetInitializedPartitionProperties(producer.Object, new PartitionPublishingProperties(false, null, null, null));
                     })
                     .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
                     .Verifiable();
@@ -742,7 +743,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReadInitializationPublishingPropertiesAsyncEnsuresPropertiesArePopulated()
         {
-            var expectedProperties = new PartitionPublishingPropertiesInternal(false, null, null, null);
+            var expectedProperties = new PartitionPublishingProperties(false, null, null, null);
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
             var producer = new Mock<AmqpProducer>("aHub", null, "fake-id", Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -754,7 +755,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetInitializedPartitionProperties(producer.Object, expectedProperties))
@@ -773,7 +774,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReadInitializationPublishingPropertiesAsyncReturnsPropertiesOnInitialization()
         {
-            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 3, 17, 32768);
+            var expectedProperties = new PartitionPublishingProperties(true, 3, 17, 32768);
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
             var producer = new Mock<AmqpProducer>("aHub", null, "fake-id", Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -785,7 +786,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetInitializedPartitionProperties(producer.Object, expectedProperties))
@@ -806,7 +807,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ReadInitializationPublishingPropertiesAsyncReturnsCachedProperties()
         {
-            var expectedProperties = new PartitionPublishingPropertiesInternal(true, 3, 17, 32768);
+            var expectedProperties = new PartitionPublishingProperties(true, 3, 17, 32768);
             var callbackProperties = expectedProperties;
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
             var producer = new Mock<AmqpProducer>("aHub", null, "fake-id", Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
@@ -819,13 +820,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() =>
                 {
                     SetInitializedPartitionProperties(producer.Object, callbackProperties);
-                    callbackProperties = new PartitionPublishingPropertiesInternal(false, null, null, null);
+                    callbackProperties = new PartitionPublishingProperties(false, null, null, null);
                 })
                 .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
 
@@ -847,7 +848,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -872,10 +873,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Callback(() => SetInitializedPartitionProperties(producer.Object, new PartitionPublishingPropertiesInternal(false, null, null, null)))
+                .Callback(() => SetInitializedPartitionProperties(producer.Object, new PartitionPublishingProperties(false, null, null, null)))
                 .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
                 .Verifiable();
 
@@ -909,7 +910,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                  .Throws(retriableException);
@@ -922,7 +923,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -950,7 +951,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -963,7 +964,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -992,7 +993,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -1005,7 +1006,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1032,7 +1033,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1045,7 +1046,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1071,7 +1072,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1084,7 +1085,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1112,7 +1113,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new AmqpProducer("aHub", null, null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.IdempotentPublishing);
             await producer.CloseAsync(CancellationToken.None);
 
-            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(async () => await producer.SendAsync(Array.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -1136,7 +1137,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             scope.Dispose();
 
-            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None),
+            Assert.That(async () => await producer.SendAsync(Array.Empty<EventData>(), new SendEventOptions(), CancellationToken.None),
                 Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
@@ -1160,7 +1161,7 @@ namespace Azure.Messaging.EventHubs.Tests
             producer
                 .Protected()
                 .Setup<Task>("SendAsync",
-                    ItExpr.IsAny<Func<AmqpMessage>>(),
+                    ItExpr.IsAny<IReadOnlyCollection<AmqpMessage>>(),
                     ItExpr.Is<string>(value => value == expectedPartitionKey),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
@@ -1179,10 +1180,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(null)]
         [TestCase("")]
         [TestCase("someKey")]
-        public async Task SendEnumerableCreatesTheAmqpMessageFromTheEnumerable(string partitonKey)
+        public async Task SendEnumerableCreatesTheAmqpMessageFromTheEnumerable(string partitionKey)
         {
-            var messageFactory = default(Func<AmqpMessage>);
-            var events = new[] { new EventData(new byte[] { 0x15 }) };
+            var amqpMessages = default(IReadOnlyCollection<AmqpMessage>);
+            var events = new List<EventData> { new EventData(new byte[] { 0x15 }) };
+            var converter = new AmqpMessageConverter();
 
             var producer = new Mock<AmqpProducer>("aHub", null, "fake-id", Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.None, null)
             {
@@ -1192,19 +1194,21 @@ namespace Azure.Messaging.EventHubs.Tests
             producer
                 .Protected()
                 .Setup<Task>("SendAsync",
-                    ItExpr.IsAny<Func<AmqpMessage>>(),
+                    ItExpr.IsAny<IReadOnlyCollection<AmqpMessage>>(),
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Callback<Func<AmqpMessage>, string, CancellationToken>((factory, key, token) => messageFactory = factory)
+                .Callback<IReadOnlyCollection<AmqpMessage>, string, CancellationToken>((messages, key, token) => amqpMessages = messages)
                 .Returns(Task.CompletedTask);
 
-            await producer.Object.SendAsync(events, new SendEventOptions { PartitionKey = partitonKey }, CancellationToken.None);
-            Assert.That(messageFactory, Is.Not.Null, "The batch message factory should have been set.");
+            await producer.Object.SendAsync(events, new SendEventOptions { PartitionKey = partitionKey }, CancellationToken.None);
 
-            using var batchMessage = new AmqpMessageConverter().CreateBatchFromEvents(events, partitonKey);
-            using var factoryMessage = messageFactory();
+            Assert.That(amqpMessages, Is.Not.Null, "The AMQP messages should have been set.");
+            Assert.That(amqpMessages.Count, Is.EqualTo(events.Count), "An AMQP message should exist for each source event.");
 
-            Assert.That(factoryMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");
+            using var batchMessage = converter.CreateBatchFromEvents(events, partitionKey);
+            using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages, partitionKey);
+
+            Assert.That(amqpSourceMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");
         }
 
         /// <summary>
@@ -1246,7 +1250,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                  .Throws(retriableException);
@@ -1259,7 +1263,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1288,7 +1292,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -1301,7 +1305,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1330,7 +1334,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -1343,7 +1347,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1370,7 +1374,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1383,7 +1387,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1410,7 +1414,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1423,7 +1427,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1462,7 +1466,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -1522,7 +1526,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -1531,7 +1535,7 @@ namespace Azure.Messaging.EventHubs.Tests
             producer
                 .Protected()
                 .Setup<Task>("SendAsync",
-                    ItExpr.IsAny<Func<AmqpMessage>>(),
+                    ItExpr.IsAny<IReadOnlyCollection<AmqpMessage>>(),
                     ItExpr.Is<string>(value => value == expectedPartitionKey),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
@@ -1552,12 +1556,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(null)]
         [TestCase("")]
         [TestCase("someKey")]
-        public async Task SendBatchCreatesTheAmqpMessageFromTheBatch(string partitonKey)
+        public async Task SendBatchCreatesTheAmqpMessageFromTheBatch(string partitionKey)
         {
-            var messageFactory = default(Func<AmqpMessage>);
+            var amqpMessages = default(IReadOnlyCollection<AmqpMessage>);
             var expectedMaximumSize = 512;
-            var options = new CreateBatchOptions { PartitionKey = partitonKey };
+            var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            var converter = new AmqpMessageConverter();
 
             var producer = new Mock<AmqpProducer>("aHub", null, "fake-id", Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1569,7 +1574,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -1578,10 +1583,10 @@ namespace Azure.Messaging.EventHubs.Tests
             producer
                 .Protected()
                 .Setup<Task>("SendAsync",
-                    ItExpr.IsAny<Func<AmqpMessage>>(),
+                    ItExpr.IsAny<IReadOnlyCollection<AmqpMessage>>(),
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<CancellationToken>())
-                .Callback<Func<AmqpMessage>, string, CancellationToken>((factory, key, token) => messageFactory = factory)
+                .Callback<IReadOnlyCollection<AmqpMessage>, string, CancellationToken>((messages, key, token) => amqpMessages = messages)
                 .Returns(Task.CompletedTask);
 
             using TransportEventBatch transportBatch = await producer.Object.CreateBatchAsync(options, default);
@@ -1589,13 +1594,16 @@ namespace Azure.Messaging.EventHubs.Tests
             using var batch = new EventDataBatch(transportBatch, "ns", "eh", options);
             batch.TryAdd(new EventData(new byte[] { 0x15 }));
 
+            var messages = batch.AsReadOnlyCollection<AmqpMessage>();
             await producer.Object.SendAsync(batch, CancellationToken.None);
-            Assert.That(messageFactory, Is.Not.Null, "The batch message factory should have been set.");
 
-            using var batchMessage = new AmqpMessageConverter().CreateBatchFromEvents(batch.AsEnumerable<EventData>(), partitonKey);
-            using var factoryMessage = messageFactory();
+            Assert.That(amqpMessages, Is.Not.Null, "The AMQP messages should have been set.");
+            Assert.That(amqpMessages.Count, Is.EqualTo(messages.Count), "An AMQP message should exist for each source event.");
 
-            Assert.That(factoryMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");
+            using var batchMessage = converter.CreateBatchFromMessages(messages, partitionKey);
+            using var amqpSourceMessage = converter.CreateBatchFromMessages(amqpMessages, partitionKey);
+
+            Assert.That(amqpSourceMessage.SerializedMessageSize, Is.EqualTo(batchMessage.SerializedMessageSize), "The serialized size of the messages should match.");
         }
 
         /// <summary>
@@ -1620,7 +1628,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -1629,7 +1637,7 @@ namespace Azure.Messaging.EventHubs.Tests
             producer
                 .Protected()
                 .Setup<Task>("SendAsync",
-                    ItExpr.IsAny<Func<AmqpMessage>>(),
+                    ItExpr.IsAny<IReadOnlyCollection<AmqpMessage>>(),
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
@@ -1667,7 +1675,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -1694,7 +1702,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = new EventHubsException(true, "Test");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1706,7 +1714,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                  .Throws(retriableException);
@@ -1719,7 +1727,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1738,7 +1746,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = new OperationCanceledException();
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1750,7 +1758,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -1763,7 +1771,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1782,7 +1790,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1794,7 +1802,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -1807,7 +1815,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1825,7 +1833,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1837,7 +1845,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1850,7 +1858,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1868,7 +1876,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
-            var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
+            var batch = EventHubsModelFactory.EventDataBatch(100, new List<EventData>(), options);
 
             var producer = new Mock<AmqpProducer>("aHub", null, identifier, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
@@ -1880,7 +1888,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1893,7 +1901,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
                     ItExpr.Is<string>(value => value == identifier),
-                    ItExpr.IsAny<PartitionPublishingOptionsInternal>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1910,7 +1918,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static CreateBatchOptions GetEventBatchOptions(AmqpEventBatch batch) =>
             (CreateBatchOptions)
                 typeof(AmqpEventBatch)
-                    .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetField("_options", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(batch);
 
         /// <summary>
@@ -1921,8 +1929,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The partition publishing options.</returns>
         ///
-        private static PartitionPublishingOptionsInternal GetPartitionPublishingOptions(AmqpProducer target) =>
-            (PartitionPublishingOptionsInternal)
+        private static PartitionPublishingOptions GetPartitionPublishingOptions(AmqpProducer target) =>
+            (PartitionPublishingOptions)
                 typeof(AmqpProducer)
                     .GetProperty("ActiveOptions", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(target);
@@ -1944,7 +1952,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   private accessor.
         /// </summary>
         ///
-        private static void SetInitializedPartitionProperties(AmqpProducer target, PartitionPublishingPropertiesInternal value)
+        private static void SetInitializedPartitionProperties(AmqpProducer target, PartitionPublishingProperties value)
         {
             typeof(AmqpProducer)
                 .GetProperty("InitializedPartitionProperties", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetProperty)

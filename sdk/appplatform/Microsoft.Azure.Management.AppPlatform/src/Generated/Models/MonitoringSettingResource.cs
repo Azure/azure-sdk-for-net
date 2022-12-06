@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="properties">Properties of the Monitoring Setting
         /// resource</param>
-        public MonitoringSettingResource(string id = default(string), string name = default(string), string type = default(string), MonitoringSettingProperties properties = default(MonitoringSettingProperties))
-            : base(id, name, type)
+        public MonitoringSettingResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), MonitoringSettingProperties properties = default(MonitoringSettingProperties))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             CustomInit();

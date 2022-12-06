@@ -1,6 +1,36 @@
 # Release History
 
-## 12.10.0-beta.2 (Unreleased)
+## 12.14.0-beta.1 (Unreleased)
+- This release contains bug fixes to improve quality.
+
+## 12.13.0 (2022-10-12)
+- Includes all features from 12.13.0-beta.1.
+
+## 12.13.0-beta.1 (2022-08-23)
+- Fixed bug where Account SAS with the resources type value not in the order "sco" would get reordered to that order, which would invalidate the Account SAS signature from the string to sign
+
+## 12.12.0 (2022-07-07)
+- Includes all features from 12.12.0-beta.1.
+
+## 12.12.0-beta.1 (2022-06-15)
+- This release contains bug fixes to improve quality.
+
+## 12.11.0 (2022-05-02)
+- Includes all features from 12.11.0-beta.1.
+
+## 12.11.0-beta.1 (2022-04-12)
+- This release contains bug fixes to improve quality.
+
+## 12.10.0 (2022-03-10)
+- Includes all features from 12.10.0-beta.1, 12.10.0-beta.2, and 12.10.0-beta.3 except SDK-calculated transactional checksums on data transfer.
+- Updated StorageBearerTokenChallengeAuthorizationPolicy to use the AAD scope returned by a bearer challenges.
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed bug where Storage Uri Builder was case sensitive for parameter names.
+
+## 12.10.0-beta.3 (2022-02-07)
+- Fixed bug where AccountSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
+
+## 12.10.0-beta.2 (2021-11-30)
 - This release contains bug fixes to improve quality.
 
 ## 12.10.0-beta.1 (2021-11-03)

@@ -206,7 +206,7 @@ namespace Compute.Tests
         /// Update VirtualMachineScaleVM to Attach Disk
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Resources no longer exist")]
         public void TestVMScaleSetVMOperations_Put()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

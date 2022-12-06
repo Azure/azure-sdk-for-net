@@ -10,16 +10,13 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The configuration settings of the Facebook provider.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class Facebook : ProxyOnlyResource
+    public partial class Facebook
     {
         /// <summary>
         /// Initializes a new instance of the Facebook class.
@@ -32,10 +29,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Facebook class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the
         /// Facebook provider should not be enabled despite the set
         /// registration; otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
@@ -45,8 +38,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// used while logging in.</param>
         /// <param name="login">The configuration settings of the login
         /// flow.</param>
-        public Facebook(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), AppRegistration registration = default(AppRegistration), string graphApiVersion = default(string), LoginScopes login = default(LoginScopes))
-            : base(id, name, kind, type)
+        public Facebook(bool? enabled = default(bool?), AppRegistration registration = default(AppRegistration), string graphApiVersion = default(string), LoginScopes login = default(LoginScopes))
         {
             Enabled = enabled;
             Registration = registration;
@@ -66,27 +58,27 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// registration; otherwise,
         /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
+        [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the app registration for
         /// the Facebook provider.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.registration")]
+        [JsonProperty(PropertyName = "registration")]
         public AppRegistration Registration { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the Facebook api to be used while
         /// logging in.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.graphApiVersion")]
+        [JsonProperty(PropertyName = "graphApiVersion")]
         public string GraphApiVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the login flow.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.login")]
+        [JsonProperty(PropertyName = "login")]
         public LoginScopes Login { get; set; }
 
     }

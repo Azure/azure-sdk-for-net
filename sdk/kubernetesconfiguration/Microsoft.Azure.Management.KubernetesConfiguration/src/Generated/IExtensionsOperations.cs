@@ -24,30 +24,27 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
     public partial interface IExtensionsOperations
     {
         /// <summary>
-        /// Create a new Kubernetes Cluster Extension Instance.
+        /// Create a new Kubernetes Cluster Extension.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='extensionInstanceName'>
-        /// Name of an instance of the Extension.
+        /// <param name='extensionName'>
+        /// Name of the Extension.
         /// </param>
-        /// <param name='extensionInstance'>
-        /// Properties necessary to Create an Extension Instance.
+        /// <param name='extension'>
+        /// Properties necessary to Create an Extension.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -64,29 +61,26 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExtensionInstance>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionInstanceName, ExtensionInstance extensionInstance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Extension>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, Extension extension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets details of the Kubernetes Cluster Extension Instance.
+        /// Gets Kubernetes Cluster Extension.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='extensionInstanceName'>
-        /// Name of an instance of the Extension.
+        /// <param name='extensionName'>
+        /// Name of the Extension.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -103,32 +97,67 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExtensionInstance>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Extension>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an existing Kubernetes Cluster Extension Instance.
+        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to
+        /// Uninstall the extension from the cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='extensionInstanceName'>
-        /// Name of an instance of the Extension.
+        /// <param name='extensionName'>
+        /// Name of the Extension.
         /// </param>
-        /// <param name='extensionInstance'>
-        /// Properties to Update in the Extension Instance.
+        /// <param name='forceDelete'>
+        /// Delete the extension resource in Azure - not the normal
+        /// asynchronous delete.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Patch an existing Kubernetes Cluster Extension.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='extensionName'>
+        /// Name of the Extension.
+        /// </param>
+        /// <param name='patchExtension'>
+        /// Properties to Patch in an existing Extension.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -145,60 +174,20 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExtensionInstance>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionInstanceName, ExtensionInstanceUpdate extensionInstance, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Extension>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, PatchExtension patchExtension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a Kubernetes Cluster Extension Instance. This will cause the
-        /// Agent to Uninstall the extension instance from the cluster.
+        /// List all Extensions in the cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the kubernetes cluster.
-        /// </param>
-        /// <param name='extensionInstanceName'>
-        /// Name of an instance of the Extension.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List all Source Control Configurations.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
-        /// </param>
-        /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -218,9 +207,125 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ExtensionInstance>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Extension>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all Source Control Configurations.
+        /// Create a new Kubernetes Cluster Extension.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='extensionName'>
+        /// Name of the Extension.
+        /// </param>
+        /// <param name='extension'>
+        /// Properties necessary to Create an Extension.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Extension>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, Extension extension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a Kubernetes Cluster Extension. This will cause the Agent to
+        /// Uninstall the extension from the cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='extensionName'>
+        /// Name of the Extension.
+        /// </param>
+        /// <param name='forceDelete'>
+        /// Delete the extension resource in Azure - not the normal
+        /// asynchronous delete.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Patch an existing Kubernetes Cluster Extension.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='extensionName'>
+        /// Name of the Extension.
+        /// </param>
+        /// <param name='patchExtension'>
+        /// Properties to Patch in an existing Extension.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Extension>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionName, PatchExtension patchExtension, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all Extensions in the cluster.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -240,6 +345,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ExtensionInstance>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Extension>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

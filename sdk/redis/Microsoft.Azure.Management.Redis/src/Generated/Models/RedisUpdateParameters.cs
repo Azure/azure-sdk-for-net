@@ -38,9 +38,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// keys:
         /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
         /// etc.</param>
-        /// <param name="redisVersion">Redis version. Only major version will
-        /// be used in PUT/PATCH request with current valid values: (4,
-        /// 6)</param>
+        /// <param name="redisVersion">Redis version. This should be in the
+        /// form 'major[.minor]' (only 'major' is required) or the value
+        /// 'latest' which refers to the latest stable Redis version that is
+        /// available. Supported versions: 4.0, 6.0 (latest). Default value is
+        /// 'latest'.</param>
         /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
         /// server port (6379) is enabled.</param>
         /// <param name="replicasPerMaster">The number of replicas to be
@@ -61,7 +63,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// 'Enabled'. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="sku">The SKU of the Redis cache to deploy.</param>
         /// <param name="tags">Resource tags.</param>
-        public RedisUpdateParameters(IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), string redisVersion = default(string), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string publicNetworkAccess = default(string), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">The identity of the resource.</param>
+        public RedisUpdateParameters(RedisCommonPropertiesRedisConfiguration redisConfiguration = default(RedisCommonPropertiesRedisConfiguration), string redisVersion = default(string), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string publicNetworkAccess = default(string), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
         {
             RedisConfiguration = redisConfiguration;
             RedisVersion = redisVersion;
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.Management.Redis.Models
             PublicNetworkAccess = publicNetworkAccess;
             Sku = sku;
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -88,11 +92,13 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.
         /// </summary>
         [JsonProperty(PropertyName = "properties.redisConfiguration")]
-        public IDictionary<string, string> RedisConfiguration { get; set; }
+        public RedisCommonPropertiesRedisConfiguration RedisConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets redis version. Only major version will be used in
-        /// PUT/PATCH request with current valid values: (4, 6)
+        /// Gets or sets redis version. This should be in the form
+        /// 'major[.minor]' (only 'major' is required) or the value 'latest'
+        /// which refers to the latest stable Redis version that is available.
+        /// Supported versions: 4.0, 6.0 (latest). Default value is 'latest'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.redisVersion")]
         public string RedisVersion { get; set; }
@@ -160,6 +166,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -170,6 +182,10 @@ namespace Microsoft.Azure.Management.Redis.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

@@ -4,7 +4,7 @@
 namespace Azure.Messaging.ServiceBus.Administration
 {
     /// <summary>
-    /// Matches all the messages arriving to be selected for the subscription.
+    /// Matches all of the messages arriving to be selected for the subscription.
     /// </summary>
     public sealed class TrueRuleFilter : SqlRuleFilter
     {

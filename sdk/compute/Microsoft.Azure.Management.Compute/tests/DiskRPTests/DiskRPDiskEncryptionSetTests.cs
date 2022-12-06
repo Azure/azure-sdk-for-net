@@ -27,18 +27,24 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void DiskEncryptionSet_CRUD_ConfidentialVmEncryptedWithCustomerKey()
+        {
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD_ConfidentialVmEncryptedWithCustomerKey", DiskEncryptionSetType.ConfidentialVmEncryptedWithCustomerKey, location: supportedZoneLocation);
+        }
+
+        [Fact]
         public void DiskEncryptionSet_List()
         {
             DiskEncryptionSet_List_Execute("DiskEncryptionSet_List", location: supportedZoneLocation);
         }
 
-        [Fact]
+        [Fact(Skip = "Resources no longer exist")]
         public void DiskEncryptionSet_CreateDisk()
         {
             DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: "centraluseuap");
         }
 
-        [Fact]
+        [Fact (Skip = "Resources no longer exist")]
         public void DiskEncryptionSet_AddDESToExistingDisk()
         {
             DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: "centraluseuap");

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,21 +20,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="metrics"> measure list. </param>
         /// <param name="dataStartFrom"> ingestion start time. </param>
         /// <param name="dataSourceParameter"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/>, or <paramref name="dataSourceParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/> or <paramref name="dataSourceParameter"/> is null. </exception>
         public AzureApplicationInsightsDataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, AzureApplicationInsightsParameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
         {
-            if (dataFeedName == null)
-            {
-                throw new ArgumentNullException(nameof(dataFeedName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (dataSourceParameter == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceParameter));
-            }
+            Argument.AssertNotNull(dataFeedName, nameof(dataFeedName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(dataSourceParameter, nameof(dataSourceParameter));
 
             DataSourceParameter = dataSourceParameter;
             DataSourceType = DataFeedSourceKind.AzureApplicationInsights;

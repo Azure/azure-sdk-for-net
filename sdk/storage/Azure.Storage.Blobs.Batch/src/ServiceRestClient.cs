@@ -17,7 +17,7 @@ namespace Azure.Storage.Blobs.Batch
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendQuery("comp", "batch", true);
             if (timeout != null)
@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Batch
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Length", contentLength);
             request.Headers.Add("Content-Type", multipartContentType);

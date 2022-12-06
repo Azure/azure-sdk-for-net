@@ -17,14 +17,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public async Task LinkedServiceSample()
         {
             #region Snippet:CreateLinkedServiceClientPrep
+#if SNIPPET
             // Replace the string below with your actual endpoint url.
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
-
+            
             // Replace the string below with your actual datalake endpoint url.
             string dataLakeEndpoint = "<my-datalake-url>";
-            /*@@*/dataLakeEndpoint = "adl://test.azuredatalakestore.net/";
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
 
+            string dataLakeEndpoint = "adl://test.azuredatalakestore.net/";
+#endif
             string serviceName = "Test-LinkedService";
             #endregion
 

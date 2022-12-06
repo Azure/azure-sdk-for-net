@@ -10,7 +10,7 @@
   </PropertyGroup>
     
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
   
   <ItemGroup>

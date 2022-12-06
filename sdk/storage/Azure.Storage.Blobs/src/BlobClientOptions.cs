@@ -81,7 +81,32 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2021-02-12 service version.
             /// </summary>
-            V2021_02_12 = 10
+            V2021_02_12 = 10,
+
+            /// <summary>
+            /// The 2021-04-10 serivce version.
+            /// </summary>
+            V2021_04_10 = 11,
+
+            /// <summary>
+            /// The 2021-06-08 service version.
+            /// </summary>
+            V2021_06_08 = 12,
+
+            /// <summary>
+            /// The 2021-08-06 service version.
+            /// </summary>
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -114,6 +139,19 @@ namespace Azure.Storage.Blobs
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Configures whether to send or receive checksum headers for blob uploads and downloads. Downloads
+        /// can optionally validate that the content matches the checksum.
+        /// </summary>
+        public TransferValidationOptions TransferValidation { get; } = new();
+
+        /// <summary>
+        /// Whether to trim leading and trailing slashes on a blob name when using
+        /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
+        /// Defaults to true for backwards compatibility.
+        /// </summary>
+        public bool TrimBlobNameSlashes { get; set; } = Constants.DefaultTrimBlobNameSlashes;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

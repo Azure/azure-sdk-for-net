@@ -70,6 +70,37 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
             await client.SendCloudNativeCloudEventAsync(cloudEvent);
         }
 
+        [RecordedTest]
+        public async Task CanPublishCloudEventToDomain()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.CloudEventDomainHost),
+                    new AzureKeyCredential(TestEnvironment.CloudEventDomainKey),
+                    options));
+
+            #region Snippet:CloudNativePublishToDomain
+            CloudEvent cloudEvent =
+                new CloudEvent
+                {
+                    Type = "record",
+                    // Event Grid does not allow absolute URIs as the domain topic
+                    Source = new Uri("test", UriKind.Relative),
+#if SNIPPET
+                    Id = "eventId",
+                    Time = DateTimeOffset.Now,
+#else
+                    Id = Recording.Random.NewGuid().ToString(),
+                    Time = Recording.Now,
+#endif
+                    Data = new TestPayload("name", 0)
+                };
+
+            await client.SendCloudNativeCloudEventAsync(cloudEvent);
+            #endregion
+        }
+
         private class TestPayload
         {
             public TestPayload(string name, int age)

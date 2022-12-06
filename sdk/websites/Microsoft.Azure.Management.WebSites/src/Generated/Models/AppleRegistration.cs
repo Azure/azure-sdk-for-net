@@ -10,16 +10,13 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The configuration settings of the registration for the Apple provider
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class AppleRegistration : ProxyOnlyResource
+    public partial class AppleRegistration
     {
         /// <summary>
         /// Initializes a new instance of the AppleRegistration class.
@@ -32,16 +29,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the AppleRegistration class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="clientId">The Client ID of the app used for
         /// login.</param>
         /// <param name="clientSecretSettingName">The app setting name that
         /// contains the client secret.</param>
-        public AppleRegistration(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string clientId = default(string), string clientSecretSettingName = default(string))
-            : base(id, name, kind, type)
+        public AppleRegistration(string clientId = default(string), string clientSecretSettingName = default(string))
         {
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
@@ -56,13 +48,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets the Client ID of the app used for login.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientId")]
+        [JsonProperty(PropertyName = "clientId")]
         public string ClientId { get; set; }
 
         /// <summary>
         /// Gets or sets the app setting name that contains the client secret.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientSecretSettingName")]
+        [JsonProperty(PropertyName = "clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
 
     }

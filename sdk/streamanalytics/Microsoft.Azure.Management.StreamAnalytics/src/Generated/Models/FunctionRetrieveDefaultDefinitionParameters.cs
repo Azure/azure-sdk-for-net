@@ -10,14 +10,12 @@
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Parameters used to specify the type of function to retrieve the default
     /// definition for.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FunctionRetrieveDefaultDefinitionParameters")]
     public partial class FunctionRetrieveDefaultDefinitionParameters
     {
         /// <summary>

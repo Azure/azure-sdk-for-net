@@ -7,7 +7,7 @@ parameters:
   default: 'Public'
 - name: SupportedClouds
   type: string
-  default: 'Public,Canary'
+  default: 'Public'
 - name: UnsupportedClouds
   type: string
   default: ''
@@ -44,6 +44,9 @@ parameters:
 - name: TestSetupSteps
   type: stepList
   default: []
+- name: DeployTestResources
+  type: boolean
+  default: true
 - name: CloudConfig
   type: object
   default:
@@ -64,7 +67,6 @@ parameters:
     - Name: NET_live_test_base
       Path: eng/pipelines/templates/stages/platform-matrix.json
       Selection: sparse
-      NonSparseParameters: AdditionalTestArguments
       GenerateVMJobs: true
 - name: AdditionalMatrixConfigs
   type: object
@@ -102,9 +104,6 @@ variables:
 
 stages:
 - ${{ each cloud in parameters.CloudConfig }}:
-  # TODO: re-enable tests-weekly allow filter once sovereign cloud live tests are stable: https://github.com/Azure/azure-sdk/issues/2074
-  # Run all clouds by default for weekly test pipeline, except for clouds specifically unsupported by the calling pipeline
-  # - ${{ if or(contains(parameters.Clouds, cloud.key), contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
   - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), contains(parameters.SupportedClouds, cloud.key))) }}:
     - ${{ if not(contains(parameters.UnsupportedClouds, cloud.key)) }}:
       - stage: ${{ cloud.key }}
@@ -112,6 +111,9 @@ stages:
         jobs:
         - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
           parameters:
+            SparseCheckoutPaths:
+              - "sdk/${{ parameters.ServiceDirectory }}/**/*.json"
+              - '!sdk/**/SessionRecords/*'
             JobTemplatePath: /eng/pipelines/templates/jobs/live.tests.yml
             AdditionalParameters:
               PreSteps:
@@ -129,6 +131,7 @@ stages:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
               Project: ${{ parameters.Project }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
+              DeployTestResources: ${{ parameters.DeployTestResources }}
             MatrixConfigs:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
               - ${{ each config in parameters.MatrixConfigs }}:

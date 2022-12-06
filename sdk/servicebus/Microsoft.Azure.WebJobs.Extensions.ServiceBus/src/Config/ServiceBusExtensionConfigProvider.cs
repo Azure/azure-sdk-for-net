@@ -81,6 +81,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
                 LogExceptionReceivedEvent(e, _loggerFactory);
                 return Task.CompletedTask;
             };
+            Options.SessionInitializingAsync ??= (e) =>
+            {
+                LogSessionInitializingEvent(e, _loggerFactory);
+                return Task.CompletedTask;
+            };
+            Options.SessionClosingAsync ??= (e) =>
+            {
+                LogSessionClosingEvent(e, _loggerFactory);
+                return Task.CompletedTask;
+            };
 
             context
                 .AddConverter(new MessageToStringConverter())
@@ -130,6 +140,34 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
                 // transient messaging errors we log as info so we have a record
                 // of them, but we don't treat them as actual errors
                 return LogLevel.Information;
+            }
+        }
+
+        internal static void LogSessionInitializingEvent(ProcessSessionEventArgs e, ILoggerFactory loggerFactory)
+        {
+            try
+            {
+                var logger = loggerFactory?.CreateLogger<ServiceBusListener>();
+                string message = $"Session initializing (SessionId={e.SessionId}, SessionLockedUntil={e.SessionLockedUntil})";
+                logger?.LogInformation(0, message);
+            }
+            catch (Exception)
+            {
+                // best effort logging
+            }
+        }
+
+        internal static void LogSessionClosingEvent(ProcessSessionEventArgs e, ILoggerFactory loggerFactory)
+        {
+            try
+            {
+                var logger = loggerFactory?.CreateLogger<ServiceBusListener>();
+                string message = $"Session closing (SessionId={e.SessionId}, SessionLockedUntil={e.SessionLockedUntil})";
+                logger?.LogInformation(0, message);
+            }
+            catch (Exception)
+            {
+                // best effort logging
             }
         }
     }

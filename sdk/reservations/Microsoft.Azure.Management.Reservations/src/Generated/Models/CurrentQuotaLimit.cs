@@ -33,12 +33,20 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// Initializes a new instance of the CurrentQuotaLimit class.
         /// </summary>
+        /// <param name="id">The quota request ID.</param>
+        /// <param name="name">The name of the quota request.</param>
+        /// <param name="type">Type of resource.
+        /// "Microsoft.Capacity/ServiceLimits"</param>
         /// <param name="properties">Quota properties for the resource.</param>
         /// <param name="provisioningState">The details of the quota request
-        /// status.</param>
+        /// status. Possible values include: 'Accepted', 'Invalid',
+        /// 'Succeeded', 'Failed', 'InProgress'</param>
         /// <param name="message">A user friendly message.</param>
-        public CurrentQuotaLimit(QuotaProperties properties = default(QuotaProperties), object provisioningState = default(object), string message = default(string))
+        public CurrentQuotaLimit(string id = default(string), string name = default(string), string type = default(string), QuotaProperties properties = default(QuotaProperties), string provisioningState = default(string), string message = default(string))
         {
+            Id = id;
+            Name = name;
+            Type = type;
             Properties = properties;
             ProvisioningState = provisioningState;
             Message = message;
@@ -51,16 +59,35 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the quota request ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "quotaInformation.id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the quota request.
+        /// </summary>
+        [JsonProperty(PropertyName = "quotaInformation.name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets type of resource. "Microsoft.Capacity/ServiceLimits"
+        /// </summary>
+        [JsonProperty(PropertyName = "quotaInformation.type")]
+        public string Type { get; private set; }
+
+        /// <summary>
         /// Gets or sets quota properties for the resource.
         /// </summary>
         [JsonProperty(PropertyName = "quotaInformation.properties")]
         public QuotaProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets the details of the quota request status.
+        /// Gets the details of the quota request status. Possible values
+        /// include: 'Accepted', 'Invalid', 'Succeeded', 'Failed', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public object ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets a user friendly message.

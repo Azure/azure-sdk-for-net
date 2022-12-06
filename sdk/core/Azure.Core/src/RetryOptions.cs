@@ -11,17 +11,27 @@ namespace Azure.Core
     /// </summary>
     public class RetryOptions
     {
-        internal RetryOptions()
+        /// <summary>
+        /// Creates a new <see cref="RetryOptions"/> instance with default values.
+        /// </summary>
+        internal RetryOptions() : this(ClientOptions.Default.Retry)
         {
         }
 
-        internal RetryOptions(RetryOptions retryOptions)
+        /// <summary>
+        /// Initializes the newly created <see cref="RetryOptions"/> with the same settings as the specified <paramref name="retryOptions"/>.
+        /// </summary>
+        /// <param name="retryOptions">The <see cref="RetryOptions"/> to model the newly created instance on.</param>
+        internal RetryOptions(RetryOptions? retryOptions)
         {
-            MaxRetries = retryOptions.MaxRetries;
-            Delay = retryOptions.Delay;
-            MaxDelay = retryOptions.MaxDelay;
-            Mode = retryOptions.Mode;
-            NetworkTimeout = retryOptions.NetworkTimeout;
+            if (retryOptions != null)
+            {
+                MaxRetries = retryOptions.MaxRetries;
+                Delay = retryOptions.Delay;
+                MaxDelay = retryOptions.MaxDelay;
+                Mode = retryOptions.Mode;
+                NetworkTimeout = retryOptions.NetworkTimeout;
+            }
         }
 
         /// <summary>
@@ -32,11 +42,13 @@ namespace Azure.Core
         /// <summary>
         /// The delay between retry attempts for a fixed approach or the delay
         /// on which to base calculations for a backoff-based approach.
+        /// If the service provides a Retry-After response header, the next retry will be delayed by the duration specified by the header value.
         /// </summary>
         public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(0.8);
 
         /// <summary>
-        /// The maximum permissible delay between retry attempts.
+        /// The maximum permissible delay between retry attempts when the service does not provide a Retry-After response header.
+        /// If the service provides a Retry-After response header, the next retry will be delayed by the duration specified by the header value.
         /// </summary>
         public TimeSpan MaxDelay { get; set; } = TimeSpan.FromMinutes(1);
 

@@ -4,10 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0
+#if NET5_0_OR_GREATER
     public class TestActivitySourceListener: IDisposable
     {
         private readonly ActivityListener _listener;
@@ -31,7 +32,15 @@ namespace Azure.Core.Tests
                         Activities.Enqueue(activity);
                     }
                 },
-                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllDataAndRecorded
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+                {
+                    if (options.Tags.Any(t => t.Key == "sampled-out" && bool.TrueString == t.Value.ToString()))
+                    {
+                        return ActivitySamplingResult.None;
+                    }
+
+                    return ActivitySamplingResult.AllDataAndRecorded;
+                }
             };
 
             ActivitySource.AddActivityListener(_listener);

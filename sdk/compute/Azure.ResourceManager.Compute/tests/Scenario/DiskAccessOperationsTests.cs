@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        private async Task<DiskAccess> CreateDiskAccessAsync(string name)
+        private async Task<DiskAccessResource> CreateDiskAccessAsync(string name)
         {
             var collection = (await CreateResourceGroupAsync()).GetDiskAccesses();
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            var lro = await collection.CreateOrUpdateAsync(name, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             return lro.Value;
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testDA-");
             var access = await CreateDiskAccessAsync(name);
-            await access.DeleteAsync();
+            await access.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testDA-");
             var access1 = await CreateDiskAccessAsync(name);
-            DiskAccess access2 = await access1.GetAsync();
+            DiskAccessResource access2 = await access1.GetAsync();
 
             ResourceDataHelper.AssertDiskAccess(access1.Data, access2.Data);
         }

@@ -412,11 +412,13 @@
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
+            int? maxParallelTasks,
+            bool? allowTaskPreemption,
             IList<Models.MetadataItem> metadata,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobUpdateParameter(poolInfo, priority, constraints, metadata, onAllTasksComplete);
+            var parameters = new Models.JobUpdateParameter(poolInfo, priority, maxParallelTasks, allowTaskPreemption, constraints, metadata, onAllTasksComplete);
             var request = new JobUpdateBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.UpdateWithHttpMessagesAsync(
@@ -435,6 +437,7 @@
             string jobId,
             int? priority,
             int? maxParallelTasks,
+            bool? allowTaskPreemption,
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
@@ -442,7 +445,7 @@
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobPatchParameter(priority, maxParallelTasks, onAllTasksComplete, constraints, poolInfo, metadata);
+            var parameters = new Models.JobPatchParameter(priority, maxParallelTasks, allowTaskPreemption, onAllTasksComplete, constraints, poolInfo, metadata);
             var request = new JobPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.PatchWithHttpMessagesAsync(
@@ -869,6 +872,7 @@
             Models.CertificateReference[] certRefs,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metaData,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
@@ -878,7 +882,7 @@
             metaData = metaData ?? new Models.MetadataItem[0];
             applicationPackageReferences = applicationPackageReferences ?? new Models.ApplicationPackageReference[0];
 
-            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask);
+            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask, targetNodeCommunicationMode);
             var request = new PoolUpdatePropertiesBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.UpdatePropertiesWithHttpMessagesAsync(
@@ -899,10 +903,11 @@
             Models.CertificateReference[] certificateReferences,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata);
+            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata, targetNodeCommunicationMode);
             var request = new PoolPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.PatchWithHttpMessagesAsync(

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<int> successfullyRolledbackInstanceCount = default;
             Optional<int> failedRolledbackInstanceCount = default;
-            Optional<ApiError> rollbackError = default;
+            Optional<ComputeApiError> rollbackError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfullyRolledbackInstanceCount"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rollbackError = ApiError.DeserializeApiError(property.Value);
+                    rollbackError = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
             }

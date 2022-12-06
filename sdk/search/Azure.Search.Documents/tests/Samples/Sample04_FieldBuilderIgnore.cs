@@ -18,13 +18,12 @@ namespace Azure.Search.Documents.Tests.Samples
     public class FieldBuilderIgnore :  SearchTestBase
     {
         public FieldBuilderIgnore(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, SearchClientOptions.LatestVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test]
         [SyncOnly]
-        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -77,6 +76,7 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchableField genreField = new SearchableField("genre")
             {
                 AnalyzerName = LexicalAnalyzerName.Values.EnLucene,
+                NormalizerName = LexicalNormalizerName.Lowercase,
                 IsFacetable = true,
                 IsFilterable = true
             };

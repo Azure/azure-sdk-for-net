@@ -142,6 +142,89 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
+
+        /// <summary>
+        /// positive test for testing UploadPreparedSecure disk
+        /// </summary>
+        [Fact (Skip = "DiskEncryptionSet belongs to different sub")]
+        public void DiskWithUploadPreparedSecureCreateOptionTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+
+                Disk disk = GenerateDefaultDisk(DiskCreateOption.UploadPreparedSecure, rgName, 32767);
+                disk.SecurityProfile = new DiskSecurityProfile { SecurityType = DiskSecurityTypes.ConfidentialVMDiskEncryptedWithCustomerKey };
+                disk.Location = DiskRPLocation;
+                disk.SecurityProfile.SecureVMDiskEncryptionSetId = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.Compute/diskEncryptionSets/cvm-des3";
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    //put disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+                    Assert.Equal(disk.CreationData.CreateOption, diskOut.CreationData.CreateOption);
+                    Assert.NotNull(diskOut.SecurityProfile);
+                    Assert.Equal(disk.SecurityProfile.SecurityType, diskOut.SecurityProfile.SecurityType);
+                    Assert.Equal(disk.SecurityProfile.SecureVMDiskEncryptionSetId, diskOut.SecurityProfile.SecureVMDiskEncryptionSetId);
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// positive test for testing ImportSecure disk
+        /// </summary>
+        [Fact]
+        public void DiskWithImportSecureCreateOptionTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+
+                Disk disk = GenerateBaseDisk(DiskCreateOption.ImportSecure);
+                disk.OsType = OperatingSystemTypes.Windows;
+                disk.CreationData.SourceUri = "https://swaggeraccount.blob.core.windows.net/swagger/abcd.vhd";
+                disk.CreationData.SecurityDataUri = "https://swaggeraccount.blob.core.windows.net/swagger/vmgs.vhd";
+                disk.CreationData.StorageAccountId = "/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/longrunningrg-centraluseuap/providers/Microsoft.Storage/storageAccounts/swaggeraccount";
+
+                disk.SecurityProfile = new DiskSecurityProfile { SecurityType = DiskSecurityTypes.TrustedLaunch };
+                disk.HyperVGeneration = HyperVGeneration.V2;
+                disk.Location = DiskRPLocation;
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    //put disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+                    Assert.Equal(disk.CreationData.CreateOption, diskOut.CreationData.CreateOption);
+                    Assert.NotNull(diskOut.SecurityProfile);
+                    Assert.Equal(disk.CreationData.SecurityDataUri, diskOut.CreationData.SecurityDataUri);
+                    Assert.Equal(disk.SecurityProfile.SecurityType, diskOut.SecurityProfile.SecurityType);
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
     }
 }
 

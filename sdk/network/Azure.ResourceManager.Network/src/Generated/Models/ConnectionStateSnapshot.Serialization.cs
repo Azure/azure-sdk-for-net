@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionStateSnapshot DeserializeConnectionStateSnapshot(JsonElement element)
         {
-            Optional<ConnectionState> connectionState = default;
+            Optional<NetworkConnectionState> connectionState = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<EvaluationState> evaluationState = default;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> maxLatencyInMs = default;
             Optional<long> probesSent = default;
             Optional<long> probesFailed = default;
-            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
+            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectionState = new ConnectionState(property.Value.GetString());
+                    connectionState = new NetworkConnectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectivityHop> array = new List<ConnectivityHop>();
+                    List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item));
+                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item));
                     }
                     hops = array;
                     continue;

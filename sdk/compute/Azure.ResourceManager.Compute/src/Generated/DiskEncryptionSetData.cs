@@ -8,19 +8,17 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the DiskEncryptionSet data model. </summary>
-    public partial class DiskEncryptionSetData : TrackedResource
+    public partial class DiskEncryptionSetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
         /// <param name="location"> The location. </param>
-        public DiskEncryptionSetData(Location location) : base(location)
+        public DiskEncryptionSetData(AzureLocation location) : base(location)
         {
             PreviousKeys = new ChangeTrackingList<KeyForDiskEncryptionSet>();
         }
@@ -28,7 +26,8 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </param>
@@ -38,7 +37,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The disk encryption set provisioning state. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
         /// <param name="lastKeyRotationTimestamp"> The time when the active key of this disk encryption set was updated. </param>
-        internal DiskEncryptionSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, EncryptionSetIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp) : base(id, name, type, tags, location)
+        /// <param name="autoKeyRotationError"> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </param>
+        /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to &apos;None&apos; will clear the property. </param>
+        internal DiskEncryptionSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp, ComputeApiError autoKeyRotationError, string federatedClientId) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             EncryptionType = encryptionType;
@@ -47,10 +48,12 @@ namespace Azure.ResourceManager.Compute
             ProvisioningState = provisioningState;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
             LastKeyRotationTimestamp = lastKeyRotationTimestamp;
+            AutoKeyRotationError = autoKeyRotationError;
+            FederatedClientId = federatedClientId;
         }
 
         /// <summary> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </summary>
-        public EncryptionSetIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
         public DiskEncryptionSetType? EncryptionType { get; set; }
         /// <summary> The key vault key which is currently used by this disk encryption set. </summary>
@@ -63,5 +66,9 @@ namespace Azure.ResourceManager.Compute
         public bool? RotationToLatestKeyVersionEnabled { get; set; }
         /// <summary> The time when the active key of this disk encryption set was updated. </summary>
         public DateTimeOffset? LastKeyRotationTimestamp { get; }
+        /// <summary> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </summary>
+        public ComputeApiError AutoKeyRotationError { get; }
+        /// <summary> Multi-tenant application client id to access key vault in a different tenant. Setting the value to &apos;None&apos; will clear the property. </summary>
+        public string FederatedClientId { get; set; }
     }
 }

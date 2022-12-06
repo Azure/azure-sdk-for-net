@@ -24,7 +24,7 @@ To recognize receipts from a URI, use the `StartRecognizeReceiptsFromUri` method
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/receiptfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-Uri receiptUri = <receiptUri>;
+Uri receiptUri = new Uri("<receiptUri>");
 
 RecognizeReceiptsOperation operation = await client.StartRecognizeReceiptsFromUriAsync(receiptUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
@@ -191,11 +191,6 @@ foreach (RecognizedForm receipt in receipts)
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Recognize receipts from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample3_RecognizeReceiptsFromUri.cs)
-* [Recognize receipts from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample3_RecognizeReceiptsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/Sample4_StronglyTypingARecognizedForm.md

@@ -26,12 +26,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ForceDeletion))
+            {
+                writer.WritePropertyName("forceDeletion");
+                writer.WriteBooleanValue(ForceDeletion.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static ScaleInPolicy DeserializeScaleInPolicy(JsonElement element)
         {
-            Optional<IList<VirtualMachineScaleSetScaleInRules>> rules = default;
+            Optional<IList<VirtualMachineScaleSetScaleInRule>> rules = default;
+            Optional<bool> forceDeletion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"))
@@ -41,16 +47,26 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineScaleSetScaleInRules> array = new List<VirtualMachineScaleSetScaleInRules>();
+                    List<VirtualMachineScaleSetScaleInRule> array = new List<VirtualMachineScaleSetScaleInRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new VirtualMachineScaleSetScaleInRules(item.GetString()));
+                        array.Add(new VirtualMachineScaleSetScaleInRule(item.GetString()));
                     }
                     rules = array;
                     continue;
                 }
+                if (property.NameEquals("forceDeletion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    forceDeletion = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ScaleInPolicy(Optional.ToList(rules));
+            return new ScaleInPolicy(Optional.ToList(rules), Optional.ToNullable(forceDeletion));
         }
     }
 }

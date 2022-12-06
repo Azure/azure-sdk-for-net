@@ -63,7 +63,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// from the extension will be suppressed (Operational failures such as
         /// not connecting to the VM will not be suppressed regardless of this
         /// value). The default is false.</param>
-        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?))
+        /// <param name="protectedSettingsFromKeyVault">The extensions
+        /// protected settings that are passed by reference, and consumed from
+        /// key vault</param>
+        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?), KeyVaultSecretReference protectedSettingsFromKeyVault = default(KeyVaultSecretReference))
             : base(tags)
         {
             ForceUpdateTag = forceUpdateTag;
@@ -75,6 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Settings = settings;
             ProtectedSettings = protectedSettings;
             SuppressFailures = suppressFailures;
+            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
             CustomInit();
         }
 
@@ -148,5 +152,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "properties.suppressFailures")]
         public bool? SuppressFailures { get; set; }
 
+        /// <summary>
+        /// Gets or sets the extensions protected settings that are passed by
+        /// reference, and consumed from key vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.protectedSettingsFromKeyVault")]
+        public KeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ProtectedSettingsFromKeyVault != null)
+            {
+                ProtectedSettingsFromKeyVault.Validate();
+            }
+        }
     }
 }

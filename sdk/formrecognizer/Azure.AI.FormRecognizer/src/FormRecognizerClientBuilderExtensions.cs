@@ -9,7 +9,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
-    /// Extension methods to add <see cref="FormRecognizerClient"/> client to clients builder.
+    /// Extension methods to add the <see cref="FormRecognizerClient"/> to clients builder.
     /// </summary>
     public static class FormRecognizerClientBuilderExtensions
     {

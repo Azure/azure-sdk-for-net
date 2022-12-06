@@ -24,7 +24,7 @@ To recognize business cards from a URI, use the `StartRecognizeBusinessCardsFrom
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/businesscardfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
-Uri businessCardUri = <businessCardUri>;
+Uri businessCardUri = new Uri("<businessCardUri>");
 
 RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsFromUriAsync(businessCardUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
@@ -291,11 +291,6 @@ foreach (RecognizedForm businessCard in businessCards)
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Recognize business cards from URI](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample12_RecognizeBusinessCardsFromUri.cs)
-* [Recognize business cards from file](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample12_RecognizeBusinessCardsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/Sample4_StronglyTypingARecognizedForm.md

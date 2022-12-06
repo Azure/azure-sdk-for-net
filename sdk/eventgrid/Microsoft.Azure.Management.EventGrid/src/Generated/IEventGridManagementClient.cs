@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.EventGrid
 
 
         /// <summary>
+        /// Gets the IChannelsOperations.
+        /// </summary>
+        IChannelsOperations Channels { get; }
+
+        /// <summary>
         /// Gets the IDomainsOperations.
         /// </summary>
         IDomainsOperations Domains { get; }
@@ -82,14 +87,24 @@ namespace Microsoft.Azure.Management.EventGrid
         IDomainTopicsOperations DomainTopics { get; }
 
         /// <summary>
-        /// Gets the IEventChannelsOperations.
+        /// Gets the ITopicEventSubscriptionsOperations.
         /// </summary>
-        IEventChannelsOperations EventChannels { get; }
+        ITopicEventSubscriptionsOperations TopicEventSubscriptions { get; }
+
+        /// <summary>
+        /// Gets the IDomainEventSubscriptionsOperations.
+        /// </summary>
+        IDomainEventSubscriptionsOperations DomainEventSubscriptions { get; }
 
         /// <summary>
         /// Gets the IEventSubscriptionsOperations.
         /// </summary>
         IEventSubscriptionsOperations EventSubscriptions { get; }
+
+        /// <summary>
+        /// Gets the IDomainTopicEventSubscriptionsOperations.
+        /// </summary>
+        IDomainTopicEventSubscriptionsOperations DomainTopicEventSubscriptions { get; }
 
         /// <summary>
         /// Gets the ISystemTopicEventSubscriptionsOperations.
@@ -105,6 +120,16 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the ITopicsOperations.
+        /// </summary>
+        ITopicsOperations Topics { get; }
+
+        /// <summary>
+        /// Gets the IPartnerConfigurationsOperations.
+        /// </summary>
+        IPartnerConfigurationsOperations PartnerConfigurations { get; }
 
         /// <summary>
         /// Gets the IPartnerNamespacesOperations.
@@ -137,11 +162,6 @@ namespace Microsoft.Azure.Management.EventGrid
         ISystemTopicsOperations SystemTopics { get; }
 
         /// <summary>
-        /// Gets the ITopicsOperations.
-        /// </summary>
-        ITopicsOperations Topics { get; }
-
-        /// <summary>
         /// Gets the IExtensionTopicsOperations.
         /// </summary>
         IExtensionTopicsOperations ExtensionTopics { get; }
@@ -150,6 +170,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the ITopicTypesOperations.
         /// </summary>
         ITopicTypesOperations TopicTypes { get; }
+
+        /// <summary>
+        /// Gets the IVerifiedPartnersOperations.
+        /// </summary>
+        IVerifiedPartnersOperations VerifiedPartners { get; }
 
     }
 }

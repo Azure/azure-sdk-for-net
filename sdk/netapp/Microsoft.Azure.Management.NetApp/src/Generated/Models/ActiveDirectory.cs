@@ -82,7 +82,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="allowLocalNfsUsersWithLdap"> If enabled, NFS client
         /// local users can also (in addition to LDAP users) access the NFS
         /// volumes.</param>
-        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), IList<string> administrators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?), IList<string> securityOperators = default(IList<string>), bool? ldapOverTLS = default(bool?), bool? allowLocalNfsUsersWithLdap = default(bool?))
+        /// <param name="encryptDCConnections">If enabled, Traffic between the
+        /// SMB server to Domain Controller (DC) will be encrypted.</param>
+        /// <param name="ldapSearchScope">LDAP Search scope options</param>
+        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), IList<string> administrators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?), IList<string> securityOperators = default(IList<string>), bool? ldapOverTLS = default(bool?), bool? allowLocalNfsUsersWithLdap = default(bool?), bool? encryptDCConnections = default(bool?), LdapSearchScopeOpt ldapSearchScope = default(LdapSearchScopeOpt))
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -104,6 +107,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
             SecurityOperators = securityOperators;
             LdapOverTLS = ldapOverTLS;
             AllowLocalNfsUsersWithLdap = allowLocalNfsUsersWithLdap;
+            EncryptDCConnections = encryptDCConnections;
+            LdapSearchScope = ldapSearchScope;
             CustomInit();
         }
 
@@ -257,6 +262,19 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? AllowLocalNfsUsersWithLdap { get; set; }
 
         /// <summary>
+        /// Gets or sets if enabled, Traffic between the SMB server to Domain
+        /// Controller (DC) will be encrypted.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptDCConnections")]
+        public bool? EncryptDCConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets LDAP Search scope options
+        /// </summary>
+        [JsonProperty(PropertyName = "ldapSearchScope")]
+        public LdapSearchScopeOpt LdapSearchScope { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -299,6 +317,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 {
                     throw new ValidationException(ValidationRules.MinLength, "ServerRootCACertificate", 1);
                 }
+            }
+            if (LdapSearchScope != null)
+            {
+                LdapSearchScope.Validate();
             }
         }
     }

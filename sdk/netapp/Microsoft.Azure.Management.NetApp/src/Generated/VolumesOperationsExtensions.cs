@@ -280,9 +280,13 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static void Delete(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            /// <param name='forceDelete'>
+            /// An option to force delete the volume. Will cleanup resources connected to
+            /// the particular volume
+            /// </param>
+            public static void Delete(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, poolName, volumeName, forceDelete).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,12 +310,16 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
+            /// <param name='forceDelete'>
+            /// An option to force delete the volume. Will cleanup resources connected to
+            /// the particular volume
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, forceDelete, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -936,9 +944,13 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static void BeginDelete(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            /// <param name='forceDelete'>
+            /// An option to force delete the volume. Will cleanup resources connected to
+            /// the particular volume
+            /// </param>
+            public static void BeginDelete(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete = default(bool?))
             {
-                operations.BeginDeleteAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, accountName, poolName, volumeName, forceDelete).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -962,12 +974,16 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
+            /// <param name='forceDelete'>
+            /// An option to force delete the volume. Will cleanup resources connected to
+            /// the particular volume
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, forceDelete, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

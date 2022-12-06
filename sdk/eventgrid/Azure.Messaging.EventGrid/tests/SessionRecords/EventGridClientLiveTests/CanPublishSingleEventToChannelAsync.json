@@ -1,0 +1,36 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://jolovegtsts111112partner-namespace.westus2-1.eventgrid.azure.net/api/events?api-version=2018-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "aeg-channel-name": "jolovegtsts111112partner-channel",
+        "aeg-sas-key": "Sanitized",
+        "Content-Length": "250",
+        "Content-Type": "application/cloudevents-batch\u002Bjson; charset=utf-8",
+        "traceparent": "00-e78e85eac3958340a8c091891724914d-5b5e9144e0334b45-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.11.0-alpha.20220629.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c823ad37e34a422e752aa7ab6afb8a43",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u00224f62332e-ad2c-cf5b-6172-0bd779b4f871\u0022,\u0022source\u0022:\u0022record\u0022,\u0022type\u0022:\u0022Microsoft.MockPublisher.TestEvent\u0022,\u0022data\u0022:{\u0022Name\u0022:\u0022name\u0022,\u0022Age\u0022:1},\u0022time\u0022:\u00222022-06-29T19:43:33.0355637-07:00\u0022,\u0022specversion\u0022:\u00221.0\u0022,\u0022subject\u0022:\u0022Subject-1\u0022,\u0022traceparent\u0022:\u0022Sanitized\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2018-01-01",
+        "Content-Length": "0",
+        "Date": "Thu, 30 Jun 2022 02:43:32 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-request-id": "08e1a145-5330-4977-b287-d6abd824c23c"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2022-06-29T19:43:33.0355637-07:00",
+    "EVENT_GRID_PARTNER_CHANNEL_NAME": "jolovegtsts111112partner-channel",
+    "EVENT_GRID_PARTNER_NAMESPACE_ENDPOINT": "https://jolovegtsts111112partner-namespace.westus2-1.eventgrid.azure.net/api/events",
+    "EVENT_GRID_PARTNER_NAMESPACE_KEY": "Kg==",
+    "RandomSeed": "1739813037"
+  }
+}

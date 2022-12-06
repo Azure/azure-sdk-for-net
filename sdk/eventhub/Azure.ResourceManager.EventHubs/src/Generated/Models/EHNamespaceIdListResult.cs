@@ -7,26 +7,27 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response of the List Namespace IDs operation. </summary>
-    public partial class EHNamespaceIdListResult
+    internal partial class EHNamespaceIdListResult
     {
         /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>
         internal EHNamespaceIdListResult()
         {
-            Value = new ChangeTrackingList<EHNamespaceIdContainer>();
+            Value = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>
         /// <param name="value"> Result of the List Namespace IDs operation. </param>
-        internal EHNamespaceIdListResult(IReadOnlyList<EHNamespaceIdContainer> value)
+        internal EHNamespaceIdListResult(IReadOnlyList<SubResource> value)
         {
             Value = value;
         }
 
         /// <summary> Result of the List Namespace IDs operation. </summary>
-        public IReadOnlyList<EHNamespaceIdContainer> Value { get; }
+        public IReadOnlyList<SubResource> Value { get; }
     }
 }

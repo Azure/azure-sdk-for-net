@@ -4,6 +4,29 @@ The `EventProcessorClient` supports a set of options to configure many aspects o
 
 To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Choosing the number of processors for the consumer group](#choosing-the-number-of-processors-for-the-consumer-group)
+- [Influencing load balancing behavior](#influencing-load-balancing-behavior)
+    - [Load balancing strategy](#load-balancing-strategy)
+    - [Load balancing intervals](#load-balancing-intervals)
+- [Using web sockets](#using-web-sockets)
+- [Setting a custom proxy](#setting-a-custom-proxy)
+- [Using the default system proxy](#using-the-default-system-proxy)
+- [Specifying a custom endpoint address](#specifying-a-custom-endpoint-address)
+- [Influencing SSL certificate validation](#influencing-ssl-certificate-validation)
+- [Configuring the client retry thresholds](#configuring-the-client-retry-thresholds)
+- [Configuring the timeout used for Event Hubs service operations](#configuring-the-timeout-used-for-event-hubs-service-operations)
+- [Using a custom retry policy](#using-a-custom-retry-policy)
+
+## Choosing the number of processors for the consumer group
+
+The `EventProcessorClient` will coordinate with other instances using the same consumer group and Blob Storage container to process the Event Hub cooperatively.  The processors will dynamically distribute and share the Event Hub's partitions, ensuring each has a single processor responsible for reading it.  As `EventProcessorClient` instances are added or removed from the group, partition ownership will be re-balanced to ensure the load is shared evenly among them.
+
+When a processor owns too many partitions, it will often experience contention in the thread pool, potentially leading to starvation. During this time, activities will stall causing delays in `EventProcessorClient` operations. Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
+
+Because of this, it is important to carefully consider how many `EventProcessorClient` instances are needed in the consumer group for your application.  Generally, it is recommended each processor own no more than 3 partitions for every 1 CPU core of the host. Since the ratio will vary for each application, it is often helpful to start with using 1.5 partitions for each CPU core and test increasing the number of owned partitions gradually to measure what works best for your application.
+
 ## Influencing load balancing behavior
 
 To scale event processing, you can run multiple instances of the `EventProcessorClient` and they will coordinate to balance work between them. The responsibility for processing is distributed among each of the active processors configured to read from the same Event Hub and using the same consumer group.  To balance work, each active `EventProcessorClient` instance will assume responsibility for processing a set of Event Hub partitions, referred to as "owning" the partitions.  The processors collaborate on ownership using storage as a central point of coordination.  
@@ -43,7 +66,9 @@ var processor = new EventProcessorClient(
 
 ### Load balancing intervals
 
-There are two intervals considered during load balancing which can influence its behavior.  The `LoadBalancingInterval` controls how frequently a load balancing cycle is run.  During the load balancing cycle, the `EventProcessorClient` will attempt to refresh its ownership record for each partition that it owns.  The `PartitionOwnershipExpirationInterval` controls how long an ownership record is considered valid.  If the processor does not update an ownership record before this interval elapses, the partition represented by this record is considered unowned and is eligible to be claimed by another processor.  
+There are two intervals considered during load balancing which can influence its behavior.  The `LoadBalancingUpdateInterval` controls how frequently a load balancing cycle is run.  During the load balancing cycle, the `EventProcessorClient` will attempt to refresh its ownership record for each partition that it owns.  The `PartitionOwnershipExpirationInterval` controls how long an ownership record is considered valid.  If the processor does not update an ownership record before this interval elapses, the partition represented by this record is considered unowned and is eligible to be claimed by another processor.  
+
+It is recommended that the `PartitionOwnershipExpirationInterval` be at least 3 times greater than the `LoadBalancingUpdateInterval` and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.
 
 ```C# Snippet:EventHubs_Processor_Sample02_LoadBalancingIntervals
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
@@ -186,7 +211,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Using the default system proxy
+## Using the default system proxy
 
 To use the default proxy for your environment, the recommended approach is to make use of [HttpClient.DefaultProxy](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient.defaultproxy?view=netcore-3.1), which will attempt to detect proxy settings from the ambient environment in a manner consistent with expectations for the target platform.  
 
@@ -200,7 +225,7 @@ var options = new EventHubConnectionOptions
 };
 ```
 
-### Specifying a custom endpoint address
+## Specifying a custom endpoint address
 
 Connections to the Azure Event Hubs service are made using the fully qualified namespace assigned to the Event Hubs namespace as the connection endpoint address. Because the Event Hubs service uses the endpoint address to locate the corresponding resources, it isn't possible to specify a custom address in the connection string or as the fully qualified namespace.
 
@@ -229,7 +254,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Influencing SSL certificate validation
+## Influencing SSL certificate validation
 
 For some environments using a proxy or custom gateway for routing traffic to Event Hubs, a certificate not trusted by the root certificate authorities may be issued.  This can often be a self-signed certificate from the gateway or one issued by a company's internal certificate authority.  
 
@@ -239,7 +264,7 @@ By default, these certificates are not trusted by the Event Hubs client library 
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
 var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
@@ -275,7 +300,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Configuring the client retry thresholds
+## Configuring the client retry thresholds
 
 The built-in retry policy offers an implementation for an exponential back-off strategy by default, as this provides a good balance between making forward progress and allowing for transient issues that may take some time to resolve.  The built-in policy also offers a fixed strategy for those cases where your application requires that you have a deterministic understanding of how long an operation may take.
 
@@ -338,7 +363,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Configuring the timeout used for Event Hubs service operations
+## Configuring the timeout used for Event Hubs service operations
 
 The `EventHubsRetryOptions` also control the timeout that is used for operations, including those which involve communicating with the Event Hubs service.  The default timeout of 60 seconds can be changed by adjusting the `TryTimeout` value.
 
@@ -351,7 +376,7 @@ var options = new EventHubsRetryOptions
 };
 ```
 
-### Using a custom retry policy
+## Using a custom retry policy
 
 For those scenarios where your application requires more control over retries, you can provide a custom retry policy.
 

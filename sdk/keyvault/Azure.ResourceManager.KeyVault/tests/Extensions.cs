@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this DeletedVault deletedVault, VaultData createdVault)
+        public static bool IsEqual(this DeletedKeyVaultResource deletedVault, KeyVaultData createdVault)
         {
             Assert.AreEqual(createdVault.Location, deletedVault.Data.Properties.Location);
             Assert.AreEqual(createdVault.Name, deletedVault.Data.Name);
             Assert.AreEqual(createdVault.Id, deletedVault.Data.Properties.VaultId);
-            Assert.AreEqual("Microsoft.KeyVault/deletedVaults", deletedVault.Data.Type);
-            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Data.Properties.Tags));
-            Assert.NotNull(deletedVault.Data.Properties.ScheduledPurgeDate);
-            Assert.NotNull(deletedVault.Data.Properties.DeletionDate);
+            Assert.AreEqual("Microsoft.KeyVault/deletedVaults", deletedVault.Data.ResourceType);
+            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Data.Properties.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)));
+            Assert.NotNull(deletedVault.Data.Properties.ScheduledPurgeOn);
+            Assert.NotNull(deletedVault.Data.Properties.DeletionOn);
             Assert.NotNull(deletedVault.Id);
             return true;
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(vault2.Id, vault1.Id);
             Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
 
-            Assert.AreEqual(vault2.Properties.HsmUri.TrimEnd('/'), vault1.Properties.HsmUri.TrimEnd('/'));
+            Assert.AreEqual(vault2.Properties.HsmUri.ToString().TrimEnd('/'), vault1.Properties.HsmUri.ToString().TrimEnd('/'));
             Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
             Assert.AreEqual(vault2.Sku.Name, vault1.Sku.Name);
             Assert.AreEqual(vault2.Sku.Family, vault1.Sku.Family);
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this VaultData vault1, VaultData vault2)
+        public static bool IsEqual(this KeyVaultData vault1, KeyVaultData vault2)
         {
             Assert.AreEqual(vault2.Location, vault1.Location);
             Assert.AreEqual(vault2.Name, vault1.Name);
             Assert.AreEqual(vault2.Id, vault1.Id);
             Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
 
-            Assert.AreEqual(vault2.Properties.VaultUri.TrimEnd('/'), vault1.Properties.VaultUri.TrimEnd('/'));
+            Assert.AreEqual(vault2.Properties.VaultUri.ToString().TrimEnd('/'), vault1.Properties.VaultUri.ToString().TrimEnd('/'));
             Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
             Assert.AreEqual(vault2.Properties.Sku.Name, vault1.Properties.Sku.Name);
             Assert.AreEqual(vault2.Properties.EnableSoftDelete, vault1.Properties.EnableSoftDelete);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this IList<AccessPolicyEntry> expected, IList<AccessPolicyEntry> actual)
+        public static bool IsEqual(this IList<KeyVaultAccessPolicy> expected, IList<KeyVaultAccessPolicy> actual)
         {
             if (expected == null && actual == null)
                 return true;
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             if (expected.Count != actual.Count)
                 return false;
 
-            AccessPolicyEntry[] expectedCopy = new AccessPolicyEntry[expected.Count];
+            KeyVaultAccessPolicy[] expectedCopy = new KeyVaultAccessPolicy[expected.Count];
             expected.CopyTo(expectedCopy, 0);
 
-            foreach (AccessPolicyEntry a in actual)
+            foreach (KeyVaultAccessPolicy a in actual)
             {
                 var match = expectedCopy.Where(e =>
                     e.TenantId == a.TenantId &&

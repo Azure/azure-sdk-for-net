@@ -13,7 +13,7 @@ Azure Purview Administration contains the Purview Account and Purview MetdataPol
 Install the Azure Purview Administration client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Analysis.Purview.Administration
+dotnet add package Azure.Analysis.Purview.Administration --prerelease
 ```
 
 ### Prerequisites
@@ -30,9 +30,9 @@ Once you have chosen and configured your credential, you can create instances of
 
 ```C#
 var credential = new DefaultAzureCredential();
-var accountClient = new PurviewAccountClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
-var policyClient = new PurviewMetadataPolicyClient(new Url("https://<my-account-name>.purview.azure.com"), "myCollection", credential);
-var roleClient = new PurviewMetadataRolesClient(new Url("https://<my-account-name>.purview.azure.com"), credential);
+var accountClient = new PurviewAccountClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
+var policyClient = new PurviewMetadataPolicyClient(new Uri("https://<my-account-name>.purview.azure.com"), "myCollection", credential);
+var roleClient = new PurviewMetadataRolesClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 ```
 
 ## Key concepts
@@ -67,7 +67,7 @@ var credential = new DefaultAzureCredential();
 var client = new PurviewAccountClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 
 var Response response = await client.GetAccountPropertiesAsync();
-var responseDocument = JsonDocument.Parse(response.Content);
+using var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("name"));
 ```
 
@@ -80,7 +80,8 @@ var client = new PurviewMetadataRolesClient(new Uri("https://<my-account-name>.p
 AsyncPageable<BinaryData> fetchResponse = client.GetMetadataRolesAsync(new());
 await foreach (BinaryData item in fetchResponse)
 {
-    JsonElement fetchBodyJson = JsonDocument.Parse(item).RootElement;
+    using var jsonDocument = JsonDocument.Parse(item);
+    JsonElement fetchBodyJson = jsonDocument.RootElement;
     Console.WriteLine(fetchBodyJson.GetProperty("id"));
 }
 ```

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The status code and count of the cloud service instance view statuses
+    /// </summary>
     public partial class StatusCodeCount
     {
         /// <summary>

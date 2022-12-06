@@ -32,9 +32,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="encryptionUserAssignedIdentity">Resource identifier of
         /// the UserAssigned identity to be associated with server-side
         /// encryption on the storage account.</param>
-        public EncryptionIdentity(string encryptionUserAssignedIdentity = default(string))
+        /// <param name="encryptionFederatedIdentityClientId">ClientId of the
+        /// multi-tenant application to be used in conjunction with the
+        /// user-assigned identity for cross-tenant customer-managed-keys
+        /// server-side encryption on the storage account.</param>
+        public EncryptionIdentity(string encryptionUserAssignedIdentity = default(string), string encryptionFederatedIdentityClientId = default(string))
         {
             EncryptionUserAssignedIdentity = encryptionUserAssignedIdentity;
+            EncryptionFederatedIdentityClientId = encryptionFederatedIdentityClientId;
             CustomInit();
         }
 
@@ -49,6 +54,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentity")]
         public string EncryptionUserAssignedIdentity { get; set; }
+
+        /// <summary>
+        /// Gets or sets clientId of the multi-tenant application to be used in
+        /// conjunction with the user-assigned identity for cross-tenant
+        /// customer-managed-keys server-side encryption on the storage
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "federatedIdentityClientId")]
+        public string EncryptionFederatedIdentityClientId { get; set; }
 
     }
 }

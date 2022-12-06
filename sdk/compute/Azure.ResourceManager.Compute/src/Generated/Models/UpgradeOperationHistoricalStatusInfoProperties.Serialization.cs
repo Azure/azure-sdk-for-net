@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<UpgradeOperationHistoryStatus> runningStatus = default;
             Optional<RollingUpgradeProgressInfo> progress = default;
-            Optional<ApiError> error = default;
+            Optional<ComputeApiError> error = default;
             Optional<UpgradeOperationInvoker> startedBy = default;
             Optional<ImageReference> targetImageReference = default;
             Optional<RollbackStatusInfo> rollbackInfo = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ApiError.DeserializeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startedBy"))

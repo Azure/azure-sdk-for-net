@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Subscription.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// Initializes a new instance of the PutAliasRequest class.
         /// </summary>
         /// <param name="properties">Put alias request properties.</param>
-        public PutAliasRequest(PutAliasRequestProperties properties)
+        public PutAliasRequest(PutAliasRequestProperties properties = default(PutAliasRequestProperties))
         {
             Properties = properties;
             CustomInit();
@@ -48,18 +47,5 @@ namespace Microsoft.Azure.Management.Subscription.Models
         [JsonProperty(PropertyName = "properties")]
         public PutAliasRequestProperties Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-        }
     }
 }

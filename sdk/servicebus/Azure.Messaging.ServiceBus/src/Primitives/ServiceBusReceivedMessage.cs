@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
 using Azure.Core.Amqp;
@@ -425,7 +426,7 @@ namespace Azure.Messaging.ServiceBus
                     return (ServiceBusMessageState)val;
                 }
 
-                return default;
+                return ServiceBusMessageState.Active;
             }
             internal set
             {

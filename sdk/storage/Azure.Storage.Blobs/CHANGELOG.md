@@ -1,11 +1,66 @@
 # Release History
 
-## 12.11.0-beta.2 (Unreleased)
+## 12.15.0-beta.1 (Unreleased)
+- Added support for service version 2021-12-02.
+- Added support for Blob Cold Tier.
+- Fixed bug where BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed was spelled incorrectly.
+
+## 12.14.1 (2022-10-20)
+- Fixed bug were BlobBaseClient constructor taking a URI and BlobClientOptions would ignore BlobClientOptions.TrimBlobNameSlashes.
+
+## 12.14.0 (2022-10-12)
+- Includes all features from 12.14.0-beta.1.
+- Added support for leading and trailing '/' characters in blob names when constructing URIs via builder.
+
+## 12.14.0-beta.1 (2022-08-23)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
+
+## 12.13.1 (2022-08-22)
+- Added support for downloading blobs with bugged client-side encryption metadata from previous library versions.
+
+## 12.13.0 (2022-07-07)
+- Includes all features from 12.13.0-beta.1.
+
+## 12.13.0-beta.1 (2022-06-15)
+- Added support for service version 2021-08-06.
+- Added support for clientside encryption V2.0
+  - GCM support
+  - V2.0 is considered a security upgrade, and it is recommended applications switch to server-side encryption or upgrade to clientside V2.0.
+- Fixed bug where calling AppendBlockFromUri() without AppendBlobAppendBlockFromUriOptions throws a null exception error
+
+## 12.12.0 (2022-05-02)
+- Includes all features from 12.12.0-beta.1.
+
+## 12.12.0-beta.1 (2022-04-12)
+- Added support for service version 2021-06-08.
+- Added pageable versions of PageBlobClient.GetPageRanges() and .GetPageRangesAsync().
+- Added ability to copy source blob tags for BlobBaseClient.SyncCopyFromUri() and .SyncCopyFromUriAsync().
+- Fixed a bug where CopyFromUriOperation was throwing an Exception when the status of the blob copy was aborted or failed.
+
+## 12.11.0 (2022-03-10)
+- Includes all features from 12.11.0-beta.1, 12.11.0-beta.2, and 12.11.0-beta.3 except SDK-calculated transactional checksums on data transfer.
+- Added support for progress reporting with DownloadToAsync().
+- Fixed a bug where BlobBaseClient.DownloadTo() would result in an ObjectDisposedException on .NET Framework in certain network conditions.
+- Added nullable version of `BlobProperties.CopyStatus` called `BlobCopyStatus`, allowing a null value when Storage doesn't return a value.
+- Fixed a bug where BlobContainerClient.GetProperties() would throw an ArgumentNullException when the AccessPolicy was null
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed a bug where BlobUriBuilder was case sensitive for parameter names.
+
+## 12.11.0-beta.3 (2022-02-07)
+- Added support for service version 2021-04-10.
+- Added support for BlobContainerClient.FilterBlobsByTag().
+- Added support for BlobContainerClient.OpenWriteAsync().
+- Fixed bug where BlobSasBuilder.SetPermissions(string rawPermissions) was not properly handling the Permanent Delete ('y') and set Immutability Policy ('i') permissions.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() would result in a NullReferenceException when trying to overwrite a blob with client-side encryption enabled
+
+## 12.11.0-beta.2 (2021-11-30)
 - Added support for service version 2021-02-12
 - Added support for listing system containers with BlobServiceClient.GetBlobContainers() and .GetBlobContainersAsync().
 - Added support for blob names container invalid XML characters.
 - Added support for updating the key encryption key on a client-side encrypted blob.
 - Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would modify the Dictionary instance passed by the caller for blob metadata.
+- Fixed a bug where BlobClient.Upload() and UploadAsync() when using client-side encryption would not respect StorageTransferOptions.InitialTransferSize.
 
 ## 12.11.0-beta.1 (2021-11-03)
 - Added support for service version 2020-12-06.

@@ -42,6 +42,9 @@ namespace Microsoft.Azure.Management.Storage
         /// alphanumeric characters and it cannot begin with a numeric
         /// character.
         /// </param>
+        /// <param name='signedIdentifiers'>
+        /// List of stored access policies specified on the table.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -57,7 +60,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Table>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Table>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new table with the specified table name, under the
         /// specified account.
@@ -77,6 +80,9 @@ namespace Microsoft.Azure.Management.Storage
         /// alphanumeric characters and it cannot begin with a numeric
         /// character.
         /// </param>
+        /// <param name='signedIdentifiers'>
+        /// List of stored access policies specified on the table.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -92,7 +98,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the table with the specified table name, under the specified
         /// account if it exists.

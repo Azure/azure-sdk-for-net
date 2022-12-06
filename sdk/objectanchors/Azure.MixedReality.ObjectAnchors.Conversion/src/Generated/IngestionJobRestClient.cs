@@ -16,64 +16,67 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     internal partial class IngestionJobRestClient
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of IngestionJobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        public IngestionJobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.2-preview.1")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public IngestionJobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "0.3-preview.2")
         {
-            this.endpoint = endpoint ?? new Uri("");
-            this.apiVersion = apiVersion;
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("");
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRequest(Guid accountId, Guid jobId, string xMrcCv, AssetConversionProperties body)
+        internal HttpMessage CreateCreateRequest(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/accounts/", false);
             uri.AppendPath(accountId, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {
                 request.Headers.Add("x-mrc-cv", xMrcCv);
             }
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Creates a job request. </summary>
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
-        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="body"> The Azure Object Anchors ingestion request. </param>
+        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders>> CreateAsync(Guid accountId, Guid jobId, string xMrcCv = null, AssetConversionProperties body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders>> CreateAsync(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(accountId, jobId, xMrcCv, body);
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateCreateRequest(accountId, jobId, body, xMrcCv);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new IngestionJobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -86,19 +89,25 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Creates a job request. </summary>
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
-        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="body"> The Azure Object Anchors ingestion request. </param>
+        /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders> Create(Guid accountId, Guid jobId, string xMrcCv = null, AssetConversionProperties body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders> Create(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(accountId, jobId, xMrcCv, body);
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateCreateRequest(accountId, jobId, body, xMrcCv);
             _pipeline.Send(message, cancellationToken);
             var headers = new IngestionJobCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -111,7 +120,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -121,15 +130,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/accounts/", false);
             uri.AppendPath(accountId, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (xMrcCv != null)
             {
@@ -159,7 +165,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

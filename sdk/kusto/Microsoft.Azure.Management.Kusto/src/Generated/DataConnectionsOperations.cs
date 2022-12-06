@@ -775,10 +775,10 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DataConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnection,DataConnectionsUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<DataConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DataConnection,DataConnectionsUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1332,7 +1332,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DataConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DataConnection,DataConnectionsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1489,7 +1489,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DataConnection>();
+            var _result = new AzureOperationResponse<DataConnection,DataConnectionsUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1549,6 +1549,19 @@ namespace Microsoft.Azure.Management.Kusto
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<DataConnectionsUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

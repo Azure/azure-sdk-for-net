@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -17,6 +18,20 @@ namespace Azure.AI.Personalizer.Tests
         public async Task SingleSlotRankTests()
         {
             PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
+            await SingleSlotRankTests(client);
+        }
+
+        [Test]
+        public async Task SingleSlotRankLocalInferenceTests()
+        {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: true, useLocalInference: true, subsampleRate: 1.01f));
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await GetPersonalizerClientAsync(isSingleSlot: true, useLocalInference: true, subsampleRate: 0f));
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true, useLocalInference: true);
+            await SingleSlotRankTests(client);
+        }
+
+        private async Task SingleSlotRankTests(PersonalizerClient client)
+        {
             await RankNullParameters(client);
             await RankServerFeatures(client);
             await RankNullParameters(client);
@@ -31,7 +46,7 @@ namespace Azure.AI.Personalizer.Tests
                     features:
                     new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
             ));
-            var request = new PersonalizerRankOptions(actions);
+            var request = new PersonalizerRankOptions(actions, null, null);
             // Action
             PersonalizerRankResult response = await client.RankAsync(request);
             // Assert

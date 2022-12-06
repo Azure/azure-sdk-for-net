@@ -101,8 +101,8 @@ namespace Azure.Messaging.EventHubs.Core
                 return new PooledProducer(EventHubProducer);
             }
 
-            var identifier = Guid.NewGuid().ToString();
-            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, TransportProducerFactory(id), removeAfterDuration));
+            var identifier = Guid.NewGuid();
+            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(id, TransportProducerFactory(id), removeAfterDuration));
 
             // A race condition at this point may end with CloseAsync called on
             // the returned PoolItem if it had expired. The probability is very low and
@@ -110,8 +110,8 @@ namespace Azure.Messaging.EventHubs.Core
 
             if (item.PartitionProducer.IsClosed || !item.ActiveInstances.TryAdd(identifier, 0))
             {
-                identifier = Guid.NewGuid().ToString();
-                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, TransportProducerFactory(id), removeAfterDuration));
+                identifier = Guid.NewGuid();
+                item = Pool.GetOrAdd(partitionId, id => new PoolItem(id, TransportProducerFactory(id), removeAfterDuration));
                 item.ActiveInstances.TryAdd(identifier, 0);
             }
 
@@ -136,13 +136,32 @@ namespace Azure.Messaging.EventHubs.Core
                 // The second TryGetValue runs after the extension would have been seen, so it
                 // is intended to be sure that the item wasn't removed in the meantime.
 
-                if (!Pool.TryGetValue(partitionId, out _) && !item.ActiveInstances.Any())
+                if (!Pool.TryGetValue(partitionId, out _) && item.ActiveInstances.IsEmpty)
                 {
                     return producer.CloseAsync(CancellationToken.None);
                 }
 
                 return Task.CompletedTask;
             });
+        }
+
+        /// <summary>
+        ///   Expires the pooled producer for the requested partition immediately.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        /// <param name="forceClose"><c>true</c> to close the pooled producer even if it is in use; otherwise, <c>false</c> will defer closing until it is no longer in use.</param>
+        ///
+        public virtual async Task ExpirePooledProducerAsync(string partitionId,
+                                                            bool forceClose = false)
+        {
+           if (Pool.TryRemove(partitionId, out var poolItem))
+           {
+               if (poolItem.ActiveInstances.IsEmpty || forceClose)
+               {
+                   await poolItem.PartitionProducer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+               }
+           }
         }
 
         /// <summary>
@@ -188,6 +207,7 @@ namespace Azure.Messaging.EventHubs.Core
             return _ =>
             {
                 // Capture the time stamp to use a consistent value.
+
                 var now = DateTimeOffset.UtcNow;
 
                 foreach (var key in Pool.Keys.ToList())
@@ -196,7 +216,7 @@ namespace Azure.Messaging.EventHubs.Core
                     {
                         if (poolItem.RemoveAfter <= now)
                         {
-                            if (Pool.TryRemove(key, out var _) && !poolItem.ActiveInstances.Any())
+                            if (Pool.TryRemove(key, out var _) && poolItem.ActiveInstances.IsEmpty)
                             {
                                 // At this point the pool item may have been closed already
                                 // if there was a context switch between the if conditions
@@ -237,7 +257,7 @@ namespace Azure.Messaging.EventHubs.Core
             ///   A set of unique identifiers used to track which instances of a <see cref="PoolItem" /> are active.
             /// </summary>
             ///
-            public ConcurrentDictionary<string, byte> ActiveInstances { get; } = new ConcurrentDictionary<string, byte>();
+            public ConcurrentDictionary<Guid, byte> ActiveInstances { get; } = new ConcurrentDictionary<Guid, byte>();
 
             /// <summary>
             ///   The UTC date and time when a <see cref="PoolItem" /> will become eligible for eviction.
@@ -328,15 +348,8 @@ namespace Azure.Messaging.EventHubs.Core
             ///
             /// <returns>A task to be resolved on when the operation has completed.</returns>
             ///
-            public virtual ValueTask DisposeAsync()
-            {
-                if (CleanUp != default)
-                {
-                    return new ValueTask(CleanUp(TransportProducer));
-                }
-
-                return new ValueTask(Task.CompletedTask);
-            }
+            public virtual ValueTask DisposeAsync() =>
+                CleanUp != default ? new ValueTask(CleanUp(TransportProducer)) : new ValueTask();
         }
     }
 }

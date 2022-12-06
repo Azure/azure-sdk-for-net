@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> clientRequestId = default;
             Optional<string> requestId = default;
             Optional<string> url = default;
-            Optional<bool> recursive = default;
+            Optional<string> recursive = default;
             Optional<string> sequencer = default;
             Optional<string> identity = default;
             Optional<object> storageDiagnostics = default;
@@ -49,12 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("recursive"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    recursive = property.Value.GetBoolean();
+                    recursive = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sequencer"))
@@ -78,7 +73,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageDirectoryDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, url.Value, Optional.ToNullable(recursive), sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageDirectoryDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, url.Value, recursive.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
         }
 
         internal partial class StorageDirectoryDeletedEventDataConverter : JsonConverter<StorageDirectoryDeletedEventData>

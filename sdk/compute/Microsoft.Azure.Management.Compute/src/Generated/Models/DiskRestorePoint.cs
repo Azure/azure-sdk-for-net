@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="timeCreated">The timestamp of restorePoint
         /// creation</param>
-        /// <param name="sourceResourceId">arm id of source disk</param>
+        /// <param name="sourceResourceId">arm id of source disk or source disk
+        /// restore point.</param>
         /// <param name="osType">The Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
         /// <param name="hyperVGeneration">The hypervisor generation of the
@@ -46,8 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="purchasePlan">Purchase plan information for the the
         /// image from which the OS disk was created.</param>
         /// <param name="supportedCapabilities">List of supported capabilities
-        /// (like accelerated networking) for the image from which the OS disk
-        /// was created.</param>
+        /// for the image from which the OS disk was created.</param>
         /// <param name="familyId">id of the backing snapshot's MIS
         /// family</param>
         /// <param name="sourceUniqueId">unique incarnation id of the source
@@ -64,9 +64,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
         /// <param name="completionPercent">Percentage complete for the
-        /// background copy when a resource is created via the CopyStart
-        /// operation.</param>
-        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?))
+        /// background copy of disk restore point when source resource is from
+        /// a different region.</param>
+        /// <param name="replicationState">Replication state of disk restore
+        /// point when source resource is from a different region.</param>
+        /// <param name="sourceResourceLocation">Location of source disk or
+        /// source disk restore point when source resource is from a different
+        /// region.</param>
+        /// <param name="securityProfile">Contains the security related
+        /// information for the resource.</param>
+        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?), string replicationState = default(string), string sourceResourceLocation = default(string), DiskSecurityProfile securityProfile = default(DiskSecurityProfile))
             : base(id, name, type)
         {
             TimeCreated = timeCreated;
@@ -83,6 +90,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             PublicNetworkAccess = publicNetworkAccess;
             DiskAccessId = diskAccessId;
             CompletionPercent = completionPercent;
+            ReplicationState = replicationState;
+            SourceResourceLocation = sourceResourceLocation;
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -98,7 +108,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public System.DateTime? TimeCreated { get; private set; }
 
         /// <summary>
-        /// Gets arm id of source disk
+        /// Gets arm id of source disk or source disk restore point.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceResourceId")]
         public string SourceResourceId { get; private set; }
@@ -125,8 +135,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets or sets list of supported capabilities (like accelerated
-        /// networking) for the image from which the OS disk was created.
+        /// Gets or sets list of supported capabilities for the image from
+        /// which the OS disk was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportedCapabilities")]
         public SupportedCapabilities SupportedCapabilities { get; set; }
@@ -177,11 +187,32 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DiskAccessId { get; set; }
 
         /// <summary>
-        /// Gets or sets percentage complete for the background copy when a
-        /// resource is created via the CopyStart operation.
+        /// Gets or sets percentage complete for the background copy of disk
+        /// restore point when source resource is from a different region.
         /// </summary>
         [JsonProperty(PropertyName = "properties.completionPercent")]
         public double? CompletionPercent { get; set; }
+
+        /// <summary>
+        /// Gets replication state of disk restore point when source resource
+        /// is from a different region.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicationState")]
+        public string ReplicationState { get; private set; }
+
+        /// <summary>
+        /// Gets location of source disk or source disk restore point when
+        /// source resource is from a different region.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceResourceLocation")]
+        public string SourceResourceLocation { get; private set; }
+
+        /// <summary>
+        /// Gets or sets contains the security related information for the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public DiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -49,8 +49,8 @@ namespace Azure.Graph.Rbac.Models
             Optional<string> signInAudience = default;
             Optional<string> wwwHomepage = default;
             Optional<string> objectId = default;
-            Optional<string> objectType = default;
-            Optional<DateTimeOffset> deletionTimestamp = default;
+            string objectType = default;
+            Optional<DateTimeOffset?> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -394,7 +394,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        deletionTimestamp = null;
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
@@ -403,7 +403,7 @@ namespace Azure.Graph.Rbac.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Application(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties, appId.Value, Optional.ToNullable(allowGuestsSignIn), Optional.ToNullable(allowPassthroughUsers), appLogoUrl.Value, Optional.ToList(appRoles), Optional.ToList(appPermissions), Optional.ToNullable(availableToOtherTenants), displayName.Value, errorUrl.Value, Optional.ToNullable(groupMembershipClaims), homepage.Value, Optional.ToList(identifierUris), informationalUrls.Value, Optional.ToNullable(isDeviceOnlyAuthSupported), Optional.ToList(keyCredentials), Optional.ToList(knownClientApplications), logoutUrl.Value, Optional.ToNullable(oauth2AllowImplicitFlow), Optional.ToNullable(oauth2AllowUrlPathMatching), Optional.ToList(oauth2Permissions), Optional.ToNullable(oauth2RequirePostResponse), Optional.ToList(orgRestrictions), optionalClaims.Value, Optional.ToList(passwordCredentials), Optional.ToList(preAuthorizedApplications), Optional.ToNullable(publicClient), publisherDomain.Value, Optional.ToList(replyUrls), Optional.ToList(requiredResourceAccess), samlMetadataUrl.Value, signInAudience.Value, wwwHomepage.Value);
+            return new Application(objectId.Value, objectType, Optional.ToNullable(deletionTimestamp), additionalProperties, appId.Value, Optional.ToNullable(allowGuestsSignIn), Optional.ToNullable(allowPassthroughUsers), appLogoUrl.Value, Optional.ToList(appRoles), Optional.ToList(appPermissions), Optional.ToNullable(availableToOtherTenants), displayName.Value, errorUrl.Value, Optional.ToNullable(groupMembershipClaims), homepage.Value, Optional.ToList(identifierUris), informationalUrls.Value, Optional.ToNullable(isDeviceOnlyAuthSupported), Optional.ToList(keyCredentials), Optional.ToList(knownClientApplications), logoutUrl.Value, Optional.ToNullable(oauth2AllowImplicitFlow), Optional.ToNullable(oauth2AllowUrlPathMatching), Optional.ToList(oauth2Permissions), Optional.ToNullable(oauth2RequirePostResponse), Optional.ToList(orgRestrictions), optionalClaims.Value, Optional.ToList(passwordCredentials), Optional.ToList(preAuthorizedApplications), Optional.ToNullable(publicClient), publisherDomain.Value, Optional.ToList(replyUrls), Optional.ToList(requiredResourceAccess), samlMetadataUrl.Value, signInAudience.Value, wwwHomepage.Value);
         }
     }
 }

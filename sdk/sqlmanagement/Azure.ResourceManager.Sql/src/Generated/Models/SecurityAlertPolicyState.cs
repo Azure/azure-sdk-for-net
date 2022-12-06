@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Specifies the state of the policy. If state is Enabled, storageEndpoint and storageAccountAccessKey are required. </summary>
+    /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>
     public enum SecurityAlertPolicyState
     {
         /// <summary> New. </summary>

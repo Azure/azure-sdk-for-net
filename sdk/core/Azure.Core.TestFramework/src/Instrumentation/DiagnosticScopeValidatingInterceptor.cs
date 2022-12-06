@@ -88,6 +88,35 @@ namespace Azure.Core.TestFramework
                 async ValueTask<T> Await()
                 {
                     invocation.Proceed();
+                    var signatureResponseType = typeof(T);
+                    if (signatureResponseType.IsGenericType && signatureResponseType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                    {
+                        //guaranteed only one generic arg with Response<T>
+                        var signatureGenericType = signatureResponseType.GetGenericArguments()[0];
+                        var runtimeTaskType = invocation.ReturnValue.GetType();
+                        Type runtimeGenericType = null;
+                        if (runtimeTaskType.IsGenericType && runtimeTaskType.GetGenericTypeDefinition().Equals(typeof(Task<>)))
+                        {
+                            var runtimeResponseType = runtimeTaskType.GetGenericArguments()[0];
+                            if (!runtimeResponseType.Equals(signatureResponseType) && runtimeResponseType.IsGenericType && runtimeResponseType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                            {
+                                runtimeGenericType = runtimeResponseType.GetGenericArguments()[0];
+                            }
+                        }
+                        if (runtimeGenericType is not null && runtimeGenericType.IsSubclassOf(signatureGenericType))
+                        {
+                            //keep async nature of the call and guaratee we are complete at this point
+                            await (Task)invocation.ReturnValue;
+                            var runtimeResponseObject = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
+                            var runtimeRawResponse = runtimeResponseObject.GetType().GetMethod("GetRawResponse", BindingFlags.Instance | BindingFlags.Public).Invoke(runtimeResponseObject, null);
+                            var runtimeValue = runtimeResponseObject.GetType().GetProperty("Value", BindingFlags.Public | BindingFlags.Instance).GetValue(runtimeResponseObject);
+
+                            //reconstruct
+                            var signatureFromValueMethod = typeof(Response).GetMethod("FromValue", BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(signatureGenericType);
+                            var convertedResponseObject = signatureFromValueMethod.Invoke(null, new object[] { runtimeValue, runtimeRawResponse });
+                            return (T)convertedResponseObject;
+                        }
+                    }
                     return await (Task<T>)invocation.ReturnValue;
                 }
 
@@ -152,8 +181,15 @@ namespace Azure.Core.TestFramework
                 methodName.Substring(0, methodName.Length - 5) :
                 methodName;
 
+            // check if this methodInfo is a "Core" method in mgmt plane, if it is, trim the Core suffix from the method name
+            if (methodInfo.IsFamily && methodNameWithoutSuffix.EndsWith("Core"))
+            {
+                methodNameWithoutSuffix = methodNameWithoutSuffix.Substring(0, methodNameWithoutSuffix.Length - 4);
+            }
+
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
-            bool strict = !methodInfo.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+            var forwardAttribute = methodInfo.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+            bool strict = forwardAttribute is null;
 
             Exception lastException = null;
             bool skipChecks = false;
@@ -180,6 +216,9 @@ namespace Azure.Core.TestFramework
             {
                 // Remove subscribers before enumerating events.
                 diagnosticListener.Dispose();
+                var skipOverrideProperty = forwardAttribute is not null ? forwardAttribute.GetType().GetProperty("SkipChecks") : null;
+                bool skipOverride = skipOverrideProperty is not null ? (bool)skipOverrideProperty.GetValue(forwardAttribute) : false;
+                skipChecks |= skipOverride;
                 if (!skipChecks)
                 {
                     if (strict)
@@ -205,9 +244,14 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        if (!diagnosticListener.Scopes.Any())
+                        // If ForwardsClientCallsAttribute is being used on the method, we don't know what the name of the scope should be because there could be many
+                        // differently named methods sharing the same scope name, but we do know that there should be some scope created other than the Azure.Core scope.
+                        if (!diagnosticListener.Scopes.Any(e => !e.Name.StartsWith("Azure.Core")))
                         {
-                            throw new InvalidOperationException($"Expected some diagnostic scopes to be created, found none");
+                            throw new InvalidOperationException(
+                                "Expected some diagnostic scopes to be created other than the Azure.Core scopes, but no such scopes were present. " +
+                                $"Ensure that the inner method that client calls are being forwarded to from the '{source}' method has diagnostic scopes " +
+                                "defined by using clientDiagnostics.CreateScope(...).");
                         }
                     }
                 }

@@ -1,307 +1,379 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourcegroups/res7089?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzI0Mzc0NWQtNTBiYi00OGQxLTllNjItM2Y3MmVmYjMxNjZjL3Jlc291cmNlZ3JvdXBzL3JlczcwODk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourcegroups/res7089?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDA5MmZkNDItMTQ1ZS00ZTkxLWFhMTUtOTZmNjZkMmI2ZGViL3Jlc291cmNlZ3JvdXBzL3JlczcwODk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "28"
-        ],
         "x-ms-client-request-id": [
-          "89e61421-87a0-4d25-b6a1-946a8f9df00b"
+          "1d179560-f6c7-4e06-93e8-dd4081ba678c"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089\",\r\n  \"name\": \"hca1234\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "167"
+          "FxVersion/4.700.22.16002",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Fri, 09 Mar 2018 08:09:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1181"
+          "1199"
         ],
         "x-ms-request-id": [
-          "d55f54ca-0ad2-4798-9741-a96462bd1cb8"
+          "171bf8a9-aac4-4fee-a4ad-eb7e2a032c52"
         ],
         "x-ms-correlation-request-id": [
-          "9e622289-028e-44a3-bbcd-904ae16adbd3"
+          "171bf8a9-aac4-4fee-a4ad-eb7e2a032c52"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190618T153235Z:d55f54ca-0ad2-4798-9741-a96462bd1cb8"
+          "WESTUS:20220428T161813Z:171bf8a9-aac4-4fee-a4ad-eb7e2a032c52"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/services/hca1234?api-version=2020-03-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2MxNDhiZjItNDJmYi00OTEzLWEzZmItMmYyODRhNjllYjg5L3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy9zZXJ2aWNlcy9oY2ExMjM0P2FwaS12ZXJzaW9uPTIwMjAtMDMtMzA=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n    \"name\": \"S1\"\r\n ,\r\n  \"location\": \"westus\",\r\n  \"properties\": {}\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Thu, 28 Apr 2022 16:18:12 GMT"
         ],
         "Content-Length": [
-          "113"
-        ],
-        "x-ms-client-request-id": [
-          "39bce3ac-f86e-490f-92d3-260643c3a770"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/accounts/hca1234\",\r\n  \"name\": \"hca1234\",\r\n  \"type\": \"Microsoft.HealthcareApis/accounts\",\r\n  \"etag\": \"\\\"0a002ee3-0000-0000-0000-5aa238d80000\\\"\",\r\n  \"location\": \"westus\",\r\n    \"name\": \"S1\"\r\n ,\r\n  \"kind\": \"fhir-R4\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "570"
+          "168"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 09 Mar 2018 07:33:44 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"0a002ee3-0000-0000-0000-5aa238d80000\""
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "x-ms-request-id": [
-          "2263b931-e233-4217-bfba-448ee3ac8346"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
-        ],
-        "x-ms-correlation-request-id": [
-          "977d2f5c-4af0-4c2e-8068-6de427d796c0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20180309T073344Z:977d2f5c-4af0-4c2e-8068-6de427d796c0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
         ]
       },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/services/hca1234?api-version=2020-03-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2MxNDhiZjItNDJmYi00OTEzLWEzZmItMmYyODRhNjllYjg5L3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy9zZXJ2aWNlcy9oY2ExMjM0P2FwaS12ZXJzaW9uPTIwMjAtMDMtMzA=",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\",\r\n    \"key5\": \"value5\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "90"
-        ],
-        "x-ms-client-request-id": [
-          "89a2cb9c-7fe3-46ea-9379-4c74c189c3a2"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/1.0.0.0\""
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/services/account1234\",\r\n  \"name\": \"account1234\",\r\n  \"type\": \"Microsoft.HealthcareApis/accounts\",\r\n \"location\": \"westus\",\r\n \"name\": \"S1\"\r\n ,\r\n  \"kind\": \"fhir-R4\",\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\",\r\n    \"key5\": \"value5\"\r\n  },\"properties\": {\"provisioningState\": \"Succeeded\"}}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 09 Mar 2018 07:49:32 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "ETag": [
-          "\"0a00d3f7-0000-0000-0000-5aa23c8c0000\""
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "7fd27fd6-93bf-44e3-8cd1-bcda43236a37"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1187"
-        ],
-        "x-ms-correlation-request-id": [
-          "3c0db97e-ee18-4c7d-a994-0ca1195cec0c"
-        ],
-        "x-ms-routing-request-id": [
-          "JAPANWEST:20180309T074933Z:3c0db97e-ee18-4c7d-a994-0ca1195cec0c"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089\",\r\n  \"name\": \"res7089\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/services/hca1234?api-version=2020-03-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2MxNDhiZjItNDJmYi00OTEzLWEzZmItMmYyODRhNjllYjg5L3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy9zZXJ2aWNlcy9oY2ExMjM0P2FwaS12ZXJzaW9uPTIwMjAtMDMtMzA=",
+      "RequestUri": "/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125?api-version=2021-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDA5MmZkNDItMTQ1ZS00ZTkxLWFhMTUtOTZmNjZkMmI2ZGViL3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy93b3Jrc3BhY2VzL2hjYTExMjU/YXBpLXZlcnNpb249MjAyMS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0762b54f-f3f5-4a00-a1d9-ad4c46fc76ee"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.16002",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"ea00e498-0000-0400-0000-626abe460000\""
+        ],
+        "x-ms-request-id": [
+          "61674b4c-f4af-4dea-a016-4f6268502794"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Request-ID": [
+          "09eccaed13b1744d9622fea73554cae7"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "4e045875-ee2e-4672-96c5-b5dd38005117"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20220428T161814Z:4e045875-ee2e-4672-96c5-b5dd38005117"
+        ],
+        "Date": [
+          "Thu, 28 Apr 2022 16:18:13 GMT"
+        ],
+        "Content-Length": [
+          "381"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125\",\r\n  \"name\": \"hca1125\",\r\n  \"type\": \"Microsoft.HealthcareApis/workspaces\",\r\n  \"etag\": \"\\\"ea00e498-0000-0400-0000-626abe460000\\\"\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125/fhirservices/fhirservice35?api-version=2021-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDA5MmZkNDItMTQ1ZS00ZTkxLWFhMTUtOTZmNjZkMmI2ZGViL3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy93b3Jrc3BhY2VzL2hjYTExMjUvZmhpcnNlcnZpY2VzL2ZoaXJzZXJ2aWNlMzU/YXBpLXZlcnNpb249MjAyMS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"kind\": \"fhir-R4\",\r\n  \"properties\": {\r\n    \"authenticationConfiguration\": {\r\n      \"authority\": \"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"audience\": \"https://azurehealthcareapis.com\",\r\n      \"smartProxyEnabled\": false\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c0ea5f4d-02d8-45a0-8f41-2db3621b9157"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.16002",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "367"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"ea002da5-0000-0400-0000-626abe5f0000\""
+        ],
+        "x-ms-request-id": [
+          "66b6341e-7ccb-40b4-b647-4793de7a1405"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/providers/Microsoft.HealthcareApis/locations/westus2/operationresults/5k7h19r4er66yh41x4vw7iayj?api-version=2021-11-01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Request-ID": [
+          "1cffc718127311489d03fb1ac9d3ba45"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e5263b6-625d-46d2-8cce-aebf76f03fda"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20220428T161839Z:6e5263b6-625d-46d2-8cce-aebf76f03fda"
+        ],
+        "Date": [
+          "Thu, 28 Apr 2022 16:18:38 GMT"
+        ],
+        "Content-Length": [
+          "935"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125/fhirservices/fhirservice35\",\r\n  \"name\": \"hca1125/fhirservice35\",\r\n  \"type\": \"Microsoft.HealthcareApis/workspaces/fhirservices\",\r\n  \"etag\": \"\\\"ea002da5-0000-0400-0000-626abe5f0000\\\"\",\r\n  \"location\": \"westus2\",\r\n  \"kind\": \"fhir-R4\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"accessPolicies\": [],\r\n    \"acrConfiguration\": {\r\n      \"loginServers\": []\r\n    },\r\n    \"authenticationConfiguration\": {\r\n      \"authority\": \"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"audience\": \"https://azurehealthcareapis.com\",\r\n      \"smartProxyEnabled\": false\r\n    },\r\n    \"corsConfiguration\": {\r\n      \"origins\": [],\r\n      \"headers\": [],\r\n      \"methods\": [],\r\n      \"allowCredentials\": false\r\n    },\r\n    \"exportConfiguration\": {},\r\n    \"resourceVersionPolicyConfiguration\": {\r\n      \"default\": \"versioned\"\r\n    },\r\n    \"eventState\": \"Disabled\",\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125/fhirservices/fhirservice35?api-version=2021-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDA5MmZkNDItMTQ1ZS00ZTkxLWFhMTUtOTZmNjZkMmI2ZGViL3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy93b3Jrc3BhY2VzL2hjYTExMjUvZmhpcnNlcnZpY2VzL2ZoaXJzZXJ2aWNlMzU/YXBpLXZlcnNpb249MjAyMS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\",\r\n    \"key5\": \"value5\"\r\n  },\r\n  \"location\": \"westus2\",\r\n  \"kind\": \"fhir-R4\",\r\n  \"properties\": {\r\n    \"authenticationConfiguration\": {\r\n      \"authority\": \"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"audience\": \"https://azurehealthcareapis.com\",\r\n      \"smartProxyEnabled\": false\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "50e6a77b-34ad-43b7-b463-d00fd44e1dcb"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.16002",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "390"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"eb003274-0000-0400-0000-626ac01c0000\""
+        ],
+        "x-ms-request-id": [
+          "aa023e4e-c156-432d-afb1-34acaa5858ba"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/providers/Microsoft.HealthcareApis/locations/westus2/operationresults/i2a1wslqib1eghovo1f3u5pj1?api-version=2021-11-01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Request-ID": [
+          "829c16c7d8696f45b8ef1487603c0fac"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a96f0c6-dc09-4fd7-9a2c-d9b2497fd42e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20220428T162605Z:8a96f0c6-dc09-4fd7-9a2c-d9b2497fd42e"
+        ],
+        "Date": [
+          "Thu, 28 Apr 2022 16:26:05 GMT"
+        ],
+        "Content-Length": [
+          "632"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125/fhirservices/fhirservice35\",\r\n  \"name\": \"hca1125/fhirservice35\",\r\n  \"type\": \"Microsoft.HealthcareApis/workspaces/fhirservices\",\r\n  \"etag\": \"\\\"eb003274-0000-0400-0000-626ac01c0000\\\"\",\r\n  \"location\": \"westus2\",\r\n  \"kind\": \"fhir-R4\",\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\",\r\n    \"key5\": \"value5\"\r\n  },\r\n  \"properties\": {\r\n    \"authenticationConfiguration\": {\r\n      \"authority\": \"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"audience\": \"https://azurehealthcareapis.com\",\r\n      \"smartProxyEnabled\": false\r\n    },\r\n    \"provisioningState\": \"Accepted\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125/fhirservices/fhirservice35?api-version=2021-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDA5MmZkNDItMTQ1ZS00ZTkxLWFhMTUtOTZmNjZkMmI2ZGViL3Jlc291cmNlR3JvdXBzL3JlczcwODkvcHJvdmlkZXJzL01pY3Jvc29mdC5IZWFsdGhjYXJlQXBpcy93b3Jrc3BhY2VzL2hjYTExMjUvZmhpcnNlcnZpY2VzL2ZoaXJzZXJ2aWNlMzU/YXBpLXZlcnNpb249MjAyMS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "65c39c9c-dcfd-47d3-a5ea-a98bfd4989bb"
+          "59b2cca8-4a57-466e-acf7-a0e8655d3bfe"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/3.0.0.0"
+          "FxVersion/4.700.22.16002",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/4.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089/providers/Microsoft.HealthcareApis/services/hca1234\",\r\n  \"name\": \"hca1234\",\r\n  \"type\": \"Microsoft.HealthcareApis/accounts\",\r\n \"location\": \"westus\",\r\n  \"name\": \"S1\"\r\n ,\r\n  \"kind\": \"fhir-R4\",\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\",\r\n    \"key5\": \"value5\"\r\n  },\"properties\": {\"provisioningState\": \"Succeeded\"}}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"eb00398b-0000-0400-0000-626ac0500000\""
+        ],
+        "x-ms-request-id": [
+          "9a63c724-1f2a-431d-9fa2-d7af908e22c4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Request-ID": [
+          "28062613cccdad4b83b6ff5ad08ff070"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "ce412555-e034-47ca-9f9f-2a70d040a311"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20220428T162816Z:ce412555-e034-47ca-9f9f-2a70d040a311"
+        ],
+        "Date": [
+          "Thu, 28 Apr 2022 16:28:16 GMT"
+        ],
+        "Content-Length": [
+          "952"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 09 Mar 2018 07:49:29 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "ETag": [
-          "\"0a00bcf7-0000-0000-0000-5aa23c880000\""
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "4697a59a-84eb-4e5c-967e-085b2a555af8"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14953"
-        ],
-        "x-ms-correlation-request-id": [
-          "122819a6-98f9-4c61-b68c-c06a134c084f"
-        ],
-        "x-ms-routing-request-id": [
-          "JAPANWEST:20180309T074930Z:122819a6-98f9-4c61-b68c-c06a134c084f"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/4092fd42-145e-4e91-aa15-96f66d2b6deb/resourceGroups/res7089/providers/Microsoft.HealthcareApis/workspaces/hca1125/fhirservices/fhirservice35\",\r\n  \"name\": \"hca1125/fhirservice35\",\r\n  \"type\": \"Microsoft.HealthcareApis/workspaces/fhirservices\",\r\n  \"etag\": \"\\\"eb00398b-0000-0400-0000-626ac0500000\\\"\",\r\n  \"location\": \"westus2\",\r\n  \"kind\": \"fhir-R4\",\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\",\r\n    \"key5\": \"value5\"\r\n  },\r\n  \"properties\": {\r\n    \"accessPolicies\": [],\r\n    \"acrConfiguration\": {\r\n      \"loginServers\": []\r\n    },\r\n    \"authenticationConfiguration\": {\r\n      \"authority\": \"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"audience\": \"https://azurehealthcareapis.com\",\r\n      \"smartProxyEnabled\": false\r\n    },\r\n    \"corsConfiguration\": {\r\n      \"origins\": [],\r\n      \"headers\": [],\r\n      \"methods\": [],\r\n      \"allowCredentials\": false\r\n    },\r\n    \"exportConfiguration\": {},\r\n    \"resourceVersionPolicyConfiguration\": {\r\n      \"default\": \"versioned\"\r\n    },\r\n    \"eventState\": \"Disabled\",\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
-    "CreateResourceGroup": [
-      "res7089"
-    ],
     "HealthcareApisAccountUpdateWithCreateTest": [
-      "hca1234"
+      "hca1125",
+      "fhirservice35"
     ]
   },
   "Variables": {
-    "SubscriptionId": "cc148bf2-42fb-4913-a3fb-2f284a69eb89"
+    "SubscriptionId": "4092fd42-145e-4e91-aa15-96f66d2b6deb"
   }
 }

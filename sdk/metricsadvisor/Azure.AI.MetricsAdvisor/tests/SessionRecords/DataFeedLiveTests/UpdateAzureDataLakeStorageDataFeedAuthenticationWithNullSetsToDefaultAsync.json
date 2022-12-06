@@ -101,7 +101,7 @@
             "metricName": "cost"
           }
         ],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "authenticationType": "ServicePrincipal",
         "credentialId": "54a1754c-ef3a-434a-9525-0ce413a7c2c0"
       },
@@ -154,7 +154,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,
@@ -213,7 +213,7 @@
         "dataFeedName": "dataFeed5oyyJ2aA",
         "dataFeedDescription": "",
         "timestampColumn": "",
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "startOffsetInSeconds": 0,
         "maxConcurrency": -1,
         "minRetryIntervalInSeconds": -1,
@@ -256,7 +256,7 @@
           }
         ],
         "dimension": [],
-        "dataStartFrom": "2020-08-01T00:00:00Z",
+        "dataStartFrom": "2020-08-01T00:00:00.0000000Z",
         "dataSourceType": "AzureDataLakeStorageGen2",
         "timestampColumn": "",
         "startOffsetInSeconds": 0,

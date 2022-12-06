@@ -17,12 +17,18 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("daysAfterCreationGreaterThan");
             writer.WriteNumberValue(DaysAfterCreationGreaterThan);
+            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
+            {
+                writer.WritePropertyName("daysAfterLastTierChangeGreaterThan");
+                writer.WriteNumberValue(DaysAfterLastTierChangeGreaterThan.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static DateAfterCreation DeserializeDateAfterCreation(JsonElement element)
         {
             float daysAfterCreationGreaterThan = default;
+            Optional<float> daysAfterLastTierChangeGreaterThan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysAfterCreationGreaterThan"))
@@ -30,8 +36,18 @@ namespace Azure.ResourceManager.Storage.Models
                     daysAfterCreationGreaterThan = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("daysAfterLastTierChangeGreaterThan"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    daysAfterLastTierChangeGreaterThan = property.Value.GetSingle();
+                    continue;
+                }
             }
-            return new DateAfterCreation(daysAfterCreationGreaterThan);
+            return new DateAfterCreation(daysAfterCreationGreaterThan, Optional.ToNullable(daysAfterLastTierChangeGreaterThan));
         }
     }
 }

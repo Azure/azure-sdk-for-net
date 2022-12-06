@@ -35,9 +35,9 @@ namespace Azure.Core
         /// <param name="name">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
 #if AZURE_NULLABLE
-        public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name) where T : class?
+        public static void AssertNotNull<T>([AllowNull, NotNull] T value, string name)
 #else
-        public static void AssertNotNull<T>(T value, string name) where T : class
+        public static void AssertNotNull<T>(T value, string name)
 #endif
         {
             if (value is null)
@@ -181,6 +181,21 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Throws if <paramref name="value"/> is not defined for <paramref name="enumType"/>.
+        /// </summary>
+        /// <param name="enumType">The type to validate against.</param>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is not defined for <paramref name="enumType"/>.</exception>
+        public static void AssertEnumDefined(Type enumType, object value, string name)
+        {
+            if (!Enum.IsDefined(enumType, value))
+            {
+                throw new ArgumentException($"Value not defined for {enumType.FullName}.", name);
+            }
+        }
+
+        /// <summary>
         /// Throws if <paramref name="value"/> has not been initialized; otherwise, returns <paramref name="value"/>.
         /// </summary>
         /// <param name="value">The value to validate.</param>
@@ -211,6 +226,27 @@ namespace Azure.Core
         {
             AssertNotNullOrEmpty(value, name);
             return value;
+        }
+
+        /// <summary>
+        /// Throws if <paramref name="value"/> is not null.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="message">The error message.</param>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is not null.</exception>
+#if AZURE_NULLABLE
+        public static void AssertNull<T>([AllowNull] T value, string name, [AllowNull] string message = null)
+#else
+#nullable enable
+        public static void AssertNull<T>(T value, string name, string? message = null)
+#nullable disable
+#endif
+        {
+            if (value is not null)
+            {
+                throw new ArgumentException(message ?? "Value must be null.", name);
+            }
         }
     }
 }

@@ -10,16 +10,13 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The configuration settings of the custom Open ID Connect provider.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class CustomOpenIdConnectProvider : ProxyOnlyResource
+    public partial class CustomOpenIdConnectProvider
     {
         /// <summary>
         /// Initializes a new instance of the CustomOpenIdConnectProvider
@@ -34,10 +31,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the CustomOpenIdConnectProvider
         /// class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the custom
         /// Open ID provider provider should not be enabled; otherwise,
         /// &lt;code&gt;true&lt;/code&gt;.</param>
@@ -45,8 +38,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// registration for the custom Open ID Connect provider.</param>
         /// <param name="login">The configuration settings of the login flow of
         /// the custom Open ID Connect provider.</param>
-        public CustomOpenIdConnectProvider(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), OpenIdConnectRegistration registration = default(OpenIdConnectRegistration), OpenIdConnectLogin login = default(OpenIdConnectLogin))
-            : base(id, name, kind, type)
+        public CustomOpenIdConnectProvider(bool? enabled = default(bool?), OpenIdConnectRegistration registration = default(OpenIdConnectRegistration), OpenIdConnectLogin login = default(OpenIdConnectLogin))
         {
             Enabled = enabled;
             Registration = registration;
@@ -64,21 +56,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// custom Open ID provider provider should not be enabled; otherwise,
         /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
+        [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the app registration for
         /// the custom Open ID Connect provider.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.registration")]
+        [JsonProperty(PropertyName = "registration")]
         public OpenIdConnectRegistration Registration { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the login flow of the
         /// custom Open ID Connect provider.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.login")]
+        [JsonProperty(PropertyName = "login")]
         public OpenIdConnectLogin Login { get; set; }
 
     }

@@ -59,6 +59,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static BlobChangeFeedEventType BlobAsyncOperationInitiated { get; } = new BlobChangeFeedEventType("BlobAsyncOperationInitiated");
 
         /// <summary>
+        /// Restore Point Marker Created.
+        /// </summary>
+        public static BlobChangeFeedEventType RestorePointMarkerCreated { get; } = new BlobChangeFeedEventType("RestorePointMarkerCreated");
+
+        /// <summary>
         /// Compares equality of two <see cref="BlobChangeFeedEventType"/> instances.
         /// </summary>
         /// <param name="left">The <see cref="BlobChangeFeedEventType"/> to compare.</param>

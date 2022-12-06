@@ -34,6 +34,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             #region Snippet:EventHubs_Processor_ReadMe_Create
 
 #if SNIPPET
+            // The container specified when creating the BlobContainerClient must exist; it will
+            // not be implicitly created.
+
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
@@ -49,14 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 #endif
 
             var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-
-            var processor = new EventProcessorClient
-            (
-                storageClient,
-                consumerGroup,
-                eventHubsConnectionString,
-                eventHubName
-            );
+            var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
 
             #endregion
         }

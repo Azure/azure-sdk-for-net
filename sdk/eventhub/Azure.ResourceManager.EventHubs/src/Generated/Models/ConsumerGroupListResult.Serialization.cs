@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static ConsumerGroupListResult DeserializeConsumerGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ConsumerGroup>> value = default;
+            Optional<IReadOnlyList<EventHubsConsumerGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConsumerGroup> array = new List<ConsumerGroup>();
+                    List<EventHubsConsumerGroupData> array = new List<EventHubsConsumerGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumerGroup.DeserializeConsumerGroup(item));
+                        array.Add(EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(item));
                     }
                     value = array;
                     continue;

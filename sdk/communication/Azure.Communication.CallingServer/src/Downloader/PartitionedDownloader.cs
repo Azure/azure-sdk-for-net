@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The client used to download the blob.
         /// </summary>
-        private readonly CallingServerClient _client;
+        private readonly CallRecording _client;
 
         /// <summary>
         /// The maximum number of simultaneous workers.
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallingServer
         private readonly long _rangeSize;
 
         internal PartitionedDownloader(
-            CallingServerClient client,
+            CallRecording client,
             ContentTransferOptions transferOptions = default)
         {
             _client = client;

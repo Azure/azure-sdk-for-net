@@ -10,14 +10,17 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Connector read setting. </summary>
+    /// <summary>
+    /// Connector read setting.
+    /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/> and <see cref="SftpReadSettings"/>.
+    /// </summary>
     public partial class StoreReadSettings
     {
         /// <summary> Initializes a new instance of StoreReadSettings. </summary>
         public StoreReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "StoreReadSettings";
         }
 
         /// <summary> Initializes a new instance of StoreReadSettings. </summary>
@@ -26,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal StoreReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "StoreReadSettings";
+            Type = type;
             MaxConcurrentConnections = maxConcurrentConnections;
             AdditionalProperties = additionalProperties;
         }

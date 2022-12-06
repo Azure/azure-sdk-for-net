@@ -19,20 +19,25 @@ namespace Azure.AI.AnomalyDetector
 {
     internal partial class AnomalyDetectorRestClient
     {
-        private Uri endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly ApiVersion? _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of AnomalyDetectorRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AnomalyDetectorRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
+        public AnomalyDetectorRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ApiVersion? apiVersion = null)
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? ApiVersion.V11Preview1;
         }
 
         internal HttpMessage CreateDetectEntireSeriesRequest(DetectRequest body)
@@ -41,8 +46,9 @@ namespace Azure.AI.AnomalyDetector
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
             uri.AppendPath("/timeseries/entire/detect", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -53,10 +59,11 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
-        /// <summary> This operation generates a model with an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>
+        /// <summary> Detect anomalies for the entire series in batch. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> This operation generates a model with an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </remarks>
         public async Task<Response<EntireDetectResponse>> DetectEntireSeriesAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -76,14 +83,15 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> This operation generates a model with an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>
+        /// <summary> Detect anomalies for the entire series in batch. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> This operation generates a model with an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </remarks>
         public Response<EntireDetectResponse> DetectEntireSeries(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -103,7 +111,7 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -113,8 +121,9 @@ namespace Azure.AI.AnomalyDetector
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
             uri.AppendPath("/timeseries/last/detect", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -125,10 +134,11 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
-        /// <summary> This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics. </summary>
+        /// <summary> Detect anomaly status of the latest point in time series. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics. </remarks>
         public async Task<Response<LastDetectResponse>> DetectLastPointAsync(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -148,14 +158,15 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics. </summary>
+        /// <summary> Detect anomaly status of the latest point in time series. </summary>
         /// <param name="body"> Time series points and period if needed. Advanced model parameters can also be set in the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> This operation generates a model using points before the latest one. With this method, only historical points are used to determine whether the target point is an anomaly. The latest point detecting operation matches the scenario of real-time monitoring of business metrics. </remarks>
         public Response<LastDetectResponse> DetectLastPoint(DetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -175,7 +186,7 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -185,8 +196,9 @@ namespace Azure.AI.AnomalyDetector
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
             uri.AppendPath("/timeseries/changepoint/detect", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -197,10 +209,11 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
-        /// <summary> Evaluate change point score of every series point. </summary>
+        /// <summary> Detect change point for the entire series. </summary>
         /// <param name="body"> Time series points and granularity is needed. Advanced model parameters can also be set in the request if needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Evaluate change point score of every series point. </remarks>
         public async Task<Response<ChangePointDetectResponse>> DetectChangePointAsync(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -220,14 +233,15 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Evaluate change point score of every series point. </summary>
+        /// <summary> Detect change point for the entire series. </summary>
         /// <param name="body"> Time series points and granularity is needed. Advanced model parameters can also be set in the request if needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Evaluate change point score of every series point. </remarks>
         public Response<ChangePointDetectResponse> DetectChangePoint(ChangePointDetectRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -247,40 +261,42 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateTrainMultivariateModelRequest(ModelInfo modelRequest)
+        internal HttpMessage CreateTrainMultivariateModelRequest(ModelInfo body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
             uri.AppendPath("/multivariate/models", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(modelRequest);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Create and train a multivariate anomaly detection model. The request must include a source parameter to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be in a single CSV file in which the first column is timestamp and the second column is value. </summary>
-        /// <param name="modelRequest"> Training request. </param>
+        /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
+        /// <param name="body"> Training request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AnomalyDetectorTrainMultivariateModelHeaders>> TrainMultivariateModelAsync(ModelInfo modelRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create and train a multivariate anomaly detection model. The request must include a source parameter to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be in a single CSV file in which the first column is timestamp and the second column is value. </remarks>
+        public async Task<ResponseWithHeaders<AnomalyDetectorTrainMultivariateModelHeaders>> TrainMultivariateModelAsync(ModelInfo body, CancellationToken cancellationToken = default)
         {
-            if (modelRequest == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(modelRequest));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateTrainMultivariateModelRequest(modelRequest);
+            using var message = CreateTrainMultivariateModelRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AnomalyDetectorTrainMultivariateModelHeaders(message.Response);
             switch (message.Response.Status)
@@ -288,22 +304,23 @@ namespace Azure.AI.AnomalyDetector
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Create and train a multivariate anomaly detection model. The request must include a source parameter to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be in a single CSV file in which the first column is timestamp and the second column is value. </summary>
-        /// <param name="modelRequest"> Training request. </param>
+        /// <summary> Train a Multivariate Anomaly Detection Model. </summary>
+        /// <param name="body"> Training request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelRequest"/> is null. </exception>
-        public ResponseWithHeaders<AnomalyDetectorTrainMultivariateModelHeaders> TrainMultivariateModel(ModelInfo modelRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create and train a multivariate anomaly detection model. The request must include a source parameter to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be in a single CSV file in which the first column is timestamp and the second column is value. </remarks>
+        public ResponseWithHeaders<AnomalyDetectorTrainMultivariateModelHeaders> TrainMultivariateModel(ModelInfo body, CancellationToken cancellationToken = default)
         {
-            if (modelRequest == null)
+            if (body == null)
             {
-                throw new ArgumentNullException(nameof(modelRequest));
+                throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateTrainMultivariateModelRequest(modelRequest);
+            using var message = CreateTrainMultivariateModelRequest(body);
             _pipeline.Send(message, cancellationToken);
             var headers = new AnomalyDetectorTrainMultivariateModelHeaders(message.Response);
             switch (message.Response.Status)
@@ -311,292 +328,7 @@ namespace Azure.AI.AnomalyDetector
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetMultivariateModelRequest(Guid modelId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
-            uri.AppendPath("/multivariate/models/", false);
-            uri.AppendPath(modelId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Get detailed information of multivariate model, including the training status and variables used in the model. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Model>> GetMultivariateModelAsync(Guid modelId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetMultivariateModelRequest(modelId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Model value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Model.DeserializeModel(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get detailed information of multivariate model, including the training status and variables used in the model. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Model> GetMultivariateModel(Guid modelId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetMultivariateModelRequest(modelId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Model value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Model.DeserializeModel(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteMultivariateModelRequest(Guid modelId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
-            uri.AppendPath("/multivariate/models/", false);
-            uri.AppendPath(modelId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Delete an existing multivariate model according to the modelId. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteMultivariateModelAsync(Guid modelId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteMultivariateModelRequest(modelId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Delete an existing multivariate model according to the modelId. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response DeleteMultivariateModel(Guid modelId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteMultivariateModelRequest(modelId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDetectAnomalyRequest(Guid modelId, DetectionRequest detectionRequest)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
-            uri.AppendPath("/multivariate/models/", false);
-            uri.AppendPath(modelId, true);
-            uri.AppendPath("/detect", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(detectionRequest);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Submit detection multivariate anomaly task with the trained model of modelId, the input schema should be the same with the training request. Thus request will be complete asynchronously and will return a resultId for querying the detection result.The request should be a source link to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be as follows: the first column is timestamp and the second column is value. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="detectionRequest"> Detect anomaly request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectionRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AnomalyDetectorDetectAnomalyHeaders>> DetectAnomalyAsync(Guid modelId, DetectionRequest detectionRequest, CancellationToken cancellationToken = default)
-        {
-            if (detectionRequest == null)
-            {
-                throw new ArgumentNullException(nameof(detectionRequest));
-            }
-
-            using var message = CreateDetectAnomalyRequest(modelId, detectionRequest);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AnomalyDetectorDetectAnomalyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Submit detection multivariate anomaly task with the trained model of modelId, the input schema should be the same with the training request. Thus request will be complete asynchronously and will return a resultId for querying the detection result.The request should be a source link to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be as follows: the first column is timestamp and the second column is value. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="detectionRequest"> Detect anomaly request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectionRequest"/> is null. </exception>
-        public ResponseWithHeaders<AnomalyDetectorDetectAnomalyHeaders> DetectAnomaly(Guid modelId, DetectionRequest detectionRequest, CancellationToken cancellationToken = default)
-        {
-            if (detectionRequest == null)
-            {
-                throw new ArgumentNullException(nameof(detectionRequest));
-            }
-
-            using var message = CreateDetectAnomalyRequest(modelId, detectionRequest);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new AnomalyDetectorDetectAnomalyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetDetectionResultRequest(Guid resultId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
-            uri.AppendPath("/multivariate/results/", false);
-            uri.AppendPath(resultId, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Get multivariate anomaly detection result based on resultId returned by the DetectAnomalyAsync api. </summary>
-        /// <param name="resultId"> Result identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DetectionResult>> GetDetectionResultAsync(Guid resultId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetDetectionResultRequest(resultId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DetectionResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DetectionResult.DeserializeDetectionResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get multivariate anomaly detection result based on resultId returned by the DetectAnomalyAsync api. </summary>
-        /// <param name="resultId"> Result identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DetectionResult> GetDetectionResult(Guid resultId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetDetectionResultRequest(resultId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DetectionResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DetectionResult.DeserializeDetectionResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateExportModelRequest(Guid modelId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
-            uri.AppendPath("/multivariate/models/", false);
-            uri.AppendPath(modelId, true);
-            uri.AppendPath("/export", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/zip");
-            return message;
-        }
-
-        /// <summary> Export multivariate anomaly detection model based on modelId. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, AnomalyDetectorExportModelHeaders>> ExportModelAsync(Guid modelId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateExportModelRequest(modelId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new AnomalyDetectorExportModelHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Export multivariate anomaly detection model based on modelId. </summary>
-        /// <param name="modelId"> Model identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, AnomalyDetectorExportModelHeaders> ExportModel(Guid modelId, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateExportModelRequest(modelId);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new AnomalyDetectorExportModelHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -606,8 +338,9 @@ namespace Azure.AI.AnomalyDetector
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
             uri.AppendPath("/multivariate/models", false);
             if (skip != null)
             {
@@ -622,10 +355,11 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
-        /// <summary> List models of a subscription. </summary>
+        /// <summary> List Multivariate Models. </summary>
         /// <param name="skip"> $skip indicates how many models will be skipped. </param>
         /// <param name="top"> $top indicates how many models will be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models of a subscription. </remarks>
         public async Task<Response<ModelList>> ListMultivariateModelAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListMultivariateModelRequest(skip, top);
@@ -640,14 +374,15 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> List models of a subscription. </summary>
+        /// <summary> List Multivariate Models. </summary>
         /// <param name="skip"> $skip indicates how many models will be skipped. </param>
         /// <param name="top"> $top indicates how many models will be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models of a subscription. </remarks>
         public Response<ModelList> ListMultivariateModel(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListMultivariateModelRequest(skip, top);
@@ -662,7 +397,384 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetMultivariateModelRequest(Guid modelId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get Multivariate Model. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get detailed information of multivariate model, including the training status and variables used in the model. </remarks>
+        public async Task<Response<Model>> GetMultivariateModelAsync(Guid modelId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetMultivariateModelRequest(modelId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Model value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = Model.DeserializeModel(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get Multivariate Model. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get detailed information of multivariate model, including the training status and variables used in the model. </remarks>
+        public Response<Model> GetMultivariateModel(Guid modelId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetMultivariateModelRequest(modelId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        Model value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = Model.DeserializeModel(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteMultivariateModelRequest(Guid modelId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Delete Multivariate Model. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete an existing multivariate model according to the modelId. </remarks>
+        public async Task<Response> DeleteMultivariateModelAsync(Guid modelId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteMultivariateModelRequest(modelId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Delete Multivariate Model. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Delete an existing multivariate model according to the modelId. </remarks>
+        public Response DeleteMultivariateModel(Guid modelId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteMultivariateModelRequest(modelId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDetectAnomalyRequest(Guid modelId, DetectionRequest body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/detect", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Detect Multivariate Anomaly. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="body"> Detect anomaly request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Submit detection multivariate anomaly task with the trained model of modelId, the input schema should be the same with the training request. Thus request will be complete asynchronously and will return a resultId for querying the detection result.The request should be a source link to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be as follows: the first column is timestamp and the second column is value. </remarks>
+        public async Task<ResponseWithHeaders<AnomalyDetectorDetectAnomalyHeaders>> DetectAnomalyAsync(Guid modelId, DetectionRequest body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateDetectAnomalyRequest(modelId, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new AnomalyDetectorDetectAnomalyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Detect Multivariate Anomaly. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="body"> Detect anomaly request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Submit detection multivariate anomaly task with the trained model of modelId, the input schema should be the same with the training request. Thus request will be complete asynchronously and will return a resultId for querying the detection result.The request should be a source link to indicate an externally accessible Azure storage Uri (preferably a Shared Access Signature Uri). All time-series used in generate the model must be zipped into one single file. Each time-series will be as follows: the first column is timestamp and the second column is value. </remarks>
+        public ResponseWithHeaders<AnomalyDetectorDetectAnomalyHeaders> DetectAnomaly(Guid modelId, DetectionRequest body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateDetectAnomalyRequest(modelId, body);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new AnomalyDetectorDetectAnomalyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetDetectionResultRequest(Guid resultId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
+            uri.AppendPath("/multivariate/results/", false);
+            uri.AppendPath(resultId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get Multivariate Anomaly Detection Result. </summary>
+        /// <param name="resultId"> Result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get multivariate anomaly detection result based on resultId returned by the DetectAnomalyAsync api. </remarks>
+        public async Task<Response<DetectionResult>> GetDetectionResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDetectionResultRequest(resultId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DetectionResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DetectionResult.DeserializeDetectionResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get Multivariate Anomaly Detection Result. </summary>
+        /// <param name="resultId"> Result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get multivariate anomaly detection result based on resultId returned by the DetectAnomalyAsync api. </remarks>
+        public Response<DetectionResult> GetDetectionResult(Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetDetectionResultRequest(resultId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DetectionResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DetectionResult.DeserializeDetectionResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateExportModelRequest(Guid modelId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/export", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/zip, application/json");
+            return message;
+        }
+
+        /// <summary> Export Multivariate Anomaly Detection Model as Zip file. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Export multivariate anomaly detection model based on modelId. </remarks>
+        public async Task<Response<Stream>> ExportModelAsync(Guid modelId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateExportModelRequest(modelId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Export Multivariate Anomaly Detection Model as Zip file. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Export multivariate anomaly detection model based on modelId. </remarks>
+        public Response<Stream> ExportModel(Guid modelId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateExportModelRequest(modelId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateLastDetectAnomalyRequest(Guid modelId, LastDetectionRequest body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/last/detect", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Detect anomalies in the last a few points of the request body. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="body"> Request for last detection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Synchronized API for anomaly detection. </remarks>
+        public async Task<Response<LastDetectionResult>> LastDetectAnomalyAsync(Guid modelId, LastDetectionRequest body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateLastDetectAnomalyRequest(modelId, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LastDetectionResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = LastDetectionResult.DeserializeLastDetectionResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Detect anomalies in the last a few points of the request body. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="body"> Request for last detection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Synchronized API for anomaly detection. </remarks>
+        public Response<LastDetectionResult> LastDetectAnomaly(Guid modelId, LastDetectionRequest body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateLastDetectAnomalyRequest(modelId, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LastDetectionResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = LastDetectionResult.DeserializeLastDetectionResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -672,20 +784,22 @@ namespace Azure.AI.AnomalyDetector
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRaw("/anomalydetector/v1.1-preview", false);
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion.Value.ToString(), false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List models of a subscription. </summary>
+        /// <summary> List Multivariate Models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skip"> $skip indicates how many models will be skipped. </param>
         /// <param name="top"> $top indicates how many models will be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List models of a subscription. </remarks>
         public async Task<Response<ModelList>> ListMultivariateModelNextPageAsync(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -705,16 +819,17 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> List models of a subscription. </summary>
+        /// <summary> List Multivariate Models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skip"> $skip indicates how many models will be skipped. </param>
         /// <param name="top"> $top indicates how many models will be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List models of a subscription. </remarks>
         public Response<ModelList> ListMultivariateModelNextPage(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -734,7 +849,7 @@ namespace Azure.AI.AnomalyDetector
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

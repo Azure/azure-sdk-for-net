@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "fe992b42-ade6-1cb5-a5bb-aa7372d3f51a",
         "x-ms-date": "Tue, 09 Nov 2021 22:12:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "fe992b42-ade6-1cb5-a5bb-aa7372d3f51a",
         "x-ms-request-id": "db63ba16-a01e-0002-36b6-d5647a000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -39,7 +39,7 @@
         "x-ms-client-request-id": "3cae7281-88fc-ef46-718b-0d6e3a8e4ad9",
         "x-ms-date": "Tue, 09 Nov 2021 22:12:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -51,7 +51,7 @@
         "x-ms-client-request-id": "3cae7281-88fc-ef46-718b-0d6e3a8e4ad9",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "db63ba26-a01e-0002-41b6-d5647a000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "5ea4cfd7-151d-96f6-edca-4bdae0064857",
         "x-ms-date": "Tue, 09 Nov 2021 22:12:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -76,7 +76,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "5ea4cfd7-151d-96f6-edca-4bdae0064857",
         "x-ms-request-id": "db63ba41-a01e-0002-55b6-d5647a000000",
-        "x-ms-version": "2021-02-12"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

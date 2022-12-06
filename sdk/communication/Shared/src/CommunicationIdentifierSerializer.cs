@@ -11,34 +11,42 @@ namespace Azure.Communication
     {
         public static CommunicationIdentifier Deserialize(CommunicationIdentifierModel identifier)
         {
-           string rawId = AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
+            string rawId = AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
 
             AssertMaximumOneNestedModel(identifier);
 
-            if (identifier.CommunicationUser is CommunicationUserIdentifierModel user)
-                return new CommunicationUserIdentifier(AssertNotNull(user.Id, nameof(user.Id), nameof(CommunicationUserIdentifierModel)));
+            var kind = identifier.Kind ?? GetKind(identifier);
 
-            if (identifier.PhoneNumber is PhoneNumberIdentifierModel phoneNumber)
+            if (kind == CommunicationIdentifierModelKind.CommunicationUser
+                && identifier.CommunicationUser is not null)
+            {
+                return new CommunicationUserIdentifier(AssertNotNull(identifier.CommunicationUser.Id, nameof(identifier.CommunicationUser.Id), nameof(CommunicationUserIdentifierModel)));
+            }
+
+            if (kind == CommunicationIdentifierModelKind.PhoneNumber
+                && identifier.PhoneNumber is not null)
             {
                 return new PhoneNumberIdentifier(
-                    AssertNotNull(phoneNumber.Value, nameof(phoneNumber.Value), nameof(PhoneNumberIdentifierModel)),
+                    AssertNotNull(identifier.PhoneNumber.Value, nameof(identifier.PhoneNumber.Value), nameof(PhoneNumberIdentifierModel)),
                     AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(PhoneNumberIdentifierModel)));
             }
 
-            if (identifier.MicrosoftTeamsUser is MicrosoftTeamsUserIdentifierModel teamsUser)
+            if (kind == CommunicationIdentifierModelKind.MicrosoftTeamsUser
+                && identifier.MicrosoftTeamsUser is not null)
             {
+                var user = identifier.MicrosoftTeamsUser;
                 return new MicrosoftTeamsUserIdentifier(
-                    AssertNotNull(teamsUser.UserId, nameof(teamsUser.UserId), nameof(MicrosoftTeamsUserIdentifierModel)),
-                    AssertNotNull(teamsUser.IsAnonymous, nameof(teamsUser.IsAnonymous), nameof(MicrosoftTeamsUserIdentifierModel)),
-                    Deserialize(AssertNotNull(teamsUser.Cloud, nameof(teamsUser.Cloud), nameof(MicrosoftTeamsUserIdentifierModel))),
-                    rawId);
+                      AssertNotNull(user.UserId, nameof(user.UserId), nameof(MicrosoftTeamsUserIdentifierModel)),
+                      AssertNotNull(user.IsAnonymous, nameof(user.IsAnonymous), nameof(MicrosoftTeamsUserIdentifierModel)),
+                      Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsUserIdentifierModel))),
+                      rawId);
             }
 
             return new UnknownIdentifier(rawId);
 
             static void AssertMaximumOneNestedModel(CommunicationIdentifierModel identifier)
             {
-                List<string> presentProperties = new List<string>();
+                List<string> presentProperties = new();
                 if (identifier.CommunicationUser is not null)
                     presentProperties.Add(nameof(identifier.CommunicationUser));
                 if (identifier.PhoneNumber is not null)
@@ -49,6 +57,26 @@ namespace Azure.Communication
                 if (presentProperties.Count > 1)
                     throw new JsonException($"Only one of the properties in {{{string.Join(", ", presentProperties)}}} should be present.");
             }
+        }
+
+        private static CommunicationIdentifierModelKind GetKind(CommunicationIdentifierModel identifier)
+        {
+            if (identifier.CommunicationUser is not null)
+            {
+                return CommunicationIdentifierModelKind.CommunicationUser;
+            }
+
+            if (identifier.PhoneNumber is not null)
+            {
+                return CommunicationIdentifierModelKind.PhoneNumber;
+            }
+
+            if (identifier.MicrosoftTeamsUser is not null)
+            {
+                return CommunicationIdentifierModelKind.MicrosoftTeamsUser;
+            }
+
+            return CommunicationIdentifierModelKind.Unknown;
         }
 
         private static CommunicationCloudEnvironment Deserialize(CommunicationCloudEnvironmentModel cloud)
@@ -68,6 +96,7 @@ namespace Azure.Communication
             {
                 CommunicationUserIdentifier u => new CommunicationIdentifierModel
                 {
+                    RawId = u.Id,
                     CommunicationUser = new CommunicationUserIdentifierModel(u.Id),
                 },
                 PhoneNumberIdentifier p => new CommunicationIdentifierModel

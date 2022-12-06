@@ -18,12 +18,12 @@ namespace Azure.Core
         public static ContentType ApplicationJson { get; } = new ContentType("application/json");
 
         /// <summary>
-        /// application/json
+        /// application/octet-stream
         /// </summary>
         public static ContentType ApplicationOctetStream { get; } = new ContentType("application/octet-stream");
 
         /// <summary>
-        /// application/json
+        /// text/plain
         /// </summary>
         public static ContentType TextPlain { get; } = new ContentType("text/plain");
 
@@ -82,6 +82,6 @@ namespace Azure.Core
             => !left.Equals(right);
 
         /// <inheritdoc />
-        public override string ToString() => _contentType == null?"":_contentType;
+        public override string ToString() => _contentType ?? "";
     }
 }

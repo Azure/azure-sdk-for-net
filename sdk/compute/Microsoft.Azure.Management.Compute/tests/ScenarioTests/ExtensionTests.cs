@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,7 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Compute.Tests
@@ -29,8 +31,8 @@ namespace Compute.Tests
                 ProtectedSettings = "{}",
                 EnableAutomaticUpgrade = false,
             };
-            typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
@@ -114,6 +116,20 @@ namespace Compute.Tests
 
                     // Validate the extension delete API
                     m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, vmExtension.Name);
+
+                    // Add another extension to the VM with protectedSettingsFromKeyVault
+                    var vmExtension2 = GetTestVMExtension();
+                    AddProtectedSettingsFromKeyVaultToExtension(vmExtension2);
+
+                    //For now we just validate that the protectedSettingsFromKeyVault has been accepted and persisted. Since we didn't create a KV, this failure is expected
+                    try
+                    {
+                        response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension2.Name, vmExtension2);
+                    }
+                    catch (Exception e)
+                    {
+                        Assert.Contains("either has not been enabled for deployment or the vault id provided", e.Message);
+                    }
                 }
                 finally
                 {
@@ -145,6 +161,19 @@ namespace Compute.Tests
             Assert.NotNull(vmExtInstanceView.Statuses[0].Code);
             Assert.NotNull(vmExtInstanceView.Statuses[0].Level);
             Assert.NotNull(vmExtInstanceView.Statuses[0].Message);
+        }
+
+        private void AddProtectedSettingsFromKeyVaultToExtension(VirtualMachineExtension vmExtension)
+        {
+            vmExtension.ProtectedSettings = null;
+            SubResource sourceVault = new SubResource();
+            sourceVault.Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/keyVaultInSoutheastAsia";
+            string secret = "https://keyvaultinsoutheastasia.vault.azure.net/secrets/SecretForTest/2375df95e3da463c81c43c300f6506ab";
+            vmExtension.ProtectedSettingsFromKeyVault = new KeyVaultSecretReference()
+            {
+                SourceVault = sourceVault,
+                SecretUrl = secret
+            };
         }
     }
 }

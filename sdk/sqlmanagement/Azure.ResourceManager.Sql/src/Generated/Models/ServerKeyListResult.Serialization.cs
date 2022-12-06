@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerKeyListResult DeserializeServerKeyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerKey>> value = default;
+            Optional<IReadOnlyList<SqlServerKeyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerKey> array = new List<ServerKey>();
+                    List<SqlServerKeyData> array = new List<SqlServerKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerKey.DeserializeServerKey(item));
+                        array.Add(SqlServerKeyData.DeserializeSqlServerKeyData(item));
                     }
                     value = array;
                     continue;

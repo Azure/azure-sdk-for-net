@@ -12,9 +12,9 @@ namespace Azure.IoT.Hub.Service.Tests
         public string IotHubConnectionString => GetRecordedVariable(TestSettings.IotHubConnectionString,
             options => options
                 .HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64)
-                .HasSecretConnectionStringParameter("HostName", CustomRequestSanitizer.FakeHost));
+                .HasSecretConnectionStringParameter("HostName", E2eTestBase.FakeHost));
 
         public Uri StorageSasToken => new Uri(GetRecordedVariable(TestSettings.StorageSasToken,
-            options => options.IsSecret(CustomRequestSanitizer.FakeStorageUri)));
+            options => options.IsSecret(E2eTestBase.FakeStorageUri)));
     }
 }

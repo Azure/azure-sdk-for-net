@@ -142,13 +142,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (top < 1)
+            if (top != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+                if (top < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+                }
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
             if (Client.ApiVersion == null)
             {
@@ -334,8 +340,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management service
+        /// instance.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -412,10 +418,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (schemaId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "schemaId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(schemaId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "schemaId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -583,8 +585,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management service
+        /// instance.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -664,10 +666,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (schemaId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "schemaId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(schemaId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "schemaId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -853,8 +851,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management service
+        /// instance.
         /// </param>
         /// <param name='parameters'>
         /// The schema contents to apply.
@@ -891,8 +889,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management service
+        /// instance.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from the
@@ -977,10 +975,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (schemaId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "schemaId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(schemaId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "schemaId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)
@@ -1153,8 +1147,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the revision number.
         /// </param>
         /// <param name='schemaId'>
-        /// Schema identifier within an API. Must be unique in the current API
-        /// Management service instance.
+        /// Schema id identifier. Must be unique in the current API Management service
+        /// instance.
         /// </param>
         /// <param name='parameters'>
         /// The schema contents to apply.
@@ -1241,10 +1235,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (schemaId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "schemaId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(schemaId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "schemaId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)

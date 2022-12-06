@@ -93,6 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "HDInsightSpark": return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element);
                     case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element);
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
+                    case "Script": return ScriptActivity.DeserializeScriptActivity(element);
                     case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
                     case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element);
                     case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element);
@@ -102,7 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<LinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
-            string type = default;
+            string type = "Execution";
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;

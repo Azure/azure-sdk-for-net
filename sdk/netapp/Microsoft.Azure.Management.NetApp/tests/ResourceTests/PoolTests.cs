@@ -28,7 +28,7 @@ namespace NetApp.Tests.ResourceTests
 
                 // create the account
                 var resource = ResourceUtils.CreateAccount(netAppMgmtClient);
-                Assert.Null(resource.Tags);
+                Assert.NotNull(resource);
 
                 // create the pool, get all pools and check
                 ResourceUtils.CreatePool(netAppMgmtClient, ResourceUtils.poolName1, ResourceUtils.accountName1, poolOnly: true);
@@ -198,8 +198,7 @@ namespace NetApp.Tests.ResourceTests
 
                 // create the pool
                 var pool = ResourceUtils.CreatePool(netAppMgmtClient);
-                Assert.Equal("Premium", pool.ServiceLevel);
-                Assert.Null(pool.Tags);
+                Assert.Equal("Premium", pool.ServiceLevel);                
 
                 // update. Add tags and change service level
                 // size is already present in the object

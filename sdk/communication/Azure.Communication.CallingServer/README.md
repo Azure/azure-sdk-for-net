@@ -1,15 +1,15 @@
-# Azure Communication CallingServer client library for .NET
+# Azure Communication CallAutomation client library for .NET
 
-This package contains a C# SDK for Azure Communication Services for Calling.
+This package contains a C# SDK for Azure Communication Call Automation.
 
 [Source code][source] |[Product documentation][product_docs]
 ## Getting started
 
 ### Install the package
-Install the Azure Communication CallingServer client library for .NET with [NuGet][nuget]:
+Install the Azure Communication CallAutomation client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.CallingServer --version 1.0.0-beta.3
+dotnet add package Azure.Communication.CallingServer --prerelease
 ``` 
 
 ### Prerequisites
@@ -18,50 +18,100 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`CallingServerClient` provides the functionality to make call connection, join call connection or initialize a server call.
+`CallAutomationClient` provides the functionality to answer incoming call or initialize an outbound call.
 
 ### Using statements
-```C# Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
+```C#
 using System;
 using System.Collections.Generic;
 using Azure.Communication.CallingServer;
 ```
 
 ### Authenticate the client
-Calling server client can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
+Call Automation client can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
 
-```C# Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
+```C#
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-CallingServerClient callingServerClient = new CallingServerClient(connectionString);
+CallAutomationClient callAutomationClient = new CallAutomationClient(connectionString);
 ```
 
 Or alternatively using a valid Active Directory token.
-```C# Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
+```C#
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 TokenCredential tokenCredential = new DefaultAzureCredential();
-var client = new CallingServerClient(endpoint, tokenCredential);
+var client = new CallAutomationClient(endpoint, tokenCredential);
 ```
 
 ## Examples
 ### Make a call to a phone number recipient
-To make an outbound call, call the `CreateCallConnection` or `CreateCallConnectionAsync` function from the `CallingServerClient`.
-```C# Snippet:Azure_Communication_Call_Tests_CreateCallOptions
-var createCallOption = new CreateCallOptions(
-       new Uri(TestEnvironment.AppCallbackUrl),
-       new[] { MediaType.Audio },
-       new[]
-       {
-           EventSubscriptionType.ParticipantsUpdated,
-           EventSubscriptionType.DtmfReceived
-       });
+To make an outbound call, call the `CreateCall` or `CreateCallAsync` function from the `CallAutomationClient`.
+```C#
+CallSource callSource = new CallSource(
+       new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+       );
+callSource.CallerId = new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted phone number that's associated to your Azure Communication Resource
 ```
-```C# Snippet:Azure_Communication_Call_Tests_CreateCallAsync
-var callConnection = await callingServerClient.CreateCallConnectionAsync(
-    source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+```C#
+CreateCallResult createCallResult = await callAutomationClient.CreateCallAsync(
+    source: callSource,
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    options: createCallOption // The options for creating a call.
+    callbackEndpoint: new Uri(TestEnvironment.AppCallbackUrl)
     );
-Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");
+Console.WriteLine($"Call connection id: {createCallResult.CallConnectionProperties.CallConnectionId}");
+```
+
+### Handle Mid-Connection call back events
+Your app will receive mid-connection call back events via the callbackEndpoint you provided. You will need to write event handler controller to receive the events and direct your app flow based on your business logic.
+```C#
+    /// <summary>
+    /// Handle call back events.
+    /// </summary>>
+    [HttpPost]
+    [Route("/CallBackEvent")]
+    public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events)
+    {
+        try
+        {
+            if (events != null)
+            {
+                // Helper function to parse CloudEvent to a CallingServer event.
+                CallAutomationEventBase callBackEvent = EventParser.Parse(events.FirstOrDefault());
+            
+                switch (callBackEvent)
+                {
+                    case CallConnected ev:
+                        # logic to handle a CallConnected event
+                        break;
+                    case CallDisconnected ev:
+                        # logic to handle a CallDisConnected event
+                        break;
+                    case ParticipantsUpdated ev:
+                        # cast the event into a ParticipantUpdated event and do something with it. Eg. iterate through the participants
+                        ParticipantsUpdated updatedEvent = (ParticipantsUpdated)ev;
+                        break;
+                    case AddParticipantsSucceeded ev:
+                        # logic to handle an AddParticipantsSucceeded event
+                        break;
+                    case AddParticipantsFailed ev:
+                        # logic to handle an AddParticipantsFailed event
+                        break;
+                    case CallTransferAccepted ev:
+                        # logic to handle CallTransferAccepted event
+                        break;
+                    case CallTransferFailed ev:
+                        # logic to handle CallTransferFailed event
+                       break;
+                    default:
+                        break;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // handle exception
+        }
+        return Ok();
+    }
 ```
 
 ## Troubleshooting

@@ -82,7 +82,11 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// center.</param>
         /// <param name="autoUpdateETA">The estimated time when the self-hosted
         /// integration runtime will be updated.</param>
-        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string nodeCommunicationChannelEncryptionMode = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>), string pushedVersion = default(string), string latestVersion = default(string), System.DateTime? autoUpdateETA = default(System.DateTime?))
+        /// <param name="serviceRegion">The service region of the integration
+        /// runtime</param>
+        /// <param name="newerVersions">The newer versions on download
+        /// center.</param>
+        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string nodeCommunicationChannelEncryptionMode = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>), string pushedVersion = default(string), string latestVersion = default(string), System.DateTime? autoUpdateETA = default(System.DateTime?), string serviceRegion = default(string), IList<string> newerVersions = default(IList<string>))
             : base(additionalProperties, dataFactoryName, state)
         {
             CreateTime = createTime;
@@ -102,6 +106,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
             PushedVersion = pushedVersion;
             LatestVersion = latestVersion;
             AutoUpdateETA = autoUpdateETA;
+            ServiceRegion = serviceRegion;
+            NewerVersions = newerVersions;
             CustomInit();
         }
 
@@ -223,6 +229,18 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.autoUpdateETA")]
         public System.DateTime? AutoUpdateETA { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the service region of the integration runtime
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.serviceRegion")]
+        public string ServiceRegion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the newer versions on download center.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.newerVersions")]
+        public IList<string> NewerVersions { get; set; }
 
     }
 }

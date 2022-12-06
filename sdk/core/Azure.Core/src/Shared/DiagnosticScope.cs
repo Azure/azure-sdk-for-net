@@ -17,22 +17,30 @@ namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
+        private const string AzureSdkScopeLabel = "az.sdk.scope";
+        private static readonly object AzureSdkScopeValue = bool.TrueString;
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
+        private readonly bool _suppressNestedClientActivities;
 
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind)
+        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientActivities) :
+            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientActivities)
         {
-            var activitySource = GetActivitySource(ns, scopeName);
-
-            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
-
-            _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, null) : null;
         }
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
         {
+            // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
+            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
+
+            // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
             IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+
+            if (_suppressNestedClientActivities)
+            {
+                IsEnabled &= !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
+            }
 
             _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
         }
@@ -53,13 +61,12 @@ namespace Azure.Core.Pipeline
                 return null;
             }
 
+            string clientName = ns;
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot == -1)
+            if (indexOfDot != -1)
             {
-                return null;
+                clientName += "." + name.Substring(0, indexOfDot);
             }
-
-            string clientName = ns + "." + name.Substring(0, indexOfDot);
 
             return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
         }
@@ -87,19 +94,35 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        public void AddLink(string id, IDictionary<string, string>? attributes = null)
+        /// <summary>
+        /// Adds a link to the scope. This must be called before <see cref="Start"/> has been called for the DiagnosticScope.
+        /// </summary>
+        /// <param name="traceparent">The traceparent for the link.</param>
+        /// <param name="tracestate">The tracestate for the link.</param>
+        /// <param name="attributes">Optional attributes to associate with the link.</param>
+        public void AddLink(string traceparent, string tracestate, IDictionary<string, string>? attributes = null)
         {
-            _activityAdapter?.AddLink(id, attributes);
+            _activityAdapter?.AddLink(traceparent, tracestate, attributes);
         }
 
         public void Start()
         {
-            _activityAdapter?.Start();
+            Activity? started = _activityAdapter?.Start();
+            started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
         public void SetStartTime(DateTime dateTime)
         {
             _activityAdapter?.SetStartTime(dateTime);
+        }
+
+        /// <summary>
+        /// Sets the trace parent for the current scope.
+        /// </summary>
+        /// <param name="traceparent">The trace parent to set for the current scope.</param>
+        public void SetTraceparent(string traceparent)
+        {
+            _activityAdapter?.SetTraceparent(traceparent);
         }
 
         public void Dispose()
@@ -168,6 +191,7 @@ namespace Azure.Core.Pipeline
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
+            private string? _traceparent;
 
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
             {
@@ -236,7 +260,7 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
-                    var link = ActivityExtensions.CreateActivityLink(activity.ParentId!, linkTagsCollection);
+                    var link = ActivityExtensions.CreateActivityLink(activity.ParentId!, activity.GetTraceState(), linkTagsCollection);
                     if (link != null)
                     {
                         linkCollection.Add(link);
@@ -246,11 +270,12 @@ namespace Azure.Core.Pipeline
                 return linkCollection;
             }
 
-            public void AddLink(string id, IDictionary<string, string>? attributes)
+            public void AddLink(string traceparent, string tracestate, IDictionary<string, string>? attributes)
             {
                 var linkedActivity = new Activity("LinkedActivity");
                 linkedActivity.SetW3CFormat();
-                linkedActivity.SetParentId(id);
+                linkedActivity.SetParentId(traceparent);
+                linkedActivity.SetTraceState(tracestate);
 
                 if (attributes != null)
                 {
@@ -264,7 +289,7 @@ namespace Azure.Core.Pipeline
                 _links.Add(linkedActivity);
             }
 
-            public void Start()
+            public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
 
@@ -272,7 +297,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
-                        return;
+                        return null;
                     }
 
                     _currentActivity = new DiagnosticActivity(_activityName)
@@ -283,7 +308,7 @@ namespace Azure.Core.Pipeline
 
                     if (_startTime != default)
                     {
-                        _currentActivity.SetStartTime(_startTime.DateTime);
+                        _currentActivity.SetStartTime(_startTime.UtcDateTime);
                     }
 
                     if (_tagCollection != null)
@@ -294,10 +319,17 @@ namespace Azure.Core.Pipeline
                         }
                     }
 
+                    if (_traceparent != null)
+                    {
+                        _currentActivity.SetParentId(_traceparent);
+                    }
+
                     _currentActivity.Start();
                 }
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+
+                return _currentActivity;
             }
 
             private Activity? StartActivitySourceActivity()
@@ -320,6 +352,12 @@ namespace Azure.Core.Pipeline
             public void MarkFailed(Exception exception)
             {
                 _diagnosticSource?.Write(_activityName + ".Exception", exception);
+            }
+
+            public void SetTraceparent(string traceparent)
+            {
+                _traceparent = traceparent;
+                _currentActivity?.SetParentId(traceparent);
             }
 
             public void Dispose()
@@ -363,14 +401,61 @@ namespace Azure.Core.Pipeline
 
         private static Action<Activity, int>? SetIdFormatMethod;
         private static Func<Activity, string?>? GetTraceStateStringMethod;
+        private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
         private static Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
-        private static Func<string, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
+        private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
         private static Func<ICollection<KeyValuePair<string,object>>?>? CreateTagsCollectionMethod;
-
+        private static Func<Activity, string, object?>? GetCustomPropertyMethod;
+        private static Action<Activity, string, object>? SetCustomPropertyMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
+
+        public static object? GetCustomProperty(this Activity activity, string propertyName)
+        {
+            if (GetCustomPropertyMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("GetCustomProperty");
+                if (method == null)
+                {
+                    GetCustomPropertyMethod = (_, _) => null;
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+
+                    GetCustomPropertyMethod = Expression.Lambda<Func<Activity, string, object>>(
+                        Expression.Convert(Expression.Call(ActivityParameter, method, nameParameter), typeof(object)),
+                        ActivityParameter, nameParameter).Compile();
+                }
+            }
+
+            return GetCustomPropertyMethod(activity, propertyName);
+        }
+
+        public static void SetCustomProperty(this Activity activity, string propertyName, object propertyValue)
+        {
+            if (SetCustomPropertyMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("SetCustomProperty");
+                if (method == null)
+                {
+                    SetCustomPropertyMethod = (_, _, _) => { };
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+                    var valueParameter = Expression.Parameter(typeof(object));
+
+                    SetCustomPropertyMethod = Expression.Lambda<Action<Activity, string, object>>(
+                        Expression.Call(ActivityParameter, method, nameParameter, valueParameter),
+                        ActivityParameter, nameParameter, valueParameter).Compile();
+                }
+            }
+
+            SetCustomPropertyMethod(activity, propertyName, propertyValue);
+        }
 
         public static void SetW3CFormat(this Activity activity)
         {
@@ -438,6 +523,28 @@ namespace Azure.Core.Pipeline
             return GetTraceStateStringMethod(activity);
         }
 
+        public static void SetTraceState(this Activity activity, string? tracestate)
+        {
+            if (SetTraceStateStringMethod == null)
+            {
+                var method = typeof(Activity).GetProperty("TraceStateString")?.SetMethod;
+                if (method == null)
+                {
+                    SetTraceStateStringMethod = (_, _) => { };
+                }
+                else
+                {
+                    var tracestateParameter = Expression.Parameter(typeof(string));
+                    var convertedParameter = Expression.Convert(tracestateParameter, method.GetParameters()[0].ParameterType);
+                    SetTraceStateStringMethod = Expression.Lambda<Action<Activity, string?>>(
+                        Expression.Call(ActivityParameter, method, convertedParameter),
+                        ActivityParameter, tracestateParameter).Compile();
+                }
+            }
+
+            SetTraceStateStringMethod(activity, tracestate);
+        }
+
         public static void AddObjectTag(this Activity activity, string name, object value)
         {
             if (ActivityAddTagMethod == null)
@@ -490,7 +597,7 @@ namespace Azure.Core.Pipeline
             return CreateTagsCollectionMethod();
         }
 
-        public static object? CreateActivityLink(string id, ICollection<KeyValuePair<string,object>>? tags)
+        public static object? CreateActivityLink(string traceparent, string? tracestate, ICollection<KeyValuePair<string,object>>? tags)
         {
             if (ActivityLinkType == null)
             {
@@ -507,24 +614,25 @@ namespace Azure.Core.Pipeline
                     ActivityTagsCollectionType == null ||
                     ActivityContextType == null)
                 {
-                    CreateActivityLinkMethod = (_, _) => null;
+                    CreateActivityLinkMethod = (_, _, _) => null;
                 }
                 else
                 {
-                    var nameParameter = Expression.Parameter(typeof(string));
+                    var traceparentParameter = Expression.Parameter(typeof(string));
+                    var tracestateParameter = Expression.Parameter(typeof(string));
                     var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string,object>>));
 
-                    CreateActivityLinkMethod = Expression.Lambda<Func<string, ICollection<KeyValuePair<string, object>>?, object?>>(
+                    CreateActivityLinkMethod = Expression.Lambda<Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>>(
                         Expression.TryCatch(
                                 Expression.Convert(Expression.New(ctor,
-                                        Expression.Call(parseMethod, nameParameter, Expression.Default(typeof(string))),
+                                        Expression.Call(parseMethod, traceparentParameter, tracestateParameter),
                                 Expression.Convert(tagsParameter, ActivityTagsCollectionType)), typeof(object)),
                         Expression.Catch(typeof(Exception), Expression.Default(typeof(object)))),
-                             nameParameter, tagsParameter).Compile();
+                             traceparentParameter, tracestateParameter, tagsParameter).Compile();
                 }
             }
 
-            return CreateActivityLinkMethod(id, tags);
+            return CreateActivityLinkMethod(traceparent, tracestate, tags);
         }
 
         public static bool ActivitySourceHasListeners(object? activitySource)

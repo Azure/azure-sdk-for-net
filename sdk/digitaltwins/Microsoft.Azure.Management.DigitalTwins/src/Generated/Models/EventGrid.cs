@@ -29,18 +29,22 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <summary>
         /// Initializes a new instance of the EventGrid class.
         /// </summary>
-        /// <param name="topicEndpoint">EventGrid Topic Endpoint</param>
+        /// <param name="topicEndpoint">EventGrid Topic Endpoint.</param>
         /// <param name="accessKey1">EventGrid secondary accesskey. Will be
         /// obfuscated during read.</param>
         /// <param name="provisioningState">The provisioning state. Possible
-        /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
-        /// 'Moving', 'Disabled'</param>
+        /// values include: 'Provisioning', 'Deleting', 'Updating',
+        /// 'Succeeded', 'Failed', 'Canceled', 'Deleted', 'Warning',
+        /// 'Suspending', 'Restoring', 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
         /// <param name="authenticationType">Specifies the authentication type
-        /// being used for connecting to the endpoint. Possible values include:
-        /// 'KeyBased', 'IdentityBased'</param>
+        /// being used for connecting to the endpoint. Defaults to 'KeyBased'.
+        /// If 'KeyBased' is selected, a connection string must be specified
+        /// (at least the primary connection string). If 'IdentityBased' is
+        /// select, the endpointUri and entityPath properties must be
+        /// specified. Possible values include: 'KeyBased',
+        /// 'IdentityBased'</param>
         /// <param name="deadLetterSecret">Dead letter storage secret for
         /// key-based authentication. Will be obfuscated during read.</param>
         /// <param name="deadLetterUri">Dead letter storage URL for
@@ -62,7 +66,7 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets eventGrid Topic Endpoint
+        /// Gets or sets eventGrid Topic Endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "TopicEndpoint")]
         public string TopicEndpoint { get; set; }

@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Azure Synapse nested object which contains information about creating pipeline run. </summary>
+    /// <summary>
+    /// Azure Synapse nested object which contains information about creating pipeline run
+    /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
+    /// </summary>
     public partial class Trigger
     {
         /// <summary> Initializes a new instance of Trigger. </summary>
@@ -18,7 +22,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Annotations = new ChangeTrackingList<object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "Trigger";
         }
 
         /// <summary> Initializes a new instance of Trigger. </summary>
@@ -29,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal Trigger(string type, string description, TriggerRuntimeState? runtimeState, IList<object> annotations, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "Trigger";
+            Type = type;
             Description = description;
             RuntimeState = runtimeState;
             Annotations = annotations;

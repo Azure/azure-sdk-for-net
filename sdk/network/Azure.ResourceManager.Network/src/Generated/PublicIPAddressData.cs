@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -13,19 +15,19 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PublicIPAddress data model. </summary>
-    public partial class PublicIPAddressData : Resource
+    public partial class PublicIPAddressData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
         public PublicIPAddressData()
         {
             Zones = new ChangeTrackingList<string>();
-            IpTags = new ChangeTrackingList<IpTag>();
+            IPTags = new ChangeTrackingList<IPTag>();
         }
 
         /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
@@ -48,19 +50,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
         /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
-        internal PublicIPAddressData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPAddressSku sku, string etag, IList<string> zones, IPAllocationMethod? publicIPAllocationMethod, IPVersion? publicIPAddressVersion, IPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IpTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, string resourceGuid, ProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, DeleteOptions? deleteOption) : base(id, name, type, location, tags)
+        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? etag, IList<string> zones, NetworkIPAllocationMethod? publicIPAllocationMethod, NetworkIPVersion? publicIPAddressVersion, NetworkIPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, IPAddressDeleteOption? deleteOption) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
-            Etag = etag;
+            ETag = etag;
             Zones = zones;
             PublicIPAllocationMethod = publicIPAllocationMethod;
             PublicIPAddressVersion = publicIPAddressVersion;
-            IpConfiguration = ipConfiguration;
+            IPConfiguration = ipConfiguration;
             DnsSettings = dnsSettings;
             DdosSettings = ddosSettings;
-            IpTags = ipTags;
-            IpAddress = ipAddress;
+            IPTags = ipTags;
+            IPAddress = ipAddress;
             PublicIPPrefix = publicIPPrefix;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             ResourceGuid = resourceGuid;
@@ -77,31 +79,43 @@ namespace Azure.ResourceManager.Network
         /// <summary> The public IP address SKU. </summary>
         public PublicIPAddressSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
         public IList<string> Zones { get; }
         /// <summary> The public IP address allocation method. </summary>
-        public IPAllocationMethod? PublicIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PublicIPAllocationMethod { get; set; }
         /// <summary> The public IP address version. </summary>
-        public IPVersion? PublicIPAddressVersion { get; set; }
+        public NetworkIPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> The IP configuration associated with the public IP address. </summary>
-        public IPConfiguration IpConfiguration { get; }
+        public NetworkIPConfiguration IPConfiguration { get; }
         /// <summary> The FQDN of the DNS record associated with the public IP address. </summary>
         public PublicIPAddressDnsSettings DnsSettings { get; set; }
         /// <summary> The DDoS protection custom policy associated with the public IP address. </summary>
         public DdosSettings DdosSettings { get; set; }
         /// <summary> The list of tags associated with the public IP address. </summary>
-        public IList<IpTag> IpTags { get; }
+        public IList<IPTag> IPTags { get; }
         /// <summary> The IP address associated with the public IP address resource. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> The Public IP Prefix this Public IP Address should be allocated from. </summary>
-        public WritableSubResource PublicIPPrefix { get; set; }
+        internal WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            set
+            {
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The resource GUID property of the public IP address resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the public IP address resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The service public IP address of the public IP address resource. </summary>
         public PublicIPAddressData ServicePublicIPAddress { get; set; }
         /// <summary> The NatGateway for the Public IP address. </summary>
@@ -111,6 +125,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The linked public IP address of the public IP address resource. </summary>
         public PublicIPAddressData LinkedPublicIPAddress { get; set; }
         /// <summary> Specify what happens to the public IP address when the VM using it is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public IPAddressDeleteOption? DeleteOption { get; set; }
     }
 }

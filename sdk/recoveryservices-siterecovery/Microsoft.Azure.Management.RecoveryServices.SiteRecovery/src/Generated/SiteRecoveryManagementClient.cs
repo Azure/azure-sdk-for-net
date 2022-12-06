@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationAlertSettingsOperations ReplicationAlertSettings { get; private set; }
 
         /// <summary>
+        /// Gets the IReplicationAppliancesOperations.
+        /// </summary>
+        public virtual IReplicationAppliancesOperations ReplicationAppliances { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationEligibilityResultsOperations.
         /// </summary>
         public virtual IReplicationEligibilityResultsOperations ReplicationEligibilityResults { get; private set; }
@@ -460,6 +465,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         {
             Operations = new Operations(this);
             ReplicationAlertSettings = new ReplicationAlertSettingsOperations(this);
+            ReplicationAppliances = new ReplicationAppliancesOperations(this);
             ReplicationEligibilityResults = new ReplicationEligibilityResultsOperations(this);
             ReplicationEvents = new ReplicationEventsOperations(this);
             ReplicationFabrics = new ReplicationFabricsOperations(this);
@@ -486,7 +492,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
             ReplicationVaultSetting = new ReplicationVaultSettingOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-08-01";
+            ApiVersion = "2021-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -529,6 +535,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryResourceGroupCustomDetails>("resourceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AddDisksProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AddDisksProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplianceSpecificDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplianceSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskTypeDetails>("instanceType"));
@@ -601,6 +609,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProviderProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SwitchProviderProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TestFailoverProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TestFailoverProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TestMigrateProviderSpecificInput>("instanceType"));

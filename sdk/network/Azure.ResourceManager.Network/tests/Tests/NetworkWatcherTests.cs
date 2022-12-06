@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Initialize();
             }
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            List<NetworkWatcher> allWatchers = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            List<NetworkWatcherResource> allWatchers = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
             foreach (var w in allWatchers)
             {
                 if (w.Data.Location == TestEnvironment.Location)
                 {
-                    await w.DeleteAsync();
+                    await w.DeleteAsync(WaitUntil.Completed);
                 }
             }
         }
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task NetworkWatcherApiTest()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            List<NetworkWatcher> allWatchers = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            List<NetworkWatcherResource> allWatchers = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
             int countBeforeTest = allWatchers.Count;
 
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
@@ -57,35 +57,35 @@ namespace Azure.ResourceManager.Network.Tests
             var networkWatcherCollection = await GetCollection();
             var location = TestEnvironment.Location;
             var properties = new NetworkWatcherData { Location = location };
-            var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(networkWatcherName, properties);
+            var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);
-            Assert.AreEqual(location, createResponse.Value.Data.Location);
+            Assert.AreEqual(location, createResponse.Value.Data.Location.ToString());
             Assert.IsEmpty(createResponse.Value.Data.Tags);
 
             //Get Network Watcher by name in the resource group
-            Response<NetworkWatcher> getResponse = await networkWatcherCollection.GetAsync(networkWatcherName);
-            Assert.AreEqual(location, getResponse.Value.Data.Location);
+            Response<NetworkWatcherResource> getResponse = await networkWatcherCollection.GetAsync(networkWatcherName);
+            Assert.AreEqual(location, getResponse.Value.Data.Location.ToString());
             Assert.AreEqual(networkWatcherName, getResponse.Value.Data.Name);
             Assert.AreEqual("Succeeded", getResponse.Value.Data.ProvisioningState.ToString());
             Assert.IsEmpty(getResponse.Value.Data.Tags);
 
             properties.Tags.Add("test", "test");
-            var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(networkWatcherName, properties);
+            var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, updateResponse.Value.Data.Name);
-            Assert.AreEqual(location, updateResponse.Value.Data.Location);
+            Assert.AreEqual(location, updateResponse.Value.Data.Location.ToString());
             Has.One.Equals(updateResponse.Value.Data.Tags);
             Assert.That(updateResponse.Value.Data.Tags, Does.ContainKey("test").WithValue("test"));
 
             //Get all Network Watchers in the resource group
-            List<NetworkWatcher> listResponse = await networkWatcherCollection.GetAllAsync().ToEnumerableAsync();
+            List<NetworkWatcherResource> listResponse = await networkWatcherCollection.GetAllAsync().ToEnumerableAsync();
             Has.One.EqualTo(listResponse);
             Assert.AreEqual(networkWatcherName, listResponse[0].Data.Name);
-            Assert.AreEqual(location, listResponse[0].Data.Location);
+            Assert.AreEqual(location, listResponse[0].Data.Location.ToString());
             Has.One.Equals(listResponse[0].Data.Tags);
             Assert.That(listResponse[0].Data.Tags, Does.ContainKey("test").WithValue("test"));
 
             //Get all Network Watchers in the subscription
-            List<NetworkWatcher> listAllResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
+            List<NetworkWatcherResource> listAllResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(listAllResponse);
             Assert.True(listAllResponse.Any(w => networkWatcherName == w.Data.Name));
 
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Network.Tests
             //await getResponse.Value.GetNetworkConfigurationDiagnosticAsync();
 
             //Delete Network Watcher
-            await getResponse.Value.DeleteAsync();
+            await getResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             //Get all Network Watchers in the subscription
-            List<NetworkWatcher> listAllAfterDeletingResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
+            List<NetworkWatcherResource> listAllAfterDeletingResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();
             Assert.AreEqual(countBeforeTest, listAllAfterDeletingResponse.Count);
             Assert.False(listAllAfterDeletingResponse.Any(w => w.Data.Name == networkWatcherName));
         }

@@ -17,7 +17,7 @@ namespace Azure.AI.AnomalyDetector
         {
             _response = response;
         }
-        /// <summary> Location and ID of the model being saved. </summary>
+        /// <summary> Location and ID of the model. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }

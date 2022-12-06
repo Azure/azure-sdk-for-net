@@ -15,7 +15,7 @@ This section should include everything a developer needs to do to install and cr
 Install the Azure Quantum Jobs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
+dotnet add package Azure.Quantum.Jobs --prerelease
 ```
 
 ### Prerequisites

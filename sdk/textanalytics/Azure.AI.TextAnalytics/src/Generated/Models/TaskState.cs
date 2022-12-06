@@ -10,34 +10,21 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The TaskState. </summary>
+    /// <summary> Returns the current state of the task. </summary>
     internal partial class TaskState
     {
         /// <summary> Initializes a new instance of TaskState. </summary>
-        /// <param name="lastUpdateDateTime"></param>
-        /// <param name="status"></param>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
+        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        public TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of TaskState. </summary>
-        /// <param name="lastUpdateDateTime"></param>
-        /// <param name="taskName"></param>
-        /// <param name="status"></param>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status)
-        {
-            LastUpdateDateTime = lastUpdateDateTime;
-            TaskName = taskName;
-            Status = status;
-        }
-
-        /// <summary> Gets the last update date time. </summary>
-        public DateTimeOffset LastUpdateDateTime { get; }
-        /// <summary> Gets the task name. </summary>
-        public string TaskName { get; }
-        /// <summary> Gets the status. </summary>
-        public TextAnalyticsOperationStatus Status { get; }
+        /// <summary> The last updated time in UTC for the task. </summary>
+        public DateTimeOffset LastUpdateDateTime { get; set; }
+        /// <summary> The status of the task at the mentioned last update time. </summary>
+        public TextAnalyticsOperationStatus Status { get; set; }
     }
 }

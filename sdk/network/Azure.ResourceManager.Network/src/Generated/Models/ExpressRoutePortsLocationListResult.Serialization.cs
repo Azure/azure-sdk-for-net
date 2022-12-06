@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRoutePortsLocationListResult DeserializeExpressRoutePortsLocationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ExpressRoutePortsLocation>> value = default;
+            Optional<IReadOnlyList<ExpressRoutePortsLocationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExpressRoutePortsLocation> array = new List<ExpressRoutePortsLocation>();
+                    List<ExpressRoutePortsLocationData> array = new List<ExpressRoutePortsLocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRoutePortsLocation.DeserializeExpressRoutePortsLocation(item));
+                        array.Add(ExpressRoutePortsLocationData.DeserializeExpressRoutePortsLocationData(item));
                     }
                     value = array;
                     continue;

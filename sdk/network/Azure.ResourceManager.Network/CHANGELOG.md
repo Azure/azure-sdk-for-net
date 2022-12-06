@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,103 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2022-11-02)
+
+### Features Added
+
+Supported following methods:
+- Get available SSL options info
+- Get specified SSL predefined policy
+- Get all SSL predefined policies
+
+## 1.0.1 (2022-09-13)
+
+### Breaking Changes
+
+Modified the following classes to abstract classes and changed their constructors from public to protected:
+- `FirewallPolicyRule`
+- `FirewallPolicyRuleCollectionInfo`
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0 (2022-07-11)
+
+This is the first stable release of the Network Management client library.
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Network` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
+
+## 1.0.0-beta.7 (2022-04-08)
+
+### Breaking Changes
+
+- Simplified `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgraded dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.6 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
+
+## 1.0.0-beta.5 (2021-12-28)
+
+### Features Added
+
+- Added `CreateResourceIdentifier` for each resource class
+
+### Breaking Changes
+
+- Renamed `CheckIfExists` to `Exists` for each resource collection class
+- Renamed `Get{Resource}ByName` to `Get{Resource}AsGenericResource` in `SubscriptionExtensions`
+
+### Bugs Fixed
+
+- Fixed comments for `FirstPageFunc` of each pageable resource class
+
+## 1.0.0-beta.4 (2021-12-07)
+
+### Breaking Changes
+
+- Unified the identification rule of detecting resources, therefore some resources might become non-resources, and vice versa.
+
+### Bugs Fixed
+
+- Fixed problematic internal parameter invocation from the context `Id` property to the corresponding `RestOperations`.
 
 ## 1.0.0-beta.3 (2021-10-28)
 
@@ -86,8 +183,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
 VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
 // Create VNet
@@ -102,8 +199,8 @@ vnet.Subnets.Add(new SubnetData
     AddressPrefix = "10.0.0.0/24",
 });
 
-VirtualNetworkCreateOrUpdateOperation vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync("_vent", vnet);
-VirtualNetwork virtualNetwork = vnetOperation.Value;
+ArmOperation<VirtualNetworkResource> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
+VirtualNetworkResource virtualNetwork = vnetOperation.Value;
 ```
 
 #### Object Model Changes
@@ -129,13 +226,13 @@ var policy = new IpsecPolicy()
 After upgrade:
 
 ```C# Snippet:Changelog_CreateModel
-IpsecPolicy policy = new IpsecPolicy(
+IPsecPolicy policy = new IPsecPolicy(
    300,
    1024,
-   IpsecEncryption.AES128,
-   IpsecIntegrity.SHA256,
-   IkeEncryption.AES192,
-   IkeIntegrity.SHA1,
-   DhGroup.DHGroup2,
-   PfsGroup.PFS1);
+   IPsecEncryption.Aes128,
+   IPsecIntegrity.Sha256,
+   IkeEncryption.Aes192,
+   IkeIntegrity.Sha1,
+   DHGroup.DHGroup2,
+   PfsGroup.Pfs1);
 ```

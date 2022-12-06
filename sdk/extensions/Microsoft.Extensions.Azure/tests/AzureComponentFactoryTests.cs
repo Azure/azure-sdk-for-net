@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core.Diagnostics;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -53,7 +54,7 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
-        public void UsesDefaultCredentialWhenNoneExists()
+        public void UsesSpecifiedCredentialFactoryWhenNoConfig()
         {
             var configuration = GetConfiguration();
 
@@ -65,6 +66,24 @@ namespace Azure.Core.Extensions.Tests
             TokenCredential credential = factory.CreateTokenCredential(configuration);
 
             Assert.IsInstanceOf<EnvironmentCredential>(credential);
+        }
+
+        [Test]
+        public void UsesDefaultAzureCredentialWithConfig()
+        {
+            var configuration = GetConfiguration(
+                new KeyValuePair<string, string>("TestClient:clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("TestClient:tenantId", "ConfigurationTenantId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.UseCredential(new EnvironmentCredential()));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
+            TokenCredential credential = factory.CreateTokenCredential(configuration.GetSection("TestClient"));
+
+            // credential factory is not used because there is configuration specified
+            Assert.IsInstanceOf<DefaultAzureCredential>(credential);
         }
 
         [Test]
@@ -129,6 +148,32 @@ namespace Azure.Core.Extensions.Tests
             TestClientOptions options = (TestClientOptions)factory.CreateClientOptions(typeof(TestClientOptions), configuration["TestClient"], null);
 
             Assert.AreEqual("AppId", options.Diagnostics.ApplicationId);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EnableLoggingRespectedWhenCallingAddAzureClientsCore(bool enableLogging)
+        {
+            var configuration = GetConfiguration(
+                new KeyValuePair<string, string>("TestClient:uri", "http://localhost/"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClientsCore(enableLogging);
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
+            TestClientWithCredentials client = (TestClientWithCredentials) factory.CreateClient(typeof(TestClientWithCredentials), configuration.GetSection("TestClient"), new EnvironmentCredential(), new TestClientOptions());
+
+            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.IsInstanceOf<EnvironmentCredential>(client.Credential);
+
+            AzureEventSourceLogForwarder forwarder = provider.GetService<AzureEventSourceLogForwarder>();
+            var listener = (AzureEventSourceListener) forwarder.GetType().GetField(
+                    "_listener",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+                .GetValue(forwarder);
+            Assert.AreEqual(enableLogging, listener != null);
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)

@@ -5,11 +5,11 @@ This sample demonstrates how to analyze sentiment of documents and get more gran
 For example, if a customer leaves feedback about a hotel such as "The room was great, but the staff was unfriendly.", Opinion Mining will locate targets in the text, and their associated opinion and sentiments. Sentiment Analysis might only report a negative sentiment.
 
 For the purpose of the sample, we will be the administrator of a hotel and we've set a system to look at the online reviews customers are posting to identify the major complaints about our hotel.
-In order to do so, we will use the Sentiment Analysis feature of the Text Analytics client library. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+In order to do so, we will use the Sentiment Analysis feature of the Text Analytics client library.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient`, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient`, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -38,7 +38,7 @@ string reviewB = @"The rooms were beautiful. The AC was good and quiet, which wa
                 Once we notified the staff, they came and cleaned it and left candles.";
 
 string reviewC = @"Nice rooms! I had a great unobstructed view of the Microsoft campus
-                but bathrooms were old and the toilet was dirty when we arrived. 
+                but bathrooms were old and the toilet was dirty when we arrived.
                 It was close to bus stops and groceries stores. If you want to be close to
                 campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
 
@@ -99,11 +99,6 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
     return complaints;
 }
 ```
-
-
-To see the full example source files, see:
-* [Synchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.cs)
-* [Asynchronous Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample2.1_AnalyzeSentimentWithOpinionMiningAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

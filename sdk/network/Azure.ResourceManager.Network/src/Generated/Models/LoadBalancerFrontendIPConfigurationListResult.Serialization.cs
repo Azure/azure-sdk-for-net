@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LoadBalancerFrontendIPConfigurationListResult DeserializeLoadBalancerFrontendIPConfigurationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FrontendIPConfiguration>> value = default;
+            Optional<IReadOnlyList<FrontendIPConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FrontendIPConfiguration> array = new List<FrontendIPConfiguration>();
+                    List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendIPConfiguration.DeserializeFrontendIPConfiguration(item));
+                        array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
                     }
                     value = array;
                     continue;

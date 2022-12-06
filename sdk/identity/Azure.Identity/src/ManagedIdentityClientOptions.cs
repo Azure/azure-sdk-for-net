@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.Identity
 {
@@ -10,6 +11,8 @@ namespace Azure.Identity
         public TokenCredentialOptions Options { get; set; }
 
         public string ClientId { get; set; }
+
+        public ResourceIdentifier ResourceIdentifier { get; set; }
 
         public bool PreserveTransport { get; set; }
 

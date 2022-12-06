@@ -17,76 +17,72 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
-        /// <param name="modelId"> Model ID used to produce this result. </param>
+        /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="content"/>, or <paramref name="pages"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="content"/> or <paramref name="pages"/> is null. </exception>
         internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (pages == null)
-            {
-                throw new ArgumentNullException(nameof(pages));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(pages, nameof(pages));
 
             ApiVersion = apiVersion;
             ModelId = modelId;
             StringIndexType = stringIndexType;
             Content = content;
             Pages = pages.ToList();
+            Paragraphs = new ChangeTrackingList<DocumentParagraph>();
             Tables = new ChangeTrackingList<DocumentTable>();
             KeyValuePairs = new ChangeTrackingList<DocumentKeyValuePair>();
-            Entities = new ChangeTrackingList<DocumentEntity>();
             Styles = new ChangeTrackingList<DocumentStyle>();
+            Languages = new ChangeTrackingList<DocumentLanguage>();
             Documents = new ChangeTrackingList<AnalyzedDocument>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="apiVersion"> API version used to produce this result. </param>
-        /// <param name="modelId"> Model ID used to produce this result. </param>
+        /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
+        /// <param name="paragraphs"> Extracted paragraphs. </param>
         /// <param name="tables"> Extracted tables. </param>
         /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
-        /// <param name="entities"> Extracted entities. </param>
         /// <param name="styles"> Extracted font styles. </param>
+        /// <param name="languages"> Detected languages. </param>
         /// <param name="documents"> Extracted documents. </param>
-        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentEntity> entities, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<AnalyzedDocument> documents)
+        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;
             StringIndexType = stringIndexType;
             Content = content;
             Pages = pages;
+            Paragraphs = paragraphs;
             Tables = tables;
             KeyValuePairs = keyValuePairs;
-            Entities = entities;
             Styles = styles;
+            Languages = languages;
             Documents = documents;
         }
-        /// <summary> Model ID used to produce this result. </summary>
+        /// <summary> Document model ID used to produce this result. </summary>
         public string ModelId { get; }
         /// <summary> Concatenate string representation of all textual and visual elements in reading order. </summary>
         public string Content { get; }
         /// <summary> Analyzed pages. </summary>
         public IReadOnlyList<DocumentPage> Pages { get; }
+        /// <summary> Extracted paragraphs. </summary>
+        public IReadOnlyList<DocumentParagraph> Paragraphs { get; }
         /// <summary> Extracted tables. </summary>
         public IReadOnlyList<DocumentTable> Tables { get; }
         /// <summary> Extracted key-value pairs. </summary>
         public IReadOnlyList<DocumentKeyValuePair> KeyValuePairs { get; }
-        /// <summary> Extracted entities. </summary>
-        public IReadOnlyList<DocumentEntity> Entities { get; }
         /// <summary> Extracted font styles. </summary>
         public IReadOnlyList<DocumentStyle> Styles { get; }
+        /// <summary> Detected languages. </summary>
+        public IReadOnlyList<DocumentLanguage> Languages { get; }
         /// <summary> Extracted documents. </summary>
         public IReadOnlyList<AnalyzedDocument> Documents { get; }
     }

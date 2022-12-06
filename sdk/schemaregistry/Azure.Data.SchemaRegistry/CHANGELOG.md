@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2022-10-11)
+
+### Features Added
+
+- Added a `GetSchema` overload that gets a schema version using its group name, schema name, and version number.
+
+## 1.2.0 (2022-05-11)
+
+### Features Added
+
+- Added `GroupName` and `Name` properties to `SchemaProperties`.
+
+## 1.1.0 (2022-01-25)
+
+### Breaking Changes
+
+- Remove unnecessary dependency on Apache Avro.
 
 ## 1.0.0 (2021-11-09)
 

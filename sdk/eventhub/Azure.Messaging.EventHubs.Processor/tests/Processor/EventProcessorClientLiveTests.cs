@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
@@ -339,9 +340,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var storageManager = new InMemoryStorageManager(_ => { });
+            var checkpointStore = new InMemoryCheckpointStore(_ => { });
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
-            var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, storageManager, options);
+            var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, checkpointStore, options);
 
             processor.ProcessErrorAsync += CreateAssertingErrorHandler();
             processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
@@ -356,7 +357,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Validate that events that were processed.
 
-            var ownership = (await storageManager.ListOwnershipAsync(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, scope.ConsumerGroups.First(), cancellationSource.Token))?.ToList();
+            var ownership = (await checkpointStore.ListOwnershipAsync(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, scope.ConsumerGroups.First(), cancellationSource.Token))?.ToList();
 
             Assert.That(ownership, Is.Not.Null, "The ownership list should have been returned.");
             Assert.That(ownership.Count, Is.AtLeast(1), "At least one partition should have been owned.");
@@ -466,6 +467,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Send a set of events.
 
+            var partitions = new HashSet<string>();
             var segmentEventCount = 25;
             var beforeCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
             var afterCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
@@ -481,6 +483,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 if (args.Data.IsEquivalentTo(checkpointEvent))
                 {
+                    partitions.Add(args.Partition.PartitionId);
                     await args.UpdateCheckpointAsync(cancellationSource.Token);
                 }
             };
@@ -489,8 +492,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var beforeCheckpointProcessHandler = CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token, processedEventCallback);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
-            var storageManager = new InMemoryStorageManager(_ => { });
-            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, storageManager, options);
+            var checkpointStore = new InMemoryCheckpointStore(_ => { });
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, checkpointStore, options);
 
             processor.ProcessErrorAsync += CreateAssertingErrorHandler();
             processor.ProcessEventAsync += beforeCheckpointProcessHandler;
@@ -502,11 +505,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processor.StopProcessingAsync(cancellationSource.Token);
 
+            // Validate that a single partition was processed.
+
+            Assert.That(partitions.Count, Is.EqualTo(1), "All events should have been processed from a single partition.");
+
             // Validate a checkpoint was created and that events were processed.
 
-            var checkpoints = (await storageManager.ListCheckpointsAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token))?.ToList();
-            Assert.That(checkpoints, Is.Not.Null, "A checkpoint should have been created.");
-            Assert.That(checkpoints.Count, Is.EqualTo(1), "A single checkpoint should exist.");
+            var checkpoint = await checkpointStore.GetCheckpointAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, partitions.First(), cancellationSource.Token);
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been created.");
             Assert.That(processedEvents.Count, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
 
             // Reset state and start the processor again; it should resume from the event following the checkpoint.
@@ -602,7 +608,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        ///   Verifies that the <see cref="EventProcessorClient" /> detects an invalid
+        ///   consumer group when starting up.
         /// </summary>
         ///
         [Test]
@@ -613,13 +620,16 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            await using StorageScope storageScope = await StorageScope.CreateAsync();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Create the processor and attempt to start.
 
-            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "fake", EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+            var containerClient = new BlobContainerClient(StorageTestEnvironment.Instance.StorageConnectionString, storageScope.ContainerName);
+            var processor = new EventProcessorClient(containerClient, "fake", EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
             processor.ProcessErrorAsync += _ => Task.CompletedTask;
             processor.ProcessEventAsync += _ => Task.CompletedTask;
 
@@ -850,26 +860,94 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> no longer dispatches events for
+        ///   processing once it has been stopped.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCeasesProcessingWhenStopping()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(4);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Publish some events
+
+            var sentCount = await SendEvents(connectionString, EventGenerator.CreateSmallEvents(400), cancellationSource.Token);
+            Assert.That(sentCount, Is.EqualTo(400), "All generated  events should have been published.");
+
+            // Attempt to read events using the longest possible TryTimeout.
+
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Greedy, MaximumWaitTime = null };
+            options.RetryOptions.TryTimeout = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit.Add(TimeSpan.FromSeconds(30));
+
+            var processorStopped = false;
+            var eventsProcessedAfterStop = false;
+            var readCount = 0;
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
+
+            processor.ProcessEventAsync += args =>
+            {
+                if (args.HasEvent)
+                {
+                    if (processorStopped)
+                    {
+                        eventsProcessedAfterStop = true;
+                    }
+
+                    // Set the completion source once half of our published events
+                    // have been read.
+
+                    if (++readCount >= (sentCount / 2))
+                    {
+                        completionSource.TrySetResult(true);
+                    }
+                }
+
+                return Task.CompletedTask;
+            };
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            // Once enough events have been confirmed to have been read, stop the processor and validate that no
+            // additional events dispatched for processing.
+
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            processorStopped = true;
+
+            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(eventsProcessedAfterStop, Is.False, "Events should not have been dispatched for processing after the processor has stopped.");
+        }
+
+        /// <summary>
         ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
         ///   a connection based on a connection string.
         /// </summary>
         ///
         /// <param name="consumerGroup">The consumer group for the processor.</param>
         /// <param name="connectionString">The connection to use for spawning connections.</param>
-        /// <param name="storageManager">The storage manager to set for the processor; if <c>default</c>, a mock storage manager will be created.</param>
+        /// <param name="checkpointStore">The storage manager to set for the processor; if <c>default</c>, a mock storage manager will be created.</param>
         /// <param name="options">The set of client options to pass.</param>
         ///
         /// <returns>The processor instance.</returns>
         ///
         private EventProcessorClient CreateProcessor(string consumerGroup,
                                                      string connectionString,
-                                                     StorageManager storageManager = default,
+                                                     CheckpointStore checkpointStore = default,
                                                      EventProcessorOptions options = default)
         {
             EventHubConnection createConnection() => new EventHubConnection(connectionString);
 
-            storageManager ??= new InMemoryStorageManager(_ => { });
-            return new TestEventProcessorClient(storageManager, consumerGroup, "fakeNamespace", "fakeEventHub", Mock.Of<TokenCredential>(), createConnection, options);
+            checkpointStore ??= new InMemoryCheckpointStore(_ => { });
+            return new TestEventProcessorClient(checkpointStore, consumerGroup, "fakeNamespace", "fakeEventHub", Mock.Of<TokenCredential>(), createConnection, options);
         }
 
         /// <summary>
@@ -879,21 +957,21 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="consumerGroup">The consumer group for the processor.</param>
         /// <param name="eventHubName">The name of the Event Hub for the processor.</param>
-        /// <param name="storageManager">The storage manager to set for the processor; if <c>default</c>, a mock storage manager will be created.</param>
+        /// <param name="checkpointStore">The storage manager to set for the processor; if <c>default</c>, a mock storage manager will be created.</param>
         /// <param name="options">The set of client options to pass.</param>
         ///
         /// <returns>The processor instance.</returns>
         ///
         private EventProcessorClient CreateProcessorWithIdentity(string consumerGroup,
                                                                  string eventHubName,
-                                                                 StorageManager storageManager = default,
+                                                                 CheckpointStore checkpointStore = default,
                                                                  EventProcessorOptions options = default)
         {
             var credential = EventHubsTestEnvironment.Instance.Credential;
             EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
-            storageManager ??= new InMemoryStorageManager(_ => { });
-            return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+            checkpointStore ??= new InMemoryCheckpointStore(_ => { });
+            return new TestEventProcessorClient(checkpointStore, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
 
         /// <summary>
@@ -909,14 +987,14 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private EventProcessorClient CreateProcessorWithSharedAccessKey(string consumerGroup,
                                                                         string eventHubName,
-                                                                        StorageManager storageManager = default,
+                                                                        CheckpointStore checkpointStore = default,
                                                                         EventProcessorOptions options = default)
         {
             var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
             EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
-            storageManager ??= new InMemoryStorageManager(_ => { });
-            return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+            checkpointStore ??= new InMemoryCheckpointStore(_ => { });
+            return new TestEventProcessorClient(checkpointStore, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
 
         /// <summary>
@@ -932,7 +1010,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private EventProcessorClient CreateProcessorWithSharedAccessSignature(string consumerGroup,
                                                                               string eventHubName,
-                                                                              StorageManager storageManager = default,
+                                                                              CheckpointStore checkpointStore = default,
                                                                               EventProcessorOptions options = default)
         {
             var builder = new UriBuilder(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace)
@@ -955,8 +1033,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = new AzureSasCredential(signature.Value);
             EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
-            storageManager ??= new InMemoryStorageManager(_ => { });
-            return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+            checkpointStore ??= new InMemoryCheckpointStore(_ => { });
+            return new TestEventProcessorClient(checkpointStore, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
 
         /// <summary>
@@ -1057,40 +1135,41 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             private readonly Func<EventHubConnection> InjectedConnectionFactory;
 
-            internal TestEventProcessorClient(StorageManager storageManager,
+            internal TestEventProcessorClient(CheckpointStore checkpointStore,
                                               string consumerGroup,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               TokenCredential credential,
                                               Func<EventHubConnection> connectionFactory,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
+                                              EventProcessorOptions options) : base(checkpointStore, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnectionFactory = connectionFactory;
             }
 
-            internal TestEventProcessorClient(StorageManager storageManager,
+            internal TestEventProcessorClient(CheckpointStore checkpointStore,
                                               string consumerGroup,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               AzureNamedKeyCredential credential,
                                               Func<EventHubConnection> connectionFactory,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
+                                              EventProcessorOptions options) : base(checkpointStore, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnectionFactory = connectionFactory;
             }
 
-            internal TestEventProcessorClient(StorageManager storageManager,
+            internal TestEventProcessorClient(CheckpointStore checkpointStore,
                                               string consumerGroup,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               AzureSasCredential credential,
                                               Func<EventHubConnection> connectionFactory,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
+                                              EventProcessorOptions options) : base(checkpointStore, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnectionFactory = connectionFactory;
             }
 
             protected override EventHubConnection CreateConnection() => InjectedConnectionFactory();
+            protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
     }
 }

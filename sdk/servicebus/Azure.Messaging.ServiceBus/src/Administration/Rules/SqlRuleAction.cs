@@ -10,7 +10,7 @@ using Azure.Messaging.ServiceBus.Primitives;
 namespace Azure.Messaging.ServiceBus.Administration
 {
     /// <summary>
-    /// Represents set of actions written in SQL language-based syntax that is performed against a <see cref="ServiceBusMessage" />.
+    /// Represents the set of actions written in SQL language-based syntax that is performed against a <see cref="ServiceBusReceivedMessage" />.
     /// </summary>
     public sealed class SqlRuleAction : RuleAction
     {

@@ -18,33 +18,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="content"> Text content of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="span"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         internal DocumentWord(string content, DocumentSpan span, float confidence)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (span == null)
-            {
-                throw new ArgumentNullException(nameof(span));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
-            BoundingBoxPrivate = new ChangeTrackingList<float>();
+            Polygon = new ChangeTrackingList<float>();
             Span = span;
             Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of DocumentWord. </summary>
         /// <param name="content"> Text content of the word. </param>
-        /// <param name="boundingBoxPrivate"> Bounding box of the word. </param>
+        /// <param name="polygon"> Bounding polygon of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        internal DocumentWord(string content, IReadOnlyList<float> boundingBoxPrivate, DocumentSpan span, float confidence)
+        internal DocumentWord(string content, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
         {
             Content = content;
-            BoundingBoxPrivate = boundingBoxPrivate;
+            Polygon = polygon;
             Span = span;
             Confidence = confidence;
         }

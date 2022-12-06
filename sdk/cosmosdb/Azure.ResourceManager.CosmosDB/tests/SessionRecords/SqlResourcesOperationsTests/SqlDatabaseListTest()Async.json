@@ -42,7 +42,7 @@
                 "id": "databaseName9849",
                 "_rid": "GmYtAA==",
                 "_self": "dbs/GmYtAA==/",
-                "_etag": "\u002200003f06-0000-0100-0000-612dfbde0000\u0022",
+                "_etag": "\"00003f06-0000-0100-0000-612dfbde0000\"",
                 "_colls": "colls/",
                 "_users": "users/",
                 "_ts": 1630403550
@@ -92,7 +92,7 @@
             "id": "databaseName9849",
             "_rid": "GmYtAA==",
             "_self": "dbs/GmYtAA==/",
-            "_etag": "\u002200003f06-0000-0100-0000-612dfbde0000\u0022",
+            "_etag": "\"00003f06-0000-0100-0000-612dfbde0000\"",
             "_colls": "colls/",
             "_users": "users/",
             "_ts": 1630403550

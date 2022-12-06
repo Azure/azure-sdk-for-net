@@ -9,7 +9,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
     {
         public string TimeSeriesInsightsHostname => GetRecordedVariable(
             $"{TestSettings.TsiEnvironmentVariablesPrefix}_URL",
-            options => options.IsSecret(TestUrlSanitizer.FAKE_HOST));
+            options => options.IsSecret(E2eTestBase.FAKE_HOST));
 
         public string IoTHubConnectionString => GetRecordedVariable(
             $"{TestSettings.IoTHubConnectionStringEnvironmentVariable}",

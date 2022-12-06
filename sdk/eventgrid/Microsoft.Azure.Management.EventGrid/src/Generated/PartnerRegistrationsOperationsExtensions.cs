@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -177,12 +179,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerRegistrationName'>
             /// Name of the partner registration.
             /// </param>
-            /// <param name='partnerRegistrationUpdateParameters'>
-            /// Partner registration update information.
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
             /// </param>
-            public static PartnerRegistration Update(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters)
+            public static PartnerRegistration Update(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationUpdateParameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, partnerRegistrationName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -200,15 +202,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerRegistrationName'>
             /// Name of the partner registration.
             /// </param>
-            /// <param name='partnerRegistrationUpdateParameters'>
-            /// Partner registration update information.
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerRegistration> UpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerRegistration> UpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -339,6 +341,153 @@ namespace Microsoft.Azure.Management.EventGrid
             public static async Task<IPage<PartnerRegistration>> ListByResourceGroupAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create a partner registration.
+            /// </summary>
+            /// <remarks>
+            /// Creates a new partner registration with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerRegistrationName'>
+            /// Name of the partner registration.
+            /// </param>
+            /// <param name='partnerRegistrationInfo'>
+            /// PartnerRegistration information.
+            /// </param>
+            public static PartnerRegistration BeginCreateOrUpdate(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistration partnerRegistrationInfo)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationInfo).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a partner registration.
+            /// </summary>
+            /// <remarks>
+            /// Creates a new partner registration with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerRegistrationName'>
+            /// Name of the partner registration.
+            /// </param>
+            /// <param name='partnerRegistrationInfo'>
+            /// PartnerRegistration information.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PartnerRegistration> BeginCreateOrUpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistration partnerRegistrationInfo, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationInfo, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a partner registration.
+            /// </summary>
+            /// <remarks>
+            /// Deletes a partner registration with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerRegistrationName'>
+            /// Name of the partner registration.
+            /// </param>
+            public static void BeginDelete(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, partnerRegistrationName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a partner registration.
+            /// </summary>
+            /// <remarks>
+            /// Deletes a partner registration with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerRegistrationName'>
+            /// Name of the partner registration.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update a partner registration.
+            /// </summary>
+            /// <remarks>
+            /// Updates a partner registration with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerRegistrationName'>
+            /// Name of the partner registration.
+            /// </param>
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
+            /// </param>
+            public static PartnerRegistration BeginUpdate(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, partnerRegistrationName, tags).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a partner registration.
+            /// </summary>
+            /// <remarks>
+            /// Updates a partner registration with the specified parameters.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerRegistrationName'>
+            /// Name of the partner registration.
+            /// </param>
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PartnerRegistration> BeginUpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

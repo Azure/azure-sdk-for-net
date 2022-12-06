@@ -32,15 +32,15 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets or sets a value that, if set, indicates the version of the text
-        /// analytics model that will be used to generate the result.  For supported
+        /// Gets or sets a value that, if set, indicates the version of the Language service
+        /// model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/model-versioning#available-versions"/>.
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/concepts/model-lifecycle#available-versions"/>.
         /// </summary>
         public string ModelVersion { get; set; }
 
         /// <summary>
-        /// The default value of this property is 'false'. This means, Text Analytics service logs your input text for 48 hours,
+        /// The default value of this property is 'false'. This means, the Language service logs your input text for 48 hours,
         /// solely to allow for troubleshooting issues.
         /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
         /// <para>
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
 

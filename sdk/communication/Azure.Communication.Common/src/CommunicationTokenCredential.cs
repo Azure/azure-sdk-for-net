@@ -53,7 +53,7 @@ namespace Azure.Communication
         /// Gets an <see cref="AccessToken"/> for the user.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
-        /// <returns>/// Contains the access token for the user.</returns>
+        /// <returns> Contains the access token for the user.</returns>
         public AccessToken GetToken(CancellationToken cancellationToken = default)
         {
             if (_isDisposed)

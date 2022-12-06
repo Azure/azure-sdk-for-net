@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
@@ -12,11 +13,13 @@ namespace Azure.Core.TestFramework
     public class ManagementInterceptor : IInterceptor
     {
         private readonly ClientTestBase _testBase;
+        private readonly RecordedTestMode _testMode;
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
 
         public ManagementInterceptor(ClientTestBase testBase)
         {
             _testBase = testBase;
+            _testMode = testBase is RecordedTestBase recordedTestBase ? recordedTestBase.Mode : RecordedTestMode.Playback;
         }
 
         public void Intercept(IInvocation invocation)
@@ -30,35 +33,19 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.StartsWith("ValueTask") ||
-                type.Name.StartsWith("Task") ||
-                type.Name.StartsWith("AsyncStateMachineBox")) //in .net 5 the type is not task here
+            if (TaskExtensions.IsTaskType(type))
             {
-                if ((bool)type.GetProperty("IsFaulted").GetValue(result))
+                if (TaskExtensions.IsTaskFaulted(result))
                     return;
 
                 var taskResultType = type.GetGenericArguments()[0];
-                if (taskResultType.Name.StartsWith("Response"))
+                if (taskResultType.Name.StartsWith("Response") || InheritsFromArmResource(taskResultType))
                 {
-                    try
-                    {
-                        var taskResult = result.GetType().GetProperty("Result").GetValue(result);
-                        var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
-                        invocation.ReturnValue = type.Name.StartsWith("ValueTask")
-                            ? GetValueFromValueTask(taskResultType, instrumentedResult)
-                            : GetValueFromOther(taskResultType, instrumentedResult);
-                    }
-                    catch (TargetInvocationException e)
-                    {
-                        if (e.InnerException is AggregateException aggException)
-                        {
-                            throw aggException.InnerExceptions.First();
-                        }
-                        else
-                        {
-                            throw e.InnerException;
-                        }
-                    }
+                    var taskResult = TaskExtensions.GetResultFromTask(result);
+                    var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                    invocation.ReturnValue = type.Name.StartsWith("ValueTask")
+                        ? GetValueFromValueTask(taskResultType, instrumentedResult)
+                        : TaskExtensions.GetValueFromTask(taskResultType, instrumentedResult);
                 }
             }
             else if (invocation.Method.Name.EndsWith("Value") && InheritsFromArmResource(type))
@@ -81,6 +68,16 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        private static bool IsLro(Type returnType)
+        {
+            if (returnType.Name.StartsWith("Task"))
+            {
+                returnType = returnType.GetGenericArguments()[0];
+            }
+
+            return returnType.IsSubclassOf(typeof(Operation));
+        }
+
         internal static bool InheritsFromArmResource(Type elementType)
         {
             if (elementType.BaseType == null)
@@ -89,17 +86,10 @@ namespace Azure.Core.TestFramework
             if (elementType.BaseType == typeof(object))
                 return false;
 
-            if (elementType.BaseType.Name == "ArmResource")
+            if (elementType.BaseType.Name.Equals("ArmResource", StringComparison.Ordinal) || elementType.BaseType.Name.Equals("ArmCollection", StringComparison.Ordinal))
                 return true;
 
             return InheritsFromArmResource(elementType.BaseType);
-        }
-
-        private object GetValueFromOther(Type taskResultType, object instrumentedResult)
-        {
-            var method = typeof(Task).GetMethod("FromResult", BindingFlags.Public | BindingFlags.Static);
-            var genericMethod = method.MakeGenericMethod(taskResultType);
-            return genericMethod.Invoke(null, new object[] { instrumentedResult });
         }
 
         private object GetValueFromValueTask(Type taskResultType, object instrumentedResult)

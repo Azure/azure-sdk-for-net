@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of UpsertManagedServerOperationStep. </summary>
-        /// <param name="order"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
+        /// <param name="order"></param>
+        /// <param name="name"></param>
+        /// <param name="status"></param>
         internal UpsertManagedServerOperationStep(int? order, string name, UpsertManagedServerOperationStepStatus? status)
         {
             Order = order;
@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.Sql.Models
             Status = status;
         }
 
+        /// <summary> Gets the order. </summary>
         public int? Order { get; }
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+        /// <summary> Gets the status. </summary>
         public UpsertManagedServerOperationStepStatus? Status { get; }
     }
 }

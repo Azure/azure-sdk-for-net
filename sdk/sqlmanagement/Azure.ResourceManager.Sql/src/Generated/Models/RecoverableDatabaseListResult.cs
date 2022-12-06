@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -17,24 +19,21 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
         /// <param name="value"> A list of recoverable databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RecoverableDatabaseListResult(IEnumerable<RecoverableDatabase> value)
+        internal RecoverableDatabaseListResult(IEnumerable<RecoverableDatabaseData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
         /// <param name="value"> A list of recoverable databases. </param>
-        internal RecoverableDatabaseListResult(IReadOnlyList<RecoverableDatabase> value)
+        internal RecoverableDatabaseListResult(IReadOnlyList<RecoverableDatabaseData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of recoverable databases. </summary>
-        public IReadOnlyList<RecoverableDatabase> Value { get; }
+        public IReadOnlyList<RecoverableDatabaseData> Value { get; }
     }
 }

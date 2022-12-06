@@ -20,18 +20,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachinePublicIPAddressConfiguration(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            IpTags = new ChangeTrackingList<VirtualMachineIpTag>();
+            IPTags = new ChangeTrackingList<VirtualMachineIPTag>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressConfiguration. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
-        /// <param name="sku"> Describes the public IP Sku. </param>
+        /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM is deleted. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
@@ -39,14 +36,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
-        internal VirtualMachinePublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIpTag> ipTags, WritableSubResource publicIPPrefix, IPVersions? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod)
+        internal VirtualMachinePublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, ComputeDeleteOption? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod)
         {
             Name = name;
             Sku = sku;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DeleteOption = deleteOption;
             DnsSettings = dnsSettings;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -54,20 +51,39 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The publicIP address configuration name. </summary>
         public string Name { get; set; }
-        /// <summary> Describes the public IP Sku. </summary>
-        public PublicIPAddressSku Sku { get; set; }
+        /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
+        public ComputePublicIPAddressSku Sku { get; set; }
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public ComputeDeleteOption? DeleteOption { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
+        internal VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
+        /// <summary> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </summary>
+        public string DnsDomainNameLabel
+        {
+            get => DnsSettings is null ? default : DnsSettings.DomainNameLabel;
+            set => DnsSettings = new VirtualMachinePublicIPAddressDnsSettingsConfiguration(value);
+        }
+
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineIpTag> IpTags { get; }
+        public IList<VirtualMachineIPTag> IPTags { get; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        public WritableSubResource PublicIPPrefix { get; set; }
+        internal WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            set
+            {
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
-        public IPVersions? PublicIPAddressVersion { get; set; }
+        public IPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> Specify the public IP allocation type. </summary>
         public PublicIPAllocationMethod? PublicIPAllocationMethod { get; set; }
     }

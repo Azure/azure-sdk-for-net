@@ -34,7 +34,7 @@ Once you have chosen and configured your credential, you can create instances of
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new PurviewScanningClient(new Url("https://<my-account-name>.scan.purview.azure.com"), credential);
+var client = new PurviewScanningClient(new Uri("https://<my-account-name>.scan.purview.azure.com"), credential);
 ```
 
 ## Key concepts
@@ -69,7 +69,7 @@ var credential = new DefaultAzureCredential();
 var client = new PurviewScanningServiceClient(new Uri("https://<my-account-name>.scan.purview.azure.com"), credential);
 
 var response = await client.GetDataSourcesAsync();
-var responseDocument = JsonDocument.Parse(response.Content);
+using var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("value"));
 ```
 

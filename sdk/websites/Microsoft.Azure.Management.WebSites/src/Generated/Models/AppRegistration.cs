@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,8 +17,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// The configuration settings of the app registration for providers that
     /// have app ids and app secrets
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class AppRegistration : ProxyOnlyResource
+    public partial class AppRegistration
     {
         /// <summary>
         /// Initializes a new instance of the AppRegistration class.
@@ -33,15 +30,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the AppRegistration class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="appId">The App ID of the app used for login.</param>
         /// <param name="appSecretSettingName">The app setting name that
         /// contains the app secret.</param>
-        public AppRegistration(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string appId = default(string), string appSecretSettingName = default(string))
-            : base(id, name, kind, type)
+        public AppRegistration(string appId = default(string), string appSecretSettingName = default(string))
         {
             AppId = appId;
             AppSecretSettingName = appSecretSettingName;
@@ -56,13 +48,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets the App ID of the app used for login.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.appId")]
+        [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
 
         /// <summary>
         /// Gets or sets the app setting name that contains the app secret.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.appSecretSettingName")]
+        [JsonProperty(PropertyName = "appSecretSettingName")]
         public string AppSecretSettingName { get; set; }
 
     }

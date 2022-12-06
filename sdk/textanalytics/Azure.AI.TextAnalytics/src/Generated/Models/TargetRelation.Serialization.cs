@@ -10,8 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TargetRelation
+    internal partial class TargetRelation : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("relationType");
+            writer.WriteStringValue(RelationType.ToSerialString());
+            writer.WritePropertyName("ref");
+            writer.WriteStringValue(Ref);
+            writer.WriteEndObject();
+        }
+
         internal static TargetRelation DeserializeTargetRelation(JsonElement element)
         {
             TargetRelationType relationType = default;

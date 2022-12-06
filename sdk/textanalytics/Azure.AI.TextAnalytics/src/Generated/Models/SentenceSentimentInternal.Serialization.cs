@@ -12,8 +12,44 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial struct SentenceSentimentInternal
+    internal partial struct SentenceSentimentInternal : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("sentiment");
+            writer.WriteStringValue(Sentiment);
+            writer.WritePropertyName("confidenceScores");
+            writer.WriteObjectValue(ConfidenceScores);
+            writer.WritePropertyName("offset");
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length");
+            writer.WriteNumberValue(Length);
+            if (Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets");
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Assessments))
+            {
+                writer.WritePropertyName("assessments");
+                writer.WriteStartArray();
+                foreach (var item in Assessments)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
         internal static SentenceSentimentInternal DeserializeSentenceSentimentInternal(JsonElement element)
         {
             string text = default;

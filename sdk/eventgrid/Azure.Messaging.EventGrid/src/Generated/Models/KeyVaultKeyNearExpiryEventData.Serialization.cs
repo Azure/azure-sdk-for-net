@@ -22,8 +22,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> objectType = default;
             Optional<string> objectName = default;
             Optional<string> version = default;
-            Optional<float> nBF = default;
-            Optional<float> eXP = default;
+            Optional<float> nbf = default;
+            Optional<float> exp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"))
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nBF = property.Value.GetSingle();
+                    nbf = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("EXP"))
@@ -68,11 +68,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eXP = property.Value.GetSingle();
+                    exp = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new KeyVaultKeyNearExpiryEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nBF), Optional.ToNullable(eXP));
+            return new KeyVaultKeyNearExpiryEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
         }
 
         internal partial class KeyVaultKeyNearExpiryEventDataConverter : JsonConverter<KeyVaultKeyNearExpiryEventData>

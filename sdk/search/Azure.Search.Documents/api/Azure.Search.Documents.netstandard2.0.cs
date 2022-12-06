@@ -22,6 +22,25 @@ namespace Azure.Search.Documents
         public IndexDocumentsOptions() { }
         public bool ThrowOnAnyError { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SearchAudience : System.IEquatable<Azure.Search.Documents.SearchAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SearchAudience(string value) { throw null; }
+        public static Azure.Search.Documents.SearchAudience AzureChina { get { throw null; } }
+        public static Azure.Search.Documents.SearchAudience AzureGovernment { get { throw null; } }
+        public static Azure.Search.Documents.SearchAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.SearchAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.SearchAudience left, Azure.Search.Documents.SearchAudience right) { throw null; }
+        public static implicit operator Azure.Search.Documents.SearchAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.SearchAudience left, Azure.Search.Documents.SearchAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SearchClient
     {
         protected SearchClient() { }
@@ -58,6 +77,7 @@ namespace Azure.Search.Documents
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
         public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2021_04_30_Preview) { }
+        public Azure.Search.Documents.SearchAudience? Audience { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -196,14 +216,20 @@ namespace Azure.Search.Documents.Indexes
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo>> AnalyzeText(string indexName, Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.AnalyzedTokenInfo>>> AnalyzeTextAsync(string indexName, Azure.Search.Documents.Indexes.Models.AnalyzeTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias> CreateAlias(Azure.Search.Documents.Indexes.Models.SearchAlias alias, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias>> CreateAliasAsync(Azure.Search.Documents.Indexes.Models.SearchAlias alias, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex> CreateIndex(Azure.Search.Documents.Indexes.Models.SearchIndex index, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex>> CreateIndexAsync(Azure.Search.Documents.Indexes.Models.SearchIndex index, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias> CreateOrUpdateAlias(string aliasName, Azure.Search.Documents.Indexes.Models.SearchAlias alias, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias>> CreateOrUpdateAliasAsync(string aliasName, Azure.Search.Documents.Indexes.Models.SearchAlias alias, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex> CreateOrUpdateIndex(Azure.Search.Documents.Indexes.Models.SearchIndex index, bool allowIndexDowntime = false, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex>> CreateOrUpdateIndexAsync(Azure.Search.Documents.Indexes.Models.SearchIndex index, bool allowIndexDowntime = false, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SynonymMap> CreateOrUpdateSynonymMap(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SynonymMap>> CreateOrUpdateSynonymMapAsync(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SynonymMap> CreateSynonymMap(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SynonymMap>> CreateSynonymMapAsync(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteAlias(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAliasAsync(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteIndex(Azure.Search.Documents.Indexes.Models.SearchIndex index, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteIndex(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteIndexAsync(Azure.Search.Documents.Indexes.Models.SearchIndex index, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -212,6 +238,10 @@ namespace Azure.Search.Documents.Indexes
         public virtual Azure.Response DeleteSynonymMap(string synonymMapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSynonymMapAsync(Azure.Search.Documents.Indexes.Models.SynonymMap synonymMap, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSynonymMapAsync(string synonymMapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias> GetAlias(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchAlias>> GetAliasAsync(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Search.Documents.Indexes.Models.SearchAlias> GetAliases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Search.Documents.Indexes.Models.SearchAlias> GetAliasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex> GetIndex(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.SearchIndex>> GetIndexAsync(string indexName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Search.Documents.Indexes.Models.SearchIndex> GetIndexes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -321,6 +351,7 @@ namespace Azure.Search.Documents.Indexes
         public bool IsHidden { get { throw null; } set { } }
         public bool IsKey { get { throw null; } set { } }
         public bool IsSortable { get { throw null; } set { } }
+        public string NormalizerName { get { throw null; } set { } }
     }
 }
 namespace Azure.Search.Documents.Indexes.Models
@@ -350,6 +381,17 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public AsciiFoldingTokenFilter(string name) { }
         public bool? PreserveOriginal { get { throw null; } set { } }
+    }
+    public partial class AzureMachineLearningSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
+    {
+        public AzureMachineLearningSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Core.ResourceIdentifier resourceId, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { }
+        public AzureMachineLearningSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, System.Uri scoringUri, string authenticationKey = null) { }
+        public string AuthenticationKey { get { throw null; } }
+        public int? DegreeOfParallelism { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public System.Uri ScoringUri { get { throw null; } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlobIndexerDataToExtract : System.IEquatable<Azure.Search.Documents.Indexes.Models.BlobIndexerDataToExtract>
@@ -787,11 +829,58 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ImageAnalysisSkillLanguage(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ar { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Az { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Bg { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Bs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ca { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Cs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Cy { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Da { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage De { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage El { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage En { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Es { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Et { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Eu { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Fi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Fr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ga { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Gl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage He { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Hi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Hr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Hu { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Id { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage It { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ja { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Kk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ko { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Lt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Lv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Mk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ms { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Nb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Nl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Pl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Prs { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Pt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage PtBR { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage PtPT { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ro { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Ru { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Sk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Sl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage SrCyrl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage SrLatn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Sv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Th { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Tr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Uk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Vi { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage Zh { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage ZhHans { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage ZhHant { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.ImageAnalysisSkillLanguage other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1320,6 +1409,14 @@ namespace Azure.Search.Documents.Indexes.Models
         public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalNormalizerName (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName left, Azure.Search.Documents.Indexes.Models.LexicalNormalizerName right) { throw null; }
         public override string ToString() { throw null; }
+        public static partial class Values
+        {
+            public const string AsciiFolding = "asciifolding";
+            public const string Elision = "elision";
+            public const string Lowercase = "lowercase";
+            public const string Standard = "standard";
+            public const string Uppercase = "uppercase";
+        }
     }
     public partial class LexicalTokenizer
     {
@@ -1548,32 +1645,176 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public OcrSkillLanguage(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Af { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Anp { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ar { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ast { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Awa { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Az { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Be { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage BeCyrl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage BeLatn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bfy { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bfz { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bg { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bgc { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bho { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bns { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Br { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bra { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Brx { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Bua { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ca { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ceb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ch { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage CnrCyrl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage CnrLatn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Co { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Crh { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Cs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Csb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Cy { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Da { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage De { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Dhi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Doi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Dsb { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage El { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage En { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Es { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Et { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Eu { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fa { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fil { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fj { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fo { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fur { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Fy { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ga { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Gag { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Gd { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Gil { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Gl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Gon { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Gv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Gvr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Haw { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hlb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hne { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hni { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hoc { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hsb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ht { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Hu { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ia { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Id { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Is { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage It { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Iu { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ja { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Jns { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Jv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kaa { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage KaaCyrl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kac { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kea { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kfq { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kha { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage KkCyrl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage KkLatn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Klr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kmj { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ko { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kos { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kpy { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Krc { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kru { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ksh { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage KuArab { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage KuLatn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kum { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Kw { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ky { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage La { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Lb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Lkt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Lt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Mi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Mn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Mr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ms { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Mt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Mww { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Myv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Nap { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Nb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ne { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Niu { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Nl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage No { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Nog { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Oc { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Os { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Pa { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Pl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Prs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ps { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Pt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Quc { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Rab { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Rm { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ro { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ru { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sa { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sat { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sck { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sco { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sm { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sma { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sme { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Smj { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Smn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sms { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage So { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sq { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sr { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage SrCyrl { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage SrLatn { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Srx { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Sw { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tet { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tg { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Thf { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage To { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Tyv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ug { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Unk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Ur { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Uz { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage UzArab { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage UzCyrl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Vo { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Wae { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Xnr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Xsr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Yua { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Za { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage ZhHans { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage ZhHant { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.OcrSkillLanguage Zu { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.OcrSkillLanguage other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1750,6 +1991,14 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
     }
+    public partial class SearchAlias
+    {
+        public SearchAlias(string name, System.Collections.Generic.IEnumerable<string> indexes) { }
+        public SearchAlias(string name, string index) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public System.Collections.Generic.IList<string> Indexes { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+    }
     public partial class SearchField
     {
         public SearchField(string name, Azure.Search.Documents.Indexes.Models.SearchFieldDataType type) { }
@@ -1763,7 +2012,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? IsSearchable { get { throw null; } set { } }
         public bool? IsSortable { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? Normalizer { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? NormalizerName { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
@@ -1979,6 +2228,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchServiceCounters
     {
         internal SearchServiceCounters() { }
+        public Azure.Search.Documents.Indexes.Models.SearchResourceCounter AliasCounter { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceCounter DataSourceCounter { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceCounter DocumentCounter { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceCounter IndexCounter { get { throw null; } }
@@ -2110,6 +2360,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool IsHidden { get { throw null; } set { } }
         public bool IsKey { get { throw null; } set { } }
         public bool IsSortable { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? NormalizerName { get { throw null; } set { } }
     }
     public partial class SnowballTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {
@@ -2913,7 +3164,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount CognitiveServicesAccount(string oDataType, string description) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy DataChangeDetectionPolicy(string oDataType) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy DataDeletionDetectionPolicy(string oDataType) { throw null; }
-        public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties) { throw null; }
+        public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
         public static Azure.Search.Documents.Models.IndexDocumentsResult IndexDocumentsResult(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.IndexingResult> results) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerChangeTrackingState IndexerChangeTrackingState(string allDocumentsInitialState, string allDocumentsFinalState, string resetDocumentsInitialState, string resetDocumentsFinalState) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status = Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.TransientFailure, Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail? statusDetail = default(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail?), Azure.Search.Documents.Indexes.Models.IndexerState currentState = null, string errorMessage = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings = null, int itemCount = 0, int failedItemCount = 0, string initialTrackingState = null, string finalTrackingState = null) { throw null; }
@@ -2938,7 +3189,9 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.SearchResult<T> SearchResult<T>(T document, double? score, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> highlights) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter aliasCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceStatistics SearchServiceStatistics(Azure.Search.Documents.Indexes.Models.SearchServiceCounters counters, Azure.Search.Documents.Indexes.Models.SearchServiceLimits limits) { throw null; }
         public static Azure.Search.Documents.Models.SearchSuggestion<T> SearchSuggestion<T>(T document, string text) { throw null; }

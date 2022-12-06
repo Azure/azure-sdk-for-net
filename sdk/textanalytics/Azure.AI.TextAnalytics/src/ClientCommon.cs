@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
@@ -10,13 +11,13 @@ namespace Azure.AI.TextAnalytics
 {
     internal static class ClientCommon
     {
-        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, IReadOnlyList<TextAnalyticsErrorInternal> errors, string errorMessage = default)
+        public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, IReadOnlyList<Error> errors, string errorMessage = default)
         {
             string errorCode = default;
 
             if (errors.Count > 0)
             {
-                errorCode = errors[0].Code;
+                errorCode = errors[0].Code.ToString();
                 errorMessage ??= errors[0].Message;
             }
 
@@ -29,8 +30,8 @@ namespace Azure.AI.TextAnalytics
             }
 
             return async
-                ? await diagnostics.CreateRequestFailedExceptionAsync(response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
+                ? await diagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(errorCode, errorMessage), errorInfo).ConfigureAwait(false)
+                : diagnostics.CreateRequestFailedException(response, new ResponseError(errorCode, errorMessage), errorInfo);
         }
     }
 }

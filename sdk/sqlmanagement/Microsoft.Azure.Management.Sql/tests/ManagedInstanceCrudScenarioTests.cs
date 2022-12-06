@@ -28,7 +28,7 @@ namespace Sql.Tests
 
                 bool publicDataEndpointEnabled = true;
                 string proxyOverride = ManagedInstanceProxyOverride.Proxy;
-                string storageAccountType = "GRS";
+                string requestedBSR = "Geo";
                 string publicResourceName = "SQL_Default";
                 string maintenanceConfigurationId = ManagedInstanceTestUtilities.getManagedInstanceFullMaintenanceResourceid();
 
@@ -67,8 +67,10 @@ namespace Sql.Tests
                 Assert.Contains(publicResourceName, getMI1.MaintenanceConfigurationId);
 
                 // Verify that storageAccountType value is correctly set
-                Assert.Equal(storageAccountType, getMI1.StorageAccountType);
-                Assert.Equal(storageAccountType, getMI2.StorageAccountType);
+                Assert.Equal(requestedBSR, getMI1.RequestedBackupStorageRedundancy);
+                Assert.Equal(requestedBSR, getMI2.RequestedBackupStorageRedundancy);
+                Assert.Equal(requestedBSR, getMI1.CurrentBackupStorageRedundancy);
+                Assert.Equal(requestedBSR, getMI2.CurrentBackupStorageRedundancy);
 
                 // Verify that dns zone value is correctly inherited from dns zone partner
                 Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);

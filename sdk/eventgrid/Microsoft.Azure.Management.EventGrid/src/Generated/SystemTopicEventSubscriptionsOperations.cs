@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Delete an event subscription of a system topic.
         /// </summary>
         /// <remarks>
-        /// Delete an event subscription of a system topic.
+        /// Delete an existing event subscription of a system topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Update event subscription of a system topic.
         /// </summary>
         /// <remarks>
-        /// Update event subscription of a system topic.
+        /// Update an existing event subscription of a system topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -1231,7 +1231,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Delete an event subscription of a system topic.
         /// </summary>
         /// <remarks>
-        /// Delete an event subscription of a system topic.
+        /// Delete an existing event subscription of a system topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -1420,7 +1420,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Update event subscription of a system topic.
         /// </summary>
         /// <remarks>
-        /// Update event subscription of a system topic.
+        /// Update an existing event subscription of a system topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.

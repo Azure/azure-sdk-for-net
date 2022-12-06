@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,11 +25,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncAgentLinkedDatabase DeserializeSyncAgentLinkedDatabase(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
             Optional<SyncMemberDbType> databaseType = default;
-            Optional<string> databaseId = default;
+            Optional<Guid> databaseId = default;
             Optional<string> description = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -46,7 +49,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -70,7 +83,12 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("databaseId"))
                         {
-                            databaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            databaseId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -97,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncAgentLinkedDatabase(id.Value, name.Value, type.Value, Optional.ToNullable(databaseType), databaseId.Value, description.Value, serverName.Value, databaseName.Value, userName.Value);
+            return new SyncAgentLinkedDatabase(id, name, type, systemData.Value, Optional.ToNullable(databaseType), Optional.ToNullable(databaseId), description.Value, serverName.Value, databaseName.Value, userName.Value);
         }
     }
 }

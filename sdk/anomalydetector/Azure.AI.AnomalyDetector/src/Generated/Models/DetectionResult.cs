@@ -8,27 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> Anomaly Response of one detection corresponds to a resultId. </summary>
+    /// <summary> Response of the given resultId. </summary>
     public partial class DetectionResult
     {
         /// <summary> Initializes a new instance of DetectionResult. </summary>
         /// <param name="resultId"></param>
-        /// <param name="summary"> Multivariate anomaly detection status. </param>
-        /// <param name="results"> anomaly status of each timestamp. </param>
+        /// <param name="summary"></param>
+        /// <param name="results"> Detection result for each timestamp. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
         internal DetectionResult(Guid resultId, DetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
-            if (summary == null)
-            {
-                throw new ArgumentNullException(nameof(summary));
-            }
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+            Argument.AssertNotNull(summary, nameof(summary));
+            Argument.AssertNotNull(results, nameof(results));
 
             ResultId = resultId;
             Summary = summary;
@@ -37,8 +32,8 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Initializes a new instance of DetectionResult. </summary>
         /// <param name="resultId"></param>
-        /// <param name="summary"> Multivariate anomaly detection status. </param>
-        /// <param name="results"> anomaly status of each timestamp. </param>
+        /// <param name="summary"></param>
+        /// <param name="results"> Detection result for each timestamp. </param>
         internal DetectionResult(Guid resultId, DetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
         {
             ResultId = resultId;
@@ -48,9 +43,9 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Gets the result id. </summary>
         public Guid ResultId { get; }
-        /// <summary> Multivariate anomaly detection status. </summary>
+        /// <summary> Gets the summary. </summary>
         public DetectionResultSummary Summary { get; }
-        /// <summary> anomaly status of each timestamp. </summary>
+        /// <summary> Detection result for each timestamp. </summary>
         public IReadOnlyList<AnomalyState> Results { get; }
     }
 }

@@ -20,39 +20,51 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary> Initializes a new instance of Path. </summary>
         /// <param name="name"></param>
         /// <param name="lastModified"></param>
-        /// <param name="eTag"></param>
         /// <param name="owner"></param>
         /// <param name="group"></param>
         /// <param name="permissions"></param>
+        /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
+        /// <param name="creationTime"></param>
+        /// <param name="expiryTime"></param>
         /// <param name="contentLength"></param>
         /// <param name="isDirectory"></param>
-        internal Path(string name, DateTimeOffset? lastModified, string eTag, string owner, string group, string permissions, string contentLength, string isDirectory)
+        /// <param name="etag"></param>
+        internal Path(string name, DateTimeOffset? lastModified, string owner, string group, string permissions, string encryptionScope, string creationTime, string expiryTime, string contentLength, string isDirectory, string etag)
         {
             Name = name;
             LastModified = lastModified;
-            ETag = eTag;
             Owner = owner;
             Group = group;
             Permissions = permissions;
+            EncryptionScope = encryptionScope;
+            CreationTime = creationTime;
+            ExpiryTime = expiryTime;
             ContentLength = contentLength;
             IsDirectory = isDirectory;
+            Etag = etag;
         }
 
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the last modified. </summary>
         public DateTimeOffset? LastModified { get; }
-        /// <summary> Gets the e tag. </summary>
-        public string ETag { get; }
         /// <summary> Gets the owner. </summary>
         public string Owner { get; }
         /// <summary> Gets the group. </summary>
         public string Group { get; }
         /// <summary> Gets the permissions. </summary>
         public string Permissions { get; }
+        /// <summary> The name of the encryption scope under which the blob is encrypted. </summary>
+        public string EncryptionScope { get; }
+        /// <summary> Gets the creation time. </summary>
+        public string CreationTime { get; }
+        /// <summary> Gets the expiry time. </summary>
+        public string ExpiryTime { get; }
         /// <summary> Gets the content length. </summary>
         public string ContentLength { get; }
         /// <summary> Gets the is directory. </summary>
         public string IsDirectory { get; }
+        /// <summary> Gets the etag. </summary>
+        public string Etag { get; }
     }
 }

@@ -35,7 +35,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Data Box Heavy.
         /// </summary>
         [EnumMember(Value = "DataBoxHeavy")]
-        DataBoxHeavy
+        DataBoxHeavy,
+        /// <summary>
+        /// Data Box Customer Disk
+        /// </summary>
+        [EnumMember(Value = "DataBoxCustomerDisk")]
+        DataBoxCustomerDisk
     }
     internal static class SkuNameEnumExtension
     {
@@ -54,6 +59,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "DataBoxDisk";
                 case SkuName.DataBoxHeavy:
                     return "DataBoxHeavy";
+                case SkuName.DataBoxCustomerDisk:
+                    return "DataBoxCustomerDisk";
             }
             return null;
         }
@@ -68,6 +75,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return SkuName.DataBoxDisk;
                 case "DataBoxHeavy":
                     return SkuName.DataBoxHeavy;
+                case "DataBoxCustomerDisk":
+                    return SkuName.DataBoxCustomerDisk;
             }
             return null;
         }

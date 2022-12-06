@@ -89,6 +89,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             #region Snippet:ServiceBusCrossEntityTransaction
 #if SNIPPET
+            string connectionString = "<connection_string>";
             var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
             await using var client = new ServiceBusClient(connectionString, options);
 
@@ -135,6 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             #region Snippet:ServiceBusCrossEntityTransactionWrongOrder
 #if SNIPPET
+            string connectionString = "<connection_string>";
             var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
             await using var client = new ServiceBusClient(connectionString, options);
 
@@ -165,7 +167,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                // This will through an InvalidOperationException because a "receive" cannot be
+                // This will throw an InvalidOperationException because a "receive" cannot be
                 // routed through a different entity.
                 await receiverA.CompleteMessageAsync(receivedMessage);
                 await senderB.SendMessageAsync(new ServiceBusMessage());

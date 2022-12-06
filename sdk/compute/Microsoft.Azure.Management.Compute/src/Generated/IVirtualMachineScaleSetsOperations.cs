@@ -584,6 +584,14 @@ namespace Microsoft.Azure.Management.Compute
         /// The platform update domain for which a manual recovery walk is
         /// requested
         /// </param>
+        /// <param name='zone'>
+        /// The zone in which the manual recovery walk is requested for cross
+        /// zone virtual machine scale set
+        /// </param>
+        /// <param name='placementGroupId'>
+        /// The placement group id for which the manual recovery walk is
+        /// requested.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -599,7 +607,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, string zone = default(string), string placementGroupId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Converts SinglePlacementGroup property to false for a existing
         /// virtual machine scale set.

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,21 +17,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="matchVariable"> The variable to be excluded. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="matchVariable"/>, <paramref name="selectorMatchOperator"/>, or <paramref name="selector"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="matchVariable"/>, <paramref name="selectorMatchOperator"/> or <paramref name="selector"/> is null. </exception>
         public ApplicationGatewayFirewallExclusion(string matchVariable, string selectorMatchOperator, string selector)
         {
-            if (matchVariable == null)
-            {
-                throw new ArgumentNullException(nameof(matchVariable));
-            }
-            if (selectorMatchOperator == null)
-            {
-                throw new ArgumentNullException(nameof(selectorMatchOperator));
-            }
-            if (selector == null)
-            {
-                throw new ArgumentNullException(nameof(selector));
-            }
+            Argument.AssertNotNull(matchVariable, nameof(matchVariable));
+            Argument.AssertNotNull(selectorMatchOperator, nameof(selectorMatchOperator));
+            Argument.AssertNotNull(selector, nameof(selector));
 
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;

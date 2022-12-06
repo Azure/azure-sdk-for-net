@@ -11,14 +11,9 @@ namespace Azure.Analytics.Purview.Scanning.Tests
 {
     public class ScanClientTestBase : RecordedTestBase<PurviewScanningTestEnvironment>
     {
-        public ScanClientTestBase(bool isAsync) : base(isAsync)
+        public ScanClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
-        }
-
-        public ScanClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new PurviewRecordedTestSanitizer();
+            this.AddPurviewSanitizers();
         }
         public PurviewScanClient GetPurviewScanClient(string dataSourceName,string scanName)
         {

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.Serialization;
+
 namespace Microsoft.Azure.WebPubSub.Common
 {
     /// <summary>
@@ -8,5 +10,10 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// </summary>
     public abstract class WebPubSubEventResponse
     {
+        /// <summary>
+        /// Reserved code for json deserilize to correct derived response.
+        /// Default to <see cref="WebPubSubStatusCode.Success"/>.
+        /// </summary>
+        internal virtual WebPubSubStatusCode StatusCode { get; set; }
     }
 }

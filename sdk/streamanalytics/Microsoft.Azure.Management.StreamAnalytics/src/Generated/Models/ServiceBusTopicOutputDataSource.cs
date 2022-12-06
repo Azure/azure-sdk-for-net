@@ -53,6 +53,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <param name="propertyColumns">A string array of the names of output
         /// columns to be attached to Service Bus messages as custom
         /// properties.</param>
+        /// <param name="systemPropertyColumns">The system properties
+        /// associated with the Service Bus Topic Output. The following system
+        /// properties are supported: ReplyToSessionId, ContentType, To,
+        /// Subject, CorrelationId, TimeToLive, PartitionKey, SessionId,
+        /// ScheduledEnqueueTime, MessageId, ReplyTo, Label,
+        /// ScheduledEnqueueTimeUtc.</param>
         public ServiceBusTopicOutputDataSource(string serviceBusNamespace = default(string), string sharedAccessPolicyName = default(string), string sharedAccessPolicyKey = default(string), string authenticationMode = default(string), string topicName = default(string), IList<string> propertyColumns = default(IList<string>), IDictionary<string, string> systemPropertyColumns = default(IDictionary<string, string>))
         {
             ServiceBusNamespace = serviceBusNamespace;
@@ -115,6 +121,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public IList<string> PropertyColumns { get; set; }
 
         /// <summary>
+        /// Gets or sets the system properties associated with the Service Bus
+        /// Topic Output. The following system properties are supported:
+        /// ReplyToSessionId, ContentType, To, Subject, CorrelationId,
+        /// TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime,
+        /// MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc.
         /// </summary>
         [JsonProperty(PropertyName = "properties.systemPropertyColumns")]
         public IDictionary<string, string> SystemPropertyColumns { get; set; }

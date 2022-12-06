@@ -10,13 +10,12 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task CreateComposedModel()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -34,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Samples
             bool useLabels = true;
 
 #if SNIPPET
-            Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
+            Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
 #else
             Uri officeSuppliesUri = new Uri(trainingFileUrl);
 #endif
@@ -45,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Samples
             CustomFormModel officeSuppliesModel = suppliesOperationResponse.Value;
 
 #if SNIPPET
-            Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
+            Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
 #else
             Uri officeEquipmentUri = new Uri(trainingFileUrl);
 #endif
@@ -56,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Samples
             CustomFormModel officeEquipmentModel = equipmentOperationResponse.Value;
 
 #if SNIPPET
-            Uri furnitureUri = <purchaseOrderFurnitureUri>;
+            Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
 #else
             Uri furnitureUri = new Uri(trainingFileUrl);
 #endif
@@ -67,7 +66,7 @@ namespace Azure.AI.FormRecognizer.Samples
             CustomFormModel furnitureModel = furnitureOperationResponse.Value;
 
 #if SNIPPET
-            Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
+            Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
 #else
             Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
 #endif

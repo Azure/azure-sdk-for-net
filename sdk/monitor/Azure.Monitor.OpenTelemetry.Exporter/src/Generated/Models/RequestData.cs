@@ -20,21 +20,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>
         /// <param name="success"> Indication of successful or unsuccessful call. </param>
         /// <param name="responseCode"> Result of a request execution. HTTP status code for HTTP requests. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="duration"/>, or <paramref name="responseCode"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="duration"/> or <paramref name="responseCode"/> is null. </exception>
         public RequestData(int version, string id, string duration, bool success, string responseCode) : base(version)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (duration == null)
-            {
-                throw new ArgumentNullException(nameof(duration));
-            }
-            if (responseCode == null)
-            {
-                throw new ArgumentNullException(nameof(responseCode));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(duration, nameof(duration));
+            Argument.AssertNotNull(responseCode, nameof(responseCode));
 
             Id = id;
             Duration = duration;

@@ -18,21 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="uri"> The url for the Web API. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/>, or <paramref name="uri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/> or <paramref name="uri"/> is null. </exception>
         public WebApiSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, string uri) : base(inputs, outputs)
         {
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (outputs == null)
-            {
-                throw new ArgumentNullException(nameof(outputs));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(outputs, nameof(outputs));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
             HttpHeaders = new ChangeTrackingDictionary<string, string>();

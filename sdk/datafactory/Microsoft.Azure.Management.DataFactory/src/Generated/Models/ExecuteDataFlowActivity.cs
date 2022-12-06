@@ -62,7 +62,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// flow execution. Allows sinks with the same save order to be
         /// processed concurrently. Type: boolean (or Expression with
         /// resultType boolean)</param>
-        public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute), object traceLevel = default(object), object continueOnError = default(object), object runConcurrently = default(object))
+        /// <param name="sourceStagingConcurrency">Specify number of parallel
+        /// staging for sources applicable to the sink. Type: integer (or
+        /// Expression with resultType integer)</param>
+        public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute), object traceLevel = default(object), object continueOnError = default(object), object runConcurrently = default(object), object sourceStagingConcurrency = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             DataFlow = dataFlow;
@@ -72,6 +75,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             TraceLevel = traceLevel;
             ContinueOnError = continueOnError;
             RunConcurrently = runConcurrently;
+            SourceStagingConcurrency = sourceStagingConcurrency;
             CustomInit();
         }
 
@@ -127,6 +131,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.runConcurrently")]
         public object RunConcurrently { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify number of parallel staging for sources
+        /// applicable to the sink. Type: integer (or Expression with
+        /// resultType integer)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sourceStagingConcurrency")]
+        public object SourceStagingConcurrency { get; set; }
 
         /// <summary>
         /// Validate the object.

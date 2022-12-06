@@ -41,6 +41,9 @@ namespace ExtendedLocation.Tests.ScenarioTests
             List<string> clusterextids = new List<string>(new string[] { CustomLocationTestData.CassandraTest });
             parameters.ClusterExtensionIds = clusterextids;
             parameters.HostType = "Kubernetes";
+            Identity identity = new Identity();
+            identity.Type = "SystemAssigned";
+            parameters.Identity = identity;
             parameters.NamespaceProperty = CustomLocationTestData.NamespaceTest;
             parameters.DisplayName = CustomLocationTestData.ResourceName;
             parameters.Authentication = null;

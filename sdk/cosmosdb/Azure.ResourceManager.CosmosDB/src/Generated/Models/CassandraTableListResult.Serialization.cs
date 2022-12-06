@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraTableListResult DeserializeCassandraTableListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<CassandraTableGetResults>> value = default;
+            Optional<IReadOnlyList<CassandraTableData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CassandraTableGetResults> array = new List<CassandraTableGetResults>();
+                    List<CassandraTableData> array = new List<CassandraTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraTableGetResults.DeserializeCassandraTableGetResults(item));
+                        array.Add(CassandraTableData.DeserializeCassandraTableData(item));
                     }
                     value = array;
                     continue;

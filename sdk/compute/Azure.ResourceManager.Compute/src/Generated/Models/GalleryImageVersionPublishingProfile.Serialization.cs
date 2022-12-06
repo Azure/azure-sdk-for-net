@@ -37,15 +37,30 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("excludeFromLatest");
                 writer.WriteBooleanValue(ExcludeFromLatest.Value);
             }
-            if (Optional.IsDefined(EndOfLifeDate))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate");
-                writer.WriteStringValue(EndOfLifeDate.Value, "O");
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (Optional.IsDefined(ReplicationMode))
+            {
+                writer.WritePropertyName("replicationMode");
+                writer.WriteStringValue(ReplicationMode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            {
+                writer.WritePropertyName("targetExtendedLocations");
+                writer.WriteStartArray();
+                foreach (var item in TargetExtendedLocations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -57,7 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> excludeFromLatest = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<StorageAccountType> storageAccountType = default;
+            Optional<ImageStorageAccountType> storageAccountType = default;
+            Optional<GalleryReplicationMode> replicationMode = default;
+            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetRegions"))
@@ -122,11 +139,36 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(property.Value.GetString());
+                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("replicationMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    replicationMode = new GalleryReplicationMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetExtendedLocations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item));
+                    }
+                    targetExtendedLocations = array;
                     continue;
                 }
             }
-            return new GalleryImageVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType));
+            return new GalleryImageVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations));
         }
     }
 }

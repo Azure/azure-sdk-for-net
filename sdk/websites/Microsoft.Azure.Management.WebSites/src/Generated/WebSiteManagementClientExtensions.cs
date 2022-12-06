@@ -22,52 +22,6 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class WebSiteManagementClientExtensions
     {
             /// <summary>
-            /// Exchange code for GitHub access token for AppService CLI
-            /// </summary>
-            /// <remarks>
-            /// Description for Exchange code for GitHub access token for AppService CLI
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='code'>
-            /// Code string to exchange for Github Access token
-            /// </param>
-            /// <param name='state'>
-            /// State string used for verification.
-            /// </param>
-            public static AppserviceGithubToken GenerateGithubAccessTokenForAppserviceCLIAsync(this IWebSiteManagementClient operations, string code, string state)
-            {
-                return operations.GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(code, state).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Exchange code for GitHub access token for AppService CLI
-            /// </summary>
-            /// <remarks>
-            /// Description for Exchange code for GitHub access token for AppService CLI
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='code'>
-            /// Code string to exchange for Github Access token
-            /// </param>
-            /// <param name='state'>
-            /// State string used for verification.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AppserviceGithubToken> GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(this IWebSiteManagementClient operations, string code, string state, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GenerateGithubAccessTokenForAppserviceCLIAsyncWithHttpMessagesAsync(code, state, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets publishing user
             /// </summary>
             /// <remarks>
@@ -360,6 +314,34 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync(this IWebSiteManagementClient operations, string name, string type, bool? isFqdn = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, type, isFqdn, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get custom hostnames under this subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<CustomHostnameSites> ListCustomHostNameSites(this IWebSiteManagementClient operations)
+            {
+                return operations.ListCustomHostNameSitesAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get custom hostnames under this subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CustomHostnameSites>> ListCustomHostNameSitesAsync(this IWebSiteManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCustomHostNameSitesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -828,6 +810,40 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<BillingMeter>> ListBillingMetersNextAsync(this IWebSiteManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBillingMetersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get custom hostnames under this subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CustomHostnameSites> ListCustomHostNameSitesNext(this IWebSiteManagementClient operations, string nextPageLink)
+            {
+                return operations.ListCustomHostNameSitesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get custom hostnames under this subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CustomHostnameSites>> ListCustomHostNameSitesNextAsync(this IWebSiteManagementClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCustomHostNameSitesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -22,31 +22,40 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         {
             #region Snippet:CreateAccessControlClient
             // Replace the string below with your actual endpoint url.
+#if SNIPPET
             string endpoint = "<my-endpoint-url>";
-            /*@@*/endpoint = TestEnvironment.EndpointUrl;
+#else
+            string endpoint = TestEnvironment.EndpointUrl;
+#endif
 
             RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
             RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:PrepCreateRoleAssignment
-            Response roleDefinitionsReponse = definitionsClient.GetRoleDefinitions(new());
-            BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
-            JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
+            Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(true);
+            BinaryData roleDefinitionsContent = roleDefinitionsResponse.Content;
+            using JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
             JsonElement adminRoleJson = roleDefinitionsJson.RootElement.EnumerateArray().
                 Single(role => role.GetProperty("name").ToString() == "Synapse Administrator");
             Guid adminRoleId = new Guid(adminRoleJson.GetProperty("id").ToString());
 
+#if SNIPPET
             string assignedScope = "workspaces/<my-workspace-name>";
-            /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
+#else
+            string assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
+#endif
 
             // Replace the string below with the ID you'd like to assign the role.
             Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
 
             // Replace the string below with the ID of the assignment you'd like to use.
+#if SNIPPET
             string assignmentId = "<my-assignment-id>";
-            /*@@*/assignmentId = Guid.NewGuid().ToString();
+#else
+            string assignmentId = Guid.NewGuid().ToString();
+#endif
             #endregion
 
             #region Snippet:CreateRoleAssignment
@@ -57,9 +66,9 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 scope = assignedScope
             };
 
-            Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails));
+            Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails), ContentType.ApplicationJson);
             BinaryData addedRoleAssignmentContent = addedRoleAssignmentResponse.Content;
-            JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
+            using JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
             string addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();
 
             #endregion
@@ -67,7 +76,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #region Snippet:RetrieveRoleAssignment
             Response roleAssignmentResponse = roleAssignmentsClient.GetRoleAssignmentById(addedRoleAssignmentId, new());
             BinaryData roleAssignmentContent = roleAssignmentResponse.Content;
-            JsonDocument roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
+            using JsonDocument roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
             string roleAssignmentRoleDefinitionId = roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString();
             string roleAssignmentPrincipalId = roleAssignmentJson.RootElement.GetProperty("principalId").ToString();
             Console.WriteLine($"Role {roleAssignmentRoleDefinitionId} is assigned to {roleAssignmentPrincipalId}.");
@@ -76,7 +85,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #region Snippet:ListRoleAssignments
             Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments();
             BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
-            JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
+            using JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
 
             foreach (JsonElement assignmentJson in roleAssignmentsJson.RootElement.GetProperty("value").EnumerateArray())
             {

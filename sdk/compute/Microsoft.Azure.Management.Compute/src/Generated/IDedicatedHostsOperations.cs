@@ -172,6 +172,37 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse<IPage<DedicatedHost>>> ListByHostGroupWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Restart the dedicated host. The operation will complete
+        /// successfully once the dedicated host has restarted and is running.
+        /// To determine the health of VMs deployed on the dedicated host after
+        /// the restart check the Resource Health Center in the Azure Portal.
+        /// Please refer to
+        /// https://docs.microsoft.com/azure/service-health/resource-health-overview
+        /// for more details.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='hostGroupName'>
+        /// The name of the dedicated host group.
+        /// </param>
+        /// <param name='hostName'>
+        /// The name of the dedicated host.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update a dedicated host .
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -258,6 +289,37 @@ namespace Microsoft.Azure.Management.Compute
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Restart the dedicated host. The operation will complete
+        /// successfully once the dedicated host has restarted and is running.
+        /// To determine the health of VMs deployed on the dedicated host after
+        /// the restart check the Resource Health Center in the Azure Portal.
+        /// Please refer to
+        /// https://docs.microsoft.com/azure/service-health/resource-health-overview
+        /// for more details.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='hostGroupName'>
+        /// The name of the dedicated host group.
+        /// </param>
+        /// <param name='hostName'>
+        /// The name of the dedicated host.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string hostGroupName, string hostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the dedicated hosts in the specified dedicated host
         /// group. Use the nextLink property in the response to get the next

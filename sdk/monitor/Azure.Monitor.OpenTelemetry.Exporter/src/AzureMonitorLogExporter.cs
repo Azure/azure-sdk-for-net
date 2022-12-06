@@ -5,7 +5,8 @@ using System;
 using System.Threading;
 
 using Azure.Core.Pipeline;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
@@ -13,40 +14,52 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
-        private readonly ITransmitter Transmitter;
-        private readonly AzureMonitorExporterOptions options;
-        private readonly string instrumentationKey;
+        private readonly ITransmitter _transmitter;
+        private readonly string _instrumentationKey;
+        private readonly ResourceParser _resourceParser;
+        private readonly AzureMonitorPersistentStorage _persistentStorage;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
         }
 
-        internal AzureMonitorLogExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
+        internal AzureMonitorLogExporter(ITransmitter transmitter)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
-            ConnectionString.ConnectionStringParser.GetValues(this.options.ConnectionString, out this.instrumentationKey, out _);
+            _transmitter = transmitter;
+            _instrumentationKey = transmitter.InstrumentationKey;
+            _resourceParser = new ResourceParser();
 
-            this.Transmitter = transmitter;
+            if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
+            {
+                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
+            }
         }
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<LogRecord> batch)
         {
+            _persistentStorage?.StartExporterTimer();
+
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
             try
             {
-                var telemetryItems = AzureMonitorConverter.Convert(batch, this.instrumentationKey);
+                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                {
+                    var resource = ParentProvider.GetResource();
+                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                }
 
-                // TODO: Handle return value, it can be converted as metrics.
-                // TODO: Validate CancellationToken and async pattern here.
-                this.Transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                return ExportResult.Success;
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
+                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
+
+                return exportResult;
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
                 return ExportResult.Failure;
             }
         }

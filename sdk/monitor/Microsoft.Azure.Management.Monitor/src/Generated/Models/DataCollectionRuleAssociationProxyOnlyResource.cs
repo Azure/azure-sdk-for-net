@@ -43,18 +43,20 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="provisioningState">The resource provisioning state.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed'</param>
+        /// <param name="metadata">Metadata about the resource</param>
         /// <param name="id">Fully qualified ID of the resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="etag">Resource entity tag (ETag).</param>
         /// <param name="systemData">Metadata pertaining to creation and last
         /// modification of the resource.</param>
-        public DataCollectionRuleAssociationProxyOnlyResource(string description = default(string), string dataCollectionRuleId = default(string), string dataCollectionEndpointId = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string etag = default(string), DataCollectionRuleAssociationProxyOnlyResourceSystemData systemData = default(DataCollectionRuleAssociationProxyOnlyResourceSystemData))
+        public DataCollectionRuleAssociationProxyOnlyResource(string description = default(string), string dataCollectionRuleId = default(string), string dataCollectionEndpointId = default(string), string provisioningState = default(string), DataCollectionRuleAssociationMetadata metadata = default(DataCollectionRuleAssociationMetadata), string id = default(string), string name = default(string), string type = default(string), string etag = default(string), DataCollectionRuleAssociationProxyOnlyResourceSystemData systemData = default(DataCollectionRuleAssociationProxyOnlyResourceSystemData))
         {
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
             DataCollectionEndpointId = dataCollectionEndpointId;
             ProvisioningState = provisioningState;
+            Metadata = metadata;
             Id = id;
             Name = name;
             Type = type;
@@ -94,6 +96,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets metadata about the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metadata")]
+        public DataCollectionRuleAssociationMetadata Metadata { get; private set; }
 
         /// <summary>
         /// Gets fully qualified ID of the resource.

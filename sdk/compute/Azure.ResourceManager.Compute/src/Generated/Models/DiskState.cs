@@ -25,18 +25,24 @@ namespace Azure.ResourceManager.Compute.Models
         private const string UnattachedValue = "Unattached";
         private const string AttachedValue = "Attached";
         private const string ReservedValue = "Reserved";
-        private const string ActiveSASValue = "ActiveSAS";
+        private const string FrozenValue = "Frozen";
+        private const string ActiveSasValue = "ActiveSAS";
+        private const string ActiveSasFrozenValue = "ActiveSASFrozen";
         private const string ReadyToUploadValue = "ReadyToUpload";
         private const string ActiveUploadValue = "ActiveUpload";
 
         /// <summary> The disk is not being used and can be attached to a VM. </summary>
         public static DiskState Unattached { get; } = new DiskState(UnattachedValue);
-        /// <summary> The disk is currently mounted to a running VM. </summary>
+        /// <summary> The disk is currently attached to a running VM. </summary>
         public static DiskState Attached { get; } = new DiskState(AttachedValue);
-        /// <summary> The disk is mounted to a stopped-deallocated VM. </summary>
+        /// <summary> The disk is attached to a stopped-deallocated VM. </summary>
         public static DiskState Reserved { get; } = new DiskState(ReservedValue);
+        /// <summary> The disk is attached to a VM which is in hibernated state. </summary>
+        public static DiskState Frozen { get; } = new DiskState(FrozenValue);
         /// <summary> The disk currently has an Active SAS Uri associated with it. </summary>
-        public static DiskState ActiveSAS { get; } = new DiskState(ActiveSASValue);
+        public static DiskState ActiveSas { get; } = new DiskState(ActiveSasValue);
+        /// <summary> The disk is attached to a VM in hibernated state and has an active SAS URI associated with it. </summary>
+        public static DiskState ActiveSasFrozen { get; } = new DiskState(ActiveSasFrozenValue);
         /// <summary> A disk is ready to be created by upload by requesting a write token. </summary>
         public static DiskState ReadyToUpload { get; } = new DiskState(ReadyToUploadValue);
         /// <summary> A disk is created for upload and a write token has been issued for uploading to it. </summary>

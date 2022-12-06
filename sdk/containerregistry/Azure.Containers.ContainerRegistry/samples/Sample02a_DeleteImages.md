@@ -3,9 +3,6 @@
 A common use case for Azure Container Registries is to scan the repositories in a registry and delete all but the most recent *n* images, or all images older than a certain date.  This sample illustrates how to use the .NET ACR SDK to delete all but the latest three images.
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -24,7 +21,7 @@ foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     Pageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollection(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestProperties(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))

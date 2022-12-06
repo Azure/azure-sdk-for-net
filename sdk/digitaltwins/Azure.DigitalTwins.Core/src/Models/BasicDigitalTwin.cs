@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.DigitalTwins.Core.Serialization;
@@ -27,7 +28,21 @@ namespace Azure.DigitalTwins.Core
     /// {
     ///     Id = basicDtId,
     ///     // model Id of digital twin
-    ///     Metadata = { ModelId = modelId },
+    ///     Metadata =
+    ///     {
+    ///         ModelId = modelId,
+    ///         PropertyMetadata = new Dictionary&lt;string, DigitalTwinPropertyMetadata&gt;
+    ///         {
+    ///             {
+    ///                 &quot;Prop2&quot;,
+    ///                 new DigitalTwinPropertyMetadata
+    ///                 {
+    ///                     // must always be serialized as ISO 8601
+    ///                     SourceTime = DateTimeOffset.UtcNow,
+    ///                 }
+    ///             }
+    ///         },
+    ///     },
     ///     Contents =
     ///     {
     ///         // digital twin properties
@@ -38,6 +53,18 @@ namespace Azure.DigitalTwins.Core
     ///             &quot;Component1&quot;,
     ///             new BasicDigitalTwinComponent
     ///             {
+    ///                 // writeable component metadata
+    ///                 Metadata =  new Dictionary&lt;string, DigitalTwinPropertyMetadata&gt;
+    ///                 {
+    ///                     {
+    ///                         &quot;ComponentProp2&quot;,
+    ///                         new DigitalTwinPropertyMetadata
+    ///                         {
+    ///                             // must always be serialized as ISO 8601
+    ///                             SourceTime = DateTimeOffset.UtcNow,
+    ///                         }
+    ///                     }
+    ///                 },
     ///                 // component properties
     ///                 Contents =
     ///                 {
@@ -66,12 +93,15 @@ namespace Azure.DigitalTwins.Core
     /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
     ///     $&quot;ETag: {basicDt.ETag}\n\t&quot; +
     ///     $&quot;ModelId: {basicDt.Metadata.ModelId}\n\t&quot; +
-    ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
-    ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn}\n\t&quot; +
-    ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]} and  last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
-    ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]} and last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn}&quot;);
+    ///     $&quot;LastUpdatedOn: {basicDt.LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn} and sourced at {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].SourceTime}\n\t&quot; +
+    ///     $&quot;Component1.LastUpdatedOn: {component1.LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn} and sourced at: {component1.Metadata[&quot;ComponentProp2&quot;].SourceTime}&quot;);
     /// </code>
     /// </example>
+    [JsonConverter(typeof(BasicDigitalTwinJsonConverter))]
     public class BasicDigitalTwin
     {
         /// <summary>
@@ -86,6 +116,12 @@ namespace Azure.DigitalTwins.Core
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
         [JsonConverter(typeof(OptionalETagConverter))] // TODO: Remove when #16272 is fixed
         public ETag? ETag { get; set; }
+
+        /// <summary>
+        /// The date and time the twin was last updated.
+        /// </summary>
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)]
+        public DateTimeOffset? LastUpdatedOn { get; internal set; }
 
         /// <summary>
         /// Information about the model a digital twin conforms to.
@@ -112,10 +148,12 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
         ///     $&quot;ETag: {basicDt.ETag}\n\t&quot; +
         ///     $&quot;ModelId: {basicDt.Metadata.ModelId}\n\t&quot; +
-        ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
-        ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn}\n\t&quot; +
-        ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]} and  last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
-        ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]} and last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn}&quot;);
+        ///     $&quot;LastUpdatedOn: {basicDt.LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn} and sourced at {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].SourceTime}\n\t&quot; +
+        ///     $&quot;Component1.LastUpdatedOn: {component1.LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn} and sourced at: {component1.Metadata[&quot;ComponentProp2&quot;].SourceTime}&quot;);
         /// </code>
         /// </example>
 #pragma warning disable CA2227 // Collection properties should be readonly

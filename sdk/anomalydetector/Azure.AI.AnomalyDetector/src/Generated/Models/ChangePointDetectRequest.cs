@@ -8,10 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector.Models
 {
-    /// <summary> The ChangePointDetectRequest. </summary>
+    /// <summary> The request of change point detection. </summary>
     public partial class ChangePointDetectRequest
     {
         /// <summary> Initializes a new instance of ChangePointDetectRequest. </summary>
@@ -20,10 +21,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public ChangePointDetectRequest(IEnumerable<TimeSeriesPoint> series, TimeGranularity granularity)
         {
-            if (series == null)
-            {
-                throw new ArgumentNullException(nameof(series));
-            }
+            Argument.AssertNotNull(series, nameof(series));
 
             Series = series.ToList();
             Granularity = granularity;

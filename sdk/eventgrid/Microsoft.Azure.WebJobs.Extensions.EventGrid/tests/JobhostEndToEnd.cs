@@ -159,6 +159,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         }
 
         [Theory]
+        [TestCase("DirectInvocation.TestString", "StringDataEvent")]
+        [TestCase("DirectInvocation.TestEventGridEvent", "EventGridEvent")]
+        public async Task ConsumeDirectInvocation(string functionName, string argument)
+        {
+            string value = (string)(typeof(FakeData)).GetField(argument).GetValue(null);
+
+            JObject eve = JObject.Parse(value);
+            var args = new Dictionary<string, object>{
+                { "value", value }
+            };
+
+            var expectOut = (string)eve["subject"];
+            var host = TestHelpers.NewHost<DirectInvocation>();
+
+            await host.GetJobHost().CallAsync(functionName, args);
+            Assert.AreEqual(_functionOut, expectOut);
+            _functionOut = null;
+        }
+
+        [Theory]
         [TestCase("TriggerParamResolve.TestJObject", "EventGridEvent", @"https://shunsouthcentralus.blob.core.windows.net/debugging/shunBlob.txt")]
         [TestCase("TriggerParamResolve.TestString", "StringDataEvent", "goodBye world")]
         [TestCase("TriggerParamResolve.TestArray", "ArrayDataEvent", "ConfusedDev")]
@@ -236,6 +256,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [TestCase("AsyncCollectorEvent", "0 1 2 3 4 5 6")]
         [TestCase("StringEvents", "0 1 2 3 4")]
         [TestCase("BinaryDataEvents", "0 1 2 3 4")]
+        [TestCase("ByteArrayEvents", "0 1 2 3 4")]
         [TestCase("JObjectEvents", "0 1 2 3 4")]
         public async Task OutputBindingParamsTests(string functionName, string expectedCollection)
         {
@@ -353,6 +374,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [TestCase("AsyncCollectorEvent", "0 1 2 3 4 5 6")]
         [TestCase("StringEvents", "0 1 2 3 4")]
         [TestCase("BinaryDataEvents", "0 1 2 3 4")]
+        [TestCase("ByteArrayEvents", "0 1 2 3 4")]
         [TestCase("JObjectEvents", "0 1 2 3 4")]
         public async Task OutputCloudEventBindingParamsTests(string functionName, string expectedCollection)
         {
@@ -697,6 +719,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
             }
 
+            public void ByteArrayEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out byte[][] data)
+            {
+                data = new byte[5][];
+                for (int i = 0; i < 5; i++)
+                {
+                    data[i] = new BinaryData($@"
+                    {{
+                        ""id"" : ""{i}"",
+                        ""data"" : ""{i}"",
+                        ""eventType"" : ""custom"",
+                        ""subject"" : ""custom"",
+                        ""dataVersion"" : ""1""
+                    }}").ToArray();
+                }
+            }
+
             public void JObjectEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out JObject[] jobjects)
             {
                 jobjects = new JObject[5];
@@ -828,6 +866,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
             }
 
+            public void ByteArrayEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out byte[][] data)
+            {
+                data = new byte[5][];
+                for (int i = 0; i < 5; i++)
+                {
+                    data[i] = new BinaryData($@"
+                    {{
+                        ""id"" : ""{i}"",
+                        ""data"" : ""{i}"",
+                        ""source"" : ""custom"",
+                        ""type"" : ""custom"",
+                        ""specversion"" : ""1.0""
+                    }}").ToArray();
+                }
+            }
+
             // assume converter is applied correctly with other output binding types
             public void JObjectEvents([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out JObject[] jobjects)
             {
@@ -842,6 +896,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                         new JProperty("specversion", "1.0")
                     );
                 }
+            }
+        }
+
+        public class DirectInvocation
+        {
+            public static void TestString([EventGridTrigger] string value)
+            {
+                _functionOut = (string)JObject.Parse(value)["subject"];
+            }
+
+            public static void TestEventGridEvent([EventGridTrigger] EventGridEvent value)
+            {
+                _functionOut = value.Subject;
             }
         }
     }

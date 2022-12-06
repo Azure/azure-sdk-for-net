@@ -2,17 +2,17 @@
 
 | Component            | Build Status                                                                                                                                                                                                          |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master)   |
+| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=main)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=main)   |
 
 # Prerequisites:
 
-- Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
+- Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 5.0.301 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
+- Install **.NET Core 6.0.100 SDK** for your specific platform. (or a higher version within the 6.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/6.0)
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
-- Install [NodeJS](https://nodejs.org/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 
 ## GENERAL THINGS TO KNOW:
 
@@ -25,6 +25,9 @@
 **Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
 **Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
+
+----
+
 # Management Libraries
 
 ## TO BUILD:
@@ -97,6 +100,8 @@ If for any reason there is an update to the build tools, you will then need to f
 We have created a dotnet template to make creating new management SDK library easier than ever.
 
 See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/templates/README.md)].
+
+----
 
 # Client Libraries
 
@@ -243,7 +248,7 @@ dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuil
 
 ## API Compatibility Verification
 
-.NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
+.NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/main/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
 
 ### How it works
 Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
@@ -335,80 +340,42 @@ To prepare a package for release you should make use of `.\eng\common\scripts\Pr
 - `<ReleaseDate>` - Optional: provide a specific date for when you plan to release the package. If one isn't given then one will be calculated based on the normal monthly shipping schedule.
 - `<ReleaseTrackingOnly>` - Optional: Switch that if passed will only update the release tracking data in DevOps and not update any versioning info or do validation in the local repo.
 
-## On-boarding New Libraries
+## On-boarding New Generated Code Library
 
 ### Project Structure
 
-In `sdk\< Service Name >`, you will find projects for services that have already been implemented
+In `sdk\< Service Name >`, you will find projects for services that have already been implemented.
 
-1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) _(defined in AzSdk.reference.props)_
-2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md)
-   - Client library packages are in a folder name like **_Microsoft.Azure.< ServiceName >_**
-   - Management library packages are in a folder named like **_Microsoft.Azure.Management.< Resource Provider Name >_**
+1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) *(defined in AzSdk.reference.props)*
+2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md).
+   - Client library packages are in a folder name like ***Microsoft.Azure.< ServiceName >***
+   - Management library packages are in a folder named like ***Microsoft.Azure.Management.< Resource Provider Name >***
 3. Each shipping package contains a project for their **generated** and /or **Customization** code
    - The folder **'Generated'** contains the generated code
    - The folder **'Customizations'** contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
    - The file **generate.cmd**, used to generate library code for the given package, can also be found in this project
 
-### Standard Process
+### On-boarding (Data plane) Generated Clients
+
+See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKCodeGeneration_DataPlane_Quickstart.md) for details.
+
+### On-boarding Data Plane (Gen 1) Convenience Clients And Management Plane Generated Clients
+
+#### Standard Process
 
 1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
 2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
-4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
-5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
-6. **MANDATORY**: Add or update tests for the newly generated code.
-7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
-9. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-10. The pull requests will be reviewed and merged by the Azure SDK team
+4. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
+5. Create a branch in your fork of the Azure SDK for .NET.
+6. Generate the code. See [Generating Client Code](#generating-client-code) below.
+7. **MANDATORY**: Add or update tests for the newly generated code.
+8. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
+9. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+10. A Pull request of your Azure SDK for .NET changes against **main** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+11. The pull requests will be reviewed and merged by the Azure SDK team
 
-### New Resource Provider
-
-1. If you have never created an SDK for your service before, you will need the following things to get your SDK in the repo
-2. Follow the standard process described above.
-3. Project names helps in using basic heuristics in finding projects as well it's associated test projects during CI process.
-4. Create a new directory using the name of your service as specified in [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo
-5. Follow the the directory structure below
-
-```
-sdk\<service name>\<package name>\README.md
-sdk\<service name>\<package name>\*src*
-sdk\<service name>\<package name>\*tests*
-sdk\<service name>\<package name>\*samples*
-```
-
-e.g.
-
-```
-sdk\eventgrid\Microsoft.Azure.EventGrid\src\Microsoft.Azure.EventGrid.csproj
-sdk\eventgrid\Microsoft.Azure.EventGrid\tests\Microsoft.Azure.EventGrid.Tests.csproj
-sdk\eventgrid\Microsoft.Azure.Management.EventGrid\src\Microsoft.Azure.Management.EventGrid.csproj
-sdk\eventgrid\Microsoft.Azure.Management.EventGrid\tests\Microsoft.Azure.Management.EventGrid.Tests.csproj
-```
-
-> Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo, that your csproj files starts with **Microsoft.Azure**
-> , that test files end with **.Tests** and that management plane project files contain **.Management.**
-If you are adding a new service directory, ensure that it is mapped to a friendly name at [ServiceMapping](https://github.com/Azure/azure-sdk-for-net/blob/8c1f53e9099bd5a674f9e77be7e4b1541cd6ab08/doc/ApiDocGeneration/Generate-DocIndex.ps1#L9-L64)
-
-
-7. Copy .csproj from any other .csproj and update the following information in the new .csproj
-
-   | Project Properties  |
-   | ------------------- |
-   | AssemblyTitle       |
-   | Description         |
-   | VersionPrefix       |
-   | PackageTags         |
-   | PackageReleaseNotes |
-   |                     |
-
-> PackageReleaseNotes are important because this information is displayed on https://www.nuget.org when your nuget package is published
-
-8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
-   During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
-
-## On-boarding New generated code library
+#### Generating Client Code
 
 1. Install templates for both data-plane and management-plane (control-plan) SDKs:
 
@@ -425,20 +392,20 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
    There are several options available for management-plane SDKs. You can see all those available with `--help` as shown above, or
    [read about them](https://github.com/heaths/azure-sdk-for-net/blob/main/eng/templates/README.md) in our documentation.
 
-   This will perform most of the renames, namespace fix-ups, etc., for you automatically; though, be sure to check all files - especially the README.md file(s) - for required manual changes.
+   This will perform most of the renames, namespace fix-ups, and similar, for you automatically; though, be sure to check all files - especially the README.md file(s) - for required manual changes.
    If the template is already installed, this same command will upgrade it.
 
 2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
 
    ``` yaml
    input-file:
-       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
-       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
-       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/[COMMIT-HASH]/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/[COMMIT-HASH]/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
+       - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/[COMMIT-HASH]/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
    ```
 
    ``` yaml
-   require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
+   require: https://github.com/Azure/azure-rest-api-specs/blob/[COMMIT-HASH]/specification/azsadmin/resource-manager/storage/readme.md
    ```
 
 3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 14).
@@ -495,7 +462,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
 
 - Prior to issuing the pull request:
-  - All code must have completed any necessary legal signoff for being publicly viewable (Patent review, JSR review, etc.)
+  - All code must have completed any necessary legal sign-off for being publicly viewable (Patent review, JSR review, etc.)
   - The changes cannot break any existing functional/unit tests that are part of the central repository.
     - This includes all tests, even those not associated with the given feature area.
   - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team
@@ -514,20 +481,48 @@ Before a pull request will be considered by the Azure SDK team, the following re
   - MS internal folks, please reach out to us via our Teams channel or
   - Send an email to the Azure Developer Platform team [adpteam@microsoft.com](mailto:adpteam@microsoft.com) alias.
     - Include all interested parties from your team as well.
-    - In the message, make sure to acknowledge that the legal signoff process is complete.
+    - In the message, make sure to acknowledge that the legal sign-off process is complete.
 
 Once all of the above steps are met, the following process will be followed:
 
 - A member of the Azure SDK team will review the pull request on GitHub.
-- If the pull request meets the repository's requirements, the individual will approve the pull request, merging the code into the dev branch of the source repository.
+- If the pull request meets the repository's requirements, the individual will approve the pull request, merging the code into the appropriate branch of the source repository.
   - The owner will then respond to the email sent as part of the pull request, informing the group of the completion of the request.
 - If the request does not meet any of the requirements, the pull request will not be merged, and the necessary fixes for acceptance will be communicated back to the partner team.
 
-### Client Library Tested OSs and .NET Versions
+### Pull Request Etiquette and Best Practices
 
-|                   | Linux (Ubuntu 16.04) | MacOS 10.13 | Windows Server 2016 |
-| ----------------- | -------------------- | ----------- | ------------------- |
-| **.NET Core 2.1** | x                    | x           | x                   |
+#### Reviewers
+
+- If you disagree with the overall approach of the PR, comment on the general PR rather than individual lines of code.
+- Leaving [suggested changes](https://docs.github.com/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request) is welcomed, but please never commit them for a PR you did not create.
+- When you are seeking to understand something rather than request corrections, it is suggested to use language such as "I'm curious ..." as a prefix to comments.
+- For comments that are just optional suggestions or are explicitly non-blocking, prefix them with "nit: " or "non-blocking: ".
+- Avoid marking a PR as "Request Changes" ![2022_01_27_08_33_07_Changes_for_discussion_to_the_PR_Template_by_christothes_Pull_Request_26631_](https://user-images.githubusercontent.com/1279263/151379844-b9babb22-b0fe-4b9c-b749-eb7488a38d84.png) unless you have serious concerns that should block the PR from merging.
+- When to mark a PR as "Approved"
+  - You feel confident that the code meets a high quality bar, has adequate test coverage, is ready to merge.
+  - You have left comments that are uncontroversial and there is a shared understanding with the author that the comments can be addressed or resolved prior to being merged without significant discussion or significant change to the design or approach.
+- When to leave comments without approval
+  - You do not feel confident that your review alone is sufficient to call the PR ready to merge.
+  - You have feedback that may require detailed discussion or may indicate a need to change the current design or approach in a non-trivial way.
+- When to mark a PR as "Request Changes"
+  - You have significant concerns that must be addressed before this PR should be merged such as unintentional breaking changes, security issues, or potential data loss.
+
+#### Pull Request Authors
+
+- If you add significant changes to a PR after it has been marked approved, please confirm with reviewers that they still approve before merging.
+- Please ensure that you have obtained an approval from at least one of the code owners before merging.
+- If a reviewer marks your PR as approved along with specific comments, it is expected that those comments will be addressed or resolved prior to merging.
+  - One exception is when a comment clearly states that the feedback is optional or just a nit
+  - When in doubt, reach out to the commentor to confirm that they have no concerns with you merging without addressing a comment.
+
+### Client Library Tested Operating Systems and .NET Versions
+
+|                          | Linux (Ubuntu 20.04) | MacOS 10.15 | Windows Server 2019 |
+| ------------------------ | :------------------: | :---------: | :-----------------: |
+| **.NET 6**               | x                    | x           | x                   |
+| **.NET Core 3.1**        | x                    | x           | x                   |
+| **.NET Framework 4.6.1** |                      |             | x                   |
 
 ### Issues with Generated Code
 
@@ -539,8 +534,12 @@ Much of the management plane SDK code is generated from metadata specs about the
 
 ## Versioning
 
-For more information on how we version see [Versioning](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md)
+For more information on how we version see [Versioning](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md).
 
 ## Breaking Changes
 
-For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md)
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md).
+
+## Debugging
+
+The libraries shipped out of this repo have [source link](https://docs.microsoft.com/dotnet/standard/library-guidance/sourcelink#using-source-link) enabled. Source link allows for symbols to be dynamically loaded while debugging, which allows you to step into the Azure SDK source code. This is often helpful when trying to step into Azure.Core code, as it is a package reference for most libraries. To enable using source link with the Azure SDK libraries in Visual Studio, you will need to check off Microsoft Symbol Servers as one of your Symbol file locations. Additionally, make sure that "Just My Code" is **_NOT_** enabled.

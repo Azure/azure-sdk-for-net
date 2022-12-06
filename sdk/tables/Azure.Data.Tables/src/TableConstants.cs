@@ -8,11 +8,14 @@ namespace Azure.Data.Tables
         internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
         internal const string CosmosTableDomain = ".table.cosmos.";
         internal const string StorageScope = "https://storage.azure.com/.default";
+        internal const string ReturnNoContent = "return-no-content";
 
         internal static class CompatSwitches
         {
             public const string DisableEscapeSingleQuotesOnGetEntitySwitchName = "Azure.Data.Tables.DisableEscapeSingleQuotesOnGetEntity";
             public const string DisableEscapeSingleQuotesOnGetEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY";
+            public const string DisableEscapeSingleQuotesOnDeleteEntitySwitchName = "Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity";
+            public const string DisableEscapeSingleQuotesOnDeleteEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONDELETEENTITY";
         }
 
         internal static class HeaderNames
@@ -59,6 +62,7 @@ namespace Azure.Data.Tables
             internal const string EdmInt32 = "Edm.Int32";
             internal const string EdmInt64 = "Edm.Int64";
             internal const string EdmString = "Edm.String";
+            internal const string MinimalMetadata = "application/json;odata=minimalmetadata";
         }
 
         internal static class ExceptionMessages

@@ -16,7 +16,7 @@ namespace Azure.Storage.Shared
         protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
-        protected readonly UploadTransactionalHashingOptions _hashingOptions;
+        protected readonly UploadTransferValidationOptions _validationOptions;
         private bool _disposed;
         private bool _shouldDisposeBuffer;
 
@@ -24,7 +24,7 @@ namespace Azure.Storage.Shared
             long position,
             long bufferSize,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             PooledMemoryStream buffer = null)
         {
             _position = position;
@@ -35,9 +35,9 @@ namespace Azure.Storage.Shared
                 _progressHandler = new AggregatingProgressIncrementer(progressHandler);
             }
 
-            _hashingOptions = hashingOptions;
+            _validationOptions = transferValidation;
             // write streams don't support pre-calculated hashes
-            if (_hashingOptions?.PrecalculatedHash != default)
+            if (!(_validationOptions?.PrecalculatedChecksum.IsEmpty ?? true))
             {
                 throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }

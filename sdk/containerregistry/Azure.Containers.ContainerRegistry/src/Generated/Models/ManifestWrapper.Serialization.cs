@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -115,9 +116,9 @@ namespace Azure.Containers.ContainerRegistry
         {
             Optional<string> mediaType = default;
             Optional<IList<ManifestListAttributes>> manifests = default;
-            Optional<Descriptor> config = default;
-            Optional<IList<Descriptor>> layers = default;
-            Optional<Annotations> annotations = default;
+            Optional<OciBlobDescriptor> config = default;
+            Optional<IList<OciBlobDescriptor>> layers = default;
+            Optional<OciAnnotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
@@ -154,7 +155,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = Descriptor.DeserializeDescriptor(property.Value);
+                    config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -164,10 +165,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Descriptor> array = new List<Descriptor>();
+                    List<OciBlobDescriptor> array = new List<OciBlobDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Descriptor.DeserializeDescriptor(item));
+                        array.Add(OciBlobDescriptor.DeserializeOciBlobDescriptor(item));
                     }
                     layers = array;
                     continue;
@@ -179,7 +180,7 @@ namespace Azure.Containers.ContainerRegistry
                         annotations = null;
                         continue;
                     }
-                    annotations = Annotations.DeserializeAnnotations(property.Value);
+                    annotations = OciAnnotations.DeserializeOciAnnotations(property.Value);
                     continue;
                 }
                 if (property.NameEquals("architecture"))

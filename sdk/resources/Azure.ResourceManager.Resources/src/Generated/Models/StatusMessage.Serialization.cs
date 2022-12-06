@@ -6,8 +6,8 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static StatusMessage DeserializeStatusMessage(JsonElement element)
         {
             Optional<string> status = default;
-            Optional<ErrorDetail> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }
-            return new StatusMessage(status.Value, error);
+            return new StatusMessage(status.Value, error.Value);
         }
     }
 }

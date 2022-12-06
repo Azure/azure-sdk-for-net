@@ -1,14 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Changelog_NewCode
-            using Azure.Identity;
-            using Azure.ResourceManager.KeyVault;
-            using Azure.ResourceManager.KeyVault.Models;
-            using Azure.ResourceManager.Resources;
-            using Azure.ResourceManager.Resources.Models;
-            using System;
-#if !SNIPPET
+#region Snippet:Changelog_Namespaces
+using System;
+using Azure;
+using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+#endregion
+
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -20,16 +23,16 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public async Task NewCode()
         {
-#endif
+            #region Snippet:Changelog_NewCode
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
-            VaultCollection vaultCollection = resourceGroup.GetVaults();
-            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard)));
+            KeyVaultCollection vaultCollection = resourceGroup.GetKeyVaults();
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.WestUS2, new KeyVaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
-            VaultCreateOrUpdateOperation lro = await vaultCollection.CreateOrUpdateAsync("myVaultName", parameters);
-            Vault vault = lro.Value;
+            ArmOperation<KeyVaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
+            KeyVaultResource vault = lro.Value;
             #endregion
         }
 
@@ -38,8 +41,8 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
         public void CreateModel()
         {
             #region Snippet:Changelog_CreateModel
-            VaultProperties properties = new VaultProperties(Guid.NewGuid(), new Sku(SkuFamily.A, SkuName.Standard));
-            VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Location.WestUS2, properties);
+            KeyVaultProperties properties = new KeyVaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
             #endregion
         }
     }

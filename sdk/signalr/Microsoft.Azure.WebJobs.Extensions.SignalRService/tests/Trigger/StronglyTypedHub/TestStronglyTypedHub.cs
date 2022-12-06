@@ -11,6 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
     public class TestStronglyTypedHub : ServerlessHub<IChatClient>
     {
         public TestStronglyTypedHub(ServiceHubContext<IChatClient> serviceHubContext) : base(serviceHubContext) { }
+        internal TestStronglyTypedHub(IServiceManagerStore serviceManagerStore) : base(serviceManagerStore) { }
 
         [FunctionName("negotiate")]
         public Task<SignalRConnectionInfo> Negotiate(string userId)

@@ -251,7 +251,7 @@ namespace Azure.Storage.Tests
                       position,
                       bufferSize,
                       progressHandler,
-                      hashingOptions: default,
+                      transferValidation: default,
                       buffer)
             {
                 ApiCalls = new List<string>();

@@ -1,0 +1,44 @@
+parameters:
+- name: ServiceDirectory
+  type: string
+  default: ''
+- name: Services
+  type: string
+  default: ''
+- name: PackageVersions
+  type: string
+  default: '.*'
+- name: Tests
+  type: string
+  default: '.*'
+- name: Arguments
+  type: string
+  default: '.*' 
+- name: Iterations
+  type: number
+  default: '5'
+- name: AdditionalArguments
+  type: string
+  default: ''
+- name: EnvVars
+  type: object
+  default: {}
+
+extends:
+  template: /eng/common/pipelines/templates/jobs/perf.yml
+  parameters:
+    Variables:
+    - template: /eng/pipelines/templates/variables/globals.yml
+    Language: Net
+    InstallLanguageSteps:
+    - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      parameters:
+        EnableNuGetCache: false
+    ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    Services: ${{ parameters.Services }}
+    PackageVersions: ${{ parameters.PackageVersions }}
+    Tests: ${{ parameters.Tests }}
+    Arguments: ${{ parameters.Arguments }}
+    Iterations: ${{ parameters.Iterations }}
+    AdditionalArguments: ${{ parameters.AdditionalArguments }}
+    EnvVars: ${{ parameters.EnvVars}}

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -268,6 +269,23 @@ namespace Azure.Search.Documents.Tests
                 response,
                 h => h.Document.HotelId,
                 "1", "5");
+        }
+
+        [Test]
+        public async Task TestNormalizer()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    null,
+                    new SearchOptions
+                    {
+                        Filter = "address/city eq 'New york'"
+                    });
+            await AssertKeysEqual(
+                response,
+                h => h.Document.HotelId,
+                "5", "9");
         }
 
         [Test]
@@ -684,6 +702,8 @@ namespace Azure.Search.Documents.Tests
                     new FacetKeyValuePair("1", "9-6"),
                     new FacetKeyValuePair("2", "9.6"),
                     new FacetKeyValuePair("3", "9'6\""),
+                    new FacetKeyValuePair("4", "9/6"),
+                    new FacetKeyValuePair("5", "9\\6"),
                 });
             await resources.WaitForIndexingAsync();
 
@@ -694,13 +714,15 @@ namespace Azure.Search.Documents.Tests
 
             Assert.IsNotNull(response.Value.Facets);
             AssertFacetsEqual(
-                GetFacetsForField(response.Value.Facets, "Value", 3),
+                GetFacetsForField(response.Value.Facets, "Value", 5),
                 MakeValueFacet(1, "9'6\""),
                 MakeValueFacet(1, "9-6"),
-                MakeValueFacet(1, "9.6"));
+                MakeValueFacet(1, "9.6"),
+                MakeValueFacet(1, "9/6"),
+                MakeValueFacet(1, "9\\6"));
 
             // Check strongly typed value facets
-            ICollection<FacetResult> facets = GetFacetsForField(response.Value.Facets, "Value", 3);
+            ICollection<FacetResult> facets = GetFacetsForField(response.Value.Facets, "Value", 5);
             ValueFacetResult<string> first = facets.ElementAt(0).AsValueFacetResult<string>();
             Assert.AreEqual("9'6\"", first.Value);
             Assert.AreEqual(1, first.Count);
@@ -710,6 +732,12 @@ namespace Azure.Search.Documents.Tests
             ValueFacetResult<string> third = facets.ElementAt(2).AsValueFacetResult<string>();
             Assert.AreEqual("9.6", third.Value);
             Assert.AreEqual(1, third.Count);
+            ValueFacetResult<string> fourth = facets.ElementAt(3).AsValueFacetResult<string>();
+            Assert.AreEqual("9/6", fourth.Value);
+            Assert.AreEqual(1, fourth.Count);
+            ValueFacetResult<string> fifth = facets.ElementAt(4).AsValueFacetResult<string>();
+            Assert.AreEqual("9\\6", fifth.Value);
+            Assert.AreEqual(1, fifth.Count);
         }
 
         [Test]
@@ -1006,6 +1034,34 @@ namespace Azure.Search.Documents.Tests
             CollectionAssert.AreEquivalent(
                 Enumerable.Range(1, size).Select(i => i.ToString()),
                 ids);
+        }
+
+        [Test]
+        public void SearchOptionsCanBeCopied()
+        {
+            SearchOptions source = new();
+
+            source.Facets = new List<string> { "facet1", "facet2" };
+            source.Filter = "searchFilter";
+            // source.IncludeTotalCount = null;
+            source.QueryCaptionHighlightEnabled = false;
+            // source.QueryType = null;
+            source.Select = null;
+            source.SessionId = "SessionId";
+            source.Size = 100;
+            source.Skip = null;
+
+            SearchOptions clonedSearchOptions = source.Clone();
+
+            CollectionAssert.AreEquivalent(source.Facets, clonedSearchOptions.Facets); // A non-null collection with multiple items
+            Assert.AreEqual(source.Filter, clonedSearchOptions.Filter); // A string value
+            Assert.IsNull(clonedSearchOptions.IncludeTotalCount); // An unset bool? value
+            Assert.AreEqual(source.QueryCaptionHighlightEnabled, clonedSearchOptions.QueryCaptionHighlightEnabled); // A bool? value
+            Assert.IsNull(source.QueryType); // An unset enum? value
+            Assert.IsNull(clonedSearchOptions.Select); // A `null` collection
+            Assert.AreEqual(source.SessionId, clonedSearchOptions.SessionId); // A string value
+            Assert.AreEqual(source.Size, clonedSearchOptions.Size); // An int? value
+            Assert.IsNull(clonedSearchOptions.Skip); // An int? value set as `null`
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

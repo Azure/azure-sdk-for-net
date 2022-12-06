@@ -51,6 +51,11 @@ namespace Microsoft.Azure.Management.HealthcareApis
         string ApiVersion { get; }
 
         /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        string ApiVersion1 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -75,16 +80,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
         IServicesOperations Services { get; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IOperationResultsOperations.
-        /// </summary>
-        IOperationResultsOperations OperationResults { get; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
@@ -93,6 +88,56 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        IWorkspacesOperations Workspaces { get; }
+
+        /// <summary>
+        /// Gets the IDicomServicesOperations.
+        /// </summary>
+        IDicomServicesOperations DicomServices { get; }
+
+        /// <summary>
+        /// Gets the IIotConnectorsOperations.
+        /// </summary>
+        IIotConnectorsOperations IotConnectors { get; }
+
+        /// <summary>
+        /// Gets the IFhirDestinationsOperations.
+        /// </summary>
+        IFhirDestinationsOperations FhirDestinations { get; }
+
+        /// <summary>
+        /// Gets the IIotConnectorFhirDestinationOperations.
+        /// </summary>
+        IIotConnectorFhirDestinationOperations IotConnectorFhirDestination { get; }
+
+        /// <summary>
+        /// Gets the IFhirServicesOperations.
+        /// </summary>
+        IFhirServicesOperations FhirServices { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacePrivateEndpointConnectionsOperations.
+        /// </summary>
+        IWorkspacePrivateEndpointConnectionsOperations WorkspacePrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacePrivateLinkResourcesOperations.
+        /// </summary>
+        IWorkspacePrivateLinkResourcesOperations WorkspacePrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IOperationResultsOperations.
+        /// </summary>
+        IOperationResultsOperations OperationResults { get; }
 
     }
 }

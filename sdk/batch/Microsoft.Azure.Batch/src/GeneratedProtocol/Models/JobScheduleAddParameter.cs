@@ -85,6 +85,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the schedule according to which Jobs will be created.
         /// </summary>
+        /// <remarks>
+        /// All times are fixed respective to UTC and are not impacted by
+        /// daylight saving time.
+        /// </remarks>
         [JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 

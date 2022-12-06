@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A server secure connection policy.
+    /// A server connection policy
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ServerConnectionPolicy : ProxyResource
@@ -33,18 +33,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ServerConnectionPolicy class.
         /// </summary>
         /// <param name="connectionType">The server connection type. Possible
-        /// values include: 'Default', 'Proxy', 'Redirect'</param>
+        /// values include: 'Default', 'Redirect', 'Proxy'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="location">Resource location.</param>
         /// <param name="kind">Metadata used for the Azure portal
         /// experience.</param>
-        /// <param name="location">Resource location.</param>
-        public ServerConnectionPolicy(ServerConnectionType connectionType, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string))
+        public ServerConnectionPolicy(string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string kind = default(string))
             : base(id, name, type)
         {
-            Kind = kind;
             Location = location;
+            Kind = kind;
             ConnectionType = connectionType;
             CustomInit();
         }
@@ -55,23 +55,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets metadata used for the Azure portal experience.
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
-
-        /// <summary>
         /// Gets resource location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; private set; }
 
         /// <summary>
+        /// Gets metadata used for the Azure portal experience.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; private set; }
+
+        /// <summary>
         /// Gets or sets the server connection type. Possible values include:
-        /// 'Default', 'Proxy', 'Redirect'
+        /// 'Default', 'Redirect', 'Proxy'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectionType")]
-        public ServerConnectionType ConnectionType { get; set; }
+        public string ConnectionType { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -81,6 +81,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (ConnectionType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionType");
+            }
         }
     }
 }

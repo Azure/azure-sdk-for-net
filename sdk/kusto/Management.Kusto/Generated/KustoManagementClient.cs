@@ -140,6 +140,11 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IOperationsResults OperationsResults { get; private set; }
 
         /// <summary>
+        /// Gets the IOperationsResultsLocation.
+        /// </summary>
+        public virtual IOperationsResultsLocation OperationsResultsLocation { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the KustoManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -392,8 +397,9 @@ namespace Microsoft.Azure.Management.Kusto
             DataConnections = new DataConnectionsOperations(this);
             Operations = new Operations(this);
             OperationsResults = new OperationsResults(this);
+            OperationsResultsLocation = new OperationsResultsLocation(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-08-27";
+            ApiVersion = "2022-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

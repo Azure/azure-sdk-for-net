@@ -1,6 +1,6 @@
 # Guide for migrating Azure.AI.FormRecognizer to version 4.0.x from versions 3.1.x and below
 
-This guide is intended to assist in the migration to `Azure.AI.FormRecognizer (4.0.x)` from versions `3.1.x` and below. It will focus on side-by-side comparisons for similar operations between versions. Please note that version `4.0.0-beta.1` will be used for comparison with `3.1.1`.
+This guide is intended to assist in the migration to `Azure.AI.FormRecognizer (4.0.x)` from versions `3.1.x` and below. It will focus on side-by-side comparisons for similar operations between versions. Please note that version `4.0.0` will be used for comparison with `3.1.1`.
 
 Familiarity with `Azure.AI.FormRecognizer (3.1.x and below)` package is assumed. For those new to the Azure Form Recognizer client library for .NET please refer to the [README][readme] rather than this guide.
 
@@ -19,10 +19,10 @@ Familiarity with `Azure.AI.FormRecognizer (3.1.x and below)` package is assumed.
 
 A natural question to ask when considering whether to adopt a new version of the library is what the benefits of doing so would be. As Azure Form Recognizer has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and add value to our customers.
 
-There are many benefits to using the new design of the `Azure.AI.FormRecognizer (4.0.x)` library. This new version of the library introduces two new clients `DocumentAnalysisClient` and the `DocumentModelAdministrationClient` with unified methods for analyzing documents and provides support for the new features added by the service in API version `2021-09-30-preview` and later.
+There are many benefits to using the new design of the `Azure.AI.FormRecognizer (4.0.x)` library. This new version of the library introduces two new clients `DocumentAnalysisClient` and the `DocumentModelAdministrationClient` with unified methods for analyzing documents and provides support for the new features added by the service in API version `2022-08-31` and later.
 
 New features provided by the `DocumentAnalysisClient` include:
-- One consolidated method for analyzing document layout, a general prebuilt document model type, along with the same prebuilt models that were included previously (receipts, invoices, business cards, ID documents), and custom models.
+- One consolidated method for analyzing document layout, a prebuilt general document model type, along with the same prebuilt models that were included previously (receipts, invoices, business cards, ID documents), and custom models.
 - Models introduced in the latest version of the library, such as `AnalyzeResult`, remove hierarchical dependencies between document elements and move them to a more top level and easily accessible position.
 - The Form Recognizer service has further improved how to define where elements are located on documents by moving towards `BoundingRegion` definitions allowing for cross-page elements.
 - Document element fields are returned with more information, such as content and spans. 
@@ -30,14 +30,14 @@ New features provided by the `DocumentAnalysisClient` include:
 New features provided by the `DocumentModelAdministrationClient` include:
 - Users can now assign their own model IDs and specify a description when building, composing, or copying models.
 - Listing models now includes both prebuilt and custom models.
-- When using `GetModel()`, users can get the field schema (field names and types that the model can extract) for the model they specified, including for prebuilt models. 
+- When using `GetDocumentModel()`, users can get the field schema (field names and types that the model can extract) for the model they specified, including for prebuilt models.
 - Ability to get information from model operations that occurred in the last 24 hours.
 
 The table below describes the relationship of each client and its supported API version(s):
 
 |API version|Supported clients
 |-|-
-|2021-09-30-preview | DocumentAnalysisClient and DocumentModelAdministrationClient
+|2022-08-31 | DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1 | FormRecognizerClient and FormTrainingClient
 |2.0 | FormRecognizerClient and FormTrainingClient
 
@@ -46,8 +46,7 @@ Please refer to the [README][readme] for more information on these new clients.
 ## Important changes
 
 ### Terminology
-Some terminology has changed to reflect the enhanced capabilities of the newest Form Recognizer service APIs. While the service is still called "Form Recognizer," it is capable of much more than simple recognition,
-and is not limited to documents that are "forms". As a result, we've made the following broad changes to the terminology used throughout the SDK:
+Some terminology has changed to reflect the enhanced capabilities of the newest Form Recognizer service APIs. While the service is still called "Form Recognizer," it is capable of much more than simple recognition, and is not limited to documents that are "forms". As a result, we've made the following broad changes to the terminology used throughout the SDK:
 
 - The word `Document` has broadly replaced the word `Form`. The service supports a wide variety of documents and data-extraction scenarios, not merely limited to `forms`.
 - The word `Analyze` has broadly replaced the word `Recognize`. The document analysis operation executes a data extraction pipeline that supports more than just recognition.
@@ -58,10 +57,9 @@ and is not limited to documents that are "forms". As a result, we've made the fo
 
 We continue to support API key and AAD authentication methods when creating the clients. Below are the differences between the two versions:
 
-- In `4.0.x`, we have added `DocumentAnalysisClient` and `DocumentModelAdministrationClient` which support API version `2021-09-30-preview` and later.
-- `FormRecognizerClient` and `FormTrainingClient` will continue to work targetting API version `2.1` and `2.0`. 
-- In `DocumentAnalysisClient` all prebuilt model methods along with custom model, layout, and a prebuilt general document analysis model are unified into two methods called
-`StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri`.
+- In `4.0.x`, we have added `DocumentAnalysisClient` and `DocumentModelAdministrationClient` which support API version `2022-08-31` and later.
+- `FormRecognizerClient` and `FormTrainingClient` will continue to work targeting API version `2.1` and `2.0`. 
+- In `DocumentAnalysisClient` all prebuilt model methods along with custom model, layout, and a prebuilt general document analysis model are unified into two methods called `AnalyzeDocument` and `AnalyzeDocumentFromUri`.
 - In `FormRecognizerClient` there are two methods (a stream and Uri method) for each of the prebuilt models supported by the service. This results in two methods for business card, receipt, identity document, and invoice models, along with a pair of methods for recognizing custom documents and for recognizing content/layout. 
 
 Creating new clients in `3.1.x`:
@@ -84,19 +82,37 @@ var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), crede
 var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
 ```
 
+### Long-running operations
+
+The way long-running operations are designed has changed slightly to conform to new patterns in the Azure SDK for .NET libraries. The differences are listed below:
+- In version `3.1.x`, service methods begin with the `Start` prefix to indicate it starts a long-running operation. In version `4.0.x`, that prefix is not used anymore. For example, `StartCopyModel` is equivalent to the new `CopyDocumentModelTo`.
+- In version `3.1.x`, the method `WaitForCompletionAsync` had to be called to wait for the long-running operation to finish running.
+- In version `4.0.x`, methods that start a long-running operation take a required `waitUntil` parameter. You can pass the value `WaitUntil.Completed` to wait for the operation to complete and obtain its result; or set it to `WaitUntil.Started` if you just want to start the operation and consume the result later.
+
+Waiting for long-running operations to finish in `3.1.x`:
+```C# Snippet:WaitForLongRunningOperationV2
+CopyModelOperation operation = await client.StartCopyModelAsync(modelId, authorization);
+await operation.WaitForCompletionAsync();
+```
+
+Waiting for long-running operations to finish in `4.0.x`:
+```C# Snippet:WaitForLongRunningOperationV3
+CopyDocumentModelToOperation operation = await client.CopyDocumentModelToAsync(WaitUntil.Completed, modelId, authorization);
+```
+
 ### Analyzing documents
 
 Differences between the versions:
-- `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` accept a string with the desired model ID for analysis. The model ID can be any of the prebuilt model IDs or a custom model ID.
-- Along with more consolidated analysis methods in the `DocumentAnalysisClient`, the return types have also been improved and remove the hierarchical dependencies between elements. An instance of the `AnalyzeResult` model is now returned which showcases important document elements, such as key-value pairs, entities, tables, and document fields and values, among others, at the top level of the returned model. This can be contrasted with `RecognizedForm` which included more hierarchical relationships, for instance tables were an element of a `FormPage` and not a top-level element.
-- In the new version of the library, the functionality of `StartRecognizeContent` has been added as a prebuilt model and can be called in library version `Azure.AI.FormRecognizer (4.0.x)` with `StartAnalyzeDocument` by passing in the `prebuilt-layout` model ID. Similarly, to get general document information, such as key-value pairs, entities, and text layout, the `prebuilt-document` model ID can be used with `StartAnalyzeDocument`.
-- When calling `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` the returned type is an `AnalyzeResult` object, while the various methods used with `FormRecognizerClient` return a list of `RecognizedForm`.
-- The optional `IncludeFieldElements` parameter is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2021-09-30-preview` and later.
-- The optional `ReadingOrder` parameter does not exist on `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri`. The service uses `natural` reading order to return data.
+- `AnalyzeDocument` and `AnalyzeDocumentFromUri` accept a string with the desired model ID for analysis. The model ID can be any of the prebuilt model IDs or a custom model ID.
+- Along with more consolidated analysis methods in the `DocumentAnalysisClient`, the return types have also been improved and remove the hierarchical dependencies between elements. An instance of the `AnalyzeResult` model is now returned which showcases important document elements, such as key-value pairs, tables, and document fields and values, among others, at the top level of the returned model. This can be contrasted with `RecognizedForm` which included more hierarchical relationships, for instance tables were an element of a `FormPage` and not a top-level element.
+- In the new version of the library, the functionality of `StartRecognizeContent` has been added as a prebuilt model and can be called in library version `Azure.AI.FormRecognizer (4.0.x)` with `AnalyzeDocument` by passing in the `prebuilt-layout` model ID. Similarly, to get general document information, such as key-value pairs and text layout, the `prebuilt-document` model ID can be used with `AnalyzeDocument`.
+- When calling `AnalyzeDocument` and `AnalyzeDocumentFromUri` the returned type is an `AnalyzeResult` object, while the various methods used with `FormRecognizerClient` return a list of `RecognizedForm`.
+- The optional `IncludeFieldElements` parameter is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2022-08-31` and later.
+- The optional `ReadingOrder` parameter does not exist on `AnalyzeDocument` and `AnalyzeDocumentFromUri`. The service uses `natural` reading order to return data.
 
 Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
-    Uri invoiceUri = <invoiceUri>;
+    Uri invoiceUri = new Uri("<invoiceUri>");
     var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
 
     RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesFromUriAsync(invoiceUri, options);
@@ -222,12 +238,9 @@ Analyzing prebuilt models like business cards, identity documents, invoices, and
 
 Analyzing prebuilt models like business cards, identity documents, invoices, and receipts with `4.0.x`:
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", fileUri);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -242,39 +255,39 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField))
     {
-        if (vendorNameField.ValueType == DocumentFieldType.String)
+        if (vendorNameField.FieldType == DocumentFieldType.String)
         {
-            string vendorName = vendorNameField.AsString();
+            string vendorName = vendorNameField.Value.AsString();
             Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField))
     {
-        if (customerNameField.ValueType == DocumentFieldType.String)
+        if (customerNameField.FieldType == DocumentFieldType.String)
         {
-            string customerName = customerNameField.AsString();
+            string customerName = customerNameField.Value.AsString();
             Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField))
     {
-        if (itemsField.ValueType == DocumentFieldType.List)
+        if (itemsField.FieldType == DocumentFieldType.List)
         {
-            foreach (DocumentField itemField in itemsField.AsList())
+            foreach (DocumentField itemField in itemsField.Value.AsList())
             {
                 Console.WriteLine("Item:");
 
-                if (itemField.ValueType == DocumentFieldType.Dictionary)
+                if (itemField.FieldType == DocumentFieldType.Dictionary)
                 {
-                    IReadOnlyDictionary<string, DocumentField> itemFields = itemField.AsDictionary();
+                    IReadOnlyDictionary<string, DocumentField> itemFields = itemField.Value.AsDictionary();
 
                     if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField))
                     {
-                        if (itemDescriptionField.ValueType == DocumentFieldType.String)
+                        if (itemDescriptionField.FieldType == DocumentFieldType.String)
                         {
-                            string itemDescription = itemDescriptionField.AsString();
+                            string itemDescription = itemDescriptionField.Value.AsString();
 
                             Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                         }
@@ -282,11 +295,11 @@ for (int i = 0; i < result.Documents.Count; i++)
 
                     if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField))
                     {
-                        if (itemAmountField.ValueType == DocumentFieldType.Double)
+                        if (itemAmountField.FieldType == DocumentFieldType.Currency)
                         {
-                            double itemAmount = itemAmountField.AsDouble();
+                            CurrencyValue itemAmount = itemAmountField.Value.AsCurrency();
 
-                            Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
+                            Console.WriteLine($"  Amount: '{itemAmount.Symbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
                         }
                     }
                 }
@@ -296,28 +309,28 @@ for (int i = 0; i < result.Documents.Count; i++)
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField))
     {
-        if (subTotalField.ValueType == DocumentFieldType.Double)
+        if (subTotalField.FieldType == DocumentFieldType.Currency)
         {
-            double subTotal = subTotalField.AsDouble();
-            Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+            CurrencyValue subTotal = subTotalField.Value.AsCurrency();
+            Console.WriteLine($"Sub Total: '{subTotal.Symbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField))
     {
-        if (totalTaxField.ValueType == DocumentFieldType.Double)
+        if (totalTaxField.FieldType == DocumentFieldType.Currency)
         {
-            double totalTax = totalTaxField.AsDouble();
-            Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
+            CurrencyValue totalTax = totalTaxField.Value.AsCurrency();
+            Console.WriteLine($"Total Tax: '{totalTax.Symbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
         }
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField))
     {
-        if (invoiceTotalField.ValueType == DocumentFieldType.Double)
+        if (invoiceTotalField.FieldType == DocumentFieldType.Currency)
         {
-            double invoiceTotal = invoiceTotalField.AsDouble();
-            Console.WriteLine($"Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
+            CurrencyValue invoiceTotal = invoiceTotalField.Value.AsCurrency();
+            Console.WriteLine($"Invoice Total: '{invoiceTotal.Symbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
         }
     }
 }
@@ -328,7 +341,7 @@ Analyzing document content with `3.1.x`:
 > NOTE: With version `3.1.x` of the library this method had an optional `Language` parameter to hint at the language for the document, whereas in version `4.0.x` of the library `Locale` is used for this purpose.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-Uri formUri = <formUri>;
+Uri formUri = new Uri("<formUri>");
 
 Response<FormPageCollection> response = await client.StartRecognizeContentFromUriAsync(formUri).WaitForCompletionAsync();
 FormPageCollection formPages = response.Value;
@@ -384,12 +397,9 @@ foreach (FormPage page in formPages)
 
 Analyzing document layout with `4.0.x`:
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -402,11 +412,12 @@ foreach (DocumentPage page in result.Pages)
         DocumentLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+        }
     }
 
     for (int i = 0; i < page.SelectionMarks.Count; i++)
@@ -414,11 +425,24 @@ foreach (DocumentPage page in result.Pages)
         DocumentSelectionMark selectionMark = page.SelectionMarks[i];
 
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
+        }
+    }
+}
+
+Console.WriteLine("Paragraphs:");
+
+foreach (DocumentParagraph paragraph in result.Paragraphs)
+{
+    Console.WriteLine($"  Paragraph content: {paragraph.Content}");
+
+    if (paragraph.Role != null)
+    {
+        Console.WriteLine($"    Role: {paragraph.Role}");
     }
 }
 
@@ -435,7 +459,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -454,24 +478,21 @@ for (int i = 0; i < result.Tables.Count; i++)
 }
 ```
 
-Analyzing general prebuilt document types with `4.0.x`:
+Analyzing general document types with `4.0.x`:
 
 > NOTE: Analyzing a document with the `prebuilt-document` model replaces training without labels in version `3.1.x` of the library.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
 
 foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
 {
-    if (kvp.Value.Content == null)
+    if (kvp.Value == null)
     {
         Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
     }
@@ -481,20 +502,6 @@ foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
     }
 }
 
-Console.WriteLine("Detected entities:");
-
-foreach (DocumentEntity entity in result.Entities)
-{
-    if (entity.SubCategory == null)
-    {
-        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
-    }
-    else
-    {
-        Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
-    }
-}
-
 foreach (DocumentPage page in result.Pages)
 {
     Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s),");
@@ -505,11 +512,12 @@ foreach (DocumentPage page in result.Pages)
         DocumentLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < line.BoundingPolygon.Count; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+        }
     }
 
     for (int i = 0; i < page.SelectionMarks.Count; i++)
@@ -517,11 +525,12 @@ foreach (DocumentPage page in result.Pages)
         DocumentSelectionMark selectionMark = page.SelectionMarks[i];
 
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
+        }
     }
 }
 
@@ -538,7 +547,7 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+            Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
         }
     }
 }
@@ -557,26 +566,34 @@ for (int i = 0; i < result.Tables.Count; i++)
 }
 ```
 
-> NOTE: All of these samples also work with `StartAnalyzeDocument` when providing a document Stream.
+> NOTE: All of these samples also work with `AnalyzeDocument` when providing a document Stream.
 
 ### Training a custom model
 
 Differences between the versions:
 - Files for building a new model for version `4.0.x` can be created using the labeling tool found [here][fr_labeling_tool].
 - In version `3.1.x` the `useTrainingLabels` parameter was used to indicate whether to use labeled data when creating the custom model.
-- In version `4.0.x` the `useTrainingLabels` parameter is not supported since training must be carried out with labeled training documents. Additionally train without labels is now replaced with the prebuilt model `prebuilt-document` which extracts entities, key-value pairs, and layout from a document. 
+- In version `4.0.x` the `useTrainingLabels` parameter is not supported since training must be carried out with labeled training documents. Additionally train without labels is now replaced with the prebuilt model `prebuilt-document` which extracts key-value pairs and layout from a document.
+- In version `4.0.x`, the new `buildMode` required parameter is used to choose the technique to be applied when building the model. Currently there are only two options:
+  - Template build mode: equivalent to the technique used in version `3.1.x`. Recommended when the custom documents all have the same layout. Fields are expected to be in the same place across documents. Build time tends to be considerably shorter than the neural build mode.
+  - Neural build mode: recommended when custom documents have different layouts. Fields are expected to be the same but they can be placed in different positions across documents.
+
+For more information about the available build modes and their capabilities, see [Form Recognizer custom models](https://aka.ms/azsdk/formrecognizer/buildmode).
 
 Train a custom model with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
 // For this sample, you can use the training forms found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions to set up forms for training in an Azure Storage Blob Container, please see:
+// Upload the forms to your storage container and then generate a container SAS URL. Note
+// that a container URI without SAS is accepted only when the container is public or has a
+// managed identity configured.
+//
+// For instructions to set up forms for training in an Azure Blob Storage Container, please see:
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 // For instructions to create a label file for your training forms, please see:
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 string modelName = "My Model with labels";
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -610,28 +627,34 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 Train a custom model with `4.0.x`:
 ```C# Snippet:FormRecognizerSampleBuildModel
 // For this sample, you can use the training documents found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-// https://aka.ms/azsdk/formrecognizer/buildtrainingset
+// Upload the documents to your storage container and then generate a container SAS URL. Note
+// that a container URI without SAS is accepted only when the container is public or has a
+// managed identity configured.
+//
+// For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+// https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri blobContainerUri = new Uri("<blobContainerUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+// We are selecting the Template build mode in this sample. For more information about the available
+// build modes and their differences, please see:
+// https://aka.ms/azsdk/formrecognizer/buildmode
+
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))
     Console.WriteLine($"  Model description: {model.Description}");
 Console.WriteLine($"  Created on: {model.CreatedOn}");
 Console.WriteLine("  Doc types the model can recognize:");
-foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
 {
-    Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
-    foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+    Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+    foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
     {
-        Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+        Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
     }
 }
 ```
@@ -639,14 +662,14 @@ foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
 ### Analyzing a document with a custom model
 
 Differences between the versions:
-- Analyzing a custom model with `DocumentAnalysisClient` uses the general `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods.
+- Analyzing a custom model with `DocumentAnalysisClient` uses the general `AnalyzeDocument` and `AnalyzeDocumentFromUri` methods.
 - In order to analyze a custom model with `FormRecognizerClient` the `StartRecognizeCustomModels` and its corresponding Uri methods are used.
-- The `IncludeFieldElements` keyword argument is not supported with the `DocumentAnalysisClient`, text details are automatically included with API version `2021-09-30-preview` and later.
+- The `IncludeFieldElements` keyword argument is not supported with the `DocumentAnalysisClient`. Text details are automatically included with API version `2022-08-31` and later.
 
 Analyze a document using a custom model with `3.1.x`:
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
-Uri formUri = <formUri>;
+Uri formUri = new Uri("<formUri>");
 var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
 
 RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri, options);
@@ -704,19 +727,16 @@ foreach (RecognizedForm form in forms)
 Analyze a document using a custom model with `4.0.x`:
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 string modelId = "<modelId>";
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, modelId, fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Document of type: {document.DocType}");
+    Console.WriteLine($"Document of type: {document.DocumentType}");
 
     foreach (KeyValuePair<string, DocumentField> fieldKvp in document.Fields)
     {
@@ -734,8 +754,8 @@ foreach (AnalyzedDocument document in result.Documents)
 ### Managing models
 
 Differences between the versions:
-- When using API version `2021-09-30-preview` and later models no longer include submodels, instead a model can analyze different document types.
-- When building, composing, or copying models users can now assign their own model IDs and specify a description.
+- When using API version `2022-08-31` and later, models no longer include submodels. Instead, a model can analyze different document types.
+- When building, composing, or copying models, users can now assign their own model IDs and specify a description.
 - In version `4.0.x` of the library, only models that build successfully can be retrieved from the get and list model calls. Unsuccessful model operations can be viewed with the `GetOperation()` and `GetOperations()` methods (note that document model operation data persists for only 24 hours). In version `3.1.x` of the library, models that had not succeeded were still created, had to be deleted by the user, and were returned in the `GetCustomModels()` response.
 
 ## Additional samples

@@ -1,5 +1,12 @@
 # Azure Time Series Insights client library for .NET
 
+---
+[//]: <> (This content is similar to https://github.com/MicrosoftDocs/azure-docs/blob/main/includes/tsi-retirement.md)
+
+**NOTE**
+>The Time Series Insights (TSI) service will no longer be supported after March 2025. Consider migrating existing TSI environments to alternative solutions as soon as possible. For more information on the deprecation and migration, visit our [documentation](https://aka.ms/tsi2adx).
+---
+
 Azure Time Series Insights provides data exploration and telemetry tools to help you improve operational analysis. It's a fully managed analytics, storage, and visualization service where you can explore and analyze billions of Internet of Things (IoT) events simultaneously.
 
 Azure Time Series Insights gives you a global view of your data, so you can quickly validate your IoT solution and avoid costly downtime to mission-critical devices. It can help you discover hidden trends, spot anomalies, and conduct root-cause analysis in near real time.
@@ -16,8 +23,8 @@ For the best development experience, developers should use the official Microsof
 
 Install the Azure Time Series Insights client library for .NET with NuGet:
 
-```PowerShell
-Install-Package Azure.IoT.TimeSeriesInsights
+```dotnetcli
+dotnet add package Azure.IoT.TimeSeriesInsights --prerelease
 ```
 
 View the package details at [nuget.org][tsi_nuget].

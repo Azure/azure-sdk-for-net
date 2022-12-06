@@ -25,5 +25,9 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         public const string Failed = "Failed";
         public const string Canceled = "Canceled";
         public const string Deprovisioned = "Deprovisioned";
+        public const string Moving = "Moving";
+        public const string Suspended = "Suspended";
+        public const string Warned = "Warned";
+        public const string SystemMaintenance = "SystemMaintenance";
     }
 }

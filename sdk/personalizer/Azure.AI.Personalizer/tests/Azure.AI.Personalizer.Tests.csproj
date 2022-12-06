@@ -5,6 +5,9 @@
     <!-- We don't care about XML doc comments on test methods -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="RL.Net" VersionOverride="0.2.0" />
+  </ItemGroup>
 
 
   <!-- Reference the Client Library -->

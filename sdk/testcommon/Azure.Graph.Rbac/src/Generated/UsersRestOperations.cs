@@ -124,7 +124,7 @@ namespace Azure.Graph.Rbac
             }
         }
 
-        internal HttpMessage CreateListRequest(string filter)
+        internal HttpMessage CreateListRequest(string filter, string expand, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,6 +138,14 @@ namespace Azure.Graph.Rbac
             {
                 uri.AppendQuery("$filter", filter, true);
             }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -146,10 +154,12 @@ namespace Azure.Graph.Rbac
 
         /// <summary> Gets list of users for the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
+        /// <param name="expand"> The expand value for the operation result. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<UserListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UserListResult>> ListAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            using var message = CreateListRequest(filter, expand, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -167,10 +177,12 @@ namespace Azure.Graph.Rbac
 
         /// <summary> Gets list of users for the current tenant. </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
+        /// <param name="expand"> The expand value for the operation result. </param>
+        /// <param name="top"> (Optional) Set the maximum number of results per response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<UserListResult> List(string filter = null, CancellationToken cancellationToken = default)
+        public Response<UserListResult> List(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            using var message = CreateListRequest(filter, expand, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

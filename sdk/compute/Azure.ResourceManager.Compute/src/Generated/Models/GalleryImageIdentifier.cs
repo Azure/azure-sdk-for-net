@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -16,21 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publisher"> The name of the gallery image definition publisher. </param>
         /// <param name="offer"> The name of the gallery image definition offer. </param>
         /// <param name="sku"> The name of the gallery image definition SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="offer"/>, or <paramref name="sku"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="offer"/> or <paramref name="sku"/> is null. </exception>
         public GalleryImageIdentifier(string publisher, string offer, string sku)
         {
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            if (offer == null)
-            {
-                throw new ArgumentNullException(nameof(offer));
-            }
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(offer, nameof(offer));
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Publisher = publisher;
             Offer = offer;

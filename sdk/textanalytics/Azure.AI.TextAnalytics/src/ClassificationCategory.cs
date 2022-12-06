@@ -6,18 +6,12 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A classification of an input document extracted by the Single Category Classification
+    /// A classification of an input document extracted by the Single Label Classification
     /// operation. The service attributes a confidence score to the predicted category
     /// for measuring how confident the model is in the returned prediction.
     /// </summary>
     public readonly struct ClassificationCategory
     {
-        internal ClassificationCategory(SingleClassificationDocument classification)
-        {
-            Category = classification.Classification.Category;
-            ConfidenceScore = classification.Classification.ConfidenceScore;
-        }
-
         internal ClassificationCategory(ClassificationResult classification)
         {
             Category = classification.Category;
@@ -27,7 +21,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the predicted category for the respective document. The possible values
         /// of the category string depends on the custom categories set in the Text Analytics
-        /// service for the targetted project.
+        /// service for the targeted project.
         /// </summary>
         public string Category { get; }
 

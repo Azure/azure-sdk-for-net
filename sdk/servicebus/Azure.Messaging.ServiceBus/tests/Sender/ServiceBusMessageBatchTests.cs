@@ -83,20 +83,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.AsEnumerable" />
+        ///   Verifies property accessors for the <see cref="ServiceBusMessageBatch.AsReadOnly{T}" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableIsDelegatedToTheTransportClient()
+        public void AsReadOnlyIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
             var mockScope = new EntityScopeFactory("mock", "mock");
 
             var batch = new ServiceBusMessageBatch(mockBatch, mockScope);
 
-            batch.AsEnumerable<string>();
-            Assert.That(mockBatch.AsEnumerableCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
+            batch.AsReadOnly<string>();
+            Assert.That(mockBatch.AsReadOnlyCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             public bool DisposeInvoked = false;
             public bool ClearInvoked = false;
-            public Type AsEnumerableCalledWith = null;
+            public Type AsReadOnlyCalledWith = null;
             public ServiceBusMessage TryAddCalledWith = null;
 
             public override long MaxSizeInBytes { get; } = 200;
@@ -226,9 +226,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 return true;
             }
 
-            public override IEnumerable<T> AsEnumerable<T>()
+            public override IReadOnlyCollection<T> AsReadOnly<T>()
             {
-                AsEnumerableCalledWith = typeof(T);
+                AsReadOnlyCalledWith = typeof(T);
                 return default;
             }
         }

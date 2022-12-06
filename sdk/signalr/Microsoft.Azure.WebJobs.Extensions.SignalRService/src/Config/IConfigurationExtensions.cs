@@ -3,9 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using static Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -18,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             foreach (var child in config.GetChildren())
             {
-                if (child.TryGetNamedEndpointFromIdentity(azureComponentFactory, out var endpoint))
+                if (child.TryGetEndpointFromIdentity(azureComponentFactory, out var endpoint))
                 {
                     yield return endpoint;
                     continue;
@@ -50,20 +54,63 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             }
         }
 
-        public static bool TryGetNamedEndpointFromIdentity(this IConfigurationSection section, AzureComponentFactory azureComponentFactory, out ServiceEndpoint endpoint)
+        public static bool TryGetEndpointFromIdentity(this IConfigurationSection section, AzureComponentFactory azureComponentFactory, out ServiceEndpoint endpoint, bool isNamed = true)
         {
-            var text = section["ServiceUri"];
+            var text = section[ServiceUriKey];
             if (text != null)
             {
                 var key = section.Key;
-                var value = section.GetValue("Type", EndpointType.Primary);
+                var name = isNamed ? key : string.Empty;
+                var value = section.GetValue(TypeKey, EndpointType.Primary);
                 var credential = azureComponentFactory.CreateTokenCredential(section);
-                endpoint = new ServiceEndpoint(new Uri(text), credential, value, key);
+                var serverEndpoint = section.GetValue<Uri>(ServerEndpointKey);
+                var clientEndpoint = section.GetValue<Uri>(ClientEndpointKey);
+                endpoint = new ServiceEndpoint(new Uri(text), credential, value, name, serverEndpoint, clientEndpoint);
                 return true;
             }
 
             endpoint = null;
             return false;
+        }
+
+        public static bool TryGetJsonObjectSerializer(this IConfiguration configuration, out ObjectSerializer serializer)
+        {
+            //indicates Newtonsoft, camcelCase
+            if (configuration.GetValue(Constants.AzureSignalRNewtonsoftCamelCase, false))
+            {
+                serializer = new NewtonsoftJsonObjectSerializer(new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                });
+                return true;
+            }
+
+            if (!configuration.OnDotnetInProcessRuntime())
+            {
+                serializer = new NewtonsoftJsonObjectSerializer();
+                return true;
+            }
+
+            var hubProtocolConfig = configuration[Constants.AzureSignalRHubProtocol];
+            if (hubProtocolConfig is not null)
+            {
+                serializer = Enum.Parse(typeof(HubProtocol), hubProtocolConfig, true) switch
+                {
+                    HubProtocol.NewtonsoftJson => new NewtonsoftJsonObjectSerializer(),
+                    HubProtocol.SystemTextJson => new JsonObjectSerializer(),
+                    _ => throw new InvalidOperationException($"The {Constants.AzureSignalRHubProtocol} setting value '{hubProtocolConfig}' is not supported."),
+                };
+                return true;
+            }
+            serializer = null;
+            return false;
+        }
+
+        private static bool OnDotnetInProcessRuntime(this IConfiguration configuration)
+        {
+            var workerRuntime = configuration[Constants.FunctionsWorkerRuntime];
+            //unit test environment
+            return workerRuntime == null || workerRuntime == Constants.DotnetWorker;
         }
     }
 }

@@ -575,11 +575,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific topic.
+        /// List all event subscriptions.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// topic.
+        /// resource.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -1047,11 +1047,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific topic.
+        /// List all event subscriptions.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// topic.
+        /// resource.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

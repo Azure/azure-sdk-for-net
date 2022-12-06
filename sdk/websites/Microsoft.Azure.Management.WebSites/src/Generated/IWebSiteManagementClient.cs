@@ -120,6 +120,16 @@ namespace Microsoft.Azure.Management.WebSites
         ICertificatesOperations Certificates { get; }
 
         /// <summary>
+        /// Gets the IContainerAppsOperations.
+        /// </summary>
+        IContainerAppsOperations ContainerApps { get; }
+
+        /// <summary>
+        /// Gets the IContainerAppsRevisionsOperations.
+        /// </summary>
+        IContainerAppsRevisionsOperations ContainerAppsRevisions { get; }
+
+        /// <summary>
         /// Gets the IDeletedWebAppsOperations.
         /// </summary>
         IDeletedWebAppsOperations DeletedWebApps { get; }
@@ -163,27 +173,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the IWebAppsOperations.
         /// </summary>
         IWebAppsOperations WebApps { get; }
-
-        /// <summary>
-        /// Exchange code for GitHub access token for AppService CLI
-        /// </summary>
-        /// <remarks>
-        /// Description for Exchange code for GitHub access token for
-        /// AppService CLI
-        /// </remarks>
-        /// <param name='code'>
-        /// Code string to exchange for Github Access token
-        /// </param>
-        /// <param name='state'>
-        /// State string used for verification.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<AppserviceGithubToken>> GenerateGithubAccessTokenForAppserviceCLIAsyncWithHttpMessagesAsync(string code, string state, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets publishing user
@@ -314,6 +303,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string name, string type, bool? isFqdn = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Get custom hostnames under this subscription
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CustomHostnameSites>>> ListCustomHostNameSitesWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets list of available geo regions plus ministamps
@@ -519,6 +519,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<BillingMeter>>> ListBillingMetersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Get custom hostnames under this subscription
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<CustomHostnameSites>>> ListCustomHostNameSitesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a list of available geographical regions.

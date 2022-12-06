@@ -11,9 +11,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     public partial class KeyClientLiveTests
     {
-        [Test]
+        [RecordedTest]
         [KeyVaultOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task GetKeyRotationPolicyReturnsDefault()
         {
             string name = Recording.GenerateId();
@@ -25,9 +25,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.That(policy.LifetimeActions, Has.One.Matches<KeyRotationLifetimeAction>(action => action.Action == KeyRotationPolicyAction.Notify));
         }
 
-        [Test]
+        [RecordedTest]
         [KeyVaultOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public void GetKeyRotationPolicyThrowsForMissingKey()
         {
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetKeyRotationPolicyAsync("missing"));
@@ -38,9 +38,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual("KeyNotFound", ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         [KeyVaultOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task RotateKeyCreatesNewVersion()
         {
             string name = Recording.GenerateId();
@@ -55,9 +55,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreNotEqual(key.Key.N, rotatedKey.Key.N);
         }
 
-        [Test]
+        [RecordedTest]
         [KeyVaultOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task UpdateKeyRotationPolicy()
         {
             string name = Recording.GenerateId();
@@ -67,13 +67,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             KeyRotationPolicy policy = new()
             {
-                ExpiresIn = TimeSpan.FromDays(90),
+                ExpiresIn = "P90D",
                 LifetimeActions =
                 {
-                    new KeyRotationLifetimeAction
+                    new KeyRotationLifetimeAction(KeyRotationPolicyAction.Rotate)
                     {
-                        Action = KeyRotationPolicyAction.Rotate,
-                        TimeBeforeExpiry = TimeSpan.FromDays(10),
+                        TimeBeforeExpiry = "P10D",
                     }
                 }
             };
@@ -82,18 +81,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.AreEqual(policy.ExpiresIn, updatedPolicy.ExpiresIn);
 
-            // Notify policy is always present and can only be updated.
-            Assert.That(updatedPolicy.LifetimeActions, Has.One.Matches<KeyRotationLifetimeAction>(action => action.Action == KeyRotationPolicyAction.Notify));
-
             KeyRotationLifetimeAction rotateAction = updatedPolicy.LifetimeActions.Single(p => p.Action == KeyRotationPolicyAction.Rotate);
             Assert.AreEqual(policy.LifetimeActions[0].Action, rotateAction.Action);
             Assert.AreEqual(policy.LifetimeActions[0].TimeAfterCreate, rotateAction.TimeAfterCreate);
             Assert.AreEqual(policy.LifetimeActions[0].TimeBeforeExpiry, rotateAction.TimeBeforeExpiry);
         }
 
-        [Test]
+        [RecordedTest]
         [KeyVaultOnly]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public void UpdateKeyRotationPolicyThrowsForMissingKey()
         {
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.UpdateKeyRotationPolicyAsync("missing", new()));

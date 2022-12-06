@@ -1,142 +1,146 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/sentiment?showStats=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "222",
+        "Accept": "application/json",
+        "Content-Length": "316",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-aaf989ab2b8c5d46aad5ae14001600bc-3718e0352079d340-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "7fbb9dea32b8080ffdad856789b2330d",
+        "traceparent": "00-f790fec90ef0e9933305dbaf5221e6a3-1e8a11ef2be981ae-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "707628529dd4d171429e4bb05591653f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "That was the best day of my life!. I had a lot of fun at the park.",
-            "language": "en"
-          },
-          {
-            "id": "1",
-            "text": "I\u0027m not sure how I feel about this product. It is complicated.",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "That was the best day of my life!. I had a lot of fun at the park.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "I\u0027m not sure how I feel about this product. It is complicated.",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "SentimentAnalysis"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e95be2c4-9e3b-4dc4-9cf4-c62c0116acd3",
+        "apim-request-id": "e2b07387-8dde-4485-8301-0568e3863efe",
+        "Content-Length": "1211",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Mon, 25 Oct 2021 21:13:16 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:53 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "76"
+        "x-envoy-upstream-service-time": "25"
       },
       "ResponseBody": {
-        "statistics": {
-          "documentsCount": 2,
-          "validDocumentsCount": 2,
-          "erroneousDocumentsCount": 0,
-          "transactionsCount": 2
-        },
-        "documents": [
-          {
-            "id": "0",
-            "sentiment": "positive",
-            "statistics": {
-              "charactersCount": 66,
-              "transactionsCount": 1
-            },
-            "confidenceScores": {
-              "positive": 1.0,
-              "neutral": 0.0,
-              "negative": 0.0
-            },
-            "sentences": [
-              {
-                "sentiment": "positive",
-                "confidenceScores": {
-                  "positive": 1.0,
-                  "neutral": 0.0,
-                  "negative": 0.0
-                },
-                "offset": 0,
-                "length": 34,
-                "text": "That was the best day of my life!."
-              },
-              {
-                "sentiment": "positive",
-                "confidenceScores": {
-                  "positive": 1.0,
-                  "neutral": 0.0,
-                  "negative": 0.0
-                },
-                "offset": 35,
-                "length": 31,
-                "text": "I had a lot of fun at the park."
-              }
-            ],
-            "warnings": []
+        "kind": "SentimentAnalysisResults",
+        "results": {
+          "statistics": {
+            "documentsCount": 2,
+            "validDocumentsCount": 2,
+            "erroneousDocumentsCount": 0,
+            "transactionsCount": 2
           },
-          {
-            "id": "1",
-            "sentiment": "negative",
-            "statistics": {
-              "charactersCount": 62,
-              "transactionsCount": 1
-            },
-            "confidenceScores": {
-              "positive": 0.0,
-              "neutral": 0.0,
-              "negative": 1.0
-            },
-            "sentences": [
-              {
-                "sentiment": "neutral",
-                "confidenceScores": {
-                  "positive": 0.02,
-                  "neutral": 0.85,
-                  "negative": 0.13
-                },
-                "offset": 0,
-                "length": 43,
-                "text": "I\u0027m not sure how I feel about this product."
+          "documents": [
+            {
+              "id": "0",
+              "sentiment": "positive",
+              "statistics": {
+                "charactersCount": 66,
+                "transactionsCount": 1
               },
-              {
-                "sentiment": "negative",
-                "confidenceScores": {
-                  "positive": 0.0,
-                  "neutral": 0.0,
-                  "negative": 1.0
+              "confidenceScores": {
+                "positive": 0.95,
+                "neutral": 0.05,
+                "negative": 0.0
+              },
+              "sentences": [
+                {
+                  "sentiment": "positive",
+                  "confidenceScores": {
+                    "positive": 1.0,
+                    "neutral": 0.0,
+                    "negative": 0.0
+                  },
+                  "offset": 0,
+                  "length": 35,
+                  "text": "That was the best day of my life!. "
                 },
-                "offset": 44,
-                "length": 18,
-                "text": "It is complicated."
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2020-04-01"
+                {
+                  "sentiment": "positive",
+                  "confidenceScores": {
+                    "positive": 0.9,
+                    "neutral": 0.09,
+                    "negative": 0.01
+                  },
+                  "offset": 35,
+                  "length": 31,
+                  "text": "I had a lot of fun at the park."
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "id": "1",
+              "sentiment": "negative",
+              "statistics": {
+                "charactersCount": 62,
+                "transactionsCount": 1
+              },
+              "confidenceScores": {
+                "positive": 0.0,
+                "neutral": 0.06,
+                "negative": 0.94
+              },
+              "sentences": [
+                {
+                  "sentiment": "neutral",
+                  "confidenceScores": {
+                    "positive": 0.03,
+                    "neutral": 0.85,
+                    "negative": 0.12
+                  },
+                  "offset": 0,
+                  "length": 44,
+                  "text": "I\u0027m not sure how I feel about this product. "
+                },
+                {
+                  "sentiment": "negative",
+                  "confidenceScores": {
+                    "positive": 0.0,
+                    "neutral": 0.06,
+                    "negative": 0.94
+                  },
+                  "offset": 44,
+                  "length": 18,
+                  "text": "It is complicated."
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2022-10-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "508530765",
+    "RandomSeed": "374520765",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

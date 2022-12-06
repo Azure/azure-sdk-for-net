@@ -24,6 +24,22 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("manageActions");
                 writer.WriteObjectValue(ManageActions);
             }
+            if (Optional.IsDefined(Settings))
+            {
+                writer.WritePropertyName("settings");
+                writer.WriteObjectValue(Settings);
+            }
+            if (Optional.IsCollectionDefined(AdvancedSettings))
+            {
+                writer.WritePropertyName("advancedSettings");
+                writer.WriteStartObject();
+                foreach (var item in AdvancedSettings)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(EnableHealthCheck))
             {
                 writer.WritePropertyName("enableHealthCheck");
@@ -49,15 +65,30 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("excludeFromLatest");
                 writer.WriteBooleanValue(ExcludeFromLatest.Value);
             }
-            if (Optional.IsDefined(EndOfLifeDate))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate");
-                writer.WriteStringValue(EndOfLifeDate.Value, "O");
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (Optional.IsDefined(ReplicationMode))
+            {
+                writer.WritePropertyName("replicationMode");
+                writer.WriteStringValue(ReplicationMode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            {
+                writer.WritePropertyName("targetExtendedLocations");
+                writer.WriteStartArray();
+                foreach (var item in TargetExtendedLocations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -65,14 +96,18 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
         {
             UserArtifactSource source = default;
-            Optional<UserArtifactManage> manageActions = default;
+            Optional<UserArtifactManagement> manageActions = default;
+            Optional<UserArtifactSettings> settings = default;
+            Optional<IDictionary<string, string>> advancedSettings = default;
             Optional<bool> enableHealthCheck = default;
             Optional<IList<TargetRegion>> targetRegions = default;
             Optional<int> replicaCount = default;
             Optional<bool> excludeFromLatest = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<StorageAccountType> storageAccountType = default;
+            Optional<ImageStorageAccountType> storageAccountType = default;
+            Optional<GalleryReplicationMode> replicationMode = default;
+            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
@@ -87,7 +122,32 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    manageActions = UserArtifactManage.DeserializeUserArtifactManage(property.Value);
+                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("settings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("advancedSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    advancedSettings = dictionary;
                     continue;
                 }
                 if (property.NameEquals("enableHealthCheck"))
@@ -162,11 +222,36 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(property.Value.GetString());
+                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("replicationMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    replicationMode = new GalleryReplicationMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetExtendedLocations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item));
+                    }
+                    targetExtendedLocations = array;
                     continue;
                 }
             }
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), source, manageActions.Value, Optional.ToNullable(enableHealthCheck));
+            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck));
         }
     }
 }

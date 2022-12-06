@@ -451,10 +451,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse> ResendEmailWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Verify domain ownership for this certificate order.
+        /// Resend domain verification email to customer for this certificate
+        /// order
         /// </summary>
         /// <remarks>
-        /// Description for Verify domain ownership for this certificate order.
+        /// Resend domain verification ownership email containing steps on how
+        /// to verify a domain for a given certificate order
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -479,10 +481,21 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse> ResendRequestEmailsWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, NameIdentifier nameIdentifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Verify domain ownership for this certificate order.
+        /// This method is used to obtain the site seal information for an
+        /// issued certificate.
         /// </summary>
         /// <remarks>
-        /// Description for Verify domain ownership for this certificate order.
+        /// This method is used to obtain the site seal information for an
+        /// issued certificate. A site seal is a graphic that the certificate
+        /// purchaser can embed on their web site to show their visitors
+        /// information about their SSL certificate. If a web site visitor
+        /// clicks on the site seal image, a pop-up page is displayed that
+        /// contains detailed information about the SSL certificate. The site
+        /// seal token is used to link the site seal graphic image to the
+        /// appropriate certificate details pop-up page display when a user
+        /// clicks on the site seal. The site seal images are expected to be
+        /// static images and hosted by the reseller, to minimize delays for
+        /// customer page load times.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.

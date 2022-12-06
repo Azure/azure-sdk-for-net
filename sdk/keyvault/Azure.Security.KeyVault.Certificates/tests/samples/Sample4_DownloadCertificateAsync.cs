@@ -38,12 +38,12 @@ namespace Azure.Security.KeyVault.Certificates.Samples
                 keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
             }
 
-            DownloadCertificateOptions options = new DownloadCertificateOptions
+            DownloadCertificateOptions options = new DownloadCertificateOptions(certificateName)
             {
                 KeyStorageFlags = keyStorageFlags
             };
 
-            using X509Certificate2 certificate = await client.DownloadCertificateAsync(certificateName, options: options);
+            using X509Certificate2 certificate = await client.DownloadCertificateAsync(options);
             using RSA key = certificate.GetRSAPrivateKey();
 
             byte[] signature = key.SignHash(hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);

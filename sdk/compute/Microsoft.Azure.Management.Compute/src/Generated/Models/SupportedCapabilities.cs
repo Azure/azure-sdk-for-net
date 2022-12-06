@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// List of supported capabilities (like accelerated networking) persisted
-    /// on the disk resource for VM use.
+    /// List of supported capabilities persisted on the disk resource for VM
+    /// use.
     /// </summary>
     public partial class SupportedCapabilities
     {
@@ -30,11 +30,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the SupportedCapabilities class.
         /// </summary>
+        /// <param name="diskControllerTypes">The disk controllers that an OS
+        /// disk supports. If set it can be SCSI or SCSI, NVME or NVME,
+        /// SCSI.</param>
         /// <param name="acceleratedNetwork">True if the image from which the
         /// OS disk is created supports accelerated networking.</param>
-        public SupportedCapabilities(bool? acceleratedNetwork = default(bool?))
+        /// <param name="architecture">CPU architecture supported by an OS
+        /// disk. Possible values include: 'x64', 'Arm64'</param>
+        public SupportedCapabilities(string diskControllerTypes = default(string), bool? acceleratedNetwork = default(bool?), string architecture = default(string))
         {
+            DiskControllerTypes = diskControllerTypes;
             AcceleratedNetwork = acceleratedNetwork;
+            Architecture = architecture;
             CustomInit();
         }
 
@@ -44,11 +51,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the disk controllers that an OS disk supports. If set
+        /// it can be SCSI or SCSI, NVME or NVME, SCSI.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskControllerTypes")]
+        public string DiskControllerTypes { get; set; }
+
+        /// <summary>
         /// Gets or sets true if the image from which the OS disk is created
         /// supports accelerated networking.
         /// </summary>
         [JsonProperty(PropertyName = "acceleratedNetwork")]
         public bool? AcceleratedNetwork { get; set; }
+
+        /// <summary>
+        /// Gets or sets CPU architecture supported by an OS disk. Possible
+        /// values include: 'x64', 'Arm64'
+        /// </summary>
+        [JsonProperty(PropertyName = "architecture")]
+        public string Architecture { get; set; }
 
     }
 }

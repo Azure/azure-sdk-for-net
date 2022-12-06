@@ -10,8 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class ClassificationResult
+    internal partial class ClassificationResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("category");
+            writer.WriteStringValue(Category);
+            writer.WritePropertyName("confidenceScore");
+            writer.WriteNumberValue(ConfidenceScore);
+            writer.WriteEndObject();
+        }
+
         internal static ClassificationResult DeserializeClassificationResult(JsonElement element)
         {
             string category = default;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -20,21 +21,12 @@ namespace Azure.Storage.Queues.Models
         /// <param name="timeNextVisible"> The time that the message will again become visible in the Queue. </param>
         /// <param name="dequeueCount"> The number of times the message has been dequeued. </param>
         /// <param name="messageText"> The content of the Message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="popReceipt"/>, or <paramref name="messageText"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="popReceipt"/> or <paramref name="messageText"/> is null. </exception>
         internal DequeuedMessageItem(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible, long dequeueCount, string messageText)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (popReceipt == null)
-            {
-                throw new ArgumentNullException(nameof(popReceipt));
-            }
-            if (messageText == null)
-            {
-                throw new ArgumentNullException(nameof(messageText));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(popReceipt, nameof(popReceipt));
+            Argument.AssertNotNull(messageText, nameof(messageText));
 
             MessageId = messageId;
             InsertionTime = insertionTime;

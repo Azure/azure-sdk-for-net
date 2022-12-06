@@ -1,0 +1,25 @@
+{
+  "displayNames": {
+    "/p:UseProjectReferenceToAzureClients=false": "PackageRef"
+  },
+  "matrix": {
+    "Agent": {
+      "Ubuntu-20.04_NET6.0": {
+        "OSVmImage": "MMSUbuntu20.04",
+        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+        "TestTargetFramework": "net6.0"
+      }
+    },
+    "AdditionalTestArguments": [
+        "/p:UseProjectReferenceToAzureClients=false"
+    ],
+    "BuildConfiguration": [
+        "Debug"
+    ],
+    "TestFilterConfig": {
+        "ExcludeNonVirtualized": {
+            "AdditionalTestFilters": "FullyQualifiedName!~WebJobs&TestCategory!=NonVirtualized"
+        }
+      }
+  }
+}

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("blobContainerSasUri");
-            writer.WriteStringValue(BlobContainerSasUri);
+            writer.WriteStringValue(BlobContainerSasUri.AbsoluteUri);
             writer.WritePropertyName("fromTime");
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime");

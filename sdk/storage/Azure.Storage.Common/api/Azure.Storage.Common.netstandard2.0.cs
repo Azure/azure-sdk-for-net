@@ -10,22 +10,30 @@ namespace Azure.Storage
     }
     public enum ClientSideEncryptionVersion
     {
+        [System.ObsoleteAttribute("This version is considered insecure. Applications are encouraged to migrate to version 2.0 or to one of Azure Storage's server-side encryption solutions. See http://aka.ms/azstorageclientencryptionblog for more details.")]
         V1_0 = 1,
+        V2_0 = 2,
     }
-    public partial class DownloadTransactionalHashingOptions
+    public partial class DownloadTransferValidationOptions
     {
-        public DownloadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public bool Validate { get { throw null; } set { } }
+        public DownloadTransferValidationOptions() { }
+        public bool AutoValidateChecksum { get { throw null; } set { } }
+        public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
     }
-    public partial class StorageCrc64NonCryptographicHashAlgorithm
+    public enum StorageChecksumAlgorithm
     {
-        internal StorageCrc64NonCryptographicHashAlgorithm() { }
-        public void Append(System.ReadOnlySpan<byte> source) { }
-        public static Azure.Storage.StorageCrc64NonCryptographicHashAlgorithm Create() { throw null; }
-        public byte[] GetCurrentHash() { throw null; }
-        protected void GetCurrentHashCore(System.Span<byte> destination) { }
-        public void Reset() { }
+        Auto = 0,
+        None = 1,
+        MD5 = 2,
+        StorageCrc64 = 3,
+    }
+    public partial class StorageCrc64HashAlgorithm : System.IO.Hashing.NonCryptographicHashAlgorithm
+    {
+        internal StorageCrc64HashAlgorithm() : base (default(int)) { }
+        public override void Append(System.ReadOnlySpan<byte> source) { }
+        public static Azure.Storage.StorageCrc64HashAlgorithm Create() { throw null; }
+        protected override void GetCurrentHashCore(System.Span<byte> destination) { }
+        public override void Reset() { }
     }
     public static partial class StorageExtensions
     {
@@ -59,17 +67,17 @@ namespace Azure.Storage
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool operator !=(Azure.Storage.StorageTransferOptions left, Azure.Storage.StorageTransferOptions right) { throw null; }
     }
-    public enum TransactionalHashAlgorithm
+    public partial class TransferValidationOptions
     {
-        None = 0,
-        StorageCrc64 = 1,
-        MD5 = 2,
+        public TransferValidationOptions() { }
+        public Azure.Storage.DownloadTransferValidationOptions Download { get { throw null; } }
+        public Azure.Storage.UploadTransferValidationOptions Upload { get { throw null; } }
     }
-    public partial class UploadTransactionalHashingOptions
+    public partial class UploadTransferValidationOptions
     {
-        public UploadTransactionalHashingOptions() { }
-        public Azure.Storage.TransactionalHashAlgorithm Algorithm { get { throw null; } set { } }
-        public byte[] PrecalculatedHash { get { throw null; } set { } }
+        public UploadTransferValidationOptions() { }
+        public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
+        public System.ReadOnlyMemory<byte> PrecalculatedChecksum { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Sas
@@ -160,7 +168,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2021-02-12";
+        public const string DefaultSasVersion = "2021-12-02";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

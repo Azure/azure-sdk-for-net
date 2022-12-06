@@ -10,15 +10,12 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Resources" (https://www.nuget.org/packages/Azure.ResourceManager.Resources/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>3.15.1-preview</Version>
+		<Version>3.17.4-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;Azure Policy</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Resource Manager SDK. This release has below changes:
-          - Add user-assigned identity support for Policy Assignments
-          - Add PATCH support to update identity portion of Policy Assignments
-          - Add new SystemData property to Policy Definitions, Sets, and Assignments
-          - Add new APIs for feature registrations
+          - Added ForceDeletionType parameter for group deletion
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

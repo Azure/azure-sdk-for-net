@@ -294,6 +294,9 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             /// <param name='resourceName'>
             /// Custom Locations name.
             /// </param>
+            /// <param name='identity'>
+            /// Identity for the resource.
+            /// </param>
             /// <param name='authentication'>
             /// This is optional input that contains the authentication that should be used
             /// to generate the namespace.
@@ -322,9 +325,9 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             /// <param name='tags'>
             /// Resource tags
             /// </param>
-            public static CustomLocation Update(this ICustomLocationsOperations operations, string resourceGroupName, string resourceName, CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static CustomLocation Update(this ICustomLocationsOperations operations, string resourceGroupName, string resourceName, Identity identity = default(Identity), CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, resourceName, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, namespaceParameter, provisioningState, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, resourceName, identity, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, namespaceParameter, provisioningState, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -342,6 +345,9 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             /// </param>
             /// <param name='resourceName'>
             /// Custom Locations name.
+            /// </param>
+            /// <param name='identity'>
+            /// Identity for the resource.
             /// </param>
             /// <param name='authentication'>
             /// This is optional input that contains the authentication that should be used
@@ -374,9 +380,9 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CustomLocation> UpdateAsync(this ICustomLocationsOperations operations, string resourceGroupName, string resourceName, CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CustomLocation> UpdateAsync(this ICustomLocationsOperations operations, string resourceGroupName, string resourceName, Identity identity = default(Identity), CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, namespaceParameter, provisioningState, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, identity, authentication, clusterExtensionIds, displayName, hostResourceId, hostType, namespaceParameter, provisioningState, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

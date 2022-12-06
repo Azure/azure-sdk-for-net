@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of GremlinDatabaseListResult. </summary>
         internal GremlinDatabaseListResult()
         {
-            Value = new ChangeTrackingList<GremlinDatabaseGetResults>();
+            Value = new ChangeTrackingList<GremlinDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of GremlinDatabaseListResult. </summary>
         /// <param name="value"> List of Gremlin databases and their properties. </param>
-        internal GremlinDatabaseListResult(IReadOnlyList<GremlinDatabaseGetResults> value)
+        internal GremlinDatabaseListResult(IReadOnlyList<GremlinDatabaseData> value)
         {
             Value = value;
         }
 
         /// <summary> List of Gremlin databases and their properties. </summary>
-        public IReadOnlyList<GremlinDatabaseGetResults> Value { get; }
+        public IReadOnlyList<GremlinDatabaseData> Value { get; }
     }
 }

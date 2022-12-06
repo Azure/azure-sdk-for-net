@@ -101,6 +101,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
+        /// DBCC_GROUP
+        /// DATABASE_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_CHANGE_GROUP
+        /// LEDGER_OPERATION_GROUP
         ///
         /// These are groups that cover all sql statements and stored
         /// procedures executed against the database, and should not be used in
@@ -164,6 +168,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// processed.
         /// The default minimum value is 1000 (1 second). The maximum is
         /// 2,147,483,647.</param>
+        /// <param name="isManagedIdentityInUse">Specifies whether Managed
+        /// Identity is used to access blob storage</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
         /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled is
@@ -184,7 +190,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// authentication](https://go.microsoft.com/fwlink/?linkid=2114355)</param>
         /// <param name="storageAccountSubscriptionId">Specifies the blob
         /// storage subscription Id.</param>
-        public ServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), bool? isDevopsAuditEnabled = default(bool?), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), System.Guid? storageAccountSubscriptionId = default(System.Guid?))
+        public ServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), bool? isDevopsAuditEnabled = default(bool?), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?), bool? isManagedIdentityInUse = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), System.Guid? storageAccountSubscriptionId = default(System.Guid?))
             : base(id, name, type)
         {
             IsDevopsAuditEnabled = isDevopsAuditEnabled;
@@ -193,6 +199,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             QueueDelayMs = queueDelayMs;
+            IsManagedIdentityInUse = isManagedIdentityInUse;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -275,6 +282,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
+        /// DBCC_GROUP
+        /// DATABASE_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_CHANGE_GROUP
+        /// LEDGER_OPERATION_GROUP
         ///
         /// These are groups that cover all sql statements and stored
         /// procedures executed against the database, and should not be used in
@@ -355,6 +366,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.queueDelayMs")]
         public int? QueueDelayMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether Managed Identity is used to access
+        /// blob storage
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isManagedIdentityInUse")]
+        public bool? IsManagedIdentityInUse { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the state of the audit. If state is Enabled,

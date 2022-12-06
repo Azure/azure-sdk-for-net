@@ -1,72 +1,72 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/linking?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "561",
+        "Accept": "application/json",
+        "Content-Length": "651",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-de8212d67cc17b448b09520e4be3ce6b-15a6f4c946d4d248-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "aa01d6b77b2b2d76ec0e72d5ad5d4024",
+        "traceparent": "00-708f0c33547f6683e8d9c6208dfc5aac-2acd37c2277978b5-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a3d76c73049bd583ef4a5e9d601ccb4a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
-            "language": "en"
-          },
-          {
-            "id": "1",
-            "text": "Hello world",
-            "language": "en"
-          },
-          {
-            "id": "2",
-            "text": "Pike place market is my favorite Seattle attraction.",
-            "language": "en"
-          },
-          {
-            "id": "3",
-            "text": "I had a wonderful trip to Seattle last week and even visited the Space Needle 2 times!",
-            "language": "en"
-          },
-          {
-            "id": "4",
-            "text": "Unfortunately, it rained during my entire trip to Seattle. I didn\u0027t even get to visit the Space Needle",
-            "language": "en"
-          },
-          {
-            "id": "5",
-            "text": "This should fail!",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "Hello world",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Pike place market is my favorite Seattle attraction.",
+              "language": "en"
+            },
+            {
+              "id": "3",
+              "text": "I had a wonderful trip to Seattle last week and even visited the Space Needle 2 times!",
+              "language": "en"
+            },
+            {
+              "id": "4",
+              "text": "Unfortunately, it rained during my entire trip to Seattle. I didn\u0027t even get to visit the Space Needle",
+              "language": "en"
+            },
+            {
+              "id": "5",
+              "text": "This should fail!",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "EntityLinking"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "cb91aae7-3ef7-42f3-ae28-009b201f884b",
+        "apim-request-id": "aa1eb2bd-ecdb-433b-b7d5-2c815622c785",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:22:06 GMT",
+        "Date": "Fri, 14 Oct 2022 22:22:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5"
+        "x-envoy-upstream-service-time": "4"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidRequest",
-          "message": "Invalid document in request.",
+          "message": "Invalid Document in request.",
           "innererror": {
             "code": "InvalidDocumentBatch",
             "message": "Batch request contains too many records. Max 5 records are permitted."
@@ -76,8 +76,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "602192603",
+    "RandomSeed": "1600869070",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

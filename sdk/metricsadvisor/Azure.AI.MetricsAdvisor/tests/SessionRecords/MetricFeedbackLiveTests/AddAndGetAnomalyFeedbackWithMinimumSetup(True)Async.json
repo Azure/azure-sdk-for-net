@@ -14,8 +14,8 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2020-09-26T00:00:00Z",
-        "endTime": "2020-09-29T00:00:00Z",
+        "startTime": "2020-09-26T00:00:00.0000000Z",
+        "endTime": "2020-09-29T00:00:00.0000000Z",
         "value": {
           "anomalyValue": "AutoDetect"
         },
@@ -76,8 +76,8 @@
           }
         },
         "feedbackType": "Anomaly",
-        "startTime": "2020-09-26T00:00:00Z",
-        "endTime": "2020-09-29T00:00:00Z",
+        "startTime": "2020-09-26T00:00:00.0000000Z",
+        "endTime": "2020-09-29T00:00:00.0000000Z",
         "value": {
           "anomalyValue": "AutoDetect"
         },

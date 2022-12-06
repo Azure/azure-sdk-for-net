@@ -26,7 +26,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
         /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
-        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+        /// var client = new MetricsQueryClient(new DefaultAzureCredential());
         /// </code>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
@@ -86,24 +86,23 @@ namespace Azure.Monitor.Query
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
         /// string resourceId =
         ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// var client = new MetricsQueryClient(new DefaultAzureCredential());
         ///
-        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
-        ///
-        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryResourceAsync(
+        /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
+        ///     new[] { &quot;SuccessfulCalls&quot;, &quot;TotalCalls&quot; }
         /// );
         ///
-        /// foreach (var metric in results.Value.Metrics)
+        /// foreach (MetricResult metric in results.Value.Metrics)
         /// {
         ///     Console.WriteLine(metric.Name);
-        ///     foreach (var element in metric.TimeSeries)
+        ///     foreach (MetricTimeSeriesElement element in metric.TimeSeries)
         ///     {
         ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
         ///
-        ///         foreach (var metricValue in element.Values)
+        ///         foreach (MetricValue value in element.Values)
         ///         {
-        ///             Console.WriteLine(metricValue);
+        ///             Console.WriteLine(value);
         ///         }
         ///     }
         /// }
@@ -148,24 +147,23 @@ namespace Azure.Monitor.Query
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
         /// string resourceId =
         ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
+        /// var client = new MetricsQueryClient(new DefaultAzureCredential());
         ///
-        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
-        ///
-        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryResourceAsync(
+        /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
+        ///     new[] { &quot;SuccessfulCalls&quot;, &quot;TotalCalls&quot; }
         /// );
         ///
-        /// foreach (var metric in results.Value.Metrics)
+        /// foreach (MetricResult metric in results.Value.Metrics)
         /// {
         ///     Console.WriteLine(metric.Name);
-        ///     foreach (var element in metric.TimeSeries)
+        ///     foreach (MetricTimeSeriesElement element in metric.TimeSeries)
         ///     {
         ///         Console.WriteLine(&quot;Dimensions: &quot; + string.Join(&quot;,&quot;, element.Metadata));
         ///
-        ///         foreach (var metricValue in element.Values)
+        ///         foreach (MetricValue value in element.Values)
         ///         {
-        ///             Console.WriteLine(metricValue);
+        ///             Console.WriteLine(value);
         ///         }
         ///     }
         /// }

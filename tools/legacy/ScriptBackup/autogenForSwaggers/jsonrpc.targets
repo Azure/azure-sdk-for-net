@@ -1,8 +1,0 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Rest.ClientRuntime.Test" Version="1.0.200.194" />
-    </ItemGroup>
-    <PropertyGroup>
-        <DefineConstants>PORTABLE;DNXCORE50</DefineConstants>
-    </PropertyGroup>
-</Project>

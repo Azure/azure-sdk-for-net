@@ -21,11 +21,13 @@ namespace Azure.Storage.Blobs
             long position,
             AppendBlobRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            UploadTransferValidationOptions transferValidation
+            ) : base(
                 position,
                 bufferSize,
                 progressHandler,
-                hashingOptions)
+                transferValidation
+                )
         {
             ValidateBufferSize(bufferSize);
             _appendBlobClient = appendBlobClient;
@@ -42,12 +44,9 @@ namespace Azure.Storage.Blobs
 
                 Response<BlobAppendInfo> response = await _appendBlobClient.AppendBlockInternal(
                     content: _buffer,
-                    new AppendBlobAppendBlockOptions()
-                    {
-                        TransactionalHashingOptions = _hashingOptions,
-                        Conditions = _conditions,
-                        ProgressHandler = _progressHandler
-                    },
+                    _validationOptions,
+                    _conditions,
+                    _progressHandler,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

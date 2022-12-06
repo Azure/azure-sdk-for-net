@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
-
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
@@ -13,7 +11,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Request conditions for downloading.
         /// </summary>
-        public  DataLakeRequestConditions Conditions { get; set; }
+        public DataLakeRequestConditions Conditions { get; set; }
 
         ///// <summary>
         ///// Progress handler for tracking download progress.
@@ -26,8 +24,8 @@ namespace Azure.Storage.Files.DataLake.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// Transactional hashing options for data integrity checks.
+        /// Optional override settings for this client's <see cref="DataLakeClientOptions.TransferValidation"/> settings.
         /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public DownloadTransferValidationOptions TransferValidation { get; set; }
     }
 }

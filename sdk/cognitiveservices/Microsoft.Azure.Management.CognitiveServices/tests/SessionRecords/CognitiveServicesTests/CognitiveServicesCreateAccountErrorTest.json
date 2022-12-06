@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res6462?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3JlczY0NjI/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res1495?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3JlczE0OTU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"CENTRALUSEUAP\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"CENTRALUS\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2f6c7411-a54c-4738-a923-1b728c5a6e62"
+          "2dddf701-8ee6-4a9e-9480-ac904f883705"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000.",
+          "OSVersion/Microsoft.Windows.10.0.22621",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "35"
+          "31"
         ]
       },
       "ResponseHeaders": {
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3e161d3d-4521-46c8-9977-ce4f68068219"
+          "48a4d16d-dd0e-42d7-a5f5-912a0c86bf15"
         ],
         "x-ms-correlation-request-id": [
-          "3e161d3d-4521-46c8-9977-ce4f68068219"
+          "48a4d16d-dd0e-42d7-a5f5-912a0c86bf15"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211101T183904Z:3e161d3d-4521-46c8-9977-ce4f68068219"
+          "WESTUS2:20220929T025557Z:48a4d16d-dd0e-42d7-a5f5-912a0c86bf15"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 18:39:03 GMT"
+          "Thu, 29 Sep 2022 02:55:56 GMT"
         ],
         "Content-Length": [
-          "174"
+          "170"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,32 +63,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res6462\",\r\n  \"name\": \"res6462\",\r\n  \"location\": \"centraluseuap\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res1495\",\r\n  \"name\": \"res1495\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/NotExistedRG/providers/Microsoft.CognitiveServices/accounts/csa3318?api-version=2021-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvZ25pdGl2ZVNlcnZpY2VzL2FjY291bnRzL2NzYTMzMTg/YXBpLXZlcnNpb249MjAyMS0xMC0wMQ==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/NotExistedRG/providers/Microsoft.CognitiveServices/accounts/csa2024?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvZ25pdGl2ZVNlcnZpY2VzL2FjY291bnRzL2NzYTIwMjQ/YXBpLXZlcnNpb249MjAyMi0xMC0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"kind\": \"ComputerVision\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"location\": \"CENTRALUSEUAP\",\r\n  \"properties\": {}\r\n}",
+      "RequestBody": "{\r\n  \"kind\": \"ComputerVision\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"location\": \"CENTRALUS\",\r\n  \"properties\": {}\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9994643a-2c33-4144-8675-3a701f1eb0b8"
+          "4243d72c-c453-466e-a720-9b68a017c453"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000.",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "121"
+          "117"
         ]
       },
       "ResponseHeaders": {
@@ -102,13 +102,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "5166a3d1-6ab9-4694-9d21-d5f97602274e"
+          "09a5bd04-a28a-44d9-b8e0-6e55b27d2bc7"
         ],
         "x-ms-correlation-request-id": [
-          "5166a3d1-6ab9-4694-9d21-d5f97602274e"
+          "09a5bd04-a28a-44d9-b8e0-6e55b27d2bc7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211101T183904Z:5166a3d1-6ab9-4694-9d21-d5f97602274e"
+          "WESTUS2:20220929T025557Z:09a5bd04-a28a-44d9-b8e0-6e55b27d2bc7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,7 +117,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 18:39:03 GMT"
+          "Thu, 29 Sep 2022 02:55:57 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -133,22 +133,22 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res6462/providers/Microsoft.CognitiveServices/accounts/csa3318?api-version=2021-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3JlczY0NjIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2EzMzE4P2FwaS12ZXJzaW9uPTIwMjEtMTAtMDE=",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res1495/providers/Microsoft.CognitiveServices/accounts/csa2024?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3JlczE0OTUvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2EyMDI0P2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"ComputerVision\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"location\": \"BLA\",\r\n  \"properties\": {}\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "24fea936-2eab-412e-9efd-4f0562add858"
+          "17f51ef8-9fcf-4800-8f44-f16d792a5d74"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000.",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -168,13 +168,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "b9aa439a-166e-4740-96c6-cc227004bd51"
+          "94495579-ee94-49a1-a750-d6d1add0ede5"
         ],
         "x-ms-correlation-request-id": [
-          "b9aa439a-166e-4740-96c6-cc227004bd51"
+          "94495579-ee94-49a1-a750-d6d1add0ede5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211101T183904Z:b9aa439a-166e-4740-96c6-cc227004bd51"
+          "WESTUS2:20220929T025557Z:94495579-ee94-49a1-a750-d6d1add0ede5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -183,7 +183,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 18:39:03 GMT"
+          "Thu, 29 Sep 2022 02:55:57 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -192,19 +192,19 @@
           "-1"
         ],
         "Content-Length": [
-          "606"
+          "633"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationNotAvailableForResourceType\",\r\n    \"message\": \"The provided location 'BLA' is not available for resource type 'Microsoft.CognitiveServices/accounts'. List of available regions for the resource type is 'global,australiaeast,brazilsouth,westus,westus2,westeurope,northeurope,southeastasia,eastasia,westcentralus,southcentralus,eastus,eastus2,canadacentral,japaneast,centralindia,uksouth,japanwest,koreacentral,francecentral,northcentralus,centralus,southafricanorth,uaenorth,switzerlandnorth,switzerlandwest,germanywestcentral,norwayeast,westus3,jioindiawest,centraluseuap,eastus2euap'.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationNotAvailableForResourceType\",\r\n    \"message\": \"The provided location 'BLA' is not available for resource type 'Microsoft.CognitiveServices/accounts'. List of available regions for the resource type is 'global,australiaeast,brazilsouth,westus,westus2,westeurope,northeurope,southeastasia,eastasia,westcentralus,southcentralus,eastus,eastus2,canadacentral,japaneast,centralindia,uksouth,japanwest,koreacentral,francecentral,northcentralus,centralus,southafricanorth,uaenorth,swedencentral,switzerlandnorth,switzerlandwest,germanywestcentral,norwayeast,westus3,jioindiawest,centraluseuap,eastus2euap,qatarcentral'.\"\r\n  }\r\n}",
       "StatusCode": 400
     }
   ],
   "Names": {
     "CreateResourceGroup": [
-      "res6462"
+      "res1495"
     ],
     "CognitiveServicesCreateAccountErrorTest": [
-      "csa3318"
+      "csa2024"
     ]
   },
   "Variables": {

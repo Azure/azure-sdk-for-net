@@ -95,12 +95,6 @@ namespace Azure.Security.KeyVault.Administration.Samples
             List<KeyVaultRoleDefinition> definitions = client.GetRoleDefinitions(KeyVaultRoleScope.Global).ToList();
             _roleDefinitionId = definitions.First(d => d.RoleName == RoleName).Id;
 
-            // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleAssignments.
-            string definitionIdToAssign = _roleDefinitionId;
-
-            // Replace objectId with the service principal object id.
-            string servicePrincipalObjectId = _objectId;
-
             #region Snippet:CreateRoleAssignment
 #if SNIPPET
             string definitionIdToAssign = "<roleDefinitionId>";
@@ -108,6 +102,12 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 #else
+            // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleAssignments.
+            string definitionIdToAssign = _roleDefinitionId;
+
+            // Replace objectId with the service principal object id.
+            string servicePrincipalObjectId = _objectId;
+
             Guid roleAssignmentName = Recording.Random.NewGuid();
             KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, roleAssignmentName);
 #endif
@@ -132,12 +132,6 @@ namespace Azure.Security.KeyVault.Administration.Samples
             List<KeyVaultRoleDefinition> definitions = await client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
             _roleDefinitionId = definitions.First(d => d.RoleName == RoleName).Id;
 
-            // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
-            string definitionIdToAssign = _roleDefinitionId;
-
-            // Replace objectId with the service principal object id.
-            string servicePrincipalObjectId = _objectId;
-
             #region Snippet:CreateRoleAssignmentAsync
 #if SNIPPET
             string definitionIdToAssign = "<roleDefinitionId>";
@@ -145,6 +139,12 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 #else
+            // Replace roleDefinitionId with a role definition Id from the definitions returned from GetRoleDefinitionsAsync.
+            string definitionIdToAssign = _roleDefinitionId;
+
+            // Replace objectId with the service principal object id.
+            string servicePrincipalObjectId = _objectId;
+
             Guid roleAssignmentName = Recording.Random.NewGuid();
             KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, roleAssignmentName).ConfigureAwait(false);
 #endif

@@ -39,14 +39,16 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// 'Requested', 'Running'</param>
         /// <param name="startTime">The time that the operation was
         /// started.</param>
+        /// <param name="endTime">The time that the operation finished.</param>
         /// <param name="properties">Additional properties of the operation
         /// result.</param>
-        public OperationResultsDescription(string id = default(string), string name = default(string), string status = default(string), string startTime = default(string), object properties = default(object))
+        public OperationResultsDescription(string id = default(string), string name = default(string), string status = default(string), string startTime = default(string), string endTime = default(string), object properties = default(object))
         {
             Id = id;
             Name = name;
             Status = status;
             StartTime = startTime;
+            EndTime = endTime;
             Properties = properties;
             CustomInit();
         }
@@ -80,6 +82,12 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public string StartTime { get; private set; }
+
+        /// <summary>
+        /// Gets the time that the operation finished.
+        /// </summary>
+        [JsonProperty(PropertyName = "endTime")]
+        public string EndTime { get; private set; }
 
         /// <summary>
         /// Gets or sets additional properties of the operation result.

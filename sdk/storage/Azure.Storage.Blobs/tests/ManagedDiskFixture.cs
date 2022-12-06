@@ -30,10 +30,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         public static ManagedDiskFixture Instance { get; private set; }
 
         private ManagedDiskConfiguration _config;
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
 
-        public Snapshot Snapshot1 { get; private set; }
-        public Snapshot Snapshot2 { get; private set; }
+        public SnapshotResource Snapshot1 { get; private set; }
+        public SnapshotResource Snapshot2 { get; private set; }
         public Uri Snapshot1SASUri { get; private set; }
         public Uri Snapshot2SASUri { get; private set; }
 
@@ -46,10 +46,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                 TokenCredential tokenCredentials = new Identity.ClientSecretCredential(
                     _config.ActiveDirectoryTenantId, _config.ActiveDirectoryApplicationId, _config.ActiveDirectoryApplicationSecret);
 
-                ArmClient client = new ArmClient(_config.SubsriptionId, tokenCredentials);
-                Subscription subscription = await client.GetDefaultSubscriptionAsync();
+                ArmClient client = new ArmClient(tokenCredentials, _config.SubsriptionId);
+                SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
                 _resourceGroup = await subscription.GetResourceGroups().GetAsync(_config.ResourceGroupName);
-                var disks = await _resourceGroup.GetDisks().GetAllAsync().ToListAsync();
+                var disks = await _resourceGroup.GetManagedDisks().GetAllAsync().ToListAsync();
                 var disk = disks.Where(d => d.Data.Name.Contains(_config.DiskNamePrefix)).First();
 
                 Snapshot1 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
@@ -78,12 +78,12 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             }
         }
 
-        private async Task<Snapshot> CreateSnapshot(Disk disk, string name)
+        private async Task<SnapshotResource> CreateSnapshot(ManagedDiskResource disk, string name)
         {
-            var snapshotCreateOperation = await _resourceGroup.GetSnapshots().CreateOrUpdateAsync(name,
+            var snapshotCreateOperation = await _resourceGroup.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, name,
                 new SnapshotData(_config.Location)
                 {
-                    CreationData = new CreationData(DiskCreateOption.Copy)
+                    CreationData = new DiskCreationData(DiskCreateOption.Copy)
                     {
                         SourceResourceId = disk.Id
                     },
@@ -92,23 +92,23 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             return await snapshotCreateOperation.WaitForCompletionAsync();
         }
 
-        private async Task DeleteSnapshot(Snapshot snapshot)
+        private async Task DeleteSnapshot(SnapshotResource snapshot)
         {
-            var snapshotDeleteOperation = await snapshot.DeleteAsync();
+            var snapshotDeleteOperation = await snapshot.DeleteAsync(WaitUntil.Completed);
             await snapshotDeleteOperation.WaitForCompletionResponseAsync();
         }
 
-        private async Task<Uri> GrantAccess(Snapshot snapshot)
+        private async Task<Uri> GrantAccess(SnapshotResource snapshot)
         {
-            var grantOperation = await snapshot.GrantAccessAsync(
+            var grantOperation = await snapshot.GrantAccessAsync(WaitUntil.Completed,
                 new GrantAccessData(AccessLevel.Read, 3600));
             AccessUri accessUri = await grantOperation.WaitForCompletionAsync();
-            return new Uri(accessUri.AccessSAS);
+            return new Uri(accessUri.AccessSas);
         }
 
-        private async Task RevokeAccess(Snapshot snapshot)
+        private async Task RevokeAccess(SnapshotResource snapshot)
         {
-            var revokeOperation = await snapshot.RevokeAccessAsync();
+            var revokeOperation = await snapshot.RevokeAccessAsync(WaitUntil.Completed);
             await revokeOperation.WaitForCompletionResponseAsync();
         }
     }

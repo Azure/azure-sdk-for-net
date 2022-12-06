@@ -48,6 +48,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 // Create volume 
                 var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1, volumeName: ResourceUtils.backupVolumeName1, vnet: ResourceUtils.backupVnet, volumeOnly: true);
+                Assert.NotNull(createVolume);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);

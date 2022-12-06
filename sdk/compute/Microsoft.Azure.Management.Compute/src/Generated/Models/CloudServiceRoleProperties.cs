@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The cloud service role properties.
+    /// </summary>
     public partial class CloudServiceRoleProperties
     {
         /// <summary>

@@ -6,13 +6,14 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
+    [LiveOnly]
+    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task AnalyzePrebuiltDocumentFromFileAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -22,43 +23,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerAnalyzePrebuiltDocumentFromFileAsync
 #if SNIPPET
-            string filePath = "filePath";
+            string filePath = "<filePath>";
 #else
             string filePath = DocumentAnalysisTestEnvironment.CreatePath("Form_1.jpg");
 #endif
             using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-document", stream);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("Detected key-value pairs:");
 
             foreach (DocumentKeyValuePair kvp in result.KeyValuePairs)
             {
-                if (kvp.Value.Content == null)
+                if (kvp.Value == null)
                 {
                     Console.WriteLine($"  Found key with no value: '{kvp.Key.Content}'");
                 }
                 else
                 {
                     Console.WriteLine($"  Found key-value pair: '{kvp.Key.Content}' and '{kvp.Value.Content}'");
-                }
-            }
-
-            Console.WriteLine("Detected entities:");
-
-            foreach (DocumentEntity entity in result.Entities)
-            {
-                if (entity.SubCategory == null)
-                {
-                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}'.");
-                }
-                else
-                {
-                    Console.WriteLine($"  Found entity '{entity.Content}' with category '{entity.Category}' and sub-category '{entity.SubCategory}'.");
                 }
             }
 
@@ -72,11 +56,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                     DocumentLine line = page.Lines[i];
                     Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-                    Console.WriteLine($"    Its bounding box is:");
-                    Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-                    Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-                    Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-                    Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+                    Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+                    for (int j = 0; j < line.BoundingPolygon.Count; j++)
+                    {
+                        Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+                    }
                 }
 
                 for (int i = 0; i < page.SelectionMarks.Count; i++)
@@ -84,11 +69,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                     DocumentSelectionMark selectionMark = page.SelectionMarks[i];
 
                     Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-                    Console.WriteLine($"    Its bounding box is:");
-                    Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-                    Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-                    Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-                    Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+                    Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+                    for (int j = 0; j < selectionMark.BoundingPolygon.Count; j++)
+                    {
+                        Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
+                    }
                 }
             }
 
@@ -105,7 +91,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     foreach (DocumentSpan span in style.Spans)
                     {
-                        Console.WriteLine($"  Content: {result.Content.Substring(span.Offset, span.Length)}");
+                        Console.WriteLine($"  Content: {result.Content.Substring(span.Index, span.Length)}");
                     }
                 }
             }

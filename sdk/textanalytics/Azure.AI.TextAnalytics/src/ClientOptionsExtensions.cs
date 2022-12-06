@@ -26,6 +26,9 @@ namespace Azure.AI.TextAnalytics
             clientOptions.Diagnostics.LoggedQueryParameters.Add("stringIndexType");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("piiCategories");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("opinionMining");
+
+            clientOptions.Diagnostics.LoggedQueryParameters.Add("top");
+            clientOptions.Diagnostics.LoggedQueryParameters.Add("skip");
         }
     }
 }

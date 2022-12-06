@@ -53,15 +53,14 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract void Clear();
 
         /// <summary>
-        ///   Represents the batch as an enumerable set of transport-specific
-        ///   representations of a message.
+        ///   Represents the batch as a set of the AMQP-specific representations of a message.
         /// </summary>
         ///
         /// <typeparam name="T">The transport-specific message representation being requested.</typeparam>
         ///
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
-        public abstract IEnumerable<T> AsEnumerable<T>();
+        public abstract IReadOnlyCollection<T> AsReadOnly<T>();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="TransportMessageBatch" />.

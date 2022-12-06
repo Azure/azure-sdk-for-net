@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -16,24 +17,18 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Document Id. </param>
         /// <param name="error"> Document Error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
-        internal DocumentError(string id, TextAnalyticsErrorInternal error)
+        public DocumentError(string id, Error error)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(error, nameof(error));
 
             Id = id;
             Error = error;
         }
 
         /// <summary> Document Id. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> Document Error. </summary>
-        public TextAnalyticsErrorInternal Error { get; }
+        public Error Error { get; set; }
     }
 }

@@ -79,15 +79,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="purchasePlan">Purchase plan information to be added on
         /// the OS disk</param>
         /// <param name="supportedCapabilities">List of supported capabilities
-        /// (like accelerated networking) to be added on the OS disk.</param>
+        /// to be added on the OS disk.</param>
         /// <param name="propertyUpdatesInProgress">Properties of the disk for
         /// which update is pending.</param>
         /// <param name="supportsHibernation">Indicates the OS on a disk
         /// supports hibernation.</param>
         /// <param name="publicNetworkAccess">Possible values include:
         /// 'Enabled', 'Disabled'</param>
+        /// <param name="dataAccessAuthMode">Possible values include:
+        /// 'AzureActiveDirectory', 'None'</param>
+        /// <param name="optimizedForFrequentAttach">Setting this property to
+        /// true improves reliability and performance of data disks that are
+        /// frequently (more than 5 times a day) by detached from one virtual
+        /// machine and attached to another. This property should not be set
+        /// for disks that are not detached and attached frequently as it
+        /// causes the disks to not align with the fault domain of the virtual
+        /// machine.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), int? maxShares = default(int?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), string dataAccessAuthMode = default(string), bool? optimizedForFrequentAttach = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -107,6 +116,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             PropertyUpdatesInProgress = propertyUpdatesInProgress;
             SupportsHibernation = supportsHibernation;
             PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
+            OptimizedForFrequentAttach = optimizedForFrequentAttach;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -228,8 +239,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
-        /// Gets or sets list of supported capabilities (like accelerated
-        /// networking) to be added on the OS disk.
+        /// Gets or sets list of supported capabilities to be added on the OS
+        /// disk.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportedCapabilities")]
         public SupportedCapabilities SupportedCapabilities { get; set; }
@@ -251,6 +262,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'AzureActiveDirectory',
+        /// 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataAccessAuthMode")]
+        public string DataAccessAuthMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets setting this property to true improves reliability and
+        /// performance of data disks that are frequently (more than 5 times a
+        /// day) by detached from one virtual machine and attached to another.
+        /// This property should not be set for disks that are not detached and
+        /// attached frequently as it causes the disks to not align with the
+        /// fault domain of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.optimizedForFrequentAttach")]
+        public bool? OptimizedForFrequentAttach { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags

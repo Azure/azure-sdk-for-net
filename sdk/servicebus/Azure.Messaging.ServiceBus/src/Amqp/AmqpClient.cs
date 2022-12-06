@@ -50,6 +50,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override Uri ServiceEndpoint { get; }
 
         /// <summary>
+        ///   The endpoint for the Service Bus service to be used when establishing the connection.
+        /// </summary>
+        ///
+        public Uri ConnectionEndpoint { get; }
+
+        /// <summary>
         ///   Gets the credential to use for authorization with the Service Bus service.
         /// </summary>
         ///
@@ -60,6 +66,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private AmqpConnectionScope ConnectionScope { get; }
+
+        /// <summary>
+        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
+        /// </summary>
+        private readonly AmqpMessageConverter _messageConverter;
+
+        public override ServiceBusTransportMetrics TransportMetrics { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpClient"/> class.
@@ -87,20 +100,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            _messageConverter = AmqpMessageConverter.Default;
+
             ServiceEndpoint = new UriBuilder
             {
                 Scheme = options.TransportType.GetUriScheme(),
                 Host = host
             }.Uri;
 
+            ConnectionEndpoint = (options.CustomEndpointAddress == null) ? ServiceEndpoint : new UriBuilder
+            {
+                Scheme = ServiceEndpoint.Scheme,
+                Host = options.CustomEndpointAddress.Host
+            }.Uri;
+
             Credential = credential;
+            if (options.EnableTransportMetrics)
+            {
+                TransportMetrics = new ServiceBusTransportMetrics();
+            }
             ConnectionScope = new AmqpConnectionScope(
                 ServiceEndpoint,
+                ConnectionEndpoint,
                 credential,
                 options.TransportType,
                 options.WebProxy,
                 options.EnableCrossEntityTransactions,
-                options.RetryOptions.TryTimeout);
+                options.RetryOptions.TryTimeout,
+                TransportMetrics);
         }
 
         /// <summary>
@@ -125,7 +152,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 entityPath,
                 ConnectionScope,
                 retryPolicy,
-                identifier
+                identifier,
+                _messageConverter
             );
         }
 
@@ -168,7 +196,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 sessionId,
                 isSessionReceiver,
                 isProcessor,
+                _messageConverter,
                 cancellationToken
+            );
+        }
+
+        /// <summary>
+        ///   Creates a rule manager strongly aligned with the active protocol and transport,
+        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
+        /// </summary>
+        ///
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="identifier">The identifier for the rule manager.</param>
+        ///
+        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
+        public override TransportRuleManager CreateRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier)
+        {
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
+
+            return new AmqpRuleManager
+            (
+                subscriptionPath,
+                ConnectionScope,
+                retryPolicy,
+                identifier
             );
         }
 

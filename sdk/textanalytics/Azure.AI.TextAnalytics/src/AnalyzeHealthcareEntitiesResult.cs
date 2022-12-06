@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the analyze heathlcare operation,
+    /// The result of the analyze healthcare operation,
     /// containing the predicted healthcare entities, warning, and relations.
     /// </summary>
     public partial class AnalyzeHealthcareEntitiesResult : TextAnalyticsResult
@@ -18,20 +18,21 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
         /// </summary>
-        /// <param name="id">Analyze operation id.</param>
-        /// <param name="statistics">Info about text document statistics. <see cref="TextDocumentStatistics"/>.</param>
-        /// <param name="healthcareEntities">Extracted health care entities.</param>
-        /// <param name="entityRelations">Relations between the entities. <see cref="HealthcareEntityRelation"/>.</param>
-        /// <param name="warnings">Returned warnings from the operation.</param>
-        internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
+        internal AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
-            IList<TextAnalyticsWarning> warnings)
+            IList<TextAnalyticsWarning> warnings,
+            IDictionary<string, object> fhirBundle)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+            FhirBundle = (fhirBundle is not null)
+                ? new ReadOnlyDictionary<string, object>(fhirBundle)
+                : new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -67,5 +68,11 @@ namespace Azure.AI.TextAnalytics
         /// Gets the relations between the entities. <see cref="HealthcareEntityRelation"/>.
         /// </summary>
         public IReadOnlyCollection<HealthcareEntityRelation> EntityRelations { get; }
+
+        /// <summary>
+        /// Gets the FHIR bundle that was produced for this result according to the specified <see cref="AnalyzeHealthcareEntitiesOptions.FhirVersion"/>.
+        /// For additional information, see <see href="https://www.hl7.org/fhir/overview.html"/>.
+        /// </summary>
+        public IReadOnlyDictionary<string, object> FhirBundle { get; }
     }
 }

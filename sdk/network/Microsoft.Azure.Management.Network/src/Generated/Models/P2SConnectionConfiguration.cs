@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -42,6 +44,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enableInternetSecurity">Flag indicating whether the
         /// enable internet security flag is turned on for the P2S Connections
         /// or not.</param>
+        /// <param name="configurationPolicyGroupAssociations">List of
+        /// Configuration Policy Groups that this P2SConnectionConfiguration is
+        /// attached to.</param>
+        /// <param name="previousConfigurationPolicyGroupAssociations">List of
+        /// previous Configuration Policy Groups that this
+        /// P2SConnectionConfiguration was attached to.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// P2SConnectionConfiguration resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
@@ -50,12 +58,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public P2SConnectionConfiguration(string id = default(string), AddressSpace vpnClientAddressPool = default(AddressSpace), RoutingConfiguration routingConfiguration = default(RoutingConfiguration), bool? enableInternetSecurity = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public P2SConnectionConfiguration(string id = default(string), AddressSpace vpnClientAddressPool = default(AddressSpace), RoutingConfiguration routingConfiguration = default(RoutingConfiguration), bool? enableInternetSecurity = default(bool?), IList<SubResource> configurationPolicyGroupAssociations = default(IList<SubResource>), IList<VpnServerConfigurationPolicyGroup> previousConfigurationPolicyGroupAssociations = default(IList<VpnServerConfigurationPolicyGroup>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             RoutingConfiguration = routingConfiguration;
             EnableInternetSecurity = enableInternetSecurity;
+            ConfigurationPolicyGroupAssociations = configurationPolicyGroupAssociations;
+            PreviousConfigurationPolicyGroupAssociations = previousConfigurationPolicyGroupAssociations;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -87,6 +97,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
+
+        /// <summary>
+        /// Gets list of Configuration Policy Groups that this
+        /// P2SConnectionConfiguration is attached to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.configurationPolicyGroupAssociations")]
+        public IList<SubResource> ConfigurationPolicyGroupAssociations { get; private set; }
+
+        /// <summary>
+        /// Gets list of previous Configuration Policy Groups that this
+        /// P2SConnectionConfiguration was attached to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.previousConfigurationPolicyGroupAssociations")]
+        public IList<VpnServerConfigurationPolicyGroup> PreviousConfigurationPolicyGroupAssociations { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the P2SConnectionConfiguration

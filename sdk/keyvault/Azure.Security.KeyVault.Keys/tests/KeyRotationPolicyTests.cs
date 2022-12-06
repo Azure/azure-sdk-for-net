@@ -49,12 +49,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual("https://test.vault.azure.net/keys/key-name/rotationpolicy", sut.Id.AbsoluteUri);
             Assert.AreEqual(2, sut.LifetimeActions.Count);
             Assert.AreEqual(KeyRotationPolicyAction.Rotate, sut.LifetimeActions[0].Action);
-            Assert.AreEqual(TimeSpan.FromDays(30), sut.LifetimeActions[0].TimeBeforeExpiry);
+            Assert.AreEqual("P30D", sut.LifetimeActions[0].TimeBeforeExpiry);
             Assert.IsNull(sut.LifetimeActions[0].TimeAfterCreate);
             Assert.AreEqual(KeyRotationPolicyAction.Notify, sut.LifetimeActions[1].Action);
-            Assert.AreEqual(TimeSpan.FromDays(25), sut.LifetimeActions[1].TimeAfterCreate);
+            Assert.AreEqual("P25D", sut.LifetimeActions[1].TimeAfterCreate);
             Assert.IsNull(sut.LifetimeActions[1].TimeBeforeExpiry);
-            Assert.AreEqual(TimeSpan.FromDays(45), sut.ExpiresIn);
+            Assert.AreEqual("P45D", sut.ExpiresIn);
             Assert.AreEqual(DateTimeOffset.Parse("2021-10-05T22:37:59.0000000+00:00"), sut.CreatedOn);
             Assert.AreEqual(DateTimeOffset.Parse("2021-10-05T22:38:24.0000000+00:00"), sut.UpdatedOn);
         }
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             KeyRotationPolicy sut = new()
             {
-                ExpiresIn = TimeSpan.FromDays(45),
+                ExpiresIn = "P45D",
                 LifetimeActions = { },
             };
 
@@ -80,13 +80,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyRotationPolicy sut = new()
             {
                 Id = new Uri("https://localhost"),
-                ExpiresIn = TimeSpan.FromDays(45),
+                ExpiresIn = "P45D",
                 LifetimeActions =
                 {
-                    new KeyRotationLifetimeAction
+                    new KeyRotationLifetimeAction(KeyRotationPolicyAction.Rotate)
                     {
-                        Action = KeyRotationPolicyAction.Rotate,
-                        TimeBeforeExpiry= TimeSpan.FromDays(30),
+                        TimeBeforeExpiry= "P30D",
                     }
                 },
                 CreatedOn = DateTimeOffset.Now,

@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         }
 
         /// <summary>
-        ///   Determines the set of <see cref="Azure.Messaging.EventHubs.Producer.CreateBatchOptions"/>
+        ///   Determines the set of <see cref="Producer.CreateBatchOptions"/>
         ///   needed for this test scenario.
         /// </summary>
         ///

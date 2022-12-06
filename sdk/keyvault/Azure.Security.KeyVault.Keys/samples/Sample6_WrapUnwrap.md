@@ -42,7 +42,7 @@ var cryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCreden
 Next, we'll generate a symmetric key which we will wrap.
 
 ```C# Snippet:KeysSample6GenerateKey
-byte[] keyData = AesManaged.Create().Key;
+byte[] keyData = Aes.Create().Key;
 Debug.WriteLine($"Generated Key: {Convert.ToBase64String(keyData)}");
 ```
 
@@ -63,12 +63,5 @@ Now unwrap the encrypted key. Note that the same algorithm must always be used f
 UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep, wrapResult.EncryptedKey);
 Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample6_WrapUnwrap.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrap.cs)
-* [Asynchronous Sample6_WrapUnwrapAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrapAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

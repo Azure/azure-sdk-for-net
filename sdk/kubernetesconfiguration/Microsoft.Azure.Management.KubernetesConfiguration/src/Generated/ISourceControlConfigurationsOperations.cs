@@ -27,18 +27,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Gets details of the Source Control Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -66,18 +63,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Create a new Kubernetes Source Control Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -109,18 +103,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// configuration, thus stopping future sync from the source repo.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -145,18 +136,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// List all Source Control Configurations.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
@@ -182,18 +170,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// configuration, thus stopping future sync from the source repo.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - either Microsoft.ContainerService (for
-        /// AKS clusters) or Microsoft.Kubernetes (for OnPrem K8S clusters).
-        /// Possible values include: 'Microsoft.ContainerService',
-        /// 'Microsoft.Kubernetes'
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
         /// </param>
         /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - either managedClusters (for
-        /// AKS clusters) or connectedClusters (for OnPrem K8S clusters).
-        /// Possible values include: 'managedClusters', 'connectedClusters'
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2022-11-11)
+
+### Features Added
+- Support `Headers` field in `ConnectEventRequest` to carry over client headers.
+
+### Bugs Fixed
+- Fix the issue about `expiresAfter` with corner values.
+
+## 1.2.0 (2022-03-08)
+
+### Bugs Fixed
+- Fix `CancellationToken` in output binding.(#26704)
+
+## 1.1.0 (2021-11-24)
+
+### Bugs Fixed
+- Changed the `ConnectionContext`'s `ConnectionStates` to correctly serialize as proper JSON when used with JavaScript.
+
+### Breaking Changes
+- JavaScript developers using `request.connectionContext.states` no longer need to `JSON.parse(...)` its values.  The values are already valid JSON.
 
 ## 1.0.0 (2021-11-09)
 

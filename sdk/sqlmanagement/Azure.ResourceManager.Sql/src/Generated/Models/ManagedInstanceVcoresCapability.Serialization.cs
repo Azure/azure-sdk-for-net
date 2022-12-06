@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedStorageSizes = default;
             Optional<bool> instancePoolSupported = default;
             Optional<bool> standaloneSupported = default;
-            Optional<CapabilityStatus> status = default;
+            Optional<IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
+            Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,6 +86,21 @@ namespace Azure.ResourceManager.Sql.Models
                     standaloneSupported = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("supportedMaintenanceConfigurations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ManagedInstanceMaintenanceConfigurationCapability> array = new List<ManagedInstanceMaintenanceConfigurationCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedInstanceMaintenanceConfigurationCapability.DeserializeManagedInstanceMaintenanceConfigurationCapability(item));
+                    }
+                    supportedMaintenanceConfigurations = array;
+                    continue;
+                }
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -92,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToCapabilityStatus();
+                    status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
                 if (property.NameEquals("reason"))
@@ -101,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceVcoresCapability(name.Value, Optional.ToNullable(value), includedMaxSize.Value, Optional.ToList(supportedStorageSizes), Optional.ToNullable(instancePoolSupported), Optional.ToNullable(standaloneSupported), Optional.ToNullable(status), reason.Value);
+            return new ManagedInstanceVcoresCapability(name.Value, Optional.ToNullable(value), includedMaxSize.Value, Optional.ToList(supportedStorageSizes), Optional.ToNullable(instancePoolSupported), Optional.ToNullable(standaloneSupported), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
         }
     }
 }

@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested Docker multi-arch-manifest file. </summary>
-    internal partial class ManifestList : Manifest
+    internal partial class ManifestList : ArtifactManifest
     {
         /// <summary> Initializes a new instance of ManifestList. </summary>
         public ManifestList()

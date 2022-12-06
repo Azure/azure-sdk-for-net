@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptLogsList
+    internal partial class ScriptLogsList
     {
         internal static ScriptLogsList DeserializeScriptLogsList(JsonElement element)
         {

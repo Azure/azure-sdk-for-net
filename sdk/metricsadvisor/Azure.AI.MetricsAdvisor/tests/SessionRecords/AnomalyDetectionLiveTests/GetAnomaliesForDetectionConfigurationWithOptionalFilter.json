@@ -1,200 +1,221 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/efaee305-f049-43ec-9f9b-76026d55c14a/anomalies/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/78f3a4e7-fe53-4a05-9f4d-d724ab6c23a7/anomalies/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "239",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-02bc4dbafb2d19479e110e31f301628f-84c945b622e61943-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-43055908aa0aac3382ea0c06a2a187fb-7cf35846c06af68a-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "803c867e50dbe8e94e1c971d3ecdea77",
+        "x-ms-client-request-id": "b41630e1961b46255aa3d1e169eaca70",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "startTime": "2021-10-01T00:00:00Z",
-        "endTime": "2021-10-31T00:00:00Z",
+        "startTime": "2022-01-01T00:00:00.0000000Z",
+        "endTime": "2022-04-15T00:00:00.0000000Z",
         "filter": {
           "dimensionFilter": [
             {
               "dimension": {
-                "region": "Delhi",
-                "category": "Handmade"
+                "Dim1": "JPN",
+                "Dim2": "JP"
               }
             },
             {
               "dimension": {
-                "region": "Kolkata"
+                "Dim1": "USD"
               }
             }
           ],
           "severityFilter": {
-            "min": "Medium",
-            "max": "Medium"
+            "min": "High",
+            "max": "High"
           }
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "94068b9f-5f9c-4cb0-a740-0838da0e498c",
-        "Content-Length": "2187",
+        "apim-request-id": "b9173864-475a-46eb-92ed-f46b03a640bd",
+        "Content-Length": "2167",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:27 GMT",
+        "Date": "Tue, 19 Apr 2022 04:02:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "131",
-        "X-Request-ID": "94068b9f-5f9c-4cb0-a740-0838da0e498c"
+        "x-envoy-upstream-service-time": "181",
+        "X-Request-ID": "b9173864-475a-46eb-92ed-f46b03a640bd"
       },
       "ResponseBody": {
         "value": [
           {
-            "timestamp": "2021-10-30T00:00:00Z",
+            "timestamp": "2022-04-14T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 403239.4,
-              "expectedValue": 371195.56461037876
+              "anomalySeverity": "High",
+              "value": 92696.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-29T00:00:00Z",
+            "timestamp": "2022-04-13T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 1006212.8,
-              "expectedValue": 561840.9682265673
+              "anomalySeverity": "High",
+              "value": 86617.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-28T00:00:00Z",
+            "timestamp": "2022-04-09T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 513455.6,
-              "expectedValue": 611853.7043958702
+              "anomalySeverity": "High",
+              "value": 89388.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-27T00:00:00Z",
+            "timestamp": "2022-04-08T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 545699.2,
-              "expectedValue": 605699.0817151875
+              "anomalySeverity": "High",
+              "value": 86352.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-26T00:00:00Z",
+            "timestamp": "2022-04-07T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 543222.8,
-              "expectedValue": 616237.7238113593
+              "anomalySeverity": "High",
+              "value": 98380.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-25T00:00:00Z",
+            "timestamp": "2022-04-05T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 527925.6,
-              "expectedValue": 602818.4000873395
+              "anomalySeverity": "High",
+              "value": 91982.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-24T00:00:00Z",
+            "timestamp": "2022-04-01T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 391302.2,
-              "expectedValue": 409011.77294836467
+              "anomalySeverity": "High",
+              "value": 91174.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-23T00:00:00Z",
+            "timestamp": "2022-03-26T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 385288.2,
-              "expectedValue": 347576.2969520082
+              "anomalySeverity": "High",
+              "value": 86722.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-22T00:00:00Z",
+            "timestamp": "2022-03-25T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 535243.2,
-              "expectedValue": 538221.7005681967
+              "anomalySeverity": "High",
+              "value": 86947.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-20T00:00:00Z",
+            "timestamp": "2022-03-24T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 585573.4,
-              "expectedValue": 588198.1834146369
+              "anomalySeverity": "High",
+              "value": 86359.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-19T00:00:00Z",
+            "timestamp": "2022-03-23T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 591052.6,
-              "expectedValue": 608241.7305675618
+              "anomalySeverity": "High",
+              "value": 96304.0,
+              "expectedValue": 80000.0
             }
           },
           {
-            "timestamp": "2021-10-04T00:00:00Z",
+            "timestamp": "2022-03-19T00:00:00Z",
             "dimension": {
-              "region": "Delhi",
-              "category": "Handmade"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             },
             "property": {
-              "anomalySeverity": "Medium",
-              "value": 1342660.0,
-              "expectedValue": 763534.6945065033
+              "anomalySeverity": "High",
+              "value": 97018.0,
+              "expectedValue": 80000.0
+            }
+          },
+          {
+            "timestamp": "2022-03-15T00:00:00Z",
+            "dimension": {
+              "Dim1": "JPN",
+              "Dim2": "JP"
+            },
+            "property": {
+              "anomalySeverity": "High",
+              "value": 83060.0,
+              "expectedValue": 80000.0
+            }
+          },
+          {
+            "timestamp": "2022-03-14T00:00:00Z",
+            "dimension": {
+              "Dim1": "JPN",
+              "Dim2": "JP"
+            },
+            "property": {
+              "anomalySeverity": "High",
+              "value": 86865.0,
+              "expectedValue": 80000.0
             }
           }
         ]
@@ -206,6 +227,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1617352434"
+    "RandomSeed": "774438152"
   }
 }

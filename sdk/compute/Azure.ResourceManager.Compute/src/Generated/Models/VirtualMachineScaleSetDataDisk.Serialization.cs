@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskMBpsReadWrite");
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
+            if (Optional.IsDefined(DeleteOption))
+            {
+                writer.WritePropertyName("deleteOption");
+                writer.WriteStringValue(DeleteOption.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -61,13 +66,14 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<string> name = default;
             int lun = default;
-            Optional<CachingTypes> caching = default;
+            Optional<CachingType> caching = default;
             Optional<bool> writeAcceleratorEnabled = default;
-            DiskCreateOptionTypes createOption = default;
+            DiskCreateOptionType createOption = default;
             Optional<int> diskSizeGB = default;
-            Optional<VirtualMachineScaleSetManagedDiskParameters> managedDisk = default;
+            Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
             Optional<long> diskIOPSReadWrite = default;
             Optional<long> diskMBpsReadWrite = default;
+            Optional<DiskDeleteOptionType> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -87,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingTypes();
+                    caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"))
@@ -102,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("createOption"))
                 {
-                    createOption = new DiskCreateOptionTypes(property.Value.GetString());
+                    createOption = new DiskCreateOptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDiskParameters.DeserializeVirtualMachineScaleSetManagedDiskParameters(property.Value);
+                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskIOPSReadWrite"))
@@ -145,8 +151,18 @@ namespace Azure.ResourceManager.Compute.Models
                     diskMBpsReadWrite = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("deleteOption"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deleteOption = new DiskDeleteOptionType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetDataDisk(name.Value, lun, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite));
+            return new VirtualMachineScaleSetDataDisk(name.Value, lun, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(deleteOption));
         }
     }
 }

@@ -96,7 +96,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             };
 
             //act
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatLiveTestBase.SanitizedUnsignedUserTokenValue);
             var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
@@ -169,7 +169,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             };
 
             //act
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatLiveTestBase.SanitizedUnsignedUserTokenValue);
             var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             AsyncPageable<ChatMessageReadReceipt> allreadReceipts = chatThreadClient.GetReadReceiptsAsync();
@@ -579,7 +579,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private ChatClient CreateMockChatClient(int responseCode, string? responseContent = null)
         {
             var uri = new Uri("https://localHostTest");
-            var communicationTokenCredential = new CommunicationTokenCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatLiveTestBase.SanitizedUnsignedUserTokenValue);
             var mockResponse = new MockResponse(responseCode);
             if (responseContent != null)
             {

@@ -30,12 +30,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
         public void CreateWithConnectionString()
         {
             #region Snippet:EventHubs_Migrate_T1_CreateWithConnectionString
-
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = TestUtility.EventHubsConnectionString;
-            /*@@*/ eventHubName = "fake";
+#else
+            var connectionString = TestUtility.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
 
             var builder = new EventHubsConnectionStringBuilder(connectionString);
             builder.EntityPath = eventHubName;
@@ -55,20 +56,20 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:EventHubs_Migrate_T1_CreateWithAzureActiveDirectory
-
+#if SNIPPET
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString).Endpoint.ToString();
-            /*@@*/ eventHubName = scope.EventHubName;
 
             var authority = "<< NAME OF THE AUTHORITY TO ASSOCIATE WITH THE TOKEN >>";
             var aadAppId = "<< THE AZURE ACTIVE DIRECTORY APPLICATION ID TO REQUEST A TOKEN FOR >>";
             var aadAppSecret = "<< THE AZURE ACTIVE DIRECTORY SECRET TO USE FOR THE TOKEN >>";
-            /*@@*/
-            /*@@*/ authority = "";     // Needed for manual run
-            /*@@*/ aadAppId = "";      // Needed for manual run
-            /*@@*/ aadAppSecret = "";  // Needed for manual run
+#else
+            var fullyQualifiedNamespace = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString).Endpoint.ToString();
+            var eventHubName = scope.EventHubName;
+            var authority = "";     // Needed for manual run
+            var aadAppId = "";      // Needed for manual run
+            var aadAppSecret = "";  // Needed for manual run
+#endif
 
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
                 async (audience, authority, state) =>
@@ -99,12 +100,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:EventHubs_Migrate_T1_ManagedIdentity
-
+#if SNIPPET
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString).Endpoint.ToString();
-            /*@@*/ eventHubName = scope.EventHubName;
+#else
+            var fullyQualifiedNamespace = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString).Endpoint.ToString();
+            var eventHubName = scope.EventHubName;
+#endif
 
             EventHubClient client = EventHubClient.CreateWithManagedIdentity(
                 new Uri(fullyQualifiedNamespace),
@@ -123,12 +125,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:EventHubs_Migrate_T1_PublishWithAutomaticRouting
-
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = TestUtility.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+#else
+            var connectionString = TestUtility.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var builder = new EventHubsConnectionStringBuilder(connectionString);
             builder.EntityPath = eventHubName;
@@ -167,12 +170,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:EventHubs_Migrate_T1_PublishWithAPartitionKey
-
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = TestUtility.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+#else
+            var connectionString = TestUtility.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var builder = new EventHubsConnectionStringBuilder(connectionString);
             builder.EntityPath = eventHubName;
@@ -216,12 +220,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:EventHubs_Migrate_T1_PublishToSpecificPartition
-
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = TestUtility.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
+#else
+            var connectionString = TestUtility.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var builder = new EventHubsConnectionStringBuilder(connectionString);
             builder.EntityPath = eventHubName;
@@ -265,14 +270,15 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:EventHubs_Migrate_T1_ReadFromSpecificPartition
-
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ connectionString = TestUtility.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/ consumerGroup = PartitionReceiver.DefaultConsumerGroupName;
+#else
+            var connectionString = TestUtility.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+            var consumerGroup = PartitionReceiver.DefaultConsumerGroupName;
+#endif
 
             var builder = new EventHubsConnectionStringBuilder(connectionString);
             builder.EntityPath = eventHubName;
@@ -309,20 +315,21 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             await using var scope = await EventHubScope.CreateAsync(1);
 
             #region Snippet:EventHubs_Migrate_T1_BasicEventProcessorHost
-
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = TestUtility.StorageConnectionString;
-            /*@@*/ blobContainerName = "migragionsample";
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = TestUtility.EventHubsConnectionString;
-            /*@@*/ eventHubName = scope.EventHubName;
-            /*@@*/ consumerGroup = PartitionReceiver.DefaultConsumerGroupName;
+#else
+            var storageConnectionString = TestUtility.StorageConnectionString;
+            var blobContainerName = "migragionsample";
+
+            var eventHubsConnectionString = TestUtility.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+            var consumerGroup = PartitionReceiver.DefaultConsumerGroupName;
+#endif
 
             var eventProcessorHost = new EventProcessorHost(
                 eventHubName,

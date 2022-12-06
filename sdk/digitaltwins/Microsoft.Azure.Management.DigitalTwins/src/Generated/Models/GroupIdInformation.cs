@@ -29,10 +29,11 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <summary>
         /// Initializes a new instance of the GroupIdInformation class.
         /// </summary>
+        /// <param name="properties">The group information properties.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
-        public GroupIdInformation(GroupIdInformationPropertiesModel properties, string id = default(string), string name = default(string), string type = default(string))
+        public GroupIdInformation(GroupIdInformationProperties properties, string id = default(string), string name = default(string), string type = default(string))
         {
             Properties = properties;
             Id = id;
@@ -47,9 +48,10 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the group information properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public GroupIdInformationPropertiesModel Properties { get; set; }
+        public GroupIdInformationProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the resource identifier.

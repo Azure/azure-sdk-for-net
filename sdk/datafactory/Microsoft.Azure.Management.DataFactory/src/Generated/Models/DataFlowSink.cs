@@ -36,10 +36,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="flowlet">Flowlet Reference</param>
         /// <param name="schemaLinkedService">Schema linked service
         /// reference.</param>
-        public DataFlowSink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference))
+        /// <param name="rejectedDataLinkedService">Rejected data linked
+        /// service reference.</param>
+        public DataFlowSink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference), LinkedServiceReference rejectedDataLinkedService = default(LinkedServiceReference))
             : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
+            RejectedDataLinkedService = rejectedDataLinkedService;
             CustomInit();
         }
 
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public LinkedServiceReference SchemaLinkedService { get; set; }
 
         /// <summary>
+        /// Gets or sets rejected data linked service reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "rejectedDataLinkedService")]
+        public LinkedServiceReference RejectedDataLinkedService { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -66,6 +75,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (SchemaLinkedService != null)
             {
                 SchemaLinkedService.Validate();
+            }
+            if (RejectedDataLinkedService != null)
+            {
+                RejectedDataLinkedService.Validate();
             }
         }
     }

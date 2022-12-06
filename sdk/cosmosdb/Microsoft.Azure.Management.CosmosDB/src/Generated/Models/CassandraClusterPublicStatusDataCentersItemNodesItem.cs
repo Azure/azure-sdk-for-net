@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="tokens">List of tokens this node covers.</param>
         /// <param name="hostID">The network ID of the node.</param>
         /// <param name="rack">The rack this node is part of.</param>
-        /// <param name="timestamp">The timestamp when these statistics were
-        /// captured.</param>
+        /// <param name="timestamp">The timestamp at which that snapshot of
+        /// these usage statistics were taken.</param>
         /// <param name="diskUsedKB">The amount of disk used, in kB, of the
         /// directory /var/lib/cassandra.</param>
         /// <param name="diskFreeKB">The amount of disk free, in kB, of the
@@ -136,7 +136,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string Rack { get; set; }
 
         /// <summary>
-        /// Gets or sets the timestamp when these statistics were captured.
+        /// Gets or sets the timestamp at which that snapshot of these usage
+        /// statistics were taken.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
         public string Timestamp { get; set; }

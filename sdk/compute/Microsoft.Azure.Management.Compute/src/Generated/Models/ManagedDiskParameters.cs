@@ -34,14 +34,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
         /// disks, it cannot be used with OS Disk. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS',
-        /// 'Premium_ZRS', 'StandardSSD_ZRS'</param>
+        /// 'Premium_ZRS', 'StandardSSD_ZRS', 'PremiumV2_LRS'</param>
         /// <param name="diskEncryptionSet">Specifies the customer managed disk
         /// encryption set resource id for the managed disk.</param>
-        public ManagedDiskParameters(string id = default(string), string storageAccountType = default(string), DiskEncryptionSetParameters diskEncryptionSet = default(DiskEncryptionSetParameters))
+        /// <param name="securityProfile">Specifies the security profile for
+        /// the managed disk.</param>
+        public ManagedDiskParameters(string id = default(string), string storageAccountType = default(string), DiskEncryptionSetParameters diskEncryptionSet = default(DiskEncryptionSetParameters), VMDiskSecurityProfile securityProfile = default(VMDiskSecurityProfile))
             : base(id)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -55,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk. NOTE: UltraSSD_LRS can only be used with data disks, it
         /// cannot be used with OS Disk. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS',
-        /// 'Premium_ZRS', 'StandardSSD_ZRS'
+        /// 'Premium_ZRS', 'StandardSSD_ZRS', 'PremiumV2_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
         public string StorageAccountType { get; set; }
@@ -66,6 +69,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionSet")]
         public DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the security profile for the managed disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityProfile")]
+        public VMDiskSecurityProfile SecurityProfile { get; set; }
 
     }
 }

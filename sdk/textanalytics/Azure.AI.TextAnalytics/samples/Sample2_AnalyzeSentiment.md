@@ -1,10 +1,10 @@
 # Analyzing the Sentiment of Documents
 
-This sample demonstrates how to analyze the sentiment in one or more documents. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to analyze the sentiment in one or more documents.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to analyze the sentiment in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to analyze the sentiment in a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -77,7 +77,7 @@ Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBat
 AnalyzeSentimentResultCollection sentimentPerDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
+Console.WriteLine($"Results of \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (AnalyzeSentimentResult sentimentInDocument in sentimentPerDocuments)
@@ -158,7 +158,7 @@ Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBat
 AnalyzeSentimentResultCollection sentimentPerDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
+Console.WriteLine($"Results of \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (AnalyzeSentimentResult sentimentInDocument in sentimentPerDocuments)
@@ -205,15 +205,6 @@ Console.WriteLine($"  Valid document count: {sentimentPerDocuments.Statistics.Va
 Console.WriteLine($"  Invalid document count: {sentimentPerDocuments.Statistics.InvalidDocumentCount}");
 Console.WriteLine($"  Transaction count: {sentimentPerDocuments.Statistics.TransactionCount}");
 ```
-
-To see the full example source files, see:
-
-* [Synchronous AnalyzeSentiment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentiment.cs)
-* [Asynchronous AnalyzeSentiment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentAsync.cs)
-* [Synchronous AnalyzeSentimentBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatch.cs)
-* [Asynchronous AnalyzeSentimentBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatchAsync.cs)
-* [Synchronous AnalyzeSentimentBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs)
-* [Asynchronous AnalyzeSentimentBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample2_AnalyzeSentimentBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

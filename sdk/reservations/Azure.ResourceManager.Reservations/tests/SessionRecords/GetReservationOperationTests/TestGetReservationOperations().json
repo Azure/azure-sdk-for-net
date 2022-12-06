@@ -1,0 +1,483 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/b0f278e1-1f18-4378-84d7-b44dfa708665?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2299587e39909447e63f554577d679b9-5ac0a5e616310fa6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "fbc9f617498289d422aa466c7e11c206",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "398",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 30 May 2022 00:37:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5a37fa27-e29c-4591-871b-d6c6792a2fff",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "5a37fa27-e29c-4591-871b-d6c6792a2fff",
+        "x-ms-routing-request-id": "WESTUS:20220530T003708Z:5a37fa27-e29c-4591-871b-d6c6792a2fff"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/b0f278e1-1f18-4378-84d7-b44dfa708665",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "b0f278e1-1f18-4378-84d7-b44dfa708665",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-adfd004962568deb32486bbc0c4a9ac3-b858dd94bd7489ce-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "1a84e0878b4e7bf5c6cf8c38c1c4c708",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 30 May 2022 00:37:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "54bbb316-55b3-4a32-b18d-a28efa44b343",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "54bbb316-55b3-4a32-b18d-a28efa44b343",
+        "x-ms-routing-request-id": "WESTUS:20220530T003709Z:54bbb316-55b3-4a32-b18d-a28efa44b343"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/f1a380c7-4edb-405c-9ffb-015823f5b32c",
+            "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/operations?api-version=2022-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f52a5d3f2a08a3826768294c8299f37d-e7a48004feb2f5c9-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220526.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "e12d61bf21eab8493c766e2d2fd64eb1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8954",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 30 May 2022 00:37:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "302f8125-38b8-4d5f-b0f9-f204223c7360",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "westus:e46af87f-a966-4fac-b927-45e90b95a51d",
+        "x-ms-routing-request-id": "WESTUS:20220530T003709Z:302f8125-38b8-4d5f-b0f9-f204223c7360"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "Microsoft.Capacity/appliedreservations/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Get Reservations",
+              "description": "Read All Reservations"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/calculateprice/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Calculate Reservation Price",
+              "description": "Calculate any Reservation Price"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/catalogs/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Read Reservation Catalog",
+              "description": "Read catalog of Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/checkoffers/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Check Subscription Offers",
+              "description": "Check any Subscription Offers"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/checkscopes/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Check Subscription",
+              "description": "Check any Subscription"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/operations/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Read Operation",
+              "description": "Read any Operation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/changedirectory/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Change reservation directory",
+              "description": "Change directory of any reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/availablescopes/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Find Available Scope",
+              "description": "Find any Available Scope"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/availablescopes/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Find Available Scope",
+              "description": "Find any Available Scope"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/validatereservationorder/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Validate Reservation",
+              "description": "Validate any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Get Reservations",
+              "description": "Read All Reservations"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/write",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Create Reservations",
+              "description": "Create any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Update Reservations",
+              "description": "Update any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/delete",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Delete Reservations",
+              "description": "Delete any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Get Reservations",
+              "description": "Read All Reservations"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/write",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Create Reservations",
+              "description": "Create any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Update Reservations",
+              "description": "Update any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/delete",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Delete Reservations",
+              "description": "Delete any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/revisions/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Get Reservations",
+              "description": "Read All Reservations"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/register/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Registers the Capacity Resource Provider.",
+              "description": "Registers the Capacity resource provider and enables the creation of Capacity resources."
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/commercialreservationorders/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Get Reservation Orders created in any Tenant",
+              "description": "Get Reservation Orders created in any Tenant"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/tenants/register/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Register Tenant",
+              "description": "Register any Tenant"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/return/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Return Reservation",
+              "description": "Return any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/swap/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Swap Reservation",
+              "description": "Swap any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/split/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Split Reservation",
+              "description": "Split any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/changeBilling/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Reservation billing change",
+              "description": "Reservation billing change"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/unregister/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Unregister Tenant",
+              "description": "Unregister any Tenant"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/merge/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Merge Reservation",
+              "description": "Merge any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/calculaterefund/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Compute price for refund",
+              "description": "Computes the refund amount and price of new purchase and returns policy Errors."
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/calculateexchange/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Compute price for exchange",
+              "description": "Computes the exchange amount and price of new purchase and returns policy Errors."
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/exchange/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Exchange Reservation",
+              "description": "Exchange any Reservation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/splitoperationresults/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Poll Reservation split operation",
+              "description": "Poll any split operation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/mergeoperationresults/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Poll Reservation merge operation",
+              "description": "Poll any merge operation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/changebillingoperationresults/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Poll Reservation billing change operation",
+              "description": "Poll any Reservation billing change operation"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/archive/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Archive Reservation",
+              "description": "Archive a reservation which is in a terminal state like Expired, Split etc."
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/reservationorders/reservations/unarchive/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Reservations",
+              "operation": "Unarchive a previously archived Reservation",
+              "description": "Unarchive a Reservation which was previously archived"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/resourceProviders/locations/serviceLimits/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Resource service limit",
+              "operation": "Get resource service limit",
+              "description": "Get the current service limit or quota of the specified resource and location"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/resourceProviders/locations/serviceLimits/write",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Resource service limit",
+              "operation": "Create resource service limit",
+              "description": "Create service limit or quota for the specified resource and location"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests/read",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "Resource service limit request",
+              "operation": "Get service limit request",
+              "description": "Get any service limit request for the specified resource and location"
+            }
+          },
+          {
+            "name": "Microsoft.Capacity/listSkus/action",
+            "display": {
+              "provider": "Microsoft Capacity",
+              "resource": "ListSkus",
+              "operation": "List SKUs",
+              "description": "Lists SKUs with filters and without any restrictions"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2004012013",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "b0f278e1-1f18-4378-84d7-b44dfa708665"
+  }
+}

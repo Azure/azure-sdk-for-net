@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure NotificationHubs Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure NotificationHubs management functions for managing the Microsoft Azure NotificationHubs service.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.3.4.0")]
 [assembly: AssemblyFileVersion("2.4.0.0")]
 
 [assembly: AssemblyConfiguration("")]

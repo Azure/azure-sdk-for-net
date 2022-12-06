@@ -295,6 +295,11 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; private set; }
 
         /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsOperations WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings { get; private set; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         public virtual IWorkspacesOperations Workspaces { get; private set; }
@@ -715,6 +720,7 @@ namespace Microsoft.Azure.Management.Synapse
             WorkspaceManagedSqlServerEncryptionProtector = new WorkspaceManagedSqlServerEncryptionProtectorOperations(this);
             WorkspaceManagedSqlServerUsages = new WorkspaceManagedSqlServerUsagesOperations(this);
             WorkspaceManagedSqlServerRecoverableSqlPools = new WorkspaceManagedSqlServerRecoverableSqlPoolsOperations(this);
+            WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings = new WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsOperations(this);
             Workspaces = new WorkspacesOperations(this);
             WorkspaceAadAdmins = new WorkspaceAadAdminsOperations(this);
             WorkspaceSqlAadAdmins = new WorkspaceSqlAadAdminsOperations(this);

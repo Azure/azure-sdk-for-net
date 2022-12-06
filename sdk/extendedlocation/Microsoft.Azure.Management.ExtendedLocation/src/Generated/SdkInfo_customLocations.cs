@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.ExtendedLocation
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ExtendedLocation", "customLocations", "2021-03-15-preview"),
+                new Tuple<string, string, string>("ExtendedLocation", "CustomLocations", "2021-08-15"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/extendedlocation/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\amalladi\\test-apps\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/extendedlocation/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\amalladi\\test-apps\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "dceaa75fe47854ad7b0fcc0c7cf38677b4bb181f";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "698ebc782f3cc4650f6df1d765f6a38a6695ad50";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

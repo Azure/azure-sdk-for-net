@@ -33,12 +33,13 @@ namespace Azure.Messaging.EventHubs.Consumer
     /// </summary>
     ///
     /// <remarks>
-    ///   The <see cref="EventHubConsumerClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
-    ///   reads events regularly or semi-regularly.  The consumer holds responsibility for efficient resource management, working to keep resource usage low during
-    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
-    ///   method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///   The <see cref="EventHubConsumerClient" /> is safe to cache and use for the lifetime of an application, which is the best practice when the application
+    ///   reads events regularly or semi-regularly.  The consumer is responsible for ensuring efficient network, CPU, and memory use.  Calling either
+    ///   <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> as the application is shutting down will ensure that network resources and other
+    ///   unmanaged objects are properly cleaned up.
     /// </remarks>
     ///
+    [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubConsumerClient : IAsyncDisposable
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
@@ -137,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString) : this(consumerGroup, connectionString, null, null)
@@ -161,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -183,7 +184,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -206,7 +207,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -487,7 +488,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 try
                 {
                     transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, Identifier, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
-                    partitionContext = new PartitionContext(partitionId, transportConsumer);
+                    partitionContext = new PartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, transportConsumer);
                     emptyPartitionEvent = new PartitionEvent(partitionContext, null);
                 }
                 catch (Exception ex)
@@ -696,7 +697,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             var options = readOptions?.Clone() ?? new ReadEventOptions();
             var startingPosition = startReadingAtEarliestEvent ? EventPosition.Earliest : EventPosition.Latest;
 
-            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
 
             try
             {
@@ -987,7 +988,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 (
                     transportConsumer,
                     channel,
-                    new PartitionContext(partitionId, transportConsumer),
+                    new PartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, transportConsumer),
                     receiveBatchSize,
                     exceptionCallback,
                     publishingCancellationSource.Token

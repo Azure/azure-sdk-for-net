@@ -12,12 +12,41 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomEntitiesResult
+    internal partial class CustomEntitiesResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("documents");
+            writer.WriteStartArray();
+            foreach (var item in Documents)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("errors");
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics");
+                writer.WriteObjectValue(Statistics);
+            }
+            writer.WritePropertyName("projectName");
+            writer.WriteStringValue(ProjectName);
+            writer.WritePropertyName("deploymentName");
+            writer.WriteStringValue(DeploymentName);
+            writer.WriteEndObject();
+        }
+
         internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element)
         {
-            IReadOnlyList<DocumentEntities> documents = default;
-            IReadOnlyList<DocumentError> errors = default;
+            IList<CustomEntitiesResultDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
@@ -25,10 +54,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<DocumentEntities> array = new List<DocumentEntities>();
+                    List<CustomEntitiesResultDocumentsItem> array = new List<CustomEntitiesResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentEntities.DeserializeDocumentEntities(item));
+                        array.Add(CustomEntitiesResultDocumentsItem.DeserializeCustomEntitiesResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -64,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomEntitiesResult(documents, errors, statistics.Value, projectName, deploymentName);
+            return new CustomEntitiesResult(errors, statistics.Value, projectName, deploymentName, documents);
         }
     }
 }

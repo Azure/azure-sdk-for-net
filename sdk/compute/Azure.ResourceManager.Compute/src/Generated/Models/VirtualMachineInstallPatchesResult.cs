@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="installedPatchCount"> The number of patches successfully installed. </param>
         /// <param name="failedPatchCount"> The number of patches that could not be installed due to some issue. See errors for details. </param>
         /// <param name="patches"> The patches that were installed during the operation. </param>
-        /// <param name="startDateTime"> The UTC timestamp when the operation began. </param>
+        /// <param name="startOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VMGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startDateTime, ApiError error)
+        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startOn, ComputeApiError error)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             InstalledPatchCount = installedPatchCount;
             FailedPatchCount = failedPatchCount;
             Patches = patches;
-            StartDateTime = startDateTime;
+            StartOn = startOn;
             Error = error;
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </summary>
         public string InstallationActivityId { get; }
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
-        public VMGuestPatchRebootStatus? RebootStatus { get; }
+        public VmGuestPatchRebootStatus? RebootStatus { get; }
         /// <summary> Whether the operation ran out of time before it completed all its intended actions. </summary>
         public bool? MaintenanceWindowExceeded { get; }
         /// <summary> The number of patches that were not installed due to the user blocking their installation. </summary>
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The patches that were installed during the operation. </summary>
         public IReadOnlyList<PatchInstallationDetail> Patches { get; }
         /// <summary> The UTC timestamp when the operation began. </summary>
-        public DateTimeOffset? StartDateTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

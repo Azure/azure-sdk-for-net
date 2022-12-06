@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of InstanceFailoverGroupListResult. </summary>
         internal InstanceFailoverGroupListResult()
         {
-            Value = new ChangeTrackingList<InstanceFailoverGroup>();
+            Value = new ChangeTrackingList<InstanceFailoverGroupData>();
         }
 
         /// <summary> Initializes a new instance of InstanceFailoverGroupListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal InstanceFailoverGroupListResult(IReadOnlyList<InstanceFailoverGroup> value, string nextLink)
+        internal InstanceFailoverGroupListResult(IReadOnlyList<InstanceFailoverGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<InstanceFailoverGroup> Value { get; }
+        public IReadOnlyList<InstanceFailoverGroupData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

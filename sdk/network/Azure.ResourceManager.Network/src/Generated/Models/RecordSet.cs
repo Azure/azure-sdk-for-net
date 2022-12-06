@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RecordSet. </summary>
         internal RecordSet()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecordSet. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the recordset. </param>
         /// <param name="ttl"> Recordset time to live. </param>
         /// <param name="ipAddresses"> The private ip address of the private endpoint. </param>
-        internal RecordSet(string recordType, string recordSetName, string fqdn, ProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> ipAddresses)
+        internal RecordSet(string recordType, string recordSetName, string fqdn, NetworkProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> ipAddresses)
         {
             RecordType = recordType;
             RecordSetName = recordSetName;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             Ttl = ttl;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> Resource record type. </summary>
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>
         public string Fqdn { get; }
         /// <summary> The provisioning state of the recordset. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Recordset time to live. </summary>
         public int? Ttl { get; }
         /// <summary> The private ip address of the private endpoint. </summary>
-        public IReadOnlyList<string> IpAddresses { get; }
+        public IReadOnlyList<string> IPAddresses { get; }
     }
 }

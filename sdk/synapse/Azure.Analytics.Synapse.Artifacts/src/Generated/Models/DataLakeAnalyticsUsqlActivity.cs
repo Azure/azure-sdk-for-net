@@ -18,21 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/>, or <paramref name="scriptLinkedService"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
         public DataLakeAnalyticsUsqlActivity(string name, object scriptPath, LinkedServiceReference scriptLinkedService) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (scriptPath == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPath));
-            }
-            if (scriptLinkedService == null)
-            {
-                throw new ArgumentNullException(nameof(scriptLinkedService));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(scriptPath, nameof(scriptPath));
+            Argument.AssertNotNull(scriptLinkedService, nameof(scriptLinkedService));
 
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;

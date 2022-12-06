@@ -18,5 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string Http = "Http";
         public const string Https = "Https";
+        public const string Tcp = "Tcp";
+        public const string Tls = "Tls";
     }
 }

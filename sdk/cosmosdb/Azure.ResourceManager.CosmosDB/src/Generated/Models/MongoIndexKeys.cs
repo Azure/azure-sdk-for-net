@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB MongoDB collection resource object. </summary>
-    public partial class MongoIndexKeys
+    internal partial class MongoIndexKeys
     {
         /// <summary> Initializes a new instance of MongoIndexKeys. </summary>
         public MongoIndexKeys()

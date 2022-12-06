@@ -1,0 +1,114 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/TestMgmtGroup?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b01e7df0b0743c428327897112af8494-c6429da9e5b3c144-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5e0d880cceb76a1ba35f55083806a6ee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "7deec5f2-bde0-4eee-bb1e-ced943c7fd1d",
+        "Content-Length": "559",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 05:35:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "7deec5f2-bde0-4eee-bb1e-ced943c7fd1d",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ba-restapi": "0.0.0.0",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7deec5f2-bde0-4eee-bb1e-ced943c7fd1d",
+        "x-ms-ratelimit-remaining-managementgroups-requests": "58",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "southeastasia:7deec5f2-bde0-4eee-bb1e-ced943c7fd1d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T053555Z:7deec5f2-bde0-4eee-bb1e-ced943c7fd1d"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.Management/managementGroups/TestMgmtGroup",
+        "type": "Microsoft.Management/managementGroups",
+        "name": "TestMgmtGroup",
+        "properties": {
+          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "displayName": "TestMgmtGroup",
+          "details": {
+            "version": 6,
+            "updatedTime": "2022-06-23T05:34:47.8220817Z",
+            "updatedBy": "7f050518-5c2c-490e-a617-e8ea4bccece2",
+            "parent": {
+              "id": "/providers/Microsoft.Management/managementGroups/72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "name": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "displayName": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+            }
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Management/managementGroups/TestMgmtGroup/providers/Microsoft.Authorization/policyAssignments/polAssign-7889?api-version=2020-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "166",
+        "Content-Type": "application/json",
+        "traceparent": "00-5cd8bb4ff6d0a040a1121232758a7af3-130776306e29bf43-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "80dc60958463bb05230af4815182550b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "Test $polAssign-7889",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "620",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 05:35:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "708aa68e-1063-4799-b16a-f6110111b608",
+        "x-ms-ratelimit-remaining-tenant-writes": "1198",
+        "x-ms-request-id": "708aa68e-1063-4799-b16a-f6110111b608",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T053556Z:708aa68e-1063-4799-b16a-f6110111b608"
+      },
+      "ResponseBody": {
+        "properties": {
+          "displayName": "Test $polAssign-7889",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
+          "scope": "/providers/Microsoft.Management/managementGroups/TestMgmtGroup",
+          "metadata": {
+            "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+            "createdOn": "2022-06-23T05:35:56.0799165Z",
+            "updatedBy": null,
+            "updatedOn": null
+          },
+          "enforcementMode": "Default"
+        },
+        "id": "/providers/Microsoft.Management/managementGroups/TestMgmtGroup/providers/Microsoft.Authorization/policyAssignments/polAssign-7889",
+        "type": "Microsoft.Authorization/policyAssignments",
+        "name": "polAssign-7889"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "978005979",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

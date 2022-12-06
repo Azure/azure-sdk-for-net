@@ -469,7 +469,7 @@ namespace Monitor.Tests.Helpers
             }
         }
 
-        private static void AreEqual(ActivityLogAlertAllOfCondition exp, ActivityLogAlertAllOfCondition act)
+        private static void AreEqual(AlertRuleAllOfCondition exp, AlertRuleAllOfCondition act)
         {
             if (exp != null)
             {
@@ -482,7 +482,7 @@ namespace Monitor.Tests.Helpers
             }
         }
 
-        private static void AreEqual(ActivityLogAlertActionList exp, ActivityLogAlertActionList act)
+        private static void AreEqual(ActionList exp, ActionList act)
         {
             if (exp != null)
             {
@@ -495,16 +495,16 @@ namespace Monitor.Tests.Helpers
             }
         }
 
-        private static void AreEqual(ActivityLogAlertActionGroup exp, ActivityLogAlertActionGroup act)
+        private static void AreEqual(ActionGroup exp, ActionGroup act)
         {
             if (exp != null)
             {
-                Assert.Equal(exp.ActionGroupId, act.ActionGroupId);
-                Assert.Equal(exp.WebhookProperties, act.WebhookProperties);
+                Assert.Equal(exp.GroupShortName, act.GroupShortName);
+                Assert.Equal(exp.WebhookReceivers, act.WebhookReceivers);
             }
         }
 
-        private static void AreEqual(ActivityLogAlertLeafCondition exp, ActivityLogAlertLeafCondition act)
+        private static void AreEqual(AlertRuleAnyOfOrLeafCondition exp, AlertRuleAnyOfOrLeafCondition act)
         {
             if (exp != null)
             {

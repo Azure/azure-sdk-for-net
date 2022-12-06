@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,44 +15,38 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
-        /// <param name="type"> The valid value is Lifecycle. </param>
+        /// <param name="ruleType"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        public ManagementPolicyRule(string name, RuleType type, ManagementPolicyDefinition definition)
+        public ManagementPolicyRule(string name, ManagementPolicyRuleType ruleType, ManagementPolicyDefinition definition)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
 
             Name = name;
-            Type = type;
+            RuleType = ruleType;
             Definition = definition;
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
-        /// <param name="enabled"> Rule is enabled if set to true. </param>
+        /// <param name="isEnabled"> Rule is enabled if set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
-        /// <param name="type"> The valid value is Lifecycle. </param>
+        /// <param name="ruleType"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
-        internal ManagementPolicyRule(bool? enabled, string name, RuleType type, ManagementPolicyDefinition definition)
+        internal ManagementPolicyRule(bool? isEnabled, string name, ManagementPolicyRuleType ruleType, ManagementPolicyDefinition definition)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Name = name;
-            Type = type;
+            RuleType = ruleType;
             Definition = definition;
         }
 
         /// <summary> Rule is enabled if set to true. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
         public string Name { get; set; }
         /// <summary> The valid value is Lifecycle. </summary>
-        public RuleType Type { get; set; }
+        public ManagementPolicyRuleType RuleType { get; set; }
         /// <summary> An object that defines the Lifecycle rule. </summary>
         public ManagementPolicyDefinition Definition { get; set; }
     }

@@ -952,9 +952,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='platformUpdateDomain'>
             /// The platform update domain for which a manual recovery walk is requested
             /// </param>
-            public static RecoveryWalkResponse ForceRecoveryServiceFabricPlatformUpdateDomainWalk(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, int platformUpdateDomain)
+            /// <param name='zone'>
+            /// The zone in which the manual recovery walk is requested for cross zone
+            /// virtual machine scale set
+            /// </param>
+            /// <param name='placementGroupId'>
+            /// The placement group id for which the manual recovery walk is requested.
+            /// </param>
+            public static RecoveryWalkResponse ForceRecoveryServiceFabricPlatformUpdateDomainWalk(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, string zone = default(string), string placementGroupId = default(string))
             {
-                return operations.ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(resourceGroupName, vmScaleSetName, platformUpdateDomain).GetAwaiter().GetResult();
+                return operations.ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(resourceGroupName, vmScaleSetName, platformUpdateDomain, zone, placementGroupId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -973,12 +980,19 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='platformUpdateDomain'>
             /// The platform update domain for which a manual recovery walk is requested
             /// </param>
+            /// <param name='zone'>
+            /// The zone in which the manual recovery walk is requested for cross zone
+            /// virtual machine scale set
+            /// </param>
+            /// <param name='placementGroupId'>
+            /// The placement group id for which the manual recovery walk is requested.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, string zone = default(string), string placementGroupId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ForceRecoveryServiceFabricPlatformUpdateDomainWalkWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, platformUpdateDomain, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ForceRecoveryServiceFabricPlatformUpdateDomainWalkWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, platformUpdateDomain, zone, placementGroupId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

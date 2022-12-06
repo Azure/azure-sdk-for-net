@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 #region Snippet:Create_Storage_Account
-using System.Collections.Generic;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 #if !SNIPPET
 using NUnit.Framework;
@@ -22,13 +21,18 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-Sku sku = new Sku(SkuName.PremiumLRS);
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardGRS), Kind.Storage, Location.WestUS);
-parameters.Tags.Add("key1", "value1");
-parameters.Tags.Add("key2", "value2");
-StorageAccount account = storageAccountCollection.CreateOrUpdate(accountName, parameters).Value;
+StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+{
+    Tags =
+    {
+        ["key1"] = "value1",
+        ["key2"] = "value2"
+    }
+};
+StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
             #endregion
         }
     }

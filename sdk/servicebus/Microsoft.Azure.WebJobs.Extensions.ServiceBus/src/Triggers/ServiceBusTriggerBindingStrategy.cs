@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(new BinaryData(input));
 
             // Return a single message. Doesn't support multiple dispatch
-            return ServiceBusTriggerInput.CreateSingle(message, null, null);
+            return ServiceBusTriggerInput.CreateSingle(message, null, null, null);
         }
 
         // Single instance: Core --> Message
@@ -52,12 +52,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
 
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-            // TODO - investigate why the parameter names need to be hard-coded here but they are not
-            // for binding to sender
+
+            // Support MessageReceiver and MessageSession parameters for backcompat
             SafeAddValue(() => bindingData.Add("MessageReceiver", value.MessageActions));
             SafeAddValue(() => bindingData.Add("MessageSession", value.MessageActions));
+
             SafeAddValue(() => bindingData.Add("MessageActions", value.MessageActions));
             SafeAddValue(() => bindingData.Add("SessionActions", value.MessageActions));
+            SafeAddValue(() => bindingData.Add("ReceiveActions", value.ReceiveActions));
             SafeAddValue(() => bindingData.Add("Client", value.Client));
 
             if (value.IsSingleDispatch)
@@ -79,7 +81,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "DeadLetterSource", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "LockToken", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ExpiresAtUtc", typeof(DateTime), isSingleDispatch);
+            AddBindingContractMember(contract, "ExpiresAt", typeof(DateTimeOffset), isSingleDispatch);
             AddBindingContractMember(contract, "EnqueuedTimeUtc", typeof(DateTime), isSingleDispatch);
+            AddBindingContractMember(contract, "EnqueuedTime", typeof(DateTimeOffset), isSingleDispatch);
             AddBindingContractMember(contract, "MessageId", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ContentType", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ReplyTo", typeof(string), isSingleDispatch);
@@ -92,10 +96,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "ApplicationProperties", typeof(IDictionary<string, object>), isSingleDispatch);
             // for backcompat
             AddBindingContractMember(contract, "UserProperties", typeof(IDictionary<string, object>), isSingleDispatch);
+            AddBindingContractMember(contract, "SessionId", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "ReplyToSessionId", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "PartitionKey", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "TransactionPartitionKey", typeof(string), isSingleDispatch);
+
             contract.Add("MessageReceiver", typeof(ServiceBusMessageActions));
             contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
             contract.Add("MessageActions", typeof(ServiceBusMessageActions));
             contract.Add("SessionActions", typeof(ServiceBusSessionMessageActions));
+            contract.Add("ReceiveActions", typeof(ServiceBusReceiveActions));
             contract.Add("Client", typeof(ServiceBusClient));
             return contract;
         }
@@ -107,7 +117,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             var deadLetterSources = new string[length];
             var lockTokens = new string[length];
             var expiresAtUtcs = new DateTime[length];
+            var expiresAt = new DateTimeOffset[length];
             var enqueuedTimeUtcs = new DateTime[length];
+            var enqueuedTimes = new DateTimeOffset[length];
             var messageIds = new string[length];
             var contentTypes = new string[length];
             var replyTos = new string[length];
@@ -116,12 +128,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             var subjects = new string[length];
             var correlationIds = new string[length];
             var applicationProperties = new IDictionary<string, object>[length];
+            var sessionIds = new string[length];
+            var replyToSessionIds = new string[length];
+            var partitionKeys = new string[length];
+            var transactionPartitionKeys = new string[length];
 
             SafeAddValue(() => bindingData.Add("DeliveryCountArray", deliveryCounts));
             SafeAddValue(() => bindingData.Add("DeadLetterSourceArray", deadLetterSources));
             SafeAddValue(() => bindingData.Add("LockTokenArray", lockTokens));
             SafeAddValue(() => bindingData.Add("ExpiresAtUtcArray", expiresAtUtcs));
+            SafeAddValue(() => bindingData.Add("ExpiresAtArray", expiresAt));
             SafeAddValue(() => bindingData.Add("EnqueuedTimeUtcArray", enqueuedTimeUtcs));
+            SafeAddValue(() => bindingData.Add("EnqueuedTimeArray", enqueuedTimes));
             SafeAddValue(() => bindingData.Add("MessageIdArray", messageIds));
             SafeAddValue(() => bindingData.Add("ContentTypeArray", contentTypes));
             SafeAddValue(() => bindingData.Add("ReplyToArray", replyTos));
@@ -134,13 +152,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add("ApplicationPropertiesArray", applicationProperties));
             // for backcompat
             SafeAddValue(() => bindingData.Add("UserPropertiesArray", applicationProperties));
+            SafeAddValue(() => bindingData.Add("SessionIdArray", sessionIds));
+            SafeAddValue(() => bindingData.Add("ReplyToSessionIdArray", replyToSessionIds));
+            SafeAddValue(() => bindingData.Add("PartitionKeyArray", partitionKeys));
+            SafeAddValue(() => bindingData.Add("TransactionPartitionKeyArray", partitionKeys));
             for (int i = 0; i < messages.Length; i++)
             {
                 deliveryCounts[i] = messages[i].DeliveryCount;
                 deadLetterSources[i] = messages[i].DeadLetterSource;
                 lockTokens[i] = messages[i].LockToken;
                 expiresAtUtcs[i] = messages[i].ExpiresAt.DateTime;
+                expiresAt[i] = messages[i].ExpiresAt;
                 enqueuedTimeUtcs[i] = messages[i].EnqueuedTime.DateTime;
+                enqueuedTimes[i] = messages[i].EnqueuedTime;
                 messageIds[i] = messages[i].MessageId;
                 contentTypes[i] = messages[i].ContentType;
                 replyTos[i] = messages[i].ReplyTo;
@@ -149,6 +173,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 subjects[i] = messages[i].Subject;
                 correlationIds[i] = messages[i].CorrelationId;
                 applicationProperties[i] = messages[i].ApplicationProperties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                sessionIds[i] = messages[i].SessionId;
+                replyToSessionIds[i] = messages[i].ReplyToSessionId;
+                partitionKeys[i] = messages[i].PartitionKey;
+                transactionPartitionKeys[i] = messages[i].TransactionPartitionKey;
             }
         }
 
@@ -157,8 +185,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add(nameof(value.DeliveryCount), value.DeliveryCount));
             SafeAddValue(() => bindingData.Add(nameof(value.DeadLetterSource), value.DeadLetterSource));
             SafeAddValue(() => bindingData.Add(nameof(value.LockToken), value.LockToken));
+            // for backcompat
             SafeAddValue(() => bindingData.Add("ExpiresAtUtc", value.ExpiresAt.DateTime));
+            SafeAddValue(() => bindingData.Add(nameof(value.ExpiresAt), value.ExpiresAt));
+            // for backcompat
             SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", value.EnqueuedTime.DateTime));
+            SafeAddValue(() => bindingData.Add(nameof(value.EnqueuedTime), value.EnqueuedTime));
             SafeAddValue(() => bindingData.Add(nameof(value.MessageId), value.MessageId));
             SafeAddValue(() => bindingData.Add(nameof(value.ContentType), value.ContentType));
             SafeAddValue(() => bindingData.Add(nameof(value.ReplyTo), value.ReplyTo));
@@ -171,6 +203,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add(nameof(value.ApplicationProperties), value.ApplicationProperties));
             // for backcompat
             SafeAddValue(() => bindingData.Add("UserProperties", value.ApplicationProperties));
+            SafeAddValue(() => bindingData.Add(nameof(value.SessionId), value.SessionId));
+            SafeAddValue(() => bindingData.Add(nameof(value.ReplyToSessionId), value.ReplyToSessionId));
+            SafeAddValue(() => bindingData.Add(nameof(value.PartitionKey), value.PartitionKey));
+            SafeAddValue(() => bindingData.Add(nameof(value.TransactionPartitionKey), value.TransactionPartitionKey));
         }
 
         private static void SafeAddValue(Action addValue)

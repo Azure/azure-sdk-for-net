@@ -40,6 +40,11 @@ namespace Azure.Graph.Rbac.Models
                 writer.WritePropertyName("mailNickname");
                 writer.WriteStringValue(MailNickname);
             }
+            if (Optional.IsDefined(Mail))
+            {
+                writer.WritePropertyName("mail");
+                writer.WriteStringValue(Mail);
+            }
             if (Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId");

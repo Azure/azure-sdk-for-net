@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the BlobInventoryPolicy data model. </summary>
-    public partial class BlobInventoryPolicyData : Resource
+    public partial class BlobInventoryPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
         public BlobInventoryPolicyData()
@@ -23,22 +23,19 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="lastModifiedTime"> Returns the last modified date and time of the blob inventory policy. </param>
-        /// <param name="policy"> The storage account blob inventory policy object. It is composed of policy rules. </param>
-        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? lastModifiedTime, BlobInventoryPolicySchema policy) : base(id, name, type)
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="lastModifiedOn"> Returns the last modified date and time of the blob inventory policy. </param>
+        /// <param name="policySchema"> The storage account blob inventory policy object. It is composed of policy rules. </param>
+        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policySchema) : base(id, name, resourceType, systemData)
         {
-            SystemData = systemData;
-            LastModifiedTime = lastModifiedTime;
-            Policy = policy;
+            LastModifiedOn = lastModifiedOn;
+            PolicySchema = policySchema;
         }
 
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Returns the last modified date and time of the blob inventory policy. </summary>
-        public DateTimeOffset? LastModifiedTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The storage account blob inventory policy object. It is composed of policy rules. </summary>
-        public BlobInventoryPolicySchema Policy { get; set; }
+        public BlobInventoryPolicySchema PolicySchema { get; set; }
     }
 }

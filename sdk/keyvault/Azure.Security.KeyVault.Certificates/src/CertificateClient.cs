@@ -42,6 +42,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a certificate <see cref="Uri"/>, use <see cref="KeyVaultCertificateIdentifier"/> to parse the <see cref="KeyVaultCertificateIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault resource. See https://aka.ms/azsdk/blog/vault-uri for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -56,6 +57,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a certificate <see cref="Uri"/>, use <see cref="KeyVaultCertificateIdentifier"/> to parse the <see cref="KeyVaultCertificateIdentifier.VaultUri"/> and other information.
+        /// You should validate that this URI references a valid Key Vault resource. See https://aka.ms/azsdk/blog/vault-uri for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="CertificateClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
@@ -67,7 +69,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             options ??= new CertificateClientOptions();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new ChallengeBasedAuthenticationPolicy(credential));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, new ClientDiagnostics(options));
         }
@@ -178,9 +180,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version, CancellationToken cancellationToken) =>
-            DownloadCertificate(certificateName, version, null, cancellationToken);
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
+            DownloadCertificate(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken);
 
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -193,29 +194,26 @@ namespace Azure.Security.KeyVault.Certificates
         /// <see cref="KeyVaultCertificate.Cer"/> property.
         /// This operation requires the certificates/get and secrets/get permissions.
         /// </remarks>
-        /// <param name="certificateName">The name of the certificate to download.</param>
-        /// <param name="version">Optional version of a certificate to download.</param>
-        /// <param name="options">Additional options for downloading and creating an <see cref="X509Certificate2"/>.</param>
+        /// <param name="options">Options for downloading and creating an <see cref="X509Certificate2"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
-        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, DownloadCertificateOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<X509Certificate2> DownloadCertificate(DownloadCertificateOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute("certificate", options.CertificateName);
+            scope.AddAttribute("version", options.Version);
             scope.Start();
 
             try
             {
-                KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version);
+                KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version);
                 Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken);
 
                 KeyVaultSecret secret = secretResponse.Value;
@@ -226,7 +224,6 @@ namespace Azure.Security.KeyVault.Certificates
                     throw new InvalidDataException($"Secret {certificate.SecretId} contains no value");
                 }
 
-                options ??= new();
                 if (secret.ContentType is null || secret.ContentType == CertificateContentType.Pkcs12)
                 {
                     byte[] rawData = Convert.FromBase64String(value);
@@ -270,9 +267,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version, CancellationToken cancellationToken) =>
-            DownloadCertificateAsync(certificateName, version, null, cancellationToken);
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
+            await DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -285,29 +281,26 @@ namespace Azure.Security.KeyVault.Certificates
         /// <see cref="KeyVaultCertificate.Cer"/> property.
         /// This operation requires the certificates/get and secrets/get permissions.
         /// </remarks>
-        /// <param name="certificateName">The name of the certificate to download.</param>
-        /// <param name="version">Optional version of a certificate to download.</param>
         /// <param name="options">Additional options for downloading and creating an <see cref="X509Certificate2"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
-        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="InvalidDataException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, DownloadCertificateOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(DownloadCertificateOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute("certificate", options.CertificateName);
+            scope.AddAttribute("version", options.Version);
             scope.Start();
 
             try
             {
-                KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version).ConfigureAwait(false);
+                KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version).ConfigureAwait(false);
                 Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken).ConfigureAwait(false);
 
                 KeyVaultSecret secret = secretResponse.Value;
@@ -318,7 +311,6 @@ namespace Azure.Security.KeyVault.Certificates
                     throw new InvalidDataException($"Secret {certificate.SecretId} contains no value");
                 }
 
-                options ??= new();
                 if (secret.ContentType is null || secret.ContentType == CertificateContentType.Pkcs12)
                 {
                     byte[] rawData = Convert.FromBase64String(value);

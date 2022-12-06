@@ -67,7 +67,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="resyncStartTime">The resync start time.</param>
         /// <param name="progressHealth">The Progress Health.</param>
         /// <param name="progressStatus">The Progress Status.</param>
-        public InMageAzureV2ProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string protectionStage = default(string), string healthErrorCode = default(string), long? rpoInSeconds = default(long?), string resyncRequired = default(string), int? resyncProgressPercentage = default(int?), long? resyncDurationInSeconds = default(long?), long? diskCapacityInBytes = default(long?), long? fileSystemCapacityInBytes = default(long?), double? sourceDataInMegaBytes = default(double?), double? psDataInMegaBytes = default(double?), double? targetDataInMegaBytes = default(double?), string diskResized = default(string), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), long? resyncProcessedBytes = default(long?), long? resyncTotalTransferredBytes = default(long?), long? resyncLast15MinutesTransferredBytes = default(long?), System.DateTime? resyncLastDataTransferTimeUTC = default(System.DateTime?), System.DateTime? resyncStartTime = default(System.DateTime?), string progressHealth = default(string), string progressStatus = default(string))
+        /// <param name="secondsToTakeSwitchProvider">The seconds to take for
+        /// switch provider.</param>
+        public InMageAzureV2ProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string protectionStage = default(string), string healthErrorCode = default(string), long? rpoInSeconds = default(long?), string resyncRequired = default(string), int? resyncProgressPercentage = default(int?), long? resyncDurationInSeconds = default(long?), long? diskCapacityInBytes = default(long?), long? fileSystemCapacityInBytes = default(long?), double? sourceDataInMegaBytes = default(double?), double? psDataInMegaBytes = default(double?), double? targetDataInMegaBytes = default(double?), string diskResized = default(string), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), long? resyncProcessedBytes = default(long?), long? resyncTotalTransferredBytes = default(long?), long? resyncLast15MinutesTransferredBytes = default(long?), System.DateTime? resyncLastDataTransferTimeUTC = default(System.DateTime?), System.DateTime? resyncStartTime = default(System.DateTime?), string progressHealth = default(string), string progressStatus = default(string), long? secondsToTakeSwitchProvider = default(long?))
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -91,6 +93,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             ResyncStartTime = resyncStartTime;
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
+            SecondsToTakeSwitchProvider = secondsToTakeSwitchProvider;
             CustomInit();
         }
 
@@ -231,6 +234,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "progressStatus")]
         public string ProgressStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the seconds to take for switch provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "secondsToTakeSwitchProvider")]
+        public long? SecondsToTakeSwitchProvider { get; set; }
 
     }
 }

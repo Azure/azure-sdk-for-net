@@ -37,36 +37,37 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource</param>
         /// <param name="availability">Indicates private store availability.
         /// Possible values include: 'enabled', 'disabled'</param>
         /// <param name="privateStoreId">Private Store id</param>
         /// <param name="eTag">Identifier for purposes of race
         /// condition</param>
         /// <param name="privateStoreName">Private Store Name</param>
-        /// <param name="tenantTag">Tenant Tag</param>
-        /// <param name="tenantIds">Tenant ids</param>
-        /// <param name="customerTag">Customer tag</param>
-        /// <param name="hasCommercialAssociation">Indicating whether private
-        /// store has association with Commercial's Billing Account (through
-        /// billing account's customer tag retrieved from GSM for a
-        /// subscription</param>
-        /// <param name="hasMultiTenantAssociation">Indicating whether private
-        /// store has association with multiple tenants (through tenant's tag
-        /// retrieved from AAD</param>
+        /// <param name="tenantId">Tenant id</param>
         /// <param name="isGov">Is government</param>
-        public PrivateStore(string id = default(string), string name = default(string), string type = default(string), string availability = default(string), string privateStoreId = default(string), string eTag = default(string), string privateStoreName = default(string), string tenantTag = default(string), IList<string> tenantIds = default(IList<string>), string customerTag = default(string), bool? hasCommercialAssociation = default(bool?), bool? hasMultiTenantAssociation = default(bool?), bool? isGov = default(bool?))
-            : base(id, name, type)
+        /// <param name="collectionIds">Gets list of associated collection
+        /// ids</param>
+        /// <param name="branding">Gets or sets list of branding
+        /// characteristics</param>
+        /// <param name="recipients">Gets or sets list of notified recipients
+        /// for new requests</param>
+        /// <param name="sendToAllMarketplaceAdmins">Gets or sets whether to
+        /// send email to all marketplace admins for new requests</param>
+        public PrivateStore(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string availability = default(string), string privateStoreId = default(string), string eTag = default(string), string privateStoreName = default(string), string tenantId = default(string), bool? isGov = default(bool?), IList<string> collectionIds = default(IList<string>), IDictionary<string, string> branding = default(IDictionary<string, string>), IList<Recipient> recipients = default(IList<Recipient>), bool? sendToAllMarketplaceAdmins = default(bool?))
+            : base(id, name, type, systemData)
         {
             Availability = availability;
             PrivateStoreId = privateStoreId;
             ETag = eTag;
             PrivateStoreName = privateStoreName;
-            TenantTag = tenantTag;
-            TenantIds = tenantIds;
-            CustomerTag = customerTag;
-            HasCommercialAssociation = hasCommercialAssociation;
-            HasMultiTenantAssociation = hasMultiTenantAssociation;
+            TenantId = tenantId;
             IsGov = isGov;
+            CollectionIds = collectionIds;
+            Branding = branding;
+            Recipients = recipients;
+            SendToAllMarketplaceAdmins = sendToAllMarketplaceAdmins;
             CustomInit();
         }
 
@@ -83,10 +84,10 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         public string Availability { get; set; }
 
         /// <summary>
-        /// Gets or sets private Store id
+        /// Gets private Store id
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateStoreId")]
-        public string PrivateStoreId { get; set; }
+        public string PrivateStoreId { get; private set; }
 
         /// <summary>
         /// Gets or sets identifier for purposes of race condition
@@ -101,43 +102,41 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         public string PrivateStoreName { get; set; }
 
         /// <summary>
-        /// Gets or sets tenant Tag
+        /// Gets or sets tenant id
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tenantTag")]
-        public string TenantTag { get; set; }
-
-        /// <summary>
-        /// Gets or sets tenant ids
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tenantIds")]
-        public IList<string> TenantIds { get; set; }
-
-        /// <summary>
-        /// Gets or sets customer tag
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.customerTag")]
-        public string CustomerTag { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicating whether private store has association with
-        /// Commercial's Billing Account (through billing account's customer
-        /// tag retrieved from GSM for a subscription
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hasCommercialAssociation")]
-        public bool? HasCommercialAssociation { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicating whether private store has association with
-        /// multiple tenants (through tenant's tag retrieved from AAD
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hasMultiTenantAssociation")]
-        public bool? HasMultiTenantAssociation { get; set; }
+        [JsonProperty(PropertyName = "properties.tenantId")]
+        public string TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets is government
         /// </summary>
         [JsonProperty(PropertyName = "properties.isGov")]
         public bool? IsGov { get; set; }
+
+        /// <summary>
+        /// Gets list of associated collection ids
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.collectionIds")]
+        public IList<string> CollectionIds { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of branding characteristics
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.branding")]
+        public IDictionary<string, string> Branding { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of notified recipients for new requests
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.notificationsSettings.recipients")]
+        public IList<Recipient> Recipients { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to send email to all marketplace admins for
+        /// new requests
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.notificationsSettings.sendToAllMarketplaceAdmins")]
+        public bool? SendToAllMarketplaceAdmins { get; set; }
 
     }
 }

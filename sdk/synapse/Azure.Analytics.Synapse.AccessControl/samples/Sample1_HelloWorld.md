@@ -19,9 +19,9 @@ RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endp
 First, you need to the determine the ID of the role you wish to assign, along with the ID of the principal you wish to assign that role.
 
 ```C# Snippet:PrepCreateRoleAssignment
-Response roleDefinitionsReponse = definitionsClient.GetRoleDefinitions(new());
-BinaryData roleDefinitionsContent = roleDefinitionsReponse.Content;
-JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
+Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(true);
+BinaryData roleDefinitionsContent = roleDefinitionsResponse.Content;
+using JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 
 JsonElement adminRoleJson = roleDefinitionsJson.RootElement.EnumerateArray().
     Single(role => role.GetProperty("name").ToString() == "Synapse Administrator");
@@ -46,9 +46,9 @@ var roleAssignmentDetails = new
     scope = assignedScope
 };
 
-Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails));
+Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails), ContentType.ApplicationJson);
 BinaryData addedRoleAssignmentContent = addedRoleAssignmentResponse.Content;
-JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
+using JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
 string addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();
 ```
 
@@ -59,7 +59,7 @@ To retrieve the details of assignment call `GetRoleAssignmentById`, passing in t
 ```C# Snippet:RetrieveRoleAssignment
 Response roleAssignmentResponse = roleAssignmentsClient.GetRoleAssignmentById(addedRoleAssignmentId, new());
 BinaryData roleAssignmentContent = roleAssignmentResponse.Content;
-JsonDocument roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
+using JsonDocument roleAssignmentJson = JsonDocument.Parse(roleAssignmentContent.ToMemory());
 string roleAssignmentRoleDefinitionId = roleAssignmentJson.RootElement.GetProperty("roleDefinitionId").ToString();
 string roleAssignmentPrincipalId = roleAssignmentJson.RootElement.GetProperty("principalId").ToString();
 Console.WriteLine($"Role {roleAssignmentRoleDefinitionId} is assigned to {roleAssignmentPrincipalId}.");
@@ -72,7 +72,7 @@ To enumerate all role assignments in the Synapse workspace call `GetRoleAssignme
 ```C# Snippet:ListRoleAssignments
 Response roleAssignmentsResponse = roleAssignmentsClient.GetRoleAssignments();
 BinaryData roleAssignmentsContent = roleAssignmentsResponse.Content;
-JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
+using JsonDocument roleAssignmentsJson = JsonDocument.Parse(roleAssignmentsContent.ToMemory());
 
 foreach (JsonElement assignmentJson in roleAssignmentsJson.RootElement.GetProperty("value").EnumerateArray())
 {

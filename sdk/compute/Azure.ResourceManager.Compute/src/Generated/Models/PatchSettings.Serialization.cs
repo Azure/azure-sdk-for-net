@@ -30,14 +30,20 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("assessmentMode");
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
+            if (Optional.IsDefined(AutomaticByPlatformSettings))
+            {
+                writer.WritePropertyName("automaticByPlatformSettings");
+                writer.WriteObjectValue(AutomaticByPlatformSettings);
+            }
             writer.WriteEndObject();
         }
 
         internal static PatchSettings DeserializePatchSettings(JsonElement element)
         {
-            Optional<WindowsVMGuestPatchMode> patchMode = default;
+            Optional<WindowsVmGuestPatchMode> patchMode = default;
             Optional<bool> enableHotpatching = default;
             Optional<WindowsPatchAssessmentMode> assessmentMode = default;
+            Optional<WindowsVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchMode"))
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    patchMode = new WindowsVMGuestPatchMode(property.Value.GetString());
+                    patchMode = new WindowsVmGuestPatchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enableHotpatching"))
@@ -70,8 +76,18 @@ namespace Azure.ResourceManager.Compute.Models
                     assessmentMode = new WindowsPatchAssessmentMode(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("automaticByPlatformSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    automaticByPlatformSettings = WindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(property.Value);
+                    continue;
+                }
             }
-            return new PatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(enableHotpatching), Optional.ToNullable(assessmentMode));
+            return new PatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(enableHotpatching), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value);
         }
     }
 }

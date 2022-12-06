@@ -42,7 +42,7 @@ None
 
 ### Breaking Changes
 
-For more details, visit the [SDK migration guide](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-10).
+For more details, visit the SDK migration guide.
 
 - Fixed the definition of `WebApiSkill` so that `HttpHeaders` is a top-level dictionary property. [PR 7080](https://github.com/Azure/azure-sdk-for-net/pull/7080).
 - Allow recursive inputs for `InputFieldMappingEntry`. [PR 7204](https://github.com/Azure/azure-sdk-for-net/pull/7204).
@@ -99,7 +99,7 @@ None
 
 ### Breaking Changes
 
-For more details, visit the [SDK migration guide](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-9).
+For more details, visit the SDK migration guide.
 
 - Public properties of several model classes are immutable. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 - Several `bool` properties of `Field` class are now nullable. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
@@ -173,7 +173,7 @@ None
 
 ### Breaking Changes
 
-For more details, visit the [SDK migration guide](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-5).
+For more details, visit the SDK migration guide.
 
 - Reorganized the package structure of `Microsoft.Azure.Search` into four separate assemblies. [PR 4246](https://github.com/Azure/azure-sdk-for-net/pull/4246).
 - `Suggester` constructor no longer has the redundant `enum` parameters for `SuggesterSearchMode`. [PR 4246](https://github.com/Azure/azure-sdk-for-net/pull/4246).
@@ -203,7 +203,7 @@ Features and improvements offered in a preview SDK are in a preview capacity. Th
 
 ### Breaking Changes
 
-For more details, visit the [section dedicated to the 8.0-preview API](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-9#new-preview-features-in-version-80-preview) in the [SDK migration guide](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-9).
+For more details, visit the section dedicated to the 8.0-preview API in the SDK migration guide.
 
 The list of breaking changes are identical to the breaking changes in [version 9.0](#9.0.0).
 

@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             KeyVersion = keyVersion ?? throw new ArgumentNullException(nameof(keyVersion));
         }
 
-        [CodeGenMember("vaultUri")]
+        [CodeGenMember("VaultUri")]
         private string _vaultUri;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets the name of the Azure Key Vault key to encrypt resources at rest.
         /// </summary>
-        [CodeGenMember("keyVaultKeyName")]
+        [CodeGenMember("KeyVaultKeyName")]
         public string KeyName { get; }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <remarks>
         /// A version is required in case the key rotates.
         /// </remarks>
-        [CodeGenMember("keyVaultKeyVersion")]
+        [CodeGenMember("KeyVaultKeyVersion")]
         public string KeyVersion { get; }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets or sets an <see cref="AzureActiveDirectoryApplicationCredentials"/> for de/serialization purposes only.
         /// </summary>
-        [CodeGenMember("accessCredentials")]
+        [CodeGenMember("AccessCredentials")]
         private AzureActiveDirectoryApplicationCredentials AccessCredentialsInternal
         {
             get

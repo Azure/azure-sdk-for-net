@@ -4,6 +4,7 @@
 #region Snippet:Managing_VirtualMachines_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -20,59 +21,56 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_CreateAVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // Use the same location as the resource group
             string vmName = "myVM";
-            var input = new VirtualMachineData(resourceGroup.Data.Location)
+            VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
             {
-                HardwareProfile = new HardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile()
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardF2
+                    VmSize = VirtualMachineSizeType.StandardF2
                 },
-                OsProfile = new OSProfile()
+                OSProfile = new VirtualMachineOSProfile()
                 {
                     AdminUsername = "adminUser",
                     ComputerName = "myVM",
                     LinuxConfiguration = new LinuxConfiguration()
                     {
                         DisablePasswordAuthentication = true,
-                        Ssh = new SshConfiguration()
-                        {
-                            PublicKeys = {
-                    new SshPublicKeyInfo()
-                    {
-                        Path = $"/home/adminUser/.ssh/authorized_keys",
-                        KeyData = "<value of the public ssh key>",
-                    }
-                }
+                        SshPublicKeys = {
+                            new SshPublicKeyConfiguration()
+                            {
+                                Path = $"/home/adminUser/.ssh/authorized_keys",
+                                KeyData = "<value of the public ssh key>",
+                            }
                         }
                     }
                 },
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile()
                 {
                     NetworkInterfaces =
                     {
-                        new NetworkInterfaceReference()
+                        new VirtualMachineNetworkInterfaceReference()
                         {
-                            Id = "/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>",
+                            Id = new ResourceIdentifier("/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"),
                             Primary = true,
                         }
                     }
                 },
-                StorageProfile = new StorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile()
                 {
-                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
                     {
-                        OsType = OperatingSystemTypes.Linux,
-                        Caching = CachingTypes.ReadWrite,
-                        ManagedDisk = new ManagedDiskParameters()
+                        OSType = SupportedOperatingSystemType.Linux,
+                        Caching = CachingType.ReadWrite,
+                        ManagedDisk = new VirtualMachineManagedDisk()
                         {
-                            StorageAccountType = StorageAccountTypes.StandardLRS
+                            StorageAccountType = StorageAccountType.StandardLrs
                         }
                     },
                     ImageReference = new ImageReference()
@@ -84,8 +82,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            VirtualMachineCreateOrUpdateOperation lro = await vmCollection.CreateOrUpdateAsync(vmName, input);
-            VirtualMachine vm = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
+            VirtualMachineResource vm = lro.Value;
             #endregion Snippet:Managing_VirtualMachines_CreateAVirtualMachine
         }
 
@@ -95,15 +93,15 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_ListAllVirtualMachines
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // With ListAsync(), we can get a list of the virtual machines
-            AsyncPageable<VirtualMachine> response = vmCollection.GetAllAsync();
-            await foreach (VirtualMachine vm in response)
+            AsyncPageable<VirtualMachineResource> response = vmCollection.GetAllAsync();
+            await foreach (VirtualMachineResource vm in response)
             {
                 Console.WriteLine(vm.Data.Name);
             }
@@ -116,15 +114,15 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_DeleteVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             string vmName = "myVM";
-            VirtualMachine vm = await vmCollection.GetAsync(vmName);
-            await vm.DeleteAsync();
+            VirtualMachineResource vm = await vmCollection.GetAsync(vmName);
+            await vm.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_VirtualMachines_DeleteVirtualMachine
         }
     }

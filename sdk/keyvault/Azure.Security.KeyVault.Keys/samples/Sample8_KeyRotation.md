@@ -33,18 +33,17 @@ Debug.WriteLine($"{cloudRsaKey.KeyType} key is returned with name {cloudRsaKey.N
 ## Set key rotation policy
 
 To set a key rotation policy, you create a new `KeyRotationPolicy` with 1 or more lifetime actions and an expiration date
-for the key that will be created when rotated.
+for the key that will be created when rotated. The format for `ExpiresIn`, `TimeAfterCreate`, and `TimeBeforeExpiry` are all ISO 8601 durations, such as "P90D" meaning "90 days".
 
 ```C# Snippet:KeysSample8UpdateRotationPolicy
 KeyRotationPolicy policy = new KeyRotationPolicy()
 {
-    ExpiresIn = TimeSpan.FromDays(90),
+    ExpiresIn = "P90D",
     LifetimeActions =
     {
-        new KeyRotationLifetimeAction()
+        new KeyRotationLifetimeAction(KeyRotationPolicyAction.Rotate)
         {
-            Action = KeyRotationPolicyAction.Rotate,
-            TimeBeforeExpiry = TimeSpan.FromDays(30)
+            TimeBeforeExpiry = "P30D"
         }
     }
 };
@@ -60,13 +59,6 @@ You can manually rotate a key at any time, which will use the current key rotati
 KeyVaultKey newRsaKey = keyClient.RotateKey(rsaKeyName);
 Debug.WriteLine($"Rotated key {newRsaKey.Name} with version {newRsaKey.Properties.Version}");
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample8_KeyRotation.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample8_KeyRotation.cs)
-* [Asynchronous Sample8_KeyRotationAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample8_KeyRotationAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md

@@ -151,6 +151,52 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Updates tags of a Azure Firewall Policy resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='firewallPolicyName'>
+            /// The name of the Firewall Policy.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update Azure Firewall Policy tags.
+            /// </param>
+            public static FirewallPolicy UpdateTags(this IFirewallPoliciesOperations operations, string resourceGroupName, string firewallPolicyName, TagsObject parameters)
+            {
+                return operations.UpdateTagsAsync(resourceGroupName, firewallPolicyName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates tags of a Azure Firewall Policy resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='firewallPolicyName'>
+            /// The name of the Firewall Policy.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update Azure Firewall Policy tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FirewallPolicy> UpdateTagsAsync(this IFirewallPoliciesOperations operations, string resourceGroupName, string firewallPolicyName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, firewallPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all Firewall Policies in a resource group.
             /// </summary>
             /// <param name='operations'>

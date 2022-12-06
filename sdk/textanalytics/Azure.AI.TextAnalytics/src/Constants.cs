@@ -8,7 +8,7 @@ namespace Azure.AI.TextAnalytics
     internal static class Constants
     {
         public static readonly StringIndexType DefaultStringIndexType = StringIndexType.Utf16CodeUnit;
-        public const string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+        public static readonly Legacy.StringIndexType DefaultLegacyStringIndexType = Legacy.StringIndexType.Utf16CodeUnit;
         public const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
     }
 }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -47,8 +48,8 @@ namespace Azure.Containers.ContainerRegistry
         internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
             Optional<string> mediaType = default;
-            Optional<Descriptor> config = default;
-            Optional<IList<Descriptor>> layers = default;
+            Optional<OciBlobDescriptor> config = default;
+            Optional<IList<OciBlobDescriptor>> layers = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +65,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = Descriptor.DeserializeDescriptor(property.Value);
+                    config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"))
@@ -74,10 +75,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Descriptor> array = new List<Descriptor>();
+                    List<OciBlobDescriptor> array = new List<OciBlobDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Descriptor.DeserializeDescriptor(item));
+                        array.Add(OciBlobDescriptor.DeserializeOciBlobDescriptor(item));
                     }
                     layers = array;
                     continue;

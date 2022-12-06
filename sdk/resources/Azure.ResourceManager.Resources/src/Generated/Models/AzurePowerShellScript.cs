@@ -8,34 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Object model for the Azure PowerShell script. </summary>
-    public partial class AzurePowerShellScript : DeploymentScriptData
+    public partial class AzurePowerShellScript : ArmDeploymentScriptData
     {
         /// <summary> Initializes a new instance of AzurePowerShellScript. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="azPowerShellVersion"/> is null. </exception>
-        public AzurePowerShellScript(string location, TimeSpan retentionInterval, string azPowerShellVersion) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="azPowerShellVersion"/> is null. </exception>
+        public AzurePowerShellScript(AzureLocation location, TimeSpan retentionInterval, string azPowerShellVersion) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (azPowerShellVersion == null)
-            {
-                throw new ArgumentNullException(nameof(azPowerShellVersion));
-            }
+            Argument.AssertNotNull(azPowerShellVersion, nameof(azPowerShellVersion));
 
-            Outputs = new ChangeTrackingDictionary<string, object>();
-            SupportingScriptUris = new ChangeTrackingList<string>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            SupportingScriptUris = new ChangeTrackingList<Uri>();
+            EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
             AzPowerShellVersion = azPowerShellVersion;
             Kind = ScriptType.AzurePowerShell;
@@ -44,12 +35,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of AzurePowerShellScript. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
         /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </param>
@@ -65,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
-        internal AzurePowerShellScript(ResourceIdentifier id, string name, ResourceType type, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind, SystemData systemData, ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IReadOnlyDictionary<string, object> outputs, string primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, type, identity, location, tags, kind, systemData)
+        internal AzurePowerShellScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -86,27 +77,68 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Container settings. </summary>
-        public ContainerConfiguration ContainerSettings { get; set; }
+        internal ContainerConfiguration ContainerSettings { get; set; }
+        /// <summary> Container group name, if not specified then the name will get auto-generated. Not specifying a &apos;containerGroupName&apos; indicates the system to generate a unique name which might end up flagging an Azure Policy as non-compliant. Use &apos;containerGroupName&apos; when you have an Azure Policy that expects a specific naming convention or when you want to fully control the name. &apos;containerGroupName&apos; property must be between 1 and 63 characters long, must contain only lowercase letters, numbers, and dashes and it cannot start or end with a dash and consecutive dashes are not allowed. To specify a &apos;containerGroupName&apos;, add the following object to properties: { &quot;containerSettings&quot;: { &quot;containerGroupName&quot;: &quot;contoso-container&quot; } }. If you do not want to specify a &apos;containerGroupName&apos; then do not add &apos;containerSettings&apos; property. </summary>
+        public string ContainerGroupName
+        {
+            get => ContainerSettings is null ? default : ContainerSettings.ContainerGroupName;
+            set
+            {
+                if (ContainerSettings is null)
+                    ContainerSettings = new ContainerConfiguration();
+                ContainerSettings.ContainerGroupName = value;
+            }
+        }
+
         /// <summary> Storage Account settings. </summary>
-        public StorageAccountConfiguration StorageAccountSettings { get; set; }
+        public ScriptStorageConfiguration StorageAccountSettings { get; set; }
         /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
-        public CleanupOptions? CleanupPreference { get; set; }
+        public ScriptCleanupOptions? CleanupPreference { get; set; }
         /// <summary> State of the script execution. This only appears in the response. </summary>
         public ScriptProvisioningState? ProvisioningState { get; }
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
-        /// <summary> List of script outputs. </summary>
-        public IReadOnlyDictionary<string, object> Outputs { get; }
+        /// <summary>
+        /// List of script outputs.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
-        public string PrimaryScriptUri { get; set; }
+        public Uri PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>
-        public IList<string> SupportingScriptUris { get; }
+        public IList<Uri> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; set; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
         public string Arguments { get; set; }
         /// <summary> The environment variables to pass over to the script. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables { get; }
+        public IList<ScriptEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </summary>

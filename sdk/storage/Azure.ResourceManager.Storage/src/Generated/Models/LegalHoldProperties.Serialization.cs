@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Storage.Models
         internal static LegalHoldProperties DeserializeLegalHoldProperties(JsonElement element)
         {
             Optional<bool> hasLegalHold = default;
-            Optional<IReadOnlyList<TagProperty>> tags = default;
+            Optional<IReadOnlyList<LegalHoldTag>> tags = default;
+            Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasLegalHold"))
@@ -36,16 +37,26 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagProperty> array = new List<TagProperty>();
+                    List<LegalHoldTag> array = new List<LegalHoldTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagProperty.DeserializeTagProperty(item));
+                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
                     }
                     tags = array;
                     continue;
                 }
+                if (property.NameEquals("protectedAppendWritesHistory"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value);
+                    continue;
+                }
             }
-            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), Optional.ToList(tags));
+            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), Optional.ToList(tags), protectedAppendWritesHistory.Value);
         }
     }
 }

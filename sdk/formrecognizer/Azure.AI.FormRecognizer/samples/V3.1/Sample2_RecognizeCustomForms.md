@@ -23,7 +23,7 @@ To recognize form fields and other content from your custom forms from a given f
 
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
-Uri formUri = <formUri>;
+Uri formUri = new Uri("<formUri>");
 var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
 
 RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri, options);
@@ -138,11 +138,6 @@ foreach (RecognizedForm form in forms)
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Recognize custom forms from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample2_RecognizeCustomFormsFromUri.cs)
-* [Recognize custom forms from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample2_RecognizeCustomFormsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/Sample4_StronglyTypingARecognizedForm.md

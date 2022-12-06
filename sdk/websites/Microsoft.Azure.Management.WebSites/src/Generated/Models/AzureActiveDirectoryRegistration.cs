@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,8 +17,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// The configuration settings of the Azure Active Directory app
     /// registration.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class AzureActiveDirectoryRegistration : ProxyOnlyResource
+    public partial class AzureActiveDirectoryRegistration
     {
         /// <summary>
         /// Initializes a new instance of the AzureActiveDirectoryRegistration
@@ -35,10 +32,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the AzureActiveDirectoryRegistration
         /// class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="openIdIssuer">The OpenID Connect Issuer URI that
         /// represents the entity which issues access tokens for this
         /// application.
@@ -62,13 +55,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// the client secret, that is the thumbprint of a certificate used for
         /// signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.</param>
-        public AzureActiveDirectoryRegistration(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string openIdIssuer = default(string), string clientId = default(string), string clientSecretSettingName = default(string), string clientSecretCertificateThumbprint = default(string))
-            : base(id, name, kind, type)
+        /// <param name="clientSecretCertificateSubjectAlternativeName">An
+        /// alternative to the client secret thumbprint, that is the subject
+        /// alternative name of a certificate used for signing purposes. This
+        /// property acts as
+        /// a replacement for the Client Secret Certificate Thumbprint. It is
+        /// also optional.</param>
+        /// <param name="clientSecretCertificateIssuer">An alternative to the
+        /// client secret thumbprint, that is the issuer of a certificate used
+        /// for signing purposes. This property acts as
+        /// a replacement for the Client Secret Certificate Thumbprint. It is
+        /// also optional.</param>
+        public AzureActiveDirectoryRegistration(string openIdIssuer = default(string), string clientId = default(string), string clientSecretSettingName = default(string), string clientSecretCertificateThumbprint = default(string), string clientSecretCertificateSubjectAlternativeName = default(string), string clientSecretCertificateIssuer = default(string))
         {
             OpenIdIssuer = openIdIssuer;
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
             ClientSecretCertificateThumbprint = clientSecretCertificateThumbprint;
+            ClientSecretCertificateSubjectAlternativeName = clientSecretCertificateSubjectAlternativeName;
+            ClientSecretCertificateIssuer = clientSecretCertificateIssuer;
             CustomInit();
         }
 
@@ -87,7 +92,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// More information on OpenID Connect Discovery:
         /// http://openid.net/specs/openid-connect-discovery-1_0.html
         /// </summary>
-        [JsonProperty(PropertyName = "properties.openIdIssuer")]
+        [JsonProperty(PropertyName = "openIdIssuer")]
         public string OpenIdIssuer { get; set; }
 
         /// <summary>
@@ -99,14 +104,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// More information on OpenID Connect:
         /// http://openid.net/specs/openid-connect-core-1_0.html
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientId")]
+        [JsonProperty(PropertyName = "clientId")]
         public string ClientId { get; set; }
 
         /// <summary>
         /// Gets or sets the app setting name that contains the client secret
         /// of the relying party application.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientSecretSettingName")]
+        [JsonProperty(PropertyName = "clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
 
         /// <summary>
@@ -115,8 +120,28 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// property acts as
         /// a replacement for the Client Secret. It is also optional.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientSecretCertificateThumbprint")]
+        [JsonProperty(PropertyName = "clientSecretCertificateThumbprint")]
         public string ClientSecretCertificateThumbprint { get; set; }
+
+        /// <summary>
+        /// Gets or sets an alternative to the client secret thumbprint, that
+        /// is the subject alternative name of a certificate used for signing
+        /// purposes. This property acts as
+        /// a replacement for the Client Secret Certificate Thumbprint. It is
+        /// also optional.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientSecretCertificateSubjectAlternativeName")]
+        public string ClientSecretCertificateSubjectAlternativeName { get; set; }
+
+        /// <summary>
+        /// Gets or sets an alternative to the client secret thumbprint, that
+        /// is the issuer of a certificate used for signing purposes. This
+        /// property acts as
+        /// a replacement for the Client Secret Certificate Thumbprint. It is
+        /// also optional.
+        /// </summary>
+        [JsonProperty(PropertyName = "clientSecretCertificateIssuer")]
+        public string ClientSecretCertificateIssuer { get; set; }
 
     }
 }

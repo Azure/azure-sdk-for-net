@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Maps.Common client library</AssemblyTitle>
+    <Version>1.0.0-beta.4</Version>
+    <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <PackageTags>Microsoft Azure Maps Common, Microsoft, Azure, Maps, azureofficial</PackageTags>
+    <Description>
+      This client library enables working with the Microsoft Azure Maps services which provides developers from all industries with powerful geospatial capabilities.
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Common/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Common/CHANGELOG.md
+      Microsoft Azure Maps quickstarts and tutorials - https://docs.microsoft.com/azure/azure-maps/
+      Microsoft Azure Maps REST API Reference - https://docs.microsoft.com/rest/api/maps/
+    </Description>
+    <RootNamespace>Azure.Maps</RootNamespace>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+</Project>

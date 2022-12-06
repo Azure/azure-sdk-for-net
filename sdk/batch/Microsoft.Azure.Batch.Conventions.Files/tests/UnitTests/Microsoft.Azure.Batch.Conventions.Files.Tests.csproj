@@ -17,20 +17,9 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>netcoreapp11</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FsCheck.Xunit" />
     <PackageReference Include="NSubstitute" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- This is needed for discovering tests in test explorer -->
-    <PackageReference Include="System.Runtime.InteropServices" />	
   </ItemGroup>
 
   <PropertyGroup>

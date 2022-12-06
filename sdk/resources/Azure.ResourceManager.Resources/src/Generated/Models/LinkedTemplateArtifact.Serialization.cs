@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,14 +19,18 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WritePropertyName("path");
             writer.WriteStringValue(Path);
             writer.WritePropertyName("template");
-            writer.WriteObjectValue(Template);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Template);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Template.ToString()).RootElement);
+#endif
             writer.WriteEndObject();
         }
 
         internal static LinkedTemplateArtifact DeserializeLinkedTemplateArtifact(JsonElement element)
         {
             string path = default;
-            object template = default;
+            BinaryData template = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("template"))
                 {
-                    template = property.Value.GetObject();
+                    template = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -6,41 +6,54 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Storage.Models;
 
-namespace Azure.ResourceManager.Storage.Models
+namespace Azure.ResourceManager.Storage
 {
-    /// <summary> Restore blobs in the specified blob ranges. </summary>
-    public partial class StorageAccountRestoreBlobRangesOperation : Operation<BlobRestoreStatus>, IOperationSource<BlobRestoreStatus>
+    /// <summary> A class representing the specific long-running operation StorageAccountRestoreBlobRangesOperation. </summary>
+    public class StorageAccountRestoreBlobRangesOperation : ArmOperation<BlobRestoreStatus>
     {
-        private readonly OperationInternals<BlobRestoreStatus> _operation;
+        private readonly StorageArmOperation<BlobRestoreStatus> _operation;
+
+        private readonly IOperationSource<BlobRestoreStatus> _operationSource;
+
+        private readonly AsyncLockWithValue<BlobRestoreStatus> _stateLock;
+
+        private readonly Response _interimResponse;
 
         /// <summary> Initializes a new instance of StorageAccountRestoreBlobRangesOperation for mocking. </summary>
         protected StorageAccountRestoreBlobRangesOperation()
         {
         }
 
-        internal StorageAccountRestoreBlobRangesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal StorageAccountRestoreBlobRangesOperation(IOperationSource<BlobRestoreStatus> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            _operation = new OperationInternals<BlobRestoreStatus>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "StorageAccountRestoreBlobRangesOperation");
+            _operation = new StorageArmOperation<BlobRestoreStatus>(source, clientDiagnostics, pipeline, request, response, finalStateVia);
+            _operationSource = source;
+            _stateLock = new AsyncLockWithValue<BlobRestoreStatus>();
+            _interimResponse = response;
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override BlobRestoreStatus Value => _operation.Value;
 
         /// <inheritdoc />
-        public override bool HasCompleted => _operation.HasCompleted;
+        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override bool HasValue => _operation.HasValue;
+        public override bool HasCompleted => _operation.HasCompleted;
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.GetRawResponse();
@@ -52,21 +65,38 @@ namespace Azure.ResourceManager.Storage.Models
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
+        public override Response<BlobRestoreStatus> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<BlobRestoreStatus> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+
+        /// <inheritdoc />
         public override ValueTask<Response<BlobRestoreStatus>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<BlobRestoreStatus>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        BlobRestoreStatus IOperationSource<BlobRestoreStatus>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement);
-        }
+        /// <summary> Gets interim status of the long-running operation. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The interim status of the long-running operation. </returns>
+        public virtual async ValueTask<BlobRestoreStatus> GetCurrentStatusAsync(CancellationToken cancellationToken = default) => await GetCurrentState(true, cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<BlobRestoreStatus> IOperationSource<BlobRestoreStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <summary> Gets interim status of the long-running operation. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The interim status of the long-running operation. </returns>
+        public virtual BlobRestoreStatus GetCurrentStatus(CancellationToken cancellationToken = default) => GetCurrentState(false, cancellationToken).EnsureCompleted();
+
+        private async ValueTask<BlobRestoreStatus> GetCurrentState(bool async, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement);
+            using var asyncLock = await _stateLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (asyncLock.HasValue)
+            {
+                return asyncLock.Value;
+            }
+            var val = async ? await _operationSource.CreateResultAsync(_interimResponse, cancellationToken).ConfigureAwait(false)
+                    : _operationSource.CreateResult(_interimResponse, cancellationToken);
+            asyncLock.SetValue(val);
+            return val;
         }
     }
 }

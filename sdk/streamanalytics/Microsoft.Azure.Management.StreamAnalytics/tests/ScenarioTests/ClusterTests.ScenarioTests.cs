@@ -51,7 +51,7 @@ namespace StreamAnalytics.Tests
                 Assert.Equal(expectedClusterResourceId, putResponse.Body.Id);
                 Assert.Equal(clusterName, putResponse.Body.Name);
                 Assert.Equal(TestHelper.ClusterFullResourceType, putResponse.Body.Type);
-                Assert.Equal("Succeeded", putResponse.Body.Properties.ProvisioningState);
+                Assert.Equal("Succeeded", putResponse.Body.ProvisioningState);
 
                 // Verify GET request returns expected job
                 var getResponse = await streamAnalyticsManagementClient.Clusters.GetWithHttpMessagesAsync(resourceGroupName, clusterName);

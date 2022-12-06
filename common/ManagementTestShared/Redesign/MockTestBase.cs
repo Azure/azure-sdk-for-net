@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -16,9 +15,8 @@ namespace Azure.ResourceManager.TestFramework
             EnsureMockServerRunning();
         }
 
-        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MockTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, !IsMockServerRunning()? RecordedTestMode.Playback: mode)
         {
-            EnsureMockServerRunning();
         }
 
         private void EnsureMockServerRunning()
@@ -27,18 +25,31 @@ namespace Azure.ResourceManager.TestFramework
                 TestMockServerRunning();
         }
 
-        private void TestMockServerRunning()
+        private static bool IsMockServerRunning()
+        {
+            try
+            {
+                TestMockServerRunning();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static void TestMockServerRunning()
         {
             using (var tcpClient = new TcpClient())
             {
                 try
                 {
-                    var uri = new Uri(TestEnvironment.MockEndPoint);
+                    var uri = new Uri(MockTestEnvironment.MockEndPoint);
                     tcpClient.Connect(uri.Host, uri.Port);
                 }
                 catch (SocketException)
                 {
-                    throw new InvalidOperationException("The mock server is not running, please start the mock server following this guide `https://devdiv.visualstudio.com/DevDiv/_git/avs?path=%2FREADME.md` in order to record the test");
+                    throw new InvalidOperationException("The mock server is not running, please start the mock server following this guide `https://github.com/Azure/azure-sdk-tools/tree/main/tools/mock-service-host` in order to record the test");
                 }
             }
         }

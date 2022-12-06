@@ -203,6 +203,10 @@ much more.
 * [Retrieving a specific document from your index](#retrieving-a-specific-document-from-your-index)
 * [Async APIs](#async-apis)
 
+### Advanced authentication
+ 
+- [Create a client that can authenticate in a national cloud](#authenticate-in-a-national-cloud)
+
 ### Querying
 
 Let's start by importing our namespaces.
@@ -425,12 +429,35 @@ support for async APIs as well.  You'll generally just add an `Async` suffix to
 the name of the method and `await` it.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
-SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
-await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+SearchResults<Hotel> searchResponse = await client.SearchAsync<Hotel>("luxury");
+await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 {
     Hotel doc = result.Document;
     Console.WriteLine($"{doc.Id}: {doc.Name}");
 }
+```
+
+### Authenticate in a National Cloud
+
+To authenticate in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
+
+- Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
+- Set the `Audience` in `SearchClientOptions`
+
+```C#
+// Create a SearchClient that will authenticate through AAD in the China national cloud
+string indexName = "nycjobs";
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+SearchClient client = new SearchClient(endpoint, indexName,
+    new DefaultAzureCredential(
+        new DefaultAzureCredentialOptions()
+        {
+            AuthorityHost = AzureAuthorityHosts.AzureChina
+        }),
+    new SearchClientOptions()
+    {
+        Audience = SearchAudience.AzureChina
+    });
 ```
 
 ## Troubleshooting
@@ -454,6 +481,8 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
 deeper into the requests you're making against the service.
+
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
 
 ## Next steps
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
@@ -31,21 +32,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
 
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
-            Matcher = new RecordMatcher(compareBodies: false);
+            CompareBodies = false;
         }
 
-        [SetUp]
-        public void ClearChallengeCacheforRecord()
-        {
-            // in record mode we reset the challenge cache before each test so that the challenge call
-            // is always made.  This allows tests to be replayed independently and in any order
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                ChallengeBasedAuthenticationPolicy.ClearCache();
-            }
-        }
-
-        [Test]
+        [RecordedTest]
         public async Task CreateKey()
         {
             string keyName = Recording.GenerateId();
@@ -57,7 +47,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateKeyWithOptions()
         {
             var exp = new DateTimeOffset(new DateTime(637027248120000000, DateTimeKind.Utc));
@@ -79,7 +69,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task CreateEcHsmKey()
         {
@@ -102,7 +92,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             StringAssert.Contains(@"""crv"":""P-256""", json);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task CreateEcKey()
         {
@@ -116,9 +106,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
-        public async Task CreateEcWithCurveKey([EnumValues]KeyCurveName curveName)
+        public async Task CreateEcWithCurveKey([EnumValues(Exclude = new[] { nameof(KeyCurveName.Ed25519) })] KeyCurveName curveName)
         {
             var ecCurveKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: false)
             {
@@ -141,7 +131,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(keyNoHsmCurve, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task CreateRsaHsmKey()
         {
@@ -163,7 +153,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             StringAssert.Contains(@"""kty"":""RSA-HSM""", json);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task CreateRsaKey()
         {
@@ -175,7 +165,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task CreateRsaWithSizeKey()
         {
@@ -191,7 +181,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateKey()
         {
             string keyName = Recording.GenerateId();
@@ -205,7 +195,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, updateResult);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateEcHsmKey()
         {
@@ -221,7 +211,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(ecHsmKey, updateResult);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateRsaHsmKey()
         {
@@ -237,7 +227,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(rsaHsmKey, updateResult);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateEnabled()
         {
             string keyName = Recording.GenerateId();
@@ -252,7 +242,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(keyReturned, updateResult);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateEcHsmKeyEnabled()
         {
@@ -269,7 +259,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(keyReturned, updateResult);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateRsaHsmKeyEnabled()
         {
@@ -286,7 +276,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(keyReturned, updateResult);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateOps()
         {
             string keyName = Recording.GenerateId();
@@ -313,7 +303,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, key.KeyOperations);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateEcHsmKeyOps()
         {
@@ -341,7 +331,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, ecHsmKey.KeyOperations);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateRsaHsmKeyOps()
         {
@@ -369,7 +359,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, rsaHsmKey.KeyOperations);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateTags()
         {
             string keyName = Recording.GenerateId();
@@ -421,7 +411,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertAreEqual(expectedTags, key.Properties.Tags);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateEcHsmKeyTags()
         {
@@ -474,7 +464,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertAreEqual(expectedTags, ecHsmKey.Properties.Tags);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task UpdateRsaHsmKeyTags()
         {
@@ -527,7 +517,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertAreEqual(expectedTags, rsaHsmKey.Properties.Tags);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetKey()
         {
             string keyName = Recording.GenerateId();
@@ -539,7 +529,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task GetEcHsmKey()
         {
@@ -554,7 +544,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(ecHsmKey, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task GetRsaHsmKey()
         {
@@ -569,13 +559,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(rsaHsmKey, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public void GetKeyNonExisting()
         {
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(Recording.GenerateId()));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetKeyWithVersion()
         {
             string keyName = Recording.GenerateId();
@@ -587,7 +577,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteKey()
         {
             string keyName = Recording.GenerateId();
@@ -607,7 +597,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task DeleteEcHsmKey()
         {
@@ -629,7 +619,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task DeleteRsaHsmKey()
         {
@@ -651,13 +641,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
         }
 
-        [Test]
+        [RecordedTest]
         public void DeleteKeyNonExisting()
         {
             Assert.ThrowsAsync<RequestFailedException>(() => Client.StartDeleteKeyAsync(Recording.GenerateId()));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDeletedKey()
         {
             string keyName = Recording.GenerateId();
@@ -681,7 +671,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, polledSecret);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task GetDeletedEcHsmKey()
         {
@@ -707,7 +697,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(ecHsmKey, polledSecret);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task GetDeletedRsaHsmKey()
         {
@@ -733,13 +723,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(rsaHsmKey, polledSecret);
         }
 
-        [Test]
+        [RecordedTest]
         public void GetDeletedKeyNonExisting()
         {
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedKeyAsync(Recording.GenerateId()));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecoverDeletedKey()
         {
             string keyName = Recording.GenerateId();
@@ -767,7 +757,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, recoveredKey);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task RecoverDeletedEcHsmKey()
         {
@@ -799,7 +789,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(ecHsmKey, recoveredKey);
         }
 
-        [Test]
+        [RecordedTest]
         [PremiumOnly]
         public async Task RecoverDeletedRsaHsmKey()
         {
@@ -831,13 +821,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(rsaHsmKey, recoveredKey);
         }
 
-        [Test]
+        [RecordedTest]
         public void RecoverDeletedKeyNonExisting()
         {
             Assert.ThrowsAsync<RequestFailedException>(() => Client.StartRecoverDeletedKeyAsync(Recording.GenerateId()));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BackupKey()
         {
             string keyName = Recording.GenerateId();
@@ -851,13 +841,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.NotNull(backup);
         }
 
-        [Test]
+        [RecordedTest]
         public void BackupKeyNonExisting()
         {
             Assert.ThrowsAsync<RequestFailedException>(() => Client.BackupKeyAsync(Recording.GenerateId()));
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/6514")]
         public async Task RestoreKeyBackup()
         {
@@ -881,14 +871,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(key, restoredResult);
         }
 
-        [Test]
+        [RecordedTest]
         public void RestoreKeyNonExisting()
         {
             byte[] backupMalformed = Encoding.ASCII.GetBytes("non-existing");
             Assert.ThrowsAsync<RequestFailedException>(() => Client.RestoreKeyBackupAsync(backupMalformed));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesOfKeys()
         {
             string keyName = Recording.GenerateId();
@@ -910,7 +900,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDeletedKeys()
         {
             string keyName = Recording.GenerateId();
@@ -942,7 +932,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesOfKeyVersions()
         {
             string keyName = Recording.GenerateId();
@@ -964,7 +954,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesOfKeyVersionsNonExisting()
         {
             List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();

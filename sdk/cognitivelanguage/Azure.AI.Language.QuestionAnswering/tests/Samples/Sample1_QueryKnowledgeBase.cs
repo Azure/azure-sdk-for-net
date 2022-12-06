@@ -17,8 +17,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringClient client = Client;
 
             #region Snippet:QuestionAnsweringClient_GetAnswers
-            string projectName = "FAQ";
-            string deploymentName = "prod";
+            string projectName = "{ProjectName}";
+            string deploymentName = "{DeploymentName}";
 #if !SNIPPET
             projectName = TestEnvironment.ProjectName;
             deploymentName = TestEnvironment.DeploymentName;
@@ -44,8 +44,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringClient client = Client;
 
             #region Snippet:QuestionAnsweringClient_GetAnswersAsync
-            string projectName = "FAQ";
-            string deploymentName = "prod";
+            string projectName = "{ProjectName}";
+            string deploymentName = "{DeploymentName}";
 #if !SNIPPET
             projectName = TestEnvironment.ProjectName;
             deploymentName = TestEnvironment.DeploymentName;

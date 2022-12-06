@@ -56,7 +56,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// negotiate client certificate on the hostname. Default Value is
         /// false.</param>
         /// <param name="certificate">Certificate information.</param>
-        public HostnameConfiguration(string type, string hostName, string keyVaultId = default(string), string identityClientId = default(string), string encodedCertificate = default(string), string certificatePassword = default(string), bool? defaultSslBinding = default(bool?), bool? negotiateClientCertificate = default(bool?), CertificateInformation certificate = default(CertificateInformation))
+        /// <param name="certificateSource">Certificate Source. Possible values
+        /// include: 'Managed', 'KeyVault', 'Custom', 'BuiltIn'</param>
+        /// <param name="certificateStatus">Certificate Status. Possible values
+        /// include: 'Completed', 'Failed', 'InProgress'</param>
+        public HostnameConfiguration(string type, string hostName, string keyVaultId = default(string), string identityClientId = default(string), string encodedCertificate = default(string), string certificatePassword = default(string), bool? defaultSslBinding = default(bool?), bool? negotiateClientCertificate = default(bool?), CertificateInformation certificate = default(CertificateInformation), string certificateSource = default(string), string certificateStatus = default(string))
         {
             Type = type;
             HostName = hostName;
@@ -67,6 +71,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             DefaultSslBinding = defaultSslBinding;
             NegotiateClientCertificate = negotiateClientCertificate;
             Certificate = certificate;
+            CertificateSource = certificateSource;
+            CertificateStatus = certificateStatus;
             CustomInit();
         }
 
@@ -141,6 +147,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "certificate")]
         public CertificateInformation Certificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets certificate Source. Possible values include:
+        /// 'Managed', 'KeyVault', 'Custom', 'BuiltIn'
+        /// </summary>
+        [JsonProperty(PropertyName = "certificateSource")]
+        public string CertificateSource { get; set; }
+
+        /// <summary>
+        /// Gets or sets certificate Status. Possible values include:
+        /// 'Completed', 'Failed', 'InProgress'
+        /// </summary>
+        [JsonProperty(PropertyName = "certificateStatus")]
+        public string CertificateStatus { get; set; }
 
         /// <summary>
         /// Validate the object.

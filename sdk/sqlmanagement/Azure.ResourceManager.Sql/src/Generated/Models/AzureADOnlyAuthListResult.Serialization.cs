@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static AzureADOnlyAuthListResult DeserializeAzureADOnlyAuthListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerAzureADOnlyAuthentication>> value = default;
+            Optional<IReadOnlyList<SqlServerAzureADOnlyAuthenticationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerAzureADOnlyAuthentication> array = new List<ServerAzureADOnlyAuthentication>();
+                    List<SqlServerAzureADOnlyAuthenticationData> array = new List<SqlServerAzureADOnlyAuthenticationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerAzureADOnlyAuthentication.DeserializeServerAzureADOnlyAuthentication(item));
+                        array.Add(SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(item));
                     }
                     value = array;
                     continue;

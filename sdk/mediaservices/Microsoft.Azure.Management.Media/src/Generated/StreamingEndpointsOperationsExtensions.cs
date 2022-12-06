@@ -293,6 +293,58 @@ namespace Microsoft.Azure.Management.Media
             }
 
             /// <summary>
+            /// List StreamingEndpoint skus
+            /// </summary>
+            /// <remarks>
+            /// List streaming endpoint supported skus.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='streamingEndpointName'>
+            /// The name of the streaming endpoint, maximum length is 24.
+            /// </param>
+            public static StreamingEndpointSkuInfoListResult Skus(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName)
+            {
+                return operations.SkusAsync(resourceGroupName, accountName, streamingEndpointName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List StreamingEndpoint skus
+            /// </summary>
+            /// <remarks>
+            /// List streaming endpoint supported skus.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Media Services account name.
+            /// </param>
+            /// <param name='streamingEndpointName'>
+            /// The name of the streaming endpoint, maximum length is 24.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StreamingEndpointSkuInfoListResult> SkusAsync(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SkusWithHttpMessagesAsync(resourceGroupName, accountName, streamingEndpointName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Start StreamingEndpoint
             /// </summary>
             /// <remarks>

@@ -1,0 +1,3215 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-758b5ba897d0da46b14c53e2d6e3a15b-d98c363507400f4e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "03ef4b34351d09bda3362f8ee40c628b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 03:48:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b5b0625f-0dca-4ae6-af8a-a4eb7cc3a520",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "b5b0625f-0dca-4ae6-af8a-a4eb7cc3a520",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034817Z:b5b0625f-0dca-4ae6-af8a-a4eb7cc3a520"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-5976?api-version=2020-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "200",
+        "Content-Type": "application/json",
+        "traceparent": "00-6b7d96e1ac07e844a0eb4e4ba826164b-51be388db0634a45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f205bfd38d3f18741efba6eb8837051c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "Test $polDef-5976",
+          "policyRule": {
+            "if": {
+              "source": "action",
+              "equals": "ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write"
+            },
+            "then": {
+              "effect": "deny"
+            }
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "575",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 03:48:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7839eb4f-2237-4a4b-8b05-13faeafe43f4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "7839eb4f-2237-4a4b-8b05-13faeafe43f4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034817Z:7839eb4f-2237-4a4b-8b05-13faeafe43f4"
+      },
+      "ResponseBody": {
+        "properties": {
+          "displayName": "Test $polDef-5976",
+          "policyType": "Custom",
+          "mode": "Indexed",
+          "metadata": {
+            "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+            "createdOn": "2022-06-23T03:48:17.8311531Z",
+            "updatedBy": null,
+            "updatedOn": null
+          },
+          "policyRule": {
+            "if": {
+              "source": "action",
+              "equals": "ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write"
+            },
+            "then": {
+              "effect": "deny"
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-5976",
+        "type": "Microsoft.Authorization/policyDefinitions",
+        "name": "polDef-5976"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-7011?api-version=2020-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "216",
+        "Content-Type": "application/json",
+        "traceparent": "00-bb8f16672d11e74c9e16b41e02ac8f77-9aa2fe1942d0f946-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "7b78cd42c367112c978b986acd0b9bad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "displayName": "Test $polSetDef-7011",
+          "policyDefinitions": [
+            {
+              "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-5976"
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "638",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 03:48:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a945de53-b640-439a-b962-1c9c3cf3db05",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "a945de53-b640-439a-b962-1c9c3cf3db05",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034819Z:a945de53-b640-439a-b962-1c9c3cf3db05"
+      },
+      "ResponseBody": {
+        "properties": {
+          "displayName": "Test $polSetDef-7011",
+          "policyType": "Custom",
+          "metadata": {
+            "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+            "createdOn": "2022-06-23T03:48:18.9713474Z",
+            "updatedBy": null,
+            "updatedOn": null
+          },
+          "policyDefinitions": [
+            {
+              "policyDefinitionReferenceId": "8858424895446897730",
+              "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-5976"
+            }
+          ]
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-7011",
+        "type": "Microsoft.Authorization/policySetDefinitions",
+        "name": "polSetDef-7011"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions?api-version=2020-09-01\u0026$filter=policyType%20eq%20\u0027Custom\u0027",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8ff7c78149bc454c951db0a1ad471393-29679be8c4f76b4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6a0076f6f5e77abdeafe3a161d1bff2a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "99842",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 23 Jun 2022 03:48:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b5421f8f-112c-4278-90c6-3dba459b9a6c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "b5421f8f-112c-4278-90c6-3dba459b9a6c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034819Z:b5421f8f-112c-4278-90c6-3dba459b9a6c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "displayName": "azuresecuritypackautoupdate_3.0",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2019-07-12T00:29:57.8886527Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "15538252262559902155",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/5e6e7d4c3e34256b",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "2745607199541423857",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/dac4e4f8ad529fe5",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10955834015986285332",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b1d9e961d02c54d5",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/12d3b8c90bd0eaa8",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "12d3b8c90bd0eaa8"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployvmss_1.5",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on VMSS resources",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-02-10T05:16:00.6907713Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "15834787869158315947",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/be8ca7b286fcda62",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "16467347251790374601",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/db5e87f8595e3529",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3854453605818776279",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/670f727baca67e29",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "14463379615958783001",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/24c7d4ccd439d601",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "15911207086901451655",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/d3d7dd009867a719",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/134109bb7d72e8a",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "134109bb7d72e8a"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployiaas_1.8",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on IaaS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-09-23T19:02:28.1221147Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "3532318834013961013",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/553fbbdb13ec9d0f",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7468742572964419574",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2b70ce08fe922256",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13818369656522710692",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/df38356b90da6d80",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/1dee38ef1a9687ca",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "1dee38ef1a9687ca"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployvmss_1.6",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on VMSS resources",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-02-23T21:20:04.733334Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "15834787869158315947",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/be8ca7b286fcda62",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10471360769835424182",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/440b823a6219927",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3854453605818776279",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/670f727baca67e29",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "1698652236880725130",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/73d4d2856cfcab45",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "8286071411777727054",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/333f0941c3c4e54b",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/20e1853705896d6b",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "20e1853705896d6b"
+          },
+          {
+            "properties": {
+              "displayName": "keyvaultsoftdeleteinitiative_1.0",
+              "policyType": "Custom",
+              "description": "This initiative consists of Append and Modify policies that will enable soft delete on all key vaults",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-04-16T00:54:35.1595752Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "4696422810491604004",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/7858cda978bcfbc2",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13816903777777977516",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c8e4d0a348a1a362",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/2338abe645719b8f",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "2338abe645719b8f"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployvmss_1.7",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on VMSS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-09-14T22:47:34.151286Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "13591215208608084897",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6b57e62ddf574816",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10350267388880940416",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/397f1dd76d1d8ca8",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "399354839640642471",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/a56159f8dee08efd",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10898854606425845072",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/8c2db91dc857e9",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9103613181011990549",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/566259cfefe5a51c",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "12814751600567766035",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/55566260dee5fa1d",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "6558011003651963520",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/7850624c5a341258",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/23e3a8b916d86b0a",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "23e3a8b916d86b0a"
+          },
+          {
+            "properties": {
+              "displayName": "azuresecuritypackautoupdate_3.4",
+              "policyType": "Custom",
+              "description": "Combinations of multiple policies to enable auto update of security pack and geneva agent",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-04-15T01:16:17.9290413Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "12921165999935056604",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c8ae98b5995645bd",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "2646226172235746695",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2eebeb66ca6e3ff0",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "1362761297950865260",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/a845c658d2351e6a",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9973398539965980987",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/ffacb081820a9322",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/27a377ed226958cf",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "27a377ed226958cf"
+          },
+          {
+            "properties": {
+              "displayName": "azsecpackautodeployuamsi_1.4",
+              "policyType": "Custom",
+              "description": "Policies to enable AzSecPack AutoConfig on VM and VMSS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2022-03-07T21:21:10.8726532Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "8114332475233313620",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/751063d3c6855f37",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9016295614196586813",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6f267dc37a83d647",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/312ca002aaf6bab2",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "312ca002aaf6bab2"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployiaas_1.5",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on IaaS resources",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-02-10T05:15:59.2885156Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "12754289237760486610",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/880bf73fd544d948",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3685870326703045474",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/7d3105ed79114b05",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "16195507925567587569",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/9d378be231749f73",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/39a3148b77c63de",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "39a3148b77c63de"
+          },
+          {
+            "properties": {
+              "displayName": "audit ssh auth_1.4",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2020-05-12T23:48:27.3554638Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "13483914140795980340",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/566405fe94cbf731",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9360537952417796273",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/9f778de970219a8a",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "6434983709718612280",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/9135d7012c4033cb",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "2722757791888947224",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/408b8964022134ba",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/3be0ea1bef3d71ca",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "3be0ea1bef3d71ca"
+          },
+          {
+            "properties": {
+              "displayName": "vmvmssfirstpartytaginitiative_1.3",
+              "policyType": "Custom",
+              "description": "This initiative consists of Append and Modify policy that will update all 1st party VM, VMSS with an identification tag",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-01-20T00:19:30.7941013Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "12571657303081782287",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/60291f79e633326b",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "subscriptiontagname": {
+                      "value": "opted_out_for_pki"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10598588295107917205",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c953c5a58a9ab221",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "subscriptiontagname": {
+                      "value": "opted_out_for_pki"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/3e383411bcf83656",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "3e383411bcf83656"
+          },
+          {
+            "properties": {
+              "displayName": "vmvmssfirstpartytaginitiative_1.5",
+              "policyType": "Custom",
+              "description": "This initiative consists of Append and Modify policy that will update all 1st party VM, VMSS with an identification tag",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-02-05T18:44:12.9931957Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "4350859845042337591",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/fb643d414982627",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "subscriptiontagname": {
+                      "value": "opted_out_for_pki"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "12711320497494907673",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/7e64acbfa5b2bcc9",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "subscriptiontagname": {
+                      "value": "opted_out_for_pki"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "12723066962648940060",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b35071d70a31160f",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "subscriptiontagname": {
+                      "value": "opted_out_for_pki"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/3e9b6c243abfa9e3",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "3e9b6c243abfa9e3"
+          },
+          {
+            "properties": {
+              "displayName": "antimalwaresignatureautoupdate_1.2",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2020-11-09T17:52:52.385558Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "7454468889612180395",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/1617f211dede4300",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipASMAV"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipASMAV"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "8184097531965613415",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/427e2c6bc663a962",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipASMAV"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipASMAV"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "8019831754441668469",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2f07775c21cd6709",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipASMAV"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipASMAV"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/42ce40d2aa7d488c",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "42ce40d2aa7d488c"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployvmss_1.9",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on VMSS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-11-01T19:11:34.7113648Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "6243216000066915918",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/ce06652ef0f4475a",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "11831900048109311772",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/d52c16448da7ef1a",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "1921085212772959897",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/4c9418b2e9b94898",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "12125599330689337517",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c602e4e094e4d682",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7093339161899898068",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/19856cebb185ac10",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13630958003184879788",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/a32489a9ef567fa0",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13955598751798587469",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/4cd5625b480ed9d0",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/431999c179e83821",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "431999c179e83821"
+          },
+          {
+            "properties": {
+              "displayName": "audit ssh auth_1.8",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-04-21T21:27:25.4148548Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "10689247031934589280",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/556e16cb1f50afab",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13284848208956449264",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6f32d2bbab871b76",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "1915254292464458867",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/283467dbf9138419",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "15832968637104786392",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/890fe20b9b29d6ef",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/474dcc6814b4a25d",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "474dcc6814b4a25d"
+          },
+          {
+            "properties": {
+              "displayName": "azsecpackautodeployuamsi_1.0",
+              "policyType": "Custom",
+              "description": "Policies to enable AzSecPack AutoConfig on VM and VMSS resources",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-02-23T21:19:58.8513851Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "11027831260504715654",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b3dcd36019b33cc8",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9649130200065502874",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/aba6242cbeff9e0d",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/51dd9327c4c2bc9a",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "51dd9327c4c2bc9a"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployvmss_1.8",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on VMSS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-09-23T19:02:28.0994512Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "13591215208608084897",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6b57e62ddf574816",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7296684010445190980",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2bb7d39b01defaaa",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "11056435027025978661",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b3289a922276c92f",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "1766372922783918950",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/ccb9012ef89212ae",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "16222314165761722766",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/ab2ae6776b1c4ec6",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "8703293422323911198",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/161977116d72d948",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "5446261543541371346",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2f7f8495adceb695",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/56d24504b3905433",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "56d24504b3905433"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployiaas_1.7",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on IaaS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-09-14T22:47:33.7316952Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "3532318834013961013",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/553fbbdb13ec9d0f",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "4582322744674825315",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/1d9ff8f5d905b7e",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "8749672551065046545",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/cbeb7899c3dffeed",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/5c52dd647167f8a5",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "5c52dd647167f8a5"
+          },
+          {
+            "properties": {
+              "displayName": "azsecpackautodeployuamsi_1.3",
+              "policyType": "Custom",
+              "description": "Policies to enable AzSecPack AutoConfig on VM and VMSS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-09-14T22:47:32.5188796Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "8114332475233313620",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/751063d3c6855f37",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9016295614196586813",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6f267dc37a83d647",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/61da478bcee41725",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "61da478bcee41725"
+          },
+          {
+            "properties": {
+              "displayName": "audit ssh auth_1.5",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-01-20T01:19:33.3095972Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "18416817380208693795",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/14aa400da6f9a869",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "1484631254942251615",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/891765f460fe4214",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "11088439458757622770",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/9aeca05794bdcf50",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "6876637531689007500",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/39b5e567c27d8441",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/71cf5bbb7fef0368",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "71cf5bbb7fef0368"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployiaas_1.6",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on IaaS resources",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-02-23T21:19:58.9863928Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "12754289237760486610",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/880bf73fd544d948",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3734079008801485160",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/a755252fb6baf40a",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "18185292873559759708",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b312c4b92f1576fc",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/732406cc80ca0778",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "732406cc80ca0778"
+          },
+          {
+            "properties": {
+              "displayName": "network-isolation-paas-perimeter_1.0",
+              "policyType": "Custom",
+              "description": "Combinations of multiple policies to measure PaaS network perimeter",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2022-02-07T20:49:33.5291909Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "13251616289680668977",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/979d15c7d5d6f728",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "17718906224026410856",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c62acd4d95271d71",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7399426160349271483",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/19a64b51bf822641",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "4175010915990660090",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6b115614afdfb4f6",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9991280377326612182",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2deffe9c07e8cfa",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7455824579126053882",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/1a06b8f8855f5330",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "16110531960893938331",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b2c891037abea4b5",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "1711842460511677558",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/cf18d7c4f0b05290",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10415241954776352949",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/a6822516605df8af",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "14852652528315679993",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/f8db185c400632fd",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/73a5651b54e45d8e",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "73a5651b54e45d8e"
+          },
+          {
+            "properties": {
+              "displayName": "require ssh key for authentication_1.7",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-01-07T02:55:16.5964214Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "4315815614487820899",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/e6063e2e57f123c2",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13553671615175066197",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2c943a16e7c448e2",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/9925b5f9b7103ed9",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "9925b5f9b7103ed9"
+          },
+          {
+            "properties": {
+              "displayName": "azuresecuritypackautoupdate_3.2",
+              "policyType": "Custom",
+              "description": "Combinations of multiple policies to enable auto update of security pack and geneva agent",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2020-06-23T19:35:08.2753869Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "979972534222797649",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/1b5a57eabcce7d7d",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipASMAzSecPack"
+                    },
+                    "resourcegrouptagname1": {
+                      "value": "autopilotcluster"
+                    },
+                    "resourcegrouptagname2": {
+                      "value": "autopilotenvironment"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipASMAzSecPack"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "12808249614316364551",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/884fc572e38f5fe9",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipASMAzSecPack"
+                    },
+                    "resourcegrouptagname1": {
+                      "value": "autopilotcluster"
+                    },
+                    "resourcegrouptagname2": {
+                      "value": "autopilotenvironment"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipASMAzSecPack"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "18014102103730737480",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c6cc0ff730a1cb3c",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipASMAzSecPack"
+                    },
+                    "resourcegrouptagname1": {
+                      "value": "autopilotcluster"
+                    },
+                    "resourcegrouptagname2": {
+                      "value": "autopilotenvironment"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipASMAzSecPack"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/9c46cf6e83dedb18",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "9c46cf6e83dedb18"
+          },
+          {
+            "properties": {
+              "displayName": "AVNM Group Policy: NRMS-ZeroTrust-CorpProdNonprod",
+              "policyType": "Custom",
+              "description": "This policy is created by Azure Virtual Network Manager and corresponds to resource ID /subscriptions/2c505610-a5dd-473e-aa33-b31aac398e29/resourceGroups/CnAISecurityAzureNetworkManager/providers/Microsoft.Network/networkManagers/NRMS-ZeroTrust-CorpProdNonprod. For information on how to create, update, or delete these policies, see aka.ms/AVNMDoc.",
+              "metadata": {
+                "managedByResourceId": "/subscriptions/2c505610-a5dd-473e-aa33-b31aac398e29/resourceGroups/CnAISecurityAzureNetworkManager/providers/Microsoft.Network/networkManagers/NRMS-ZeroTrust-CorpProdNonprod",
+                "category": "Azure Virtual Network Manager",
+                "createdBy": "c76edb3e-70fe-46dc-a8fd-8cfc142da90e",
+                "createdOn": "2022-06-14T19:39:01.9365001Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "2195910091511500036",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_YmLwAEciQVh3pH9F9Ac"
+                },
+                {
+                  "policyDefinitionReferenceId": "4086225840352083058",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_d0JKaZwDPVrmewVJNNl"
+                },
+                {
+                  "policyDefinitionReferenceId": "16130291487018612139",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_VPIMrdX8nF7h9OevWhc"
+                },
+                {
+                  "policyDefinitionReferenceId": "5137254524589837599",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_3jZRkLCPPFut39hjZts"
+                },
+                {
+                  "policyDefinitionReferenceId": "5166646322838659008",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_Y_1L20F-pV9_AxkG226"
+                },
+                {
+                  "policyDefinitionReferenceId": "14199847107057950825",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_W46Jzrr8L19R03GUpVV"
+                },
+                {
+                  "policyDefinitionReferenceId": "14454598845626140593",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_piWlf0md9Vsx7dZj9xa"
+                },
+                {
+                  "policyDefinitionReferenceId": "13996928914846211235",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_BMvHx9UNbFBfrBoq0U4"
+                },
+                {
+                  "policyDefinitionReferenceId": "15592755028987347113",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_sz27vOg8o1wNrLR9DUq"
+                },
+                {
+                  "policyDefinitionReferenceId": "11763597355790258991",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_9bF5ktOfdVWEHMqYjYa"
+                },
+                {
+                  "policyDefinitionReferenceId": "6717567570914377753",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_G9vzJSqA_F9TX4G_5Cf"
+                },
+                {
+                  "policyDefinitionReferenceId": "7673466774907615059",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_7pnw2WyW31icMBV3b2v"
+                },
+                {
+                  "policyDefinitionReferenceId": "9523800950137045709",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_9QBZZldCzVGZYLexsjS"
+                },
+                {
+                  "policyDefinitionReferenceId": "7266755293993900552",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_9NqyN4ykWVYGbkFm2XA"
+                },
+                {
+                  "policyDefinitionReferenceId": "8526849426815253802",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_NCvgKNG7nVIZCWFDbsD"
+                },
+                {
+                  "policyDefinitionReferenceId": "4133285050450454331",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_BpwCSjIIalTlsotfGG7"
+                },
+                {
+                  "policyDefinitionReferenceId": "7732146619047102405",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_1v0nJaw1k1is9Gyh84J"
+                },
+                {
+                  "policyDefinitionReferenceId": "7257447822221033900",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_QaOeOTQmVlUZozAv78Y"
+                },
+                {
+                  "policyDefinitionReferenceId": "1152988342007093196",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_1DM5vsNIhlKwcBArFeC"
+                },
+                {
+                  "policyDefinitionReferenceId": "498825506278742768",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_BZDdvD1y9V-a73Vupit"
+                },
+                {
+                  "policyDefinitionReferenceId": "18276834781874093308",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_tf30dHXDK1jCJ6iTNvy"
+                },
+                {
+                  "policyDefinitionReferenceId": "400700178361746789",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_4Ddt-OqEBFG8wyrHBxp"
+                },
+                {
+                  "policyDefinitionReferenceId": "11110644286958142641",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_-G-OXUMs11eQTxcf2zZ"
+                },
+                {
+                  "policyDefinitionReferenceId": "3025386961712501048",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_0nJBWDK-J1OSR0-XoLc"
+                },
+                {
+                  "policyDefinitionReferenceId": "17349213693216524712",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_3cvN3kwFUVf5b7T56MV"
+                },
+                {
+                  "policyDefinitionReferenceId": "7639442840994983936",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_BbQJbhiX0l0JEZdTXtx"
+                },
+                {
+                  "policyDefinitionReferenceId": "2590520025097113687",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_oXRiY_IIxFqaOCgJfrg"
+                },
+                {
+                  "policyDefinitionReferenceId": "12286771763316549142",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_JhQsqWIBDV1jAwzFKsp"
+                },
+                {
+                  "policyDefinitionReferenceId": "17609472959437083567",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_su56jRMnDlRMIOM5MX7"
+                },
+                {
+                  "policyDefinitionReferenceId": "16076422365939273553",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_CuYTLhSZNlws2I2SYR6"
+                },
+                {
+                  "policyDefinitionReferenceId": "3937370120282530284",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_1AwgqN8JDVHhmNcGHjp"
+                },
+                {
+                  "policyDefinitionReferenceId": "4278721773095851870",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_Y7xUpOdFoV7C_BX5ObV"
+                },
+                {
+                  "policyDefinitionReferenceId": "13820932524075629020",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_PbCe4stdzVl7NksFm5n"
+                },
+                {
+                  "policyDefinitionReferenceId": "9114398129525074643",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_mDsUXiBTMF8HA1mydGt"
+                },
+                {
+                  "policyDefinitionReferenceId": "7539151949719712542",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_T8CIgI7StVqhEWJL-3c"
+                },
+                {
+                  "policyDefinitionReferenceId": "4620956406098706679",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_9X1jFOx1H1Qez3zRBga"
+                },
+                {
+                  "policyDefinitionReferenceId": "18381514888311310507",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM__5MsQRlgrVPZhPD5fgf"
+                },
+                {
+                  "policyDefinitionReferenceId": "13123833442651282891",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_7A5RmF5F-F4o3F_2FFT"
+                },
+                {
+                  "policyDefinitionReferenceId": "17678439983767814937",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_hHEBaKuODlDJHP7PBea"
+                },
+                {
+                  "policyDefinitionReferenceId": "1138948475193496319",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_YdaVITFsGFQ1tnr47UL"
+                },
+                {
+                  "policyDefinitionReferenceId": "6785899430674121243",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_zgNziIyASFLxZx0YTPc"
+                },
+                {
+                  "policyDefinitionReferenceId": "13456788852181794029",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_RkBTcEfWsFv1f7T0X60"
+                },
+                {
+                  "policyDefinitionReferenceId": "5545005660391340518",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_m96-mhyB_VugIEjihK7"
+                },
+                {
+                  "policyDefinitionReferenceId": "17721174193382587040",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_RGA0QJlg510RE61bJrL"
+                },
+                {
+                  "policyDefinitionReferenceId": "12130499225325835377",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_p_Adi-10sVOg_g2zW_V"
+                },
+                {
+                  "policyDefinitionReferenceId": "13327785242826256117",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_aPeTIejv0lQHGriLqQc"
+                },
+                {
+                  "policyDefinitionReferenceId": "4681982159911616748",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_IGSd1D_U31GRHfhO39d"
+                },
+                {
+                  "policyDefinitionReferenceId": "12975758175844361974",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_cS1bOpOx_1jCM68Za58"
+                },
+                {
+                  "policyDefinitionReferenceId": "12456097888049168703",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_AJ20LmEpEV9GzG-hTzj"
+                },
+                {
+                  "policyDefinitionReferenceId": "10725802794440150463",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_Hh58xSDyo1V8viYdnky"
+                },
+                {
+                  "policyDefinitionReferenceId": "8400666326795742435",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_Em6HfBWgrFeRGj5ahsu"
+                },
+                {
+                  "policyDefinitionReferenceId": "6378207320263446869",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_37Rf4D9B0lzoHairXka"
+                },
+                {
+                  "policyDefinitionReferenceId": "9751084342246807307",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_SUh0zd0LpllOyf5xWFj"
+                },
+                {
+                  "policyDefinitionReferenceId": "15851015144666870211",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_gH1IH1QvxF1G27gWnys"
+                },
+                {
+                  "policyDefinitionReferenceId": "5785219001588512552",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_il_-geEwU1L4hXt1qvL"
+                },
+                {
+                  "policyDefinitionReferenceId": "4151174139823706981",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_qnAsgtryCFWDfmtcrXp"
+                },
+                {
+                  "policyDefinitionReferenceId": "1011691913500404929",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_nIsMu_0QYlnQVRLCQyB"
+                },
+                {
+                  "policyDefinitionReferenceId": "2539592926637367748",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_Mocziiy34VwT5h4kWKY"
+                },
+                {
+                  "policyDefinitionReferenceId": "5967207904982736610",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_XWmgaU1O9lsyoTI7IiF"
+                },
+                {
+                  "policyDefinitionReferenceId": "11338859918270902457",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_c4YFWjggVVp-wur1CiF"
+                },
+                {
+                  "policyDefinitionReferenceId": "12897218158727626754",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_gcaxlTh1c1e1-8VOq_H"
+                },
+                {
+                  "policyDefinitionReferenceId": "14483125333735835032",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_OipklVkjoFckerfOEGw"
+                },
+                {
+                  "policyDefinitionReferenceId": "16872659275434356711",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_KKX2zD4Vg1lK9eWCJJ5"
+                },
+                {
+                  "policyDefinitionReferenceId": "2861592781858022844",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/AVNM_lFc_Wd5fI1b789QAUxi"
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementGroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/AVNM_GFN-0Y-no1_UQZVFToi",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "AVNM_GFN-0Y-no1_UQZVFToi"
+          },
+          {
+            "properties": {
+              "displayName": "network-isolation-paas-perimeter_1.2",
+              "policyType": "Custom",
+              "description": "Combinations of multiple policies to measure PaaS network perimeter",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2022-02-17T19:05:24.6813882Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "13251616289680668977",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/979d15c7d5d6f728",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "17718906224026410856",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c62acd4d95271d71",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7399426160349271483",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/19a64b51bf822641",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "4175010915990660090",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6b115614afdfb4f6",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9991280377326612182",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/2deffe9c07e8cfa",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7455824579126053882",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/1a06b8f8855f5330",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "16110531960893938331",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b2c891037abea4b5",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7716402687079202705",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c7f4766e826cc01b",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10415241954776352949",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/a6822516605df8af",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "14852652528315679993",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/f8db185c400632fd",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7708794654867018772",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/d48d08a21f9a1c4b",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3286182185018548638",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/ac47711d44241ded",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "6516911444434581814",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/92c6e70830bce1",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "7803784020150599705",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/fb90deb6c62f700b",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "16320988617443422196",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/e0b77020ffec8920",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "12516928506402682466",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/3b48756cddc29ed6",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/ba5e650e435f7c81",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "ba5e650e435f7c81"
+          },
+          {
+            "properties": {
+              "displayName": "azuresecuritypackautoupdate_3.1",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2019-09-06T16:43:32.8220798Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "789450576081369785",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/9534973cc57db387",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "tagname": {
+                      "value": "SkipASMAzSecPack"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13572758933673578033",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/a646ce8cd06eac96",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "tagname": {
+                      "value": "SkipASMAzSecPack"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "11261448708615796955",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b70c6f621534db23",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "tagname": {
+                      "value": "SkipASMAzSecPack"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/c02faf167895f1d1",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "c02faf167895f1d1"
+          },
+          {
+            "properties": {
+              "displayName": "azuresecuritypackautodeploy_1.2",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of security pack and Geneva Agent",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-01-22T03:54:08.5889048Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "17986016967906703944",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c09cb226ea763513",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3112281781440885114",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/71f8559f28de5992",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/c07a73127ee784cb",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "c07a73127ee784cb"
+          },
+          {
+            "properties": {
+              "displayName": "audit ssh auth_1.3",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2020-02-25T22:01:45.466687Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "16388248251493717678",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b9c65c79770e8c51",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10154572141801065274",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c2f5d119c894ce34",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13472703575539822520",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/d950db6f06d4cd0c",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "2895720101597038200",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c901e756f9e2e56e",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/ccb99e4953de1460",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "ccb99e4953de1460"
+          },
+          {
+            "properties": {
+              "displayName": "deny ssh password auth_1.5",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2020-07-14T00:05:24.6182117Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "16028986346052278648",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/bfa798085e63e6b3",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "5073138609425025088",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/6e87f6ee1518ae1d",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    },
+                    "subscriptiontagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForSub"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/cd305803df135c1b",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "cd305803df135c1b"
+          },
+          {
+            "properties": {
+              "displayName": "vmvmssfirstpartytaginitiative_1.4",
+              "policyType": "Custom",
+              "description": "This initiative consists of Append and Modify policy that will update all 1st party VM, VMSS with an identification tag",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-01-25T21:18:16.2936268Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "10515993255990280884",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/95f9c4eadac531e",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "subscriptiontagname": {
+                      "value": "opted_out_for_pki"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "14909360022656909644",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/dc188748309e5653",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "opted_out_for_pki"
+                    },
+                    "subscriptiontagname": {
+                      "value": "opted_out_for_pki"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/d24a97dd0a4d98e9",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "d24a97dd0a4d98e9"
+          },
+          {
+            "properties": {
+              "displayName": "antimalwaresignatureautoupdate_1.3",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-05-03T20:22:24.3932305Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "16919281753122009665",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/1809051d2ac6f30a",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9347889820956680993",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/15d7c23561199182",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "9142933876476856698",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/ba7b2938f8a50a0e",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "10978458754042902722",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/d81435bde0343df2",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/e73424224c4f7a48",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "e73424224c4f7a48"
+          },
+          {
+            "properties": {
+              "displayName": "audit ssh auth_1.1",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2019-12-06T21:04:43.1322087Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "9418583734010353468",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/d974fab8daefe230",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3387197638563076957",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/28b685eba93cc71f",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "resourcetagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForResource"
+                    },
+                    "resourcegrouptagname": {
+                      "value": "SkipGreenTeamLinuxSSHAuthForRG"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/f38a041917a1abdf",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "f38a041917a1abdf"
+          },
+          {
+            "properties": {
+              "displayName": "linuxazuresecuritypackautodeployiaas_1.9",
+              "policyType": "Custom",
+              "description": "Policies to enable auto deploy of AzureMonitorLinuxAgent and AzureSecurityLinuxAgent on IaaS resources. For additional details: https://aka.ms/azsecpackautoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-11-01T19:11:33.7773248Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "181558046094162253",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/f9c7e26a8a5ea3c7",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "8492248299235402993",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/9044f47f8f6bfdec",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "14775871151039171795",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/81d7a091b49d5bc0",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/f611950530d78341",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "f611950530d78341"
+          },
+          {
+            "properties": {
+              "displayName": "azuresecuritypackautoconfig_1.0",
+              "policyType": "Custom",
+              "description": "Policies to enable AutoConfig for security pack and Geneva Agent",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-10-22T18:50:28.9143771Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "11252057305779884440",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/c63bbeb294bd6494",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "azSecPackTagValue": {
+                      "value": "nonprod"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "13918453623754881018",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/969529012f27b3ed",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    },
+                    "azSecPackTagValue": {
+                      "value": "nonprod"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/f62730550de5c3ba",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "f62730550de5c3ba"
+          },
+          {
+            "properties": {
+              "displayName": "azsecpackautodeployuamsi_1.1",
+              "policyType": "Custom",
+              "description": "Policies to enable AzSecPack AutoConfig on VM and VMSS resources. For additional details: https://aka.ms/autoconfig",
+              "metadata": {
+                "createdBy": "1f75b9dd-4f1d-4e80-9521-321a8b1f5764",
+                "createdOn": "2021-05-20T22:13:13.5564904Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "parameters": {
+                "AllowedLocations1": {
+                  "type": "Array",
+                  "metadata": {
+                    "displayName": "Allowed locations",
+                    "description": "The list of locations that can be specified when deploying resources.",
+                    "strongType": "location"
+                  }
+                }
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "11027831260504715654",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/b3dcd36019b33cc8",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                },
+                {
+                  "policyDefinitionReferenceId": "3492036417389494348",
+                  "policyDefinitionId": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policyDefinitions/7a1263fd23581697",
+                  "parameters": {
+                    "allowedLocations": {
+                      "value": "[parameters(\u0027AllowedLocations1\u0027)]"
+                    }
+                  }
+                }
+              ]
+            },
+            "id": "/providers/Microsoft.Management/managementgroups/48fed3a1-0814-4847-88ce-b766155f2792/providers/Microsoft.Authorization/policySetDefinitions/f74243108bc634c4",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "f74243108bc634c4"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-1632",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "createdOn": "2022-01-11T15:46:27.1547748Z",
+                "updatedBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "updatedOn": "2022-01-12T05:40:54.9334694Z"
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "11169814309355695573",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-1692"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-1632",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-1632"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-3602",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+                "createdOn": "2022-06-23T03:48:13.3673634Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "15360128452906548144",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-2273"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-3602",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-3602"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-5344",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "createdOn": "2022-01-11T15:46:24.9923998Z",
+                "updatedBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "updatedOn": "2022-01-12T05:40:53.6083636Z"
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "13424253409101963745",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-5674"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-5344",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-5344"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-5864",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+                "createdOn": "2022-06-23T03:48:15.9611753Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "14972618751108029764",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-9136"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-5864",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-5864"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-59",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+                "createdOn": "2022-06-23T03:47:59.6086298Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "15317736062377422371",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-7910"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-59",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-59"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-6228",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+                "createdOn": "2022-06-23T03:48:02.4955838Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "990775620584957758",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-154"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-6228",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-6228"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-7011",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+                "createdOn": "2022-06-23T03:48:18.9713474Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "8858424895446897730",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-5976"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-7011",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-7011"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-763",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "createdOn": "2022-01-11T15:46:32.3609106Z",
+                "updatedBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "updatedOn": "2022-01-12T05:40:59.1348216Z"
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "17204855009865040862",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-9331"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-763",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-763"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-8497",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "fdc9f735-07d7-441f-92ab-f95b1c49185a",
+                "createdOn": "2022-06-23T03:48:07.8212249Z",
+                "updatedBy": null,
+                "updatedOn": null
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "13695989894371499811",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-8646"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-8497",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-8497"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-8730",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "createdOn": "2022-01-11T15:46:34.3076121Z",
+                "updatedBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "updatedOn": "2022-01-12T05:41:00.3740198Z"
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "5118942780509976821",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-5565"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-8730",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-8730"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-9119",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "createdOn": "2022-01-11T15:46:22.142015Z",
+                "updatedBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "updatedOn": "2022-01-12T05:40:52.8757898Z"
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "17584946464956476238",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-4851"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-9119",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-9119"
+          },
+          {
+            "properties": {
+              "displayName": "Test $polSetDef-9483",
+              "policyType": "Custom",
+              "metadata": {
+                "createdBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "createdOn": "2022-01-11T15:46:30.7782649Z",
+                "updatedBy": "7b8faa77-f564-4284-9992-813b178ef8e0",
+                "updatedOn": "2022-01-12T05:40:58.4286638Z"
+              },
+              "policyDefinitions": [
+                {
+                  "policyDefinitionReferenceId": "185579663825538836",
+                  "policyDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policyDefinitions/polDef-1217"
+                }
+              ]
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/policySetDefinitions/polSetDef-9483",
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "name": "polSetDef-9483"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2123785980",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

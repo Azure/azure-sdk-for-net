@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/logs/properties",
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.3/logs/properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -33,7 +33,7 @@
       "ResponseBody": {}
     },
     {
-      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/logs",
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.3/logs",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",

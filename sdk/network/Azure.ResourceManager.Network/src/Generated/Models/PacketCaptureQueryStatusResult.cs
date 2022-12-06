@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PacketCaptureQueryStatusResult. </summary>
         /// <param name="name"> The name of the packet capture resource. </param>
         /// <param name="id"> The ID of the packet capture resource. </param>
-        /// <param name="captureStartTime"> The start time of the packet capture session. </param>
+        /// <param name="captureStartOn"> The start time of the packet capture session. </param>
         /// <param name="packetCaptureStatus"> The status of the packet capture session. </param>
         /// <param name="stopReason"> The reason the current packet capture session was stopped. </param>
         /// <param name="packetCaptureError"> List of errors of packet capture session. </param>
-        internal PacketCaptureQueryStatusResult(string name, string id, DateTimeOffset? captureStartTime, PcStatus? packetCaptureStatus, string stopReason, IReadOnlyList<PcError> packetCaptureError)
+        internal PacketCaptureQueryStatusResult(string name, string id, DateTimeOffset? captureStartOn, PcStatus? packetCaptureStatus, string stopReason, IReadOnlyList<PcError> packetCaptureError)
         {
             Name = name;
             Id = id;
-            CaptureStartTime = captureStartTime;
+            CaptureStartOn = captureStartOn;
             PacketCaptureStatus = packetCaptureStatus;
             StopReason = stopReason;
             PacketCaptureError = packetCaptureError;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of the packet capture resource. </summary>
         public string Id { get; }
         /// <summary> The start time of the packet capture session. </summary>
-        public DateTimeOffset? CaptureStartTime { get; }
+        public DateTimeOffset? CaptureStartOn { get; }
         /// <summary> The status of the packet capture session. </summary>
         public PcStatus? PacketCaptureStatus { get; }
         /// <summary> The reason the current packet capture session was stopped. </summary>

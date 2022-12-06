@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/60723d13309c8f8060d020a7f3dd9d6e380f0bbd/specification/storage/data-plane/Microsoft.FileStorage/preview/2021-02-12/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/080b332b7572514a2e100dd2fa1fb86cb8edcb08/specification/storage/data-plane/Microsoft.FileStorage/preview/2021-12-02/file.json
+generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
 modelerfour:
@@ -43,7 +44,11 @@ directive:
     $.Metrics.type = "object";
 ```
 
-### Times aren't required
+<<<<<<< HEAD
+### Times aren't required 
+=======
+### Formats aren't required
+>>>>>>> feature/storage/stg82base
 ``` yaml
 directive:
 - from: swagger-document
@@ -52,6 +57,10 @@ directive:
     delete $.format;
 - from: swagger-document
   where: $.parameters.FileLastWriteTime
+  transform: >
+    delete $.format;
+- from: swagger-document
+  where: $.parameters.FileChangeTime
   transform: >
     delete $.format;
 ```
@@ -134,4 +143,14 @@ directive:
 - from: swagger-document
   where: $..[?(@.operationId=='File_Download')]
   transform: $["x-csharp-buffer-response"] = false;
+```
+
+### Remove conditions parameter groupings
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.SourceLeaseId["x-ms-parameter-grouping"];
+    delete $.DestinationLeaseId["x-ms-parameter-grouping"];
 ```

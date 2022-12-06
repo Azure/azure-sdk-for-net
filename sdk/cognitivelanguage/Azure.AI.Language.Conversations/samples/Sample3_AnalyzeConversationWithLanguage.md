@@ -5,7 +5,7 @@ This sample demonstrates how to analyze an utterance. To get started, you'll nee
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -16,31 +16,40 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions()
-{
-    Language = "es"
-};
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "Tendremos 2 platos de nigiri de salmón braseado.",
-    conversationsProject,
-    options);
+string projectName = "Menu";
+string deploymentName = "production";
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+var data = new
+{
+    analysisInput = new
+    {
+        conversationItem = new
+        {
+            text = "Enviar un email a Carol acerca de la presentación de mañana",
+            language = "es",
+            id = "1",
+            participantId = "1",
+        }
+    },
+    parameters = new
+    {
+        projectName,
+        deploymentName,
+        verbose = true,
+
+        // Use Utf16CodeUnit for strings in .NET.
+        stringIndexType = "Utf16CodeUnit",
+    },
+    kind = "Conversation",
+};
+
+Response response = client.AnalyzeConversation(RequestContent.Create(data));
 ```
 
 ## Asynchronous
 
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions()
-{
-    Language = "es"
-};
-Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(
-    "Tendremos 2 platos de nigiri de salmón braseado.",
-    conversationsProject,
-    options);
+Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
+Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 ```

@@ -36,9 +36,14 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="displayName">The display name of the bookmark</param>
         /// <param name="query">The query of the bookmark.</param>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="created">The time the bookmark was created</param>
         /// <param name="createdBy">Describes a user that created the
@@ -56,8 +61,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="queryEndTime">The end time for the query</param>
         /// <param name="incidentInfo">Describes an incident that relates to
         /// bookmark</param>
-        public Bookmark(string displayName, string query, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? created = default(System.DateTime?), UserInfo createdBy = default(UserInfo), IList<string> labels = default(IList<string>), string notes = default(string), string queryResult = default(string), System.DateTime? updated = default(System.DateTime?), UserInfo updatedBy = default(UserInfo), System.DateTime? eventTime = default(System.DateTime?), System.DateTime? queryStartTime = default(System.DateTime?), System.DateTime? queryEndTime = default(System.DateTime?), IncidentInfo incidentInfo = default(IncidentInfo))
-            : base(id, name, type, etag)
+        /// <param name="entityMappings">Describes the entity mappings of the
+        /// bookmark</param>
+        /// <param name="tactics">A list of relevant mitre attacks</param>
+        /// <param name="techniques">A list of relevant mitre
+        /// techniques</param>
+        public Bookmark(string displayName, string query, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), System.DateTime? created = default(System.DateTime?), UserInfo createdBy = default(UserInfo), IList<string> labels = default(IList<string>), string notes = default(string), string queryResult = default(string), System.DateTime? updated = default(System.DateTime?), UserInfo updatedBy = default(UserInfo), System.DateTime? eventTime = default(System.DateTime?), System.DateTime? queryStartTime = default(System.DateTime?), System.DateTime? queryEndTime = default(System.DateTime?), IncidentInfo incidentInfo = default(IncidentInfo), IList<BookmarkEntityMappings> entityMappings = default(IList<BookmarkEntityMappings>), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>))
+            : base(id, name, type, systemData, etag)
         {
             Created = created;
             CreatedBy = createdBy;
@@ -72,6 +82,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             QueryStartTime = queryStartTime;
             QueryEndTime = queryEndTime;
             IncidentInfo = incidentInfo;
+            EntityMappings = entityMappings;
+            Tactics = tactics;
+            Techniques = techniques;
             CustomInit();
         }
 
@@ -159,6 +172,24 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public IncidentInfo IncidentInfo { get; set; }
 
         /// <summary>
+        /// Gets or sets describes the entity mappings of the bookmark
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.entityMappings")]
+        public IList<BookmarkEntityMappings> EntityMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of relevant mitre attacks
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tactics")]
+        public IList<string> Tactics { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of relevant mitre techniques
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -173,14 +204,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             if (Query == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Query");
-            }
-            if (CreatedBy != null)
-            {
-                CreatedBy.Validate();
-            }
-            if (UpdatedBy != null)
-            {
-                UpdatedBy.Validate();
             }
         }
     }

@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Containers.ContainerRegistry.Tests", "tests\Azure.Containers.ContainerRegistry.Tests.csproj", "{3AEC1467-61D0-4A91-93FA-2BD391122D21}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{F62DCD51-5101-4427-B6C9-C24974F9DD3F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Containers.ContainerRegistry.Perf", "perf\Azure.Containers.ContainerRegistry.Perf\Azure.Containers.ContainerRegistry.Perf.csproj", "{D8B4B378-8339-44AB-BBEC-056B82A15A0A}"
 EndProject
 Global

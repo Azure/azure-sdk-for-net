@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/checkDomainAvailability?api-version=2021-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvY2hlY2tEb21haW5BdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMS0xMC0wMQ==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/checkDomainAvailability?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvY2hlY2tEb21haW5BdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"subdomainName\": \"atestsubdomain\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "43d5be04-ba5b-44f8-a450-785355d06c4d"
+          "b1e49c71-793f-44fa-9250-5bab8784f763"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000.",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,10 +36,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "f4091496-6c62-4652-9a77-8d79d043c9ef"
+          "de6e577d-a34c-45d9-851f-9a49899aa1ad"
         ],
         "x-envoy-upstream-service-time": [
-          "234"
+          "585"
         ],
         "Server": [
           "istio-envoy"
@@ -48,16 +48,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "f3a018cd-183e-404b-ba0f-a4038c62d06f"
+          "3d069e27-2d1c-4887-b3dc-9d7448331d71"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211101T212418Z:f3a018cd-183e-404b-ba0f-a4038c62d06f"
+          "WESTUS2:20220929T031334Z:3d069e27-2d1c-4887-b3dc-9d7448331d71"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 21:24:18 GMT"
+          "Thu, 29 Sep 2022 03:13:33 GMT"
         ],
         "Content-Length": [
           "62"
@@ -73,22 +73,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/checkDomainAvailability?api-version=2021-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvY2hlY2tEb21haW5BdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMS0xMC0wMQ==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/checkDomainAvailability?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvY2hlY2tEb21haW5BdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"subdomainName\": \"atestsubdomain\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n  \"kind\": \"OpenAI\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "898a33bf-2f2e-4683-ae46-93c2855ae0d2"
+          "71fa8693-068c-4863-b6c0-bc686cee81ad"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30411.01",
+          "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000.",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,10 +108,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "06535ad0-429f-444d-857a-7eb62049ea6d"
+          "8bb48b0a-1ecf-4ac8-8ff3-a913b10c0957"
         ],
         "x-envoy-upstream-service-time": [
-          "253"
+          "606"
         ],
         "Server": [
           "istio-envoy"
@@ -120,16 +120,16 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "2b63b080-8bee-420a-bd5b-f51f8d7fdc7a"
+          "5a074fb2-1c10-4b38-b8d0-e80d7bd11852"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20211101T212418Z:2b63b080-8bee-420a-bd5b-f51f8d7fdc7a"
+          "WESTUS2:20220929T031335Z:5a074fb2-1c10-4b38-b8d0-e80d7bd11852"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Mon, 01 Nov 2021 21:24:18 GMT"
+          "Thu, 29 Sep 2022 03:13:34 GMT"
         ],
         "Content-Length": [
           "62"

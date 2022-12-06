@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -71,6 +70,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AmazonRdsForSqlServer": return AmazonRdsForSqlServerLinkedService.DeserializeAmazonRdsForSqlServerLinkedService(element);
                     case "AmazonRedshift": return AmazonRedshiftLinkedService.DeserializeAmazonRedshiftLinkedService(element);
                     case "AmazonS3": return AmazonS3LinkedService.DeserializeAmazonS3LinkedService(element);
+                    case "AppFigures": return AppFiguresLinkedService.DeserializeAppFiguresLinkedService(element);
+                    case "Asana": return AsanaLinkedService.DeserializeAsanaLinkedService(element);
                     case "AzureBatch": return AzureBatchLinkedService.DeserializeAzureBatchLinkedService(element);
                     case "AzureBlobFS": return AzureBlobFSLinkedService.DeserializeAzureBlobFSLinkedService(element);
                     case "AzureBlobStorage": return AzureBlobStorageLinkedService.DeserializeAzureBlobStorageLinkedService(element);
@@ -92,6 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureSqlDatabase": return AzureSqlDatabaseLinkedService.DeserializeAzureSqlDatabaseLinkedService(element);
                     case "AzureSqlMI": return AzureSqlMILinkedService.DeserializeAzureSqlMILinkedService(element);
                     case "AzureStorage": return AzureStorageLinkedService.DeserializeAzureStorageLinkedService(element);
+                    case "AzureSynapseArtifacts": return AzureSynapseArtifactsLinkedService.DeserializeAzureSynapseArtifactsLinkedService(element);
                     case "AzureTableStorage": return AzureTableStorageLinkedService.DeserializeAzureTableStorageLinkedService(element);
                     case "Cassandra": return CassandraLinkedService.DeserializeCassandraLinkedService(element);
                     case "CommonDataServiceForApps": return CommonDataServiceForAppsLinkedService.DeserializeCommonDataServiceForAppsLinkedService(element);
@@ -100,6 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "CosmosDbMongoDbApi": return CosmosDbMongoDbApiLinkedService.DeserializeCosmosDbMongoDbApiLinkedService(element);
                     case "Couchbase": return CouchbaseLinkedService.DeserializeCouchbaseLinkedService(element);
                     case "CustomDataSource": return CustomDataSourceLinkedService.DeserializeCustomDataSourceLinkedService(element);
+                    case "Dataworld": return DataworldLinkedService.DeserializeDataworldLinkedService(element);
                     case "Db2": return Db2LinkedService.DeserializeDb2LinkedService(element);
                     case "Drill": return DrillLinkedService.DeserializeDrillLinkedService(element);
                     case "Dynamics": return DynamicsLinkedService.DeserializeDynamicsLinkedService(element);
@@ -111,6 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element);
                     case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element);
                     case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element);
+                    case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element);
                     case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element);
                     case "HBase": return HBaseLinkedService.DeserializeHBaseLinkedService(element);
                     case "HDInsight": return HDInsightLinkedService.DeserializeHDInsightLinkedService(element);
@@ -141,6 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element);
                     case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element);
+                    case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element);
                     case "Responsys": return ResponsysLinkedService.DeserializeResponsysLinkedService(element);
                     case "RestService": return RestServiceLinkedService.DeserializeRestServiceLinkedService(element);
                     case "Salesforce": return SalesforceLinkedService.DeserializeSalesforceLinkedService(element);
@@ -150,87 +155,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapCloudForCustomer": return SapCloudForCustomerLinkedService.DeserializeSapCloudForCustomerLinkedService(element);
                     case "SapEcc": return SapEccLinkedService.DeserializeSapEccLinkedService(element);
                     case "SapHana": return SapHanaLinkedService.DeserializeSapHanaLinkedService(element);
+                    case "SapOdp": return SapOdpLinkedService.DeserializeSapOdpLinkedService(element);
                     case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element);
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element);
                     case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element);
+                    case "Smartsheet": return SmartsheetLinkedService.DeserializeSmartsheetLinkedService(element);
                     case "Snowflake": return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element);
                     case "Spark": return SparkLinkedService.DeserializeSparkLinkedService(element);
                     case "SqlServer": return SqlServerLinkedService.DeserializeSqlServerLinkedService(element);
                     case "Square": return SquareLinkedService.DeserializeSquareLinkedService(element);
                     case "Sybase": return SybaseLinkedService.DeserializeSybaseLinkedService(element);
+                    case "TeamDesk": return TeamDeskLinkedService.DeserializeTeamDeskLinkedService(element);
                     case "Teradata": return TeradataLinkedService.DeserializeTeradataLinkedService(element);
+                    case "Twilio": return TwilioLinkedService.DeserializeTwilioLinkedService(element);
                     case "Vertica": return VerticaLinkedService.DeserializeVerticaLinkedService(element);
                     case "Web": return WebLinkedService.DeserializeWebLinkedService(element);
                     case "Xero": return XeroLinkedService.DeserializeXeroLinkedService(element);
+                    case "Zendesk": return ZendeskLinkedService.DeserializeZendeskLinkedService(element);
                     case "Zoho": return ZohoLinkedService.DeserializeZohoLinkedService(element);
                 }
             }
-            string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("connectVia"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("parameters"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
-                    }
-                    parameters = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("annotations"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<object> array = new List<object>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetObject());
-                    }
-                    annotations = array;
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties);
+            return UnknownLinkedService.DeserializeUnknownLinkedService(element);
         }
 
         internal partial class LinkedServiceConverter : JsonConverter<LinkedService>

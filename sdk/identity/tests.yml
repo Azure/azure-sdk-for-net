@@ -3,7 +3,8 @@ trigger: none
 resources:
   containers:
     - container: 'ubuntu_netcore_keyring'
-      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore50401_keyring:powershell714focalnet50401.4'
+      # See ./eng/containers/UbuntuNetCoreKeyring/Dockerfile for tool versions
+      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:1347171'
       endpoint: 'azsdkengsys'
       options: -ti --cap-add=IPC_LOCK
 

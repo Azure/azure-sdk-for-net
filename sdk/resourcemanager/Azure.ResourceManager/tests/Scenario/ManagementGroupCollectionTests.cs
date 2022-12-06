@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.ManagementGroups.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
     public class ManagementGroupCollectionTests : ResourceManagerTestBase
     {
-        private ManagementGroup _mgmtGroup;
+        private ManagementGroupResource _mgmtGroup;
         private string _mgmtGroupName;
 
         public ManagementGroupCollectionTests(bool isAsync)
@@ -20,17 +20,18 @@ namespace Azure.ResourceManager.Tests
         public async Task GetGlobalManagementGroup()
         {
             _mgmtGroupName = SessionRecording.GenerateAssetName("mgmt-group-");
-            var mgmtOp = await GlobalClient.GetManagementGroups().CreateOrUpdateAsync(_mgmtGroupName, new CreateManagementGroupOptions());
+            var mgmtGroupCollection = GlobalClient.GetManagementGroups();
+            var mgmtOp = await mgmtGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, _mgmtGroupName, new ManagementGroupCreateOrUpdateContent());
             _mgmtGroup = mgmtOp.Value;
             _mgmtGroup = await _mgmtGroup.GetAsync();
-            StopSessionRecording();
+            await StopSessionRecordingAsync();
         }
 
         [RecordedTest]
         public async Task List()
         {
             var mgmtGroupCollection = Client.GetManagementGroups();
-            ManagementGroup mgmtGroup = null;
+            ManagementGroupResource mgmtGroup = null;
             await foreach(var item in mgmtGroupCollection.GetAllAsync("no-cache"))
             {
                 mgmtGroup = item;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(mgmtGroup.Data.Id, "Id was null");
             Assert.IsNotNull(mgmtGroup.Data.Name, "Name was null");
             Assert.IsNotNull(mgmtGroup.Data.TenantId, "TenantId was null");
-            Assert.IsNotNull(mgmtGroup.Data.Type, "Type was null");
+            Assert.IsNotNull(mgmtGroup.Data.ResourceType, "Type was null");
             Assert.IsEmpty(mgmtGroup.Data.Children);
             Assert.IsNull(mgmtGroup.Data.Details);
         }
@@ -49,26 +50,17 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().GetAsync(_mgmtGroupName, cacheControl: "no-cache");
+            ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetAsync(_mgmtGroupName, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
             Assert.AreEqual(403, ex.Status);
         }
 
         [RecordedTest]
-        public async Task TryGet()
+        public async Task Exists()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
-            CompareMgmtGroups(_mgmtGroup, mgmtGroup);
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
-            Assert.AreEqual(403, ex.Status);
-        }
-
-        [RecordedTest]
-        public async Task CheckIfExists()
-        {
-            Assert.IsTrue(await Client.GetManagementGroups().CheckIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetManagementGroups().CheckIfExistsAsync(_mgmtGroup.Data.Name + "x", cacheControl: "no-cache"));
+            Assert.IsTrue(await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache"));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetManagementGroups().ExistsAsync(_mgmtGroup.Data.Name + "x", cacheControl: "no-cache"));
             Assert.AreEqual(403, ex.Status); //you get forbidden vs not found here for some reason by the service
         }
 
@@ -76,30 +68,30 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdate()
         {
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
-            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions(), waitForCompletion: false);
-            ManagementGroup mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(WaitUntil.Started, mgmtGroupName, new ManagementGroupCreateOrUpdateContent());
+            ManagementGroupResource mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.Type);
+            Assert.AreEqual(ManagementGroupResource.ResourceType, mgmtGroup.Data.ResourceType);
         }
 
         [RecordedTest]
         public async Task StartCreateOrUpdate()
         {
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
-            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions(), waitForCompletion: false);
-            ManagementGroup mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
+            var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(WaitUntil.Started, mgmtGroupName, new ManagementGroupCreateOrUpdateContent());
+            ManagementGroupResource mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.Type);
+            Assert.AreEqual(ManagementGroupResource.ResourceType, mgmtGroup.Data.ResourceType);
         }
 
         [RecordedTest]
         public async Task CheckNameAvailability()
         {
-            var rq = new CheckNameAvailabilityOptions();
+            var rq = new ManagementGroupNameAvailabilityContent();
             rq.Name = "this-should-not-exist";
             var rs = await Client.GetManagementGroups().CheckNameAvailabilityAsync(rq);
             Assert.IsTrue(rs.Value.NameAvailable);

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Deleted Api Management Service information.
+    /// Deleted API Management Service information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DeletedServiceContract : Resource
@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the DeletedServiceContract class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type for API Management
-        /// resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="serviceId">Fully-qualified API Management Service
         /// Resource ID</param>
         /// <param name="scheduledPurgeDate">UTC Date and Time when the service
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="deletionDate">UTC Timestamp when the service was
         /// soft-deleted. The date conforms to the following format:
         /// yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.</param>
-        /// <param name="location">Api Management Service Master
+        /// <param name="location">API Management Service Master
         /// Location.</param>
         public DeletedServiceContract(string id = default(string), string name = default(string), string type = default(string), string serviceId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), string location = default(string))
             : base(id, name, type)
@@ -85,7 +87,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.DateTime? DeletionDate { get; set; }
 
         /// <summary>
-        /// Gets api Management Service Master Location.
+        /// Gets API Management Service Master Location.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; private set; }

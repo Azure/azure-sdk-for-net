@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// Initializes a new instance of the GroupIdInformationProperties
         /// class.
         /// </summary>
-        /// <param name="groupId">The group id</param>
+        /// <param name="groupId">The group id.</param>
         /// <param name="requiredMembers">The required members for a specific
         /// group id.</param>
         /// <param name="requiredZoneNames">The required DNS zones for a
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the group id
+        /// Gets or sets the group id.
         /// </summary>
         [JsonProperty(PropertyName = "groupId")]
         public string GroupId { get; set; }

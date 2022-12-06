@@ -43,13 +43,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
+        /// <param name="policy">Execute pipeline activity policy.</param>
         /// <param name="parameters">Pipeline parameters.</param>
         /// <param name="waitOnCompletion">Defines whether activity execution
         /// will wait for the dependent pipeline execution to finish. Default
         /// is false.</param>
-        public ExecutePipelineActivity(string name, PipelineReference pipeline, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), IDictionary<string, object> parameters = default(IDictionary<string, object>), bool? waitOnCompletion = default(bool?))
+        public ExecutePipelineActivity(string name, PipelineReference pipeline, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), ExecutePipelineActivityPolicy policy = default(ExecutePipelineActivityPolicy), IDictionary<string, object> parameters = default(IDictionary<string, object>), bool? waitOnCompletion = default(bool?))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
+            Policy = policy;
             Pipeline = pipeline;
             Parameters = parameters;
             WaitOnCompletion = waitOnCompletion;
@@ -60,6 +62,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets execute pipeline activity policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "policy")]
+        public ExecutePipelineActivityPolicy Policy { get; set; }
 
         /// <summary>
         /// Gets or sets pipeline reference.

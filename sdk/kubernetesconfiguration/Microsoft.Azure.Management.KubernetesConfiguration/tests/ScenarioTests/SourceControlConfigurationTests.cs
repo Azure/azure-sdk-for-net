@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace KubernetesConfiguration.Tests.ScenarioTests
+namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
 {
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
     using Microsoft.Azure.Management.KubernetesConfiguration.Models;
-    using KubernetesConfiguration.Tests.TestSupport;
     using Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport;
 
     public class SourceControlConfigurationTest
@@ -17,11 +16,11 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
         public void CanCreateUpdateDeleteSourceControlConfiguration()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "nanthicluster0923",
+                name: "arc-cluster",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
-                resourceGroup: "nanthirg0923"
-                );
+                resourceGroup: "dotnet-sdk-tests"
+            );
 
             SourceControlConfiguration configuration = new SourceControlConfiguration(
                 name: "netsdktestconfig01a",

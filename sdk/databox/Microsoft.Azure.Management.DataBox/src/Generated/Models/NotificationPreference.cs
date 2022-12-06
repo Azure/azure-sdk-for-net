@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,10 +32,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="stageName">Name of the stage. Possible values include:
         /// 'DevicePrepared', 'Dispatched', 'Delivered', 'PickedUp',
-        /// 'AtAzureDC', 'DataCopy'</param>
+        /// 'AtAzureDC', 'DataCopy', 'Created', 'ShippedToCustomer'</param>
         /// <param name="sendNotification">Notification is required or
         /// not.</param>
-        public NotificationPreference(NotificationStageName stageName, bool sendNotification)
+        public NotificationPreference(string stageName, bool sendNotification)
         {
             StageName = stageName;
             SendNotification = sendNotification;
@@ -49,10 +50,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Gets or sets name of the stage. Possible values include:
         /// 'DevicePrepared', 'Dispatched', 'Delivered', 'PickedUp',
-        /// 'AtAzureDC', 'DataCopy'
+        /// 'AtAzureDC', 'DataCopy', 'Created', 'ShippedToCustomer'
         /// </summary>
         [JsonProperty(PropertyName = "stageName")]
-        public NotificationStageName StageName { get; set; }
+        public string StageName { get; set; }
 
         /// <summary>
         /// Gets or sets notification is required or not.
@@ -63,11 +64,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (StageName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StageName");
+            }
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Throws<ArgumentException>(() => new ClientCertificateCredential(tenantId, clientId, certificatePath, new ClientCertificateCredentialOptions()));
                 Assert.Throws<ArgumentException>(() => new ClientSecretCredential(tenantId, clientId, password, new TokenCredentialOptions()));
-                Assert.Throws<ArgumentException>(() => new DefaultAzureCredential(new DefaultAzureCredentialOptions()));
+                Assert.Throws(Is.TypeOf<ArgumentException>().Or.TypeOf<TypeInitializationException>(), () => new DefaultAzureCredential(new DefaultAzureCredentialOptions()));
                 Assert.Throws<ArgumentException>(() => new DeviceCodeCredential(new DeviceCodeCredentialOptions()));
                 Assert.Throws<ArgumentException>(() => new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions()));
                 Assert.Throws<ArgumentException>(() => new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions()));

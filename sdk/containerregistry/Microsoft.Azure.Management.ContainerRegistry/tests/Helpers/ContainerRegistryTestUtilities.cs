@@ -9,6 +9,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Xunit;
 using Resource = Microsoft.Azure.Management.ContainerRegistry.Models.Resource;
 using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
@@ -36,6 +37,17 @@ namespace ContainerRegistry.Tests
 
         public static string DefaultWebhookServiceUri = "http://www.microsoft.com";
         public static string DefaultWebhookScope = "hello-world";
+
+        public static string DefaultScopeMapRepositoriesAdmin = "_repositories_admin";
+        public static string DefaultScopeMapRepository = "hello-world";
+        public static string[] DefaultScopeMapActions = new string[]
+        {
+            $"repositories/{DefaultScopeMapRepository}/content/read",
+            $"repositories/{DefaultScopeMapRepository}/content/write",
+            $"repositories/{DefaultScopeMapRepository}/content/delete",
+            $"repositories/{DefaultScopeMapRepository}/metadata/read",
+            $"repositories/{DefaultScopeMapRepository}/metadata/write"
+        };
 
         public static string GetDefaultRegistryLocation(ResourceManagementClient client)
         {
@@ -119,6 +131,51 @@ namespace ContainerRegistry.Tests
                     Location = location,
                     Tags = DefaultTags
                 });
+        }
+
+        public static ScopeMap CreatedContainerRegistryScopeMap(ContainerRegistryManagementClient client, string resourceGroupName, string registryName)
+        {
+            return client.ScopeMaps.Create(
+                resourceGroupName,
+                registryName,
+                TestUtilities.GenerateName("acrscopemap"),
+                DefaultScopeMapActions
+            );
+        }
+
+        public static Token CreatedContainerRegistryToken(ContainerRegistryManagementClient client, string resourceGroupName, string registryName, string scopeMapId)
+        {
+            return client.Tokens.Create(
+                resourceGroupName,
+                registryName,
+                TestUtilities.GenerateName("acrtoken"),
+                new Token(
+                    scopeMapId: scopeMapId
+                )
+            );
+        }
+
+        public static ConnectedRegistry CreatedContainerRegistryConnectedRegistry(ContainerRegistryManagementClient client, string resourceGroupName, string registryName, string connectedRegistryName, string tokenId)
+        {
+            return client.ConnectedRegistries.Create(
+                resourceGroupName,
+                registryName,
+                connectedRegistryName,
+                new ConnectedRegistry(
+                    mode: "ReadWrite",
+                    parent: new ParentProperties(
+                        syncProperties: new SyncProperties(
+                            tokenId: tokenId,
+                            schedule: "0 9 * * *",
+                            messageTtl: XmlConvert.ToTimeSpan("PT48H"),
+                            syncWindow: XmlConvert.ToTimeSpan("PT4H")
+                        )
+                    ),
+                    logging: new LoggingProperties(
+                        logLevel: "Information"
+                    )
+                )
+            );
         }
 
         public static void ValidateResourceDefaultTags(Resource resource)

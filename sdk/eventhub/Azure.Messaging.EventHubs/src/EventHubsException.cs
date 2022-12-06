@@ -50,10 +50,10 @@ namespace Azure.Messaging.EventHubs
             {
                 if (string.IsNullOrEmpty(EventHubName))
                 {
-                    return base.Message;
+                    return string.Format(CultureInfo.InvariantCulture, "{0}.  {1}", base.Message, Resources.TroubleshootingGuideLink);
                 }
 
-                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, EventHubName);
+                return string.Format(CultureInfo.InvariantCulture, "{0} ({1}).  {2}", base.Message, EventHubName, Resources.TroubleshootingGuideLink);
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.Messaging.EventHubs
             /// <summary>There was a general communications error encountered when interacting with the Azure Event Hubs service.</summary>
             ServiceCommunicationProblem,
 
-            /// <summary>A client was forcefully disconnected from an Event Hub instance.  This typically occurs when another consumer with higher <see cref="PartitionPublishingOptionsInternal.OwnerLevel" /> asserts ownership over the partition and producer group.</summary>
+            /// <summary>A client was forcefully disconnected from an Event Hub instance.  This typically occurs when another consumer with higher <see cref="PartitionPublishingOptions.OwnerLevel" /> asserts ownership over the partition and producer group.</summary>
             ProducerDisconnected,
 
             /// <summary>A client is in an invalid state from which it cannot recover.  It is recommended that the client be closed and recreated to force reinitialization of state.</summary>

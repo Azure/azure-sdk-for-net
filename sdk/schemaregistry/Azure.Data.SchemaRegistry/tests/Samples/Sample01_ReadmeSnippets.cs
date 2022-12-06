@@ -101,5 +101,21 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
         }
+
+        [Test]
+        [Order(4)]
+        public void RetrieveSchemaVersion()
+        {
+            string groupName = _schemaProperties.GroupName;
+            string name = _schemaProperties.Name;
+            int version = 1;
+
+            #region Snippet:SchemaRegistryRetrieveSchemaVersion
+            SchemaRegistrySchema schema = client.GetSchema(groupName, name, version);
+            string definition = schema.Definition;
+            #endregion
+
+            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
+        }
     }
 }

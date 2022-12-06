@@ -4,275 +4,383 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-csharp: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
 tag: package-track2-preview
-
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
-
+skip-csproj: true
 modelerfour:
-    lenient-model-deduplication: true
+  flatten-payloads: false
 model-namespace: true
 public-clients: false
 head-as-boolean: false
-flatten-payloads: false
+resource-model-requires-type: false
+
+rename-mapping:
+  ConnectionMonitor: ConnectionMonitorInput
+  ConnectionMonitorResult: ConnectionMonitor
+  PacketCapture: PacketCaptureInput
+  PacketCaptureResult: PacketCapture
+  IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
+  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType   # VirtualNetworkGatewayNatRuleProperties is flatten in VirtualNetworkGatewayNatRule
+  SubResource: NetworkSubResource
+  ProvisioningState: NetworkProvisioningState
+  IpAllocation.properties.type: IPAllocationType
+  VirtualWAN.properties.type: VirtualWanType
+  VpnGatewayNatRule.properties.type: VpnNatRuleType
+  Topology: NetworkTopology
+  TopologyResource: TopologyResourceInfo
+  TrafficAnalyticsConfigurationProperties.trafficAnalyticsInterval: TrafficAnalyticsIntervalInMinutes
+  TroubleshootingParameters.properties.storagePath: storageUri
+  ProtocolConfiguration.HTTPConfiguration: HttpProtocolConfiguration
+  FlowLogFormatParameters: FlowLogProperties
+  TrafficAnalyticsProperties.networkWatcherFlowAnalyticsConfiguration: TrafficAnalyticsConfiguration
+  UsageName: NetworkUsageName
+  UsagesListResult: NetworkUsagesListResult
+  Delegation: ServiceDelegation
+  Subnet.properties.privateEndpointNetworkPolicies: PrivateEndpointNetworkPolicy
+  Subnet.properties.privateLinkServiceNetworkPolicies: PrivateLinkServiceNetworkPolicy
+  AzureFirewallApplicationRuleCollection: AzureFirewallApplicationRuleCollectionData
+  AzureFirewallNatRuleCollection: AzureFirewallNatRuleCollectionData
+  AzureFirewallNetworkRuleCollection: AzureFirewallNetworkRuleCollectionData
+  FirewallPolicyRuleCollection: FirewallPolicyRuleCollectionInfo
+  FirewallPolicyNatRuleCollection: FirewallPolicyNatRuleCollectionInfo
+  FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
+  ApplicationGateway.zones: AvailabilityZones
+  ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
+  ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
+  ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
+  ApplicationGatewayProbe.properties.interval: IntervalInSeconds
+  ApplicationGatewayProbe.properties.timeout: TimeoutInSeconds
+  ApplicationGatewayPrivateLinkIpConfiguration.properties.primary: IsPrimary
+  PrivateLinkServiceConnection.properties.privateLinkServiceConnectionState: connectionState
+  DeleteOptions: IPAddressDeleteOption
+  TransportProtocol: LoadBalancingTransportProtocol
+  UsageUnit: NetworkUsageUnit
+  Direction: NetworkTrafficDirection
+  Origin: IssueOrigin
+  Severity: IssueSeverity
+  Protocol: NetworkWatcherProtocol
+  Access: NetworkAccess
+  Resource: NetworkTrackedResourceData
+  ConnectivityIssue.context: Contexts
+  VpnClientConnectionHealthDetail.vpnConnectionDuration: vpnConnectionDurationInSeconds
+  VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
+  TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
+  ConnectivityIssue.type: ConnectivityIssueType
+  HttpHeader: NetworkWatcherHttpHeader
+  HttpMethod: NetworkWatcherHttpMethod
+  HttpConfiguration: NetworkHttpConfiguration
+  HttpConfigurationMethod: NetworkHttpConfigurationMethod
+  IPVersion: NetworkIPVersion
+  IPConfiguration: NetworkIPConfiguration
+  IPConfigurationProfile: NetworkIPConfigurationProfile
+  IPConfigurationBgpPeeringAddress: NetworkIPConfigurationBgpPeeringAddress
+  IPAllocationMethod: NetworkIPAllocationMethod
+  IpAllocationType: NetworkIPAllocationType
+  IpAllocationListResult: NetworkIPAllocationListResult
+  AuthenticationMethod: NetworkAuthenticationMethod
+  ConnectionStateSnapshot.connectionState: NetworkConnectionState
+  ConnectivityInformation.connectionStatus: NetworkConnectionStatus
+  DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
+  CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
+  ProtocolCustomSettingsFormat: ProtocolCustomSettings
+  ServiceEndpointPropertiesFormat: ServiceEndpointProperties
+  ConnectionStatus: NetworkConnectionStatus
+  IssueType: ConnectivityIssueType
+  PrivateLinkServiceConnection: NetworkPrivateLinkServiceConnection
+  ConnectivityHop: ConnectivityHopInfo
+  ConnectivityIssue: ConnectivityIssueInfo
+  PreferredIPVersion: TestEvalPreferredIPVersion
+  InboundNatPool: LoadBalancerInboundNatPool
+  TagsObject: NetworkTagsObject
+  EndpointType: ConnectionMonitorEndpointType
+  ConnectionState: NetworkConnectionState
+  ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  'azureLocation': 'azure-location'
+  'azureLocations': 'azure-location'
+  'targetResourceId': 'arm-id'
+  'vNetExtendedLocationResourceId': 'arm-id'
+  'workspaceResourceId': 'arm-id'
+  'targetNicResourceId': 'arm-id'
+  'networkSecurityGroupId': 'arm-id'
+  'storageId': 'arm-id'
+  'vpnServerConfigurationResourceId': 'arm-id'
+  'routeTableId': 'arm-id'
+  'privateLinkServiceId': 'arm-id'
+  'resourceId': 'arm-id'
+  'serviceResources': 'arm-id'
+  'linkedResourceType': 'resource-type'
+  'data': 'any'
+  'body': 'any'
+  'validatedCertData': 'any'
+  'publicCertData': 'any'
+  '*Guid': 'uuid'
+  '*Time': 'date-time'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs|ips
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+  BGP: Bgp
+  TCP: Tcp
+  UDP: Udp
+  ANY: Any
+  LOA: Loa
+  P2S: P2S|p2s
+  IKEv1: IkeV1
+  IKEv2: IkeV2
+  IkeV2: IkeV2
+  Stag: STag|stag
+
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
-  DdosCustomPolicies
-operation-group-to-resource-type:
-    # applicationgateway.json
-    ApplicationGatewayPrivateLinkResources: Microsoft.Network/applicationGateways/privateLinkResources
-    ApplicationGatewayAvailableServiceVariables: Microsoft.Network/applicationGatewayAvailableServerVariables
-    ApplicationGatewayAvailableRequestHeaders: Microsoft.Network/applicationGatewayAvailableRequestHeaders
-    AppicationGatewayAvailableResponseHeaders: Microsoft.Network/applicationGatewayAvailableResponseHeaders
-    ApplicationGatewayAvailableWafRuleSets: Microsoft.Network/applicationGatewayAvailableWafRuleSets
-    ApplicationGatewayAvailableSslOptions: Microsoft.Network/applicationGatewayAvailableSslOptions/default
-    ApplicationGatewayAvailableSslPredefinedPolicies: Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
-    AvailableDelegations: Microsoft.Network/locations/availableDelegations
-    AvailableServiceAliases: Microsoft.Network/locations/availableServiceAliases
-    # azureFirewallFqdnTag.json
-    AzureFirewallFqdnTags: Microsoft.Network/azureFirewallFqdnTags
-    AvailableEndpointServices: Microsoft.Network/locations/virtualNetworkAvailableEndpointServices
-    PeerExpressRouteCircuitConnections: Microsoft.Network/expressRouteCircuits/peerings/peerConnections
-    ExpressRouteServiceProviders: Microsoft.Network/expressRouteServiceProviders
-    ExpressRoutePortsLocations: Microsoft.Network/ExpressRoutePortsLocations
-    ExpressRouteLinks: Microsoft.Network/ExpressRoutePorts/links
-    # bastionHost.json
-    # BastionShareableLinks: Microsoft.Network/bastionHosts/bastionShareableLinks
-    # ActiveSessions: Microsoft.Network/bastionHosts/activeSessions
-    # checkDnsAvailability.json
-    DnsNameAvailabilities: Microsoft.Network/locations/CheckDnsNameAvailability
-    # loadBalancer.json
-    LoadBalancerFrontendIPConfigurations: Microsoft.Network/loadBalancers/frontendIPConfigurations
-    LoadBalancerLoadBalancingRules: Microsoft.Network/loadBalancers/loadBalancingRules
-    LoadBalancerOutboundRules: Microsoft.Network/loadBalancers/outboundRules
-    LoadBalancerNetworkInterfaces: Microsoft.Network/loadBalancers/networkInterfaces
-    LoadBalancerProbes: Microsoft.Network/loadBalancers/probes
-    # network.json
-    # NetworkInterfaces: Microsoft.Comupte/cloudServices/networkIntefaces
-    NetworkInterfaceIPConfigurations: Microsoft.Network/networkInterfaces/ipConfigurations
-    NetworkInterfaceLoadBalancers: Microsoft.Network/networkInterfaces/loadBalancers
-    # networkSecurityGroup.json
-    DefaultSecurityRules: Microsoft.Network/networkSecurityGroups/defaultSecurityRules
-    # networkVirtualAppliance.json
-    VirtualApplianceSkus: Microsoft.Network/networkVirtualApplianceSkus
-    InboundSecurityRule: Microsoft.Network/networkVirtualAppliances/inboundSecurityRules
-    # InboundSecurityRule: Microsoft.Network/networkVirtualAppliances/inboundSecurityRules
-    # operation.json
-    Operations: Microsoft.Network/operations
-    # privateEndpoint.json
-    AvailablePrivateEndpointTypes: Microsoft.Network/locations/availablePrivateEndpointTypes
-    # serviceCommunity.json
-    BgpServiceCommunities: Microsoft.Network/bgpServiceCommunities
-    # serviceTags.json
-    ServiceTags: Microsoft.Network/locations/serviceTags
-    # usage.json
-    Usages: Microsoft.Network/locations/usages
-    # virtualNetwork.json
-    # VirtualNetworkUsage: Microsoft.Network/virtualNetworks/usages
-    ResourceNavigationLinks: Microsoft.Network/virtualNetworks/subnets/ResourceNavigationLinks
-    ServiceAssociationLinks: Microsoft.Network/virtualNetworks/subnets/ServiceAssociationLinks
-    # virtualWan.json
-    VpnSiteLinks: Microsoft.Network/vpnSites/vpnSiteLinks
-    VpnSiteLinkConnections: Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections
-    VpnSitesConfiguration: Microsoft.Network/virtualWans/vpnConfiguration
-    VpnServerConfigurationsAssociatedWithVirtualWan: Microsoft.Network/virtualWans
-    SupportedSecurityProviders: Microsoft.Network/virtualWans/supportedSecurityProviders
-    VpnLinkConnections: Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections
-    VirtualWanVpnServerConfigurationVpnProfiles: Microsoft.Network/virtualWans/GenerateVpnProfile
-    # azureWebCategory.json
-    WebCategories: Microsoft.Network/azureWebCategories
-operation-group-to-resource:
-    # applicationgateway.json
-    ApplicationGatewayPrivateLinkResources: NonResource
-    ApplicationGatewayAvailableServiceVariables: NonResource
-    ApplicationGatewayAvailableRequestHeaders: NonResource
-    AppicationGatewayAvailableResponseHeaders: NonResource
-    ApplicationGatewayAvailableWafRuleSets: NonResource
-    ApplicationGatewayAvailableSslOptions: NonResource
-    ApplicationGatewayAvailableSslPredefinedPolicies: NonResource
-    AvailableDelegations: NonResource
-    AvailableServiceAliases: NonResource
-    AzureFirewallFqdnTags: NonResource
-    # NetworkInterfaces: NetworkInteface
-    AvailableEndpointServices: NonResource
-    PeerExpressRouteCircuitConnections: NonResource
-    ExpressRouteServiceProviders: NonResource
-    ExpressRoutePortsLocations: NonResource
-    ExpressRouteLinks: NonResource
-    # bastionHost.json
-    # BastionShareableLinks: NonResource
-    # ActiveSessions: NonResource
-    # checkDnsAvailability.json
-    DnsNameAvailabilities: NonResource
-    # loadBalancer.json
-    LoadBalancerFrontendIPConfigurations: NonResource
-    LoadBalancerLoadBalancingRules: NonResource
-    LoadBalancerOutboundRules: NonResource
-    LoadBalancerNetworkInterfaces: NonResource
-    LoadBalancerProbes: NonResource
-    # network.json
-    NetworkInterfaceIPConfigurations: NonResource
-    NetworkInterfaceLoadBalancers: NonResource
-    # networkSecurityGroup.json
-    DefaultSecurityRules: NonResource
-    # networkVirtualAppliance.json
-    VirtualApplianceSkus: NonResource
-    InboundSecurityRule: NonResource
-    # networkWatcher.json
-    PacketCaptures: PacketCapture
-    ConnectionMonitors: ConnectionMonitor
-    # operations.json
-    Operations: NonResource
-    # privateEndpoint.json
-    AvailablePrivateEndpointTypes: NonResource
-    # serviceCommunity.json
-    BgpServiceCommunities: NonResource
-    # serviceTags.json
-    ServiceTags: NonResource
-    # usage.json
-    Usages: NonResource
-    # virtualNetwork.json
-    # VirtualNetworkUsage: NonResource
-    ResourceNavigationLinks: NonResource
-    ServiceAssociationLinks: NonResource
-    # virtualWan.json
-    VpnSiteLinks: NonResource
-    VpnSitesConfiguration: NonResource
-    VpnServerConfigurationsAssociatedWithVirtualWan: NonResource
-    VpnSiteLinkConnections: NonResource
-    SupportedSecurityProviders: NonResource
-    VpnLinkConnections: NonResource
-    VirtualWanVpnServerConfigurationVpnProfiles: NonResource
-    # azureWebCategory.json
-    WebCategories: NonResource
-operation-group-to-parent:
-    AvailableDelegations: resourceGroups
-    # bastionHost.json
-    # BastionShareableLinks: BastionHosts
-    # ActiveSessions: BastionHosts
-    # checkDnsAvailability.json
-    DnsNameAvailabilities: subscriptions
-    # networkinferface.json
-    # NetworkInterfaces: ResourceGroup
-    # NetworkInterfaceIPConfigurations: NetworkInterface
-    # NetworkInterfaceLoadBalancers: NetworkInterface
-    # NetworkInterfaceTapConfigurations: NetworkInterface
-    LoadBalancerFrontendIPConfigurations: Microsoft.Network/loadBalancers
-    # networkSecurityGroup.json
-    DefaultSecurityRules: Microsoft.Network/networkSecurityGroups
-    # endpoint.json
-    InboundSecurityRule: Microsoft.Network/networkVirtualAppliances
-    AvailableEndpointServices: subscriptions
-    AvailablePrivateEndpointTypes: subscriptions
-    ServiceTags: subscriptions
-    Usages: subscriptions
-    # virtualWan.json
-    VpnServerConfigurationsAssociatedWithVirtualWan: Microsoft.Network/virtualWans
-    VpnSitesConfiguration: Microsoft.Network/virtualWans
-    VirtualWanVpnServerConfigurationVpnProfiles: Microsoft.Network/virtualWans
-    # azureWebCategory.json
-    WebCategories: subscriptions
-singleton-resource: ConnectionSharedKey
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}: SecurityRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}: DefaultSecurityRule
+
+request-path-is-non-resource:
+- /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
+- /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
+- /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+
+override-operation-name:
+  ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
+  VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
+  VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
+  VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection
+  ApplicationGateways_ListAvailableSslOptions: GetApplicationGatewayAvailableSslOptions
+  ApplicationGateways_ListAvailableSslPredefinedPolicies: GetApplicationGatewayAvailableSslPredefinedPolicies
+  ApplicationGateways_GetSslPredefinedPolicy: GetApplicationGatewaySslPredefinedPolicy
+
 directive:
-  # rename Operation to RestApi
-  - rename-model:
-      from: Operation
-      to: RestApi
-#   networkWatcher.json:
-  - rename-model:
-      from: ConnectionMonitor
-      to: ConnectionMonitorInput
-  - rename-model:
-      from: ConnectionMonitorResult
-      to: ConnectionMonitor
-  - rename-model:
-      from: PacketCapture
-      to: PacketCaptureInput
-  - rename-model:
-      from: PacketCaptureResult
-      to: PacketCapture
-# applicationgateway.json
+  - remove-operation: 'PutBastionShareableLink'
+  - remove-operation: 'DeleteBastionShareableLink'
+  - remove-operation: 'GetBastionShareableLink'
+  - remove-operation: 'GetActiveSessions'
+  - remove-operation: 'DisconnectActiveSessions'
+  - from: virtualNetworkGateway.json
+    where: $.definitions
+    transform: >
+      $.BgpPeerStatus.properties.connectedDuration['x-ms-format'] = 'duration-constant';
+      $.DhGroup['x-ms-enum']['name'] = 'DHGroup';
+      $.DhGroup['x-ms-enum']['values'] = [
+        { value: 'None',        name: 'None' },
+        { value: 'DHGroup1',    name: 'DHGroup1' },
+        { value: 'DHGroup2',    name: 'DHGroup2' },
+        { value: 'DHGroup14',   name: 'DHGroup14' },
+        { value: 'DHGroup2048', name: 'DHGroup2048' },
+        { value: 'ECP256',      name: 'Ecp256' },
+        { value: 'ECP384',      name: 'Ecp384' },
+        { value: 'DHGroup24',   name: 'DHGroup24' }
+      ];
+      $.IkeEncryption['x-ms-enum']['values'] = [
+        { value: 'DES',         name: 'Des' },
+        { value: 'DES3',        name: 'Des3' },
+        { value: 'AES128',      name: 'Aes128' },
+        { value: 'AES192',      name: 'Aes192' },
+        { value: 'AES256',      name: 'Aes256' },
+        { value: 'GCMAES256',   name: 'GcmAes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' }
+      ];
+      $.IkeIntegrity['x-ms-enum']['values'] = [
+        { value: 'MD5',         name: 'MD5' },
+        { value: 'SHA1',        name: 'Sha1' },
+        { value: 'SHA256',      name: 'Sha256' },
+        { value: 'SHA384',      name: 'Sha384' },
+        { value: 'GCMAES256',   name: 'GcmAes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' }
+      ];
+      $.IpsecEncryption['x-ms-enum']['values'] = [
+        { value: 'None',        name: 'None' },
+        { value: 'DES',         name: 'Des' },
+        { value: 'DES3',        name: 'Des3' },
+        { value: 'AES128',      name: 'Aes128' },
+        { value: 'AES192',      name: 'Aes192' },
+        { value: 'AES256',      name: 'Aes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' },
+        { value: 'GCMAES192',   name: 'GcmAes192' },
+        { value: 'GCMAES256',   name: 'GcmAes256' }
+      ];
+      $.IpsecIntegrity['x-ms-enum']['values'] = [
+        { value: 'MD5',         name: 'MD5' },
+        { value: 'SHA1',        name: 'Sha1' },
+        { value: 'SHA256',      name: 'Sha256' },
+        { value: 'SHA384',      name: 'Sha384' },
+        { value: 'GCMAES256',   name: 'GcmAes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' }
+      ];
+      $.PfsGroup['x-ms-enum']['values'] = [
+        { value: 'None',        name: 'None' },
+        { value: 'PFS1',        name: 'Pfs1' },
+        { value: 'PFS2',        name: 'Pfs2' },
+        { value: 'PFS2048',     name: 'Pfs2048' },
+        { value: 'ECP256',      name: 'Ecp256' },
+        { value: 'ECP384',      name: 'Ecp384' },
+        { value: 'PFS24',       name: 'Pfs24' },
+        { value: 'PFS14',       name: 'Pfs14' },
+        { value: 'PFSMM',       name: 'Pfs' }
+      ];
+  - from: network.json
+    where: $.definitions
+    transform: >
+      $.Resource.properties.id['x-ms-format'] = 'arm-id';
+      $.Resource.properties.type['x-ms-format'] = 'resource-type';
+      $.SubResource.properties.id['x-ms-format'] = 'arm-id';
+  - from: network.json
+    where: $.definitions
+    transform: >
+      $.NetworkResource = {
+        'properties': {
+            'id': {
+              'type': 'string',
+              'description': 'Resource ID.',
+              'x-ms-format': 'arm-id'
+            },
+            'name': {
+              'type': 'string',
+              'description': 'Resource name.'
+            },
+            'type': {
+              'readOnly': true,
+              'type': 'string',
+              'description': 'Resource type.',
+              'x-ms-format': 'resource-type'
+            }
+          },
+        'description': 'Common resource representation.',
+        'x-ms-azure-resource': true,
+        'x-ms-client-name': 'NetworkResourceData'
+      };
+      $.NetworkWritableResource = {
+        'properties': {
+            'id': {
+              'type': 'string',
+              'description': 'Resource ID.',
+              'x-ms-format': 'arm-id'
+            },
+            'name': {
+              'type': 'string',
+              'description': 'Resource name.'
+            },
+            'type': {
+              'type': 'string',
+              'description': 'Resource type.',
+              'x-ms-format': 'resource-type'
+            }
+          },
+        'description': 'Common resource representation.',
+        'x-ms-azure-resource': true,
+        'x-ms-client-name': 'NetworkWritableResourceData'
+      }
+    reason: Add network versions of Resource (id, name are not read-only). The original (Network)Resource definition is actually a TrackedResource.
   - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables"].get.operationId
-    transform: return "ApplicationGatewayAvailableServiceVariables_List"
+    where: $.definitions[?(@.allOf && @.properties.name && !@.properties.type)]
+    transform: >
+      if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
+      {
+        $.properties.type = {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'Resource type.'
+        };
+      }
+    reason: Add missing type property in swagger definition which exists in service response.
   - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders"].get.operationId
-    transform: return "ApplicationGatewayAvailableRequestHeaders_List"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders"].get.operationId
-    transform: return "AppicationGatewayAvailableResponseHeaders_List"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets"].get.operationId
-    transform: return "ApplicationGatewayAvailableWafRuleSets_List"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default"].get.operationId
-    transform: return "ApplicationGatewayAvailableSslOptions_List"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies"].get.operationId
-    transform: return "ApplicationGatewayAvailableSslPredefinedPolicies_List"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}"].get.operationId
-    transform: return "ApplicationGatewayAvailableSslPredefinedPolicies_Get"
-# TODO: ADO 6044
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/createShareableLinks"].post.operationId
-#    transform: return "BastionHosts_CreateShareableLinks"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/deleteShareableLinks"].post.operationId
-#    transform: return "BastionHosts_DeleteShareableLinks"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getShareableLinks"].post.operationId
-#    transform: return "BastionHosts_GetShareableLinks"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/getActiveSessions"].post.operationId
-#    transform: return "BastionHosts_GetActiveSessions"
-#    reason: Original 'operationId' doesn't follow pattern
-#  - from: swagger-document
-#    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}/disconnectActiveSessions"].post.operationId
-#    transform: return "BastionHosts_DisconnectActiveSessions"
-#    reason: Original 'operationId' doesn't follow pattern
-  - remove-operation: "PutBastionShareableLink"
-  - remove-operation: "DeleteBastionShareableLink"
-  - remove-operation: "GetBastionShareableLink"
-  - remove-operation: "GetActiveSessions"
-  - remove-operation: "DisconnectActiveSessions"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"].get.operationId
-    transform: return "AvailableDelegations_ListByResourceGroup"
-    reason: Original 'operationId' is not good, it's actually returned the same type resource but under different context
-# checkDnsAvailability.json
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability"].get.operationId
-    transform: return "DnsNameAvailabilities_Check"
-    reason: Original 'operationId' doesn't follow pattern
-# virtualWan.json
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"].get.operationId
-    transform: return "SupportedSecurityProviders_List"
-    reason: Original 'operationId' doesn't follow pattern
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile"].post.operationId
-    transform: return "VirtualWanVpnServerConfigurationVpnProfiles_Generate"
-    reason: Original 'operationId' doesn't follow pattern
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}"].get.operationId
-    transform: return "VirtualHubBgpConnections_Get"
-    reason: Original 'operationId' doesn't follow pattern
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}"].put.operationId
-    transform: return "VirtualHubBgpConnections_CreateOrUpdate"
-    reason: Original 'operationId' doesn't follow pattern
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}"].delete.operationId
-    transform: return "VirtualHubBgpConnections_Delete"
-    reason: Original 'operationId' doesn't follow pattern
+    where: $.definitions[?(@.allOf && @.properties.name && !@.properties.name.readOnly && @.properties.type)]
+    transform: >
+      if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
+      {
+        if ($.properties.type.readOnly)
+          $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkResource');
+        else
+          $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkWritableResource');
+        delete $.properties.name;
+        delete $.properties.type;
+      }
+    reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.name
+    transform: 'return undefined'
+    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.etag
+    transform: 'return undefined'
+    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
+  - from: azureFirewall.json
+    where: $.definitions
+    transform: >
+      $.AzureFirewallIpGroups.properties.id['x-ms-format'] = 'arm-id';
+  - from: networkWatcher.json
+    where: $.definitions
+    transform: >
+      $.NetworkInterfaceAssociation.properties.id['x-ms-format'] = 'arm-id';
+      $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
+      $.PacketCaptureResult.properties.type = {
+        'readOnly': true,
+        'type': 'string',
+        'description': 'Resource type.'
+      };
+  - from: usage.json
+    where: $.definitions
+    transform: >
+      $.Usage.properties.id['x-ms-format'] = 'arm-id';
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+      $.VirtualNetworkUsage.properties.id['x-ms-format'] = 'arm-id';
+  - from: virtualWan.json
+    where: $.definitions
+    transform: >
+      $.VpnGatewayIpConfiguration.properties.id['x-ms-format'] = 'arm-id';
+  - from: endpointService.json
+    where: $.definitions
+    transform: >
+      $.EndpointServiceResult.properties.type['x-ms-format'] = 'resource-type';
+      delete $.EndpointServiceResult.allOf;
+      $.EndpointServiceResult.properties.id = {
+          'readOnly': true,
+          'type': 'string',
+          'description': 'Resource ID.',
+          'x-ms-format': 'arm-id'
+      };
+    reason: id should be read-only.
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+      $.ResourceNavigationLinkFormat.properties.link['x-ms-format'] = 'arm-id';
+      $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
 ```
 
 ### Tag: package-track2-preview

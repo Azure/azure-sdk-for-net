@@ -32,16 +32,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="createOption">This enumerates the possible sources of
         /// a disk's creation. Possible values include: 'Empty', 'Attach',
-        /// 'FromImage', 'Import', 'Copy', 'Restore', 'Upload',
-        /// 'CopyStart'</param>
+        /// 'FromImage', 'Import', 'Copy', 'Restore', 'Upload', 'CopyStart',
+        /// 'ImportSecure', 'UploadPreparedSecure'</param>
         /// <param name="storageAccountId">Required if createOption is Import.
         /// The Azure Resource Manager identifier of the storage account
         /// containing the blob to import as a disk.</param>
-        /// <param name="imageReference">Disk source information.</param>
+        /// <param name="imageReference">Disk source information for PIR or
+        /// user images.</param>
         /// <param name="galleryImageReference">Required if creating from a
-        /// Gallery Image. The id of the ImageDiskReference will be the ARM id
-        /// of the shared galley image version from which to create a
-        /// disk.</param>
+        /// Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId
+        /// of the ImageDiskReference will be the ARM id of the shared galley
+        /// image version from which to create a disk.</param>
         /// <param name="sourceUri">If createOption is Import, this is the URI
         /// of a blob to be imported into a managed disk.</param>
         /// <param name="sourceResourceId">If createOption is Copy, this is the
@@ -56,7 +57,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="logicalSectorSize">Logical sector size in bytes for
         /// Ultra disks. Supported values are 512 ad 4096. 4096 is the
         /// default.</param>
-        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?))
+        /// <param name="securityDataUri">If createOption is ImportSecure, this
+        /// is the URI of a blob to be imported into VM guest state.</param>
+        /// <param name="performancePlus">Set this flag to true to get a boost
+        /// on the performance target of the disk deployed, see here on the
+        /// respective performance target. This flag can only be set on disk
+        /// creation time and cannot be disabled after enabled.</param>
+        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?), string securityDataUri = default(string), bool? performancePlus = default(bool?))
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -67,6 +74,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             SourceUniqueId = sourceUniqueId;
             UploadSizeBytes = uploadSizeBytes;
             LogicalSectorSize = logicalSectorSize;
+            SecurityDataUri = securityDataUri;
+            PerformancePlus = performancePlus;
             CustomInit();
         }
 
@@ -78,7 +87,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets this enumerates the possible sources of a disk's
         /// creation. Possible values include: 'Empty', 'Attach', 'FromImage',
-        /// 'Import', 'Copy', 'Restore', 'Upload', 'CopyStart'
+        /// 'Import', 'Copy', 'Restore', 'Upload', 'CopyStart', 'ImportSecure',
+        /// 'UploadPreparedSecure'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public string CreateOption { get; set; }
@@ -92,15 +102,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string StorageAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets disk source information.
+        /// Gets or sets disk source information for PIR or user images.
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageDiskReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets required if creating from a Gallery Image. The id of
-        /// the ImageDiskReference will be the ARM id of the shared galley
-        /// image version from which to create a disk.
+        /// Gets or sets required if creating from a Gallery Image. The
+        /// id/sharedGalleryImageId/communityGalleryImageId of the
+        /// ImageDiskReference will be the ARM id of the shared galley image
+        /// version from which to create a disk.
         /// </summary>
         [JsonProperty(PropertyName = "galleryImageReference")]
         public ImageDiskReference GalleryImageReference { get; set; }
@@ -143,6 +154,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? LogicalSectorSize { get; set; }
 
         /// <summary>
+        /// Gets or sets if createOption is ImportSecure, this is the URI of a
+        /// blob to be imported into VM guest state.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityDataUri")]
+        public string SecurityDataUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets set this flag to true to get a boost on the
+        /// performance target of the disk deployed, see here on the respective
+        /// performance target. This flag can only be set on disk creation time
+        /// and cannot be disabled after enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "performancePlus")]
+        public bool? PerformancePlus { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -153,14 +180,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (CreateOption == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CreateOption");
-            }
-            if (ImageReference != null)
-            {
-                ImageReference.Validate();
-            }
-            if (GalleryImageReference != null)
-            {
-                GalleryImageReference.Validate();
             }
         }
     }

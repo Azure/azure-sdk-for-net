@@ -61,9 +61,16 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// disable local auth. Default value is false. When the property is
         /// set to true, only AAD token will be used to authenticate if user is
         /// allowed to publish to the partner namespace.</param>
+        /// <param name="partnerTopicRoutingMode">This determines if events
+        /// published to this partner namespace should use the source attribute
+        /// in the event payload
+        /// or use the channel name in the header when matching to the partner
+        /// topic. If none is specified, source attribute routing will be used
+        /// to match the partner topic. Possible values include:
+        /// 'SourceEventAttribute', 'ChannelNameHeader'</param>
         /// <param name="systemData">The system metadata relating to Partner
         /// Namespace resource.</param>
-        public PartnerNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string partnerRegistrationFullyQualifiedId = default(string), string endpoint = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), SystemData systemData = default(SystemData))
+        public PartnerNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string partnerRegistrationFullyQualifiedId = default(string), string endpoint = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), string partnerTopicRoutingMode = default(string), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -73,6 +80,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
             DisableLocalAuth = disableLocalAuth;
+            PartnerTopicRoutingMode = partnerTopicRoutingMode;
             SystemData = systemData;
             CustomInit();
         }
@@ -137,6 +145,17 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if events published to this partner
+        /// namespace should use the source attribute in the event payload
+        /// or use the channel name in the header when matching to the partner
+        /// topic. If none is specified, source attribute routing will be used
+        /// to match the partner topic. Possible values include:
+        /// 'SourceEventAttribute', 'ChannelNameHeader'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerTopicRoutingMode")]
+        public string PartnerTopicRoutingMode { get; set; }
 
         /// <summary>
         /// Gets the system metadata relating to Partner Namespace resource.

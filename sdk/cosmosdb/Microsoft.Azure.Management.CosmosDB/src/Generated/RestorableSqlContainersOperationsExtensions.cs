@@ -43,10 +43,10 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The resource ID of the SQL database.
             /// </param>
             /// <param name='startTime'>
-            /// The snapshot create timestamp after which snapshots need to be listed.
+            /// Restorable Sql containers event feed start time.
             /// </param>
             /// <param name='endTime'>
-            /// The snapshot create timestamp before which snapshots need to be listed.
+            /// Restorable Sql containers event feed end time.
             /// </param>
             public static IEnumerable<RestorableSqlContainerGetResult> List(this IRestorableSqlContainersOperations operations, string location, string instanceId, string restorableSqlDatabaseRid = default(string), string startTime = default(string), string endTime = default(string))
             {
@@ -73,10 +73,10 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The resource ID of the SQL database.
             /// </param>
             /// <param name='startTime'>
-            /// The snapshot create timestamp after which snapshots need to be listed.
+            /// Restorable Sql containers event feed start time.
             /// </param>
             /// <param name='endTime'>
-            /// The snapshot create timestamp before which snapshots need to be listed.
+            /// Restorable Sql containers event feed end time.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

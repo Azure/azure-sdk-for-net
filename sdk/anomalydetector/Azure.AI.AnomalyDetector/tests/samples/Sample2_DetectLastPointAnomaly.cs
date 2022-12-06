@@ -49,17 +49,29 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //detect
             Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
 
-            LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
-
-            if (result.IsAnomaly)
+            try
             {
-                Console.WriteLine("The latest point was detected as an anomaly.");
-            }
-            else
-            {
-                Console.WriteLine("The latest point was not detected as an anomaly.");
-            }
+                LastDetectResponse result = await client.DetectLastPointAsync(request).ConfigureAwait(false);
 
+                if (result.IsAnomaly)
+                {
+                    Console.WriteLine("The latest point was detected as an anomaly.");
+                }
+                else
+                {
+                    Console.WriteLine("The latest point was not detected as an anomaly.");
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+                throw;
+            }
             #endregion
         }
     }

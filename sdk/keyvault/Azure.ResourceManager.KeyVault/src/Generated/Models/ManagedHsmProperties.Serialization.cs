@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Optional<Guid> tenantId = default;
             Optional<IList<string>> initialAdminObjectIds = default;
-            Optional<string> hsmUri = default;
+            Optional<Uri> hsmUri = default;
             Optional<bool> enableSoftDelete = default;
             Optional<int> softDeleteRetentionInDays = default;
             Optional<bool> enablePurgeProtection = default;
-            Optional<CreateMode> createMode = default;
+            Optional<ManagedHsmCreateMode> createMode = default;
             Optional<string> statusMessage = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MhsmNetworkRuleSet> networkAcls = default;
-            Optional<IReadOnlyList<MhsmPrivateEndpointConnectionItem>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ManagedHsmProvisioningState> provisioningState = default;
+            Optional<ManagedHsmNetworkRuleSet> networkAcls = default;
+            Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
+            Optional<ManagedHsmPublicNetworkAccess> publicNetworkAccess = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -109,7 +109,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("hsmUri"))
                 {
-                    hsmUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hsmUri = null;
+                        continue;
+                    }
+                    hsmUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enableSoftDelete"))
@@ -149,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createMode = property.Value.GetString().ToCreateMode();
+                    createMode = property.Value.GetString().ToManagedHsmCreateMode();
                     continue;
                 }
                 if (property.NameEquals("statusMessage"))
@@ -164,7 +169,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ManagedHsmProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkAcls"))
@@ -174,7 +179,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkAcls = MhsmNetworkRuleSet.DeserializeMhsmNetworkRuleSet(property.Value);
+                    networkAcls = ManagedHsmNetworkRuleSet.DeserializeManagedHsmNetworkRuleSet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"))
@@ -184,10 +189,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MhsmPrivateEndpointConnectionItem> array = new List<MhsmPrivateEndpointConnectionItem>();
+                    List<ManagedHsmPrivateEndpointConnectionItemData> array = new List<ManagedHsmPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MhsmPrivateEndpointConnectionItem.DeserializeMhsmPrivateEndpointConnectionItem(item));
+                        array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -199,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new ManagedHsmPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scheduledPurgeDate"))

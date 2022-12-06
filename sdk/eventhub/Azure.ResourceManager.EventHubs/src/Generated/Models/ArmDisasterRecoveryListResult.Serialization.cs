@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static ArmDisasterRecoveryListResult DeserializeArmDisasterRecoveryListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ArmDisasterRecovery>> value = default;
+            Optional<IReadOnlyList<EventHubsDisasterRecoveryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ArmDisasterRecovery> array = new List<ArmDisasterRecovery>();
+                    List<EventHubsDisasterRecoveryData> array = new List<EventHubsDisasterRecoveryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDisasterRecovery.DeserializeArmDisasterRecovery(item));
+                        array.Add(EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(item));
                     }
                     value = array;
                     continue;

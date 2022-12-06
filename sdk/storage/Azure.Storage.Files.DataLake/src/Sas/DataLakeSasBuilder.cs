@@ -193,6 +193,11 @@ namespace Azure.Storage.Sas
         public string CorrelationId { get; set; }
 
         /// <summary>
+        /// Optional.  Encryption scope to use when sending requests authorized with this SAS URI.
+        /// </summary>
+        public string EncryptionScope { get; set; }
+
+        /// <summary>
         /// Optional. Required when <see cref="Resource"/> is set to d to indicate the
         /// depth of the directory specified in the canonicalizedresource field of the
         /// string-to-sign to indicate the depth of the directory specified in the
@@ -221,7 +226,8 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -241,7 +247,8 @@ namespace Azure.Storage.Sas
         /// class to create a Blob Service Sas.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -368,7 +375,7 @@ namespace Azure.Storage.Sas
                     Version,
                     Resource,
                     null, // snapshot
-                    null, // encryption scope
+                    EncryptionScope,
                     CacheControl,
                     ContentDisposition,
                     ContentEncoding,
@@ -394,7 +401,8 @@ namespace Azure.Storage.Sas
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
                 contentType: ContentType,
-                directoryDepth: _directoryDepth);
+                directoryDepth: _directoryDepth,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -442,7 +450,7 @@ namespace Azure.Storage.Sas
                 Version,
                 Resource,
                 null, // snapshot
-                null, // encryption scope
+                EncryptionScope,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
@@ -477,7 +485,8 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 unauthorizedAadObjectId: AgentObjectId,
                 correlationId: CorrelationId,
-                directoryDepth: _directoryDepth);
+                directoryDepth: _directoryDepth,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -611,6 +620,7 @@ namespace Azure.Storage.Sas
                 PreauthorizedAgentObjectId = originalDataLakeSasBuilder.PreauthorizedAgentObjectId,
                 AgentObjectId = originalDataLakeSasBuilder.AgentObjectId,
                 CorrelationId = originalDataLakeSasBuilder.CorrelationId,
+                EncryptionScope = originalDataLakeSasBuilder.EncryptionScope
             };
     }
 }

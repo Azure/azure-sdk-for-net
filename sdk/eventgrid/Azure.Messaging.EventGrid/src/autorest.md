@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/cd92e4a9c00d6cac0acfe7996796fdc49c36ffad/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d5ff2c358382dfa75282bf3c13aa00dd92c38d71/specification/eventgrid/data-plane/readme.md
+generation1-convenience-client: true
 ```
 
 ## Swagger workarounds
@@ -90,8 +91,8 @@ directive:
       {
         $[path]["x-namespace"] = namespace;
       }
-      if (path.endsWith("EventData") || 
-          path.includes("EventGridEvent") || 
+      if (path.endsWith("EventData") ||
+          path.includes("EventGridEvent") ||
          ($[path]["x-ms-client-name"] && $[path]["x-ms-client-name"].endsWith("EventData")))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
@@ -113,6 +114,18 @@ directive:
           $[path]["properties"]["x509Thumbprint"]["x-namespace"] = namespace;
           $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
       }
+      if (path.includes("AcsRecordingFileStatusUpdatedEventData"))
+      {
+          $[path]["properties"]["recordingContentType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingContentType"]["x-ms-client-name"] = "ContentType";
+          $[path]["properties"]["recordingContentType"]["x-ms-enum"]["name"] = "AcsRecordingContentType";
+          $[path]["properties"]["recordingChannelType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingChannelType"]["x-ms-client-name"] = "ChannelType";
+          $[path]["properties"]["recordingChannelType"]["x-ms-enum"]["name"] = "AcsRecordingChannelType";
+          $[path]["properties"]["recordingFormatType"]["x-namespace"] = namespace;
+          $[path]["properties"]["recordingFormatType"]["x-ms-client-name"] = "FormatType";
+          $[path]["properties"]["recordingFormatType"]["x-ms-enum"]["name"] = "AcsRecordingFormatType";
+      }
     }
 ```
 
@@ -122,7 +135,9 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.MediaJobOutput
-  transform: $.required.push("@odata.type")
+  transform: >
+    $.required.push("@odata.type");
+    $["x-csharp-usage"] = "model,output";
 ```
 
 ### Fix Media types

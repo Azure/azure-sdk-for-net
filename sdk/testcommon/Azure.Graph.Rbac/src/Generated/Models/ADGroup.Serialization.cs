@@ -22,8 +22,8 @@ namespace Azure.Graph.Rbac.Models
             Optional<bool> securityEnabled = default;
             Optional<string> mail = default;
             Optional<string> objectId = default;
-            Optional<string> objectType = default;
-            Optional<DateTimeOffset> deletionTimestamp = default;
+            string objectType = default;
+            Optional<DateTimeOffset?> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        deletionTimestamp = null;
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
@@ -86,7 +86,7 @@ namespace Azure.Graph.Rbac.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ADGroup(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties, displayName.Value, Optional.ToNullable(mailEnabled), mailNickname.Value, Optional.ToNullable(securityEnabled), mail.Value);
+            return new ADGroup(objectId.Value, objectType, Optional.ToNullable(deletionTimestamp), additionalProperties, displayName.Value, Optional.ToNullable(mailEnabled), mailNickname.Value, Optional.ToNullable(securityEnabled), mail.Value);
         }
     }
 }

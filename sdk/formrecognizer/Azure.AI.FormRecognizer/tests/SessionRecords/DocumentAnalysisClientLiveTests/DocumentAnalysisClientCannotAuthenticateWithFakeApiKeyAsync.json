@@ -1,25 +1,25 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-08-31",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "479269",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4459efb9e54f7c4381b1e1eea1895071-4e21d695aa43614f-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "4c199dd47c4fbe6a4fa912a7a5319a41",
+        "traceparent": "00-2f5b6ef51e31a81ab2e9fb034b3ecb16-ad27032b3be63436-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220815.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4ec3cfc6cf89ec7afb6daed84c119d07",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "913c6483-53bc-4189-8f4f-d7a834861314",
+        "apim-request-id": "c1d7d383-cf82-4bcf-9cf1-94a0eb2ddf67",
         "Content-Length": "224",
         "Content-Type": "application/json",
-        "Date": "Tue, 28 Sep 2021 14:24:28 GMT"
+        "Date": "Tue, 16 Aug 2022 05:56:00 GMT"
       },
       "ResponseBody": {
         "error": {
@@ -30,7 +30,7 @@
     }
   ],
   "Variables": {
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
-    "RandomSeed": "723746212"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "209007168"
   }
 }

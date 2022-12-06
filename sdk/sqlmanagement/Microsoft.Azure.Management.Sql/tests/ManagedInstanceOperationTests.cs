@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using System.Linq;
 using System.Threading;
 using Xunit;
@@ -45,7 +46,11 @@ namespace Sql.Tests
                 do
                 {
                     managedInstanceOperations = sqlClient.ManagedInstanceOperations.ListByManagedInstance(resourceGroupName, managedInstanceName);
-                    Thread.Sleep(20000);
+
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        Thread.Sleep(20000);
+                    }
                 } while (managedInstanceOperations.Count() < oldOperations + 2 || !managedInstanceOperations.ElementAt(oldOperations + 1).IsCancellable.Value);
 
                 operationId = managedInstanceOperations.ElementAt(oldOperations + 1).Name;
@@ -58,7 +63,10 @@ namespace Sql.Tests
                 while (!secondManagedInstanceOperation.State.Equals("Cancelled"))
                 {
                     secondManagedInstanceOperation = sqlClient.ManagedInstanceOperations.Get(resourceGroupName, managedInstanceName, System.Guid.Parse(operationId));
-                    Thread.Sleep(20000);
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        Thread.Sleep(20000);
+                    }
                 }
 
                 // Validate that operation was cancelled.

@@ -2,6 +2,24 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.2 (2022-04-05)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Martin Costello  _([GitHub](https://github.com/martincostello))_
+
+### Bugs Fixed
+
+- Prevent ObjectDisposedException when Key Vault config provider is disposed twice. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
 
 ## 1.2.1 (2021-05-18)
 

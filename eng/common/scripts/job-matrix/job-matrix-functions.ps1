@@ -84,6 +84,7 @@ class MatrixParameter {
     }
 }
 
+. (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
 $IMPORT_KEYWORD = '$IMPORT'
 
 function GenerateMatrix(
@@ -117,7 +118,7 @@ function GenerateMatrix(
     }
 
     $matrix = FilterMatrix $matrix $filters
-    $matrix = ProcessReplace $matrix $replace $config.displayNamesLookup
+    $matrix = ProcessReplace $matrix $replace $combinedDisplayNameLookup
     $matrix = FilterMatrixDisplayName $matrix $displayNameFilter
     return $matrix
 }
@@ -146,7 +147,7 @@ function ProcessNonSparseParameters(
 
 function FilterMatrixDisplayName([array]$matrix, [string]$filter) {
     return $matrix | Where-Object { $_ } | ForEach-Object {
-        if ($_.Name -match $filter) {
+        if ($_.ContainsKey("Name") -and $_.Name -match $filter) {
             return $_
         }
     }
@@ -168,7 +169,7 @@ function MatchesFilters([hashtable]$entry, [array]$filters) {
         # Default all regex checks to go against empty string when keys are missing.
         # This simplifies the filter syntax/interface to be regex only.
         $value = ""
-        if ($null -ne $entry -and $entry.parameters.Contains($key)) {
+        if ($null -ne $entry -and $entry.ContainsKey("parameters") -and $entry.parameters.Contains($key)) {
             $value = $entry.parameters[$key]
         }
         if ($value -notmatch $regex) {
@@ -190,11 +191,34 @@ function ParseFilter([string]$filter) {
     }
 }
 
-# Importing the JSON as PSCustomObject preserves key ordering,
-# whereas ConvertFrom-Json -AsHashtable does not
+function GetMatrixConfigFromFile([String] $config)
+{
+    [MatrixConfig]$config = try{
+        GetMatrixConfigFromJson $config
+    } catch {
+        GetMatrixConfigFromYaml $config
+    }
+    return $config
+}
+
+function GetMatrixConfigFromYaml([String] $yamlConfig)
+{
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    # ConvertTo then from json is to make sure the nested values are in PSCustomObject
+    [MatrixConfig]$config = ConvertFrom-Yaml $yamlConfig -Ordered | ConvertTo-Json -Depth 100 | ConvertFrom-Json
+    return GetMatrixConfig $config
+}
+
 function GetMatrixConfigFromJson([String]$jsonConfig)
 {
     [MatrixConfig]$config = $jsonConfig | ConvertFrom-Json
+    return GetMatrixConfig $config
+}
+
+# Importing the JSON as PSCustomObject preserves key ordering,
+# whereas ConvertFrom-Json -AsHashtable does not
+function GetMatrixConfig([MatrixConfig]$config)
+{
     $config.matrixParameters = @()
     $config.displayNamesLookup = @{}
     $include = [MatrixParameter[]]@()
@@ -352,10 +376,14 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         }
     }
     if ((!$matrix -and !$importPath) -or !$importPath) {
-        return $matrix, @()
+        return $matrix, @(), @{}
     }
 
-    $importedMatrixConfig = GetMatrixConfigFromJson (Get-Content $importPath)
+    if (!(Test-Path $importPath)) {
+        Write-Error "`$IMPORT path '$importPath' does not exist."
+        exit 1
+    }
+    $importedMatrixConfig = GetMatrixConfigFromFile (Get-Content -Raw $importPath)
     $importedMatrix = GenerateMatrix `
                         -config $importedMatrixConfig `
                         -selectFromMatrixType $selection `
@@ -366,7 +394,7 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         $combinedDisplayNameLookup[$lookup.Name] = $lookup.Value
     }
 
-    return $matrix, $importedMatrix, $importedMatrixConfig.displayNamesLookup
+    return $matrix, $importedMatrix, $combinedDisplayNameLookup
 }
 
 function CombineMatrices([Array]$matrix1, [Array]$matrix2, [Hashtable]$displayNamesLookup = @{})
@@ -515,14 +543,11 @@ function CreateMatrixCombinationScalar([MatrixParameter[]]$permutation, [Hashtab
 
     # The maximum allowed matrix name length is 100 characters
     $name = $names -join "_"
+    if ($name -and $name[0] -match "^[0-9]") {
+        $name = "job_" + $name  # Azure Pipelines only supports job names starting with letters
+    }
     if ($name.Length -gt 100) {
         $name = $name[0..99] -join ""
-    }
-    $stripped = $name -replace "^[^A-Za-z]*", ""  # strip leading digits
-    if ($stripped -eq "") {
-        $name = "job_" + $name  # Handle names that consist entirely of numbers
-    } else {
-        $name = $stripped
     }
 
     return @{

@@ -22,10 +22,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
+            writer.WritePropertyName("buildMode");
+            writer.WriteStringValue(BuildMode.ToString());
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource");
                 writer.WriteObjectValue(AzureBlobSource);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }

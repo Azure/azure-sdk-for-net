@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// Git repository property payload
+    /// Git repository property payload for config server
     /// </summary>
     public partial class GitPatternRepository
     {

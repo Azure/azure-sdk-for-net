@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,11 +26,11 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             return dest;
         }
 
-        public static void AssertTrackedResource(TrackedResource r1, TrackedResource r2)
+        public static void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
         {
             Assert.AreEqual(r1.Name, r2.Name);
             Assert.AreEqual(r1.Id, r2.Id);
-            Assert.AreEqual(r1.Type, r2.Type);
+            Assert.AreEqual(r1.ResourceType, r2.ResourceType);
             Assert.AreEqual(r1.Location, r2.Location);
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(set1.ProximityPlacementGroup?.Id, set2.ProximityPlacementGroup?.Id);
         }
 
-        public static AvailabilitySetData GetBasicAvailabilitySetData(Location location)
+        public static AvailabilitySetData GetBasicAvailabilitySetData(AzureLocation location)
         {
             return new AvailabilitySetData(location);
         }
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(group1.SupportAutomaticPlacement, group2.SupportAutomaticPlacement);
         }
 
-        public static DedicatedHostGroupData GetBasicDedicatedHostGroup(Location location, int platformFaultDomainCount)
+        public static DedicatedHostGroupData GetBasicDedicatedHostGroup(AzureLocation location, int platformFaultDomainCount)
         {
             return new DedicatedHostGroupData(location)
             {
@@ -77,9 +78,9 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(host1.PlatformFaultDomain, host2.PlatformFaultDomain);
         }
 
-        public static DedicatedHostData GetBasicDedicatedHost(Location location, string skuName, int platformFaultDomain)
+        public static DedicatedHostData GetBasicDedicatedHost(AzureLocation location, string skuName, int platformFaultDomain)
         {
-            return new DedicatedHostData(location, new Models.Sku()
+            return new DedicatedHostData(location, new ComputeSku()
             {
                 Name = skuName
             })
@@ -95,14 +96,14 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             AssertTrackedResource(access1, access2);
         }
 
-        public static DiskAccessData GetEmptyDiskAccess(Location location)
+        public static DiskAccessData GetEmptyDiskAccess(AzureLocation location)
         {
             return new DiskAccessData(location);
         }
         #endregion
 
         #region Disk
-        public static void AssertDisk(DiskData disk1, DiskData disk2)
+        public static void AssertDisk(ManagedDiskData disk1, ManagedDiskData disk2)
         {
             AssertTrackedResource(disk1, disk2);
             Assert.AreEqual(disk1.BurstingEnabled, disk2.BurstingEnabled);
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(disk1.DiskSizeGB, disk2.DiskSizeGB);
             Assert.AreEqual(disk1.ManagedBy, disk2.ManagedBy);
             Assert.AreEqual(disk1.Encryption?.DiskEncryptionSetId, disk2.Encryption?.DiskEncryptionSetId);
-            Assert.AreEqual(disk1.Encryption?.Type, disk2.Encryption?.Type);
+            Assert.AreEqual(disk1.Encryption?.EncryptionType, disk2.Encryption?.EncryptionType);
             Assert.AreEqual(disk1.CreationData?.CreateOption, disk2.CreationData?.CreateOption);
             Assert.AreEqual(disk1.CreationData?.ImageReference?.Id, disk2.CreationData?.ImageReference?.Id);
             Assert.AreEqual(disk1.CreationData?.ImageReference?.Lun, disk2.CreationData?.ImageReference?.Lun);
@@ -126,15 +127,15 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(disk1.CreationData?.UploadSizeBytes, disk2.CreationData?.UploadSizeBytes);
         }
 
-        public static DiskData GetEmptyDiskData(Location location, IDictionary<string, string> tags = null)
+        public static ManagedDiskData GetEmptyDiskData(AzureLocation location, IDictionary<string, string> tags = null)
         {
-            return new DiskData(location)
+            return new ManagedDiskData(location)
             {
                 Sku = new DiskSku()
                 {
-                    Name = DiskStorageAccountTypes.StandardLRS
+                    Name = DiskStorageAccountType.StandardLrs
                 },
-                CreationData = new CreationData(DiskCreateOption.Empty),
+                CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
         }
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(gallery1.Identifier?.UniqueName, gallery2.Identifier?.UniqueName);
         }
 
-        public static GalleryData GetBasicGalleryData(Location location, string description = null)
+        public static GalleryData GetBasicGalleryData(AzureLocation location, string description = null)
         {
             var data = new GalleryData(location)
             {
@@ -165,16 +166,16 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(image1.Identifier.Offer, image2.Identifier.Offer);
             Assert.AreEqual(image1.Identifier.Publisher, image2.Identifier.Publisher);
             Assert.AreEqual(image1.Identifier.Sku, image2.Identifier.Sku);
-            Assert.AreEqual(image1.OsType, image2.OsType);
-            Assert.AreEqual(image1.OsState, image2.OsState);
+            Assert.AreEqual(image1.OSType, image2.OSType);
+            Assert.AreEqual(image1.OSState, image2.OSState);
             Assert.AreEqual(image1.Description, image2.Description);
         }
 
-        public static GalleryImageData GetBasicGalleryImageData(Location location, OperatingSystemTypes osType, GalleryImageIdentifier identifier)
+        public static GalleryImageData GetBasicGalleryImageData(AzureLocation location, SupportedOperatingSystemType osType, GalleryImageIdentifier identifier)
         {
             var data = new GalleryImageData(location)
             {
-                OsType = osType,
+                OSType = osType,
                 Identifier = identifier
             };
             return data;
@@ -193,25 +194,25 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             // adding these checks one by one is so tedious, is there anything we can do about this?
         }
 
-        public static VirtualMachineData GetBasicLinuxVirtualMachineData(Location location, string computerName, ResourceIdentifier nicID, string adminUsername = "adminuser")
+        public static VirtualMachineData GetBasicLinuxVirtualMachineData(AzureLocation location, string computerName, ResourceIdentifier nicID, string adminUsername = "adminuser")
         {
             return new VirtualMachineData(location)
             {
-                HardwareProfile = new HardwareProfile()
+                HardwareProfile = new()
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardF2
+                    VmSize = VirtualMachineSizeType.StandardF2
                 },
-                OsProfile = new OSProfile()
+                OSProfile = new()
                 {
                     AdminUsername = adminUsername,
                     ComputerName = computerName,
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new()
                     {
                         DisablePasswordAuthentication = true,
-                        Ssh = new SshConfiguration()
+                        Ssh = new()
                         {
                             PublicKeys = {
-                                new SshPublicKeyInfo()
+                                new()
                                 {
                                     Path = $"/home/{adminUsername}/.ssh/authorized_keys",
                                     KeyData = dummySSHKey,
@@ -220,29 +221,29 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                         }
                     }
                 },
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile()
                 {
                     NetworkInterfaces =
                     {
-                        new NetworkInterfaceReference()
+                        new VirtualMachineNetworkInterfaceReference()
                         {
                             Id = nicID,
                             Primary = true,
                         }
                     }
                 },
-                StorageProfile = new StorageProfile()
+                StorageProfile = new()
                 {
-                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    OSDisk = new(DiskCreateOptionType.FromImage)
                     {
-                        OsType = OperatingSystemTypes.Linux,
-                        Caching = CachingTypes.ReadWrite,
-                        ManagedDisk = new ManagedDiskParameters()
+                        OSType = SupportedOperatingSystemType.Linux,
+                        Caching = CachingType.ReadWrite,
+                        ManagedDisk = new()
                         {
-                            StorageAccountType = StorageAccountTypes.StandardLRS
+                            StorageAccountType = StorageAccountType.StandardLrs
                         }
                     },
-                    ImageReference = new ImageReference()
+                    ImageReference = new()
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",
@@ -261,34 +262,34 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(vmss1.Name, vmss2.Name);
         }
 
-        public static VirtualMachineScaleSetData GetBasicLinuxVirtualMachineScaleSetData(Location location, string computerNamePrefix, ResourceIdentifier subnetId, int capacity = 2, string adminUsername = "adminuser")
+        public static VirtualMachineScaleSetData GetBasicLinuxVirtualMachineScaleSetData(AzureLocation location, string computerNamePrefix, ResourceIdentifier subnetId, int capacity = 2, string adminUsername = "adminuser")
         {
             return new VirtualMachineScaleSetData(location)
             {
-                Sku = new Models.Sku()
+                Sku = new()
                 {
                     Name = "Standard_F2",
                     Capacity = capacity,
                     Tier = "Standard"
                 },
-                UpgradePolicy = new UpgradePolicy()
+                UpgradePolicy = new()
                 {
-                    Mode = UpgradeMode.Manual,
+                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                 },
-                VirtualMachineProfile = new VirtualMachineScaleSetVMProfile()
+                VirtualMachineProfile = new()
                 {
-                    OsProfile = new VirtualMachineScaleSetOSProfile()
+                    OSProfile = new()
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
-                        LinuxConfiguration = new LinuxConfiguration()
+                        LinuxConfiguration = new()
                         {
                             DisablePasswordAuthentication = true,
-                            Ssh = new SshConfiguration()
+                            Ssh = new()
                             {
                                 PublicKeys =
                                 {
-                                    new SshPublicKeyInfo()
+                                    new()
                                     {
                                         Path = $"/home/{adminUsername}/.ssh/authorized_keys",
                                         KeyData = dummySSHKey
@@ -297,17 +298,17 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             }
                         }
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    StorageProfile = new()
                     {
-                        OsDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes.FromImage)
+                        OSDisk = new(DiskCreateOptionType.FromImage)
                         {
-                            Caching = CachingTypes.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
+                            Caching = CachingType.ReadWrite,
+                            ManagedDisk = new()
                             {
-                                StorageAccountType = StorageAccountTypes.StandardLRS
+                                StorageAccountType = StorageAccountType.StandardLrs
                             }
                         },
-                        ImageReference = new ImageReference()
+                        ImageReference = new()
                         {
                             Publisher = "Canonical",
                             Offer = "UbuntuServer",
@@ -315,16 +316,16 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             Version = "latest"
                         }
                     },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                    NetworkProfile = new()
                     {
                         NetworkInterfaceConfigurations =
                         {
-                            new VirtualMachineScaleSetNetworkConfiguration("example")
+                            new("example")
                             {
                                 Primary = true,
-                                IpConfigurations =
+                                IPConfigurations =
                                 {
-                                    new VirtualMachineScaleSetIPConfiguration("internal")
+                                    new("internal")
                                     {
                                         Primary = true,
                                         Subnet = new WritableSubResource()

@@ -40,7 +40,9 @@ namespace Azure.Storage.Files.DataLake
                     ETag = containerProperties.ETag,
                     Metadata = containerProperties.Metadata,
                     DeletedOn = containerProperties.DeletedOn,
-                    RemainingRetentionDays = containerProperties.RemainingRetentionDays
+                    RemainingRetentionDays = containerProperties.RemainingRetentionDays,
+                    DefaultEncryptionScope = containerProperties.DefaultEncryptionScope,
+                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
@@ -114,7 +116,8 @@ namespace Azure.Storage.Files.DataLake
                 AccessTier = blobProperties.AccessTier,
                 ArchiveStatus = blobProperties.ArchiveStatus,
                 AccessTierChangedOn = blobProperties.AccessTierChangedOn,
-                ExpiresOn = blobProperties.ExpiresOn
+                ExpiresOn = blobProperties.ExpiresOn,
+                EncryptionScope = blobProperties.EncryptionScope
             };
 
         internal static PathInfo ToPathInfo(this BlobInfo blobInfo) =>
@@ -409,7 +412,8 @@ namespace Azure.Storage.Files.DataLake
                 ColumnSeparator = options.ColumnSeparator,
                 QuotationCharacter = options.QuotationCharacter,
                 EscapeCharacter = options.EscapeCharacter,
-                HasHeaders = options.HasHeaders
+                HasHeaders = options.HasHeaders,
+                RecordSeparator = options.RecordSeparator,
             };
 
         internal static BlobQueryArrowOptions ToBlobQueryArrowOptions(this DataLakeQueryArrowOptions options)
@@ -504,7 +508,7 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -519,7 +523,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -533,7 +537,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransactionalHashingOptions = options.TransactionalHashingOptions
+                TransferValidation = options.TransferValidation
             };
         }
 
@@ -566,12 +570,43 @@ namespace Azure.Storage.Files.DataLake
                 Name = path.Name,
                 IsDirectory = path.IsDirectory != null && bool.Parse(path.IsDirectory),
                 LastModified = path.LastModified.GetValueOrDefault(),
-                ETag = new ETag(path.ETag),
+                ETag = new ETag(path.Etag),
                 ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
                 Owner = path.Owner,
                 Group = path.Group,
-                Permissions = path.Permissions
+                Permissions = path.Permissions,
+                CreatedOn = ParseFileTimeString(path.CreationTime),
+                ExpiresOn = ParseFileTimeString(path.ExpiryTime),
+                EncryptionScope = path.EncryptionScope
             };
+        }
+
+        internal static DateTimeOffset? ParseFileTimeString(string fileTimeString)
+        {
+            if (string.IsNullOrEmpty(fileTimeString))
+            {
+                return null;
+            }
+
+            // fileTimeString can come back as either in ticks or in a proper readable format
+            // If the service gives us the format in ticks
+            if (long.TryParse(fileTimeString, NumberStyles.None, CultureInfo.InvariantCulture, out long fileTimeLong))
+            {
+                if (fileTimeLong == 0)
+                {
+                    return null;
+                }
+                return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
+            }
+            // If the service gives the format in DAYOFTHEWEEK, DD MMMM YYYY HH:MM:SS ZONE
+            if (DateTimeOffset.TryParse(fileTimeString, default, DateTimeStyles.None, out DateTimeOffset parsedTime))
+            {
+                return parsedTime;
+            }
+            // Reaching here means we got a format from the service we did not expect
+            // Even though we got a successful response from the service we should at least return what the service gave us
+            Errors.InvalidFormat($"When parsing a File Time property of the PathItem, it return in an unexpected format: \"{fileTimeString}\"");
+            return default;
         }
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
@@ -860,6 +895,29 @@ namespace Azure.Storage.Files.DataLake
                 ErrorDocument404Path = dataLakeStaticWebsite.ErrorDocument404Path,
                 DefaultIndexDocumentPath = dataLakeStaticWebsite.DefaultIndexDocumentPath
             };
+        }
+        internal static BlobContainerEncryptionScopeOptions ToBlobContainerEncryptionScopeOptions(this DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions)
+        {
+            if (encryptionScopeOptions == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = encryptionScopeOptions.DefaultEncryptionScope,
+                PreventEncryptionScopeOverride = encryptionScopeOptions.PreventEncryptionScopeOverride
+            };
+        }
+
+        internal static Blobs.Models.CustomerProvidedKey? ToBlobCustomerProvidedKey(this DataLake.Models.DataLakeCustomerProvidedKey? dataLakeCustomerProvidedKey)
+        {
+            if (dataLakeCustomerProvidedKey == null)
+            {
+                return null;
+            }
+
+            return new Blobs.Models.CustomerProvidedKey(dataLakeCustomerProvidedKey.Value.EncryptionKey);
         }
 
         #region ValidateConditionsNotPresent

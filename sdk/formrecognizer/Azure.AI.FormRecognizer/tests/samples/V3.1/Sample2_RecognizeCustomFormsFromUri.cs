@@ -7,13 +7,12 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task RecognizeCustomFormsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -35,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 #if SNIPPET
             string modelId = "<modelId>";
-            Uri formUri = <formUri>;
+            Uri formUri = new Uri("<formUri>");
 #else
             Uri formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
             string modelId = model.ModelId;

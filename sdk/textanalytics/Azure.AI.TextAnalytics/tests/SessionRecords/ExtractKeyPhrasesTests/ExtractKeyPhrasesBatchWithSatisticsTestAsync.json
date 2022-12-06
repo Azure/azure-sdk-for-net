@@ -1,92 +1,94 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/keyPhrases?showStats=true",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "188",
+        "Accept": "application/json",
+        "Content-Length": "251",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-da64a9ed674aa443840a6f4113c6cff9-ce46d4f85889af42-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "fcabdefd3d51a89852601fc0d61f3468",
+        "traceparent": "00-6025be02727f37c5c2aab1b3e44910b5-b648850837a296d9-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "893dbd4f5c87ca3ae48476db1ea323e3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "1",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
-            "language": "en"
-          },
-          {
-            "id": "2",
-            "text": "Mi perro y mi gato tienen que ir al veterinario.",
-            "language": "es"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Mi perro y mi gato tienen que ir al veterinario.",
+              "language": "es"
+            }
+          ]
+        },
+        "parameters": {},
+        "kind": "KeyPhraseExtraction"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1699ad5e-1137-4c81-8f38-e9832b886dcb",
+        "apim-request-id": "9d15c53e-27f7-4b1b-987e-52bcd498ecce",
+        "Content-Length": "474",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Mon, 25 Oct 2021 21:15:00 GMT",
+        "Date": "Fri, 14 Oct 2022 22:17:00 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "13"
       },
       "ResponseBody": {
-        "statistics": {
-          "documentsCount": 2,
-          "validDocumentsCount": 2,
-          "erroneousDocumentsCount": 0,
-          "transactionsCount": 2
-        },
-        "documents": [
-          {
-            "id": "1",
-            "keyPhrases": [
-              "Bill Gates",
-              "Paul Allen",
-              "Microsoft"
-            ],
-            "statistics": {
-              "charactersCount": 51,
-              "transactionsCount": 1
-            },
-            "warnings": []
+        "kind": "KeyPhraseExtractionResults",
+        "results": {
+          "statistics": {
+            "documentsCount": 2,
+            "validDocumentsCount": 2,
+            "erroneousDocumentsCount": 0,
+            "transactionsCount": 2
           },
-          {
-            "id": "2",
-            "keyPhrases": [
-              "perro",
-              "gato",
-              "veterinario"
-            ],
-            "statistics": {
-              "charactersCount": 48,
-              "transactionsCount": 1
+          "documents": [
+            {
+              "id": "1",
+              "keyPhrases": [
+                "Bill Gates",
+                "Paul Allen",
+                "Microsoft"
+              ],
+              "statistics": {
+                "charactersCount": 51,
+                "transactionsCount": 1
+              },
+              "warnings": []
             },
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2021-06-01"
+            {
+              "id": "2",
+              "keyPhrases": [
+                "perro",
+                "gato",
+                "veterinario"
+              ],
+              "statistics": {
+                "charactersCount": 48,
+                "transactionsCount": 1
+              },
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2022-10-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1658669752",
+    "RandomSeed": "824511664",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='operationResultId'>
             /// The ID of the operation result to get.
             /// </param>
-            public static object Get(this IOperationResultsOperations operations, string locationName, string operationResultId)
+            public static OperationResultsDescription Get(this IOperationResultsOperations operations, string locationName, string operationResultId)
             {
                 return operations.GetAsync(locationName, operationResultId).GetAwaiter().GetResult();
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAsync(this IOperationResultsOperations operations, string locationName, string operationResultId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationResultsDescription> GetAsync(this IOperationResultsOperations operations, string locationName, string operationResultId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(locationName, operationResultId, null, cancellationToken).ConfigureAwait(false))
                 {

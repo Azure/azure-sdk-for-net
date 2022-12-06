@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2S Vpn connection detailed health written to sas url. </summary>
@@ -16,13 +18,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of P2SVpnConnectionHealth. </summary>
-        /// <param name="sasUrl"> Returned sas url of the blob to which the p2s vpn connection detailed health will be written. </param>
-        internal P2SVpnConnectionHealth(string sasUrl)
+        /// <param name="sasUri"> Returned sas url of the blob to which the p2s vpn connection detailed health will be written. </param>
+        internal P2SVpnConnectionHealth(Uri sasUri)
         {
-            SasUrl = sasUrl;
+            SasUri = sasUri;
         }
 
         /// <summary> Returned sas url of the blob to which the p2s vpn connection detailed health will be written. </summary>
-        public string SasUrl { get; }
+        public Uri SasUri { get; }
     }
 }

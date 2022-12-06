@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobStepListResult DeserializeJobStepListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobStep>> value = default;
+            Optional<IReadOnlyList<SqlServerJobStepData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobStep> array = new List<JobStep>();
+                    List<SqlServerJobStepData> array = new List<SqlServerJobStepData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobStep.DeserializeJobStep(item));
+                        array.Add(SqlServerJobStepData.DeserializeSqlServerJobStepData(item));
                     }
                     value = array;
                     continue;

@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
@@ -440,7 +440,7 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -676,7 +676,7 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
@@ -918,7 +918,7 @@ namespace Microsoft.Azure.Management.EventGrid
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(parentType, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{parentType}", System.Uri.EscapeDataString(parentType));
             _url = _url.Replace("{parentName}", System.Uri.EscapeDataString(parentName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();

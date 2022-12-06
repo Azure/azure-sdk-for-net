@@ -27,7 +27,12 @@ namespace DataFactory.Tests.JsonSamples
              value: ""mykey""
           },
           tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
-          azureCloudType: ""AzurePublic""
+          azureCloudType: ""AzurePublic"",
+          servicePrincipalCredentialType: ""ServicePrincipalKey"",
+          servicePrincipalCredential: {
+             type: ""SecureString"",
+             value: ""mykey""
+          },
         }
     }
 }";
@@ -2680,6 +2685,25 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string GoogleAdWordsConnectionPropertiesLinkedService = @"
+{
+	name: ""GoogleAdWordsLinkedService"",
+	properties: {
+		type: ""GoogleAdWords"",
+		typeProperties: {
+			connectionProperties: {
+				clientCustomerID: ""fakeClientCustomerID"",
+				developerToken: {
+					type: ""SecureString"",
+					value: ""some secret""
+				}
+			}
+		}
+	}
+}
+";
+
+        [JsonSample]
         public const string NetezzaLinkedService = @"
 {
     name: ""NetezzaLinkedService"",
@@ -3278,6 +3302,125 @@ namespace DataFactory.Tests.JsonSamples
                 type : ""SecureString""
             },
             database: ""testdb""
+        }
+    }
+}";
+        [JsonSample]
+        public const string TeamDeskLinkedService = @"
+{
+    name: ""LinkedService-TeamDesk"",
+    properties:
+    {
+        type: ""TeamDesk"",
+        typeProperties: {
+            authenticationType: ""Basic"",
+            userName: ""userName"",
+            password: {
+                value : ""fakePassword"",
+                type : ""SecureString""
+            },
+            url: ""testUrl""
+        }
+    }
+}";
+        [JsonSample]
+        public const string QuickbaseLinkedService = @"
+{
+    name: ""LinkedService-Quickbase"",
+    properties:
+    {
+        type: ""Quickbase"",
+        typeProperties: {
+            userToken: {
+                value : ""fakeUserToken"",
+                type : ""SecureString""
+            },
+            url: ""testUrl""
+        }
+    }
+}";
+        [JsonSample]
+        public const string SmartsheetLinkedService = @"
+{
+    name: ""LinkedService-Smartsheet"",
+    properties:
+    {
+        type: ""Smartsheet"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
+        public const string ZendeskLinkedService = @"
+{
+    name: ""LinkedService-Zendesk"",
+    properties:
+    {
+        type: ""Zendesk"",
+        typeProperties: {
+            authenticationType: ""Token"",
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            },
+            url: ""testUrl""
+        }
+    }
+}";
+        [JsonSample]
+        public const string DataworldLinkedService = @"
+{
+    name: ""LinkedService-Dataworld"",
+    properties:
+    {
+        type: ""Dataworld"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
+        public const string RestLinkedServiceOAuth2 = @"
+{
+    name: ""LinkedService-Rest"",
+    properties:
+    {
+        type: ""RestService"",
+        typeProperties: {
+            url: ""http://example.com"",
+            enableServerCertificateValidation: true,
+            authenticationType: ""OAuth2ClientCredential"",
+            clientId: ""fakeClientId"",
+            clientSecret: {
+                type: ""SecureString"",
+                value: ""somesecretClientSecret""
+            },
+            tokenEndpoint: ""fakeTokenEndpoint"",
+            resource: ""fakeResource"",
+            scope: ""fakeScope""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string GoogleSheetsLinkedService = @"
+{
+    name: ""LinkedService-GoogleSheets"",
+    properties:
+    {
+        type: ""GoogleSheets"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
         }
     }
 }";

@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -19,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
                                 worth the hike! Yesterday was foggy though, so we missed the spectacular views.
@@ -61,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Samples
             RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)

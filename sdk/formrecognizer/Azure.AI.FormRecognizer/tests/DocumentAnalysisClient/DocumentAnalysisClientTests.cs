@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             try
             {
                 using var stream = new MemoryStream(Array.Empty<byte>());
-                await client.StartAnalyzeDocumentAsync("modelId", stream);
+                await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream);
             }
             catch (AggregateException ex)
             {
@@ -109,28 +109,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Analyze Document
 
         /// <summary>
-        /// Verifies functionality of the <see cref="DocumentAnalysisClient.StartAnalyzeDocument"/>
+        /// Verifies functionality of the <see cref="DocumentAnalysisClient.AnalyzeDocument"/>
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentArgumentValidation()
+        public void AnalyzeDocumentArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             var options = new AnalyzeDocumentOptions();
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartAnalyzeDocumentAsync(null, stream, options));
-            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeDocumentAsync("", stream, options));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartAnalyzeDocumentAsync("modelId", null, options));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, null, stream, options));
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, "", stream, options));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", null, options));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="DocumentAnalysisClient.StartAnalyzeDocument"/>
+        /// Verifies functionality of the <see cref="DocumentAnalysisClient.AnalyzeDocument"/>
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentRespectsTheCancellationToken()
+        public void AnalyzeDocumentRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
             var options = new AnalyzeDocumentOptions();
@@ -139,32 +139,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartAnalyzeDocumentAsync("modelId", stream, options, cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream, options, cancellationSource.Token));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="DocumentAnalysisClient.StartAnalyzeDocumentFromUri"/>
+        /// Verifies functionality of the <see cref="DocumentAnalysisClient.AnalyzeDocumentFromUri"/>
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentFromUriArgumentValidation()
+        public void AnalyzeDocumentFromUriArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 
             var fakeUri = new Uri("http://localhost");
             var options = new AnalyzeDocumentOptions();
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartAnalyzeDocumentFromUriAsync(null, fakeUri, options));
-            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeDocumentFromUriAsync("", fakeUri, options));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartAnalyzeDocumentFromUriAsync("modelId", null, options));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, null, fakeUri, options));
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, "", fakeUri, options));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, "modelId", null, options));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="DocumentAnalysisClient.StartAnalyzeDocumentFromUri"/>
+        /// Verifies functionality of the <see cref="DocumentAnalysisClient.AnalyzeDocumentFromUri"/>
         /// method.
         /// </summary>
         [Test]
-        public void StartAnalyzeDocumentFromUriRespectsTheCancellationToken()
+        public void AnalyzeDocumentFromUriRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
             var options = new AnalyzeDocumentOptions();
@@ -173,7 +173,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartAnalyzeDocumentFromUriAsync("modelId", fakeUri, options, cancellationSource.Token));
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, "modelId", fakeUri, options, cancellationSource.Token));
         }
 
         #endregion

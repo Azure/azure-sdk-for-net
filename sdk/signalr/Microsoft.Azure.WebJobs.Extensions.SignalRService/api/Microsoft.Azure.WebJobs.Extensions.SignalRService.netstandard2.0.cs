@@ -1,10 +1,12 @@
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public static partial class Category
     {
         public const string Connections = "connections";
         public const string Messages = "messages";
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public static partial class Event
     {
         public const string Connected = "connected";
@@ -114,12 +116,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     }
     public abstract partial class ServerlessHub<T> where T : class
     {
-        protected ServerlessHub(Microsoft.Azure.SignalR.Management.ServiceHubContext<T> serviceHubContext = null) { }
+        protected ServerlessHub() { }
+        protected ServerlessHub(Microsoft.Azure.SignalR.Management.ServiceHubContext<T> serviceHubContext) { }
         public Microsoft.Azure.SignalR.Management.ClientManager ClientManager { get { throw null; } }
         public Microsoft.AspNetCore.SignalR.IHubClients<T> Clients { get { throw null; } }
         public Microsoft.Azure.SignalR.Management.GroupManager Groups { get { throw null; } }
+        public string HubName { get { throw null; } }
         public Microsoft.Azure.SignalR.Management.UserGroupManager UserGroups { get { throw null; } }
-        protected static System.Collections.Generic.IList<System.Security.Claims.Claim> GetClaims(string jwt) { throw null; }
+        protected System.Collections.Generic.IList<System.Security.Claims.Claim> GetClaims(string jwt) { throw null; }
         protected System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionInfo> NegotiateAsync(Microsoft.Azure.SignalR.Management.NegotiationOptions options) { throw null; }
     }
     public partial class SignalRAsyncCollector<T> : Microsoft.Azure.WebJobs.IAsyncCollector<T>
@@ -136,6 +140,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public string ConnectionStringSetting { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string HubName { get { throw null; } set { } }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
+    public partial class SignalRConnectionAttribute : System.Attribute, Microsoft.Azure.WebJobs.IConnectionProvider
+    {
+        public SignalRConnectionAttribute(string connection) { }
+        public string Connection { get { throw null; } set { } }
     }
     public partial class SignalRConnectionDetail
     {
@@ -223,6 +233,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         public SignalRNegotiationAttribute() { }
     }
+    public partial class SignalROptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
+    {
+        public SignalROptions() { }
+        public Azure.Core.Serialization.ObjectSerializer JsonObjectSerializer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Microsoft.Azure.SignalR.ServiceEndpoint> ServiceEndpoints { get { throw null; } }
+        public Microsoft.Azure.SignalR.Management.ServiceTransportType ServiceTransportType { get { throw null; } set { } }
+        string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
+    }
     public partial class SignalROutputConverter
     {
         public SignalROutputConverter() { }
@@ -248,6 +266,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string HubName { get { throw null; } }
         public string[] ParameterNames { get { throw null; } }
+    }
+    public static partial class SignalRTriggerCategories
+    {
+        public const string Connections = "connections";
+        public const string Messages = "messages";
+    }
+    public static partial class SignalRTriggerEvents
+    {
+        public const string Connected = "connected";
+        public const string Disconnected = "disconnected";
     }
     public partial class SignalRTriggerException : System.Exception
     {

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties of the PartnerNamespace update.
+    /// Properties of the Partner Namespace update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PartnerNamespaceUpdateParameters
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Initializes a new instance of the PartnerNamespaceUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="tags">Tags of the partner namespace.</param>
+        /// <param name="tags">Tags of the Partner Namespace.</param>
         /// <param name="publicNetworkAccess">This determines if traffic is
         /// allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the partner namespace.
+        /// Gets or sets tags of the Partner Namespace.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

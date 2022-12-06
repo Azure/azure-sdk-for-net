@@ -118,7 +118,7 @@ namespace DataBox.Tests
         {
             return new ShippingAddress
             {
-                StreetAddress1 = "16 TOWNSEND ST",
+                StreetAddress1 = "164 TOWNSEND ST",
                 StreetAddress2 = "Unit 1",
                 City = "San Francisco",
                 StateOrProvince = "CA",

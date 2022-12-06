@@ -15,11 +15,11 @@ Use the client library for App Configuration to:
 
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Azure.Data.AppConfiguration
+```dotnetcli
+dotnet add package Azure.Data.AppConfiguration
 ```
 
-### Prerequisites 
+### Prerequisites
 
 * An [Azure subscription][azure_sub].
 * An existing [Configuration Store][configuration_store].  
@@ -60,8 +60,8 @@ var client = new ConfigurationClient(connectionString);
 Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 You will also need to [register a new AAD application][aad_register_app] and [grant access][aad_grant_access] to Configuration Store by assigning the `"App Configuration Data Reader"` or `"App Configuration Data Owner"` role to your service principal.
@@ -84,6 +84,7 @@ The [Label][label_concept] property of a Configuration Setting provides a way to
 For example, MaxRequests may be 100 in "NorthAmerica" and 200 in "WestEurope". By creating a Configuration Setting named MaxRequests with a label of "NorthAmerica" and another, only with a different value, with a "WestEurope" label, an application can seamlessly retrieve Configuration Settings as it runs in these two dimensions.
 
 ### Thread safety
+
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
@@ -101,17 +102,17 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The following sections provide several code snippets covering some of the most common Configuration Service tasks. Note that there are sync and async methods available for both.
 
-- [Create a Configuration Setting](#create-a-configuration-setting)
-- [Retrieve a Configuration Setting](#retrieve-a-configuration-setting)
-- [Update an existing Configuration Setting](#update-an-existing-configuration-setting)
-- [Delete a Configuration Setting](#delete-a-configuration-setting)
+* [Create a Configuration Setting](#create-a-configuration-setting)
+* [Retrieve a Configuration Setting](#retrieve-a-configuration-setting)
+* [Update an existing Configuration Setting](#update-an-existing-configuration-setting)
+* [Delete a Configuration Setting](#delete-a-configuration-setting)
 
 ### Create a Configuration Setting
 
 Create a Configuration Setting to be stored in the Configuration Store. There are two ways to store a Configuration Setting:
 
-- AddConfigurationSetting creates a setting only if the setting does not already exist in the store.
-- SetConfigurationSetting creates a setting if it doesn't exist or overrides an existing setting.
+* AddConfigurationSetting creates a setting only if the setting does not already exist in the store.
+* SetConfigurationSetting creates a setting if it doesn't exist or overrides an existing setting.
 
 ```C# Snippet:CreateConfigurationSetting
 string connectionString = "<connection_string>";
@@ -164,7 +165,7 @@ ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key")
 
 You will notice that additional information is logged, like the Client Request ID of the operation.
 
-```
+```shell
 Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Found', Version: 1.1, Content: System.Net.Http.NoWriteNoSeekStreamContent, Headers:
 {
   Connection: keep-alive
@@ -182,17 +183,17 @@ Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Foun
 
 ### More sample code
 
-Several App Configuration client library samples are available to you in this GitHub repository.  These include: 
-- [Hello world](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample1_HelloWorld.md): Create and delete a configuration setting.
-- [Hello world async with labels](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample2_HelloWorldExtended.md): Asynchronously create, update and delete configuration settings with labels.
-- [Make a configuration setting readonly](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample3_SetClearReadOnly.md): Make a configuration setting read-only, and then return it to a read-write state.
-- [Read revision history](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample4_ReadRevisionHistory.md): Read the revision history of a configuration setting that has been changed.
-- [Get a setting if changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample5_GetSettingIfChanged.md): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
-- [Update a setting if it hasn't changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
-- [Create a mock client](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample7_MockClient.md): Mock a client for testing using the [Moq library][moq].
+Several App Configuration client library samples are available to you in this GitHub repository.  These include:
+
+* [Hello world](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample1_HelloWorld.md): Create and delete a configuration setting.
+* [Hello world async with labels](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample2_HelloWorldExtended.md): Asynchronously create, update and delete configuration settings with labels.
+* [Make a configuration setting readonly](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample3_SetClearReadOnly.md): Make a configuration setting read-only, and then return it to a read-write state.
+* [Read revision history](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample4_ReadRevisionHistory.md): Read the revision history of a configuration setting that has been changed.
+* [Get a setting if changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample5_GetSettingIfChanged.md): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
+* [Update a setting if it hasn't changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
+* [Create a mock client](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample7_MockClient.md): Mock a client for testing using the [Moq library][moq].
 
  For more details see the [samples README][samples_readme].
-
 
 ## Contributing
 

@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of VirtualHubRoute. </summary>
         /// <param name="addressPrefixes"> List of all addressPrefixes. </param>
-        /// <param name="nextHopIpAddress"> NextHop ip address. </param>
-        internal VirtualHubRoute(IList<string> addressPrefixes, string nextHopIpAddress)
+        /// <param name="nextHopIPAddress"> NextHop ip address. </param>
+        internal VirtualHubRoute(IList<string> addressPrefixes, string nextHopIPAddress)
         {
             AddressPrefixes = addressPrefixes;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
         }
 
         /// <summary> List of all addressPrefixes. </summary>
         public IList<string> AddressPrefixes { get; }
         /// <summary> NextHop ip address. </summary>
-        public string NextHopIpAddress { get; set; }
+        public string NextHopIPAddress { get; set; }
     }
 }

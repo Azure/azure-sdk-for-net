@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task RecognizeContentFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -22,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeContentFromUri
 #if SNIPPET
-            Uri formUri = <formUri>;
+            Uri formUri = new Uri("<formUri>");
 #else
             Uri formUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
 #endif

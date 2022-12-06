@@ -2,16 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using Azure.Messaging.ServiceBus.Amqp;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Transaction;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -355,6 +348,79 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.NotNull(receivedMessage);
                 Assert.AreEqual(message2.Body.ToString(), receivedMessage.Body.ToString());
                 await receiver.CompleteMessageAsync(receivedMessage);
+
+                // validate that the Local transaction cannot span multiple entities error is not thrown when outside of a transaction
+                await using var scope2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+                ServiceBusReceiver receiver2 = client.CreateReceiver(scope2.QueueName);
+                await receiver2.ReceiveMessageAsync(TimeSpan.FromSeconds(2));
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanUseSameSenderBothWithinAndOutsideTransactionSimultaneously(bool transactionFirst)
+        {
+            await using (var scope1 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                ServiceBusSender sender1 = client.CreateSender(scope1.QueueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(scope1.QueueName);
+
+                await using var scope2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+                ServiceBusSender sender2 = client.CreateSender(scope2.QueueName);
+
+                ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
+                await sender1.SendMessageAsync(message);
+
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.NotNull(receivedMessage);
+
+                var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                Task transactionTask = SendWithTransactionAsync();
+                Task noTransactionTask = SendWithoutTransactionAsync();
+
+                async Task SendWithTransactionAsync()
+                {
+                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    {
+                        if (!transactionFirst)
+                        {
+                            await tcs.Task;
+                        }
+                        await receiver.CompleteMessageAsync(receivedMessage).ConfigureAwait(false);
+                        if (transactionFirst)
+                        {
+                            tcs.SetResult(true);
+                        }
+
+                        await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                        await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                        ts.Complete();
+                    }
+                }
+
+                async Task SendWithoutTransactionAsync()
+                {
+                    // await the TCS so that we can attempt to call Send from both inside the txn and outside at the same time
+                    if (transactionFirst)
+                    {
+                        await tcs.Task;
+                    }
+                    Assert.IsNull(Transaction.Current);
+                    await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                    if (!transactionFirst)
+                    {
+                        tcs.SetResult(true);
+                    }
+                    Assert.IsNull(Transaction.Current);
+                    await sender2.SendMessageAsync(message).ConfigureAwait(false);
+                }
+
+                // make sure tasks are completed to surface any exceptions
+                await noTransactionTask;
+                await transactionTask;
             }
         }
 
@@ -905,7 +971,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await processorA.StartProcessingAsync();
             await tcs.Task;
-            await processorA.StopProcessingAsync();
+            // close rather than just stop because we want the session link to be closed
+            await processorA.CloseAsync();
 
             // transaction wasn't committed - verify that it was rolled back
             ServiceBusSessionReceiver receiverA = await client.AcceptNextSessionAsync(queueA.QueueName);
@@ -951,7 +1018,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await processorA.StartProcessingAsync();
             await tcs.Task;
-            await processorA.StopProcessingAsync();
+            // close rather than just stop because we want the session link to be closed
+            await processorA.CloseAsync();
 
             // this should timeout as the session message was completed
             Assert.ThrowsAsync<ServiceBusException>(
@@ -998,23 +1066,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
             Assert.IsNotNull(await receiverB.ReceiveMessageAsync());
-        }
-
-        private static void SimulateNetworkFailure(ServiceBusClient client)
-        {
-            var connection = client.Connection;
-            AmqpClient amqpClient = (AmqpClient) typeof(ServiceBusConnection).GetField(
-                    "_innerClient",
-                    BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(connection);
-            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
-                "ConnectionScope",
-                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
-            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
-                "ActiveConnection",
-                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
-
-            typeof(AmqpConnection).GetMethod("AbortInternal", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(activeConnection, null);
         }
 
         private ServiceBusClient CreateCrossEntityTxnClient() =>

@@ -81,7 +81,7 @@ steps:
 - ${{ if parameters.SparseCheckoutPaths }}:
   - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
     parameters:
-      SkipDefaultCheckout: true
+      SkipCheckoutNone: true
       Repositories:
         - Name: ${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }}
           WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo

@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <!-- <PropertyGroup> -->
-        <!-- <TargetFrameworks>netcoreapp1.1</TargetFrameworks> -->
+        <!-- <TargetFrameworks>netcoreapp3.1</TargetFrameworks> -->
     <!-- </PropertyGroup> -->
 
     <ItemGroup>

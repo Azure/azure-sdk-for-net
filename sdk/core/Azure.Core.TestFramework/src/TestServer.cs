@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -36,7 +37,11 @@ namespace Azure.Core.TestFramework
                     {
                         if (https)
                         {
-                            listenOptions.UseHttps();
+                            listenOptions.UseHttps(TestEnvironment.DevCertPath, TestEnvironment.DevCertPassword, config =>
+                            {
+                                config.ClientCertificateMode = Microsoft.AspNetCore.Server.Kestrel.Https.ClientCertificateMode.AllowCertificate;
+                                config.ClientCertificateValidation = (_, _, _) => true;
+                            });
                         }
                     });
                 })

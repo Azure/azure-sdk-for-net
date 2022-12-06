@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -14,6 +15,68 @@ namespace Azure.Monitor.Query.Tests
 {
     public class LogsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
+        [Test]
+        [Explicit]
+        public async Task QueryLogsWithStatistics()
+        {
+            #region Snippet:QueryLogsWithStatistics
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+                workspaceId,
+                "AzureActivity | top 10 by TimeGenerated",
+                new QueryTimeRange(TimeSpan.FromDays(1)),
+                new LogsQueryOptions
+                {
+                    IncludeStatistics = true,
+                });
+
+            BinaryData stats = response.Value.GetStatistics();
+            using var statsDoc = JsonDocument.Parse(stats);
+            var queryStats = statsDoc.RootElement.GetProperty("query");
+            Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());
+
+            #endregion
+        }
+
+        [Test]
+        [Explicit]
+        public async Task QueryLogsWithVisualization()
+        {
+            #region Snippet:QueryLogsWithVisualization
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+                workspaceId,
+                @"StormEvents
+                    | summarize event_count = count() by State
+                    | where event_count > 10
+                    | project State, event_count
+                    | render columnchart",
+                new QueryTimeRange(TimeSpan.FromDays(1)),
+                new LogsQueryOptions
+                {
+                    IncludeVisualization = true,
+                });
+
+            BinaryData viz = response.Value.GetVisualization();
+            using var vizDoc = JsonDocument.Parse(viz);
+            var queryViz = vizDoc.RootElement.GetProperty("visualization");
+            Console.WriteLine(queryViz.GetString());
+
+            #endregion
+        }
+
         [Test]
         [Explicit]
         public async Task QueryLogsAsTable()
@@ -119,10 +182,11 @@ namespace Azure.Monitor.Query.Tests
         {
             #region Snippet:QueryLogsAsModels
 
-            var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
 #if SNIPPET
+            var client = new LogsQueryClient(new DefaultAzureCredential());
             string workspaceId = "<workspace_id>";
 #else
+            var client = new LogsQueryClient(TestEnvironment.LogsEndpoint, new DefaultAzureCredential());
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
 
@@ -199,11 +263,14 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
-                "AzureActivity | summarize count()",
+                @"AzureActivity
+                    | summarize Count = count() by ResourceGroup
+                    | top 10 by Count
+                    | project ResourceGroup",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
-                options: new LogsQueryOptions
+                new LogsQueryOptions
                 {
                     ServerTimeout = TimeSpan.FromMinutes(10)
                 });
@@ -232,11 +299,14 @@ namespace Azure.Monitor.Query.Tests
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             // Query TOP 10 resource groups by event count
-            Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+            Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
                 workspaceId,
-                "AzureActivity | summarize count()",
+                @"AzureActivity
+                    | summarize Count = count() by ResourceGroup
+                    | top 10 by Count
+                    | project ResourceGroup",
                 new QueryTimeRange(TimeSpan.FromDays(1)),
-                options: new LogsQueryOptions
+                new LogsQueryOptions
                 {
                     AdditionalWorkspaces = { additionalWorkspaceId }
                 });
@@ -282,5 +352,32 @@ namespace Azure.Monitor.Query.Tests
             public int Count { get; set; }
         }
         #endregion
+
+        [Test]
+        [Explicit]
+        public async Task QueryLogsWithPartialSuccess()
+        {
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            #region Snippet:QueryLogsWithPartialSuccess
+            Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+                TestEnvironment.WorkspaceId,
+                "My Not So Valid Query",
+                new QueryTimeRange(TimeSpan.FromDays(1)),
+                new LogsQueryOptions
+                {
+                    AllowPartialErrors = true
+                });
+            LogsQueryResult result = response.Value;
+
+            if (result.Status == LogsQueryResultStatus.PartialFailure)
+            {
+                var errorCode = result.Error.Code;
+                var errorMessage = result.Error.Message;
+
+                // code omitted for brevity
+            }
+            #endregion
+        }
     }
 }

@@ -27,7 +27,6 @@ namespace Azure.Data.Tables.Samples
             serviceClient.CreateTable(tableName);
             var tableClient = serviceClient.GetTableClient(tableName);
 
-            #region Snippet:TablesSample5UpsertEntity
             var entity = new TableEntity(partitionKey, rowKey)
             {
                 {"Product", "Markers" },
@@ -37,18 +36,14 @@ namespace Azure.Data.Tables.Samples
 
             // Entity doesn't exist in table, so invoking UpsertEntity will simply insert the entity.
             tableClient.UpsertEntity(entity);
-            #endregion
 
-            #region Snippet:TablesSample5UpsertWithReplace
             // Delete an entity property.
             entity.Remove("Brand");
 
             // Entity does exist in the table, so invoking UpsertEntity will update using the given UpdateMode, which defaults to Merge if not given.
             // Since UpdateMode.Replace was passed, the existing entity will be replaced and delete the "Brand" property.
             tableClient.UpsertEntity(entity, TableUpdateMode.Replace);
-            #endregion
 
-            #region Snippet:TablesSample5UpdateEntity
             // Get the entity to update.
             TableEntity qEntity = tableClient.GetEntity<TableEntity>(partitionKey, rowKey);
             qEntity["Price"] = 7.00;
@@ -59,7 +54,6 @@ namespace Azure.Data.Tables.Samples
             TableEntity updatedEntity = tableClient.GetEntity<TableEntity>(partitionKey, rowKey);
             Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
             Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}");
-            #endregion
 
             serviceClient.DeleteTable(tableName);
         }

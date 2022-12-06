@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SlotType))
+            {
+                writer.WritePropertyName("slotType");
+                writer.WriteStringValue(SlotType.Value.ToString());
+            }
             if (Optional.IsDefined(SwappableCloudService))
             {
                 writer.WritePropertyName("swappableCloudService");
@@ -37,7 +42,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
         {
-            Optional<IList<LoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Optional<CloudServiceSlotType> slotType = default;
             Optional<WritableSubResource> swappableCloudService = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,12 +54,22 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoadBalancerConfiguration> array = new List<LoadBalancerConfiguration>();
+                    List<CloudServiceLoadBalancerConfiguration> array = new List<CloudServiceLoadBalancerConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerConfiguration.DeserializeLoadBalancerConfiguration(item));
+                        array.Add(CloudServiceLoadBalancerConfiguration.DeserializeCloudServiceLoadBalancerConfiguration(item));
                     }
                     loadBalancerConfigurations = array;
+                    continue;
+                }
+                if (property.NameEquals("slotType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    slotType = new CloudServiceSlotType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("swappableCloudService"))
@@ -67,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), swappableCloudService);
+            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), Optional.ToNullable(slotType), swappableCloudService);
         }
     }
 }

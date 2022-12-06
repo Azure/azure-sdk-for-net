@@ -83,6 +83,7 @@ namespace Microsoft.Azure.Management.Synapse
                 new Tuple<string, string, string>("Synapse", "WorkspaceAadAdmins", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedIdentitySqlControlSettings", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerBlobAuditingPolicies", "2021-06-01"),
+                new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerEncryptionProtector", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerExtendedBlobAuditingPolicies", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerRecoverableSqlPools", "2021-06-01"),
@@ -100,7 +101,7 @@ namespace Microsoft.Azure.Management.Synapse
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/synapse/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "c0f5f5f439ce6152ff3c078f9ba02f2549b2b58c";
+      public static readonly String GithubCommidId = "74ca59fc8cb6563d5a9d66fb533b8622522143eb";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

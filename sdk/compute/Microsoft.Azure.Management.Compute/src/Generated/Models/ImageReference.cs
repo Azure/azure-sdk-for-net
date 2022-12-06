@@ -45,7 +45,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// and Build are decimal numbers. Specify 'latest' to use the latest
         /// version of an image available at deploy time. Even if you use
         /// 'latest', the VM image will not automatically update after deploy
-        /// time even if a new version becomes available.</param>
+        /// time even if a new version becomes available. Please do not use
+        /// field 'version' for gallery image deployment, gallery image should
+        /// always use 'id' field for deployment, to use 'latest' version of
+        /// gallery image, just set
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}'
+        /// in the 'id' field without version input.</param>
         /// <param name="exactVersion">Specifies in decimal numbers, the
         /// version of platform image or marketplace image used to create the
         /// virtual machine. This readonly field differs from 'version', only
@@ -53,7 +58,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="sharedGalleryImageId">Specified the shared gallery
         /// image unique id for vm deployment. This can be fetched from shared
         /// gallery image GET call.</param>
-        public ImageReference(string id = default(string), string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string exactVersion = default(string), string sharedGalleryImageId = default(string))
+        /// <param name="communityGalleryImageId">Specified the community
+        /// gallery image unique id for vm deployment. This can be fetched from
+        /// community gallery image GET call.</param>
+        public ImageReference(string id = default(string), string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string exactVersion = default(string), string sharedGalleryImageId = default(string), string communityGalleryImageId = default(string))
             : base(id)
         {
             Publisher = publisher;
@@ -62,6 +70,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Version = version;
             ExactVersion = exactVersion;
             SharedGalleryImageId = sharedGalleryImageId;
+            CommunityGalleryImageId = communityGalleryImageId;
             CustomInit();
         }
 
@@ -96,7 +105,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// are decimal numbers. Specify 'latest' to use the latest version of
         /// an image available at deploy time. Even if you use 'latest', the VM
         /// image will not automatically update after deploy time even if a new
-        /// version becomes available.
+        /// version becomes available. Please do not use field 'version' for
+        /// gallery image deployment, gallery image should always use 'id'
+        /// field for deployment, to use 'latest' version of gallery image,
+        /// just set
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}'
+        /// in the 'id' field without version input.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
@@ -116,6 +130,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "sharedGalleryImageId")]
         public string SharedGalleryImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specified the community gallery image unique id for vm
+        /// deployment. This can be fetched from community gallery image GET
+        /// call.
+        /// </summary>
+        [JsonProperty(PropertyName = "communityGalleryImageId")]
+        public string CommunityGalleryImageId { get; set; }
 
     }
 }

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Get an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Get an event subscription of a partner topic.
+        /// Get properties of an event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Delete an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Delete an event subscription of a partner topic.
+        /// Delete an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Update event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Update event subscription of a partner topic.
+        /// Update an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Delete an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Delete an event subscription of a partner topic.
+        /// Delete an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Update event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Update event subscription of a partner topic.
+        /// Update an existing event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.

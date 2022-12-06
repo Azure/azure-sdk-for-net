@@ -40,6 +40,18 @@
         "UnboundAccess": "read,write"
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "IList<HttpHeader>",
+        "Name": "UploadHeaders",
+        "SummaryComment": "A list of name-value pairs for headers to be used in uploading output files.",
+        "RemarksComment": "These headers will be specified when uploading files to Azure Storage. For more information, see [Request Headers (All Blob Types)](https://docs.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types).",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "None"
+      },
+      "Value": null
     }
   ]
 }

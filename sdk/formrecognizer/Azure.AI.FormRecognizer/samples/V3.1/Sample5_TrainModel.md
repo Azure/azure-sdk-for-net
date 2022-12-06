@@ -25,11 +25,14 @@ Train custom models to recognize all fields and values found in your custom form
 
 ```C# Snippet:FormRecognizerSampleTrainModelWithForms
 // For this sample, you can use the training forms found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions on setting up forms for training in an Azure Storage Blob Container, see
+// Upload the forms to your storage container and then generate a container SAS URL. Note
+// that a container URI without SAS is accepted only when the container is public or has a
+// managed identity configured.
+//
+// For instructions on setting up forms for training in an Azure Blob Storage Container, see
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");
@@ -65,14 +68,17 @@ Train custom models to recognize specific fields and values you specify by label
 
 ```C# Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
 // For this sample, you can use the training forms found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions to set up forms for training in an Azure Storage Blob Container, please see:
+// Upload the forms to your storage container and then generate a container SAS URL. Note
+// that a container URI without SAS is accepted only when the container is public or has a
+// managed identity configured.
+//
+// For instructions to set up forms for training in an Azure Blob Storage Container, please see:
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 // For instructions to create a label file for your training forms, please see:
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 string modelName = "My Model with labels";
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -102,11 +108,6 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Train a model with forms](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample5_TrainModelWithForms.cs)
-* [Train a model with forms and labels](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample6_TrainModelWithFormsAndLabels.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1

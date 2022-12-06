@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Management.LabServices
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -69,14 +69,9 @@ namespace Microsoft.Azure.Management.LabServices
 
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IImagesOperations.
         /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IOperationResultsOperations.
-        /// </summary>
-        IOperationResultsOperations OperationResults { get; }
+        IImagesOperations Images { get; }
 
         /// <summary>
         /// Gets the ILabPlansOperations.
@@ -84,14 +79,24 @@ namespace Microsoft.Azure.Management.LabServices
         ILabPlansOperations LabPlans { get; }
 
         /// <summary>
-        /// Gets the IImagesOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IImagesOperations Images { get; }
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the ILabsOperations.
         /// </summary>
         ILabsOperations Labs { get; }
+
+        /// <summary>
+        /// Gets the IOperationResultsOperations.
+        /// </summary>
+        IOperationResultsOperations OperationResults { get; }
+
+        /// <summary>
+        /// Gets the ISchedulesOperations.
+        /// </summary>
+        ISchedulesOperations Schedules { get; }
 
         /// <summary>
         /// Gets the IUsersOperations.
@@ -104,9 +109,14 @@ namespace Microsoft.Azure.Management.LabServices
         IVirtualMachinesOperations VirtualMachines { get; }
 
         /// <summary>
-        /// Gets the ISchedulesOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        ISchedulesOperations Schedules { get; }
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the ISkusOperations.
+        /// </summary>
+        ISkusOperations Skus { get; }
 
     }
 }

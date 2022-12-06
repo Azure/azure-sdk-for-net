@@ -62,6 +62,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("notebook");
             writer.WriteObjectValue(Notebook);
+            if (Optional.IsDefined(SparkPool))
+            {
+                writer.WritePropertyName("sparkPool");
+                writer.WriteObjectValue(SparkPool);
+            }
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
@@ -72,6 +77,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ExecutorSize))
+            {
+                writer.WritePropertyName("executorSize");
+                writer.WriteObjectValue(ExecutorSize);
+            }
+            if (Optional.IsDefined(Conf))
+            {
+                writer.WritePropertyName("conf");
+                writer.WriteObjectValue(Conf);
+            }
+            if (Optional.IsDefined(DriverSize))
+            {
+                writer.WritePropertyName("driverSize");
+                writer.WriteObjectValue(DriverSize);
+            }
+            if (Optional.IsDefined(NumExecutors))
+            {
+                writer.WritePropertyName("numExecutors");
+                writer.WriteNumberValue(NumExecutors.Value);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -92,7 +117,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             SynapseNotebookReference notebook = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            Optional<BigDataPoolParametrizationReference> sparkPool = default;
+            Optional<IDictionary<string, NotebookParameter>> parameters = default;
+            Optional<object> executorSize = default;
+            Optional<object> conf = default;
+            Optional<object> driverSize = default;
+            Optional<int> numExecutors = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -176,6 +206,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             notebook = SynapseNotebookReference.DeserializeSynapseNotebookReference(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("sparkPool"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sparkPool = BigDataPoolParametrizationReference.DeserializeBigDataPoolParametrizationReference(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("parameters"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -183,12 +223,52 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, NotebookParameter> dictionary = new Dictionary<string, NotebookParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, NotebookParameter.DeserializeNotebookParameter(property1.Value));
                             }
                             parameters = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("executorSize"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            executorSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("conf"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            conf = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("driverSize"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            driverSize = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("numExecutors"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numExecutors = property0.Value.GetInt32();
                             continue;
                         }
                     }
@@ -197,7 +277,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseNotebookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, Optional.ToDictionary(parameters));
+            return new SynapseNotebookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, sparkPool.Value, Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, Optional.ToNullable(numExecutors));
         }
 
         internal partial class SynapseNotebookActivityConverter : JsonConverter<SynapseNotebookActivity>

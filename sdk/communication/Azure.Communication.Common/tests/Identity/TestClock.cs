@@ -10,11 +10,11 @@ namespace Azure.Communication.Identity
 {
     /// <summary>
     /// Test utility to manipulate time and timers. Pass the UtcNow and Schedule members to the code under test and
-    /// call Tick to change the clock and excute any scheduled actions that are due.
+    /// call Tick to change the clock and execute any scheduled actions that are due.
     /// </summary>
     internal class TestClock
     {
-        private readonly List<ScheduledAction> _scheduledActions = new List<ScheduledAction>();
+        private readonly List<ScheduledAction> _scheduledActions = new();
         public IEnumerable<IScheduledAction> ScheduledActions => _scheduledActions.Where(x => !x.IsDisposed && !x.HasExecuted).Cast<IScheduledAction>();
 
         public IScheduledAction Schedule(Action action, TimeSpan period)

@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         /// <param name="result">Evaluation result.</param>
         /// <param name="expression">Expression evaluated.</param>
+        /// <param name="expressionKind">The kind of expression that was
+        /// evaluated.</param>
         /// <param name="path">Property path if the expression is a field or an
         /// alias.</param>
         /// <param name="expressionValue">Value of the expression.</param>
@@ -40,10 +42,11 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// expression value.</param>
         /// <param name="operatorProperty">Operator to compare the expression
         /// value and the target value.</param>
-        public ExpressionEvaluationDetails(string result = default(string), string expression = default(string), string path = default(string), object expressionValue = default(object), object targetValue = default(object), string operatorProperty = default(string))
+        public ExpressionEvaluationDetails(string result = default(string), string expression = default(string), string expressionKind = default(string), string path = default(string), object expressionValue = default(object), object targetValue = default(object), string operatorProperty = default(string))
         {
             Result = result;
             Expression = expression;
+            ExpressionKind = expressionKind;
             Path = path;
             ExpressionValue = expressionValue;
             TargetValue = targetValue;
@@ -67,6 +70,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "expression")]
         public string Expression { get; set; }
+
+        /// <summary>
+        /// Gets the kind of expression that was evaluated.
+        /// </summary>
+        [JsonProperty(PropertyName = "expressionKind")]
+        public string ExpressionKind { get; private set; }
 
         /// <summary>
         /// Gets or sets property path if the expression is a field or an

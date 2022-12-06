@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<PatchOperationStatus> status = default;
             Optional<string> installationActivityId = default;
-            Optional<VMGuestPatchRebootStatus> rebootStatus = default;
+            Optional<VmGuestPatchRebootStatus> rebootStatus = default;
             Optional<bool> maintenanceWindowExceeded = default;
             Optional<int> excludedPatchCount = default;
             Optional<int> notSelectedPatchCount = default;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> failedPatchCount = default;
             Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
             Optional<DateTimeOffset> startDateTime = default;
-            Optional<ApiError> error = default;
+            Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rebootStatus = new VMGuestPatchRebootStatus(property.Value.GetString());
+                    rebootStatus = new VmGuestPatchRebootStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maintenanceWindowExceeded"))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ApiError.DeserializeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
             }

@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
@@ -17,9 +18,14 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
+        protected VirtualMachineScaleSetTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         protected async Task<VirtualMachineScaleSetCollection> GetVirtualMachineScaleSetCollectionAsync()
         {
-            _genericResourceCollection = DefaultSubscription.GetGenericResources();
+            _genericResourceCollection = Client.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
             return _resourceGroup.GetVirtualMachineScaleSets();
         }

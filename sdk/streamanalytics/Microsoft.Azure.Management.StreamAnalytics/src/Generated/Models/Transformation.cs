@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -39,6 +41,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <param name="type">Resource type</param>
         /// <param name="streamingUnits">Specifies the number of streaming
         /// units that the streaming job uses.</param>
+        /// <param name="validStreamingUnits">Specifies the valid streaming
+        /// units a streaming job can scale to.</param>
         /// <param name="query">Specifies the query that will be run in the
         /// streaming job. You can learn more about the Stream Analytics Query
         /// Language (SAQL) here:
@@ -49,10 +53,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// resource has changed between requests. You can also use it in the
         /// If-Match or If-None-Match headers for write operations for
         /// optimistic concurrency.</param>
-        public Transformation(string id = default(string), string name = default(string), string type = default(string), int? streamingUnits = default(int?), string query = default(string), string etag = default(string))
+        public Transformation(string id = default(string), string name = default(string), string type = default(string), int? streamingUnits = default(int?), IList<int?> validStreamingUnits = default(IList<int?>), string query = default(string), string etag = default(string))
             : base(id, name, type)
         {
             StreamingUnits = streamingUnits;
+            ValidStreamingUnits = validStreamingUnits;
             Query = query;
             Etag = etag;
             CustomInit();
@@ -69,6 +74,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamingUnits")]
         public int? StreamingUnits { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the valid streaming units a streaming job
+        /// can scale to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.validStreamingUnits")]
+        public IList<int?> ValidStreamingUnits { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the query that will be run in the streaming

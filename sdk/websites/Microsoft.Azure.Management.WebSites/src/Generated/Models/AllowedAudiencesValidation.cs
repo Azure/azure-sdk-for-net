@@ -10,15 +10,15 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    [Rest.Serialization.JsonTransformation]
-    public partial class AllowedAudiencesValidation : ProxyOnlyResource
+    /// <summary>
+    /// The configuration settings of the Allowed Audiences validation flow.
+    /// </summary>
+    public partial class AllowedAudiencesValidation
     {
         /// <summary>
         /// Initializes a new instance of the AllowedAudiencesValidation class.
@@ -31,12 +31,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the AllowedAudiencesValidation class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
-        public AllowedAudiencesValidation(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<string> allowedAudiences = default(IList<string>))
-            : base(id, name, kind, type)
+        /// <param name="allowedAudiences">The configuration settings of the
+        /// allowed list of audiences from which to validate the JWT
+        /// token.</param>
+        public AllowedAudiencesValidation(IList<string> allowedAudiences = default(IList<string>))
         {
             AllowedAudiences = allowedAudiences;
             CustomInit();
@@ -48,8 +46,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the configuration settings of the allowed list of
+        /// audiences from which to validate the JWT token.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.allowedAudiences")]
+        [JsonProperty(PropertyName = "allowedAudiences")]
         public IList<string> AllowedAudiences { get; set; }
 
     }

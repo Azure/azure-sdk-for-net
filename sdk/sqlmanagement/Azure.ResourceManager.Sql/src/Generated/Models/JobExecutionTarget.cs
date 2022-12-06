@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of JobExecutionTarget. </summary>
-        /// <param name="type"> The type of the target. </param>
+        /// <param name="targetType"> The type of the target. </param>
         /// <param name="serverName"> The server name. </param>
         /// <param name="databaseName"> The database name. </param>
-        internal JobExecutionTarget(JobTargetType? type, string serverName, string databaseName)
+        internal JobExecutionTarget(JobTargetType? targetType, string serverName, string databaseName)
         {
-            Type = type;
+            TargetType = targetType;
             ServerName = serverName;
             DatabaseName = databaseName;
         }
 
         /// <summary> The type of the target. </summary>
-        public JobTargetType? Type { get; }
+        public JobTargetType? TargetType { get; }
         /// <summary> The server name. </summary>
         public string ServerName { get; }
         /// <summary> The database name. </summary>

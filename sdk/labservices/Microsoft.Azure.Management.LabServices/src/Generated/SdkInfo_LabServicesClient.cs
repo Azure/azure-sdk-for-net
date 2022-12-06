@@ -19,24 +19,26 @@ namespace Microsoft.Azure.Management.LabServices
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("LabServices", "Images", "2021-10-01-preview"),
-                new Tuple<string, string, string>("LabServices", "LabPlans", "2021-10-01-preview"),
-                new Tuple<string, string, string>("LabServices", "Labs", "2021-10-01-preview"),
-                new Tuple<string, string, string>("LabServices", "OperationResults", "2021-10-01-preview"),
-                new Tuple<string, string, string>("LabServices", "Operations", "2021-10-01-preview"),
-                new Tuple<string, string, string>("LabServices", "Schedules", "2021-10-01-preview"),
-                new Tuple<string, string, string>("LabServices", "Users", "2021-10-01-preview"),
-                new Tuple<string, string, string>("LabServices", "VirtualMachines", "2021-10-01-preview"),
+                new Tuple<string, string, string>("LabServices", "Images", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "LabPlans", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "Labs", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "OperationResults", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "Operations", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "Schedules", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "Skus", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "Usages", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "Users", "2021-11-15-preview"),
+                new Tuple<string, string, string>("LabServices", "VirtualMachines", "2021-11-15-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.4.0";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/labservices/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Repos\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/labservices/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Projects\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "2ebe584103a362fa87f2f60c9bab89ab410c7571";
+      public static readonly String GithubCommidId = "f68e478437a9065651c982788769337fc4d8fb37";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

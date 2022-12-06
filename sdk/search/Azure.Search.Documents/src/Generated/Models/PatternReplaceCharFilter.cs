@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,21 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="pattern"> A regular expression pattern. </param>
         /// <param name="replacement"> The replacement text. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="pattern"/>, or <paramref name="replacement"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="pattern"/> or <paramref name="replacement"/> is null. </exception>
         public PatternReplaceCharFilter(string name, string pattern, string replacement) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (pattern == null)
-            {
-                throw new ArgumentNullException(nameof(pattern));
-            }
-            if (replacement == null)
-            {
-                throw new ArgumentNullException(nameof(replacement));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(pattern, nameof(pattern));
+            Argument.AssertNotNull(replacement, nameof(replacement));
 
             Pattern = pattern;
             Replacement = replacement;

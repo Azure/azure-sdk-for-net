@@ -193,6 +193,9 @@ namespace Microsoft.Azure.Management.ExtendedLocation
         /// <param name='resourceName'>
         /// Custom Locations name.
         /// </param>
+        /// <param name='identity'>
+        /// Identity for the resource.
+        /// </param>
         /// <param name='authentication'>
         /// This is optional input that contains the authentication that should
         /// be used to generate the namespace.
@@ -236,7 +239,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CustomLocation>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CustomLocation>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, Identity identity = default(Identity), CustomLocationPropertiesAuthentication authentication = default(CustomLocationPropertiesAuthentication), IList<string> clusterExtensionIds = default(IList<string>), string displayName = default(string), string hostResourceId = default(string), string hostType = default(string), string namespaceParameter = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of Enabled Resource Types.
         /// </summary>

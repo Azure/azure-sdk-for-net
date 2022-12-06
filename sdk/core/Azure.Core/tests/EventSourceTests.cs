@@ -200,7 +200,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task GettingErrorRequestProducesEvents()
+        public async Task GettingErrorResponseProducesEvents()
         {
             var response = new MockResponse(500);
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });

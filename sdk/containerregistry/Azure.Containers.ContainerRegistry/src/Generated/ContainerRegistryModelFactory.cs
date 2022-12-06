@@ -62,7 +62,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="digest"> Manifest. </param>
-        /// <param name="size"> Image size. </param>
+        /// <param name="sizeInBytes"> Image size. </param>
         /// <param name="createdOn"> Created time. </param>
         /// <param name="lastUpdatedOn"> Last update time. </param>
         /// <param name="architecture"> CPU architecture. </param>
@@ -74,12 +74,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
         /// <returns> A new <see cref="ContainerRegistry.ArtifactManifestProperties"/> instance for mocking. </returns>
-        public static ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer = null, string repositoryName = null, string digest = null, long? size = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ArtifactArchitecture? architecture = null, ArtifactOperatingSystem? operatingSystem = null, IEnumerable<ArtifactManifestPlatform> relatedArtifacts = null, IEnumerable<string> tags = null, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
+        public static ArtifactManifestProperties ArtifactManifestProperties(string registryLoginServer = null, string repositoryName = null, string digest = null, long? sizeInBytes = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ArtifactArchitecture? architecture = null, ArtifactOperatingSystem? operatingSystem = null, IEnumerable<ArtifactManifestPlatform> relatedArtifacts = null, IEnumerable<string> tags = null, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
             relatedArtifacts ??= new List<ArtifactManifestPlatform>();
             tags ??= new List<string>();
 
-            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, size, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts?.ToList(), tags?.ToList(), canDelete, canWrite, canList, canRead);
+            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, sizeInBytes, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts?.ToList(), tags?.ToList(), canDelete, canWrite, canList, canRead);
         }
     }
 }

@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/lmazuel/swagger-to-sdk/master/swagger_to_sdk_config.schema.json",
   "meta": {
     "autorest_options": {
-      "version": "V2",
+      "version": "2.0.4421",
       "csharp": "",
       "reflect-api-versions": "",
       "license-header": "MICROSOFT_MIT_NO_VERSION",

@@ -42,7 +42,7 @@ Every relay configuration has an expiry date and time stamped on it, indicating 
 ```C# Snippet:GetRelayConfiguration
 Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration();
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
 foreach (CommunicationIceServer iceServer in iceServers)
 {

@@ -1,6 +1,6 @@
 # Release History
 
-## 15.2.0-beta.1 (Unreleased)
+## 15.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,37 @@
 
 ### Other Changes
 
-## 15.2.0 (2021-08-10)
+## 15.4.0 (2022-10-01)
+
+### Features Added
+
+- Added new custom enum type `NodeCommunicationMode`.
+  - This property determines how a pool communicates with the Batch service.
+  - Possible values: Default, Classic, Simplified.
+- Added properties `CurrentNodeCommunicationMode` and `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `CloudPool`.
+- Added property `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `PoolSpecification`, `PoolAddParameter`, `PoolPatchParameter`, and `PoolUpdatePropertiesParameter`.
+
+### Other Changes
+
+- Modified descriptions of `ApplicationId`, `UploadHeaders`, and `Name` (UserAccount) properties.
+
+## 15.3.0 (2022-01-07)
+
+### Features Added
+
+- Added property `UploadHeaders` to `OutputFileBlobContainerDestination`.
+  - Allows users to set custom HTTP headers on resource file uploads.
+  - Array of type `HttpHeader` (also being added).
+- Added boolean property `AllowTaskPreemption` to `JobSpecification`, `CloudJob`, `JobAddParameter`, `JobPatchParameter`, `JobUpdateParameter`
+  - Mark Tasks as preemptible for higher priority Tasks (requires Comms-Enabled or Single Tenant Pool).
+- Replaced comment (title, description, etc.) references of "low-priority" with "Spot/Low-Priority", to reflect new service behavior.
+  - No API change required.
+  - Low-Priority Compute Nodes (VMs) will continue to be used for User Subscription pools (and only User Subscription pools), as before.
+  - Spot Compute Nodes (VMs) will now be used for Batch Managed (and only Batch Managed pools) pools.
+
+### Bugs Fixed
+
+- Fixed OutputFileBlobContainerDestination constructor null reference exception.
 
 ## Features Added
 

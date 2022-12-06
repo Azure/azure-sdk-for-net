@@ -1,0 +1,93 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-text?api-version=2021-10-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "690",
+        "Content-Type": "application/json",
+        "traceparent": "00-595e4b5c802c638d6579f4cdb2236062-c2f9747cd5f3f52a-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "67b61b55c381b21dd014d0ec3af2c55f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "question": "How long it takes to charge surface?",
+        "records": [
+          {
+            "id": "1",
+            "text": "Power and charging. It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it."
+          },
+          {
+            "id": "2",
+            "text": "You can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface."
+          }
+        ],
+        "language": "en",
+        "stringIndexType": "Utf16CodeUnit"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b2a30c62-718a-4c23-bbc8-2f259ffe3316",
+        "Content-Length": "1476",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=2",
+        "Date": "Thu, 22 Sep 2022 00:25:34 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "434"
+      },
+      "ResponseBody": {
+        "answers": [
+          {
+            "answer": "Power and charging. It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.",
+            "confidenceScore": 0.930730938911438,
+            "id": "1",
+            "answerSpan": {
+              "text": "two to four hours",
+              "confidenceScore": 0.994789,
+              "offset": 28,
+              "length": 18
+            },
+            "offset": 0,
+            "length": 245
+          },
+          {
+            "answer": "It takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.",
+            "confidenceScore": 0.92386794090271,
+            "id": "1",
+            "answerSpan": {
+              "text": "two to four hours",
+              "confidenceScore": 0.99445844,
+              "offset": 8,
+              "length": 18
+            },
+            "offset": 20,
+            "length": 225
+          },
+          {
+            "answer": "It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.",
+            "confidenceScore": 0.11520536988973618,
+            "id": "1",
+            "answerSpan": {
+              "text": "longer",
+              "confidenceScore": 0.68131536,
+              "offset": 11,
+              "length": 7
+            },
+            "offset": 110,
+            "length": 135
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "RandomSeed": "1119387684"
+  }
+}

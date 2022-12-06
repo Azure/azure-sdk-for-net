@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,21 +19,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/>, <paramref name="repository"/>, or <paramref name="tagAttributeBases"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/>, <paramref name="repository"/> or <paramref name="tagAttributeBases"/> is null. </exception>
         internal TagList(string registryLoginServer, string repository, IEnumerable<TagAttributesBase> tagAttributeBases)
         {
-            if (registryLoginServer == null)
-            {
-                throw new ArgumentNullException(nameof(registryLoginServer));
-            }
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-            if (tagAttributeBases == null)
-            {
-                throw new ArgumentNullException(nameof(tagAttributeBases));
-            }
+            Argument.AssertNotNull(registryLoginServer, nameof(registryLoginServer));
+            Argument.AssertNotNull(repository, nameof(repository));
+            Argument.AssertNotNull(tagAttributeBases, nameof(tagAttributeBases));
 
             RegistryLoginServer = registryLoginServer;
             Repository = repository;

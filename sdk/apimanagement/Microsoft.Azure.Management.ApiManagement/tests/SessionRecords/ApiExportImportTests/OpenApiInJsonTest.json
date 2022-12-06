@@ -1,67 +1,67 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZT9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "843ef850-db6c-4918-8cb3-6efb447bb183"
+          "630b75cf-5b02-4452-abaf-246502ee0a9a"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "289"
+          "342"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:56:52 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAU2+c=\""
+          "\"AAAAAAAc1T0=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7debe1de-20f0-44d5-b2fb-1b5a93b45876",
-          "3c208fa9-4e36-4779-8157-165a5e8e9ee8"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "4e07245c-b518-4ebc-8fc1-e3651ce8794f",
+          "3cf128f7-3f30-4e8b-99e0-f9538a75a86a"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "cb29d5b4-a4c3-4fbd-8fac-e0009d5facde"
+          "d80c3742-b951-4820-9881-4a66c261be85"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231017Z:cb29d5b4-a4c3-4fbd-8fac-e0009d5facde"
+          "WESTUS:20211027T235653Z:d80c3742-b951-4820-9881-4a66c261be85"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:16 GMT"
-        ],
         "Content-Length": [
-          "2221"
+          "2533"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -70,25 +70,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAAU2+c=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2019-08-23T10:23:03.7042803Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"104.43.169.82\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null,\r\n  \"zones\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAAc1T0=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2019-08-23T10:23:03.7042803Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"104.43.171.8\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv1\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"2c0119c2-0acb-487f-9229-7bf3dce57d0a\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZT9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZT9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bf87cc19-ee5b-44a6-bf41-5e3a14849d2f"
+          "37a9c842-8e9c-49bf-9d03-39689e57229f"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -96,38 +96,38 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:56:52 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAU2+c=\""
+          "\"AAAAAAAc1T0=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "354ab24c-8493-43e3-8ece-0267c8561d01"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "5ba276fd-96d0-4f30-8c76-d122b615ffb6"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "80d8ab53-f490-49eb-a9c3-2c8fdd60f14e"
+          "c64014a3-3e30-4c5d-a121-a8b56928f472"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231017Z:80d8ab53-f490-49eb-a9c3-2c8fdd60f14e"
+          "WESTUS:20211027T235653Z:c64014a3-3e30-4c5d-a121-a8b56928f472"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:16 GMT"
-        ],
         "Content-Length": [
-          "2221"
+          "2533"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -136,25 +136,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAAU2+c=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2019-08-23T10:23:03.7042803Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"104.43.169.82\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null,\r\n  \"zones\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAAc1T0=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2019-08-23T10:23:03.7042803Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true,\r\n        \"identityClientId\": null,\r\n        \"certificateSource\": \"BuiltIn\",\r\n        \"certificateStatus\": null\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"104.43.171.8\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    },\r\n    \"publicIpAddressId\": null,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"privateEndpointConnections\": null,\r\n    \"platformVersion\": \"stv1\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"2c0119c2-0acb-487f-9229-7bf3dce57d0a\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  },\r\n  \"zones\": null,\r\n  \"systemData\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDkyODY/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDgyODI/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"path\": \"openapi4\",\r\n    \"value\": \"{\\r\\n    \\\"openapi\\\": \\\"3.0.0\\\",\\r\\n    \\\"servers\\\": [\\r\\n        {\\r\\n            \\\"url\\\": \\\"http://petstore.swagger.io/v2\\\"\\r\\n        }\\r\\n    ],\\r\\n    \\\"info\\\": {\\r\\n        \\\"description\\\": \\\":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\\\",\\r\\n        \\\"version\\\": \\\"1.0.0\\\",\\r\\n        \\\"title\\\": \\\"Swagger Petstore\\\",\\r\\n        \\\"termsOfService\\\": \\\"http://swagger.io/terms/\\\",\\r\\n        \\\"contact\\\": {\\r\\n            \\\"email\\\": \\\"apiteam@swagger.io\\\"\\r\\n        },\\r\\n        \\\"license\\\": {\\r\\n            \\\"name\\\": \\\"Apache 2.0\\\",\\r\\n            \\\"url\\\": \\\"http://www.apache.org/licenses/LICENSE-2.0.html\\\"\\r\\n        }\\r\\n    },\\r\\n    \\\"tags\\\": [\\r\\n        {\\r\\n            \\\"name\\\": \\\"pet\\\",\\r\\n            \\\"description\\\": \\\"Everything about your Pets\\\",\\r\\n            \\\"externalDocs\\\": {\\r\\n                \\\"description\\\": \\\"Find out more\\\",\\r\\n                \\\"url\\\": \\\"http://swagger.io\\\"\\r\\n            }\\r\\n        },\\r\\n        {\\r\\n            \\\"name\\\": \\\"store\\\",\\r\\n            \\\"description\\\": \\\"Access to Petstore orders\\\"\\r\\n        },\\r\\n        {\\r\\n            \\\"name\\\": \\\"user\\\",\\r\\n            \\\"description\\\": \\\"Operations about user\\\",\\r\\n            \\\"externalDocs\\\": {\\r\\n                \\\"description\\\": \\\"Find out more about our store\\\",\\r\\n                \\\"url\\\": \\\"http://swagger.io\\\"\\r\\n            }\\r\\n        }\\r\\n    ],\\r\\n    \\\"paths\\\": {\\r\\n        \\\"/pet\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Add a new pet to the store\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"addPet\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"405\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid input\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/Pet\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            },\\r\\n            \\\"put\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Update an existing pet\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"updatePet\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Pet not found\\\"\\r\\n                    },\\r\\n                    \\\"405\\\": {\\r\\n                        \\\"description\\\": \\\"Validation exception\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/Pet\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/findByStatus\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Finds Pets by status\\\",\\r\\n                \\\"description\\\": \\\"Multiple status values can be provided with comma separated strings\\\",\\r\\n                \\\"operationId\\\": \\\"findPetsByStatus\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"status\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"Status values that need to be considered for filter\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"explode\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"type\\\": \\\"string\\\",\\r\\n                                \\\"enum\\\": [\\r\\n                                    \\\"available\\\",\\r\\n                                    \\\"pending\\\",\\r\\n                                    \\\"sold\\\"\\r\\n                                ],\\r\\n                                \\\"default\\\": \\\"available\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid status value\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ]\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/findByTags\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Finds Pets by tags\\\",\\r\\n                \\\"description\\\": \\\"Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.\\\",\\r\\n                \\\"operationId\\\": \\\"findPetsByTags\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"tags\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"Tags to filter by\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"explode\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"type\\\": \\\"string\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid tag value\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"deprecated\\\": true\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/{petId}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Find pet by ID\\\",\\r\\n                \\\"description\\\": \\\"Returns a single pet\\\",\\r\\n                \\\"operationId\\\": \\\"getPetById\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet to return\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Pet not found\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"api_key\\\": []\\r\\n                    }\\r\\n                ]\\r\\n            },\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Updates a pet in the store with form data\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"updatePetWithForm\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet that needs to be updated\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"405\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid input\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/x-www-form-urlencoded\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"type\\\": \\\"object\\\",\\r\\n                                \\\"properties\\\": {\\r\\n                                    \\\"name\\\": {\\r\\n                                        \\\"description\\\": \\\"Updated name of the pet\\\",\\r\\n                                        \\\"type\\\": \\\"string\\\"\\r\\n                                    },\\r\\n                                    \\\"status\\\": {\\r\\n                                        \\\"description\\\": \\\"Updated status of the pet\\\",\\r\\n                                        \\\"type\\\": \\\"string\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"delete\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Deletes a pet\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"deletePet\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"api_key\\\",\\r\\n                        \\\"in\\\": \\\"header\\\",\\r\\n                        \\\"required\\\": false,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"Pet id to delete\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Pet not found\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ]\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/{petId}/uploadImage\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"uploads an image\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"uploadFile\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet to update\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/ApiResponse\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/octet-stream\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"type\\\": \\\"string\\\",\\r\\n                                \\\"format\\\": \\\"binary\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/store/inventory\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Returns pet inventories by status\\\",\\r\\n                \\\"description\\\": \\\"Returns a map of status codes to quantities\\\",\\r\\n                \\\"operationId\\\": \\\"getInventory\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"object\\\",\\r\\n                                    \\\"additionalProperties\\\": {\\r\\n                                        \\\"type\\\": \\\"integer\\\",\\r\\n                                        \\\"format\\\": \\\"int32\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"api_key\\\": []\\r\\n                    }\\r\\n                ],\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/store/order\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Place an order for a pet\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"placeOrder\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid Order\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/json\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"description\\\": \\\"order placed for purchasing the pet\\\",\\r\\n                    \\\"required\\\": true\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/store/order/{orderId}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Find purchase order by ID\\\",\\r\\n                \\\"description\\\": \\\"For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions\\\",\\r\\n                \\\"operationId\\\": \\\"getOrderById\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"orderId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet that needs to be fetched\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\",\\r\\n                            \\\"minimum\\\": 1,\\r\\n                            \\\"maximum\\\": 10\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Order not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"delete\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Delete purchase order by ID\\\",\\r\\n                \\\"description\\\": \\\"For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors\\\",\\r\\n                \\\"operationId\\\": \\\"deleteOrder\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"orderId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of the order that needs to be deleted\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\",\\r\\n                            \\\"minimum\\\": 1\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Order not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/user\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Create user\\\",\\r\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\r\\n                \\\"operationId\\\": \\\"createUser\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/json\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"description\\\": \\\"Created user object\\\",\\r\\n                    \\\"required\\\": true\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/createWithArray\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Creates list of users with given input array\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"createUsersWithArrayInput\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/UserArray\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/createWithList\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Creates list of users with given input array\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"createUsersWithListInput\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/UserArray\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/login\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Logs user into the system\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"loginUser\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"The user name for login\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"password\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"The password for login in clear text\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\",\\r\\n                            \\\"format\\\": \\\"password\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"headers\\\": {\\r\\n                            \\\"X-Rate-Limit\\\": {\\r\\n                                \\\"description\\\": \\\"calls per hour allowed by the user\\\",\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"integer\\\",\\r\\n                                    \\\"format\\\": \\\"int32\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"X-Expires-After\\\": {\\r\\n                                \\\"description\\\": \\\"date in UTC when token expires\\\",\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"string\\\",\\r\\n                                    \\\"format\\\": \\\"date-time\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        },\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"string\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"string\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid username/password supplied\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/logout\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Logs out current logged in user session\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"logoutUser\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/{username}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Get user by user name\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"getUserByName\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"The name that needs to be fetched. Use user1 for testing. \\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid username supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"User not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"put\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Updated user\\\",\\r\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\r\\n                \\\"operationId\\\": \\\"updateUser\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"name that need to be updated\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid user supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"User not found\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/json\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"description\\\": \\\"Updated user object\\\",\\r\\n                    \\\"required\\\": true\\r\\n                }\\r\\n            },\\r\\n            \\\"delete\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Delete user\\\",\\r\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\r\\n                \\\"operationId\\\": \\\"deleteUser\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"The name that needs to be deleted\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid username supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"User not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    },\\r\\n    \\\"externalDocs\\\": {\\r\\n        \\\"description\\\": \\\"See AsyncAPI example\\\",\\r\\n        \\\"url\\\": \\\"https://mermade.github.io/shins/asyncapi.html\\\"\\r\\n    },\\r\\n    \\\"components\\\": {\\r\\n        \\\"schemas\\\": {\\r\\n            \\\"Order\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"petId\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"quantity\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\"\\r\\n                    },\\r\\n                    \\\"shipDate\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"format\\\": \\\"date-time\\\"\\r\\n                    },\\r\\n                    \\\"status\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"description\\\": \\\"Order Status\\\",\\r\\n                        \\\"enum\\\": [\\r\\n                            \\\"placed\\\",\\r\\n                            \\\"approved\\\",\\r\\n                            \\\"delivered\\\"\\r\\n                        ]\\r\\n                    },\\r\\n                    \\\"complete\\\": {\\r\\n                        \\\"type\\\": \\\"boolean\\\",\\r\\n                        \\\"default\\\": false\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Order\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"Category\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"name\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Category\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"User\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"username\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"firstName\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"lastName\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"email\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"password\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"phone\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"userStatus\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\",\\r\\n                        \\\"description\\\": \\\"User Status\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"User\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"Tag\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"name\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Tag\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"Pet\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"required\\\": [\\r\\n                    \\\"name\\\",\\r\\n                    \\\"photoUrls\\\"\\r\\n                ],\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"category\\\": {\\r\\n                        \\\"$ref\\\": \\\"#/components/schemas/Category\\\"\\r\\n                    },\\r\\n                    \\\"name\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"example\\\": \\\"doggie\\\"\\r\\n                    },\\r\\n                    \\\"photoUrls\\\": {\\r\\n                        \\\"type\\\": \\\"array\\\",\\r\\n                        \\\"xml\\\": {\\r\\n                            \\\"name\\\": \\\"photoUrl\\\",\\r\\n                            \\\"wrapped\\\": true\\r\\n                        },\\r\\n                        \\\"items\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"tags\\\": {\\r\\n                        \\\"type\\\": \\\"array\\\",\\r\\n                        \\\"xml\\\": {\\r\\n                            \\\"name\\\": \\\"tag\\\",\\r\\n                            \\\"wrapped\\\": true\\r\\n                        },\\r\\n                        \\\"items\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/components/schemas/Tag\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"status\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"description\\\": \\\"pet status in the store\\\",\\r\\n                        \\\"enum\\\": [\\r\\n                            \\\"available\\\",\\r\\n                            \\\"pending\\\",\\r\\n                            \\\"sold\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Pet\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"ApiResponse\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"code\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\"\\r\\n                    },\\r\\n                    \\\"type\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"message\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"requestBodies\\\": {\\r\\n            \\\"Pet\\\": {\\r\\n                \\\"content\\\": {\\r\\n                    \\\"application/json\\\": {\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"application/xml\\\": {\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"description\\\": \\\"Pet object that needs to be added to the store\\\",\\r\\n                \\\"required\\\": true\\r\\n            },\\r\\n            \\\"UserArray\\\": {\\r\\n                \\\"content\\\": {\\r\\n                    \\\"application/json\\\": {\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"description\\\": \\\"List of user object\\\",\\r\\n                \\\"required\\\": true\\r\\n            }\\r\\n        },\\r\\n        \\\"securitySchemes\\\": {\\r\\n            \\\"petstore_auth\\\": {\\r\\n                \\\"type\\\": \\\"oauth2\\\",\\r\\n                \\\"flows\\\": {\\r\\n                    \\\"implicit\\\": {\\r\\n                        \\\"authorizationUrl\\\": \\\"http://petstore.swagger.io/oauth/dialog\\\",\\r\\n                        \\\"scopes\\\": {\\r\\n                            \\\"write:pets\\\": \\\"modify pets in your account\\\",\\r\\n                            \\\"read:pets\\\": \\\"read your pets\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"api_key\\\": {\\r\\n                \\\"type\\\": \\\"apiKey\\\",\\r\\n                \\\"name\\\": \\\"api_key\\\",\\r\\n                \\\"in\\\": \\\"header\\\"\\r\\n            }\\r\\n        },\\r\\n        \\\"links\\\": {},\\r\\n        \\\"callbacks\\\": {}\\r\\n    },\\r\\n    \\\"security\\\": []\\r\\n}\",\r\n    \"format\": \"openapi+json\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8890b996-981b-451f-acc3-dbdcecd346c1"
+          "36cbcbad-1f9a-42ac-afd1-fe4ddb578c06"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ],
         "Content-Type": [
@@ -168,11 +168,17 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:56:52 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286?api-version=2020-12-01&asyncId=606f8d590dcb2d0bc8115e8d&asyncCode=201"
+          "https://management.azure.com/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282?api-version=2021-08-01&asyncId=6179e745093a9d0b54f2cbdb&asyncCode=201"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -181,43 +187,37 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "f6805bb6-490e-4de5-8049-1b913ce29b9a"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "0654a5c7-f093-48fa-a177-f41c2ee4f612"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "49e7f8cb-50ac-42d4-8e72-a2016b624d04"
+          "2b192c5a-2c8b-4c9f-adf7-f0b2c57ecc64"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231017Z:49e7f8cb-50ac-42d4-8e72-a2016b624d04"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:17 GMT"
-        ],
-        "Expires": [
-          "-1"
+          "WESTUS:20211027T235653Z:2b192c5a-2c8b-4c9f-adf7-f0b2c57ecc64"
         ],
         "Content-Length": [
           "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286?api-version=2020-12-01&asyncId=606f8d590dcb2d0bc8115e8d&asyncCode=201",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDkyODY/YXBpLXZlcnNpb249MjAyMC0xMi0wMSZhc3luY0lkPTYwNmY4ZDU5MGRjYjJkMGJjODExNWU4ZCZhc3luY0NvZGU9MjAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282?api-version=2021-08-01&asyncId=6179e745093a9d0b54f2cbdb&asyncCode=201",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDgyODI/YXBpLXZlcnNpb249MjAyMS0wOC0wMSZhc3luY0lkPTYxNzllNzQ1MDkzYTlkMGI1NGYyY2JkYiZhc3luY0NvZGU9MjAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -225,11 +225,17 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:23 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAdXE=\""
+          "\"AAAAAAAApLc=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -238,25 +244,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "8cf356e3-711e-4da0-8d98-a3c17938c683"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "883283d9-91c3-4de1-aa98-056cdd78ac8c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "5dd2179b-3149-4cea-a60d-049cb17cd2d8"
+          "d35ab811-e39c-40b5-8830-70b12106e8a4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231047Z:5dd2179b-3149-4cea-a60d-049cb17cd2d8"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:47 GMT"
+          "WESTUS:20211027T235724Z:d35ab811-e39c-40b5-8830-70b12106e8a4"
         ],
         "Content-Length": [
-          "1045"
+          "1322"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -265,25 +265,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid9286\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid8282\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"termsOfServiceUrl\": \"http://swagger.io/terms/\",\r\n    \"contact\": {\r\n      \"name\": null,\r\n      \"url\": null,\r\n      \"email\": \"apiteam@swagger.io\"\r\n    },\r\n    \"license\": {\r\n      \"name\": \"Apache 2.0\",\r\n      \"url\": \"http://www.apache.org/licenses/LICENSE-2.0.html\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDkyODY/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDgyODI/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5c478213-2c97-4a26-8ddf-93005d882309"
+          "97b0bdb8-768d-40c3-a08a-a0cfb745d10a"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -291,11 +291,17 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:24 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAdXE=\""
+          "\"AAAAAAAApLc=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -304,25 +310,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "160866bb-dece-42fa-ae66-2a38d31ba7f9"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "78e26dc6-ce85-4701-ac0d-5f8eaa411267"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "8d4e9230-a908-4bc5-be7d-a6812c9c935c"
+          "c676e90e-ecfb-4dbe-8d6c-d2abd33b5be3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231048Z:8d4e9230-a908-4bc5-be7d-a6812c9c935c"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:47 GMT"
+          "WESTUS:20211027T235724Z:c676e90e-ecfb-4dbe-8d6c-d2abd33b5be3"
         ],
         "Content-Length": [
-          "1045"
+          "1322"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -331,37 +331,43 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid9286\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid8282\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"termsOfServiceUrl\": \"http://swagger.io/terms/\",\r\n    \"contact\": {\r\n      \"name\": null,\r\n      \"url\": null,\r\n      \"email\": \"apiteam@swagger.io\"\r\n    },\r\n    \"license\": {\r\n      \"name\": \"Apache 2.0\",\r\n      \"url\": \"http://www.apache.org/licenses/LICENSE-2.0.html\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286?format=openapi-link&export=true&api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDkyODY/Zm9ybWF0PW9wZW5hcGktbGluayZleHBvcnQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282?format=openapi-link&export=true&api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDgyODI/Zm9ybWF0PW9wZW5hcGktbGluayZleHBvcnQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7ad8e8d5-719f-4b84-8099-0c16f9ce3439"
+          "9d5b4252-c6cb-4714-ae6c-12e1bef37a5e"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAdXE=\""
+          "\"AAAAAAAApLc=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -370,25 +376,19 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "42a09ef7-4cd0-4ad6-9bf4-bdec3c05e704"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "733e783b-7d2a-479d-a137-17a5e310f033"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "d44fc862-c18e-4379-9d03-64d4d2220cc6"
+          "d0d31e14-0e57-40a4-bbfd-184bf4b19375"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231048Z:d44fc862-c18e-4379-9d03-64d4d2220cc6"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:48 GMT"
+          "WESTUS:20211027T235725Z:d0d31e14-0e57-40a4-bbfd-184bf4b19375"
         ],
         "Content-Length": [
-          "397"
+          "401"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -397,28 +397,28 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286\",\r\n  \"format\": \"openapi-link\",\r\n  \"value\": {\r\n    \"link\": \"https://apimstl8mwklev40ebgc8w3k.blob.core.windows.net/api-export/Swagger Petstore.yaml?sv=2017-04-17&sr=b&sig=bJ0OMHXVuJKHKX62hEQr0BWkg6VRouPrBBU2CGg65jM%3D&se=2021-04-08T23:15:48Z&sp=r\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282\",\r\n  \"format\": \"openapi-link\",\r\n  \"value\": {\r\n    \"link\": \"https://apimstl8mwklev40ebgc8w3k.blob.core.windows.net/api-export/Swagger Petstore.yaml?sv=2017-04-17&sr=b&sig=I%2FPzcd1H4234iBwhscFnNFJHqZ%2FEBLLR7CP0VY8wxRI%3D&se=2021-10-28T00:02:25Z&sp=r\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid9286?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDkyODY/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8282?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDgyODI/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7bc4e5a5-f292-42a1-8554-787e8328ffe0"
+          "843176b8-610b-47aa-8ae2-41921803b48c"
         ],
         "If-Match": [
           "*"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -426,8 +426,14 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:25 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -436,49 +442,43 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "700d39cd-c39f-4a15-882e-54c108290967"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "0a6db1bc-c2c7-4b48-a5d5-05d4c3cac521"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "13cfc06a-9906-4e96-964c-0190e7cfcecb"
+          "bcaeb4e8-f5bd-4e09-a06a-54d96202a42b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231049Z:13cfc06a-9906-4e96-964c-0190e7cfcecb"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:48 GMT"
-        ],
-        "Expires": [
-          "-1"
+          "WESTUS:20211027T235725Z:bcaeb4e8-f5bd-4e09-a06a-54d96202a42b"
         ],
         "Content-Length": [
           "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3d0ba5b2-7d43-4407-9537-b890d276113b"
+          "f395556c-c3cc-4260-8161-4b164d14ef82"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -486,8 +486,14 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:25 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -496,22 +502,16 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "37aad872-f5c5-4804-badd-ecef9c7cbccc"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "e994d65d-d01c-40fa-9749-0e37c58b0b58"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "b3305297-e8cf-4f16-bf98-04a4d26de49a"
+          "a9cf1160-05ee-4e04-83a0-1836f933c5a8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231049Z:b3305297-e8cf-4f16-bf98-04a4d26de49a"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:48 GMT"
+          "WESTUS:20211027T235726Z:a9cf1160-05ee-4e04-83a0-1836f933c5a8"
         ],
         "Content-Length": [
           "1021"
@@ -527,24 +527,24 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags/pet?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzL3BldD9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags/pet?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzL3BldD9hcGktdmVyc2lvbj0yMDIxLTA4LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8b217f57-72f4-47ef-bd32-6d5847c6a861"
+          "f9c371bb-7ee9-4cc0-863e-15fa82147e8c"
         ],
         "If-Match": [
           "*"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -552,8 +552,14 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:25 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -562,52 +568,46 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "4cd2aff7-2783-48bd-b056-5a8a26fcb9d2"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "f353b6ca-9080-40b8-b471-34b429d26a50"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "96690d29-52bf-4db3-82f1-ebcf408f8e87"
+          "ef956843-c914-4cbe-bd68-d6cccc4414ef"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231049Z:96690d29-52bf-4db3-82f1-ebcf408f8e87"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:49 GMT"
-        ],
-        "Expires": [
-          "-1"
+          "WESTUS:20211027T235726Z:ef956843-c914-4cbe-bd68-d6cccc4414ef"
         ],
         "Content-Length": [
           "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags/store?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzL3N0b3JlP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags/store?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzL3N0b3JlP2FwaS12ZXJzaW9uPTIwMjEtMDgtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "00df34bd-0a98-497e-89ad-de80ac31661b"
+          "c77c9ad4-edc5-4a0a-adf2-02dd3ef2105f"
         ],
         "If-Match": [
           "*"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -615,8 +615,14 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:26 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -625,52 +631,46 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "b065c430-21c4-4bdb-b189-80ba4c4988b9"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "c9dc4e38-b72d-4de4-8e85-d8c388e69e78"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14997"
         ],
         "x-ms-correlation-request-id": [
-          "9a86db19-1566-47aa-a69f-37fc31bc7a35"
+          "d6af0d50-ae67-4860-afd3-8cc5151eb89a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231049Z:9a86db19-1566-47aa-a69f-37fc31bc7a35"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:49 GMT"
-        ],
-        "Expires": [
-          "-1"
+          "WESTUS:20211027T235726Z:d6af0d50-ae67-4860-afd3-8cc5151eb89a"
         ],
         "Content-Length": [
           "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags/user?api-version=2020-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzL3VzZXI/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/tags/user?api-version=2021-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS90YWdzL3VzZXI/YXBpLXZlcnNpb249MjAyMS0wOC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2622a925-3069-4bf8-84b1-deca20acd901"
+          "2eddf796-feb7-4ae9-8970-977b030cae11"
         ],
         "If-Match": [
           "*"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
           "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/7.0.0.0"
         ]
       },
@@ -678,8 +678,14 @@
         "Cache-Control": [
           "no-cache"
         ],
+        "Date": [
+          "Wed, 27 Oct 2021 23:57:26 GMT"
+        ],
         "Pragma": [
           "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -688,28 +694,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "ff2b396e-4a75-45a3-ae06-880233868100"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "942f6407-f996-4142-821b-bfa210946192"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14996"
         ],
         "x-ms-correlation-request-id": [
-          "8d089336-49ab-4eb7-9da7-c2c1f779210c"
+          "ecc72579-064b-41d8-940d-a41a81aa11f9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210408T231049Z:8d089336-49ab-4eb7-9da7-c2c1f779210c"
-        ],
-        "Date": [
-          "Thu, 08 Apr 2021 23:10:49 GMT"
-        ],
-        "Expires": [
-          "-1"
+          "WESTUS:20211027T235726Z:ecc72579-064b-41d8-940d-a41a81aa11f9"
         ],
         "Content-Length": [
           "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
       "ResponseBody": "",
@@ -718,13 +718,14 @@
   ],
   "Names": {
     "OpenApiInJsonTest": [
-      "aid9286"
+      "aid8282"
     ]
   },
   "Variables": {
     "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
     "TestCertificate": "MIIHEwIBAzCCBs8GCSqGSIb3DQEHAaCCBsAEgga8MIIGuDCCA9EGCSqGSIb3DQEHAaCCA8IEggO+MIIDujCCA7YGCyqGSIb3DQEMCgECoIICtjCCArIwHAYKKoZIhvcNAQwBAzAOBAidzys9WFRXCgICB9AEggKQRcdJYUKe+Yaf12UyefArSDv4PBBGqR0mh2wdLtPW3TCs6RIGjP4Nr3/KA4o8V8MF3EVQ8LWd/zJRdo7YP2Rkt/TPdxFMDH9zVBvt2/4fuVvslqV8tpphzdzfHAMQvO34ULdB6lJVtpRUx3WNUSbC3h5D1t5noLb0u0GFXzTUAsIw5CYnFCEyCTatuZdAx2V/7xfc0yF2kw/XfPQh0YVRy7dAT/rMHyaGfz1MN2iNIS048A1ExKgEAjBdXBxZLbjIL6rPxB9pHgH5AofJ50k1dShfSSzSzza/xUon+RlvD+oGi5yUPu6oMEfNB21CLiTJnIEoeZ0Te1EDi5D9SrOjXGmcZjCjcmtITnEXDAkI0IhY1zSjABIKyt1rY8qyh8mGT/RhibxxlSeSOIPsxTmXvcnFP3J+oRoHyWzrp6DDw2ZjRGBenUdExg1tjMqThaE7luNB6Yko8NIObwz3s7tpj6u8n11kB5RzV8zJUZkrHnYzrRFIQF8ZFjI9grDFPlccuYFPYUzSsEQU3l4mAoc0cAkaxCtZg9oi2bcVNTLQuj9XbPK2FwPXaF+owBEgJ0TnZ7kvUFAvN1dECVpBPO5ZVT/yaxJj3n380QTcXoHsav//Op3Kg+cmmVoAPOuBOnC6vKrcKsgDgf+gdASvQ+oBjDhTGOVk22jCDQpyNC/gCAiZfRdlpV98Abgi93VYFZpi9UlcGxxzgfNzbNGc06jWkw8g6RJvQWNpCyJasGzHKQOSCBVhfEUidfB2KEkMy0yCWkhbL78GadPIZG++FfM4X5Ov6wUmtzypr60/yJLduqZDhqTskGQlaDEOLbUtjdlhprYhHagYQ2tPD+zmLN7sOaYA6Y+ZZDg7BYq5KuOQZ2QxgewwDQYJKwYBBAGCNxECMQAwEwYJKoZIhvcNAQkVMQYEBAEAAAAwWwYJKoZIhvcNAQkUMU4eTAB7ADYANwBCADcAQQA1AEMAOQAtAEMAQQAzADIALQA0ADAAQwA0AC0AQQAxADUAMwAtAEEAQgAyADIANwA5ADUARQBGADcAOABBAH0waQYJKwYBBAGCNxEBMVweWgBNAGkAYwByAG8AcwBvAGYAdAAgAFIAUwBBACAAUwBDAGgAYQBuAG4AZQBsACAAQwByAHkAcAB0AG8AZwByAGEAcABoAGkAYwAgAFAAcgBvAHYAaQBkAGUAcjCCAt8GCSqGSIb3DQEHBqCCAtAwggLMAgEAMIICxQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQMwDgQIGa3JOIHoBmsCAgfQgIICmF5H0WCdmEFOmpqKhkX6ipBiTk0Rb+vmnDU6nl2L09t4WBjpT1gIddDHMpzObv3ktWts/wA6652h2wNKrgXEFU12zqhaGZWkTFLBrdplMnx/hr804NxiQa4A+BBIsLccczN21776JjU7PBCIvvmuudsKi8V+PmF2K6Lf/WakcZEq4Iq6gmNxTvjSiXMWZe7Wj4+Izt2aoooDYwfQs4KBlI03HzMSU3omA0rXLtARDXwHAJXW2uFwqihlPdC4gwDd/YFwUvnKn92UmyAvENKUV/uKyH3AF1ZqlUgBzYNXyd8YX9H8rtfho2f6qaJZQC93YU3fs9L1xmWIH5saow8r3K85dGCJsisddNsgwtH/o4imOSs8WJw1EjjdpYhyCjs9gE/7ovZzcvrdXBZditLFN8nRIX5HFGz93PksHAQwZbVnbCwVgTGf0Sy5WstPb340ODE5CrakMPUIiVPQgkujpIkW7r4cIwwyyGKza9ZVEXcnoSWZiFSB7yaEf0SYZEoECZwN52wiMxeosJjaAPpWXFe8x5mHbDZ7/DE+pv+Qlyo7rQIzu4SZ9GCvs33dMC/7+RPy6u32ca87kKBQHR1JeCHeBdklMw+pSFRdHxIxq1l5ktycan943OluTdqND5Vf2RwXdSFv2P53334XNKG82wsfm68w7+EgEClDFLz7FymmIfoFO2z0H0adQvkq/7GcIFBSr1K0KEfT2l6csrMc3NSwzDOFiYJDDf++OYUN4nVKlkVE5j+c9Zo8ZkAlz8I4m756wL7e++xXWgwovlsxkBE5TdwWDZDOE8id6yJf54/o4JwS5SEnnNlvt3gRNdo6yCSUrTHfIr9YhvAdJUXbdSrNm5GZu+2fhgg/UJ7EY8pf5BczhNSDkcAwOzAfMAcGBSsOAwIaBBRzf6NV4Bxf3KRT41VV4sQZ348BtgQU7+VeN+vrmbRv0zCvk7r1ORhJ7YkCAgfQ",
     "TestCertificatePassword": "Password",
+    "testKeyVaultSecretUrl": "https://jikangsdkkeyvault.vault.azure.net/secrets/sdkcert1",
     "SubId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
     "ServiceName": "sdktestservice",
     "Location": "CentralUS",

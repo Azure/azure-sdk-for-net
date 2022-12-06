@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LoadBalancerProbeListResult DeserializeLoadBalancerProbeListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Probe>> value = default;
+            Optional<IReadOnlyList<ProbeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Probe> array = new List<Probe>();
+                    List<ProbeData> array = new List<ProbeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Probe.DeserializeProbe(item));
+                        array.Add(ProbeData.DeserializeProbeData(item));
                     }
                     value = array;
                     continue;

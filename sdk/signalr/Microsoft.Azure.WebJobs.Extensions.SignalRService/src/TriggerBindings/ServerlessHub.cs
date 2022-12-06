@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
@@ -33,8 +32,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Might be converted from <see cref="IServiceHubContext"/>, don't forget to test null before use it.
         /// </summary>
-        private readonly ServiceHubContext _hubContext;
+        private readonly IServiceHubContext _hubContext;
         private readonly IServiceManager _serviceManager;
+
+        internal ServiceHubContext HubContext => _hubContext as ServiceHubContext;
+
+        internal string ConnectionName => SignalRTriggerUtils.GetConnectionNameFromAttribute(GetType()) ?? Constants.AzureSignalRConnectionStringName;
 
         /// <summary>
         /// Leave the parameters to be null when called by Azure Function infrastructure.
@@ -42,16 +45,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// </summary>
         protected ServerlessHub(IServiceHubContext hubContext = null, IServiceManager serviceManager = null)
         {
-            var hubContextAttribute = GetType().GetCustomAttribute<SignalRConnectionAttribute>(true);
-            var connectionString = hubContextAttribute?.Connection ?? Constants.AzureSignalRConnectionStringName;
-            HubName = GetType().Name;
-            hubContext = hubContext ?? StaticServiceHubContextStore.Get(connectionString).GetAsync(HubName).GetAwaiter().GetResult();
-            _serviceManager = serviceManager ?? StaticServiceHubContextStore.Get(connectionString).ServiceManager;
-            Clients = hubContext.Clients;
-            Groups = hubContext.Groups;
-            UserGroups = hubContext.UserGroups;
-            _hubContext = hubContext as ServiceHubContext;
-            ClientManager = _hubContext?.ClientManager;
+            _hubContext = hubContext ?? StaticServiceHubContextStore.Get(ConnectionName).GetAsync(HubName).GetAwaiter().GetResult();
+            _serviceManager = serviceManager ?? StaticServiceHubContextStore.Get(ConnectionName).ServiceManager;
+        }
+
+        internal ServerlessHub(IServiceManagerStore store)
+        {
+            _hubContext = store.GetOrAddByConnectionStringKey(ConnectionName).GetAsync(HubName).GetAwaiter().GetResult();
+            _serviceManager = store.GetOrAddByConnectionStringKey(ConnectionName).ServiceManager;
         }
 
         /// <summary>
@@ -78,27 +79,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Gets an object that can be used to invoke methods on the clients connected to this hub.
         /// </summary>
-        public IHubClients Clients { get; }
+        public IHubClients Clients => _hubContext.Clients;
 
         /// <summary>
         /// Get the group manager of this hub.
         /// </summary>
-        public IGroupManager Groups { get; }
+        public IGroupManager Groups => _hubContext.Groups;
 
         /// <summary>
         /// Get the user group manager of this hub.
         /// </summary>
-        public IUserGroupManager UserGroups { get; }
+        public IUserGroupManager UserGroups => _hubContext.UserGroups;
 
         /// <summary>
         /// Get the client manager of this hub.
         /// </summary>
-        public ClientManager ClientManager { get; }
+        public ClientManager ClientManager => HubContext?.ClientManager;
 
         /// <summary>
         /// Get the hub name of this hub.
         /// </summary>
-        public string HubName { get; }
+        public string HubName => GetType().Name;
 
         /// <summary>
         /// Gets client endpoint access information object for SignalR hub connections to connect to Azure SignalR Service
@@ -118,9 +119,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// </summary>
         protected async Task<SignalRConnectionInfo> NegotiateAsync(NegotiationOptions options)
         {
-            if (_hubContext != null)
+            if (HubContext != null)
             {
-                var negotiateResponse = await _hubContext.NegotiateAsync(options).ConfigureAwait(false);
+                var negotiateResponse = await HubContext.NegotiateAsync(options).ConfigureAwait(false);
                 return new SignalRConnectionInfo
                 {
                     Url = negotiateResponse.Url,

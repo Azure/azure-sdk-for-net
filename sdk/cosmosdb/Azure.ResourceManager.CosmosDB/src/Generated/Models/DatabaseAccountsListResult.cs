@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of DatabaseAccountsListResult. </summary>
         internal DatabaseAccountsListResult()
         {
-            Value = new ChangeTrackingList<DatabaseAccountGetResults>();
+            Value = new ChangeTrackingList<CosmosDBAccountData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseAccountsListResult. </summary>
         /// <param name="value"> List of database account and their properties. </param>
-        internal DatabaseAccountsListResult(IReadOnlyList<DatabaseAccountGetResults> value)
+        internal DatabaseAccountsListResult(IReadOnlyList<CosmosDBAccountData> value)
         {
             Value = value;
         }
 
         /// <summary> List of database account and their properties. </summary>
-        public IReadOnlyList<DatabaseAccountGetResults> Value { get; }
+        public IReadOnlyList<CosmosDBAccountData> Value { get; }
     }
 }

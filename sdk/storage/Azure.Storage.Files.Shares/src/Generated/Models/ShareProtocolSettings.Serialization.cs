@@ -26,9 +26,9 @@ namespace Azure.Storage.Files.Shares.Models
         internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element)
         {
             ShareSmbSettings smb = default;
-            if (element.Element("SMB") is XElement sMBElement)
+            if (element.Element("SMB") is XElement smbElement)
             {
-                smb = ShareSmbSettings.DeserializeShareSmbSettings(sMBElement);
+                smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
             }
             return new ShareProtocolSettings(smb);
         }

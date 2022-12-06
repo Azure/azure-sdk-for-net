@@ -18,6 +18,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         private static string _defaultConnection = "Endpoint=sb://default.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
         private static ServiceBusClient _client = new(_defaultConnection);
 
+        private static string _secondaryConnection = "Endpoint=sb://default2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
+        private static ServiceBusClient _secondaryClient = new(_secondaryConnection);
+
         [Test]
         public void CreateMessageReceiver_ReturnsExpectedReceiver()
         {
@@ -95,6 +98,40 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 
             var sender2 = provider.CreateMessageSender(_client, "entityPath");
             Assert.AreSame(sender, sender2);
+        }
+
+        [Test]
+        public void CreateMessageSender_MultipleNamespacesWithSameEntityName_ReturnsCorrectSender()
+        {
+            var options = new ServiceBusOptions();
+
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
+
+            var sender1 = provider.CreateMessageSender(_client, "entityPath");
+            Assert.AreEqual("entityPath", sender1.EntityPath);
+            Assert.AreEqual(_client.FullyQualifiedNamespace, sender1.FullyQualifiedNamespace);
+
+            var sender2 = provider.CreateMessageSender(_secondaryClient, "entityPath");
+            Assert.AreNotSame(sender1, sender2);
+            Assert.AreEqual("entityPath", sender2.EntityPath);
+            Assert.AreEqual(_secondaryClient.FullyQualifiedNamespace, sender2.FullyQualifiedNamespace);
+        }
+
+        [Test]
+        public void CreateMessageReceiver_MultipleNamespacesWithSameEntityName_ReturnsCorrectReceiver()
+        {
+            var options = new ServiceBusOptions();
+
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
+
+            var receiver1 = provider.CreateBatchMessageReceiver(_client, "entityPath", new ServiceBusReceiverOptions());
+            Assert.AreEqual("entityPath", receiver1.EntityPath);
+            Assert.AreEqual(_client.FullyQualifiedNamespace, receiver1.FullyQualifiedNamespace);
+
+            var receiver2 = provider.CreateBatchMessageReceiver(_secondaryClient, "entityPath", new ServiceBusReceiverOptions());
+            Assert.AreNotSame(receiver1, receiver2);
+            Assert.AreEqual("entityPath", receiver2.EntityPath);
+            Assert.AreEqual(_secondaryClient.FullyQualifiedNamespace, receiver2.FullyQualifiedNamespace);
         }
 
         private IConfiguration CreateConfiguration(params KeyValuePair<string, string>[] data)

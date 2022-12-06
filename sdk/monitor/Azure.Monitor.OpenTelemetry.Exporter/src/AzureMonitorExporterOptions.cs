@@ -47,5 +47,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             /// </summary>
             V2020_09_15_Preview = 1,
         }
+
+        public string StorageDirectory { get; set; }
+
+        public bool DisableOfflineStorage { get; set; }
     }
 }

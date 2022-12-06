@@ -13,15 +13,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewTypes service client. </summary>
+    // Data plane generated sub-client. The PurviewTypes sub-client.
+    /// <summary> The PurviewTypes sub-client. </summary>
     public partial class PurviewTypes
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -31,105 +34,143 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewTypes. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewTypes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
+        /// <summary> Get the businessMetadata definition for the given guid. </summary>
+        /// <param name="guid"> businessMetadata guid. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByGuidAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetBusinessMetadataDefByGuidAsync(string guid, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByGuid");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the businessMetadata definition for the given guid. </summary>
+        /// <param name="guid"> businessMetadata guid. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByGuid(String,RequestContext)']/*" />
+        public virtual Response GetBusinessMetadataDefByGuid(string guid, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByGuid");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the businessMetadata definition by it&apos;s name (unique). </summary>
+        /// <param name="name"> businessMetadata name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByNameAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetBusinessMetadataDefByNameAsync(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the businessMetadata definition by it&apos;s name (unique). </summary>
+        /// <param name="name"> businessMetadata name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByName(String,RequestContext)']/*" />
+        public virtual Response GetBusinessMetadataDefByName(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataDefByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByGuidAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -140,103 +181,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByGuid(String,RequestContext)']/*" />
         public virtual Response GetClassificationDefByGuid(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -247,103 +207,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetClassificationDefByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -354,103 +233,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByName(String,RequestContext)']/*" />
         public virtual Response GetClassificationDefByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationDefByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetClassificationDefByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -461,121 +259,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByGuidAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -586,121 +285,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByGuid(String,RequestContext)']/*" />
         public virtual Response GetEntityDefinitionByGuid(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -711,121 +311,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -836,121 +337,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByName(String,RequestContext)']/*" />
         public virtual Response GetEntityDefinitionByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -961,86 +363,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByGuidAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1051,86 +389,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByGuid(String,RequestContext)']/*" />
         public virtual Response GetEnumDefByGuid(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetEnumDefByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1141,86 +415,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetEnumDefByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1231,86 +441,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByName(String,RequestContext)']/*" />
         public virtual Response GetEnumDefByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumDefByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetEnumDefByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1321,111 +467,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByGuidAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1436,111 +493,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByGuid(String,RequestContext)']/*" />
         public virtual Response GetRelationshipDefByGuid(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1551,111 +519,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1666,111 +545,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByName(String,RequestContext)']/*" />
         public virtual Response GetRelationshipDefByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetRelationshipDefByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1781,100 +571,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByGuidAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetStructDefByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1885,100 +597,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByGuid(String,RequestContext)']/*" />
         public virtual Response GetStructDefByGuid(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetStructDefByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1989,100 +623,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetStructDefByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2093,100 +649,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByName(String,RequestContext)']/*" />
         public virtual Response GetStructDefByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructDefByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetStructDefByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2197,141 +675,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ],
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ],
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByGuidAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2342,141 +701,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ],
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ],
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByGuid(String,RequestContext)']/*" />
         public virtual Response GetTypeDefinitionByGuid(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2487,141 +727,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ],
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ],
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2632,141 +753,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
-        ///   relationshipAttributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
-        ///     }
-        ///   ],
-        ///   defaultValue: string,
-        ///   elementDefs: [
-        ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
-        ///     }
-        ///   ],
-        ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByName(String,RequestContext)']/*" />
         public virtual Response GetTypeDefinitionByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2777,28 +779,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for type identified by its name. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTypeByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteTypeByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2809,28 +805,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for type identified by its name. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeByName(String,RequestContext)']/*" />
         public virtual Response DeleteTypeByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateDeleteTypeByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2845,240 +835,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetAllTypeDefinitionsAsync(Boolean,String,RequestContext)']/*" />
         public virtual async Task<Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3093,240 +861,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetAllTypeDefinitions(Boolean,String,RequestContext)']/*" />
         public virtual Response GetAllTypeDefinitions(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3339,455 +885,22 @@ namespace Azure.Analytics.Purview.Catalog
         /// Create all atlas type definitions in bulk, only new definitions will be created.
         /// Any changes to the existing definitions will be discarded.
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='CreateTypeDefinitionsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3800,455 +913,22 @@ namespace Azure.Analytics.Purview.Catalog
         /// Create all atlas type definitions in bulk, only new definitions will be created.
         /// Any changes to the existing definitions will be discarded.
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='CreateTypeDefinitions(RequestContent,RequestContext)']/*" />
         public virtual Response CreateTypeDefinitions(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateCreateTypeDefinitionsRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -4258,455 +938,22 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update all types in bulk, changes detected in the type definitions would be persisted. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='UpdateAtlasTypeDefinitionsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAtlasTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4716,455 +963,22 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update all types in bulk, changes detected in the type definitions would be persisted. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='UpdateAtlasTypeDefinitions(RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAtlasTypeDefinitions(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -5174,242 +988,22 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeDefinitionsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5419,242 +1013,22 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   classificationDefs: [
-        ///     {
-        ///       attributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [
-        ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
-        ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
-        ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
-        ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
-        ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
-        ///     }
-        ///   ],
-        ///   entityDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
-        ///       relationshipAttributeDefs: [
-        ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   enumDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
-        ///       elementDefs: [
-        ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
-        ///         }
-        ///       ]
-        ///     }
-        ///   ],
-        ///   relationshipDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
-        ///     }
-        ///   ],
-        ///   structDefs: [
-        ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
-        ///     }
-        ///   ],
-        ///   termTemplateDefs: [
-        ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeDefinitions(RequestContent,RequestContext)']/*" />
         public virtual Response DeleteTypeDefinitions(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -5669,34 +1043,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   guid: string,
-        ///   name: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeadersAsync(Boolean,String,RequestContext)']/*" />
         public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5711,34 +1069,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   guid: string,
-        ///   name: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionHeaders(Boolean,String,RequestContext)']/*" />
         public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -5749,100 +1091,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByGuidAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5853,100 +1117,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByGuid(String,RequestContext)']/*" />
         public virtual Response GetTermTemplateDefByGuid(string guid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -5957,100 +1143,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The name of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByNameAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6061,100 +1169,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The name of the term template. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributeDefs: [
-        ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [
-        ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
-        ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
-        ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByName(String,RequestContext)']/*" />
         public virtual Response GetTermTemplateDefByName(string name, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -6163,9 +1193,39 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        internal HttpMessage CreateGetClassificationDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetBusinessMetadataDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/businessmetadatadef/guid/", false);
+            uri.AppendPath(guid, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBusinessMetadataDefByNameRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/businessmetadatadef/name/", false);
+            uri.AppendPath(name, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6175,13 +1235,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetClassificationDefByNameRequest(string name)
+        internal HttpMessage CreateGetClassificationDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6191,13 +1250,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid)
+        internal HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6207,13 +1265,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetEntityDefinitionByNameRequest(string name)
+        internal HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6223,13 +1280,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetEnumDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetEnumDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6239,13 +1295,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetEnumDefByNameRequest(string name)
+        internal HttpMessage CreateGetEnumDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6255,13 +1310,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetRelationshipDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetRelationshipDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6271,13 +1325,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetRelationshipDefByNameRequest(string name)
+        internal HttpMessage CreateGetRelationshipDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6287,13 +1340,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetStructDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetStructDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6303,13 +1355,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetStructDefByNameRequest(string name)
+        internal HttpMessage CreateGetStructDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6319,13 +1370,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid)
+        internal HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6335,13 +1385,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetTypeDefinitionByNameRequest(string name)
+        internal HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6351,13 +1400,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateDeleteTypeByNameRequest(string name)
+        internal HttpMessage CreateDeleteTypeByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6367,13 +1415,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate, string type)
+        internal HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate, string type, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6390,13 +1437,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content)
+        internal HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6407,13 +1453,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content)
+        internal HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6424,13 +1469,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content)
+        internal HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6441,13 +1485,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate, string type)
+        internal HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate, string type, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6464,13 +1507,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid)
+        internal HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6481,13 +1523,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetTermTemplateDefByNameRequest(string name)
+        internal HttpMessage CreateGetTermTemplateDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6498,35 +1539,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

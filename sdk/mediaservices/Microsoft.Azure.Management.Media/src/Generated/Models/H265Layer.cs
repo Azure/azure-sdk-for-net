@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Media.Models
     /// Describes the settings to be used when encoding the input video into a
     /// desired output bitrate layer with the H.265 video codec.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Media.H265Layer")]
     public partial class H265Layer : H265VideoLayer
     {
         /// <summary>
@@ -67,7 +66,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// the encoder will turn it on whenever the video profile permits its
         /// use.</param>
         /// <param name="profile">We currently support Main. Default is Auto.
-        /// Possible values include: 'Auto', 'Main'</param>
+        /// Possible values include: 'Auto', 'Main', 'Main10'</param>
         /// <param name="level">We currently support Level up to 6.2. The value
         /// can be Auto, or a number that matches the H.265 profile. If not
         /// specified, the default is Auto, which lets the encoder choose the
@@ -76,16 +75,24 @@ namespace Microsoft.Azure.Management.Media.Models
         /// should be in ISO 8601 format. The value should be in the range
         /// [0.1-100] seconds. The default is 5 seconds (for example,
         /// PT5S).</param>
+        /// <param name="crf">The value of CRF to be used when encoding this
+        /// layer. This setting takes effect when RateControlMode of video
+        /// codec is set at CRF mode. The range of CRF value is between 0 and
+        /// 51, where lower values would result in better quality, at the
+        /// expense of higher file sizes. Higher values mean more compression,
+        /// but at some point quality degradation will be noticed. Default
+        /// value is 28.</param>
         /// <param name="referenceFrames">The number of reference frames to be
         /// used when encoding this layer. If not specified, the encoder
         /// determines an appropriate number based on the encoder complexity
         /// setting.</param>
-        public H265Layer(int bitrate, string width = default(string), string height = default(string), string label = default(string), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?), H265VideoProfile? profile = default(H265VideoProfile?), string level = default(string), System.TimeSpan? bufferWindow = default(System.TimeSpan?), int? referenceFrames = default(int?))
+        public H265Layer(int bitrate, string width = default(string), string height = default(string), string label = default(string), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?), H265VideoProfile? profile = default(H265VideoProfile?), string level = default(string), System.TimeSpan? bufferWindow = default(System.TimeSpan?), double? crf = default(double?), int? referenceFrames = default(int?))
             : base(bitrate, width, height, label, maxBitrate, bFrames, frameRate, slices, adaptiveBFrame)
         {
             Profile = profile;
             Level = level;
             BufferWindow = bufferWindow;
+            Crf = crf;
             ReferenceFrames = referenceFrames;
             CustomInit();
         }
@@ -97,7 +104,7 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets we currently support Main. Default is Auto. Possible
-        /// values include: 'Auto', 'Main'
+        /// values include: 'Auto', 'Main', 'Main10'
         /// </summary>
         [JsonProperty(PropertyName = "profile")]
         public H265VideoProfile? Profile { get; set; }
@@ -118,6 +125,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "bufferWindow")]
         public System.TimeSpan? BufferWindow { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value of CRF to be used when encoding this layer.
+        /// This setting takes effect when RateControlMode of video codec is
+        /// set at CRF mode. The range of CRF value is between 0 and 51, where
+        /// lower values would result in better quality, at the expense of
+        /// higher file sizes. Higher values mean more compression, but at some
+        /// point quality degradation will be noticed. Default value is 28.
+        /// </summary>
+        [JsonProperty(PropertyName = "crf")]
+        public double? Crf { get; set; }
 
         /// <summary>
         /// Gets or sets the number of reference frames to be used when

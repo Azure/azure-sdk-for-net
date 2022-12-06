@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Text;
 using System.Threading;
 using Azure.Identity;
@@ -102,6 +103,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         }
 
         #region Certificates
+#if !SNIPPET
         private static readonly string s_pem =
 "-----BEGIN CERTIFICATE-----\n" +
 "MIIDqzCCApMCFC+MROpib4t03Wqzgkcod1lad6JtMA0GCSqGSIb3DQEBCwUAMIGR\n" +
@@ -208,6 +210,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 "PLn+J1KhHwtkO3hqPBKPV5lA0xL1s/OCUCP1oPnhz+VKCm2tj9lRhzmLbRdntbLv" +
 "D8ZsMSUwIwYJKoZIhvcNAQkVMRYEFBbpBK9fRSneUhgx9SL/t04nnPfiMDEwITAJ" +
 "BgUrDgMCGgUABBQ3xckfQUCgNMIXxUvrEUKgdeV8lQQIAPCuS/4UMrICAggA";
+#endif
         #endregion
     }
 }

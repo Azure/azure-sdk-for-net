@@ -19,31 +19,20 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="inputDataFormat"> The format of the input data. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>
         /// <param name="target"> The target identifier to run the job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/>, <paramref name="inputDataFormat"/>, <paramref name="providerId"/>, or <paramref name="target"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/>, <paramref name="inputDataFormat"/>, <paramref name="providerId"/> or <paramref name="target"/> is null. </exception>
         public JobDetails(string containerUri, string inputDataFormat, string providerId, string target)
         {
-            if (containerUri == null)
-            {
-                throw new ArgumentNullException(nameof(containerUri));
-            }
-            if (inputDataFormat == null)
-            {
-                throw new ArgumentNullException(nameof(inputDataFormat));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            Argument.AssertNotNull(inputDataFormat, nameof(inputDataFormat));
+            Argument.AssertNotNull(providerId, nameof(providerId));
+            Argument.AssertNotNull(target, nameof(target));
 
             ContainerUri = containerUri;
             InputDataFormat = inputDataFormat;
             ProviderId = providerId;
             Target = target;
             Metadata = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of JobDetails. </summary>
@@ -63,8 +52,10 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="beginExecutionTime"> The time when the job began execution. </param>
         /// <param name="endExecutionTime"> The time when the job finished execution. </param>
         /// <param name="cancellationTime"> The time when a job was successfully cancelled. </param>
+        /// <param name="costEstimate"> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </param>
         /// <param name="errorData"> The error data for the job. This is expected only when Status &apos;Failed&apos;. </param>
-        internal JobDetails(string id, string name, string containerUri, string inputDataUri, string inputDataFormat, object inputParams, string providerId, string target, IDictionary<string, string> metadata, string outputDataUri, string outputDataFormat, JobStatus? status, DateTimeOffset? creationTime, DateTimeOffset? beginExecutionTime, DateTimeOffset? endExecutionTime, DateTimeOffset? cancellationTime, ErrorData errorData)
+        /// <param name="tags"> List of user-supplied tags associated with the job. </param>
+        internal JobDetails(string id, string name, string containerUri, string inputDataUri, string inputDataFormat, object inputParams, string providerId, string target, IDictionary<string, string> metadata, string outputDataUri, string outputDataFormat, JobStatus? status, DateTimeOffset? creationTime, DateTimeOffset? beginExecutionTime, DateTimeOffset? endExecutionTime, DateTimeOffset? cancellationTime, CostEstimate costEstimate, ErrorData errorData, IList<string> tags)
         {
             Id = id;
             Name = name;
@@ -82,7 +73,9 @@ namespace Azure.Quantum.Jobs.Models
             BeginExecutionTime = beginExecutionTime;
             EndExecutionTime = endExecutionTime;
             CancellationTime = cancellationTime;
+            CostEstimate = costEstimate;
             ErrorData = errorData;
+            Tags = tags;
         }
 
         /// <summary> The job id. </summary>
@@ -117,7 +110,11 @@ namespace Azure.Quantum.Jobs.Models
         public DateTimeOffset? EndExecutionTime { get; }
         /// <summary> The time when a job was successfully cancelled. </summary>
         public DateTimeOffset? CancellationTime { get; }
+        /// <summary> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </summary>
+        public CostEstimate CostEstimate { get; }
         /// <summary> The error data for the job. This is expected only when Status &apos;Failed&apos;. </summary>
         public ErrorData ErrorData { get; }
+        /// <summary> List of user-supplied tags associated with the job. </summary>
+        public IList<string> Tags { get; set; }
     }
 }

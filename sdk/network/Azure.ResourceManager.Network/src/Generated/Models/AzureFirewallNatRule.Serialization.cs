@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("translatedFqdn");
                 writer.WriteStringValue(TranslatedFqdn);
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpGroups)
+                foreach (var item in SourceIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> translatedAddress = default;
             Optional<string> translatedPort = default;
             Optional<string> translatedFqdn = default;
-            Optional<IList<string>> sourceIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
             }
-            return new AzureFirewallNatRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(protocols), translatedAddress.Value, translatedPort.Value, translatedFqdn.Value, Optional.ToList(sourceIpGroups));
+            return new AzureFirewallNatRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(protocols), translatedAddress.Value, translatedPort.Value, translatedFqdn.Value, Optional.ToList(sourceIPGroups));
         }
     }
 }

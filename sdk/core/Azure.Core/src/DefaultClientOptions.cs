@@ -8,9 +8,8 @@ namespace Azure.Core
 {
     internal class DefaultClientOptions: ClientOptions
     {
-        public DefaultClientOptions(): base(null)
+        public DefaultClientOptions(): base(null, null)
         {
-            Transport = HttpPipelineTransport.Create();
             Diagnostics.IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             Diagnostics.IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
         }

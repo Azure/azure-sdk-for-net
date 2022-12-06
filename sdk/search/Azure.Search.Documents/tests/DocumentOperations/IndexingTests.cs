@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
@@ -15,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
     public class IndexingTests : SearchTestBase
     {
         public IndexingTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -848,7 +846,19 @@ namespace Azure.Search.Documents.Tests
                     batch,
                     new IndexDocumentsOptions { ThrowOnAnyError = true }));
             Assert.AreEqual(400, ex.Status);
-            StringAssert.StartsWith("The request is invalid. Details: actions : 0: Document key cannot be missing or empty.", ex.Message);
+            StringAssert.StartsWith("The request is invalid.", ex.Message);
+
+            int errorJsonStartIndex = ex.Message.IndexOf("{");
+            int errorJsonEndIndex = ex.Message.LastIndexOf("}");
+            string errorJsonContent = ex.Message.Substring(errorJsonStartIndex, errorJsonEndIndex - errorJsonStartIndex + 1);
+
+            using var jsonDocument = JsonDocument.Parse(errorJsonContent);
+            JsonElement errorElement = jsonDocument.RootElement.GetProperty("error");
+            StringAssert.AreEqualIgnoringCase("OperationNotAllowed", errorElement.GetProperty("code").GetString());
+            StringAssert.StartsWith("The request is invalid.", errorElement.GetProperty("message").GetString());
+            JsonElement details = errorElement.GetProperty("details");
+            StringAssert.AreEqualIgnoringCase("MissingKeyField", details[0].GetProperty("code").GetString());
+            StringAssert.AreEqualIgnoringCase("0: Document key cannot be missing or empty. Parameters: actions", details[0].GetProperty("message").GetString());
         }
 
         [Test]

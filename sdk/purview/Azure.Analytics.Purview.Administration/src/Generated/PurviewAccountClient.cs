@@ -16,14 +16,17 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
+    // Data plane generated client. The PurviewAccount service client.
     /// <summary> The PurviewAccount service client. </summary>
     public partial class PurviewAccountClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
@@ -36,124 +39,41 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewAccountClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewAccountClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
+        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewAccountClientOptions();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
         }
 
         /// <summary> Get an account. </summary>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
-        ///   properties: {
-        ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
-        ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
-        ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
-        ///     privateEndpointConnections: [
-        ///       {
-        ///         id: string,
-        ///         name: string,
-        ///         properties: {
-        ///           privateEndpoint: {
-        ///             id: string
-        ///           },
-        ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
-        ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
-        ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccountPropertiesAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetAccountPropertiesAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccountPropertiesRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetAccountPropertiesRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -163,103 +83,18 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Get an account. </summary>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
-        ///   properties: {
-        ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
-        ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
-        ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
-        ///     privateEndpointConnections: [
-        ///       {
-        ///         id: string,
-        ///         name: string,
-        ///         properties: {
-        ///           privateEndpoint: {
-        ///             id: string
-        ///           },
-        ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
-        ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
-        ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccountProperties(RequestContext)']/*" />
         public virtual Response GetAccountProperties(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccountPropertiesRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetAccountPropertiesRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -269,110 +104,22 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Updates an account. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   friendlyName: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
-        ///   properties: {
-        ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
-        ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
-        ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
-        ///     privateEndpointConnections: [
-        ///       {
-        ///         id: string,
-        ///         name: string,
-        ///         properties: {
-        ///           privateEndpoint: {
-        ///             id: string
-        ///           },
-        ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
-        ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
-        ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='UpdateAccountPropertiesAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAccountPropertiesAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -382,110 +129,22 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Updates an account. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   friendlyName: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
-        ///   properties: {
-        ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
-        ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
-        ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
-        ///     privateEndpointConnections: [
-        ///       {
-        ///         id: string,
-        ///         name: string,
-        ///         properties: {
-        ///           privateEndpoint: {
-        ///             id: string
-        ///           },
-        ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
-        ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
-        ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
-        ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='UpdateAccountProperties(RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAccountProperties(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateAccountPropertiesRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateUpdateAccountPropertiesRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -495,43 +154,18 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List the authorization keys associated with this account. </summary>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccessKeysAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetAccessKeysAsync(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccessKeysRequest();
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetAccessKeysRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -541,43 +175,18 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List the authorization keys associated with this account. </summary>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccessKeys(RequestContext)']/*" />
         public virtual Response GetAccessKeys(RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccessKeysRequest();
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateGetAccessKeysRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -587,50 +196,22 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='RegenerateAccessKeyAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RegenerateAccessKeyAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
-                return await _pipeline.ProcessMessageAsync(message, _clientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateRegenerateAccessKeyRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -640,50 +221,22 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='RegenerateAccessKey(RequestContent,RequestContext)']/*" />
         public virtual Response RegenerateAccessKey(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRegenerateAccessKeyRequest(content);
-                return _pipeline.ProcessMessage(message, _clientDiagnostics, context);
+                using HttpMessage message = CreateRegenerateAccessKeyRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -694,66 +247,26 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> List the collections in the account. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       name: string,
-        ///       parentCollection: {
-        ///         referenceName: string,
-        ///         type: string
-        ///       },
-        ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format),
-        ///         createdBy: string,
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///         lastModifiedAt: string (ISO 8601 Format),
-        ///         lastModifiedBy: string,
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///       }
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetCollectionsAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCollectionsAsync(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewAccountClient.GetCollections");
+            return GetCollectionsImplementationAsync("PurviewAccountClient.GetCollections", skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetCollectionsImplementationAsync(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCollectionsRequest(skipToken)
-                        : CreateGetCollectionsNextPageRequest(nextLink, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetCollectionsRequest(skipToken, context)
+                        : CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -762,66 +275,26 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> List the collections in the account. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       name: string,
-        ///       parentCollection: {
-        ///         referenceName: string,
-        ///         type: string
-        ///       },
-        ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format),
-        ///         createdBy: string,
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///         lastModifiedAt: string (ISO 8601 Format),
-        ///         lastModifiedBy: string,
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///       }
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetCollections(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCollections(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewAccountClient.GetCollections");
+            return GetCollectionsImplementation("PurviewAccountClient.GetCollections", skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetCollectionsImplementation(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCollectionsRequest(skipToken)
-                        : CreateGetCollectionsNextPageRequest(nextLink, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                        ? CreateGetCollectionsRequest(skipToken, context)
+                        : CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -830,140 +303,26 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format),
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///       },
-        ///       name: string,
-        ///       pathPatternConfig: {
-        ///         acceptedPatterns: [
-        ///           {
-        ///             createdBy: string,
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             path: string
-        ///           }
-        ///         ],
-        ///         complexReplacers: [
-        ///           {
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             typeName: string
-        ///           }
-        ///         ],
-        ///         createdBy: string,
-        ///         enableDefaultPatterns: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         normalizationRules: [
-        ///           {
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             dynamicReplacement: boolean,
-        ///             entityTypes: [string],
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             regex: {
-        ///               maxDigits: number,
-        ///               maxLetters: number,
-        ///               minDashes: number,
-        ///               minDigits: number,
-        ///               minDigitsOrLetters: number,
-        ///               minDots: number,
-        ///               minHex: number,
-        ///               minLetters: number,
-        ///               minUnderscores: number,
-        ///               options: number,
-        ///               regexStr: string
-        ///             },
-        ///             replaceWith: string,
-        ///             version: number
-        ///           }
-        ///         ],
-        ///         regexReplacers: [
-        ///           {
-        ///             condition: string,
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             doNotReplaceRegex: FastRegex,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             regex: FastRegex,
-        ///             replaceWith: string
-        ///           }
-        ///         ],
-        ///         rejectedPatterns: [Filter],
-        ///         scopedRules: [
-        ///           {
-        ///             bindingUrl: string,
-        ///             rules: [
-        ///               {
-        ///                 displayName: string,
-        ///                 isResourceSet: boolean,
-        ///                 lastUpdatedTimestamp: number,
-        ///                 name: string,
-        ///                 qualifiedName: string
-        ///               }
-        ///             ],
-        ///             storeType: string
-        ///           }
-        ///         ],
-        ///         version: number
-        ///       }
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetResourceSetRulesAsync(String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetResourceSetRulesAsync(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, _clientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            return GetResourceSetRulesImplementationAsync("PurviewAccountClient.GetResourceSetRules", skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetResourceSetRulesImplementationAsync(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetResourceSetRulesRequest(skipToken)
-                        : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, _clientDiagnostics, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                        ? CreateGetResourceSetRulesRequest(skipToken, context)
+                        : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
@@ -972,149 +331,54 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format),
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///       },
-        ///       name: string,
-        ///       pathPatternConfig: {
-        ///         acceptedPatterns: [
-        ///           {
-        ///             createdBy: string,
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             path: string
-        ///           }
-        ///         ],
-        ///         complexReplacers: [
-        ///           {
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             typeName: string
-        ///           }
-        ///         ],
-        ///         createdBy: string,
-        ///         enableDefaultPatterns: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         normalizationRules: [
-        ///           {
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             dynamicReplacement: boolean,
-        ///             entityTypes: [string],
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             regex: {
-        ///               maxDigits: number,
-        ///               maxLetters: number,
-        ///               minDashes: number,
-        ///               minDigits: number,
-        ///               minDigitsOrLetters: number,
-        ///               minDots: number,
-        ///               minHex: number,
-        ///               minLetters: number,
-        ///               minUnderscores: number,
-        ///               options: number,
-        ///               regexStr: string
-        ///             },
-        ///             replaceWith: string,
-        ///             version: number
-        ///           }
-        ///         ],
-        ///         regexReplacers: [
-        ///           {
-        ///             condition: string,
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             doNotReplaceRegex: FastRegex,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             regex: FastRegex,
-        ///             replaceWith: string
-        ///           }
-        ///         ],
-        ///         rejectedPatterns: [Filter],
-        ///         scopedRules: [
-        ///           {
-        ///             bindingUrl: string,
-        ///             rules: [
-        ///               {
-        ///                 displayName: string,
-        ///                 isResourceSet: boolean,
-        ///                 lastUpdatedTimestamp: number,
-        ///                 name: string,
-        ///                 qualifiedName: string
-        ///               }
-        ///             ],
-        ///             storeType: string
-        ///           }
-        ///         ],
-        ///         version: number
-        ///       }
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-#pragma warning disable AZC0002
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetResourceSetRules(String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetResourceSetRules(string skipToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, _clientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            return GetResourceSetRulesImplementation("PurviewAccountClient.GetResourceSetRules", skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetResourceSetRulesImplementation(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetResourceSetRulesRequest(skipToken)
-                        : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, _clientDiagnostics, context, "value", "nextLink");
+                        ? CreateGetResourceSetRulesRequest(skipToken, context)
+                        : CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
                 } while (!string.IsNullOrEmpty(nextLink));
             }
         }
 
-        internal HttpMessage CreateGetAccountPropertiesRequest()
+        private PurviewResourceSetRule _cachedPurviewResourceSetRule;
+
+        /// <summary> Initializes a new instance of PurviewCollection. </summary>
+        /// <param name="collectionName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
         {
-            var message = _pipeline.CreateMessage();
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+
+            return new PurviewCollection(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName);
+        }
+
+        /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
+        public virtual PurviewResourceSetRule GetPurviewResourceSetRuleClient()
+        {
+            return Volatile.Read(ref _cachedPurviewResourceSetRule) ?? Interlocked.CompareExchange(ref _cachedPurviewResourceSetRule, new PurviewResourceSetRule(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewResourceSetRule;
+        }
+
+        internal HttpMessage CreateGetAccountPropertiesRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1123,13 +387,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendQuery("api-version", "2019-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content)
+        internal HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1140,13 +403,12 @@ namespace Azure.Analytics.Purview.Administration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetAccessKeysRequest()
+        internal HttpMessage CreateGetAccessKeysRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1155,13 +417,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendQuery("api-version", "2019-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content)
+        internal HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1172,13 +433,12 @@ namespace Azure.Analytics.Purview.Administration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionsRequest(string skipToken)
+        internal HttpMessage CreateGetCollectionsRequest(string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1191,13 +451,12 @@ namespace Azure.Analytics.Purview.Administration
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetResourceSetRulesRequest(string skipToken)
+        internal HttpMessage CreateGetResourceSetRulesRequest(string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1210,13 +469,12 @@ namespace Azure.Analytics.Purview.Administration
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionsNextPageRequest(string nextLink, string skipToken)
+        internal HttpMessage CreateGetCollectionsNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1224,13 +482,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetResourceSetRulesNextPageRequest(string nextLink, string skipToken)
+        internal HttpMessage CreateGetResourceSetRulesNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1238,22 +495,10 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

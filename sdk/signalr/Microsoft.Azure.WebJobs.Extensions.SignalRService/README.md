@@ -20,7 +20,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.SignalRService
 
     To quickly create the needed SignalR resource in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-    [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2fquickstarts%2fmicrosoft.signalrservice%2fsignalr%2fazuredeploy.json)
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fazure-quickstart-templates%2fmaster%2fquickstarts%2fmicrosoft.signalrservice%2fsignalr%2fazuredeploy.json)
 
     After the instance is deployed, open it in the portal and locate its Settings page. Change the Service Mode setting to *Serverless*.
 

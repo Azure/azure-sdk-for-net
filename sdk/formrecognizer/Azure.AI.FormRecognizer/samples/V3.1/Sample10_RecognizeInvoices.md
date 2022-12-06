@@ -24,7 +24,7 @@ To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` m
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/invoicefields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
-    Uri invoiceUri = <invoiceUri>;
+    Uri invoiceUri = new Uri("<invoiceUri>");
     var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
 
     RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesFromUriAsync(invoiceUri, options);
@@ -287,11 +287,6 @@ if (invoice.Fields.TryGetValue("InvoiceTotal", out FormField invoiceTotalField))
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Recognize invoices from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample13_RecognizeInvoicesFromUri.cs)
-* [Recognize invoices from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/V3.1/Sample13_RecognizeInvoicesFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/V3.1/Sample4_StronglyTypingARecognizedForm.md

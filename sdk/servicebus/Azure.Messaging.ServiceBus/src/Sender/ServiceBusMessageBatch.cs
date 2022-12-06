@@ -78,20 +78,32 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Attempts to add a message to the batch, ensuring that the size
-        ///   of the batch does not exceed its maximum. If the message is modified
-        ///   after being added to the batch, the batch will fail to send if the modification
-        ///   caused the batch to exceed the maximum allowable size. Therefore it is best
-        ///   to not modify a message after adding it to the batch.
+        ///   of the batch does not exceed its maximum.
         /// </summary>
         ///
         /// <param name="message">The message to attempt to add to the batch.</param>
         ///
         /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
+        /// <remarks>
+        ///   When a message is accepted into the batch, changes made to its properties
+        ///   will not be reflected in the batch nor will any state transitions be reflected
+        ///   to the original instance.
+        ///
+        ///   Note: Any <see cref="ReadOnlyMemory{T}" />, byte array, or <see cref="BinaryData" />
+        ///   instance associated with the event is referenced by the batch and must remain valid and
+        ///   unchanged until the batch is disposed.
+        /// </remarks>
+        ///
         /// <exception cref="InvalidOperationException">
         ///   When a batch is sent, it will be locked for the duration of that operation.  During this time,
         ///   no messages may be added to the batch.  Calling <c>TryAdd</c> while the batch is being sent will
         ///   result in an <see cref="InvalidOperationException" /> until the send has completed.
+        /// </exception>
+        ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="message"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
         /// </exception>
         ///
         public bool TryAddMessage(ServiceBusMessage message)
@@ -140,7 +152,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The set of messages as an enumerable of the requested type.</returns>
         ///
-        internal IEnumerable<T> AsEnumerable<T>() => _innerBatch.AsEnumerable<T>();
+        internal IReadOnlyCollection<T> AsReadOnly<T>() => _innerBatch.AsReadOnly<T>();
 
         /// <summary>
         ///   Locks the batch to prevent new messages from being added while a service

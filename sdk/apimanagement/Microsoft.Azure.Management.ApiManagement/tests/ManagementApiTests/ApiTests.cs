@@ -119,7 +119,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = newApiDescription,
                             Path = newApiPath,
                             ServiceUrl = newApiServiceUrl,
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http },
                             SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
                             {
                                 Header = subscriptionKeyParametersHeader,
@@ -191,6 +191,54 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.True(apiGetResponse.Protocols.Contains(Protocol.Http));
                     Assert.True(apiGetResponse.Protocols.Contains(Protocol.Https));
 
+                    // get the latest API Entity Tag
+                    apiTag = testBase.client.Api.GetEntityTag(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId);
+
+                    // patch added api again with Tos Contact License
+                    string patchedNameTos = TestUtilities.GenerateName("patchednametos");
+                    string patchedDescriptionTos = TestUtilities.GenerateName("patchedDescriptiontos");
+                    string patchedPathTos = TestUtilities.GenerateName("patchedPathtos");
+
+                    testBase.client.Api.Update(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        new ApiUpdateContract
+                        {
+                            DisplayName = patchedNameTos,
+                            Description = patchedDescriptionTos,
+                            Path = patchedPathTos,
+                            TermsOfServiceUrl = "https://fabrikam.com/tos",
+                            Contact = new ApiContactInformation
+                            {
+                                Name = "Alice",
+                                Url = "https://fabrikam.com/alice",
+                                Email = "alice@fabrikam.com"
+                            },
+                            License = new ApiLicenseInformation
+                            {
+                                Name = "Fabrikam license",
+                                Url = "https://fabrikam.com/license"
+                            }
+                        },
+                        apiTag.ETag);
+
+                    // get patched api to check it was patched
+                    apiGetResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newApiId);
+
+                    Assert.NotNull(apiGetResponse);
+                    Assert.Equal(newApiId, apiGetResponse.Name);
+                    Assert.Equal(patchedNameTos, apiGetResponse.DisplayName);
+                    Assert.Equal("https://fabrikam.com/tos", apiGetResponse.TermsOfServiceUrl);
+                    Assert.Equal("Alice", apiGetResponse.Contact?.Name);
+                    Assert.Equal("https://fabrikam.com/alice", apiGetResponse.Contact?.Url);
+                    Assert.Equal("alice@fabrikam.com", apiGetResponse.Contact?.Email);
+                    Assert.Equal("Fabrikam license", apiGetResponse.License?.Name);
+                    Assert.Equal("https://fabrikam.com/license", apiGetResponse.License?.Url);
+
                     // add an api with OpenId authentication settings
                     // create a openId connect provider
                     string openIdProviderName = TestUtilities.GenerateName("openIdName");
@@ -233,7 +281,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = newOpenIdApiDescription,
                             Path = newOpenIdApiPath,
                             ServiceUrl = newOpenIdApiServiceUrl,
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http },
                             SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
                             {
                                 Header = subscriptionKeyParametersHeader,
@@ -436,7 +484,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = newApiDescription,
                             Path = newApiPath,
                             ServiceUrl = newApiServiceUrl,
-                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            Protocols = new List<string> { Protocol.Https, Protocol.Http },
                             SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
                             {
                                 Header = subscriptionKeyParametersHeader,

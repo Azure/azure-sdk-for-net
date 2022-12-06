@@ -389,6 +389,11 @@ namespace Azure.Core.Pipeline
                             x509Chain,
                             sslPolicyErrors));
             }
+            // Set ClientCertificates
+            foreach (var cert in options.ClientCertificates)
+            {
+                request.ClientCertificates.Add(cert);
+            }
         }
     }
 #endif

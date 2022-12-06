@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// resource</param>
         /// <param name="location">The GEO location of the application, always
         /// the same with its parent resource</param>
-        public AppResource(string id = default(string), string name = default(string), string type = default(string), AppResourceProperties properties = default(AppResourceProperties), ManagedIdentityProperties identity = default(ManagedIdentityProperties), string location = default(string))
-            : base(id, name, type)
+        public AppResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), AppResourceProperties properties = default(AppResourceProperties), ManagedIdentityProperties identity = default(ManagedIdentityProperties), string location = default(string))
+            : base(id, name, type, systemData)
         {
             Properties = properties;
             Identity = identity;

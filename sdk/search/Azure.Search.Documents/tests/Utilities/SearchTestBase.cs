@@ -57,8 +57,9 @@ namespace Azure.Search.Documents.Tests
             : base(async, mode)
         {
             ServiceVersion = serviceVersion;
-            Sanitizer = new SearchRecordedTestSanitizer();
-            Matcher = new RecordMatcher(compareBodies: false);
+            JsonPathSanitizers.Add("$..applicationSecret");
+            SanitizedHeaders.Add("api-key");
+            CompareBodies = false;
         }
 
         /// <summary>

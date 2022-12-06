@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -17,20 +18,20 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyUrl");
-            writer.WriteStringValue(KeyUrl);
+            writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault");
             JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
         }
 
         internal static KeyVaultKeyReference DeserializeKeyVaultKeyReference(JsonElement element)
         {
-            string keyUrl = default;
+            Uri keyUrl = default;
             WritableSubResource sourceVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUrl"))
                 {
-                    keyUrl = property.Value.GetString();
+                    keyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceVault"))

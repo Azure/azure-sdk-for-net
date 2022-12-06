@@ -6,159 +6,178 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.ConfidentialLedger.Certificate;
 
 namespace Azure.Security.ConfidentialLedger
 {
+    [CodeGenSuppress("PostLedgerEntry", typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("PostLedgerEntryAsync", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class ConfidentialLedgerClient
     {
-        internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
+        private const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
+        /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential)
+            : this(ledgerEndpoint, credential: credential, ledgerOptions: new ConfidentialLedgerClientOptions(), identityServiceCert: default)
+        { }
+
+        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
+        /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
-        {
-            if (ledgerUri == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerUri));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+        public ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential, ConfidentialLedgerClientOptions options)
+            : this(ledgerEndpoint, credential: credential, ledgerOptions: options, identityServiceCert: default)
+        { }
 
-            var actualOptions = options ?? new ConfidentialLedgerClientOptions();
-            var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri, actualOptions);
-            _clientDiagnostics = new ClientDiagnostics(actualOptions);
+        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
+        /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
+        /// <param name="clientCertificate"> A <see cref="X509Certificate2"/> used to authenticate to an Azure Service. </param>
+        public ConfidentialLedgerClient(Uri ledgerEndpoint, X509Certificate2 clientCertificate)
+            : this(ledgerEndpoint, clientCertificate: clientCertificate, ledgerOptions: new ConfidentialLedgerClientOptions(), identityServiceCert: null)
+        { }
+
+        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
+        /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
+        /// <param name="clientCertificate"> A <see cref="X509Certificate2"/> used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public ConfidentialLedgerClient(Uri ledgerEndpoint, X509Certificate2 clientCertificate, ConfidentialLedgerClientOptions options)
+            : this(ledgerEndpoint, clientCertificate: clientCertificate, ledgerOptions: options, identityServiceCert: null)
+        { }
+
+        internal ConfidentialLedgerClient(Uri ledgerEndpoint, TokenCredential credential = null, X509Certificate2 clientCertificate = null, ConfidentialLedgerCertificateClientOptions certificateClientOptions = null, ConfidentialLedgerClientOptions ledgerOptions = null, X509Certificate2 identityServiceCert = null)
+        {
+            if (ledgerEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(ledgerEndpoint));
+            }
+            if (clientCertificate == null && credential == null)
+            {
+                if (clientCertificate == null)
+                    throw new ArgumentNullException(nameof(clientCertificate));
+                if (credential == null)
+                    throw new ArgumentNullException(nameof(credential));
+            }
+            var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
+            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions(), ledgerOptions: ledgerOptions).Cert;
+
+            var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert);
+            if (clientCertificate != null)
+            {
+                transportOptions.ClientCertificates.Add(clientCertificate);
+            }
+            ClientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
-                new HttpPipelinePolicy[] { authPolicy },
-                new ResponseClassifier(),
-                transportOptions);
-            _ledgerUri = ledgerUri;
+                Array.Empty<HttpPipelinePolicy>(),
+                _tokenCredential == null ?
+                    Array.Empty<HttpPipelinePolicy>() :
+                    new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
+                transportOptions,
+                new ResponseClassifier());
+            _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
         }
 
-        /// <summary> Posts a new entry to the ledger. A sub-ledger id may optionally be specified. </summary>
+        /// <summary> Posts a new entry to the ledger. A collection id may optionally be specified. </summary>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> Contents of the ledger entry. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Identifier for sub-ledgers. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
-        ///   </item>
-        /// </list>
+        /// Below is the JSON schema for the request and response payloads.
+        ///
+        /// Request Body:
+        ///
+        /// Schema for <c>LedgerEntry</c>:
+        /// <code>{
+        ///   contents: string, # Required. Contents of the ledger entry.
+        ///   collectionId: string, # Optional.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+        /// }
+        /// </code>
         /// </remarks>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/> will not be returned until the ledger entry is committed.
-        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponse(System.Threading.CancellationToken)"/> must be called to ensure the operation has completed.</param>
+        /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
-        public virtual PostLedgerEntryOperation PostLedgerEntry(
+        public virtual Operation PostLedgerEntry(
+            WaitUntil waitUntil,
             RequestContent content,
-            string subLedgerId = null,
-            bool waitForCompletion = true,
+            string collectionId = null,
             RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            var response = PostLedgerEntry(content, subLedgerId, context);
-            response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
-
-            var operation = new PostLedgerEntryOperation(this, transactionId);
-            if (waitForCompletion)
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
             {
-                operation.WaitForCompletionResponse(context?.CancellationToken ?? default);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
+                var response = _pipeline.ProcessMessage(message, context);
+                response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+
+                var operation = new PostLedgerEntryOperation(this, transactionId);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(context?.CancellationToken ?? default);
+                }
+                return operation;
             }
-            return operation;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Posts a new entry to the ledger. A sub-ledger id may optionally be specified. </summary>
+        /// <summary> Posts a new entry to the ledger. A collection id may optionally be specified. </summary>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>contents</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term> Contents of the ledger entry. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>subLedgerId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> Identifier for sub-ledgers. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>transactionId</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
-        ///   </item>
-        /// </list>
+        /// Below is the JSON schema for the request and response payloads.
+        ///
+        /// Request Body:
+        ///
+        /// Schema for <c>LedgerEntry</c>:
+        /// <code>{
+        ///   contents: string, # Required. Contents of the ledger entry.
+        ///   collectionId: string, # Optional.
+        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+        /// }
+        /// </code>
         /// </remarks>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="waitForCompletion"> If <c>true</c>, the <see cref="PostLedgerEntryOperation"/>
-        /// will automatically poll for status until the ledger entry is committed before it is returned.
-        /// If <c>false</c>,<see cref="Operation.WaitForCompletionResponseAsync(System.Threading.CancellationToken)"/>
-        /// must be called to ensure the operation has completed.</param>
+        /// <param name="collectionId"> The collection id. </param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<PostLedgerEntryOperation> PostLedgerEntryAsync(
+        public virtual async Task<Operation> PostLedgerEntryAsync(
+            WaitUntil waitUntil,
             RequestContent content,
-            string subLedgerId = null,
-            bool waitForCompletion = true,
+            string collectionId = null,
             RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            var response = await PostLedgerEntryAsync(content, subLedgerId, context).ConfigureAwait(false);
-            response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
-
-            var operation = new PostLedgerEntryOperation(this, transactionId);
-            if (waitForCompletion)
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.PostLedgerEntry");
+            scope.Start();
+            try
             {
-                await operation.WaitForCompletionResponseAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, context);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+
+                var operation = new PostLedgerEntryOperation(this, transactionId);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(context?.CancellationToken ?? default).ConfigureAwait(false);
+                }
+                return operation;
             }
-            return operation;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(Uri ledgerUri, ConfidentialLedgerClientOptions options)
+        internal static (X509Certificate2 Cert, string PEM) GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerCertificateClientOptions options, ConfidentialLedgerCertificateClient client = null, ConfidentialLedgerClientOptions ledgerOptions = null)
         {
-            var identityClient = new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.accledger.azure.com"), options);
+            var identityClient = client ?? new ConfidentialLedgerCertificateClient(ledgerOptions?.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint), options);
 
             // Get the ledger's  TLS certificate for our ledger.
             var ledgerId = ledgerUri.Host.Substring(0, ledgerUri.Host.IndexOf('.'));
@@ -171,29 +190,46 @@ namespace Azure.Security.ConfidentialLedger
                 .GetString();
 
             // construct an X509Certificate2 with the ECC PEM value.
-            var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
-            var ledgerTlsCert = PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
+            return (GetCertFromPEM(eccPem), eccPem);
+        }
 
+        private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null)
+        {
             X509Chain certificateChain = new();
+            // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+            // Add the ledger identity TLS certificate to the ExtraStore.
+            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
+            // AllowUnknownCertificateAuthority will NOT allow validation of all unknown self-signed certificates.
+            // It extends trust to the ExtraStore, which in this case contains the trusted ledger identity TLS certificate.
+            // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
+            // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
             certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-            certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-            certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
-            // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
+            // Define a validation function to ensure that certificates presented to the client only pass validation if
+            // they are trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(X509Certificate2 cert)
             {
+                // Validate the presented certificate chain, using the ChainPolicy defined above.
+                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
                 bool isChainValid = certificateChain.Build(cert);
-                if (!isChainValid) return false;
+                if (!isChainValid)
+                    return false;
 
-                var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-                    .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
-                return isCertSignedByTheTlsCert;
+                // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
+                var rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
+                var isChainRootedInTheTlsCert = rootCert.RawData.SequenceEqual(identityServiceCert.RawData);
+                return isChainRootedInTheTlsCert;
             }
 
             return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
+        }
+
+        private static X509Certificate2 GetCertFromPEM(string eccPem)
+        {
+            var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
+            return PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
         }
     }
 }

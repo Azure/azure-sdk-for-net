@@ -57,18 +57,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the dedicated host group. The value is defaulted to 'false' when
         /// not provided. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2020-06-01.</param>
+        /// <param name="additionalCapabilities">Enables or disables a
+        /// capability on the dedicated host group.&lt;br&gt;&lt;br&gt;Minimum
+        /// api-version: 2022-03-01.</param>
         /// <param name="zones">Availability Zone to use for this host group.
         /// Only single zone is supported. The zone can be assigned only during
         /// creation. If not provided, the group supports all zones in the
         /// region. If provided, enforces each host in the group to be in the
         /// same zone.</param>
-        public DedicatedHostGroup(string location, int platformFaultDomainCount, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResourceReadOnly> hosts = default(IList<SubResourceReadOnly>), DedicatedHostGroupInstanceView instanceView = default(DedicatedHostGroupInstanceView), bool? supportAutomaticPlacement = default(bool?), IList<string> zones = default(IList<string>))
+        public DedicatedHostGroup(string location, int platformFaultDomainCount, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResourceReadOnly> hosts = default(IList<SubResourceReadOnly>), DedicatedHostGroupInstanceView instanceView = default(DedicatedHostGroupInstanceView), bool? supportAutomaticPlacement = default(bool?), DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities = default(DedicatedHostGroupPropertiesAdditionalCapabilities), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             PlatformFaultDomainCount = platformFaultDomainCount;
             Hosts = hosts;
             InstanceView = instanceView;
             SupportAutomaticPlacement = supportAutomaticPlacement;
+            AdditionalCapabilities = additionalCapabilities;
             Zones = zones;
             CustomInit();
         }
@@ -110,6 +114,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportAutomaticPlacement")]
         public bool? SupportAutomaticPlacement { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables or disables a capability on the dedicated host
+        /// group.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2022-03-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalCapabilities")]
+        public DedicatedHostGroupPropertiesAdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
         /// Gets or sets availability Zone to use for this host group. Only

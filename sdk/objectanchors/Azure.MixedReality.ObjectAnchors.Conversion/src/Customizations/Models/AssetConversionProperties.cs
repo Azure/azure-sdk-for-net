@@ -46,19 +46,19 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary>
-        /// The status of the AOA asset conversion job
+        /// The status of the AOA asset conversion job.
         /// </summary>
         [CodeGenMember("JobStatus")]
         public AssetConversionStatus? ConversionStatus { get; internal set; }
 
         /// <summary>
-        /// The configuration of the AOA asset conversion job
+        /// The configuration of the AOA asset conversion job.
         /// </summary>
         [CodeGenMember("IngestionConfiguration")]
         public AssetConversionConfiguration ConversionConfiguration { get; internal set; }
 
         /// <summary>
-        /// The error code of the AOA asset conversion job
+        /// The error code of the AOA asset conversion job.
         /// </summary>
         public ConversionErrorCode ErrorCode { get; }
 
@@ -75,6 +75,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// </summary>
         public Guid AccountId { get => AccountIdInternal.GetValueOrDefault(); set => AccountIdInternal = value; }
 
+        /// <summary>
+        /// The scaled dimensions of the asset.
+        /// </summary>
+        public System.Numerics.Vector3? ScaledAssetDimensions { get => ScaledAssetDimensionsWrapper == null ? null : (System.Numerics.Vector3)ScaledAssetDimensionsWrapper; }
+
         [CodeGenMember("OutputModelUri")]
         internal string OutputModelUriString { get; }
 
@@ -89,5 +94,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
         [CodeGenMember("AccountId")]
         internal Guid? AccountIdInternal { get; set; }
+
+        [CodeGenMember("ScaledAssetDimensions")]
+        internal Vector3 ScaledAssetDimensionsWrapper { get; set; }
     }
 }

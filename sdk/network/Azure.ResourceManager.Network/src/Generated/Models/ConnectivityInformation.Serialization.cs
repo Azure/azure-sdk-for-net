@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityInformation DeserializeConnectivityInformation(JsonElement element)
         {
-            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
-            Optional<ConnectionStatus> connectionStatus = default;
+            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            Optional<NetworkConnectionStatus> connectionStatus = default;
             Optional<int> avgLatencyInMs = default;
             Optional<int> minLatencyInMs = default;
             Optional<int> maxLatencyInMs = default;
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectivityHop> array = new List<ConnectivityHop>();
+                    List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item));
+                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item));
                     }
                     hops = array;
                     continue;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectionStatus = new ConnectionStatus(property.Value.GetString());
+                    connectionStatus = new NetworkConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avgLatencyInMs"))

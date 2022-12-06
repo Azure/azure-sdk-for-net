@@ -1,12 +1,122 @@
 # Release History
 
-## 5.7.0-beta.2 (Unreleased)
+## 5.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 5.7.4 (2022-11-08)
+
+### Bugs Fixed
+
+- Telemetry will now use a parent activity instead of links when the event processor is configured to use a `CacheEventCount` of 1.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.5.12. This resolves a rare race condition encountered when creating an AMQP link that could cause the link to hang.
+
+### Other Changes
+
+- Adjusted the frequency that a warning is logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+- Added timing information to logs for AMQP publish and read operations.
+
+## 5.7.3 (2022-10-11)
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessorClient` configuration to help discover issues that can impact processor performance and stability; these validations will produce warnings at processor start-up should potential concerns be found.
+
+- Exception messages have been updated to include a link to the Event Hubs troubleshooting guide.
+
+## 5.7.2 (2022-08-09)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Miscellaneous performance improvements by reducing memory allocations. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 5.7.1 (2022-07-07)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Chad Vidovcich _([GitHub](https://github.com/chadvidovcich))_
+
+### Features Added
+
+- The event processor error handler will now raise warning when an unhandled exception propagated from the event processing handler causing partition processing to fault and restart.
+
+### Bugs Fixed
+
+- Fixed an issue with event processor startup validation where an invalid consumer group was not properly detected.
+
+### Other Changes
+
+- `EventProcessorClient` and `BlobCheckpointStore` will now detect when an ownership blob has been deleted externally while the processor is running and gracefully recover.
+
+- Samples now each have a table of contents to help discover and navigate to the topics discussed for a scenario. _(A community contribution, courtesy of [chadvidovcich](https://github.com/chadvidovcich))_
+
+## 5.7.0 (2022-05-10)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- The `BlobCheckpointStore` implementation used internally by the processor has been made public and now conforms to the `CheckpointStore` contract, allowing it to be used with custom processor implementations.
+
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for processor load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
+- Added additional heuristics for the `EventProcessorClient` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessorClient` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+- Removed allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Enhanced documentation to call attention to the need for the Azure Storage container used with the processor to exist, and highlight that it will not be implicitly created.
+
+## 5.7.0-beta.5 (2022-04-05)
+
+### Features Added
+
+- The `BlobCheckpointStore` implementation used internally by the processor has been made public and now conforms to the `CheckpointStore` contract, allowing it to be used with custom processor implementations.
+
+## 5.7.0-beta.4 (2022-03-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Removed allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Enhanced README documentation to call attention to the need for the Azure Storage container used with the processor to exist, and highlight that it will not be implicitly created.
+
+## 5.7.0-beta.3 (2022-02-09)
+
+### Features Added
+
+- Added `FullyQualifiedNamespace`, `EventHubName`, and `ConsumerGroup` to the partition context associated with events dispatched for processing.
+
+## 5.7.0-beta.2 (2022-01-13)
 
 ### Other Changes
 

@@ -18,7 +18,6 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
             }
@@ -32,7 +31,7 @@
         }
     },
     "variables": {
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]"
+        "secretValue": "Very secret value"
     },
     "resources": [
         {
@@ -68,14 +67,18 @@
               "[resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))]"
             ],
             "properties": {
-              "value": "Very secret value"
+              "value": "[variables('secretValue')]"
             }
           }
     ],
     "outputs": {
         "KEYVAULT_URL": {
             "type": "string",
-            "value": "[variables('azureKeyVaultUrl')]"
+            "value": "[reference(parameters('baseName')).vaultUri]"
+        },
+        "KEYVAULT_SECRET": {
+            "type": "string",
+            "value": "[variables('secretValue')]"
         }
     }
 }

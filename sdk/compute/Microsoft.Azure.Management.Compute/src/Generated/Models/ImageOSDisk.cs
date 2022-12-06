@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// custom image. &lt;br&gt;&lt;br&gt; Possible values are:
         /// &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**.
         /// Possible values include: 'Windows', 'Linux'</param>
-        /// <param name="osState">The OS State. Possible values include:
-        /// 'Generalized', 'Specialized'</param>
+        /// <param name="osState">The OS State. For managed images, use
+        /// Generalized. Possible values include: 'Generalized',
+        /// 'Specialized'</param>
         /// <param name="snapshot">The snapshot.</param>
         /// <param name="managedDisk">The managedDisk.</param>
         /// <param name="blobUri">The Virtual Hard Disk.</param>
@@ -53,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
         /// disks, it cannot be used with OS Disk. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS',
-        /// 'Premium_ZRS', 'StandardSSD_ZRS'</param>
+        /// 'Premium_ZRS', 'StandardSSD_ZRS', 'PremiumV2_LRS'</param>
         /// <param name="diskEncryptionSet">Specifies the customer managed disk
         /// encryption set resource id for the managed image disk.</param>
         public ImageOSDisk(OperatingSystemTypes osType, OperatingSystemStateTypes osState, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string), DiskEncryptionSetParameters diskEncryptionSet = default(DiskEncryptionSetParameters))
@@ -81,8 +82,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public OperatingSystemTypes OsType { get; set; }
 
         /// <summary>
-        /// Gets or sets the OS State. Possible values include: 'Generalized',
-        /// 'Specialized'
+        /// Gets or sets the OS State. For managed images, use Generalized.
+        /// Possible values include: 'Generalized', 'Specialized'
         /// </summary>
         [JsonProperty(PropertyName = "osState")]
         public OperatingSystemStateTypes OsState { get; set; }

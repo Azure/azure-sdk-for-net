@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -15,7 +16,8 @@ namespace Azure.ResourceManager.Tests
         public async Task ListComputeTest()
         {
             bool foundVirtualMachine = false;
-            var restApiCollection = Client.GetRestApis("Microsoft.Compute");
+            SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
+            var restApiCollection = sub.GetArmRestApis("Microsoft.Compute");
             await foreach (var restApi in restApiCollection.GetAllAsync())
             {
                 if (restApi.Resource == "Virtual Machines")
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.Tests
         public async Task ListNetworkTest()
         {
             bool foundPrivateEndpoint = false;
-            var restApiCollection = Client.GetRestApis("Microsoft.Network");
+            SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
+            var restApiCollection = sub.GetArmRestApis("Microsoft.Network");
             await foreach (var restApi in restApiCollection.GetAllAsync())
             {
                 if (restApi.Resource == "Private Endpoint")

@@ -35,14 +35,19 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureStorageLocation DeserializePacketCaptureStorageLocation(JsonElement element)
         {
-            Optional<string> storageId = default;
+            Optional<ResourceIdentifier> storageId = default;
             Optional<string> storagePath = default;
             Optional<string> filePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageId"))
                 {
-                    storageId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storagePath"))

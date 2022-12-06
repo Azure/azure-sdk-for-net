@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Microsoft.Azure.Management.AlertsManagement.Models;
+using System.Linq;
 
 namespace AlertsManagement.Tests.Helpers
 {
@@ -202,9 +203,9 @@ namespace AlertsManagement.Tests.Helpers
         }
         #endregion
 
-        #region Action Rule Tests
+        #region Alert Processing Rules Tests
 
-        public static void AreEqual(ActionRule exp, ActionRule act)
+        public static void AreEqual(AlertProcessingRule exp, AlertProcessingRule act)
         {
             if (exp != null)
             {
@@ -213,40 +214,40 @@ namespace AlertsManagement.Tests.Helpers
                     Assert.Equal(exp.Properties.Description, act.Properties.Description);
                 }
 
-                if (exp.Properties.Status != null && act.Properties.Status != null)
+                if (exp.Properties.Enabled != null && act.Properties.Enabled != null)
                 {
-                    Assert.Equal(exp.Properties.Status, act.Properties.Status);
+                    Assert.Equal(exp.Properties.Enabled, act.Properties.Enabled);
                 }
 
-                AreEqual(exp.Properties.Scope, act.Properties.Scope);
+                AreEqual(exp.Properties.Scopes, act.Properties.Scopes);
                 AreEqual(exp.Properties.Conditions, act.Properties.Conditions);
             }
         }
 
-        public static void AreEqual(Scope exp, Scope act)
+        public static void AreEqual(IList<string> exp, IList<string> act)
         {
-            if (exp != null)
+            if (exp != null && act !=null)
             {
-                Assert.Equal(exp.ScopeType, act.ScopeType);
+                Assert.Equal(exp.Count, act.Count);
 
-                foreach (var value in exp.Values)
+                foreach (var value in exp)
                 {
-                    Assert.Contains(value, act.Values);
+                    Assert.Contains(value, act);
                 }
             }
         }
 
-        public static void AreEqual(Conditions exp, Conditions act)
+        public static void AreEqual(IList<Condition> exp, IList<Condition> act)
         {
             if (exp != null)
             {
-                AreEqual(exp.Severity, act.Severity);
-                AreEqual(exp.MonitorService, act.MonitorService);
-                AreEqual(exp.MonitorCondition, act.MonitorCondition);
-                AreEqual(exp.TargetResourceType, act.TargetResourceType);
-                AreEqual(exp.AlertRuleId, act.AlertRuleId);
-                AreEqual(exp.Description, act.Description);
-                AreEqual(exp.AlertContext, act.AlertContext);
+                Assert.False(exp == null || act == null);
+                Assert.Equal(exp.Count, act.Count);
+                foreach (Condition actCond in act)
+                {
+                    Condition expCond = exp.Where(condition => condition.Field.Equals(actCond.Field)).FirstOrDefault();
+                    AreEqual(actCond, expCond);
+                }
             }
         }
 
@@ -254,6 +255,7 @@ namespace AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
+                Assert.Equal(exp.Field, act.Field);
                 Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
                 foreach (var value in exp.Values)
                 {

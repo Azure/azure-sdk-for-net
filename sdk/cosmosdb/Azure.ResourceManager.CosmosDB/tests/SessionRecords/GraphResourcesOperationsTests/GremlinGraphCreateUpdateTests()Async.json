@@ -460,7 +460,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -522,10 +522,10 @@
             "geospatialConfig": {
               "type": "Geography"
             },
-            "_rid": "n21ZANCB\u002BRQ=",
+            "_rid": "n21ZANCB+RQ=",
             "_ts": 1630402836,
-            "_self": "dbs/n21ZAA==/colls/n21ZANCB\u002BRQ=/",
-            "_etag": "\u00220000aa00-0000-0700-0000-612df9140000\u0022",
+            "_self": "dbs/n21ZAA==/colls/n21ZANCB+RQ=/",
+            "_etag": "\"0000aa00-0000-0700-0000-612df9140000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",
@@ -1046,7 +1046,7 @@
                   "path": "/pathToNotIndex/*"
                 },
                 {
-                  "path": "/\u0022_etag\u0022/?"
+                  "path": "/\"_etag\"/?"
                 }
               ],
               "spatialIndexes": [
@@ -1108,10 +1108,10 @@
             "geospatialConfig": {
               "type": "Geography"
             },
-            "_rid": "n21ZANCB\u002BRQ=",
+            "_rid": "n21ZANCB+RQ=",
             "_ts": 1630402836,
-            "_self": "dbs/n21ZAA==/colls/n21ZANCB\u002BRQ=/",
-            "_etag": "\u00220000aa00-0000-0700-0000-612df9140000\u0022",
+            "_self": "dbs/n21ZAA==/colls/n21ZANCB+RQ=/",
+            "_etag": "\"0000aa00-0000-0700-0000-612df9140000\"",
             "_docs": "docs/",
             "_sprocs": "sprocs/",
             "_triggers": "triggers/",

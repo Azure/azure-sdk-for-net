@@ -12,12 +12,21 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TaskState
+    internal partial class TaskState : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("lastUpdateDateTime");
+            writer.WriteStringValue(LastUpdateDateTime, "O");
+            writer.WritePropertyName("status");
+            writer.WriteStringValue(Status.ToString());
+            writer.WriteEndObject();
+        }
+
         internal static TaskState DeserializeTaskState(JsonElement element)
         {
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,18 +35,13 @@ namespace Azure.AI.TextAnalytics.Models
                     lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("taskName"))
-                {
-                    taskName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("status"))
                 {
                     status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new TaskState(lastUpdateDateTime, taskName.Value, status);
+            return new TaskState(lastUpdateDateTime, status);
         }
     }
 }

@@ -70,6 +70,11 @@ namespace Azure.Core.Tests
                 Assert.False(beforeTransportRan);
             }), HttpPipelinePosition.PerRetry);
 
+            // Intentionally add some null policies to ensure it does not break indexing
+            options.AddPolicy(null, HttpPipelinePosition.PerCall);
+            options.AddPolicy(null, HttpPipelinePosition.PerRetry);
+            options.AddPolicy(null, HttpPipelinePosition.BeforeTransport);
+
             options.AddPolicy(new CallbackPolicy(m =>
             {
                 beforeTransportRan = true;
@@ -110,10 +115,49 @@ namespace Azure.Core.Tests
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             var informationalVersion = typeof(TestOptions).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            informationalVersion = informationalVersion.Substring(0, informationalVersion.IndexOf('+'));
+            var i = informationalVersion.IndexOf('+');
+            if (i > 0)
+            {
+                informationalVersion = informationalVersion.Substring(0, i);
+            }
 
             Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
             StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);
+        }
+
+        [Test]
+        public async Task UsesAssemblyNameAndInformationalVersionForTelemetryPolicySettingsWithSetTelemetryPackageInfo()
+        {
+            var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
+            var options = new TestOptions
+            {
+                Transport = transport
+            };
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+
+            var message = pipeline.CreateMessage();
+            var userAgent = new TelemetryDetails(typeof(string).Assembly);
+            userAgent.Apply(message);
+            using Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("http://example.com"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+
+            var informationalVersion = typeof(string).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var i = informationalVersion.IndexOf('+');
+            if (i > 0)
+            {
+                informationalVersion = informationalVersion.Substring(0, i);
+            }
+
+            Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
+#if NETFRAMEWORK
+            StringAssert.StartsWith($"azsdk-net-mscorlib/{informationalVersion} ", value);
+#else
+            StringAssert.StartsWith($"azsdk-net-System.Private.CoreLib/{informationalVersion} ", value);
+#endif
         }
 
         [Test]
@@ -216,8 +260,8 @@ namespace Azure.Core.Tests
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 Array.Empty<HttpPipelinePolicy>(),
-                ResponseClassifier.Shared,
-                new HttpPipelineTransportOptions());
+                new HttpPipelineTransportOptions(),
+                ResponseClassifier.Shared);
 
             HttpPipelineTransport transportField = pipeline.GetType().GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(pipeline) as HttpPipelineTransport;
             if (isCustomTransportSet)

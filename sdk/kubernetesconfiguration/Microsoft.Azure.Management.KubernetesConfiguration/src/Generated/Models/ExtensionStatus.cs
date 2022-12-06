@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Status from this instance of the extension.
+    /// Status from the extension.
     /// </summary>
     public partial class ExtensionStatus
     {
@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// Initializes a new instance of the ExtensionStatus class.
         /// </summary>
         /// <param name="code">Status code provided by the Extension</param>
-        /// <param name="displayStatus">Short description of status of this
-        /// instance of the extension.</param>
+        /// <param name="displayStatus">Short description of status of the
+        /// extension.</param>
         /// <param name="level">Level of the status. Possible values include:
         /// 'Error', 'Warning', 'Information'</param>
         /// <param name="message">Detailed message of the status from the
-        /// Extension instance.</param>
+        /// Extension.</param>
         /// <param name="time">DateLiteral (per ISO8601) noting the time of
         /// installation status.</param>
         public ExtensionStatus(string code = default(string), string displayStatus = default(string), string level = default(string), string message = default(string), string time = default(string))
@@ -60,8 +60,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets short description of status of this instance of the
-        /// extension.
+        /// Gets or sets short description of status of the extension.
         /// </summary>
         [JsonProperty(PropertyName = "displayStatus")]
         public string DisplayStatus { get; set; }
@@ -74,8 +73,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         public string Level { get; set; }
 
         /// <summary>
-        /// Gets or sets detailed message of the status from the Extension
-        /// instance.
+        /// Gets or sets detailed message of the status from the Extension.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

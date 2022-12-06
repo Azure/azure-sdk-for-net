@@ -35,13 +35,20 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the ScheduledAlertRuleTemplate class.
         /// </summary>
-        /// <param name="id">Azure resource Id</param>
-        /// <param name="name">Azure resource name</param>
-        /// <param name="type">Azure resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="alertRulesCreatedByTemplateCount">the number of alert
         /// rules that were created by this template</param>
         /// <param name="createdDateUTC">The time that this alert rule template
         /// has been added.</param>
+        /// <param name="lastUpdatedDateUTC">The time that this alert rule
+        /// template was last updated.</param>
         /// <param name="description">The description of the alert rule
         /// template.</param>
         /// <param name="displayName">The display name for alert rule
@@ -66,11 +73,24 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// rule.</param>
         /// <param name="tactics">The tactics of the alert rule
         /// template</param>
-        public ScheduledAlertRuleTemplate(string id = default(string), string name = default(string), string type = default(string), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? createdDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), string query = default(string), System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), string severity = default(string), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?), IList<string> tactics = default(IList<string>))
-            : base(id, name, type)
+        /// <param name="techniques">The techniques of the alert rule</param>
+        /// <param name="version">The version of this template - in format
+        /// &lt;a.b.c&gt;, where all are numbers. For example
+        /// &lt;1.0.2&gt;.</param>
+        /// <param name="eventGroupingSettings">The event grouping
+        /// settings.</param>
+        /// <param name="customDetails">Dictionary of string key-value pairs of
+        /// columns to be attached to the alert</param>
+        /// <param name="entityMappings">Array of the entity mappings of the
+        /// alert rule</param>
+        /// <param name="alertDetailsOverride">The alert details override
+        /// settings</param>
+        public ScheduledAlertRuleTemplate(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? createdDateUTC = default(System.DateTime?), System.DateTime? lastUpdatedDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), string query = default(string), System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), string severity = default(string), TriggerOperator? triggerOperator = default(TriggerOperator?), int? triggerThreshold = default(int?), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>), string version = default(string), EventGroupingSettings eventGroupingSettings = default(EventGroupingSettings), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride))
+            : base(id, name, type, systemData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
             CreatedDateUTC = createdDateUTC;
+            LastUpdatedDateUTC = lastUpdatedDateUTC;
             Description = description;
             DisplayName = displayName;
             RequiredDataConnectors = requiredDataConnectors;
@@ -82,6 +102,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             TriggerOperator = triggerOperator;
             TriggerThreshold = triggerThreshold;
             Tactics = tactics;
+            Techniques = techniques;
+            Version = version;
+            EventGroupingSettings = eventGroupingSettings;
+            CustomDetails = customDetails;
+            EntityMappings = entityMappings;
+            AlertDetailsOverride = alertDetailsOverride;
             CustomInit();
         }
 
@@ -102,6 +128,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDateUTC")]
         public System.DateTime? CreatedDateUTC { get; private set; }
+
+        /// <summary>
+        /// Gets the time that this alert rule template was last updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastUpdatedDateUTC")]
+        public System.DateTime? LastUpdatedDateUTC { get; private set; }
 
         /// <summary>
         /// Gets or sets the description of the alert rule template.
@@ -174,6 +206,45 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.tactics")]
         public IList<string> Tactics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the techniques of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of this template - in format
+        /// &amp;lt;a.b.c&amp;gt;, where all are numbers. For example
+        /// &amp;lt;1.0.2&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event grouping settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventGroupingSettings")]
+        public EventGroupingSettings EventGroupingSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets dictionary of string key-value pairs of columns to be
+        /// attached to the alert
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customDetails")]
+        public IDictionary<string, string> CustomDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of the entity mappings of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.entityMappings")]
+        public IList<EntityMapping> EntityMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alert details override settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alertDetailsOverride")]
+        public AlertDetailsOverride AlertDetailsOverride { get; set; }
 
     }
 }

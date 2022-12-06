@@ -13,11 +13,16 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_4_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_3,
         KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3_Preview)]
-    [NonParallelizable]
+        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_0)]
+    [IgnoreServiceError(
+        409,
+        "Conflict",
+        Message = "User triggered Restore operation is in progress",
+        Reason = "Test assemblies run in parallel so a restore operation triggered by the Administration package may be in progress.")]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
@@ -41,6 +46,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _serviceVersion = serviceVersion;
         }
 
+        [SetUp]
+        public void ClearChallengeCacheforRecord()
+        {
+            // in record mode we reset the challenge cache before each test so that the challenge call
+            // is always made.  This allows tests to be replayed independently and in any order
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                ChallengeBasedAuthenticationPolicy.ClearCache();
+            }
+        }
+
         /// <summary>
         /// Gets whether the current text fixture is running against Managed HSM.
         /// </summary>
@@ -56,45 +72,39 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         internal KeyClient GetClient()
         {
+            KeyClientOptions options = InstrumentClientOptions(new KeyClientOptions(_serviceVersion)
+            {
+                Diagnostics =
+                {
+                    LoggedHeaderNames =
+                    {
+                        "x-ms-request-id",
+                    },
+                },
+            });
+
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
             // we need to delay creation of keys due to aggressive service limits on key creation:
             // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
             IInterceptor[] interceptors = new[] { new DelayCreateKeyInterceptor(Mode) };
 
-            return InstrumentClient(
-                new KeyClient(
-                    Uri,
-                    TestEnvironment.Credential,
-                    InstrumentClientOptions(
-                        new KeyClientOptions(_serviceVersion)
-                        {
-                            Diagnostics =
-                            {
-                                LoggedHeaderNames =
-                                {
-                                    "x-ms-request-id",
-                                },
-                                // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
-                                IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
-                            },
-                        })),
-                interceptors);
+            return InstrumentClient(new KeyClient(Uri, TestEnvironment.Credential, options), interceptors);
         }
 
-        public override void StartTestRecording()
+        public override async Task StartTestRecordingAsync()
         {
-            base.StartTestRecording();
+            await base.StartTestRecordingAsync();
 
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
         }
 
-        public override void StopTestRecording()
+        public override async Task StopTestRecordingAsync()
         {
             _listener?.Dispose();
 
-            base.StopTestRecording();
+            await base.StopTestRecordingAsync();
         }
 
         [TearDown]

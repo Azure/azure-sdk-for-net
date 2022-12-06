@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -46,8 +45,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -70,8 +68,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -91,8 +88,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -118,8 +114,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -142,8 +137,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -172,8 +166,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -193,8 +186,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -208,6 +200,98 @@ namespace Microsoft.Azure.Management.SecurityInsights
             public static async Task DeleteAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Connects a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            /// <param name='connectBody'>
+            /// The data connector
+            /// </param>
+            public static void Connect(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody)
+            {
+                operations.ConnectAsync(resourceGroupName, workspaceName, dataConnectorId, connectBody).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Connects a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            /// <param name='connectBody'>
+            /// The data connector
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ConnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ConnectWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, connectBody, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Disconnect a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            public static void Disconnect(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId)
+            {
+                operations.DisconnectAsync(resourceGroupName, workspaceName, dataConnectorId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect a data connector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='dataConnectorId'>
+            /// Connector ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisconnectAsync(this IDataConnectorsOperations operations, string resourceGroupName, string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisconnectWithHttpMessagesAsync(resourceGroupName, workspaceName, dataConnectorId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

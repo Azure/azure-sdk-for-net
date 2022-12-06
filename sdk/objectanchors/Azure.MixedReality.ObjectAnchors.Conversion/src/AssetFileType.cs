@@ -4,11 +4,12 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary>
-    /// An extensible enum representing the filetype of the asset
+    /// An extensible enum representing the filetype of the asset.
     /// </summary>
     public readonly struct AssetFileType : IEquatable<AssetFileType>
     {
@@ -19,47 +20,58 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal const string ObjValue = ".obj";
         internal const string PlyValue = ".ply";
 
+        internal string Value => _value ?? string.Empty;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetFileType"/> struct.
         /// </summary>
-        /// <param name="value">The asset file type</param>
+        /// <param name="value">The asset file type.</param>
         public AssetFileType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
+
+            if (!value.StartsWith(".", StringComparison.Ordinal))
+            {
+                throw new ArgumentException("The value must start with a '.' character.", nameof(value));
+            }
+
+            _value = value.ToLowerInvariant();
         }
 
         /// <summary>
-        /// Returns an AssetFileType derived from the extension of a provided file name
+        /// Returns an AssetFileType derived from the extension of a provided file name.
         /// </summary>
-        /// <param name="assetFilePath">The asset file name</param>
-        /// <returns>The AssetFileType derived from the extension of a provided file name</returns>
+        /// <param name="assetFilePath">The asset file name.</param>
+        /// <returns>The AssetFileType derived from the extension of a provided file name.</returns>
         public static AssetFileType FromFilePath(string assetFilePath)
         {
-            return new AssetFileType(Path.GetExtension(assetFilePath));
+            Argument.AssertNotNullOrWhiteSpace(assetFilePath, nameof(assetFilePath));
+
+            return new AssetFileType(Path.GetExtension(assetFilePath).ToLowerInvariant());
         }
 
         /// <summary>
-        /// Fbx
+        /// The FBX asset file type.
         /// </summary>
         public static AssetFileType Fbx { get; } = new AssetFileType(FbxValue);
 
         /// <summary>
-        /// Glb
+        /// The GLB asset file type.
         /// </summary>
         public static AssetFileType Glb { get; } = new AssetFileType(GlbValue);
 
         /// <summary>
-        /// Gltf
+        /// The GLTF asset file type.
         /// </summary>
         public static AssetFileType Gltf { get; } = new AssetFileType(GltfValue);
 
         /// <summary>
-        /// Obj
+        /// The OBJ asset file type.
         /// </summary>
         public static AssetFileType Obj { get; } = new AssetFileType(ObjValue);
 
         /// <summary>
-        /// Ply
+        /// The PLY asset file type.
         /// </summary>
         public static AssetFileType Ply { get; } = new AssetFileType(PlyValue);
 
@@ -85,24 +97,29 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <inheritdoc/>
         public bool Equals(AssetFileType other)
         {
-            return this._value == other._value;
+            return Value.Equals(other._value, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            return obj is AssetFileType && Equals((AssetFileType)obj);
+            if (obj is AssetFileType otherFileType)
+            {
+                return Equals(otherFileType);
+            }
+
+            return false;
         }
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return _value.GetHashCode();
+            return Value.GetHashCode();
         }
 
         /// <inheritdoc/>
-        public override string ToString() => _value;
+        public override string ToString() => Value;
     }
 }

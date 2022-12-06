@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading;
+using Azure.Core.Cryptography;
+
 namespace Azure.Storage.Cryptography.Models
 {
     /// <summary>
@@ -20,6 +24,8 @@ namespace Azure.Storage.Cryptography.Models
 
         /// <summary>
         /// The encrypted content encryption key.
+        /// In V2, the content encryption algorithm is wrapped in with the key,
+        /// authenticating the selected decryption algorithm.
         /// </summary>
         public byte[] EncryptedKey { get; set; }
 

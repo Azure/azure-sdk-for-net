@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceEncryptionProtectorListResult DeserializeManagedInstanceEncryptionProtectorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedInstanceEncryptionProtector>> value = default;
+            Optional<IReadOnlyList<ManagedInstanceEncryptionProtectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedInstanceEncryptionProtector> array = new List<ManagedInstanceEncryptionProtector>();
+                    List<ManagedInstanceEncryptionProtectorData> array = new List<ManagedInstanceEncryptionProtectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEncryptionProtector.DeserializeManagedInstanceEncryptionProtector(item));
+                        array.Add(ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(item));
                     }
                     value = array;
                     continue;

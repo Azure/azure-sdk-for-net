@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// EventGrid Partner Topic.
+    /// Event Grid Partner Topic.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PartnerTopic : TrackedResource
@@ -40,8 +40,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of the resource.</param>
         /// <param name="tags">Tags of the resource.</param>
+        /// <param name="partnerRegistrationImmutableId">The immutableId of the
+        /// corresponding partner registration.</param>
         /// <param name="source">Source associated with this partner topic.
         /// This represents a unique partner resource.</param>
+        /// <param name="eventTypeInfo">Event Type information from the
+        /// corresponding event channel.</param>
         /// <param name="expirationTimeIfNotActivatedUtc">Expiration time of
         /// the partner topic. If this timer expires while the partner topic is
         /// still never activated,
@@ -49,7 +53,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// deleted.</param>
         /// <param name="provisioningState">Provisioning state of the partner
         /// topic. Possible values include: 'Creating', 'Updating', 'Deleting',
-        /// 'Succeeded', 'Canceled', 'Failed'</param>
+        /// 'Succeeded', 'Canceled', 'Failed',
+        /// 'IdleDueToMirroredChannelResourceDeletion'</param>
         /// <param name="activationState">Activation state of the partner
         /// topic. Possible values include: 'NeverActivated', 'Activated',
         /// 'Deactivated'</param>
@@ -58,18 +63,23 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// custom description for the customer partner topic.
         /// This will be helpful to remove any ambiguity of the origin of
         /// creation of the partner topic for the customer.</param>
+        /// <param name="messageForActivation">Context or helpful message that
+        /// can be used during the approval process by the subscriber.</param>
         /// <param name="systemData">The system metadata relating to Partner
         /// Topic resource.</param>
         /// <param name="identity">Identity information for the Partner Topic
         /// resource.</param>
-        public PartnerTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string source = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), string provisioningState = default(string), string activationState = default(string), string partnerTopicFriendlyDescription = default(string), SystemData systemData = default(SystemData), IdentityInfo identity = default(IdentityInfo))
+        public PartnerTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string source = default(string), EventTypeInfo eventTypeInfo = default(EventTypeInfo), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), string provisioningState = default(string), string activationState = default(string), string partnerTopicFriendlyDescription = default(string), string messageForActivation = default(string), SystemData systemData = default(SystemData), IdentityInfo identity = default(IdentityInfo))
             : base(location, id, name, type, tags)
         {
+            PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             Source = source;
+            EventTypeInfo = eventTypeInfo;
             ExpirationTimeIfNotActivatedUtc = expirationTimeIfNotActivatedUtc;
             ProvisioningState = provisioningState;
             ActivationState = activationState;
             PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
+            MessageForActivation = messageForActivation;
             SystemData = systemData;
             Identity = identity;
             CustomInit();
@@ -81,11 +91,25 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the immutableId of the corresponding partner
+        /// registration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerRegistrationImmutableId")]
+        public System.Guid? PartnerRegistrationImmutableId { get; set; }
+
+        /// <summary>
         /// Gets or sets source associated with this partner topic. This
         /// represents a unique partner resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.source")]
         public string Source { get; set; }
+
+        /// <summary>
+        /// Gets or sets event Type information from the corresponding event
+        /// channel.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventTypeInfo")]
+        public EventTypeInfo EventTypeInfo { get; set; }
 
         /// <summary>
         /// Gets or sets expiration time of the partner topic. If this timer
@@ -98,7 +122,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Gets provisioning state of the partner topic. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded',
-        /// 'Canceled', 'Failed'
+        /// 'Canceled', 'Failed', 'IdleDueToMirroredChannelResourceDeletion'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -119,6 +143,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerTopicFriendlyDescription")]
         public string PartnerTopicFriendlyDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets context or helpful message that can be used during the
+        /// approval process by the subscriber.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.messageForActivation")]
+        public string MessageForActivation { get; set; }
 
         /// <summary>
         /// Gets the system metadata relating to Partner Topic resource.

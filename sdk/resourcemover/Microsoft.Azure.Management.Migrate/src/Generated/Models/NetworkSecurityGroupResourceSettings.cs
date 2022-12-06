@@ -36,11 +36,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         /// <param name="targetResourceName">Gets or sets the target Resource
         /// name.</param>
+        /// <param name="tags">Gets or sets the Resource tags.</param>
         /// <param name="securityRules">Gets or sets Security rules of network
         /// security group.</param>
-        public NetworkSecurityGroupResourceSettings(string targetResourceName, IList<NsgSecurityRule> securityRules = default(IList<NsgSecurityRule>))
+        public NetworkSecurityGroupResourceSettings(string targetResourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<NsgSecurityRule> securityRules = default(IList<NsgSecurityRule>))
             : base(targetResourceName)
         {
+            Tags = tags;
             SecurityRules = securityRules;
             CustomInit();
         }
@@ -49,6 +51,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets Security rules of network security group.

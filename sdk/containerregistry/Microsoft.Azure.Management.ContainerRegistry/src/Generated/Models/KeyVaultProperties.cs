@@ -33,11 +33,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// used for encryption.</param>
         /// <param name="identity">The client id of the identity which will be
         /// used to access key vault.</param>
-        public KeyVaultProperties(string keyIdentifier = default(string), string versionedKeyIdentifier = default(string), string identity = default(string))
+        /// <param name="keyRotationEnabled">Auto key rotation status for a CMK
+        /// enabled registry.</param>
+        /// <param name="lastKeyRotationTimestamp">Timestamp of the last
+        /// successful key rotation.</param>
+        public KeyVaultProperties(string keyIdentifier = default(string), string versionedKeyIdentifier = default(string), string identity = default(string), bool? keyRotationEnabled = default(bool?), System.DateTime? lastKeyRotationTimestamp = default(System.DateTime?))
         {
             KeyIdentifier = keyIdentifier;
             VersionedKeyIdentifier = versionedKeyIdentifier;
             Identity = identity;
+            KeyRotationEnabled = keyRotationEnabled;
+            LastKeyRotationTimestamp = lastKeyRotationTimestamp;
             CustomInit();
         }
 
@@ -65,6 +71,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public string Identity { get; set; }
+
+        /// <summary>
+        /// Gets auto key rotation status for a CMK enabled registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyRotationEnabled")]
+        public bool? KeyRotationEnabled { get; private set; }
+
+        /// <summary>
+        /// Gets timestamp of the last successful key rotation.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastKeyRotationTimestamp")]
+        public System.DateTime? LastKeyRotationTimestamp { get; private set; }
 
     }
 }

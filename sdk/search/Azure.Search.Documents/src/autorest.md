@@ -1,22 +1,19 @@
 # Azure.Search.Documents Code Generation
 
-Run `/sdk/search/generate.ps1` to generate code.
+Run `dotnet build /t:GenerateCode` in the `src` directory to generate SDK code.
+
+See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blob/fe0bf0e7e84a406ec2102c194ea05ccd5011a141/sdk/search/CONTRIBUTING.md) for more details.
 
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
 ## Swagger Source(s)
-AutoRest doesn't play nicely with multiple remote swagger files.  It will
-however merge two local swagger files together automagically.  At some point,
-we should merge the Service and Index swagger files together but for now we
-copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/shmed/azure-rest-api-specs/blob/7a003b0aa0def1a454ff0844fa4c6a276bc1ee53/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
-modelerfour:
-    seal-single-value-enum-by-default: true
+ - https://github.com/Azure/azure-rest-api-specs/blob/932e261a870475e1a29115f62def7bb84e4d7b38/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/904899a23a417768ce1ec1d5f89f33817f8ef8ad/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+generation1-convenience-client: true
 ```
 
 ## Release hacks
@@ -301,6 +298,7 @@ directive:
           required: true,
           type: "string",
           enum: [ accept ],
+          "x-ms-enum": { "modelAsString": false },
           "x-ms-parameter-location": "method"
         });
       }
@@ -332,4 +330,18 @@ directive:
   from: swagger-document
   where: $.parameters.ClientRequestIdParameter
   transform: $["x-ms-parameter-location"] = "client";
+```
+
+## Seal single value enums
+
+Prevents the creation of single-value extensible enum in generated code. The following single-value enum will be generated as string constant.
+
+```yaml
+directive:
+  from: swagger-document
+  where: $.parameters.PreferHeaderParameter
+  transform: >
+    $["x-ms-enum"] = {
+      "modelAsString": false
+    }
 ```

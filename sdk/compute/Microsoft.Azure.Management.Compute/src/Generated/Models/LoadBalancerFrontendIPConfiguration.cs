@@ -14,6 +14,11 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Specifies the frontend IP to be used for the load balancer. Only IPv4
+    /// frontend IP address is supported. Each load balancer configuration must
+    /// have exactly one frontend IP configuration.
+    /// </summary>
     public partial class LoadBalancerFrontendIPConfiguration
     {
         /// <summary>

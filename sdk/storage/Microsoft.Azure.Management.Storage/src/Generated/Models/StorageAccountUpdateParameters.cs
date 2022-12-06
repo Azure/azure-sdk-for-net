@@ -53,19 +53,27 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// domain is supported per storage account at this time. To clear the
         /// existing custom domain, use an empty string for the custom domain
         /// name property.</param>
-        /// <param name="encryption">Provides the encryption settings on the
-        /// account. The default setting is unencrypted.</param>
+        /// <param name="encryption">Not applicable. Azure Storage encryption
+        /// at rest is enabled by default for all storage accounts and cannot
+        /// be disabled.</param>
         /// <param name="sasPolicy">SasPolicy assigned to the storage
         /// account.</param>
         /// <param name="keyPolicy">KeyPolicy assigned to the storage
         /// account.</param>
         /// <param name="accessTier">Required for storage accounts where kind =
-        /// BlobStorage. The access tier used for billing. Possible values
-        /// include: 'Hot', 'Cool'</param>
+        /// BlobStorage. The access tier is used for billing. The 'Premium'
+        /// access tier is the default value for premium block blobs storage
+        /// account type and it cannot be changed for the premium block blobs
+        /// storage account type. Possible values include: 'Hot', 'Cool',
+        /// 'Premium'</param>
         /// <param name="azureFilesIdentityBasedAuthentication">Provides the
         /// identity based authentication settings for Azure Files.</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
+        /// <param name="isSftpEnabled">Enables Secure File Transfer Protocol,
+        /// if set to true</param>
+        /// <param name="isLocalUserEnabled">Enables local users feature, if
+        /// set to true</param>
         /// <param name="networkRuleSet">Network rule set</param>
         /// <param name="largeFileSharesState">Allow large file shares if sets
         /// to Enabled. It cannot be disabled once it is enabled. Possible
@@ -99,11 +107,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// immutable and can only be set to true at the account creation time.
         /// When set to true, it enables object level immutability for all the
         /// containers in the account by default.</param>
+        /// <param name="allowedCopyScope">Restrict copy to and from Storage
+        /// Accounts within an AAD tenant or with Private Links to the same
+        /// VNet. Possible values include: 'PrivateLink', 'AAD'</param>
+        /// <param name="dnsEndpointType">Allows you to specify the type of
+        /// endpoint. Set this to AzureDNSZone to create a large number of
+        /// accounts in a single subscription, which creates accounts in an
+        /// Azure DNS Zone and the endpoint URL will have an alphanumeric DNS
+        /// Zone identifier. Possible values include: 'Standard',
+        /// 'AzureDnsZone'</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), string publicNetworkAccess = default(string), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount), string kind = default(string))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? defaultToOAuthAuthentication = default(bool?), string publicNetworkAccess = default(string), ImmutableStorageAccount immutableStorageWithVersioning = default(ImmutableStorageAccount), string allowedCopyScope = default(string), string dnsEndpointType = default(string), string kind = default(string))
         {
             Sku = sku;
             Tags = tags;
@@ -115,6 +132,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             AccessTier = accessTier;
             AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
+            IsSftpEnabled = isSftpEnabled;
+            IsLocalUserEnabled = isLocalUserEnabled;
             NetworkRuleSet = networkRuleSet;
             LargeFileSharesState = largeFileSharesState;
             RoutingPreference = routingPreference;
@@ -125,6 +144,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             DefaultToOAuthAuthentication = defaultToOAuthAuthentication;
             PublicNetworkAccess = publicNetworkAccess;
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
+            AllowedCopyScope = allowedCopyScope;
+            DnsEndpointType = dnsEndpointType;
             Kind = kind;
             CustomInit();
         }
@@ -168,8 +189,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
-        /// Gets or sets provides the encryption settings on the account. The
-        /// default setting is unencrypted.
+        /// Gets or sets not applicable. Azure Storage encryption at rest is
+        /// enabled by default for all storage accounts and cannot be disabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
@@ -188,8 +209,11 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets required for storage accounts where kind =
-        /// BlobStorage. The access tier used for billing. Possible values
-        /// include: 'Hot', 'Cool'
+        /// BlobStorage. The access tier is used for billing. The 'Premium'
+        /// access tier is the default value for premium block blobs storage
+        /// account type and it cannot be changed for the premium block blobs
+        /// storage account type. Possible values include: 'Hot', 'Cool',
+        /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; set; }
@@ -207,6 +231,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHttpsTrafficOnly")]
         public bool? EnableHttpsTrafficOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables Secure File Transfer Protocol, if set to true
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isSftpEnabled")]
+        public bool? IsSftpEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables local users feature, if set to true
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isLocalUserEnabled")]
+        public bool? IsLocalUserEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets network rule set
@@ -288,6 +324,24 @@ namespace Microsoft.Azure.Management.Storage.Models
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
 
         /// <summary>
+        /// Gets or sets restrict copy to and from Storage Accounts within an
+        /// AAD tenant or with Private Links to the same VNet. Possible values
+        /// include: 'PrivateLink', 'AAD'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowedCopyScope")]
+        public string AllowedCopyScope { get; set; }
+
+        /// <summary>
+        /// Gets or sets allows you to specify the type of endpoint. Set this
+        /// to AzureDNSZone to create a large number of accounts in a single
+        /// subscription, which creates accounts in an Azure DNS Zone and the
+        /// endpoint URL will have an alphanumeric DNS Zone identifier.
+        /// Possible values include: 'Standard', 'AzureDnsZone'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsEndpointType")]
+        public string DnsEndpointType { get; set; }
+
+        /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
@@ -315,10 +369,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (CustomDomain != null)
             {
                 CustomDomain.Validate();
-            }
-            if (Encryption != null)
-            {
-                Encryption.Validate();
             }
             if (SasPolicy != null)
             {

@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Rl.Net;
 
 namespace Azure.AI.Personalizer
 {
@@ -14,12 +16,27 @@ namespace Azure.AI.Personalizer
     ///<see href="https://docs.microsoft.com/azure/cognitive-services/personalizer/what-is-personalizer"/>
     public class PersonalizerClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics clientDiagnostics;
+        private readonly HttpPipeline pipeline;
+        private readonly bool useLocalInference;
+        private string stringEndpoint;
+        private AzureKeyCredential azureKeyCredential;
+        private TokenCredential tokenCredential;
+        private int liveModelRefreshTimeInMinutes = 15;
+        private DateTimeOffset tokenExpiry;
+        private DateTimeOffset liveModelLastRefresh;
+        private string[] scopes = { "https://cognitiveservices.azure.com/.default" };
+        private float subsampleRate = 1.0f;
+
+        private Lazy<RlNetProcessor> rlNetProcessor;
         internal RankRestClient RankRestClient { get; set; }
         internal EventsRestClient EventsRestClient { get; set; }
         internal MultiSlotRestClient MultiSlotRestClient { get; set; }
         internal MultiSlotEventsRestClient MultiSlotEventsRestClient { get; set; }
+        internal ServiceConfigurationRestClient ServiceConfigurationRestClient { get; set; }
+        internal PolicyRestClient PolicyRestClient { get; set; }
+        internal PersonalizerServiceProperties personalizerServiceProperties { get; set; }
+        internal PersonalizerPolicy personalizerPolicy { get; set; }
 
         /// <summary> Initializes a new instance of Personalizer Client for mocking. </summary>
         protected PersonalizerClient()
@@ -42,20 +59,30 @@ namespace Azure.AI.Personalizer
             }
 
             options ??= new PersonalizerClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            string[] scopes = { "https://cognitiveservices.azure.com/.default" };
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            string stringEndpoint = endpoint.AbsoluteUri;
-            RankRestClient = new RankRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            clientDiagnostics = new ClientDiagnostics(options);
+            pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            stringEndpoint = endpoint.AbsoluteUri;
+            RankRestClient = new RankRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            EventsRestClient = new EventsRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            MultiSlotRestClient = new MultiSlotRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            MultiSlotEventsRestClient = new MultiSlotEventsRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            ServiceConfigurationRestClient = new ServiceConfigurationRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            PolicyRestClient = new PolicyRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            tokenCredential = credential;
+
+            this.useLocalInference = options.UseLocalInference;
+            if (useLocalInference)
+            {
+                validateAndAssignSampleRate(options.SubsampleRate);
+                //lazy load Rankprocessor
+                rlNetProcessor = new Lazy<RlNetProcessor>(() => GetConfigurationForRankProcessor());
+            }
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public PersonalizerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null){ }
+        public PersonalizerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null) { }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
@@ -71,21 +98,31 @@ namespace Azure.AI.Personalizer
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-
             options ??= new PersonalizerClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
-            string stringEndpoint = endpoint.AbsoluteUri;
-            RankRestClient = new RankRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            clientDiagnostics = new ClientDiagnostics(options);
+            pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
+            stringEndpoint = endpoint.AbsoluteUri;
+            RankRestClient = new RankRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            EventsRestClient = new EventsRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            MultiSlotRestClient = new MultiSlotRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            MultiSlotEventsRestClient = new MultiSlotEventsRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            ServiceConfigurationRestClient = new ServiceConfigurationRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            PolicyRestClient = new PolicyRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            azureKeyCredential = credential;
+
+            this.useLocalInference = options.UseLocalInference;
+            if (useLocalInference)
+            {
+                validateAndAssignSampleRate(options.SubsampleRate);
+                //lazy load Rankprocessor
+                rlNetProcessor = new Lazy<RlNetProcessor>(() => GetConfigurationForRankProcessor());
+            }
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential): this(endpoint, credential, null) { }
+        public PersonalizerClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, null) { }
 
         /// <summary> Initializes a new instance of MultiSlotEventsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -94,12 +131,12 @@ namespace Azure.AI.Personalizer
         internal PersonalizerClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
             string stringEndpoint = endpoint.AbsoluteUri;
-            RankRestClient = new RankRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            EventsRestClient = new EventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            MultiSlotRestClient = new MultiSlotRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            MultiSlotEventsRestClient = new MultiSlotEventsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            RankRestClient = new RankRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            EventsRestClient = new EventsRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            MultiSlotRestClient = new MultiSlotRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            MultiSlotEventsRestClient = new MultiSlotEventsRestClient(clientDiagnostics, pipeline, stringEndpoint);
+            this.clientDiagnostics = clientDiagnostics;
+            this.pipeline = pipeline;
         }
 
         /// <summary> Submit a Personalizer rank request. Receives a context and a list of actions. Returns which of the provided actions should be used by your application, in rewardActionId. </summary>
@@ -107,11 +144,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerRankResult>> RankAsync(PersonalizerRankOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Rank");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.Rank");
             scope.Start();
             try
             {
-                return await RankRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Rank(options);
+                }
+                else
+                {
+                    return await RankRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -150,11 +195,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerRankResult> Rank(PersonalizerRankOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Rank");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.Rank");
             scope.Start();
             try
             {
-                return RankRestClient.Rank(options, cancellationToken);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Rank(options);
+                }
+                else
+                {
+                    return RankRestClient.Rank(options, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -193,11 +246,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerMultiSlotRankResult>> RankMultiSlotAsync(PersonalizerRankMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RankMultiSlot");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.RankMultiSlot");
             scope.Start();
             try
             {
-                return await MultiSlotRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Rank(options);
+                }
+                else
+                {
+                    return await MultiSlotRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -243,11 +304,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerMultiSlotRankResult> RankMultiSlot(PersonalizerRankMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RankMultiSlot");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.RankMultiSlot");
             scope.Start();
             try
             {
-                return MultiSlotRestClient.Rank(options, cancellationToken);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Rank(options);
+                }
+                else
+                {
+                    return MultiSlotRestClient.Rank(options, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -294,12 +363,20 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RewardAsync(string eventId, float reward, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Reward");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.Reward");
             scope.Start();
             try
             {
                 PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
-                return await EventsRestClient.RewardAsync(eventId, rewardOptions, cancellationToken).ConfigureAwait(false);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Reward(eventId, reward);
+                }
+                else
+                {
+                    return await EventsRestClient.RewardAsync(eventId, rewardOptions, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -314,12 +391,20 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Reward(string eventId, float reward, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Reward");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.Reward");
             scope.Start();
             try
             {
-                PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
-                return EventsRestClient.Reward(eventId, rewardOptions, cancellationToken);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Reward(eventId, reward);
+                }
+                else
+                {
+                    PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
+                    return EventsRestClient.Reward(eventId, rewardOptions, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -334,11 +419,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RewardMultiSlotAsync(string eventId, PersonalizerRewardMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RewardMultiSlot");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.RewardMultiSlot");
             scope.Start();
             try
             {
-                return await MultiSlotEventsRestClient.RewardAsync(eventId, options, cancellationToken).ConfigureAwait(false);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.RewardMultiSlot(eventId, options.Reward);
+                }
+                else
+                {
+                    return await MultiSlotEventsRestClient.RewardAsync(eventId, options, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -364,11 +457,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RewardMultiSlot(string eventId, PersonalizerRewardMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RewardMultiSlot");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.RewardMultiSlot");
             scope.Start();
             try
             {
-                return MultiSlotEventsRestClient.Reward(eventId, options, cancellationToken);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.RewardMultiSlot(eventId, options.Reward);
+                }
+                else
+                {
+                    return MultiSlotEventsRestClient.Reward(eventId, options, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -393,11 +494,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ActivateAsync(string eventId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Activate");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.Activate");
             scope.Start();
             try
             {
-                return await EventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Activate(eventId);
+                }
+                else
+                {
+                    return await EventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -411,11 +520,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Activate(string eventId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Activate");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.Activate");
             scope.Start();
             try
             {
-                return EventsRestClient.Activate(eventId, cancellationToken);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Activate(eventId);
+                }
+                else
+                {
+                    return EventsRestClient.Activate(eventId, cancellationToken);
+                }
             }
             catch (Exception e)
             {
@@ -429,11 +546,19 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ActivateMultiSlotAsync(string eventId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.ActivateMultiSlot");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.ActivateMultiSlot");
             scope.Start();
             try
             {
-                return await MultiSlotEventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Activate(eventId);
+                }
+                else
+                {
+                    return await MultiSlotEventsRestClient.ActivateAsync(eventId, cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -447,17 +572,93 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ActivateMultiSlot(string eventId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.ActivateMultiSlot");
+            using var scope = clientDiagnostics.CreateScope("PersonalizerClient.ActivateMultiSlot");
             scope.Start();
             try
             {
-                return MultiSlotEventsRestClient.Activate(eventId, cancellationToken);
+                if (useLocalInference)
+                {
+                    validateAndUpdateLiveModelConfig();
+                    return rlNetProcessor.Value.Activate(eventId);
+                }
+                else
+                {
+                    return MultiSlotEventsRestClient.Activate(eventId, cancellationToken);
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the rank processor initiated with live model to use </summary>
+        internal virtual RlNetProcessor GetConfigurationForRankProcessor(CancellationToken cancellationToken = default)
+        {
+            Configuration config = new Configuration();
+            // set up the model
+            if (azureKeyCredential != null)
+            {
+                config["http.api.key"] = azureKeyCredential.Key;
+            }
+            else if (tokenCredential != null)
+            {
+                var tokenRequestContext = new TokenRequestContext(scopes);
+                AccessToken token = tokenCredential.GetToken(tokenRequestContext, cancellationToken);
+                config["http.api.key"] = "Bearer " + token.Token;
+                config["http.api.header.key.name"] = "Authorization";
+                tokenExpiry = token.ExpiresOn;
+            }
+            else
+            {
+                throw new ApplicationException("PersonalizerClient is neither initalized with Token Credential nor with AzureKey Credential");
+            }
+            personalizerServiceProperties = ServiceConfigurationRestClient.Get(cancellationToken);
+            personalizerPolicy = PolicyRestClient.Get(cancellationToken);
+            //interactions & observations
+            config["interaction.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.3/logs/interactions";
+            config["observation.http.api.host"] = stringEndpoint + "personalizer/v1.1-preview.3/logs/observations";
+            config["interaction.sender.implementation"] = "INTERACTION_HTTP_API_SENDER";
+            config["observation.sender.implementation"] = "OBSERVATION_HTTP_API_SENDER";
+            config["interaction.subsample.rate"] = Convert.ToString(this.subsampleRate, CultureInfo.InvariantCulture);
+            config["observation.subsample.rate"] = Convert.ToString(this.subsampleRate, CultureInfo.InvariantCulture);
+            //model
+            config["model.blob.uri"] = stringEndpoint + "personalizer/v1.1-preview.3/model";
+            config["model.source"] = "HTTP_MODEL_DATA";
+
+            config["model.vw.initial_command_line"] = personalizerPolicy.Arguments;
+            config["protocol.version"] = "2";
+            config["initial_exploration.epsilon"] = Convert.ToString(personalizerServiceProperties.ExplorationPercentage, CultureInfo.InvariantCulture);
+            config["rank.learning.mode"] = Convert.ToString(personalizerServiceProperties.LearningMode, CultureInfo.InvariantCulture);
+            LiveModel liveModel = new LiveModel(config);
+            liveModel.Init();
+            LiveModelBase liveModelAdapter = new LiveModelAdapter(liveModel);
+            liveModelLastRefresh = DateTimeOffset.UtcNow;
+            return new RlNetProcessor(liveModelAdapter);
+        }
+
+        /// <summary> Update the config details periodically based on liveModelRefreshTimeInMinutes or when bearer token is expired </summary>
+        private void validateAndUpdateLiveModelConfig()
+        {
+            if ((tokenCredential != null &&
+                DateTimeOffset.Compare(tokenExpiry, DateTimeOffset.MinValue) != 0 &&
+                DateTimeOffset.Compare(tokenExpiry, DateTimeOffset.UtcNow) <= 0) ||
+                (DateTimeOffset.Compare(liveModelLastRefresh, DateTimeOffset.MinValue) != 0 &&
+                DateTimeOffset.Compare(liveModelLastRefresh.AddMinutes(liveModelRefreshTimeInMinutes), DateTimeOffset.UtcNow) < 0))
+            {
+                rlNetProcessor = new Lazy<RlNetProcessor>(() => GetConfigurationForRankProcessor());
+            }
+        }
+
+        /// <summary> validate SubsampleRate input from user and throw exception if not in range </summary>
+        private void validateAndAssignSampleRate(float subsampleRate)
+        {
+            if (0 >= subsampleRate || subsampleRate > 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(subsampleRate), "Percentage should be between (0,1]");
+            }
+            this.subsampleRate = subsampleRate;
         }
     }
 }

@@ -48,15 +48,17 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// disable local auth. Default value is false. When the property is
         /// set to true, only AAD token will be used to authenticate if user is
         /// allowed to publish to the topic.</param>
-        /// <param name="sku">The Sku pricing tier for the topic.</param>
-        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), ResourceSku sku = default(ResourceSku))
+        /// <param name="dataResidencyBoundary">The data residency boundary for
+        /// the topic. Possible values include: 'WithinGeopair',
+        /// 'WithinRegion'</param>
+        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), string dataResidencyBoundary = default(string))
         {
             Tags = tags;
             Identity = identity;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
             DisableLocalAuth = disableLocalAuth;
-            Sku = sku;
+            DataResidencyBoundary = dataResidencyBoundary;
             CustomInit();
         }
 
@@ -106,10 +108,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public bool? DisableLocalAuth { get; set; }
 
         /// <summary>
-        /// Gets or sets the Sku pricing tier for the topic.
+        /// Gets or sets the data residency boundary for the topic. Possible
+        /// values include: 'WithinGeopair', 'WithinRegion'
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Sku { get; set; }
+        [JsonProperty(PropertyName = "properties.dataResidencyBoundary")]
+        public string DataResidencyBoundary { get; set; }
 
     }
 }

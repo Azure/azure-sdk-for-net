@@ -9,10 +9,6 @@ Please note:
 - The operations in this sample are run in series, but could be parallelized using the new `Parallel.ForEachAsync` method in [.NET 6](https://dotnet.microsoft.com/download/dotnet/6.0).
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-using System.Linq;
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -31,7 +27,7 @@ await foreach (string repositoryName in repositoryNames)
 
     // Obtain the images ordered from newest to oldest
     AsyncPageable<ArtifactManifestProperties> imageManifests =
-        repository.GetManifestPropertiesCollectionAsync(orderBy: ArtifactManifestOrderBy.LastUpdatedOnDescending);
+        repository.GetAllManifestPropertiesAsync(manifestOrder: ArtifactManifestOrder.LastUpdatedOnDescending);
 
     // Delete images older than the first three.
     await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))

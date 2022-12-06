@@ -67,7 +67,7 @@ namespace Azure.Data.Tables.Tests
             tableSasBuilder.SetPermissions(permissions);
 
             Assert.AreEqual(permissionsString.ToLowerInvariant(), tableSasBuilder.Permissions);
-            Assert.AreEqual(tableName.ToLowerInvariant(), tableSasBuilder.TableName);
+            Assert.AreEqual(tableName, tableSasBuilder.TableName);
         }
     }
 }

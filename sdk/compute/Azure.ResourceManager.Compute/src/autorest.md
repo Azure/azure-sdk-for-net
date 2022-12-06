@@ -10,149 +10,317 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/654c237832960c2753b7a4a4459a434af6d57a4a/specification/compute/resource-manager/readme.md
-tag: package-2021-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/261132757bc9806f4aa90bd5b176ecfa6a447726/specification/compute/resource-manager/readme.md
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
-  lenient-model-deduplication: true
-#TODO: remove after we resolve why RestorePoint has no list
+  flatten-payloads: false
+
+update-required-copy:
+  GalleryImage: OSType
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+- IntervalInMins
+- VmGuestPatchClassificationForWindows # we have this because the generator will change windows to window which does not make sense
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs|ips
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VirtualMachineScaleSet
+  VmScaleSet: VirtualMachineScaleSet
+  VmScaleSets: VirtualMachineScaleSets
+  VMScaleSets: VirtualMachineScaleSets
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+  SSD: Ssd
+  SAS: Sas
+  VCPUs: VCpus
+  LRS: Lrs
+  ZRS: Zrs
+  RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
+  EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
+
 list-exception:
-  RestorePoints
-operation-group-to-resource-type:
-  CloudServiceRoles: Microsoft.Compute/cloudServices/roles
-  CloudServiceOperatingSystems: Microsoft.Compute/locations/cloudServiceOsFamilies
-  VirtualMachineExtensionImages: Microsoft.Compute/locations/publishers/vmextension
-  VirtualMachineImages: Microsoft.Compute/locations/publishers/vmimage
-  Usage: Microsoft.Compute/locations/usages
-  VirtualMachineSizes: Microsoft.Compute/locations/vmSizes
-  VirtualMachineImagesEdgeZone: Microsoft.Compute/locations/edgeZones/publishers/artifacttypes/offers/skus/versions
-  VirtualMachineScaleSetRollingUpgrades: Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades
-  LogAnalytics: Microsoft.Compute/locations/logAnalytics
-  Locations: Microsoft.Compute/locations/runCommands
-  ResourceSkus: Microsoft.Compute/skus
-  DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints/diskRestorePoints
-  GallerySharingProfile: Microsoft.Compute/galleries/share
-  SharedGalleries: Microsoft.Compute/locations/sharedGalleries
-  SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries/images
-  SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images/versions
-operation-group-to-resource:
-  CloudServiceRoleInstances: NonResource
-  CloudServiceRoles: NonResource
-  CloudServiceOperatingSystems: NonResource
-  VirtualMachineImages: NonResource
-  VirtualMachineExtensionImages: NonResource
-  VirtualMachineImagesEdgeZone: NonResource
-  VirtualMachineScaleSetRollingUpgrades: VirtualMachineScaleSetRollingUpgrade
-  LogAnalytics: NonResource
-  Locations: NonResource
-  DiskRestorePoint: DiskRestorePoint
-  GallerySharingProfile: NonResource
-  SharedGalleries: NonResource
-  SharedGalleryImages: NonResource
-  SharedGalleryImageVersions: NonResource
-  RestorePointCollections: RestorePointGroup
-operation-group-to-parent:
-  Usage: subscriptions
-  LogAnalytics: subscriptions
-  CloudServiceRoleInstances: Microsoft.Compute/cloudServices
-  CloudServiceRoles: Microsoft.Compute/cloudServices
-  CloudServiceOperatingSystems: subscriptions
-  VirtualMachineSizes: subscriptions
-  VirtualMachineImages: subscriptions
-  VirtualMachineExtensionImages: subscriptions
-  VirtualMachineImagesEdgeZone: subscriptions
-  VirtualMachineExtensions: Microsoft.Compute/virtualMachines
-  VirtualMachineScaleSetVMExtensions: Microsoft.Compute/virtualMachineScaleSets
-  VirtualMachineScaleSetRollingUpgrades: Microsoft.Compute/virtualMachineScaleSets
-  VirtualMachineRunCommands: Microsoft.Compute/virtualMachines
-  VirtualMachineScaleSetVMRunCommands: Microsoft.Compute/virtualMachineScaleSets/virtualMachines ## there is a casing inconsistency !!!
-  GallerySharingProfile: Microsoft.Compute/galleries
-  ResourceSkus: subscriptions
-  DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints
-  SharedGalleries: subscriptions
-  SharedGalleryImages: subscriptions
-  SharedGalleryImageVersions: subscriptions
-operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{restorePointName} # compute RP did not provide an API for listing this resource
+- /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}: VirtualMachineScaleSetVmRunCommand
+
+override-operation-name:
+  VirtualMachines_Start: PowerOn
+  VirtualMachineScaleSets_Start: PowerOn
+  VirtualMachineScaleSetVMs_Start: PowerOn
+  CloudServices_Start: PowerOn
+  CloudServicesUpdateDomain_GetUpdateDomain: GetUpdateDomain
+  CloudServicesUpdateDomain_ListUpdateDomains: GetUpdateDomains
+  CloudServicesUpdateDomain_WalkUpdateDomain: WalkUpdateDomain
+  GallerySharingProfile_Update: UpdateSharingProfile
+  VirtualMachineImages_ListPublishers: GetVirtualMachineImagePublishers
+  VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
+  VirtualMachineImages_ListOffers: GetVirtualMachineImageOffers
+  VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
+  VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
+  LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
+  LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
+  ResourceSkus_List: GetComputeResourceSkus
+
+request-path-to-resource-data:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}: CommunityGallery
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
+
+prepend-rp-prefix:
+- UsageName
+- UsageUnit
+- ApiError
+- ApiErrorBase
+- DeleteOptions
+- ResourceSku
+- ResourceSkuCapacity
+- ResourceSkuLocationInfo
+- ResourceSkuRestrictions
+- ResourceSkuRestrictionInfo
+- ResourceSkuRestrictionsReasonCode
+- ResourceSkuRestrictionsType
+- ResourceSkuZoneDetails
+- ResourceSkuCapacityScaleType
+- EncryptionType
+- PublicIPAddressSku
+- PublicIPAddressSkuName
+- PublicIPAddressSkuTier
+- StatusLevelTypes
+
+rename-mapping:
+  DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
+  SubResource: ComputeWriteableSubResourceData
+  SubResourceReadOnly: ComputeSubResourceData
+  HyperVGenerationType: HyperVGeneration
+  HyperVGenerationTypes: HyperVGeneration
+  VirtualMachineExtension.properties.type: ExtensionType
+  VirtualMachineExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtensionUpdate.properties.type: ExtensionType
+  RollingUpgradeStatusInfo: VirtualMachineScaleSetRollingUpgrade
+  OperatingSystemTypes: SupportedOperatingSystemType
+  VirtualMachineImageResource: VirtualMachineImageBase
+  RestorePointCollectionSourceProperties: RestorePointCollectionSource
+  RestorePointExpandOptions: RestorePointExpand
+  RestorePointCollectionExpandOptions: RestorePointCollectionExpand
+  ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
+  UpdateResource: ComputeResourcePatch
+  SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
+  SshPublicKey: SshPublicKeyConfiguration
+  SshPublicKeyResource: SshPublicKey
+  LogAnalyticsOperationResult: LogAnalytics
+  PrivateLinkResource: ComputePrivateLinkResourceData
+  PrivateLinkResource.properties.groupId: -|arm-id
+  Disk: ManagedDisk
+  Disk.managedBy: -|arm-id
+  Disk.managedByExtended: -|arm-id
+  Disk.properties.diskAccessId: -|arm-id
+  DiskUpdate.properties.diskAccessId: -|arm-id
+  DiskRestorePoint.properties.sourceResourceId: -|arm-id
+  DiskRestorePoint.properties.diskAccessId: -|arm-id
+  DiskRestorePoint.properties.sourceResourceLocation: -|azure-location
+  Encryption: DiskEncryption
+  Encryption.diskEncryptionSetId: -|arm-id
+  CreationData: DiskCreationData
+  CreationData.storageAccountId: -|arm-id
+  CreationData.sourceResourceId: -|arm-id
+  Architecture: ArchitectureType
+  OSFamily: CloudServiceOSFamily
+  OSFamily.name: ResourceName
+  OSFamily.properties.name: OSFamilyName
+  OSVersion: CloudServiceOSVersion
+  UpdateDomain: UpdateDomainIdentifier
+  UpdateDomain.id: -|arm-id
+  Extension: CloudServiceExtension
+  RoleInstance: CloudServiceRoleInstance
+  UpdateResourceDefinition: GalleryUpdateResourceData
+  StorageAccountType: ImageStorageAccountType
+  SharingProfile.permissions: permission
+  UserArtifactManage: UserArtifactManagement
+  GalleryExpandParams: GalleryExpand
+  PirResource: PirResourceData
+  PirSharedGalleryResource: PirSharedGalleryResourceData
+  PirCommunityGalleryResource: PirCommunityGalleryResourceData
+  PirCommunityGalleryResource.type: ResourceType|resource-type
+  ExpandTypesForGetCapacityReservationGroups: CapacityReservationGroupGetExpand
+  ExpandTypesForGetVMScaleSets: VirtualMachineScaleSetGetExpand
+  DedicatedHostGroup.properties.hosts: DedicatedHosts
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
+  NetworkProfile: VirtualMachineNetworkProfile
+  NetworkInterfaceReference: VirtualMachineNetworkInterfaceReference
+  Image: DiskImage
+  VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  VmDiskTypes: VirtualMachineDiskType
+  VMGalleryApplication: VirtualMachineGalleryApplication
+  VMSizeProperties: VirtualMachineSizeProperties
+  ManagedDiskParameters: VirtualMachineManagedDisk
+  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
+  StorageProfile: VirtualMachineStorageProfile
+  OSProfile: VirtualMachineOSProfile
+  OSDisk: VirtualMachineOSDisk
+  DataDisk: VirtualMachineDataDisk
+  HardwareProfile: VirtualMachineHardwareProfile
+  PublicNetworkAccess: DiskPublicNetworkAccess
+  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
+  LoadBalancerConfiguration.id: -|arm-id
+  ReplicationMode: GalleryReplicationMode
+  ReplicationState: RegionalReplicationState
+  RunCommandResult: VirtualMachineRunCommandResult
+  UpgradeMode: VirtualMachineScaleSetUpgradeMode
+  UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  ProtocolTypes: WinRMListenerProtocolType
+  VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
+  VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
+  VirtualMachineScaleSetExtension.type: ResourceType|resource-type
+  VirtualMachineScaleSetExtensionUpdate.type: ResourceType|resource-type
+  VirtualMachineScaleSetVMExtension.type: ResourceType|resource-type
+  VirtualMachineScaleSetVMExtensionUpdate.type: ResourceType|resource-type
+  VirtualMachineScaleSetSku.resourceType: ResourceType|resource-type
+  VirtualMachineScaleSetVMInstanceView.assignedHost: -|arm-id
+  RestorePointCollectionSourceProperties.id: -|arm-id
+  SshPublicKeyGenerateKeyPairResult.id: -|arm-id
+  Snapshot.properties.diskAccessId: -|arm-id
+  SnapshotUpdate.properties.diskAccessId: -|arm-id
+  DiskSecurityProfile.secureVMDiskEncryptionSetId: -|arm-id
+  ImageDiskReference.id: -|arm-id
+  DiskImageEncryption.diskEncryptionSetId: -|arm-id
+  GalleryArtifactVersionSource.id: -|arm-id
+
 directive:
-  ## first we need to unify all the paths by changing `virtualmachines` to `virtualMachines` so that every path could have consistent casing
-  - from: swagger-document
-    where: $.paths
+# copy the systemData from common-types here so that it will be automatically replaced
+  - from: common.json
+    where: $.definitions
     transform: >
-      for (var key in $) {
-          const newKey = key.replace('virtualmachines', 'virtualMachines');
-          if (newKey !== key) {
-              $[newKey] = $[key]
-              delete $[key]
+      $.SubResource.properties.id["x-ms-format"] = "arm-id";
+      $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+      $.SystemData = {
+        "description": "Metadata pertaining to creation and last modification of the resource.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+            "createdBy": {
+            "type": "string",
+            "description": "The identity that created the resource."
+            },
+            "createdByType": {
+            "type": "string",
+            "description": "The type of identity that created the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource creation (UTC)."
+            },
+            "lastModifiedBy": {
+            "type": "string",
+            "description": "The identity that last modified the resource."
+            },
+            "lastModifiedByType": {
+            "type": "string",
+            "description": "The type of identity that last modified the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource last modification (UTC)"
+            }
           }
-      }
-  - from: compute.json
-    where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages
-    transform: $.description="The list of data disk images information."
+        };
+  - from: virtualMachine.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
+  - from: virtualMachineImage.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
+# resolve the duplicate schema issue
+  - from: diskRPCommon.json
+    where: $.definitions
+    transform: >
+      $.PurchasePlan["x-ms-client-name"] = "DiskPurchasePlan";
+      $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
   - from: disk.json
-    where: $.definitions.GrantAccessData.properties.access
-    transform: $.description="The Access Level, accepted values include None, Read, Write."
-  - rename-model:
-      from: SshPublicKey
-      to: SshPublicKeyInfo
-  - rename-model:
-      from: LogAnalyticsOperationResult
-      to: LogAnalytics
-  - rename-model:
-      from: SshPublicKeyResource
-      to: SshPublicKey
-  - rename-model:
-      from: RollingUpgradeStatusInfo
-      to: VirtualMachineScaleSetRollingUpgrade
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.operationId
-    transform: return "PrivateEndpointConnections_CreateOrUpdate"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].get.operationId
-    transform: return "PrivateEndpointConnections_Get"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].delete.operationId
-    transform: return "PrivateEndpointConnections_Delete"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections'].get.operationId
-    transform: return "PrivateEndpointConnections_List"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries'].get.operationId
-    transform: return "Galleries_ListBySubscription"
-  ## temporary approach
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}'].put.parameters
+    where: $.definitions
     transform: >
-        $[2] = {
-            "in": "path",
-            "name": "updateDomain",
-            "description": "Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on.",
-            "required": true,
-            "type": "string"
-        }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}'].get.parameters
+      $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
+  - from: cloudService.json
+    where: $.definitions
     transform: >
-        $[2] = {
-            "in": "path",
-            "name": "updateDomain",
-            "description": "Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on.",
-            "required": true,
-            "type": "string"
-        }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start'].post.operationId
-    transform: return 'VirtualMachines_PowerOn';
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/start'].post.operationId
-    transform: return 'VirtualMachineScaleSets_PowerOn';
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/start'].post.operationId
-    transform: return 'VirtualMachineScaleSetVMs_PowerOn';
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/start'].post.operationId
-    transform: return 'CloudServices_PowerOn';
-  - rename-model:
-      from: RestorePointCollection
-      to: RestorePointGroup
+      $.CloudService.properties.properties["x-ms-client-flatten"] = true;
+      $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
+      $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
+      $.Extension.properties.properties["x-ms-client-flatten"] = true;
+      $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
+      $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerFrontendIPConfiguration.properties.properties["x-ms-client-flatten"] = true;
+  - from: cloudService.json
+    where: $.definitions.LoadBalancerConfigurationProperties
+    transform: >
+      $.properties.frontendIpConfigurations = $.properties.frontendIPConfigurations;
+      $.properties.frontendIpConfigurations["x-ms-client-name"] = "frontendIPConfigurations";
+      $.required = ["frontendIpConfigurations"];
+      $.properties.frontendIPConfigurations = undefined;
+    reason: Service returns response with property name as frontendIpConfigurations.
+  # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: $["readOnly"] = true;
 ```

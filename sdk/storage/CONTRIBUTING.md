@@ -102,7 +102,7 @@ All random values should be obtained via `this.Recording.Random` since we use
 the same seed on test playback to ensure our client code generates the same
 "random" values each time.  You can't share any state between tests or rely on
 ordering because you don't know the order they'll be recorded or replayed.  Any
-sensitive values are redacted via the [`StorageRecordedTestSanitizer`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Common/tests/Shared/StorageRecordedTestSanitizer.cs).
+sensitive values are redacted via the the configuration in the constructor of [`StorageTestBase`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Common/tests/Shared/StorageTestBase.cs).
 
 ### Running tests
 

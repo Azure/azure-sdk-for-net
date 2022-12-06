@@ -19,24 +19,48 @@ namespace Microsoft.Azure.Management.SecurityInsights
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("OperationalInsights", "Actions", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "AlertRuleTemplates", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "AlertRules", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "Bookmarks", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "DataConnectors", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "IncidentComments", "2020-01-01"),
-                new Tuple<string, string, string>("OperationalInsights", "Incidents", "2020-01-01"),
-                new Tuple<string, string, string>("SecurityInsights", "Operations", "2020-01-01"),
+                new Tuple<string, string, string>("OperationalInsights", "Actions", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "AlertRuleTemplates", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "AlertRules", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "AutomationRules", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "Bookmark", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "BookmarkRelations", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "Bookmarks", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "DataConnectors", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "DataConnectorsCheckRequirements", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "Entities", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "EntitiesGetTimeline", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "EntitiesRelations", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "EntityQueries", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "EntityQueryTemplates", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "EntityRelations", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "IncidentComments", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "IncidentRelations", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "Incidents", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "Metadata", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "OfficeConsents", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "ProductSettings", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "SentinelOnboardingStates", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "SourceControl", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "SourceControls", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "ThreatIntelligenceIndicator", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "ThreatIntelligenceIndicatorMetrics", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "ThreatIntelligenceIndicators", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "WatchlistItems", "2022-01-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "Watchlists", "2022-01-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "DomainWhois", "2022-01-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "IPGeodata", "2022-01-01-preview"),
+                new Tuple<string, string, string>("SecurityInsights", "Operations", "2022-01-01-preview"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/securityinsights/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.5.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/securityinsights/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\One\\azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "fb680afc380cccb44a59ed277232ad4224ac809b";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "96da969aa75e2beb27c3dbc2d69a76900856cc52";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

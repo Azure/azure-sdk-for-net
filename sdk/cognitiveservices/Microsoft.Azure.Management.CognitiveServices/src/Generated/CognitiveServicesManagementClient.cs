@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             Deployments = new DeploymentsOperations(this);
             CommitmentPlans = new CommitmentPlansOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-10-01";
+            ApiVersion = "2022-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

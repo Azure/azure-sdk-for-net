@@ -31,9 +31,15 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="enabled">Indicates whether Dynamic Executor Allocation
         /// is enabled or not.</param>
-        public DynamicExecutorAllocation(bool? enabled = default(bool?))
+        /// <param name="minExecutors">The minimum number of executors
+        /// alloted</param>
+        /// <param name="maxExecutors">The maximum number of executors
+        /// alloted</param>
+        public DynamicExecutorAllocation(bool? enabled = default(bool?), int? minExecutors = default(int?), int? maxExecutors = default(int?))
         {
             Enabled = enabled;
+            MinExecutors = minExecutors;
+            MaxExecutors = maxExecutors;
             CustomInit();
         }
 
@@ -48,6 +54,18 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimum number of executors alloted
+        /// </summary>
+        [JsonProperty(PropertyName = "minExecutors")]
+        public int? MinExecutors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of executors alloted
+        /// </summary>
+        [JsonProperty(PropertyName = "maxExecutors")]
+        public int? MaxExecutors { get; set; }
 
     }
 }

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <param name="name">the name to check for availability</param>
         /// <param name="type">fully qualified resource type which includes
         /// provider namespace. Possible values include:
-        /// '/providers/Microsoft.Management/managementGroups'</param>
+        /// 'Microsoft.Management/managementGroups'</param>
         public CheckNameAvailabilityRequest(string name = default(string), Type? type = default(Type?))
         {
             Name = name;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <summary>
         /// Gets or sets fully qualified resource type which includes provider
         /// namespace. Possible values include:
-        /// '/providers/Microsoft.Management/managementGroups'
+        /// 'Microsoft.Management/managementGroups'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public Type? Type { get; set; }

@@ -32,16 +32,21 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="domainName">Specifies the primary domain that the AD
         /// DNS server is authoritative for.</param>
+        /// <param name="domainGuid">Specifies the domain GUID.</param>
         /// <param name="netBiosDomainName">Specifies the NetBIOS domain
         /// name.</param>
         /// <param name="forestName">Specifies the Active Directory forest to
         /// get.</param>
-        /// <param name="domainGuid">Specifies the domain GUID.</param>
         /// <param name="domainSid">Specifies the security identifier
         /// (SID).</param>
         /// <param name="azureStorageSid">Specifies the security identifier
         /// (SID) for Azure Storage.</param>
-        public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid)
+        /// <param name="samAccountName">Specifies the Active Directory
+        /// SAMAccountName for Azure Storage.</param>
+        /// <param name="accountType">Specifies the Active Directory account
+        /// type for Azure Storage. Possible values include: 'User',
+        /// 'Computer'</param>
+        public ActiveDirectoryProperties(string domainName, string domainGuid, string netBiosDomainName = default(string), string forestName = default(string), string domainSid = default(string), string azureStorageSid = default(string), string samAccountName = default(string), string accountType = default(string))
         {
             DomainName = domainName;
             NetBiosDomainName = netBiosDomainName;
@@ -49,6 +54,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             DomainGuid = domainGuid;
             DomainSid = domainSid;
             AzureStorageSid = azureStorageSid;
+            SamAccountName = samAccountName;
+            AccountType = accountType;
             CustomInit();
         }
 
@@ -96,6 +103,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string AzureStorageSid { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies the Active Directory SAMAccountName for
+        /// Azure Storage.
+        /// </summary>
+        [JsonProperty(PropertyName = "samAccountName")]
+        public string SamAccountName { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Active Directory account type for Azure
+        /// Storage. Possible values include: 'User', 'Computer'
+        /// </summary>
+        [JsonProperty(PropertyName = "accountType")]
+        public string AccountType { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -107,25 +128,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DomainName");
             }
-            if (NetBiosDomainName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NetBiosDomainName");
-            }
-            if (ForestName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ForestName");
-            }
             if (DomainGuid == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DomainGuid");
-            }
-            if (DomainSid == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DomainSid");
-            }
-            if (AzureStorageSid == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AzureStorageSid");
             }
         }
     }

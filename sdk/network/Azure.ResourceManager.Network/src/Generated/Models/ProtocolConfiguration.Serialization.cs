@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ProtocolConfiguration : IUtf8JsonSerializable
+    internal partial class ProtocolConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HttpConfiguration))
+            if (Optional.IsDefined(HttpProtocolConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration");
-                writer.WriteObjectValue(HttpConfiguration);
+                writer.WriteObjectValue(HttpProtocolConfiguration);
             }
             writer.WriteEndObject();
         }

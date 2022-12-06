@@ -65,6 +65,26 @@ namespace Microsoft.Azure.Management.OperationalInsights
 
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IWorkspacesOperations.
+        /// </summary>
+        IWorkspacesOperations Workspaces { get; }
+
+        /// <summary>
+        /// Gets the IDeletedWorkspacesOperations.
+        /// </summary>
+        IDeletedWorkspacesOperations DeletedWorkspaces { get; }
+
+        /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        ITablesOperations Tables { get; }
+
+        /// <summary>
         /// Gets the IDataExportsOperations.
         /// </summary>
         IDataExportsOperations DataExports { get; }
@@ -140,29 +160,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         IWorkspacePurgeOperations WorkspacePurge { get; }
 
         /// <summary>
-        /// Gets the ITablesOperations.
-        /// </summary>
-        ITablesOperations Tables { get; }
-
-        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         IClustersOperations Clusters { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IWorkspacesOperations.
-        /// </summary>
-        IWorkspacesOperations Workspaces { get; }
-
-        /// <summary>
-        /// Gets the IDeletedWorkspacesOperations.
-        /// </summary>
-        IDeletedWorkspacesOperations DeletedWorkspaces { get; }
 
     }
 }

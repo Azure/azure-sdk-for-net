@@ -10,12 +10,22 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DocumentError
+    internal partial class DocumentError : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("error");
+            writer.WriteObjectValue(Error);
+            writer.WriteEndObject();
+        }
+
         internal static DocumentError DeserializeDocumentError(JsonElement element)
         {
             string id = default;
-            TextAnalyticsErrorInternal error = default;
+            Error error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -25,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("error"))
                 {
-                    error = TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(property.Value);
+                    error = Error.DeserializeError(property.Value);
                     continue;
                 }
             }

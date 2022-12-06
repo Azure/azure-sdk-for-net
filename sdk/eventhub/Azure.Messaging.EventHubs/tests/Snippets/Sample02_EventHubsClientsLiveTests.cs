@@ -368,7 +368,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             Assert.That(options, Is.Not.Null);
         }
 
-#if NETCOREAPP || SNIPPET
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -388,7 +387,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             Assert.That(options, Is.Not.Null);
         }
-#endif
 
         #region Snippet:EventHubs_Sample02_CustomRetryPolicy
 
@@ -418,5 +416,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         }
 
         #endregion
+
+        /// <summary>
+        ///   Serves as a shim to allow the illustration of using
+        ///   the DefaultProxy, which is supported on .NET Core and later,
+        ///   across all target frameworks.
+        /// </summary>
+        ///
+        public static class HttpClient
+        {
+            public static WebProxy DefaultProxy { get; set; }
+        }
     }
 }

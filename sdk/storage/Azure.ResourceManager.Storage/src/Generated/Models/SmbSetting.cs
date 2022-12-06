@@ -31,7 +31,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Multichannel setting. Applies to Premium FileStorage only. </summary>
-        public Multichannel Multichannel { get; set; }
+        internal Multichannel Multichannel { get; set; }
+        /// <summary> Indicates whether multichannel is enabled. </summary>
+        public bool? IsMultiChannelEnabled
+        {
+            get => Multichannel is null ? default : Multichannel.IsMultiChannelEnabled;
+            set
+            {
+                if (Multichannel is null)
+                    Multichannel = new Multichannel();
+                Multichannel.IsMultiChannelEnabled = value;
+            }
+        }
+
         /// <summary> SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter &apos;;&apos;. </summary>
         public string Versions { get; set; }
         /// <summary> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter &apos;;&apos;. </summary>

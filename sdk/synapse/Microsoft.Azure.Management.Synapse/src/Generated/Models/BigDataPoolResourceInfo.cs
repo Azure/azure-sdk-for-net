@@ -121,10 +121,10 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public AutoScaleProperties AutoScale { get; set; }
 
         /// <summary>
-        /// Gets or sets the time when the Big Data pool was created.
+        /// Gets the time when the Big Data pool was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; set; }
+        public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
         /// Gets or sets auto-pausing properties

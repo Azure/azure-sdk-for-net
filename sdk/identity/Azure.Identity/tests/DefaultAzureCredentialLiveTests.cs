@@ -22,7 +22,7 @@ namespace Azure.Identity.Tests
             TestDiagnostics = false;
         }
 
-        [Test]
+        [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
         public async Task DefaultAzureCredential_UseVisualStudioCredential()
         {
@@ -33,6 +33,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
@@ -40,7 +41,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Output = processOutput };
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), default);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             AccessToken token;
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -59,7 +60,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
         }
 
-        [Test]
+        [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential()
         {
@@ -71,6 +72,7 @@ namespace Azure.Identity.Tests
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -79,7 +81,7 @@ namespace Azure.Identity.Tests
             var process = new TestProcess { Error = "Error" };
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(process), default);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             AccessToken token;
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -98,7 +100,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[1].Name);
         }
 
-        [Test]
+        [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
@@ -109,6 +111,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -117,7 +120,7 @@ namespace Azure.Identity.Tests
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, default);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             var tasks = new List<Task<AccessToken>>();
             using (await CredentialTestHelpers.CreateRefreshTokenFixtureAsync(TestEnvironment, Mode, ExpectedServiceName, cloudName))
@@ -136,7 +139,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DefaultAzureCredential_UseAzureCliCredential()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -145,6 +148,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -154,7 +158,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             AccessToken token;
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -173,7 +177,8 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[1].Name);
         }
 
-        [Test]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27020")]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -182,6 +187,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
 
@@ -191,7 +197,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             var tasks = new List<Task<AccessToken>>();
             for (int i = 0; i < 10; i++)
@@ -208,7 +214,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_CredentialUnavailableException()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -217,11 +223,12 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
 
@@ -239,7 +246,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(AzurePowerShellCredential)}.{nameof(AzurePowerShellCredential.GetToken)}", scopes[4].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_FirstAuthenticationFailedException()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -248,11 +255,12 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
 
@@ -269,7 +277,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_LastAuthenticationFailedException()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -278,11 +286,12 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeVisualStudioCodeCredential = false,
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
 

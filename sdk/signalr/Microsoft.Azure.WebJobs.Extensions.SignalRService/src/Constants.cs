@@ -27,5 +27,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public const string FunctionsWorkerRuntime = "FUNCTIONS_WORKER_RUNTIME";
         public const string FunctionsWorkerProductInfoKey = "func";
         public const string DotnetWorker = "dotnet";
+
+        public const string ServiceUriKey = "serviceUri";
+        public const string ServerEndpointKey = "serverEndpoint";
+        public const string ClientEndpointKey = "clientEndpoint";
+        public const string TypeKey = "type";
     }
 }

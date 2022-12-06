@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/mixedreality/
+    exclude:
+    - sdk/mixedreality/Azure.ResourceManager.MixedReality/
 
 pr:
   branches:
@@ -19,9 +21,11 @@ pr:
   paths:
     include:
     - sdk/mixedreality/
+    exclude:
+    - sdk/mixedreality/Azure.ResourceManager.MixedReality/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: mixedreality
     ArtifactName: packages
