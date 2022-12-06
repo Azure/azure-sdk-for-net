@@ -26,7 +26,7 @@ override-operation-name:
   Accounts_ListByResourceGroup: GetAll
   Accounts_CheckNameAvailability: CheckDataLakeStoreAccountNameAvailability
   Locations_GetCapability: GetCapabilityByLocation
-  Locations_GetUsage: GetUsageByLocation
+  Locations_GetUsage: GetUsagesByLocation
 
 rename-mapping:
   CheckNameAvailabilityParameters: DataLakeStoreAccountNameAvailabilityContent

@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeStoreUsage> GetUsageByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataLakeStoreUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<DataLakeStoreUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageByLocation");
+                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
                 scope.Start();
                 try
                 {
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeStoreUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeStoreUsage> GetUsageByLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataLakeStoreUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<DataLakeStoreUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsageByLocation");
+                using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
                 scope.Start();
                 try
                 {
