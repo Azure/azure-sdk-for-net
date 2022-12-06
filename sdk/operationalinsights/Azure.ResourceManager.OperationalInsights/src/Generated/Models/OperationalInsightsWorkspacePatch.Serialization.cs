@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
             Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
             Optional<bool> forceCmkForQuery = default;
-            Optional<IReadOnlyList<PrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
+            Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
             Optional<OperationalInsightsWorkspaceFeatures> features = default;
             Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
             foreach (var property in element.EnumerateObject())
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateLinkScopedResourceInfo> array = new List<PrivateLinkScopedResourceInfo>();
+                            List<OperationalInsightsPrivateLinkScopedResourceInfo> array = new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkScopedResourceInfo.DeserializePrivateLinkScopedResourceInfo(item));
+                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item));
                             }
                             privateLinkScopedResources = array;
                             continue;

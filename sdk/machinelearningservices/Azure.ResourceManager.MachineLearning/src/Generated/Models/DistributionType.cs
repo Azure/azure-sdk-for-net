@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine the job distribution type. </summary>
+    /// <summary>
+    /// Enum to determine the job distribution type.
+    /// Serialized Name: DistributionType
+    /// </summary>
     internal readonly partial struct DistributionType : IEquatable<DistributionType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string TensorFlowValue = "TensorFlow";
         private const string MpiValue = "Mpi";
 
-        /// <summary> PyTorch. </summary>
+        /// <summary>
+        /// PyTorch
+        /// Serialized Name: DistributionType.PyTorch
+        /// </summary>
         public static DistributionType PyTorch { get; } = new DistributionType(PyTorchValue);
-        /// <summary> TensorFlow. </summary>
+        /// <summary>
+        /// TensorFlow
+        /// Serialized Name: DistributionType.TensorFlow
+        /// </summary>
         public static DistributionType TensorFlow { get; } = new DistributionType(TensorFlowValue);
-        /// <summary> Mpi. </summary>
+        /// <summary>
+        /// Mpi
+        /// Serialized Name: DistributionType.Mpi
+        /// </summary>
         public static DistributionType Mpi { get; } = new DistributionType(MpiValue);
         /// <summary> Determines if two <see cref="DistributionType"/> values are the same. </summary>
         public static bool operator ==(DistributionType left, DistributionType right) => left.Equals(right);

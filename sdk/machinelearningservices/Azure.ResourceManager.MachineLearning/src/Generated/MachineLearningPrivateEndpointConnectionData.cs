@@ -28,12 +28,27 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, PrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity">
+        /// The identity of the resource.
+        /// Serialized Name: PrivateEndpointConnection.identity
+        /// </param>
+        /// <param name="sku">
+        /// The sku of the workspace.
+        /// Serialized Name: PrivateEndpointConnection.sku
+        /// </param>
+        /// <param name="privateEndpoint">
+        /// The resource of private end point.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </param>
+        /// <param name="connectionState">
+        /// A collection of information about the state of the connection between service consumer and provider.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the private endpoint connection resource.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </param>
+        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, MachineLearningPrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -42,15 +57,30 @@ namespace Azure.ResourceManager.MachineLearning
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The identity of the resource. </summary>
+        /// <summary>
+        /// The identity of the resource.
+        /// Serialized Name: PrivateEndpointConnection.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The sku of the workspace. </summary>
+        /// <summary>
+        /// The sku of the workspace.
+        /// Serialized Name: PrivateEndpointConnection.sku
+        /// </summary>
         public MachineLearningSku Sku { get; set; }
-        /// <summary> The resource of private end point. </summary>
-        public PrivateEndpoint PrivateEndpoint { get; set; }
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <summary>
+        /// The resource of private end point.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </summary>
+        public MachineLearningPrivateEndpoint PrivateEndpoint { get; set; }
+        /// <summary>
+        /// A collection of information about the state of the connection between service consumer and provider.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </summary>
         public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        /// <summary>
+        /// The provisioning state of the private endpoint connection resource.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </summary>
         public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

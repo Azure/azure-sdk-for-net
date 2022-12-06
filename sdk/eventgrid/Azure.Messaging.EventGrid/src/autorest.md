@@ -18,7 +18,13 @@ directive:
   where: $.definitions.CloudEventEvent
   transform: >
     $.properties.data["x-nullable"] = true;
-````
+```
+
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class: MediaJobOutput
+```
 
 ### Append `EventData` suffix to Resource Manager system event data models
 

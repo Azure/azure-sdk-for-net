@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<MachineLearningPrivateEndpoint> privateEndpoint = default;
             Optional<MachineLearningPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<MachineLearningPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = MachineLearningPrivateEndpoint.DeserializeMachineLearningPrivateEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> The parameters required to create or update linked storage accounts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationalInsightsLinkedStorageAccountsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, OperationalInsightsDataSourceType dataSourceType, OperationalInsightsLinkedStorageAccountData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationalInsightsLinkedStorageAccountsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, OperationalInsightsDataSourceType dataSourceType, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="data"> The parameters required to create or update linked storage accounts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<OperationalInsightsLinkedStorageAccountsResource> CreateOrUpdate(WaitUntil waitUntil, OperationalInsightsDataSourceType dataSourceType, OperationalInsightsLinkedStorageAccountData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationalInsightsLinkedStorageAccountsResource> CreateOrUpdate(WaitUntil waitUntil, OperationalInsightsDataSourceType dataSourceType, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

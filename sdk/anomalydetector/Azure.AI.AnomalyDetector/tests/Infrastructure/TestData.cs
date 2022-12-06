@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.AI.AnomalyDetector;
 
 namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
 {
     internal static class TestData
     {
-        public static DetectRequest TestPointSeries = new DetectRequest(
+        public static UnivariateDetectionOptions TestPointSeries = new UnivariateDetectionOptions(
             new List<TimeSeriesPoint>{
                 new TimeSeriesPoint(826){ Timestamp = DateTime.Parse("1972-01-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
                 new TimeSeriesPoint(799){ Timestamp = DateTime.Parse("1972-02-01T00:00:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
@@ -65,7 +65,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
             Granularity = TimeGranularity.Monthly
         };
 
-        public static EntireDetectResponse ExpectedEntireDetectResult = new EntireDetectResponse(
+        public static UnivariateEntireDetectionResult ExpectedEntireDetectResult = new UnivariateEntireDetectionResult(
             12,
             new List<float>
             {
@@ -426,7 +426,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
             }
             );
 
-        public static ChangePointDetectRequest TestChangePointSeries = new ChangePointDetectRequest(
+        public static UnivariateChangePointDetectionOptions TestChangePointSeries = new UnivariateChangePointDetectionOptions(
             new List<TimeSeriesPoint>{
                new TimeSeriesPoint(1639196){ Timestamp = DateTime.Parse("2017-01-01T06:45:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
                new TimeSeriesPoint(1639290){ Timestamp = DateTime.Parse("2017-01-01T06:50:00Z", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind)},
@@ -688,7 +688,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
             },
             TimeGranularity.PerMinute);
 
-        public static ChangePointDetectResponse ExpectedChangePointResult = new ChangePointDetectResponse(
+        public static UnivariateChangePointDetectionResult ExpectedChangePointResult = new UnivariateChangePointDetectionResult(
             0,
             new List<bool>
             {
