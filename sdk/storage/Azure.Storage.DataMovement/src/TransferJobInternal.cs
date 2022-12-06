@@ -15,7 +15,7 @@ using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
-    internal abstract class TransferJobInternal
+    internal abstract class TransferJobInternal : IDisposable
     {
         #region Delegates
         public delegate Task QueueChunkTaskInternal(Func<Task> uploadTask);
@@ -219,6 +219,19 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = false;
         }
 
+        public void Dispose()
+        {
+            DisposeHandlers();
+        }
+
+        public void DisposeHandlers()
+        {
+            if (JobPartStatusEvents != default)
+            {
+                JobPartStatusEvents -= JobPartEvent();
+            }
+        }
+
         /// <summary>
         /// Pauses all job parts within the job.
         /// </summary>
@@ -245,6 +258,7 @@ namespace Azure.Storage.DataMovement
 
         public void TriggerJobCancellation()
         {
+            DisposeHandlers();
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
@@ -255,9 +269,9 @@ namespace Azure.Storage.DataMovement
         /// In order to properly propagate the transfer status events of each job part up
         /// until all job parts have completed.
         /// </summary>
-        public void InitializeJobPartStatusEvents()
+        public SyncAsyncEventHandler<TransferStatusEventArgs> JobPartEvent()
         {
-            JobPartStatusEvents += async (TransferStatusEventArgs args) =>
+            return async (TransferStatusEventArgs args) =>
             {
                 if (args.StorageTransferStatus == StorageTransferStatus.Completed
                     && _transferStatus < StorageTransferStatus.Completed)
