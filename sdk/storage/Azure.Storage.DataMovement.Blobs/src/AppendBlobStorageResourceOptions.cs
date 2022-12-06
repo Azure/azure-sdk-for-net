@@ -8,12 +8,12 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Options for <see cref="AppendBlobStorageResource"/>
+    /// Options for <see cref="AppendBlobStorageResource"/>.
     /// </summary>
     public class AppendBlobStorageResourceOptions
     {
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
+        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
         public AppendBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
 

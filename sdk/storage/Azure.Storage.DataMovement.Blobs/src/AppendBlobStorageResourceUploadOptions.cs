@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// Optional parameters for upload for
-    /// Append Block Storage Resource
+    /// Append Block Storage Resource.
     /// </summary>
     public class AppendBlobStorageResourceUploadOptions
     {
