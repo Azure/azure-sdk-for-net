@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.Chaos.Tests
         public async Task StartAndCheckStatus()
         {
             var experimentName = $"{ExperimentNamePrefix}execution-{this.VmssId}";
-            await this.ExperimentCollection.CreateOrUpdateAsync(WaitUntil.Completed, experimentName, this.MockExperimentEntities.GetVmssShutdownV2v0Experiment());
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
             var startResponse = await experimentResourceResponse.Value.StartAsync().ConfigureAwait(false);
             Assert.AreEqual(experimentName, startResponse.Value.Name);
@@ -83,8 +80,33 @@ namespace Azure.ResourceManager.Chaos.Tests
 
             var statusId = UrlUtility.GetStatusId(startResponse.Value.StatusUri);
             var statusResponse = await experimentResourceResponse.Value.GetExperimentStatusAsync(statusId).ConfigureAwait(false);
-            Assert.AreEqual(statusId, statusResponse.Value.Id);
             Assert.AreEqual(200, statusResponse.GetRawResponse().Status);
+        }
+
+        [TestCase, Order(6)]
+        [RecordedTest]
+        public async Task Cancel()
+        {
+            var experimentName = $"{ExperimentNamePrefix}execution-{this.VmssId}";
+            var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
+            var cancelResponse = await experimentResourceResponse.Value.CancelAsync().ConfigureAwait(false);
+            Assert.AreEqual(experimentName, cancelResponse.Value.Name);
+            Assert.AreEqual(202, cancelResponse.GetRawResponse().Status);
+        }
+
+        [TestCase, Order(7)]
+        [RecordedTest]
+        public async Task ListAndGetDetails()
+        {
+            var experimentName = $"{ExperimentNamePrefix}execution-{this.VmssId}";
+            var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
+            var detailsList = await experimentResourceResponse.Value.GetExperimentExecutionDetails().ToListAsync().ConfigureAwait(false);
+            Assert.True(detailsList.Count > 0);
+
+            var detailId = UrlUtility.GetDetailsId(detailsList.FirstOrDefault().Id);
+            var experimentDetailResponse = await experimentResourceResponse.Value.GetExperimentExecutionDetailAsync(detailId).ConfigureAwait(false);
+            Assert.AreEqual(detailsList.FirstOrDefault().Id, experimentDetailResponse.Value.Id);
+            Assert.AreEqual(200, experimentDetailResponse.GetRawResponse().Status);
         }
     }
 }
