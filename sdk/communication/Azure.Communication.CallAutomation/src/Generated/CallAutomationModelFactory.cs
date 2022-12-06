@@ -174,7 +174,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of ChoiceResult. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
-        /// Phrases are set to the value if choice is selected via phrase detection.
+        /// Phrases are set to the value if choice is seletected via phrase detection.
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
         /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>

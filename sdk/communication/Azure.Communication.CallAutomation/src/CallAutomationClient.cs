@@ -215,6 +215,11 @@ namespace Azure.Communication.CallAutomation
             }
 
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
+            // Add custom cognitive service domain name
+            if (string.IsNullOrEmpty(options.AzureCognitiveServiceDomainName))
+            {
+                request.AzureCognitiveServiceDomainName = options.AzureCognitiveServiceDomainName;
+            }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
@@ -504,6 +509,11 @@ namespace Azure.Communication.CallAutomation
                 options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                 sourceDto,
                 options.CallbackUri.AbsoluteUri);
+            // Add custom cognitive service domain name
+            if (string.IsNullOrEmpty(options.AzureCognitiveServiceDomainName))
+            {
+                request.AzureCognitiveServiceDomainName = options.AzureCognitiveServiceDomainName;
+            }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
