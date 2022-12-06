@@ -27,7 +27,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             if (SkipSipRoutingLiveTests)
                 Assert.Ignore("Skip SIP routing live tests flag is on.");
 
-            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
 
             #region Snippet:CreateSipRoutingClient
             // Get a connection string to Azure Communication resource.
