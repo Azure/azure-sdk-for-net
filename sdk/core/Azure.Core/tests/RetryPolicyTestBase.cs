@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.Samples;
+using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
@@ -382,6 +383,219 @@ namespace Azure.Core.Tests
 
             AssertRetryEvent(listener, request, 1);
             AssertRetryEvent(listener, request, 2);
+        }
+
+        [Test]
+        public async Task CyclesThroughReadHosts()
+        {
+           (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(new[] { "host1", "host2" }, null);
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });
+            var message = pipeline.CreateMessage();
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
+
+            MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("host1", request.Uri.Host);
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            Assert.AreEqual("host2", request.Uri.Host);
+
+            await task;
+        }
+
+        [Test]
+        public async Task DoesNotCycleThroughWriteHostsOnReads()
+        {
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(null, new[] { "host1", "host2" });
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });
+            var message = pipeline.CreateMessage();
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
+
+            MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("example.com", request.Uri.Host);
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await task;
+        }
+
+        [Test]
+        public async Task CyclesThroughWriteHosts()
+        {
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(null, new[] { "host1", "host2" });
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });
+
+            var task = Send();
+
+            async Task<Response> Send()
+            {
+                await Task.Yield();
+                return await SendRequestAsync(pipeline, request =>
+                {
+                    request.Method = RequestMethod.Put;
+                    request.Uri.Reset(new Uri("https://example.com/update"));
+                    request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
+                });
+            }
+
+            MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("host1", request.Uri.Host);
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            Assert.AreEqual("host2", request.Uri.Host);
+
+            await task;
+        }
+
+        [Test]
+        public async Task DoesNotCycleThroughReadHostsOnWrites()
+        {
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(new[] { "host1", "host2" }, null);
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });
+            var task = Send();
+
+            async Task<Response> Send()
+            {
+                await Task.Yield();
+                return await SendRequestAsync(pipeline, request =>
+                {
+                    request.Method = RequestMethod.Put;
+                    request.Uri.Reset(new Uri("https://example.com/update"));
+                    request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
+                });
+            }
+            MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("example.com", request.Uri.Host);
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await task;
+        }
+
+        [Test]
+        public async Task RespectsHostAffinity()
+        {
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(new[] { "host1", "host2" }, null);
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });
+            var message = pipeline.CreateMessage();
+            GeoRedundantFallbackPolicy.SetHostAffinity(message, true);
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
+
+            MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            await gate.Cycle();
+
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("example.com", request.Uri.Host);
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await task;
+        }
+
+        public async Task RespectsPrimaryCoolDown_InitialAttempt()
+        {
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(new[] { "host1", "host2" }, null, TimeSpan.FromSeconds(3));
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });
+            var message = pipeline.CreateMessage();
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
+
+            MockRequest request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("host1", request.Uri.Host);
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await task;
+        }
+
+        [Test]
+        public async Task RespectsPrimaryCoolDown()
+        {
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(new[] { "host1", "host2" }, null, TimeSpan.FromSeconds(3));
+            var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });
+            var message = pipeline.CreateMessage();
+            Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
+
+            MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            await gate.Cycle();
+
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.CycleWithException(new IOException());
+            Assert.AreEqual("host1", request.Uri.Host);
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            await gate.Cycle();
+
+            request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            Assert.AreEqual("example.com", request.Uri.Host);
+
+            await task;
         }
 
         private static void AssertRetryEvent(TestEventListener listener, MockRequest request, int retryNumber)
