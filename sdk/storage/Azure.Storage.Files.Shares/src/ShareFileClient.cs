@@ -412,10 +412,12 @@ namespace Azure.Storage.Files.Shares
         private FileRestClient BuildFileRestClient(Uri uri)
         {
             return new FileRestClient(
-                _clientConfiguration.ClientDiagnostics,
-                _clientConfiguration.Pipeline,
-                uri.AbsoluteUri,
-                _clientConfiguration.ClientOptions.Version.ToVersionString());
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
+                url: uri.AbsoluteUri,
+                version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
+                allowSourceTrailingDot: _clientConfiguration.ClientOptions.SourceAllowTrailingDot);
         }
         #endregion ctors
 
