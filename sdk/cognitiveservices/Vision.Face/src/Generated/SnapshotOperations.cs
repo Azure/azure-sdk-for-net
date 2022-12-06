@@ -1106,7 +1106,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Retrieve the status of a take/apply snapshot operation.
+        /// Get status of a long running operation.
         /// </summary>
         /// <param name='operationId'>
         /// Id referencing a particular take/apply snapshot operation.

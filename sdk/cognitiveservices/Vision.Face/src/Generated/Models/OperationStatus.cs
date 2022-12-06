@@ -14,8 +14,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Operation status object. Operation refers to the asynchronous backend
-    /// task including taking a snapshot and applying a snapshot.
+    /// Operation status object. Operation refers to an asynchronous backend
+    /// task.
     /// </summary>
     public partial class OperationStatus
     {
@@ -30,27 +30,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the OperationStatus class.
         /// </summary>
-        /// <param name="status">Operation status: notstarted, running,
-        /// succeeded, failed. If the operation is requested and waiting to
-        /// perform, the status is notstarted. If the operation is ongoing in
-        /// backend, the status is running. Status succeeded means the
-        /// operation is completed successfully, specifically for snapshot
-        /// taking operation, it illustrates the snapshot is well taken and
-        /// ready to apply, and for snapshot applying operation, it presents
-        /// the target object has finished creating by the snapshot and ready
-        /// to be used. Status failed is often caused by editing the source
-        /// object while taking the snapshot or editing the target object while
-        /// applying the snapshot before completion, see the field "message" to
-        /// check the failure reason. Possible values include: 'notstarted',
+        /// <param name="status">Possible values include: 'notStarted',
         /// 'running', 'succeeded', 'failed'</param>
         /// <param name="createdTime">A combined UTC date and time string that
-        /// describes the time when the operation (take or apply a snapshot) is
-        /// requested. E.g. 2018-12-25T11:41:02.2331413Z.</param>
+        /// describes the time when the operation is requested. E.g.
+        /// 2018-12-25T11:41:02.2331413Z.</param>
         /// <param name="lastActionTime">A combined UTC date and time string
-        /// that describes the last time the operation (take or apply a
-        /// snapshot) is actively migrating data. The lastActionTime will keep
-        /// increasing until the operation finishes. E.g.
-        /// 2018-12-25T11:51:27.8705696Z.</param>
+        /// that describes the last time the operation is actively running. The
+        /// lastActionTime will keep increasing until the operation finishes.
+        /// E.g. 2018-12-25T11:51:27.8705696Z.</param>
+        /// <param name="finishedTime">A combined UTC date and time string that
+        /// describes the time when the operation finished. E.g.
+        /// 2018-12-25T11:41:02.2331413Z.</param>
         /// <param name="resourceLocation">When the operation succeeds
         /// successfully, for snapshot taking operation the snapshot id will be
         /// included in this field, and for snapshot applying operation, the
@@ -58,11 +49,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// field.</param>
         /// <param name="message">Show failure message when operation fails
         /// (omitted when operation succeeds).</param>
-        public OperationStatus(OperationStatusType status, System.DateTime createdTime, System.DateTime? lastActionTime = default(System.DateTime?), string resourceLocation = default(string), string message = default(string))
+        public OperationStatus(OperationStatusType status, System.DateTime createdTime, System.DateTime? lastActionTime = default(System.DateTime?), System.DateTime? finishedTime = default(System.DateTime?), string resourceLocation = default(string), string message = default(string))
         {
             Status = status;
             CreatedTime = createdTime;
             LastActionTime = lastActionTime;
+            FinishedTime = finishedTime;
             ResourceLocation = resourceLocation;
             Message = message;
             CustomInit();
@@ -74,18 +66,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets operation status: notstarted, running, succeeded,
-        /// failed. If the operation is requested and waiting to perform, the
-        /// status is notstarted. If the operation is ongoing in backend, the
-        /// status is running. Status succeeded means the operation is
-        /// completed successfully, specifically for snapshot taking operation,
-        /// it illustrates the snapshot is well taken and ready to apply, and
-        /// for snapshot applying operation, it presents the target object has
-        /// finished creating by the snapshot and ready to be used. Status
-        /// failed is often caused by editing the source object while taking
-        /// the snapshot or editing the target object while applying the
-        /// snapshot before completion, see the field "message" to check the
-        /// failure reason. Possible values include: 'notstarted', 'running',
+        /// Gets or sets possible values include: 'notStarted', 'running',
         /// 'succeeded', 'failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
@@ -93,20 +74,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets a combined UTC date and time string that describes the
-        /// time when the operation (take or apply a snapshot) is requested.
-        /// E.g. 2018-12-25T11:41:02.2331413Z.
+        /// time when the operation is requested. E.g.
+        /// 2018-12-25T11:41:02.2331413Z.
         /// </summary>
         [JsonProperty(PropertyName = "createdTime")]
         public System.DateTime CreatedTime { get; set; }
 
         /// <summary>
         /// Gets or sets a combined UTC date and time string that describes the
-        /// last time the operation (take or apply a snapshot) is actively
-        /// migrating data. The lastActionTime will keep increasing until the
-        /// operation finishes. E.g. 2018-12-25T11:51:27.8705696Z.
+        /// last time the operation is actively running. The lastActionTime
+        /// will keep increasing until the operation finishes. E.g.
+        /// 2018-12-25T11:51:27.8705696Z.
         /// </summary>
         [JsonProperty(PropertyName = "lastActionTime")]
         public System.DateTime? LastActionTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets a combined UTC date and time string that describes the
+        /// time when the operation finished. E.g.
+        /// 2018-12-25T11:41:02.2331413Z.
+        /// </summary>
+        [JsonProperty(PropertyName = "finishedTime")]
+        public System.DateTime? FinishedTime { get; set; }
 
         /// <summary>
         /// Gets or sets when the operation succeeds successfully, for snapshot

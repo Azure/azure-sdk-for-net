@@ -18,7 +18,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     /// recognition model name for largePersonGroup/personGroup, and
     /// largeFaceList/faceList.
     /// </summary>
-    public partial class MetaDataContract : NonNullableNameAndNullableUserDataContract
+    public partial class MetaDataContract : NameAndUserDataContractForCreation
     {
         /// <summary>
         /// Initializes a new instance of the MetaDataContract class.

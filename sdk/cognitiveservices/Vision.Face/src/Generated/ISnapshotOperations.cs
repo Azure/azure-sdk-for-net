@@ -272,7 +272,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </exception>
         Task<HttpOperationHeaderResponse<SnapshotApplyHeaders>> ApplyWithHttpMessagesAsync(System.Guid snapshotId, string objectId, SnapshotApplyMode mode = default(SnapshotApplyMode), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve the status of a take/apply snapshot operation.
+        /// Get status of a long running operation.
         /// </summary>
         /// <param name='operationId'>
         /// Id referencing a particular take/apply snapshot operation.
