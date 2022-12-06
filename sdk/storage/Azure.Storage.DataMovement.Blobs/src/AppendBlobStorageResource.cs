@@ -137,7 +137,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <param name="stream">The stream containing the data to be consumed and uploaded.</param>
         /// <param name="options">Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
@@ -184,7 +185,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
         /// <param name="options">Options for the storage resource. See <see cref="StorageResourceCopyFromUriOptions"/>.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
@@ -221,7 +223,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <param name="range">The range of the blob to upload/copy.</param>
         /// <param name="options">Options for the storage resource. See <see cref="StorageResourceCopyFromUriOptions"/>.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>

@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         /// <summary>
         /// Optional. See <see cref="AppendBlobRequestConditions"/> to add
-        /// conditions on the upload of this Append Blob.
+        /// conditions on the upload of this append Blob.
         /// </summary>
         public AppendBlobRequestConditions Conditions { get; set; }
 
