@@ -216,7 +216,7 @@ namespace Azure.Communication.CallAutomation
 
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
             // Add custom cognitive service domain name
-            if (string.IsNullOrEmpty(options.AzureCognitiveServiceDomainName))
+            if (!string.IsNullOrEmpty(options.AzureCognitiveServiceDomainName))
             {
                 request.AzureCognitiveServiceDomainName = options.AzureCognitiveServiceDomainName;
             }
@@ -510,7 +510,7 @@ namespace Azure.Communication.CallAutomation
                 sourceDto,
                 options.CallbackUri.AbsoluteUri);
             // Add custom cognitive service domain name
-            if (string.IsNullOrEmpty(options.AzureCognitiveServiceDomainName))
+            if (!string.IsNullOrEmpty(options.AzureCognitiveServiceDomainName))
             {
                 request.AzureCognitiveServiceDomainName = options.AzureCognitiveServiceDomainName;
             }
