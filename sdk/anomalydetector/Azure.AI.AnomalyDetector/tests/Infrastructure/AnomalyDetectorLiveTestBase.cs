@@ -31,17 +31,16 @@ namespace Azure.AI.AnomalyDetector.Tests
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new AnomalyDetectorClientOptions());
             AnomalyDetectorClient client;
-            String apiVersion = "v1.1";
 
             if (useTokenCredential)
             {
                 AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
-                client = new AnomalyDetectorClient(endpoint, apiVersion, credential, options: options);
+                client = new AnomalyDetectorClient(endpoint, credential, options: options);
             }
             else
             {
                 var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
-                client = new AnomalyDetectorClient(endpoint, apiVersion, credential, options: options);
+                client = new AnomalyDetectorClient(endpoint, credential, options: options);
             }
 
             return skipInstrumenting ? client : InstrumentClient(client);
