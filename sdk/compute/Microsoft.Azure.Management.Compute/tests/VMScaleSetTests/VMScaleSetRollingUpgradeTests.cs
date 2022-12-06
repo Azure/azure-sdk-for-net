@@ -41,7 +41,7 @@ namespace Compute.Tests
                 VirtualMachineScaleSet inputVMScaleSet;
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                     EnsureClientsInitialized(context);
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
 
@@ -68,6 +68,15 @@ namespace Compute.Tests
                         {
                             vmScaleSet.Overprovision = false;
                             vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Rolling;
+                            vmScaleSet.UpgradePolicy.RollingUpgradePolicy = new RollingUpgradePolicy
+                            {
+                                MaxBatchInstancePercent = 100,
+                                MaxUnhealthyInstancePercent = 100,
+                                MaxUnhealthyUpgradedInstancePercent = 100,
+                                PauseTimeBetweenBatches = "PT0S",
+                                PrioritizeUnhealthyInstances = true,
+                                RollbackFailedInstancesOnPolicyBreach = true
+                            };
                         },
                         createWithManagedDisks: true,
                         createWithPublicIpAddress: false,

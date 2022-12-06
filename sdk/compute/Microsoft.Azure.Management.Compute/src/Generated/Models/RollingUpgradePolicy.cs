@@ -58,7 +58,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// determine the batch size.</param>
         /// <param name="prioritizeUnhealthyInstances">Upgrade all unhealthy
         /// instances in a scale set before any healthy instances.</param>
-        public RollingUpgradePolicy(int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string), bool? enableCrossZoneUpgrade = default(bool?), bool? prioritizeUnhealthyInstances = default(bool?))
+        /// <param name="rollbackFailedInstancesOnPolicyBreach">Rollback failed
+        /// instances to previous model if the Rolling Upgrade policy is
+        /// violated.</param>
+        public RollingUpgradePolicy(int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string), bool? enableCrossZoneUpgrade = default(bool?), bool? prioritizeUnhealthyInstances = default(bool?), bool? rollbackFailedInstancesOnPolicyBreach = default(bool?))
         {
             MaxBatchInstancePercent = maxBatchInstancePercent;
             MaxUnhealthyInstancePercent = maxUnhealthyInstancePercent;
@@ -66,6 +69,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             PauseTimeBetweenBatches = pauseTimeBetweenBatches;
             EnableCrossZoneUpgrade = enableCrossZoneUpgrade;
             PrioritizeUnhealthyInstances = prioritizeUnhealthyInstances;
+            RollbackFailedInstancesOnPolicyBreach = rollbackFailedInstancesOnPolicyBreach;
             CustomInit();
         }
 
@@ -129,6 +133,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "prioritizeUnhealthyInstances")]
         public bool? PrioritizeUnhealthyInstances { get; set; }
+
+        /// <summary>
+        /// Gets or sets rollback failed instances to previous model if the
+        /// Rolling Upgrade policy is violated.
+        /// </summary>
+        [JsonProperty(PropertyName = "rollbackFailedInstancesOnPolicyBreach")]
+        public bool? RollbackFailedInstancesOnPolicyBreach { get; set; }
 
         /// <summary>
         /// Validate the object.
