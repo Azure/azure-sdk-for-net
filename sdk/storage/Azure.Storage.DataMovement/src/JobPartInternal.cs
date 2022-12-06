@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Invokes Failed Argument
         /// </summary>
-        internal async Task InvokeSkippedArg()
+        public async virtual Task InvokeSkippedArg()
         {
             if (TransferSkippedEventHandler != null)
             {
@@ -238,7 +238,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Invokes Failed Argument
         /// </summary>
-        internal async Task InvokeFailedArg(Exception ex)
+        public async virtual Task InvokeFailedArg(Exception ex)
         {
             if (TransferFailedEventHandler != null)
             {

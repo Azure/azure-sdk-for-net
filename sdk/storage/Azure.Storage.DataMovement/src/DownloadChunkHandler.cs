@@ -12,7 +12,7 @@ using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadChunkHandler
+    internal class DownloadChunkHandler : IDisposable
     {
         #region Delegate Definitions
         public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength);
@@ -117,12 +117,22 @@ namespace Azure.Storage.DataMovement
             // Set size of the list of null streams
             _rangesCompleted = new ConcurrentDictionary<long, string>();
 
-            AddDownloadChunkEvent();
+            _downloadChunkEventHandler += AddDownloadChunkEvent();
         }
 
-        public void AddDownloadChunkEvent()
+        public void Dispose()
         {
-            _downloadChunkEventHandler += async (DownloadRangeEventArgs args) =>
+            CleanUp();
+        }
+
+        public void CleanUp()
+        {
+            _downloadChunkEventHandler -= AddDownloadChunkEvent();
+        }
+
+        public SyncAsyncEventHandler<DownloadRangeEventArgs> AddDownloadChunkEvent()
+        {
+            return async (DownloadRangeEventArgs args) =>
             {
                 if (args.Success && !_cancellationToken.IsCancellationRequested)
                 {

@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class CommitChunkHandler
+    internal class CommitChunkHandler : IDisposable
     {
         #region Delegate Definitions
         public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
@@ -40,8 +40,9 @@ namespace Azure.Storage.DataMovement
         internal SyncAsyncEventHandler<StageChunkEventArgs> GetCommitBlockHandler() => _commitBlockHandler;
 
         private long _bytesTransferred;
-        private long _expectedLength;
-        private long _blockSize;
+        private readonly long _expectedLength;
+        private readonly long _blockSize;
+        private readonly TransferType _transferType;
 
         public CommitChunkHandler(
             long expectedLength,
@@ -73,17 +74,31 @@ namespace Azure.Storage.DataMovement
             _bytesTransferred = blockSize;
 
             _blockSize = blockSize;
-
-            if (transferType == TransferType.Sequential)
+            _transferType = transferType;
+            if (_transferType == TransferType.Sequential)
             {
-                AddQueueBlockEvent();
+                _commitBlockHandler += AddQueueBlockEvent();
             }
-            AddCommitBlockEvent();
+            _commitBlockHandler += AddCommitBlockEvent();
         }
 
-        public void AddCommitBlockEvent()
+        public void Dispose()
         {
-            _commitBlockHandler += async (StageChunkEventArgs args) =>
+            CleanUp();
+        }
+
+        public void CleanUp()
+        {
+            if (_transferType == TransferType.Sequential)
+            {
+                _commitBlockHandler -= AddQueueBlockEvent();
+            }
+            _commitBlockHandler -= AddCommitBlockEvent();
+        }
+
+        public SyncAsyncEventHandler<StageChunkEventArgs> AddCommitBlockEvent()
+        {
+            return async (StageChunkEventArgs args) =>
             {
                 if (args.Success)
                 {
@@ -110,28 +125,28 @@ namespace Azure.Storage.DataMovement
             };
         }
 
-        public void AddQueueBlockEvent()
+        public SyncAsyncEventHandler<StageChunkEventArgs> AddQueueBlockEvent()
         {
-            _commitBlockHandler += async (StageChunkEventArgs args) =>
+            return async (StageChunkEventArgs args) =>
+            {
+                if (args.Success)
                 {
-                    if (args.Success)
+                    long oldOffset = args.Offset;
+                    long newOffset = oldOffset + _blockSize;
+                    if (newOffset < _expectedLength)
                     {
-                        long oldOffset = args.Offset;
-                        long newOffset = oldOffset + _blockSize;
-                        if (newOffset < _expectedLength)
-                        {
-                            long blockLength = (newOffset + _blockSize < _expectedLength) ?
-                                            _blockSize :
-                                            _expectedLength - newOffset;
-                            await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
-                        }
+                        long blockLength = (newOffset + _blockSize < _expectedLength) ?
+                                        _blockSize :
+                                        _expectedLength - newOffset;
+                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
                     }
-                    else
-                    {
-                        // Set status to completed with failed
-                        await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
-                    }
-                };
+                }
+                else
+                {
+                    // Set status to completed with failed
+                    await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
+                }
+            };
         }
 
         public void AddEvent(SyncAsyncEventHandler<StageChunkEventArgs> stageBlockEvent)

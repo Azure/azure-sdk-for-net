@@ -11,7 +11,7 @@ using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class CopyStatusHandler
+    internal class CopyStatusHandler : IDisposable
     {
         #region Delegate Definitions
         public delegate Task QueueGetPropertiesInternal();
@@ -49,12 +49,22 @@ namespace Azure.Storage.DataMovement
             _updateTransferStatus = behaviors.UpdateTransferStatus
                 ?? throw Errors.ArgumentNull(nameof(behaviors.UpdateTransferStatus));
 
-            AddStatusEvent();
+            _getStatusHandler += AddStatusEvent();
         }
 
-        public void AddStatusEvent()
+        public void Dispose()
         {
-            _getStatusHandler += async (CopyStatusEventArgs args) =>
+            Cleanup();
+        }
+
+        public void Cleanup()
+        {
+            _getStatusHandler -= AddStatusEvent();
+        }
+
+        public SyncAsyncEventHandler<CopyStatusEventArgs> AddStatusEvent()
+        {
+            return async (CopyStatusEventArgs args) =>
             {
                 // Use progress tracker to get the amount of bytes transferred
                 // Nothing needs to be done except update the bytes transfered if it was updated.
