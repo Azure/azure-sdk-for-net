@@ -524,6 +524,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                         catch (Exception ex)
                         {
                             WebPubSubClientEventSource.Log.FailedToProcessMessage(ex.Message);
+                            throw;
                         }
                     }
                 }
