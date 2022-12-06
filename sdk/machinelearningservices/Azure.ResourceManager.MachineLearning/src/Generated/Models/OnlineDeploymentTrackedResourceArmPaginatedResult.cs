@@ -11,10 +11,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A paginated list of OnlineDeployment entities.
-    /// Serialized Name: OnlineDeploymentTrackedResourceArmPaginatedResult
-    /// </summary>
+    /// <summary> A paginated list of OnlineDeployment entities. </summary>
     internal partial class OnlineDeploymentTrackedResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink">
-        /// The link to the next page of OnlineDeployment objects. If null, there are no additional pages.
-        /// Serialized Name: OnlineDeploymentTrackedResourceArmPaginatedResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// An array of objects of type OnlineDeployment.
-        /// Serialized Name: OnlineDeploymentTrackedResourceArmPaginatedResult.value
-        /// </param>
+        /// <param name="nextLink"> The link to the next page of OnlineDeployment objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type OnlineDeployment. </param>
         internal OnlineDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningOnlineDeploymentData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link to the next page of OnlineDeployment objects. If null, there are no additional pages.
-        /// Serialized Name: OnlineDeploymentTrackedResourceArmPaginatedResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of OnlineDeployment objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// An array of objects of type OnlineDeployment.
-        /// Serialized Name: OnlineDeploymentTrackedResourceArmPaginatedResult.value
-        /// </summary>
+        /// <summary> An array of objects of type OnlineDeployment. </summary>
         public IReadOnlyList<MachineLearningOnlineDeploymentData> Value { get; }
     }
 }

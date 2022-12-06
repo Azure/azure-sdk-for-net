@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningNotebookResourceInfo.
-    /// Serialized Name: NotebookResourceInfo
-    /// </summary>
+    /// <summary> The MachineLearningNotebookResourceInfo. </summary>
     public partial class MachineLearningNotebookResourceInfo
     {
         /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
@@ -19,15 +16,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
-        /// <param name="fqdn"> Serialized Name: NotebookResourceInfo.fqdn. </param>
-        /// <param name="resourceId">
-        /// the data plane resourceId that used to initialize notebook component
-        /// Serialized Name: NotebookResourceInfo.resourceId
-        /// </param>
-        /// <param name="notebookPreparationError">
-        /// The error that occurs when preparing notebook.
-        /// Serialized Name: NotebookResourceInfo.notebookPreparationError
-        /// </param>
+        /// <param name="fqdn"></param>
+        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
+        /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
         internal MachineLearningNotebookResourceInfo(string fqdn, string resourceId, MachineLearningNotebookPreparationError notebookPreparationError)
         {
             Fqdn = fqdn;
@@ -35,17 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             NotebookPreparationError = notebookPreparationError;
         }
 
-        /// <summary> Serialized Name: NotebookResourceInfo.fqdn. </summary>
+        /// <summary> Gets the fqdn. </summary>
         public string Fqdn { get; }
-        /// <summary>
-        /// the data plane resourceId that used to initialize notebook component
-        /// Serialized Name: NotebookResourceInfo.resourceId
-        /// </summary>
+        /// <summary> the data plane resourceId that used to initialize notebook component. </summary>
         public string ResourceId { get; }
-        /// <summary>
-        /// The error that occurs when preparing notebook.
-        /// Serialized Name: NotebookResourceInfo.notebookPreparationError
-        /// </summary>
+        /// <summary> The error that occurs when preparing notebook. </summary>
         public MachineLearningNotebookPreparationError NotebookPreparationError { get; }
     }
 }

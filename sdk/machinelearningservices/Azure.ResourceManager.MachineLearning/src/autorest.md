@@ -15,9 +15,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug:
-  show-serialized-names: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
@@ -52,6 +49,10 @@ rename-rules:
   PAT: Pat
   SAS: Sas
   LRS: Lrs
+  AAD: Aad
+  AML: Aml
+  VCPU: VCpu|vCpu
+  VCPUs: VCpus|vCpus
 
 override-operation-name:
   Quotas_List: GetMachineLearningQuotas
@@ -177,7 +178,6 @@ rename-mapping:
   LoadBalancerType: MachineLearningLoadBalancerType
   SslConfiguration: MachineLearningSslConfiguration
   SystemService: MachineLearningComputeSystemService
-  AllocationState: AmlAllocationState
   IdentityConfiguration: MachineLearningIdentityConfiguration
   ManagedIdentity: MachineLearningManagedIdentity
   ManagedIdentity.resourceId: -|arm-id
@@ -342,7 +342,7 @@ rename-mapping:
   QuotaUnit: MachineLearningQuotaUnit
   RecurrenceFrequency: MachineLearningRecurrenceFrequency
   RecurrenceSchedule: MachineLearningRecurrenceSchedule
-  WeekDay: MachineLearningWeekday
+  WeekDay: MachineLearningDayOfWeek
   RegenerateEndpointKeysRequest: MachineLearningEndpointKeyRegenerateContent
   Regression: AutoMLVerticalRegression
   RegressionModels: AutoMLVerticalRegressionModel
@@ -385,6 +385,16 @@ rename-mapping:
   VirtualMachineSshCredentials: MachineLearningVmSshCredentials
   VmPriority: MachineLearningVmPriority
   WorkspaceConnectionUsernamePassword: MachineLearningWorkspaceConnectionUsernamePassword
+  Workspace.properties.hbiWorkspace: IsHbiWorkspace
+  AllocationState: MachineLearningAllocationState
+  ResourceId.id: -|arm-id
+  JobBase.componentId: -|arm-id
+  JobBase.computeId: -|arm-id
+  CommandJob.environmentId: -|arm-id
+  EndpointComputeType.AzureMLCompute: AmlCompute
+  OutputPathAssetReference.jobId: -|arm-id
+  PipelineJob.sourceJobId: -|arm-id
+  VirtualMachineSize.premiumIO: IsPremiumIOSupported
 
 directive:
   - from: swagger-document

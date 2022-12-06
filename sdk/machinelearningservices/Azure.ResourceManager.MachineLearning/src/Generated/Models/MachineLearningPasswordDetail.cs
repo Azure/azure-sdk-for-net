@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningPasswordDetail.
-    /// Serialized Name: Password
-    /// </summary>
+    /// <summary> The MachineLearningPasswordDetail. </summary>
     public partial class MachineLearningPasswordDetail
     {
         /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
@@ -19,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
-        /// <param name="name"> Serialized Name: Password.name. </param>
-        /// <param name="value"> Serialized Name: Password.value. </param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         internal MachineLearningPasswordDetail(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> Serialized Name: Password.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: Password.value. </summary>
+        /// <summary> Gets the value. </summary>
         public string Value { get; }
     }
 }

@@ -838,9 +838,9 @@ namespace Azure.ResourceManager.MachineLearning
         public System.Uri DiscoveryUri { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningEncryptionSetting Encryption { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
-        public bool? HbiWorkspace { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string ImageBuildCompute { get { throw null; } set { } }
+        public bool? IsHbiWorkspace { get { throw null; } set { } }
         public bool? IsStorageHnsEnabled { get { throw null; } }
         public bool? IsV1LegacyMode { get { throw null; } set { } }
         public string KeyVault { get { throw null; } set { } }
@@ -940,24 +940,6 @@ namespace Azure.ResourceManager.MachineLearning
 }
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AmlAllocationState : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.AmlAllocationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AmlAllocationState(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearning.Models.AmlAllocationState Resizing { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.AmlAllocationState Steady { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearning.Models.AmlAllocationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearning.Models.AmlAllocationState left, Azure.ResourceManager.MachineLearning.Models.AmlAllocationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearning.Models.AmlAllocationState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.AmlAllocationState left, Azure.ResourceManager.MachineLearning.Models.AmlAllocationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AmlCompute : Azure.ResourceManager.MachineLearning.Models.MachineLearningComputeProperties
     {
         public AmlCompute() { }
@@ -976,7 +958,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AmlComputeProperties
     {
         public AmlComputeProperties() { }
-        public Azure.ResourceManager.MachineLearning.Models.AmlAllocationState? AllocationState { get { throw null; } }
+        public Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState? AllocationState { get { throw null; } }
         public System.DateTimeOffset? AllocationStateTransitionOn { get { throw null; } }
         public int? CurrentNodeCount { get { throw null; } }
         public bool? EnableNodePublicIP { get { throw null; } set { } }
@@ -987,7 +969,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public System.BinaryData PropertyBag { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningRemoteLoginPortPublicAccess? RemoteLoginPortPublicAccess { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.AmlComputeScaleSettings ScaleSettings { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public int? TargetNodeCount { get { throw null; } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningUserAccountCredentials UserAccountCredentials { get { throw null; } set { } }
         public string VirtualMachineImageId { get { throw null; } set { } }
@@ -1647,6 +1629,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MachineLearningAllocationState : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MachineLearningAllocationState(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState Resizing { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState Steady { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState left, Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState left, Azure.ResourceManager.MachineLearning.Models.MachineLearningAllocationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MachineLearningApplicationSharingPolicy : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.MachineLearningApplicationSharingPolicy>
     {
         private readonly object _dummy;
@@ -1890,11 +1890,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     }
     public partial class MachineLearningCommandJob : Azure.ResourceManager.MachineLearning.Models.MachineLearningJobProperties
     {
-        public MachineLearningCommandJob(string command, string environmentId) { }
+        public MachineLearningCommandJob(string command, Azure.Core.ResourceIdentifier environmentId) { }
         public string CodeId { get { throw null; } set { } }
         public string Command { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningDistributionConfiguration Distribution { get { throw null; } set { } }
-        public string EnvironmentId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.MachineLearningJobInput> Inputs { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningCommandJobLimits Limits { get { throw null; } set { } }
@@ -2045,7 +2045,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningScriptsToExecute Scripts { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningComputeInstanceSshSettings SshSettings { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningComputeInstanceState? State { get { throw null; } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public string VersionsRuntime { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
     }
@@ -2309,6 +2309,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningDataVersionProperties(System.Uri dataUri) { }
         public System.Uri DataUri { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MachineLearningDayOfWeek : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MachineLearningDayOfWeek(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek Friday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek Monday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek Saturday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek Sunday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek Thursday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek left, Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek left, Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MachineLearningDefaultScaleSettings : Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineScaleSettings
     {
         public MachineLearningDefaultScaleSettings() { }
@@ -2462,8 +2485,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MachineLearningEndpointAuthMode(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointAuthMode AADToken { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointAuthMode AMLToken { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointAuthMode AadToken { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointAuthMode AmlToken { get { throw null; } }
         public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointAuthMode Key { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointAuthMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2489,7 +2512,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MachineLearningEndpointComputeType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointComputeType AzureMLCompute { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointComputeType AmlCompute { get { throw null; } }
         public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointComputeType Kubernetes { get { throw null; } }
         public static Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointComputeType Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointComputeType other) { throw null; }
@@ -2791,8 +2814,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningJobProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceBase
     {
         public MachineLearningJobProperties() { }
-        public string ComponentId { get { throw null; } set { } }
-        public string ComputeId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ComponentId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ComputeId { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExperimentName { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningIdentityConfiguration Identity { get { throw null; } set { } }
@@ -3301,7 +3324,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningOutputPathAssetReference : Azure.ResourceManager.MachineLearning.Models.MachineLearningAssetReferenceBase
     {
         public MachineLearningOutputPathAssetReference() { }
-        public string JobId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier JobId { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
     }
     public partial class MachineLearningPartialManagedServiceIdentity
@@ -3328,7 +3351,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Jobs { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.MachineLearningJobOutput> Outputs { get { throw null; } set { } }
         public System.BinaryData Settings { get { throw null; } set { } }
-        public string SourceJobId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceJobId { get { throw null; } set { } }
     }
     public partial class MachineLearningPrivateEndpoint
     {
@@ -3519,7 +3542,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public System.Collections.Generic.IList<int> Hours { get { throw null; } }
         public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
         public System.Collections.Generic.IList<int> MonthDays { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday> WeekDays { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearning.Models.MachineLearningDayOfWeek> WeekDays { get { throw null; } set { } }
     }
     public partial class MachineLearningRecurrenceTrigger : Azure.ResourceManager.MachineLearning.Models.MachineLearningTriggerBase
     {
@@ -4289,14 +4312,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningEstimatedVmPrices EstimatedVmPrices { get { throw null; } }
         public string Family { get { throw null; } }
         public int? Gpus { get { throw null; } }
+        public bool? IsPremiumIOSupported { get { throw null; } }
         public bool? LowPriorityCapable { get { throw null; } }
         public int? MaxResourceVolumeMB { get { throw null; } }
         public double? MemoryGB { get { throw null; } }
         public string Name { get { throw null; } }
         public int? OSVhdSizeMB { get { throw null; } }
-        public bool? PremiumIO { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedComputeTypes { get { throw null; } }
-        public int? VCPUs { get { throw null; } }
+        public int? VCpus { get { throw null; } }
     }
     public partial class MachineLearningVmSshCredentials
     {
@@ -4323,29 +4346,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(Azure.ResourceManager.MachineLearning.Models.MachineLearningVmTier left, Azure.ResourceManager.MachineLearning.Models.MachineLearningVmTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.MachineLearning.Models.MachineLearningVmTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.MachineLearningVmTier left, Azure.ResourceManager.MachineLearning.Models.MachineLearningVmTier right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MachineLearningWeekday : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MachineLearningWeekday(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday Friday { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday Monday { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday Saturday { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday Sunday { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday Thursday { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday left, Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday left, Azure.ResourceManager.MachineLearning.Models.MachineLearningWeekday right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MachineLearningWorkspaceConnectionManagedIdentity
