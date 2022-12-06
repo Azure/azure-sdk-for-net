@@ -17,6 +17,7 @@ namespace Azure
     public class AzureSasCredential
     {
         private string _signature;
+        private string _previousSignature;
         private long _signatureUpdated;
 
         /// <summary>
@@ -40,11 +41,15 @@ namespace Azure
         }
 
         /// <summary>
-        /// Previous values for <see cref="Signature"/>.
+        /// The previous value af <see cref="Signature"/> after <see cref="Update"/> is called.
         /// </summary>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public List<string> SignatureHistory { get; } = new();
+        public string PreviousSignature
+        {
+            get => Volatile.Read(ref _previousSignature);
+            private set => Volatile.Write(ref _previousSignature, value);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureSasCredential"/> class.
@@ -62,6 +67,7 @@ namespace Azure
             Argument.AssertNotNullOrWhiteSpace(signature, nameof(signature));
             SignatureUpdated = DateTimeOffset.UtcNow.Ticks;
             Signature = signature;
+            PreviousSignature = signature;
         }
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
@@ -81,10 +87,8 @@ namespace Azure
         {
             Argument.AssertNotNullOrWhiteSpace(signature, nameof(signature));
             SignatureUpdated = DateTimeOffset.UtcNow.Ticks;
-            SignatureHistory.Add(
-                Signature.StartsWith("?", StringComparison.InvariantCulture) ?
-                    Signature.Substring(1) :
-                    Signature);
+            PreviousSignature = Signature.StartsWith("?", StringComparison.InvariantCulture) ?
+                Signature.Substring(1) : Signature;
             Signature = signature;
         }
     }

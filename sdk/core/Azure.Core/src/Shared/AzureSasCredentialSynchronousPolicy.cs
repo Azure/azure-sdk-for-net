@@ -35,14 +35,11 @@ namespace Azure.Core
                 // check if the signature has updated since we started processing this message
                 if (message.ProcessingStartTime.Ticks < _credential.SignatureUpdated)
                 {
-                    foreach (string previousSig in _credential.SignatureHistory.ToArray())
+                    string previousSig = _credential.PreviousSignature;
+                    if (query.Contains(previousSig))
                     {
-                        if (query.Contains(previousSig))
-                        {
-                            query = query.Replace(previousSig, signature);
-                            setSignature = true;
-                            break;
-                        }
+                        query = query.Replace(previousSig, signature);
+                        setSignature = true;
                     }
                 }
                 if (!setSignature)
