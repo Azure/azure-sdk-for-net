@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class AutoGridLayout : IUtf8JsonSerializable
+    public partial class AutoGridInputGroup : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,22 +24,27 @@ namespace Azure.Communication.MediaComposition
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(HighlightDominantSpeaker))
-            {
-                writer.WritePropertyName("highlightDominantSpeaker");
-                writer.WriteBooleanValue(HighlightDominantSpeaker.Value);
-            }
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
+            if (Optional.IsDefined(Position))
             {
-                writer.WritePropertyName("resolution");
-                writer.WriteObjectValue(Resolution);
+                writer.WritePropertyName("position");
+                writer.WriteObjectValue(Position);
             }
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (Optional.IsDefined(Width))
             {
-                writer.WritePropertyName("placeholderImageUri");
-                writer.WriteStringValue(PlaceholderImageUri);
+                writer.WritePropertyName("width");
+                writer.WriteStringValue(Width);
+            }
+            if (Optional.IsDefined(Height))
+            {
+                writer.WritePropertyName("height");
+                writer.WriteStringValue(Height);
+            }
+            if (Optional.IsDefined(Layer))
+            {
+                writer.WritePropertyName("layer");
+                writer.WriteStringValue(Layer);
             }
             if (Optional.IsDefined(ScalingMode))
             {
@@ -49,13 +54,14 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndObject();
         }
 
-        internal static AutoGridLayout DeserializeAutoGridLayout(JsonElement element)
+        internal static AutoGridInputGroup DeserializeAutoGridInputGroup(JsonElement element)
         {
             IList<string> inputIds = default;
-            Optional<bool> highlightDominantSpeaker = default;
-            LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
+            InputGroupType kind = default;
+            Optional<InputPosition> position = default;
+            Optional<string> width = default;
+            Optional<string> height = default;
+            Optional<string> layer = default;
             Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,34 +75,34 @@ namespace Azure.Communication.MediaComposition
                     inputIds = array;
                     continue;
                 }
-                if (property.NameEquals("highlightDominantSpeaker"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    highlightDominantSpeaker = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("kind"))
                 {
-                    kind = new LayoutType(property.Value.GetString());
+                    kind = new InputGroupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resolution"))
+                if (property.NameEquals("position"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
+                    position = InputPosition.DeserializeInputPosition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("placeholderImageUri"))
+                if (property.NameEquals("width"))
                 {
-                    placeholderImageUri = property.Value.GetString();
+                    width = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("height"))
+                {
+                    height = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("layer"))
+                {
+                    layer = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("scalingMode"))
@@ -110,7 +116,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new AutoGridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), inputIds, Optional.ToNullable(highlightDominantSpeaker));
+            return new AutoGridInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode), inputIds);
         }
     }
 }

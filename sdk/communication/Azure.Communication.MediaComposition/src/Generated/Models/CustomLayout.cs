@@ -34,9 +34,10 @@ namespace Azure.Communication.MediaComposition
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="layers"> Configure layer to control the z-position of input groups. </param>
         /// <param name="inputGroups"> Configure input groups of the layout. </param>
-        internal CustomLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups) : base(kind, resolution, placeholderImageUri)
+        internal CustomLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups) : base(kind, resolution, placeholderImageUri, scalingMode)
         {
             Layers = layers;
             InputGroups = inputGroups;
