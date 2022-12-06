@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
 
         /// <summary>
-        /// The identifier of the Cognitive Service resource assigned to this call.
+        /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public string AzureCognitiveServiceDomainName { get; set; }
     }
