@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        { "AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
                     });
                 })
                 .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        { "ConnectionStrings:Storage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
+                        { "ConnectionStrings:AzureWebJobsStorage", AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString }
                     });
                 })
                 .ConfigureDefaultTestHost<BindToParameterBindingDataArray>(program, builder =>
