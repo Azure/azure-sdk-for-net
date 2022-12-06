@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 
         protected ArmClient Client { get; private set; }
 
-        protected SubscriptionResource Subscription { get; private set; }
+        protected SubscriptionResource Subscription { get; set; }
 
         protected SqlVirtualMachineManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -44,34 +44,28 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            Subscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgName, AzureLocation location)
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
 
-        protected async Task<StorageAccountResource> CreateStorageAccountAsync(ResourceGroupResource rg)
+        protected async Task<string> CreateStorageAccountAsync(ResourceGroupResource rg, string storageAccountName)
         {
-            var storageAccountName = Recording.GenerateAssetName("sqlvmteststorage");
-            StorageAccountCreateOrUpdateContent input = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.StorageV2, rg.Data.Location);
+            StorageAccountCreateOrUpdateContent input = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.StorageV2, AzureLocation.WestUS);
             var lro = await rg.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, input);
-            return lro.Value;
+            var storageAccount = lro.Value;
+            return (await storageAccount.GetKeysAsync().FirstOrDefaultAsync(_ => true)).Value;
         }
 
-        protected async Task<SqlVmGroupResource> CreateSqlVmGroupAsync(ResourceGroupResource rg, string sqlVmGroupName, StorageAccountResource storageAccount)
+        protected async Task<SqlVmGroupResource> CreateSqlVmGroupAsync(ResourceGroupResource rg, string sqlVmGroupName, string storageAccountName, string storageAccountKey)
         {
-            var pageableKeys = storageAccount.GetKeysAsync();
-            StorageAccountKey storageAccountKey = await pageableKeys.FirstOrDefaultAsync(_ => true);
-            string key = storageAccountKey.Value;
-            Uri blobUri = storageAccount.Data.PrimaryEndpoints.BlobUri;
             var lro = await rg.GetSqlVmGroups().CreateOrUpdateAsync(WaitUntil.Completed, sqlVmGroupName, new SqlVmGroupData(rg.Data.Location)
             {
                 SqlImageOffer = ImageOffer,
@@ -81,25 +75,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                     SqlServiceAccount = GetUsername("sqlService", DomainName),
                     ClusterOperatorAccount = GetUsername(AdminLogin, DomainName),
                     DomainFqdn = $"{DomainName}.com",
-                    StorageAccountUri = blobUri,
-                    StorageAccountPrimaryKey = key,
+                    StorageAccountUri = new Uri($"https://{storageAccountName}.blob.core.windows.net/"),
+                    StorageAccountPrimaryKey = storageAccountKey,
                     ClusterSubnetType = SqlVmClusterSubnetType.SingleSubnet,
                 }
             });
             return lro.Value;
         }
 
-        protected async Task<SqlVmResource> CreateSqlVmAsync(ResourceGroupResource rg)
+        protected async Task<SqlVmResource> CreateSqlVmAsync(ResourceGroupResource rg, ResourceIdentifier vmIdentifier)
         {
-            StorageAccountResource storageAccount = await CreateStorageAccountAsync(rg);
-            NetworkSecurityGroupResource nsg = await CreateNetworkSecurityGroupAsync(rg);
-            VirtualNetworkResource vnet = await CreateVirtualNetworkAsync(rg, nsg);
-            NetworkInterfaceResource nic = await CreateNetworkInterfaceAsync(rg, vnet, nsg);
-            VirtualMachineResource vm = await CreateVmAsync(rg, storageAccount, nsg, nic);
-
-            SqlVmResource sqlVm = (await rg.GetSqlVms().CreateOrUpdateAsync(WaitUntil.Completed, vm.Data.Name, new SqlVmData(rg.Data.Location)
+            SqlVmResource sqlVm = (await rg.GetSqlVms().CreateOrUpdateAsync(WaitUntil.Completed, vmIdentifier.Name, new SqlVmData(rg.Data.Location)
             {
-                VirtualMachineResourceId = vm.Id,
+                VirtualMachineResourceId = vmIdentifier,
                 SqlServerLicenseType = SqlServerLicenseType.Payg,
                 SqlManagement = SqlManagementMode.Full,
                 SqlImageSku = SqlImageSku.Enterprise,
@@ -132,9 +120,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             return sqlVm;
         }
 
-        protected async Task<VirtualMachineResource> CreateVmAsync(ResourceGroupResource rg, StorageAccountResource storageAccount, NetworkSecurityGroupResource nsg, NetworkInterfaceResource nic)
+        protected async Task<VirtualMachineResource> CreateVmAsync(ResourceGroupResource rg, NetworkSecurityGroupResource nsg, NetworkInterfaceResource nic, string vmName)
         {
-            var vmName = Recording.GenerateAssetName("vm");
             VirtualMachineResource vm = (await rg.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, vmName, new VirtualMachineData(rg.Data.Location)
             {
                 HardwareProfile = new VirtualMachineHardwareProfile
@@ -197,10 +184,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             return vm;
         }
 
-        private async Task<NetworkInterfaceResource> CreateNetworkInterfaceAsync(ResourceGroupResource rg, VirtualNetworkResource vnet, NetworkSecurityGroupResource nsg)
+        protected async Task<NetworkInterfaceResource> CreateNetworkInterfaceAsync(ResourceGroupResource rg, VirtualNetworkResource vnet, NetworkSecurityGroupResource nsg, string publicIPAddressName, string domainName, string nicName, string nicIPConfName)
         {
             SubnetData subnetData = vnet.Data.Subnets.First();
-            var publicIPAddressName = Recording.GenerateAssetName("publicip");
             PublicIPAddressResource publicIPAddress = (await rg.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, new PublicIPAddressData()
             {
                 Location = rg.Data.Location,
@@ -211,10 +197,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
-                    DomainNameLabel = Recording.GenerateAssetName("dnslabel")
+                    DomainNameLabel = domainName
                 }
             })).Value;
-            var nicName = Recording.GenerateAssetName("nic");
+
             NetworkInterfaceResource nic = (await rg.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, nicName, new NetworkInterfaceData()
             {
                 Location = rg.Data.Location,
@@ -222,7 +208,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
                 {
                     new NetworkInterfaceIPConfigurationData()
                     {
-                        Name = Recording.GenerateAssetName("ipconfig"),
+                        Name = nicIPConfName,
                         Subnet = subnetData,
                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = publicIPAddress.Data
@@ -233,10 +219,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             return nic;
         }
 
-        private async Task<VirtualNetworkResource> CreateVirtualNetworkAsync(ResourceGroupResource rg, NetworkSecurityGroupResource nsg)
+        protected async Task<VirtualNetworkResource> CreateVirtualNetworkAsync(ResourceGroupResource rg, NetworkSecurityGroupResource nsg, string vnetName, string subnetName)
         {
-            var subnetName = Recording.GenerateAssetName("subnet");
-            var vnetName = Recording.GenerateAssetName("vnet");
             VirtualNetworkResource vnet = (await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, new VirtualNetworkData()
             {
                 Location = rg.Data.Location,
@@ -254,9 +238,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Tests
             return vnet;
         }
 
-        private async Task<NetworkSecurityGroupResource> CreateNetworkSecurityGroupAsync(ResourceGroupResource rg)
+        protected async Task<NetworkSecurityGroupResource> CreateNetworkSecurityGroupAsync(ResourceGroupResource rg, string nsgName)
         {
-            var nsgName = Recording.GenerateAssetName("nsg");
             NetworkSecurityGroupResource nsg = (await rg.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, nsgName, new NetworkSecurityGroupData()
             {
                 Location = rg.Data.Location,
