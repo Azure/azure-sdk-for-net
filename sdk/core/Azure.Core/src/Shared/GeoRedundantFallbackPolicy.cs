@@ -16,8 +16,8 @@ namespace Azure.Core.Shared
     {
         private readonly string[] _readFallbackHosts;
         private readonly string[] _writeFallbackHosts;
-        private volatile int _readFallbackIndex = -1;
-        private volatile int _writeFallbackIndex = -1;
+        private int _readFallbackIndex = -1;
+        private int _writeFallbackIndex = -1;
         private long _readFallBackTicks = -1;
         private long _writeFallbackTicks = -1;
         private readonly TimeSpan _primaryCoolDown;
@@ -97,8 +97,8 @@ namespace Azure.Core.Shared
             if (fallbackHosts.Length == 0)
                 return;
 
-            int current = fallbackIndex;
-            long currentTicks = fallbackTicks;
+            int current = Volatile.Read(ref fallbackIndex);
+            long currentTicks = Volatile.Read(ref fallbackTicks);
 
             // we should only advance if another thread hasn't already done so
             if ((current == -1 && message.Request.Uri.Host.Equals(GetPrimaryHost(message), StringComparison.Ordinal)) ||
@@ -124,17 +124,19 @@ namespace Azure.Core.Shared
 
         private void UpdateHost(HttpMessage message, string[] fallbackHosts, ref int fallbackIndex, ref long fallbackTicks)
         {
-            if (Volatile.Read(ref fallbackTicks) != -1)
+            long currentTicks = Volatile.Read(ref fallbackTicks);
+            if (currentTicks != -1)
             {
                 long nowTicks = DateTimeOffset.UtcNow.Ticks;
-                if (nowTicks - fallbackTicks >= _primaryCoolDown.Ticks)
+                if (nowTicks - currentTicks >= _primaryCoolDown.Ticks)
                 {
                     Interlocked.Exchange(ref fallbackIndex, -1);
                     Interlocked.Exchange(ref fallbackTicks, nowTicks);
                 }
             }
 
-            message.Request.Uri.Host = fallbackIndex != -1 ? fallbackHosts[fallbackIndex] : GetPrimaryHost(message);
+            var currentIndex = Volatile.Read(ref fallbackIndex);
+            message.Request.Uri.Host = currentIndex != -1 ? fallbackHosts[currentIndex] : GetPrimaryHost(message);
         }
 
         private class HostAffinityKey
