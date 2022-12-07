@@ -10,7 +10,8 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Options for <see cref="BlockBlobStorageResource"/> when calling
+    /// Optional parameters for
+    /// <see cref="BlockBlobStorageResource"/> when calling
     /// <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public class BlockBlobStorageResourceServiceCopyOptions
@@ -22,7 +23,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public TransferCopyMethod CopyMethod { get; set; }
 
         /// <summary>
-        /// Optional custom metadata to set for this append blob.
+        /// Optional. Defines custom metadata to set for this append blob.
         /// </summary>
     #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
@@ -37,19 +38,19 @@ namespace Azure.Storage.DataMovement.Blobs
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Optional <see cref="AccessTier"/>
+        /// Optional. See <see cref="AccessTier"/>.
         /// Indicates the tier to be set on the blob.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
 
         /// <summary>
-        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// Optional. See <see cref="BlobRequestConditions"/> to add
         /// conditions on the copying of data from this source storage resource blob.
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Optional <see cref="RehydratePriority"/>
+        /// Optional. See <see cref="RehydratePriority"/>
         /// Indicates the priority with which to rehydrate an archived blob.
         ///
         /// This parameter is not valid for synchronous copies.
@@ -57,14 +58,14 @@ namespace Azure.Storage.DataMovement.Blobs
         public RehydratePriority? RehydratePriority { get; set; }
 
         /// <summary>
-        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Optional. See <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </summary>
         public BlobImmutabilityPolicy DestinationImmutabilityPolicy { get; set; }
 
         /// <summary>
-        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Optional. Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </summary>
