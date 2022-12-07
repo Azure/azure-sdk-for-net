@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -128,6 +129,14 @@ namespace Azure.Core.Tests.Public
                 Assert.AreEqual(expectedValues[i], (int)pair.Value);
                 i++;
             }
+        }
+
+        [Test]
+        public void CannotCallGetDirectly()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""first"": 1, ""second"": 2 }");
+
+            Assert.Throws<RuntimeBinderException>(() => data.Get("first"));
         }
     }
 }
