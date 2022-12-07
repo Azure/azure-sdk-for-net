@@ -70,23 +70,16 @@ namespace Azure.ResourceManager.DigitalTwins
             // invoke the operation
             TimeSeriesDatabaseConnectionData data = new TimeSeriesDatabaseConnectionData()
             {
-                Properties = new DataExplorerConnectionProperties(
-                    adxResourceId: new ResourceIdentifier("/subscriptions/50016170-c839-41ba-a724-51e9df440b9e/resourceGroups/testrg/providers/Microsoft.Kusto/clusters/testcluster"),
-                    adxDatabaseName: "MyKustoDatabase",
-                    adxTableName: "mytable",
-                    adxEndpointUri: new Uri("https://mykusto.kusto.windows.net/"),
-                    eventHubConsumerGroup: "myeventhubconsumergroup",
-                    eventHubEntityPath: "myeventhub",
-                    eventHubEndpointUri: new Uri("sb://myeventhubnamespace.servicebus.windows.net/"),
-                    eventHubNamespaceResourceId: new ResourceIdentifier("/subscriptions/50016170-c839-41ba-a724-51e9df440b9e/resourceGroups/testrg/providers/Microsoft.EventHub/namespaces/testnamespace"),
-                    connectionType: ConnectionType.AzureDataExplorer,
-                    identity: new DigitalTwinsManagedIdentityReference()
+                Properties = new DataExplorerConnectionProperties(new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.Kusto/clusters/mycluster"), new Uri("https://mycluster.kusto.windows.net"), "myDatabase", new Uri("sb://myeh.servicebus.windows.net/"), "myeh", new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.EventHub/namespaces/myeh"))
+                {
+                    AdxTableName = "myTable",
+                    ConnectionType = ConnectionType.AzureDataExplorer,
+                    Identity = new DigitalTwinsManagedIdentityReference()
                     {
                         IdentityType = DigitalTwinsManagedIdentityType.UserAssigned,
                         UserAssignedIdentity = "/subscriptions/50016170-c839-41ba-a724-51e9df440b9e/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity",
                     },
-                    provisioningState: null
-                )
+                },
             };
             ArmOperation<TimeSeriesDatabaseConnectionResource> lro = await timeSeriesDatabaseConnection.UpdateAsync(WaitUntil.Completed, data);
             TimeSeriesDatabaseConnectionResource result = lro.Value;
@@ -121,19 +114,11 @@ namespace Azure.ResourceManager.DigitalTwins
             // invoke the operation
             TimeSeriesDatabaseConnectionData data = new TimeSeriesDatabaseConnectionData()
             {
-                Properties = new DataExplorerConnectionProperties(
-                    adxResourceId: new ResourceIdentifier("/subscriptions/50016170-c839-41ba-a724-51e9df440b9e/resourceGroups/testrg/providers/Microsoft.Kusto/clusters/testcluster"),
-                    adxDatabaseName: "MyKustoDatabase",
-                    adxTableName: "mytable",
-                    adxEndpointUri: new Uri("https://mykusto.kusto.windows.net/"),
-                    eventHubConsumerGroup: "myeventhubconsumergroup",
-                    eventHubEntityPath: "myeventhub",
-                    eventHubEndpointUri: new Uri("sb://myeventhubnamespace.servicebus.windows.net/"),
-                    eventHubNamespaceResourceId: new ResourceIdentifier("/subscriptions/50016170-c839-41ba-a724-51e9df440b9e/resourceGroups/testrg/providers/Microsoft.EventHub/namespaces/testnamespace"),
-                    connectionType: ConnectionType.AzureDataExplorer,
-                    identity: null,
-                    provisioningState: null
-                )
+                Properties = new DataExplorerConnectionProperties(new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.Kusto/clusters/mycluster"), new Uri("https://mycluster.kusto.windows.net"), "myDatabase", new Uri("sb://myeh.servicebus.windows.net/"), "myeh", new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.EventHub/namespaces/myeh"))
+                {
+                    AdxTableName = "myTable",
+                    ConnectionType = ConnectionType.AzureDataExplorer,
+                },
             };
             ArmOperation<TimeSeriesDatabaseConnectionResource> lro = await timeSeriesDatabaseConnection.UpdateAsync(WaitUntil.Completed, data);
             TimeSeriesDatabaseConnectionResource result = lro.Value;
