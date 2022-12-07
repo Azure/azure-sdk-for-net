@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
-        public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string encodedPath) { throw null; }
+        public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string path) { throw null; }
         public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer() { throw null; }
         public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
