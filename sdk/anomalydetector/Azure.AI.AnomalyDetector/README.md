@@ -205,10 +205,6 @@ To see how to use Anomaly Detector library to conduct Multivariate Anomaly Detec
 
 ## Troubleshooting
 
-### General
-
-Anomaly Detector client library will raise exceptions defined in [Azure Core](https://azuresdkdocs.blob.core.windows.net/$web/python/azure-core/latest/azure.core.html#module-azure.core.exceptions).
-
 ### Setting up console logging
 
 The simplest way to see the logs is to enable the console logging.
