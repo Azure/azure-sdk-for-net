@@ -33,7 +33,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string sourceLocalPath = CreateTempFile(SampleFileContent);
 
-            #region Snippet:UploadSingle_ConnectionStringAsync
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
@@ -62,6 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Upload file data
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
+                #region Snippet:UploadSingle_ConnectionStringAsync
                 // Create simple transfer single blob upload job
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: new LocalFileStorageResource(sourceLocalPath),
@@ -88,7 +88,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempPath();
             string downloadPath2 = CreateTempPath();
 
-            #region Snippet:DownloadSingle_SharedKeyAuthAsync
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -131,6 +130,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 };
                 TransferManager transferManager = new TransferManager(options);
 
+                #region Snippet:DownloadSingle_SharedKeyAuthAsync
                 // Simple Download Single Blob Job
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
@@ -178,7 +178,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string sourcePath2 = CreateSampleDirectoryTree();
 
-            #region Snippet:UploadDirectory_SasAsync
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -232,6 +231,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 };
                 TransferManager transferManager = new TransferManager(transferManagerOptions);
 
+                #region Snippet:UploadDirectory_SasAsync
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
@@ -267,7 +267,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             string logFile = Path.GetTempFileName();
 
-            #region Snippet:UploadDirectory_CompletedEventHandler
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -307,6 +306,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Prepare for upload
             try
             {
+                #region Snippet:UploadDirectory_CompletedEventHandler
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
@@ -355,7 +355,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             string logFile = Path.GetTempFileName();
 
-            #region Snippet:UploadDirectory_EventHandler_SasAsync
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -395,6 +394,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Prepare for upload
             try
             {
+                #region Snippet:UploadDirectory_EventHandler_SasAsync
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
@@ -459,7 +459,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateSampleDirectoryTree();
             string downloadPath2 = CreateSampleDirectoryTree();
 
-            #region Snippet:DownloadDirectory_EventHandler_ActiveDirectoryAuthAsync
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
             TokenCredential credential =
@@ -495,6 +494,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await container.UploadBlobAsync("second", File.OpenRead(CreateTempFile()));
                 await container.UploadBlobAsync("third", File.OpenRead(CreateTempFile()));
 
+                #region Snippet:DownloadDirectory_EventHandler_ActiveDirectoryAuthAsync
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
@@ -539,7 +539,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string originalPath = CreateTempFile(SampleFileContent);
 
-            #region Snippet:CopySingle_ConnectionStringAsync
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
@@ -572,6 +571,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Upload file data
                 TransferManager transferManager = new TransferManager(default);
 
+                #region Snippet:CopySingle_ConnectionStringAsync
                 // Create simple transfer single blob upload job
                 DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
                 await transfer.AwaitCompletion();
@@ -600,7 +600,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempPath();
             string downloadPath2 = CreateTempPath();
 
-            #region Snippet:CopyDirectory
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -656,7 +655,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     //await LogFailedFileAsync(args.SourceFileUri, args.DestinationFileClient.Uri, args.Exception.Message);
                 };
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-
+                #region Snippet:CopyDirectory
                 await transferManager.StartTransferAsync(
                     sourceDirectory1,
                     destinationDirectory1);
@@ -682,7 +681,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempDirectoryPath();
             string downloadPath2 = CreateTempDirectoryPath();
 
-            #region Snippet:ErrorHandlingPermissions
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -739,6 +737,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(default);
 
+                #region Snippet:ErrorHandlingPermissions
                 // Create transfer single blob upload job with transfer options concurrency specified
                 // i.e. it's a bigger blob so it maybe need more help uploading fast
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
@@ -758,12 +757,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     // Remove stub
                     await Task.CompletedTask;
                 };
+                #endregion
                 DataTransfer jobProperties = await transferManager.StartTransferAsync(
                     sourceDirectory2,
                     destinationDirectory2);
                 jobProperties.EnsureCompleted();
             }
-            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -780,7 +779,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempDirectoryPath();
             string downloadPath2 = CreateTempDirectoryPath();
 
-            #region Snippet:PauseAndResumeAllJobs
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -834,6 +832,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     MaximumConcurrency = 4
                 };
 
+                #region Snippet:PauseAndResumeAllJobs
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(options);
 
@@ -879,7 +878,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempDirectoryPath();
             string downloadPath2 = CreateTempDirectoryPath();
 
-            #region Snippet:PauseAndResumeOneJob
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -931,6 +929,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await container.UploadBlobAsync($"{sourceDirectoryName3}/tenth", File.OpenRead(originalPath));
                 await container.UploadBlobAsync($"{sourceDirectoryName3}/eleventh", File.OpenRead(originalPath));
 
+                #region Snippet:PauseAndResumeOneJob
                 // Set configurations to take in checkpointing information
                 TransferManagerOptions options = new TransferManagerOptions()
                 {
@@ -987,7 +986,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath2 = CreateTempDirectoryPath();
             string downloadPath3 = CreateTempDirectoryPath();
 
-            #region Snippet:PauseAllJobsResumeOneJob
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -1046,6 +1044,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     MaximumConcurrency = 4,
                 };
 
+                #region Snippet:PauseAllJobsResumeOneJob
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(options);
 
@@ -1117,7 +1116,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath2 = CreateTempDirectoryPath();
             string checkpointerPath = CreateTempDirectoryPath();
 
-            #region Snippet:ResumeFromStoppedJobs
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -1153,6 +1151,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string sourceDirectoryName2 = Randomize("sample-blob-directory");
                 string sourceDirectoryName3 = Randomize("sample-blob-directory");
 
+                #region Snippet:ResumeFromStoppedJobs
                 // Set configurations to grab the checkpointer from the designated place
                 // in the environment where the checkpointer is stored.
                 LocalTransferCheckpointer checkpointer = new LocalTransferCheckpointer(checkpointerPath);
