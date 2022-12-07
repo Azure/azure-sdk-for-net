@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Threading;
 using Azure.Core.Pipeline;
 
+#nullable enable
+
 namespace Azure.Core.Shared
 {
     /// <summary>
