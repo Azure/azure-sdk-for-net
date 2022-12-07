@@ -250,7 +250,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobRequestConditions conditions = new BlobRequestConditions
                 {
                     // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
                 };
                 string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
                 if (!_blocks.TryAdd(range.Offset, id))
