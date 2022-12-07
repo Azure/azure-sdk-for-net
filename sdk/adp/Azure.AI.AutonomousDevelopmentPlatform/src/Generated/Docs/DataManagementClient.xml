@@ -1,0 +1,4955 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetLongRunningAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetLongRunningAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetLongRunningAsync("<operationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("resultLocation").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>LongRunningOperationWithResponseHeaders</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: string, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+  lastModifiedBy: string, # Required.
+  resultLocation: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetLongRunning(String,RequestContext)">
+<example>
+This sample shows how to call GetLongRunning with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetLongRunning("<operationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("operationId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("operationType").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("resultLocation").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>LongRunningOperationWithResponseHeaders</c>:
+<code>{
+  operationId: string, # Required.
+  status: &quot;Created&quot; | &quot;InProgress&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Required.
+  operationType: string, # Optional.
+  error: {
+    code: string, # Required.
+    message: string, # Required.
+    target: string, # Optional.
+    details: [Error], # Required.
+    innererror: {
+      code: string, # Required.
+      innererror: InnerError, # Optional.
+    }, # Optional.
+  }, # Optional.
+  lastModifiedBy: string, # Required.
+  resultLocation: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceDiscoveryAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceDiscoveryAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {};
+
+Response response = await client.CreateOrReplaceDiscoveryAsync("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceDiscoveryAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    externalPackageId = "<externalPackageId>",
+};
+
+Response response = await client.CreateOrReplaceDiscoveryAsync("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DiscoveryCreationParameters</c>:
+<code>{
+  externalPackageId: string, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceDiscovery(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceDiscovery with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {};
+
+Response response = client.CreateOrReplaceDiscovery("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceDiscovery with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    externalPackageId = "<externalPackageId>",
+};
+
+Response response = client.CreateOrReplaceDiscovery("<discoveryId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DiscoveryCreationParameters</c>:
+<code>{
+  externalPackageId: string, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDiscoveryAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetDiscoveryAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetDiscoveryAsync("<discoveryId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDiscovery(String,RequestContext)">
+<example>
+This sample shows how to call GetDiscovery with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetDiscovery("<discoveryId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceUploadAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceUploadAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {};
+
+Response response = await client.CreateOrReplaceUploadAsync("<uploadId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceUploadAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    externalPackageId = "<externalPackageId>",
+    discoveryId = "<discoveryId>",
+};
+
+Response response = await client.CreateOrReplaceUploadAsync("<uploadId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UploadCreationParameters</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceUpload(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceUpload with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {};
+
+Response response = client.CreateOrReplaceUpload("<uploadId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceUpload with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    externalPackageId = "<externalPackageId>",
+    discoveryId = "<discoveryId>",
+};
+
+Response response = client.CreateOrReplaceUpload("<uploadId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UploadCreationParameters</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetUploadAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetUploadAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetUploadAsync("<uploadId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetUpload(String,RequestContext)">
+<example>
+This sample shows how to call GetUpload with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetUpload("<uploadId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetClassificationSchemaAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetClassificationSchemaAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetClassificationSchemaAsync("<name>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetClassificationSchema(String,RequestContext)">
+<example>
+This sample shows how to call GetClassificationSchema with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetClassificationSchema("<name>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetMeasurementAsync("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurement(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurement with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetMeasurement("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementMetadataAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementMetadataAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetMeasurementMetadataAsync("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementMetadataBase</c>:
+<code>{
+  metadata: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementMetadata(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementMetadata with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetMeasurementMetadata("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementMetadataBase</c>:
+<code>{
+  metadata: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementProcessingResultsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementProcessingResultsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetMeasurementProcessingResultsAsync("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleCategory").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleName").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("details").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationError").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementProcessingResultsBase</c>:
+<code>{
+  validationPassed: boolean, # Optional.
+  results: [
+    {
+      ruleCategory: string, # Optional.
+      ruleName: string, # Optional.
+      details: Dictionary&lt;string, string&gt;, # Optional.
+      validationPassed: boolean, # Optional.
+      validationError: string, # Optional.
+    }
+  ], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementProcessingResults(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementProcessingResults with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetMeasurementProcessingResults("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleCategory").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("ruleName").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("details").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationPassed").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("validationError").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementProcessingResultsBase</c>:
+<code>{
+  validationPassed: boolean, # Optional.
+  results: [
+    {
+      ruleCategory: string, # Optional.
+      ruleName: string, # Optional.
+      details: Dictionary&lt;string, string&gt;, # Optional.
+      validationPassed: boolean, # Optional.
+      validationError: string, # Optional.
+    }
+  ], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementStateMachineAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementStateMachineAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetMeasurementStateMachineAsync("<measurementId>", "<id>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementStateMachine(String,String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementStateMachine with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetMeasurementStateMachine("<measurementId>", "<id>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementMetadataSchemaFileInfoAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementMetadataSchemaFileInfoAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetMeasurementMetadataSchemaFileInfoAsync("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaFileName").ToString());
+Console.WriteLine(result.GetProperty("schemaFileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementMetadataSchemaFileInfoBase</c>:
+<code>{
+  schemaFileName: string, # Optional.
+  schemaFileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementMetadataSchemaFileInfo(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementMetadataSchemaFileInfo with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetMeasurementMetadataSchemaFileInfo("<measurementId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaFileName").ToString());
+Console.WriteLine(result.GetProperty("schemaFileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementMetadataSchemaFileInfoBase</c>:
+<code>{
+  schemaFileName: string, # Optional.
+  schemaFileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementClassificationAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementClassificationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetMeasurementClassificationAsync("<measurementId>", "<schemaName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementClassification(String,String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementClassification with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetMeasurementClassification("<measurementId>", "<schemaName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetDataStreamAsync("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStream(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStream with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetDataStream("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="StageFilesForDataStreamAsync(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call StageFilesForDataStreamAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    files = new[] {
+        new {
+            clientFileName = "<clientFileName>",
+            recordingTimestampUtc = "2022-05-10T14:57:31.2311892-04:00",
+        }
+    },
+};
+
+Response response = await client.StageFilesForDataStreamAsync("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("files")[0].GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("files")[0].GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UploadDerivedDataStreamFilesRequest</c>:
+<code>{
+  files: [
+    {
+      clientFileName: string, # Required.
+      recordingTimestampUtc: string (date &amp; time), # Optional.
+    }
+  ], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UploadDerivedDataStreamFilesResponse</c>:
+<code>{
+  files: [
+    {
+      clientFileName: string, # Required.
+      fileUri: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="StageFilesForDataStream(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call StageFilesForDataStream with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    files = new[] {
+        new {
+            clientFileName = "<clientFileName>",
+            recordingTimestampUtc = "2022-05-10T14:57:31.2311892-04:00",
+        }
+    },
+};
+
+Response response = client.StageFilesForDataStream("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("files")[0].GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("files")[0].GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UploadDerivedDataStreamFilesRequest</c>:
+<code>{
+  files: [
+    {
+      clientFileName: string, # Required.
+      recordingTimestampUtc: string (date &amp; time), # Optional.
+    }
+  ], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UploadDerivedDataStreamFilesResponse</c>:
+<code>{
+  files: [
+    {
+      clientFileName: string, # Required.
+      fileUri: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceDataStreamStorageAsync(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceDataStreamStorageAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    type = "<type>",
+};
+
+Response response = await client.CreateOrReplaceDataStreamStorageAsync("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceDataStreamStorageAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    type = "<type>",
+    rollingInformation = new {
+        strategy = "Time",
+        unit = "Seconds",
+        value = 1234,
+    },
+};
+
+Response response = await client.CreateOrReplaceDataStreamStorageAsync("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StorageCreationParameters</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Storage</c>:
+<code>{
+  id: &quot;current&quot;, # Required.
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceDataStreamStorage(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceDataStreamStorage with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    type = "<type>",
+};
+
+Response response = client.CreateOrReplaceDataStreamStorage("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceDataStreamStorage with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    type = "<type>",
+    rollingInformation = new {
+        strategy = "Time",
+        unit = "Seconds",
+        value = 1234,
+    },
+};
+
+Response response = client.CreateOrReplaceDataStreamStorage("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StorageCreationParameters</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Storage</c>:
+<code>{
+  id: &quot;current&quot;, # Required.
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamStorageAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamStorageAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetDataStreamStorageAsync("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StorageBase</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamStorage(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamStorage with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetDataStreamStorage("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("strategy").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("rollingInformation").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("dataFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("shardFolderUri").ToString());
+Console.WriteLine(result.GetProperty("shards")[0].GetProperty("manifestFileUri").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StorageBase</c>:
+<code>{
+  type: string, # Required.
+  rollingInformation: {
+    strategy: &quot;Time&quot; | &quot;Size&quot;, # Required.
+    unit: &quot;Seconds&quot; | &quot;Minutes&quot; | &quot;kB&quot; | &quot;MB&quot; | &quot;GB&quot;, # Required.
+    value: number, # Required.
+  }, # Optional.
+  manifestUri: string, # Required.
+  dataFolderUri: string, # Optional.
+  shards: [
+    {
+      shardFolderUri: string, # Required.
+      manifestFileUri: string, # Required.
+    }
+  ], # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceDataStreamTagsAsync(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceDataStreamTagsAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    tags = new[] {
+        new {
+            key = "<key>",
+            value = "<value>",
+        }
+    },
+};
+
+Response response = await client.CreateOrReplaceDataStreamTagsAsync("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>TagSetCreationParameters</c>:
+<code>{
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: &quot;current&quot;, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceDataStreamTags(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceDataStreamTags with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    tags = new[] {
+        new {
+            key = "<key>",
+            value = "<value>",
+        }
+    },
+};
+
+Response response = client.CreateOrReplaceDataStreamTags("<measurementId>", "<dataStreamId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>TagSetCreationParameters</c>:
+<code>{
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: &quot;current&quot;, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamTagsAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamTagsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetDataStreamTagsAsync("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: &quot;current&quot;, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamTags(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamTags with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetDataStreamTags("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("key").ToString());
+Console.WriteLine(result.GetProperty("tags")[0].GetProperty("value").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>TagSet</c>:
+<code>{
+  id: &quot;current&quot;, # Required.
+  tags: [
+    {
+      key: string, # Required.
+      value: string, # Required.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamLogsContainerLocationAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamLogsContainerLocationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = await client.GetDataStreamLogsContainerLocationAsync("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("logFolderUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamLogsContainerBase</c>:
+<code>{
+  logFolderUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamLogsContainerLocation(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamLogsContainerLocation with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+Response response = client.GetDataStreamLogsContainerLocation("<measurementId>", "<dataStreamId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("logFolderUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamLogsContainerBase</c>:
+<code>{
+  logFolderUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDiscoverySpecialFileUploadLocationsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetDiscoverySpecialFileUploadLocationsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetDiscoverySpecialFileUploadLocationsAsync("<discoveryId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDiscoverySpecialFileUploadLocations(String,RequestContext)">
+<example>
+This sample shows how to call GetDiscoverySpecialFileUploadLocations with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetDiscoverySpecialFileUploadLocations("<discoveryId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllDiscoveryUploadsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetAllDiscoveryUploadsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetAllDiscoveryUploadsAsync("<discoveryId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("manifestUri").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  uploadId: string, # Required.
+  manifestUri: string, # Required.
+  resourceEndpoint: string, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllDiscoveryUploads(String,RequestContext)">
+<example>
+This sample shows how to call GetAllDiscoveryUploads with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetAllDiscoveryUploads("<discoveryId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("manifestUri").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  uploadId: string, # Required.
+  manifestUri: string, # Required.
+  resourceEndpoint: string, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetUploadSpecialFilesAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetUploadSpecialFilesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetUploadSpecialFilesAsync("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetUploadSpecialFiles(String,RequestContext)">
+<example>
+This sample shows how to call GetUploadSpecialFiles with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetUploadSpecialFiles("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetUploadDataFilesAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetUploadDataFilesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetUploadDataFilesAsync("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetUploadDataFiles(String,RequestContext)">
+<example>
+This sample shows how to call GetUploadDataFiles with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetUploadDataFiles("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetMeasurementsAsync("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurements(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurements with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetMeasurements("<uploadId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetClassificationSchemasAsync(RequestContext)">
+<example>
+This sample shows how to call GetClassificationSchemasAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetClassificationSchemasAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetClassificationSchemas(RequestContext)">
+<example>
+This sample shows how to call GetClassificationSchemas and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetClassificationSchemas())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementsAsync(RequestContext)">
+<example>
+This sample shows how to call GetMeasurementsAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetMeasurementsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurements(RequestContext)">
+<example>
+This sample shows how to call GetMeasurements and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetMeasurements())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementsWithMetadataAsync(RequestContext)">
+<example>
+This sample shows how to call GetMeasurementsWithMetadataAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetMeasurementsWithMetadataAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+  metadata: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementsWithMetadata(RequestContext)">
+<example>
+This sample shows how to call GetMeasurementsWithMetadata and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetMeasurementsWithMetadata())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+  metadata: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementsByIdsAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementsByIdsAsync with required request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    measurementIds = new[] {
+        "<String>"
+    },
+};
+
+await foreach (var data in client.GetMeasurementsByIdsAsync(RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>MeasurementListRequestParameters</c>:
+<code>{
+  measurementIds: [string], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementsByIds(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementsByIds with required request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    measurementIds = new[] {
+        "<String>"
+    },
+};
+
+foreach (var data in client.GetMeasurementsByIds(RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("measurementId").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+    Console.WriteLine(result.GetProperty("uploadId").ToString());
+    Console.WriteLine(result.GetProperty("discoveryId").ToString());
+    Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>MeasurementListRequestParameters</c>:
+<code>{
+  measurementIds: [string], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementStateMachinesAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementStateMachinesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetMeasurementStateMachinesAsync("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementStateMachines(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementStateMachines with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetMeasurementStateMachines("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementClassificationsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementClassificationsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetMeasurementClassificationsAsync("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+    Console.WriteLine(result.GetProperty("classificationObject").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMeasurementClassifications(String,RequestContext)">
+<example>
+This sample shows how to call GetMeasurementClassifications with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetMeasurementClassifications("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+    Console.WriteLine(result.GetProperty("classificationObject").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllDataStreamAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetAllDataStreamAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetAllDataStreamAsync("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+This sample shows how to call GetAllDataStreamAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetAllDataStreamAsync("<measurementId>", "<filter>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [DataStreamInput], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetAllDataStream(String,String,RequestContext)">
+<example>
+This sample shows how to call GetAllDataStream with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetAllDataStream("<measurementId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+This sample shows how to call GetAllDataStream with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetAllDataStream("<measurementId>", "<filter>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [DataStreamInput], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamsByTagsAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamsByTagsAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    tags = new {
+        key = "<String>",
+    },
+};
+
+await foreach (var data in client.GetDataStreamsByTagsAsync("<measurementId>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>FindDataStreamByTagsRequestParameters</c>:
+<code>{
+  tags: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [DataStreamInput], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamsByTags(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamsByTags with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    tags = new {
+        key = "<String>",
+    },
+};
+
+foreach (var data in client.GetDataStreamsByTags("<measurementId>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>FindDataStreamByTagsRequestParameters</c>:
+<code>{
+  tags: Dictionary&lt;string, string&gt;, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [DataStreamInput], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamsByLineageAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamsByLineageAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    lineage = new {
+        producerMetadata = new {
+            key = "<String>",
+        },
+        inputs = new[] {
+            new {
+                sourceDataStreamId = "<sourceDataStreamId>",
+                channels = new[] {
+                    "<String>"
+                },
+            }
+        },
+    },
+};
+
+await foreach (var data in client.GetDataStreamsByLineageAsync("<measurementId>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>FindDataStreamByLineageRequestParameters</c>:
+<code>{
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [DataStreamInput], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamsByLineage(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamsByLineage with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    lineage = new {
+        producerMetadata = new {
+            key = "<String>",
+        },
+        inputs = new[] {
+            new {
+                sourceDataStreamId = "<sourceDataStreamId>",
+                channels = new[] {
+                    "<String>"
+                },
+            }
+        },
+    },
+};
+
+foreach (var data in client.GetDataStreamsByLineage("<measurementId>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>FindDataStreamByLineageRequestParameters</c>:
+<code>{
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [DataStreamInput], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamLineageGraphsByLineageAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamLineageGraphsByLineageAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    processingObjects = new[] {
+        new {
+            metadata = new {
+                key = "<String>",
+            },
+            id = "<id>",
+        }
+    },
+    edges = new[] {
+        new {
+            sourceId = "<sourceId>",
+            targetId = "<targetId>",
+        }
+    },
+};
+
+await foreach (var data in client.GetDataStreamLineageGraphsByLineageAsync("<measurementId>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>FindDataStreamByLineageGraphRequestParameters</c>:
+<code>{
+  processingObjects: [
+    {
+      metadata: Dictionary&lt;string, string&gt;, # Required.
+      id: string, # Required.
+    }
+  ], # Required.
+  edges: [ProcessingObjectEdge], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamsGraphs: [DataStreamsGraph], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamLineageGraphsByLineage(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamLineageGraphsByLineage with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    processingObjects = new[] {
+        new {
+            metadata = new {
+                key = "<String>",
+            },
+            id = "<id>",
+        }
+    },
+    edges = new[] {
+        new {
+            sourceId = "<sourceId>",
+            targetId = "<targetId>",
+        }
+    },
+};
+
+foreach (var data in client.GetDataStreamLineageGraphsByLineage("<measurementId>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("dataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("resourceEndpoint").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("dataStreamsGraphs")[0].GetProperty("dataStreamByProcessingObjectId").GetProperty("<test>").GetProperty("etag").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>FindDataStreamByLineageGraphRequestParameters</c>:
+<code>{
+  processingObjects: [
+    {
+      metadata: Dictionary&lt;string, string&gt;, # Required.
+      id: string, # Required.
+    }
+  ], # Required.
+  edges: [ProcessingObjectEdge], # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  dataStreamsGraphs: [DataStreamsGraph], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamFilesAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamFilesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+await foreach (var data in client.GetDataStreamFilesAsync("<measurementId>", "<dataStreamId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+    Console.WriteLine(result.GetProperty("externalTimeStamp").ToString());
+    Console.WriteLine(result.GetProperty("size").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+  externalTimeStamp: string (date &amp; time), # Required.
+  size: number, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetDataStreamFiles(String,String,RequestContext)">
+<example>
+This sample shows how to call GetDataStreamFiles with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+foreach (var data in client.GetDataStreamFiles("<measurementId>", "<dataStreamId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("clientFileName").ToString());
+    Console.WriteLine(result.GetProperty("fileUri").ToString());
+    Console.WriteLine(result.GetProperty("externalTimeStamp").ToString());
+    Console.WriteLine(result.GetProperty("size").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+  externalTimeStamp: string (date &amp; time), # Required.
+  size: number, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CompleteDiscoveryAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CompleteDiscoveryAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CompleteDiscoveryAsync(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CompleteDiscoveryAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CompleteDiscoveryAsync(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CompleteDiscovery(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CompleteDiscovery with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CompleteDiscovery(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CompleteDiscovery with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CompleteDiscovery(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CancelDiscoveryAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CancelDiscoveryAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CancelDiscoveryAsync(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CancelDiscoveryAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CancelDiscoveryAsync(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CancelDiscovery(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CancelDiscovery with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CancelDiscovery(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CancelDiscovery with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CancelDiscovery(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Discovery</c>:
+<code>{
+  discoveryId: string, # Required.
+  externalPackageId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateDiscoverySpecialFileUploadLocationsAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateDiscoverySpecialFileUploadLocationsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateDiscoverySpecialFileUploadLocationsAsync(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call GenerateDiscoverySpecialFileUploadLocationsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateDiscoverySpecialFileUploadLocationsAsync(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DiscoverySpecialFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateDiscoverySpecialFileUploadLocations(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateDiscoverySpecialFileUploadLocations with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateDiscoverySpecialFileUploadLocations(WaitUntil.Completed, "<discoveryId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call GenerateDiscoverySpecialFileUploadLocations with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateDiscoverySpecialFileUploadLocations(WaitUntil.Completed, "<discoveryId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DiscoverySpecialFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CompleteUploadAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CompleteUploadAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CompleteUploadAsync(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CompleteUploadAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CompleteUploadAsync(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CompleteUpload(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CompleteUpload with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CompleteUpload(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CompleteUpload with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CompleteUpload(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CancelUploadAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CancelUploadAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CancelUploadAsync(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CancelUploadAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CancelUploadAsync(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CancelUpload(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call CancelUpload with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CancelUpload(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CancelUpload with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CancelUpload(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("manifestUri").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Upload</c>:
+<code>{
+  externalPackageId: string, # Optional.
+  discoveryId: string, # Optional.
+  manifestUri: string, # Optional.
+  status: &quot;Created&quot; | &quot;GeneratingSpecialFilesUploadInfo&quot; | &quot;GeneratedSpecialFilesUploadInfo&quot; | &quot;GeneratingDataFilesUploadInfo&quot; | &quot;GeneratedDataFilesUploadInfo&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Aborting&quot; | &quot;Aborted&quot; | &quot;Failed&quot;, # Optional.
+  resourceEndpoint: string, # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateUploadSpecialFilesAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateUploadSpecialFilesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateUploadSpecialFilesAsync(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call GenerateUploadSpecialFilesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateUploadSpecialFilesAsync(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadSpecialFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateUploadSpecialFiles(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateUploadSpecialFiles with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateUploadSpecialFiles(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call GenerateUploadSpecialFiles with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateUploadSpecialFiles(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadSpecialFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateUploadDataFilesAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateUploadDataFilesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateUploadDataFilesAsync(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call GenerateUploadDataFilesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateUploadDataFilesAsync(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadDataFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateUploadDataFiles(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateUploadDataFiles with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateUploadDataFiles(WaitUntil.Completed, "<uploadId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+This sample shows how to call GenerateUploadDataFiles with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateUploadDataFiles(WaitUntil.Completed, "<uploadId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>UploadDataFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateClassificationSchemaAsync(WaitUntil,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateClassificationSchemaAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = await client.CreateClassificationSchemaAsync(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateClassificationSchemaAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = await client.CreateClassificationSchemaAsync(WaitUntil.Completed, RequestContent.Create(data), "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ClassificationSchemaCreationParameters</c>:
+<code>{
+  schemaDefinition: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateClassificationSchema(WaitUntil,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateClassificationSchema with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = client.CreateClassificationSchema(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateClassificationSchema with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaDefinition = "<schemaDefinition>",
+};
+
+var operation = client.CreateClassificationSchema(WaitUntil.Completed, RequestContent.Create(data), "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ClassificationSchemaCreationParameters</c>:
+<code>{
+  schemaDefinition: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteClassificationSchemaAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteClassificationSchemaAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.DeleteClassificationSchemaAsync(WaitUntil.Completed, "<name>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteClassificationSchemaAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.DeleteClassificationSchemaAsync(WaitUntil.Completed, "<name>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteClassificationSchema(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteClassificationSchema with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.DeleteClassificationSchema(WaitUntil.Completed, "<name>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteClassificationSchema with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.DeleteClassificationSchema(WaitUntil.Completed, "<name>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("schemaDefinition").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>ClassificationSchema</c>:
+<code>{
+  name: string, # Required.
+  schemaDefinition: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteMeasurementAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteMeasurementAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.DeleteMeasurementAsync(WaitUntil.Completed, "<measurementId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteMeasurementAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.DeleteMeasurementAsync(WaitUntil.Completed, "<measurementId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteMeasurement(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteMeasurement with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.DeleteMeasurement(WaitUntil.Completed, "<measurementId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteMeasurement with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.DeleteMeasurement(WaitUntil.Completed, "<measurementId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("measurementId").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("ingestTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("externalPackageId").ToString());
+Console.WriteLine(result.GetProperty("uploadId").ToString());
+Console.WriteLine(result.GetProperty("discoveryId").ToString());
+Console.WriteLine(result.GetProperty("recordTimestampUtc").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Measurement</c>:
+<code>{
+  measurementId: string, # Required.
+  location: string, # Required.
+  ingestTimestampUtc: string (date &amp; time), # Optional.
+  resourceEndpoint: string, # Optional.
+  externalPackageId: string, # Optional.
+  uploadId: string, # Optional.
+  discoveryId: string, # Optional.
+  recordTimestampUtc: string (date &amp; time), # Optional.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ActMeasurementStateMachineAsync(WaitUntil,String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call ActMeasurementStateMachineAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = await client.ActMeasurementStateMachineAsync(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+This sample shows how to call ActMeasurementStateMachineAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = await client.ActMeasurementStateMachineAsync(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StateMachineAction</c>:
+<code>{
+  actionName: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ActMeasurementStateMachine(WaitUntil,String,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call ActMeasurementStateMachine with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = client.ActMeasurementStateMachine(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+This sample shows how to call ActMeasurementStateMachine with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    actionName = "<actionName>",
+};
+
+var operation = client.ActMeasurementStateMachine(WaitUntil.Completed, "<measurementId>", "<id>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("availableActionNames")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>StateMachineAction</c>:
+<code>{
+  actionName: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>StateMachine</c>:
+<code>{
+  id: string, # Required.
+  type: string, # Required.
+  availableActionNames: [string], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteMeasurementClassificationAsync(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteMeasurementClassificationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.DeleteMeasurementClassificationAsync(WaitUntil.Completed, "<measurementId>", "<schemaName>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteMeasurementClassificationAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.DeleteMeasurementClassificationAsync(WaitUntil.Completed, "<measurementId>", "<schemaName>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteMeasurementClassification(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteMeasurementClassification with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.DeleteMeasurementClassification(WaitUntil.Completed, "<measurementId>", "<schemaName>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call DeleteMeasurementClassification with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.DeleteMeasurementClassification(WaitUntil.Completed, "<measurementId>", "<schemaName>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MeasurementClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateMeasurementClassificationAsync(WaitUntil,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateMeasurementClassificationAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = await client.CreateMeasurementClassificationAsync(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateMeasurementClassificationAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = await client.CreateMeasurementClassificationAsync(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>MeasurementClassificationCreationParameters</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MeasurementClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateMeasurementClassification(WaitUntil,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateMeasurementClassification with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = client.CreateMeasurementClassification(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateMeasurementClassification with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    schemaName = "<schemaName>",
+    classificationObject = "<classificationObject>",
+};
+
+var operation = client.CreateMeasurementClassification(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("schemaName").ToString());
+Console.WriteLine(result.GetProperty("classificationObject").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>MeasurementClassificationCreationParameters</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MeasurementClassification</c>:
+<code>{
+  schemaName: string, # Required.
+  classificationObject: string, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateDataStreamAsync(WaitUntil,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateDataStreamAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    lineage = new {
+        producerMetadata = new {
+            key = "<String>",
+        },
+        inputs = new[] {
+            new {
+                sourceDataStreamId = "<sourceDataStreamId>",
+            }
+        },
+    },
+};
+
+var operation = await client.CreateDataStreamAsync(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateDataStreamAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    lineage = new {
+        producerMetadata = new {
+            key = "<String>",
+        },
+        inputs = new[] {
+            new {
+                sourceDataStreamId = "<sourceDataStreamId>",
+                channels = new[] {
+                    "<String>"
+                },
+            }
+        },
+    },
+};
+
+var operation = await client.CreateDataStreamAsync(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DataStreamCreationParameters</c>:
+<code>{
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateDataStream(WaitUntil,String,RequestContent,String,RequestContext)">
+<example>
+This sample shows how to call CreateDataStream with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    lineage = new {
+        producerMetadata = new {
+            key = "<String>",
+        },
+        inputs = new[] {
+            new {
+                sourceDataStreamId = "<sourceDataStreamId>",
+            }
+        },
+    },
+};
+
+var operation = client.CreateDataStream(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CreateDataStream with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var data = new {
+    lineage = new {
+        producerMetadata = new {
+            key = "<String>",
+        },
+        inputs = new[] {
+            new {
+                sourceDataStreamId = "<sourceDataStreamId>",
+                channels = new[] {
+                    "<String>"
+                },
+            }
+        },
+    },
+};
+
+var operation = client.CreateDataStream(WaitUntil.Completed, "<measurementId>", RequestContent.Create(data), "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>DataStreamCreationParameters</c>:
+<code>{
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ClearContentOfDataStreamAsync(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call ClearContentOfDataStreamAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.ClearContentOfDataStreamAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call ClearContentOfDataStreamAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.ClearContentOfDataStreamAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="ClearContentOfDataStream(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call ClearContentOfDataStream with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.ClearContentOfDataStream(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call ClearContentOfDataStream with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.ClearContentOfDataStream(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CompleteDataStreamAsync(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call CompleteDataStreamAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CompleteDataStreamAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CompleteDataStreamAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.CompleteDataStreamAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CompleteDataStream(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call CompleteDataStream with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CompleteDataStream(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call CompleteDataStream with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.CompleteDataStream(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="FailDataStreamAsync(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call FailDataStreamAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.FailDataStreamAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call FailDataStreamAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.FailDataStreamAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="FailDataStream(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call FailDataStream with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.FailDataStream(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+This sample shows how to call FailDataStream with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.FailDataStream(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("dataStreamId").ToString());
+Console.WriteLine(result.GetProperty("resourceEndpoint").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("producerMetadata").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("sourceDataStreamId").ToString());
+Console.WriteLine(result.GetProperty("lineage").GetProperty("inputs")[0].GetProperty("channels")[0].ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("etag").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStream</c>:
+<code>{
+  dataStreamId: string, # Required.
+  resourceEndpoint: string, # Optional.
+  lineage: {
+    producerMetadata: Dictionary&lt;string, string&gt;, # Required.
+    inputs: [
+      {
+        sourceDataStreamId: string, # Required.
+        channels: [string], # Optional.
+      }
+    ], # Required.
+  }, # Required.
+  status: &quot;Created&quot; | &quot;Completing&quot; | &quot;Completed&quot; | &quot;Failed&quot; | &quot;Failing&quot; | &quot;Clearing&quot; | &quot;Cleared&quot;, # Required.
+  type: &quot;System&quot; | &quot;Raw&quot; | &quot;Derived&quot;, # Required.
+  etag: string, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateDataStreamFilesAsync(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateDataStreamFilesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateDataStreamFilesAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+Console.WriteLine(result.GetProperty("externalTimeStamp").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+]]></code>
+This sample shows how to call GenerateDataStreamFilesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = await client.GenerateDataStreamFilesAsync(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+Console.WriteLine(result.GetProperty("externalTimeStamp").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+  externalTimeStamp: string (date &amp; time), # Required.
+  size: number, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GenerateDataStreamFiles(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GenerateDataStreamFiles with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateDataStreamFiles(WaitUntil.Completed, "<measurementId>", "<dataStreamId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+Console.WriteLine(result.GetProperty("externalTimeStamp").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+]]></code>
+This sample shows how to call GenerateDataStreamFiles with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new DataManagementClient(credential);
+
+var operation = client.GenerateDataStreamFiles(WaitUntil.Completed, "<measurementId>", "<dataStreamId>", "<operationId>");
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("clientFileName").ToString());
+Console.WriteLine(result.GetProperty("fileUri").ToString());
+Console.WriteLine(result.GetProperty("externalTimeStamp").ToString());
+Console.WriteLine(result.GetProperty("size").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>DataStreamFile</c>:
+<code>{
+  clientFileName: string, # Required.
+  fileUri: string, # Required.
+  externalTimeStamp: string (date &amp; time), # Required.
+  size: number, # Required.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

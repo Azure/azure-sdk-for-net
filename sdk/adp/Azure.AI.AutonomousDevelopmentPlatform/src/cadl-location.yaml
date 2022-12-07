@@ -1,0 +1,5 @@
+directory: specification/adp/DataManagement
+additionalDirectories:
+    - specification/adp/Adp.Shared
+commit: b2ffe83cecba7bba4682097682bba77e4e536a49
+repo: Azure/azure-rest-api-specs-pr
