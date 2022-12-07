@@ -15,11 +15,12 @@ using System.Runtime.InteropServices;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
     /// <summary>
-    /// Basic Azure Blob Storage samples
+    /// Basic Azure Blob Storage samples.
     /// </summary>
     public class Sample01b_HelloWorldAsync : SampleTest
     {
@@ -64,6 +65,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource: new LocalFileStorageResource(sourceLocalPath),
                     destinationResource: new BlockBlobStorageResource(destinationBlob));
+                await dataTransfer.AwaitCompletion();
             }
             finally
             {
@@ -72,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         }
 
         /// <summary>
-        /// Use a shared key to access a Storage Account to download two single blobs
+        /// Use a shared key to access a Storage Account to download two separate blobs.
         /// </summary>
         [Test]
         public async Task DownloadSingle_SharedKeyAuthAsync()
@@ -115,6 +117,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 using (FileStream stream = File.Open(originalPath, FileMode.Open))
                 {
                     await sourceBlob.UploadAsync(stream);
+                    stream.Position = 0;
                     await sourceBlob2.UploadAsync(stream);
                 }
 
@@ -152,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         }
 
         /// <summary>
-        /// Use a shared access signature to access  a Storage Account and upload a directory.
+        /// Use a shared access signature to access a Storage Account and upload a directory.
         ///
         /// A shared access signature (SAS) is a URI that grants restricted
         /// access rights to Azure Storage resources. You can provide a shared
@@ -178,14 +181,15 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Allow access to blobs
                 Services = AccountSasServices.Blobs,
 
-                // Allow access to the service level APIs
-                ResourceTypes = AccountSasResourceTypes.Service,
+                // Allow access to the container level APIs
+                ResourceTypes = AccountSasResourceTypes.Container,
 
                 // Access expires in 1 hour!
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
-            // Allow read access
-            sas.SetPermissions(AccountSasPermissions.Read);
+            // Allow read, write, and delete access
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write | AccountSasPermissions.Delete;
+            sas.SetPermissions(permissions);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -202,9 +206,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
-            await container.CreateIfNotExistsAsync();
 
             // Make a service request to verify we've successfully authenticated
+            await container.CreateIfNotExistsAsync();
+
+            // Prepare for upload
             try
             {
                 // Get a storage resource reference to a local directory
@@ -212,7 +218,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Get a storage resource to a destination blob directory
                 StorageResourceContainer directoryDestination = new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory"));
 
-                // Create BlobtransferManager with event handler in Options bag
+                // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
                 ContainerTransferOptions options = new ContainerTransferOptions()
                 {
@@ -262,14 +268,15 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Allow access to blobs
                 Services = AccountSasServices.Blobs,
 
-                // Allow access to the service level APIs
-                ResourceTypes = AccountSasResourceTypes.Service,
+                // Allow access to the container level APIs
+                ResourceTypes = AccountSasResourceTypes.Container,
 
                 // Access expires in 1 hour!
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
-            // Allow read access
-            sas.SetPermissions(AccountSasPermissions.Read);
+            // Allow read, write, and delete access
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write | AccountSasPermissions.Delete;
+            sas.SetPermissions(permissions);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -286,12 +293,14 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
-            await container.CreateIfNotExistsAsync();
 
             // Make a service request to verify we've successfully authenticated
+            await container.CreateIfNotExistsAsync();
+
+            // Prepare for upload
             try
             {
-                // Create BlobtransferManager with event handler in Options bag
+                // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
                 containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
@@ -345,14 +354,15 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Allow access to blobs
                 Services = AccountSasServices.Blobs,
 
-                // Allow access to the service level APIs
-                ResourceTypes = AccountSasResourceTypes.Service,
+                // Allow access to the container level APIs
+                ResourceTypes = AccountSasResourceTypes.Container,
 
                 // Access expires in 1 hour!
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
-            // Allow read access
-            sas.SetPermissions(AccountSasPermissions.Read);
+            // Allow read, write, and delete access
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write | AccountSasPermissions.Delete;
+            sas.SetPermissions(permissions);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -369,12 +379,14 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
-            await container.CreateIfNotExistsAsync();
 
             // Make a service request to verify we've successfully authenticated
+            await container.CreateIfNotExistsAsync();
+
+            // Prepare for upload
             try
             {
-                // Create BlobtransferManager with event handler in Options bag
+                // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
                 containerTransferOptions.TransferStatus += (TransferStatusEventArgs args) =>
@@ -452,9 +464,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
-            await container.CreateIfNotExistsAsync();
 
             // Make a service request to verify we've successfully authenticated
+            await container.CreateIfNotExistsAsync();
+
+            // Prepare to download
             try
             {
                 // Get a reference to a source blobs and upload sample content to download
@@ -470,7 +484,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await container.UploadBlobAsync("second", File.OpenRead(CreateTempFile()));
                 await container.UploadBlobAsync("third", File.OpenRead(CreateTempFile()));
 
-                // Create BlobtransferManager with event handler in Options bag
+                // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
                 ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
@@ -528,9 +542,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a client that can authenticate with a connection string
             BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-            await container.CreateIfNotExistsAsync();
 
             // Make a service request to verify we've successfully authenticated
+            await container.CreateIfNotExistsAsync();
+
+            // Prepare to copy
             try
             {
                 // Get a reference to a destination blobs
@@ -545,6 +561,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create simple transfer single blob upload job
                 DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+                await transfer.AwaitCompletion();
 
                 // Generous 10 second wait for our transfer to finish
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
@@ -590,9 +607,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
 
+            // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
 
-            // Make a service request to verify we've successfully authenticated
+            // Prepare to copy directory
             try
             {
                 string sourceDirectoryName = Randomize("sample-blob-directory");
@@ -669,9 +687,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
 
+            // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
 
-            // Make a service request to verify we've successfully authenticated
+            // Prepare for download
             try
             {
                 string sourceDirectoryName = Randomize("sample-blob-directory");
@@ -764,9 +783,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
 
+            // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
 
-            // Make a service request to verify we've successfully authenticated
+            // Prepare to upload
             try
             {
                 string sourceDirectoryName = Randomize("sample-blob-directory");
@@ -860,9 +880,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
 
+            // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
 
-            // Make a service request to verify we've successfully authenticated
+            // Prepare to upload
             try
             {
                 string sourceDirectoryName = Randomize("sample-blob-directory");
@@ -965,9 +986,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
 
+            // Make a service request to verify we've successfully authenticated
             await container.CreateIfNotExistsAsync();
 
-            // Make a service request to verify we've successfully authenticated
+            // Prepare to download
             try
             {
                 string sourceDirectoryName = Randomize("sample-blob-directory");
@@ -1094,11 +1116,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobContainerClient container2 = service.GetBlobContainerClient(Randomize("sample-container1"));
             BlobContainerClient container3 = service.GetBlobContainerClient(Randomize("sample-container2"));
 
+            // Make a service request to verify we've successfully authenticated
             await container1.CreateIfNotExistsAsync();
             await container2.CreateIfNotExistsAsync();
             await container3.CreateIfNotExistsAsync();
 
-            // Make a service request to verify we've successfully authenticated
+            // Prepare to download
             try
             {
                 string sourceDirectoryName = Randomize("sample-blob-directory");
