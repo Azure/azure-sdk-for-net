@@ -103,6 +103,10 @@ namespace Azure.Core.Shared
 
             ref int fallbackIndex = ref isRead ? ref _readFallbackIndex : ref _writeFallbackIndex;
             string[] fallbackHosts = isRead ? _readFallbackHosts : _writeFallbackHosts;
+
+            if (fallbackHosts.Length == 0)
+                return;
+
             int current = fallbackIndex;
 
             // we should only advance if another thread hasn't already done so

@@ -598,6 +598,46 @@ namespace Azure.Core.Tests
             await task;
         }
 
+        [Test]
+        public async Task DoesNotAdvanceHostWhenAdvancedByOtherThread()
+        {
+            (HttpPipelinePolicy policy1, AsyncGate<TimeSpan, object> gate1) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport1 = CreateMockTransport();
+            var geoPolicy = new GeoRedundantFallbackPolicy(new[] { "host1", "host2" }, null);
+            var pipeline1 = new HttpPipeline(mockTransport1, new[] { policy1, geoPolicy });
+            var message1 = pipeline1.CreateMessage();
+            var task1 = SendMessageGetRequest(pipeline1, message1);
+
+            var request1 = await mockTransport1.RequestGate.CycleWithException(new IOException());
+            await gate1.Cycle();
+            // use a delay before asserting unlike in the other tests because this becomes too difficult to reason about otherwise
+            // as we are simulating two threads
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            Assert.AreEqual("host1", request1.Uri.Host);
+
+            (HttpPipelinePolicy policy2, AsyncGate<TimeSpan, object> gate2) = CreateRetryPolicy(maxRetries: 3);
+            MockTransport mockTransport2 = CreateMockTransport();
+
+            var pipeline2 = new HttpPipeline(mockTransport2, new[] { policy2, geoPolicy });
+            var message2 = pipeline2.CreateMessage();
+            var task2 = SendMessageGetRequest(pipeline2, message2);
+            var request2 = await mockTransport2.RequestGate.CycleWithException(new IOException());
+            await gate2.Cycle();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            Assert.AreEqual("host2", request2.Uri.Host);
+
+            request1 = await mockTransport1.RequestGate.CycleWithException(new IOException());
+            await gate1.Cycle();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            Assert.AreEqual("host2", request1.Uri.Host);
+
+            await mockTransport1.RequestGate.Cycle(new MockResponse(200));
+            await mockTransport2.RequestGate.Cycle(new MockResponse(200));
+
+            await task1;
+            await task2;
+        }
+
         private static void AssertRetryEvent(TestEventListener listener, MockRequest request, int retryNumber)
         {
             EventWrittenEventArgs e = listener.SingleEventById(10, args => args.GetProperty<int>("retryNumber") == retryNumber);
