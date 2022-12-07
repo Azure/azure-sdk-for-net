@@ -84,18 +84,18 @@ namespace Azure.Core.Shared
 
             if (message.ProcessingContext.RetryNumber == 0)
             {
+                // store the primary host in the message
                 SetPrimaryHost(message);
                 // set the host based on the fallback information
-                UpdateHost(message, fallback);
+                UpdateHostIfNeeded(message, fallback);
                 return;
             }
 
             fallback.AdvanceIfNeeded(message);
-
-            UpdateHost(message, fallback);
+            UpdateHostIfNeeded(message, fallback);
         }
 
-        private static void UpdateHost(HttpMessage message, Fallback fallback)
+        private static void UpdateHostIfNeeded(HttpMessage message, Fallback fallback)
         {
             fallback.ResetPrimaryIfNeeded();
 
