@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class RpUnbilledPrefix
+    public partial class RoutingPreferenceUnbilledPrefix
     {
-        internal static RpUnbilledPrefix DeserializeRpUnbilledPrefix(JsonElement element)
+        internal static RoutingPreferenceUnbilledPrefix DeserializeRoutingPreferenceUnbilledPrefix(JsonElement element)
         {
             Optional<string> prefix = default;
             Optional<string> azureRegion = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new RpUnbilledPrefix(prefix.Value, azureRegion.Value, Optional.ToNullable(peerAsn));
+            return new RoutingPreferenceUnbilledPrefix(prefix.Value, azureRegion.Value, Optional.ToNullable(peerAsn));
         }
     }
 }

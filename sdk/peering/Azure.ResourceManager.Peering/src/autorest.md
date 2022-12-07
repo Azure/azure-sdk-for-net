@@ -86,6 +86,8 @@ rename-mapping:
   BgpSession.peerSessionIPv6Address: -|ip-address
   CdnPeeringPrefix.properties.azureRegion: -|azure-location
   PeeringServiceLocation.properties.azureRegion: -|azure-location
+  RpUnbilledPrefix: RoutingPreferenceUnbilledPrefix
+  RpUnbilledPrefix.AzureRegion: -|azure-location
 
 directive:
   - from: swagger-document
