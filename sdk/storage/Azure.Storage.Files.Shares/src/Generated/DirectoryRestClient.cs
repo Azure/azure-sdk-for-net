@@ -22,6 +22,7 @@ namespace Azure.Storage.Files.Shares
         private readonly string _url;
         private readonly bool? _allowTrailingDot;
         private readonly string _version;
+        private readonly bool? _allowSourceTrailingDot;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -32,14 +33,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2022-11-02")
+        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, bool? allowTrailingDot = null, string version = "2022-11-02", bool? allowSourceTrailingDot = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _allowTrailingDot = allowTrailingDot;
             _version = version ?? throw new ArgumentNullException(nameof(version));
+            _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
         internal HttpMessage CreateCreateRequest(string fileAttributes, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime)
@@ -789,6 +792,10 @@ namespace Azure.Storage.Files.Shares
             if (_allowTrailingDot != null)
             {
                 request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+            }
+            if (_allowSourceTrailingDot != null)
+            {
+                request.Headers.Add("x-ms-source-allow-trailing-dot", _allowSourceTrailingDot.Value);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;

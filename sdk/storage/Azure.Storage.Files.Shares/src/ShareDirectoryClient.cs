@@ -407,7 +407,8 @@ namespace Azure.Storage.Files.Shares
                 pipeline: _clientConfiguration.Pipeline,
                 url: uri.AbsoluteUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
-                allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot);
+                allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
+                allowSourceTrailingDot: _clientConfiguration.ClientOptions.SourceAllowTrailingDot);
         }
         #endregion ctors
 
