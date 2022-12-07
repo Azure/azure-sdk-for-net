@@ -117,7 +117,7 @@ namespace Azure.Storage.DataMovement
             // Set size of the list of null streams
             _rangesCompleted = new ConcurrentDictionary<long, string>();
 
-            _downloadChunkEventHandler += AddDownloadChunkEvent;
+            _downloadChunkEventHandler += DownloadChunkEvent;
         }
 
         public void Dispose()
@@ -127,10 +127,10 @@ namespace Azure.Storage.DataMovement
 
         public void CleanUp()
         {
-            _downloadChunkEventHandler -= AddDownloadChunkEvent;
+            _downloadChunkEventHandler -= DownloadChunkEvent;
         }
 
-        public async Task AddDownloadChunkEvent(DownloadRangeEventArgs args)
+        private async Task DownloadChunkEvent(DownloadRangeEventArgs args)
         {
             if (args.Success && !_cancellationToken.IsCancellationRequested)
             {

@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement
             _updateTransferStatus = behaviors.UpdateTransferStatus
                 ?? throw Errors.ArgumentNull(nameof(behaviors.UpdateTransferStatus));
 
-            _getStatusHandler += GetStatusEvent;
+            _getStatusHandler += StatusEvent;
         }
 
         public void Dispose()
@@ -59,10 +59,10 @@ namespace Azure.Storage.DataMovement
 
         public void Cleanup()
         {
-            _getStatusHandler -= GetStatusEvent;
+            _getStatusHandler -= StatusEvent;
         }
 
-        public async Task GetStatusEvent(CopyStatusEventArgs args)
+        private async Task StatusEvent(CopyStatusEventArgs args)
         {
             // Use progress tracker to get the amount of bytes transferred
             // Nothing needs to be done except update the bytes transfered if it was updated.

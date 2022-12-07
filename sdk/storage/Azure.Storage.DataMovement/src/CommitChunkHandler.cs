@@ -77,9 +77,9 @@ namespace Azure.Storage.DataMovement
             _transferType = transferType;
             if (_transferType == TransferType.Sequential)
             {
-                _commitBlockHandler += GetQueueBlockEvent;
+                _commitBlockHandler += QueueBlockEvent;
             }
-            _commitBlockHandler += GetCommitBlockEvent;
+            _commitBlockHandler += CommitBlockEvent;
         }
 
         public void Dispose()
@@ -91,12 +91,12 @@ namespace Azure.Storage.DataMovement
         {
             if (_transferType == TransferType.Sequential)
             {
-                _commitBlockHandler -= GetQueueBlockEvent;
+                _commitBlockHandler -= QueueBlockEvent;
             }
-            _commitBlockHandler -= GetCommitBlockEvent;
+            _commitBlockHandler -= CommitBlockEvent;
         }
 
-        private async Task GetCommitBlockEvent(StageChunkEventArgs args)
+        private async Task CommitBlockEvent(StageChunkEventArgs args)
         {
             if (args.Success)
             {
@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task GetQueueBlockEvent(StageChunkEventArgs args)
+        private async Task QueueBlockEvent(StageChunkEventArgs args)
         {
             if (args.Success)
             {
