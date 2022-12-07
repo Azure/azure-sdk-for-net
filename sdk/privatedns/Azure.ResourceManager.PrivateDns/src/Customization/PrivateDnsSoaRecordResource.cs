@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PrivateDns
     /// A Class representing a PrivateDnsSoaRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateDnsSoaRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsSoaRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetPrivateDnsSoaRecord method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateDnsZoneResource" /> using the GetPrivateDnsSoaRecord method.
     /// </summary>
     public partial class PrivateDnsSoaRecordResource : ArmResource
     {

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> codeId = default;
             string command = default;
-            Optional<DistributionConfiguration> distribution = default;
+            Optional<MachineLearningDistributionConfiguration> distribution = default;
             string environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<JobResourceConfiguration> resources = default;
+            Optional<MachineLearningJobResourceConfiguration> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         distribution = null;
                         continue;
                     }
-                    distribution = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
+                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resources = JobResourceConfiguration.DeserializeJobResourceConfiguration(property.Value);
+                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value);
                     continue;
                 }
             }

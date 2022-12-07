@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static ScheduleResourceArmPaginatedResult DeserializeScheduleResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ScheduleData>> value = default;
+            Optional<IReadOnlyList<MachineLearningScheduleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScheduleData> array = new List<ScheduleData>();
+                    List<MachineLearningScheduleData> array = new List<MachineLearningScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduleData.DeserializeScheduleData(item));
+                        array.Add(MachineLearningScheduleData.DeserializeMachineLearningScheduleData(item));
                     }
                     value = array;
                     continue;
