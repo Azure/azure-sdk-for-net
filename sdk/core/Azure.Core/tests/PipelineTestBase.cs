@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -17,24 +16,17 @@ namespace Azure.Core.Tests
             _isAsync = isAsync;
         }
 
-        protected async Task<HttpMessage> ProcessAsync(HttpMessage message, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
+        protected async Task ProcessAsync(HttpMessage message, HttpPipelineTransport transport, CancellationToken cancellationToken = default)
         {
             message.CancellationToken = cancellationToken;
-            try
+            if (_isAsync)
             {
-                if (_isAsync)
-                {
-                    await transport.ProcessAsync(message);
-                }
-                else
-                {
-                    transport.Process(message);
-                }
+                await transport.ProcessAsync(message);
             }
-            catch (Exception)
-            {}
-
-            return message;
+            else
+            {
+                transport.Process(message);
+            }
         }
 
         protected async Task<Response> ExecuteRequest(Request request, HttpPipelineTransport transport, CancellationToken cancellationToken = default)

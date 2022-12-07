@@ -1199,7 +1199,15 @@ namespace Azure.Core.Tests
                 message.Request.Uri.Reset(testServer.Address);
                 message.Request.Content = RequestContent.Create("Hello");
                 message.Response = new MockResponse(200);
-                await ProcessAsync(message, transport);
+
+                try
+                {
+                    await ProcessAsync(message, transport);
+                }
+                catch (Exception)
+                {
+                }
+
                 // response should have been cleared by transport
                 Assert.IsFalse(message.HasResponse);
             }
