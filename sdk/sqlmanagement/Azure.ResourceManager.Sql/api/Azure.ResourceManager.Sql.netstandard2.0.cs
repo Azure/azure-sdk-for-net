@@ -1074,6 +1074,7 @@ namespace Azure.ResourceManager.Sql
     {
         public ManagedDatabaseRestoreDetailData() { }
         public string BlockReason { get { throw null; } }
+        public int? CompletedPercent { get { throw null; } }
         public string CurrentBackupType { get { throw null; } }
         public int? CurrentRestoredSizeMB { get { throw null; } }
         public int? CurrentRestorePlanSizeMB { get { throw null; } }
@@ -1085,16 +1086,24 @@ namespace Azure.ResourceManager.Sql
         public string LastUploadedFileName { get { throw null; } }
         public System.DateTimeOffset? LastUploadedFileOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailsBackupSetProperties> LogBackupSets { get { throw null; } }
-        public int? NumberOfFilesDetected { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public long? NumberOfFilesDetected { get { throw null; } }
+        public int? NumberOfFilesFound { get { throw null; } }
         public int? NumberOfFilesQueued { get { throw null; } }
         public int? NumberOfFilesRestored { get { throw null; } }
         public int? NumberOfFilesRestoring { get { throw null; } }
         public int? NumberOfFilesSkipped { get { throw null; } }
         public int? NumberOfFilesUnrestorable { get { throw null; } }
-        public int? PercentCompleted { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public double? PercentCompleted { get { throw null; } }
         public string Status { get { throw null; } }
         public string TypePropertiesType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailsUnrestorableFileProperties> UnrestorableFiles { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedDatabaseRestoreDetailsUnrestorableFileProperties> UnrestorableFileList { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public System.Collections.Generic.IReadOnlyList<string> UnrestorableFiles { get { throw null; } }
     }
     public partial class ManagedDatabaseRestoreDetailResource : Azure.ResourceManager.ArmResource
     {
@@ -3890,14 +3899,14 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlServerDevOpsAuditingSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>, System.Collections.IEnumerable
     {
         protected SqlServerDevOpsAuditingSettingCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> Get(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string devOpsAuditingSettingsName, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string devOpsAuditingSettingsName, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> Get(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetAsync(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -3918,7 +3927,7 @@ namespace Azure.ResourceManager.Sql
         protected SqlServerDevOpsAuditingSettingResource() { }
         public virtual Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4457,8 +4466,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.SqlServerConnectionPolicyCollection GetSqlServerConnectionPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> GetSqlServerConnectionPolicy(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>> GetSqlServerConnectionPolicyAsync(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> GetSqlServerDevOpsAuditingSetting(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource> GetSqlServerDevOpsAuditingSetting(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(string devOpsAuditingSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingCollection GetSqlServerDevOpsAuditingSettings() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource> GetSqlServerDnsAlias(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerDnsAliasResource>> GetSqlServerDnsAliasAsync(string dnsAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4956,6 +4965,12 @@ namespace Azure.ResourceManager.Sql
     {
         public VirtualClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<string> ChildResources { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public string Family { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public string Version { get { throw null; } set { } }
     }
@@ -4978,8 +4993,10 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.VirtualClusterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.VirtualClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VirtualClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.VirtualClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.Models.VirtualClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.UpdateVirtualClusterDnsServersOperation> UpdateDnsServers(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.UpdateVirtualClusterDnsServersOperation>> UpdateDnsServersAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.ManagedInstanceUpdateDnsServersOperationData> UpdateDnsServers(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.Models.ManagedInstanceUpdateDnsServersOperationData> UpdateDnsServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.Models.ManagedInstanceUpdateDnsServersOperationData>> UpdateDnsServersAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.ManagedInstanceUpdateDnsServersOperationData>> UpdateDnsServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class VulnerabilityAssessmentScanRecordData : Azure.ResourceManager.Models.ResourceData
     {
@@ -5543,23 +5560,6 @@ namespace Azure.ResourceManager.Sql.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DevOpsAuditingSettingsName : System.IEquatable<Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DevOpsAuditingSettingsName(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName Default { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName left, Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName left, Azure.ResourceManager.Sql.Models.DevOpsAuditingSettingsName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiffBackupIntervalInHours : System.IEquatable<Azure.ResourceManager.Sql.Models.DiffBackupIntervalInHours>
     {
         private readonly int _dummyPrimitive;
@@ -5595,22 +5595,22 @@ namespace Azure.ResourceManager.Sql.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DnsRefreshOperationStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus>
+    public readonly partial struct DnsRefreshConfigurationPropertiesStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DnsRefreshOperationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus other) { throw null; }
+        public DnsRefreshConfigurationPropertiesStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus left, Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus left, Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus left, Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus left, Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6626,6 +6626,11 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public ManagedInstanceQuery() { }
         public string QueryText { get { throw null; } set { } }
+    }
+    public partial class ManagedInstanceUpdateDnsServersOperationData : Azure.ResourceManager.Models.ResourceData
+    {
+        public ManagedInstanceUpdateDnsServersOperationData() { }
+        public Azure.ResourceManager.Sql.Models.DnsRefreshConfigurationPropertiesStatus? Status { get { throw null; } }
     }
     public partial class ManagedInstanceVcoresCapability
     {
@@ -8599,11 +8604,6 @@ namespace Azure.ResourceManager.Sql.Models
         public UpdateLongTermRetentionBackupContent() { }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get { throw null; } set { } }
     }
-    public partial class UpdateVirtualClusterDnsServersOperation : Azure.ResourceManager.Models.ResourceData
-    {
-        public UpdateVirtualClusterDnsServersOperation() { }
-        public Azure.ResourceManager.Sql.Models.DnsRefreshOperationStatus? Status { get { throw null; } }
-    }
     public partial class UpsertManagedServerOperationParameters
     {
         internal UpsertManagedServerOperationParameters() { }
@@ -8658,6 +8658,12 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public VirtualClusterPatch() { }
         public System.Collections.Generic.IReadOnlyList<string> ChildResources { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public string Family { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Version { get { throw null; } set { } }

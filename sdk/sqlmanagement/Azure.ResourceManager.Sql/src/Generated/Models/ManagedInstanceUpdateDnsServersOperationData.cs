@@ -11,25 +11,25 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A refresh DNS servers operation. </summary>
-    public partial class UpdateVirtualClusterDnsServersOperation : ResourceData
+    public partial class ManagedInstanceUpdateDnsServersOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of UpdateVirtualClusterDnsServersOperation. </summary>
-        public UpdateVirtualClusterDnsServersOperation()
+        /// <summary> Initializes a new instance of ManagedInstanceUpdateDnsServersOperationData. </summary>
+        public ManagedInstanceUpdateDnsServersOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateVirtualClusterDnsServersOperation. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceUpdateDnsServersOperationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> The status of the DNS refresh operation. </param>
-        internal UpdateVirtualClusterDnsServersOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DnsRefreshOperationStatus? status) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceUpdateDnsServersOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DnsRefreshConfigurationPropertiesStatus? status) : base(id, name, resourceType, systemData)
         {
             Status = status;
         }
 
         /// <summary> The status of the DNS refresh operation. </summary>
-        public DnsRefreshOperationStatus? Status { get; }
+        public DnsRefreshConfigurationPropertiesStatus? Status { get; }
     }
 }

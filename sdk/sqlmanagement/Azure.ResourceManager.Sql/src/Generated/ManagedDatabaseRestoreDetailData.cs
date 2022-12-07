@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
             FullBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailsBackupSetProperties>();
             DiffBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailsBackupSetProperties>();
             LogBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailsBackupSetProperties>();
-            UnrestorableFiles = new ChangeTrackingList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties>();
+            UnrestorableFileList = new ChangeTrackingList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties>();
         }
 
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailData. </summary>
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="lastUploadedFileOn"> Last uploaded file time. </param>
         /// <param name="lastRestoredFileName"> Last restored file name. </param>
         /// <param name="lastRestoredFileOn"> Last restored file time. </param>
-        /// <param name="percentCompleted"> Percent completed. </param>
+        /// <param name="completedPercent"> Percent completed. </param>
         /// <param name="currentRestoredSizeMB"> Current restored size MB. </param>
         /// <param name="currentRestorePlanSizeMB"> Current restore plan size MB. </param>
         /// <param name="currentBackupType"> Current backup type. </param>
         /// <param name="currentRestoringFileName"> Current restoring file name. </param>
-        /// <param name="numberOfFilesDetected"> Number of files detected. </param>
+        /// <param name="numberOfFilesFound"> Number of files detected. </param>
         /// <param name="numberOfFilesQueued"> Number of files queued. </param>
         /// <param name="numberOfFilesSkipped"> Number of files skipped. </param>
         /// <param name="numberOfFilesRestoring"> Number of files restoring. </param>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="fullBackupSets"> Full backup sets. </param>
         /// <param name="diffBackupSets"> Diff backup sets. </param>
         /// <param name="logBackupSets"> Log backup sets. </param>
-        /// <param name="unrestorableFiles"> Unrestorable files. </param>
-        internal ManagedDatabaseRestoreDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string typePropertiesType, string status, string blockReason, string lastUploadedFileName, DateTimeOffset? lastUploadedFileOn, string lastRestoredFileName, DateTimeOffset? lastRestoredFileOn, int? percentCompleted, int? currentRestoredSizeMB, int? currentRestorePlanSizeMB, string currentBackupType, string currentRestoringFileName, int? numberOfFilesDetected, int? numberOfFilesQueued, int? numberOfFilesSkipped, int? numberOfFilesRestoring, int? numberOfFilesRestored, int? numberOfFilesUnrestorable, IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties> fullBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties> diffBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties> logBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties> unrestorableFiles) : base(id, name, resourceType, systemData)
+        /// <param name="unrestorableFileList"> Unrestorable files. </param>
+        internal ManagedDatabaseRestoreDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string typePropertiesType, string status, string blockReason, string lastUploadedFileName, DateTimeOffset? lastUploadedFileOn, string lastRestoredFileName, DateTimeOffset? lastRestoredFileOn, int? completedPercent, int? currentRestoredSizeMB, int? currentRestorePlanSizeMB, string currentBackupType, string currentRestoringFileName, int? numberOfFilesFound, int? numberOfFilesQueued, int? numberOfFilesSkipped, int? numberOfFilesRestoring, int? numberOfFilesRestored, int? numberOfFilesUnrestorable, IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties> fullBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties> diffBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties> logBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties> unrestorableFileList) : base(id, name, resourceType, systemData)
         {
             TypePropertiesType = typePropertiesType;
             Status = status;
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Sql
             LastUploadedFileOn = lastUploadedFileOn;
             LastRestoredFileName = lastRestoredFileName;
             LastRestoredFileOn = lastRestoredFileOn;
-            PercentCompleted = percentCompleted;
+            CompletedPercent = completedPercent;
             CurrentRestoredSizeMB = currentRestoredSizeMB;
             CurrentRestorePlanSizeMB = currentRestorePlanSizeMB;
             CurrentBackupType = currentBackupType;
             CurrentRestoringFileName = currentRestoringFileName;
-            NumberOfFilesDetected = numberOfFilesDetected;
+            NumberOfFilesFound = numberOfFilesFound;
             NumberOfFilesQueued = numberOfFilesQueued;
             NumberOfFilesSkipped = numberOfFilesSkipped;
             NumberOfFilesRestoring = numberOfFilesRestoring;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
             FullBackupSets = fullBackupSets;
             DiffBackupSets = diffBackupSets;
             LogBackupSets = logBackupSets;
-            UnrestorableFiles = unrestorableFiles;
+            UnrestorableFileList = unrestorableFileList;
         }
 
         /// <summary> Restore type. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Last restored file time. </summary>
         public DateTimeOffset? LastRestoredFileOn { get; }
         /// <summary> Percent completed. </summary>
-        public int? PercentCompleted { get; }
+        public int? CompletedPercent { get; }
         /// <summary> Current restored size MB. </summary>
         public int? CurrentRestoredSizeMB { get; }
         /// <summary> Current restore plan size MB. </summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Current restoring file name. </summary>
         public string CurrentRestoringFileName { get; }
         /// <summary> Number of files detected. </summary>
-        public int? NumberOfFilesDetected { get; }
+        public int? NumberOfFilesFound { get; }
         /// <summary> Number of files queued. </summary>
         public int? NumberOfFilesQueued { get; }
         /// <summary> Number of files skipped. </summary>
@@ -121,6 +121,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Log backup sets. </summary>
         public IReadOnlyList<ManagedDatabaseRestoreDetailsBackupSetProperties> LogBackupSets { get; }
         /// <summary> Unrestorable files. </summary>
-        public IReadOnlyList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties> UnrestorableFiles { get; }
+        public IReadOnlyList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties> UnrestorableFileList { get; }
     }
 }

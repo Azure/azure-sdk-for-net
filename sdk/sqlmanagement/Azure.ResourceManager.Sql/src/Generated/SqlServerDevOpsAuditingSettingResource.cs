@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlServerDevOpsAuditingSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerDevOpsAuditingSettingResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, DevOpsAuditingSettingsName devOpsAuditingSettingsName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}";
             return new ResourceIdentifier(resourceId);

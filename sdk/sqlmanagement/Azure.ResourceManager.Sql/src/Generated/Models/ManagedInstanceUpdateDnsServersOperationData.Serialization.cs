@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UpdateVirtualClusterDnsServersOperation : IUtf8JsonSerializable
+    public partial class ManagedInstanceUpdateDnsServersOperationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        internal static UpdateVirtualClusterDnsServersOperation DeserializeUpdateVirtualClusterDnsServersOperation(JsonElement element)
+        internal static ManagedInstanceUpdateDnsServersOperationData DeserializeManagedInstanceUpdateDnsServersOperationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DnsRefreshOperationStatus> status = default;
+            Optional<DnsRefreshConfigurationPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new DnsRefreshOperationStatus(property0.Value.GetString());
+                            status = new DnsRefreshConfigurationPropertiesStatus(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new UpdateVirtualClusterDnsServersOperation(id, name, type, systemData.Value, Optional.ToNullable(status));
+            return new ManagedInstanceUpdateDnsServersOperationData(id, name, type, systemData.Value, Optional.ToNullable(status));
         }
     }
 }

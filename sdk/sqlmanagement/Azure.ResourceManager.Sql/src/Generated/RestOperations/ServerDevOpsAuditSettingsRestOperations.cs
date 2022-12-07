@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, DevOpsAuditingSettingsName devOpsAuditingSettingsName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/devOpsAuditingSettings/", false);
-            uri.AppendPath(devOpsAuditingSettingsName.ToString(), true);
+            uri.AppendPath(devOpsAuditingSettingsName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -142,15 +142,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="devOpsAuditingSettingsName"> The DevOpsAuditingSettingsName to use. </param>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlServerDevOpsAuditingSettingData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SqlServerDevOpsAuditingSettingData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, devOpsAuditingSettingsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -174,15 +175,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="devOpsAuditingSettingsName"> The DevOpsAuditingSettingsName to use. </param>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlServerDevOpsAuditingSettingData> Get(string subscriptionId, string resourceGroupName, string serverName, DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SqlServerDevOpsAuditingSettingData> Get(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, devOpsAuditingSettingsName);
             _pipeline.Send(message, cancellationToken);
@@ -202,7 +204,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, DevOpsAuditingSettingsName devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -216,7 +218,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/devOpsAuditingSettings/", false);
-            uri.AppendPath(devOpsAuditingSettingsName.ToString(), true);
+            uri.AppendPath(devOpsAuditingSettingsName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -232,16 +234,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="devOpsAuditingSettingsName"> The DevOpsAuditingSettingsName to use. </param>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
         /// <param name="data"> Properties of DevOps audit settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, DevOpsAuditingSettingsName devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="devOpsAuditingSettingsName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, devOpsAuditingSettingsName, data);
@@ -260,16 +263,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="devOpsAuditingSettingsName"> The DevOpsAuditingSettingsName to use. </param>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
         /// <param name="data"> Properties of DevOps audit settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, DevOpsAuditingSettingsName devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="devOpsAuditingSettingsName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, devOpsAuditingSettingsName, data);

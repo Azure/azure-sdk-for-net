@@ -567,10 +567,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}
         /// Operation Id: ServerDevOpsAuditSettings_Get
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The DevOpsAuditingSettingsName to use. </param>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
             return await GetSqlServerDevOpsAuditingSettings().GetAsync(devOpsAuditingSettingsName, cancellationToken).ConfigureAwait(false);
         }
@@ -580,10 +582,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}
         /// Operation Id: ServerDevOpsAuditSettings_Get
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The DevOpsAuditingSettingsName to use. </param>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerDevOpsAuditingSettingResource> GetSqlServerDevOpsAuditingSetting(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerDevOpsAuditingSettingResource> GetSqlServerDevOpsAuditingSetting(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
             return GetSqlServerDevOpsAuditingSettings().Get(devOpsAuditingSettingsName, cancellationToken);
         }

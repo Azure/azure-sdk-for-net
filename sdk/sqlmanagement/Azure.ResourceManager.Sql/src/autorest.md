@@ -242,7 +242,7 @@ rename-mapping:
   DatabaseOperation: DatabaseOperationData
   ServerOperation: ServerOperationData
   ElasticPoolOperation: ElasticPoolOperationData
-  UpdateManagedInstanceDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
+  UpdateVirtualClusterDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
   VirtualNetworkRule: SqlServerVirtualNetworkRule
   VirtualNetworkRuleState: SqlServerVirtualNetworkRuleState
   MetricAvailability: SqlMetricAvailability
@@ -259,6 +259,7 @@ rename-mapping:
   RestorePoint: SqlServerDatabaseRestorePoint
   BackupStorageRedundancy: SqlBackupStorageRedundancy
   PrimaryAggregationType: SqlMetricPrimaryAggregationType
+  DNSRefreshOperationStatus: DnsRefreshConfigurationPropertiesStatus
 
 prompted-enum-values:
   - Default
@@ -437,3 +438,17 @@ directive:
       where: $.paths
       transform: >
           $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}'].get.parameters[2]['x-ms-enum'].name = 'SQLVulnerabilityAssessmentName';
+    - from: ServerDevOpsAudit.json
+      where: $.paths..parameters[?(@.name === 'devOpsAuditingSettingsName')]
+      transform: >
+        delete $.enum;
+        delete $['x-ms-enum'];
+        $.description = 'The name of the devops audit settings. This should always be Default.';
+      reason: address breaking changes when upgrading ServerDevOpsAudit API version from 2020-11-01-preview to 2022-02-01-preview
+    - from: ManagedDatabaseRestoreDetails.json
+      where: $.definitions
+      transform: >
+        $.ManagedDatabaseRestoreDetailsProperties.properties.percentCompleted['x-ms-client-name'] = 'CompletedPercent';
+        $.ManagedDatabaseRestoreDetailsProperties.properties.numberOfFilesDetected['x-ms-client-name'] = 'NumberOfFilesFound';
+        $.ManagedDatabaseRestoreDetailsProperties.properties.unrestorableFiles['x-ms-client-name'] = 'UnrestorableFileList';
+      reason: address breaking changes when upgrading ManagedDatabaseRestoreDetail API version from 2020-11-01-preview to 2022-02-01-preview
