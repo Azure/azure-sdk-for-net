@@ -17,17 +17,17 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             ["presenter"] = new ParticipantInput(
                 id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
-                call: "teamsMeeting")
+                call: "acsGroupCall")
                 {
                    PlaceholderImageUri = "https://imageendpoint"
                 },
             ["support"] = new ParticipantInput(
                 id: new MicrosoftTeamsUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
-                call: "teamsMeeting")
+                call: "acsGroupCall")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 },
-            ["teamsMeeting"] = new TeamsMeetingInput("https://teamsJoinUrl")
+            ["acsGroupCall"] = new GroupCallInput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
         };
 
         public MediaCompositionClientLiveTests(bool isAsync) : base(isAsync)
@@ -52,6 +52,35 @@ namespace Azure.Communication.MediaComposition.Tests
         }
 
         [Test]
+        public async Task CreateMediaCompositionWithInputsOutputsNotTheSameKindThrow()
+        {
+            try
+            {
+                var mediaCompositionClient = CreateClient();
+                var layout = new PresenterLayout(presenterId: "presenter", supportId: "support")
+                {
+                    Resolution = new(1920, 1080),
+                };
+
+                var outputs = new Dictionary<string, MediaOutput>()
+                {
+                    ["teamsMeeting"] = new TeamsMeetingOutput("https://teamsJoinUrl")
+                };
+
+                await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, _presentationInputs, outputs);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.InputOutputNotSameKind));
+                Assert.AreEqual(ex.Status, 400);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+
+            Assert.Fail("An exception should have been thrown trying to create a media composition with call input and output not of the same kind");
+        }
+
+        [Test]
         public async Task CreateMediaCompositionNullInputsShouldThrow()
         {
             try
@@ -71,7 +100,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.InputIdNotDefined));
                 Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
@@ -94,7 +123,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.OutputNotDefined));
                 Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
@@ -115,7 +144,7 @@ namespace Azure.Communication.MediaComposition.Tests
 
                 var inputs = new Dictionary<string, MediaInput>()
                 {
-                    ["teamsMeeting"] = new TeamsMeetingInput("https://teamsJoinUrl")
+                    ["acsGroupCall"] = new GroupCallInput("d12d2277-ffec-4e22-9979-8c0d8c13d193")
                 };
 
                 var outputs = new Dictionary<string, MediaOutput>()
@@ -127,7 +156,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.InvalidInputId));
                 Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
@@ -149,7 +178,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.LayoutNotDefined));
                 Assert.AreEqual(ex.Status, 400);
                 Console.WriteLine(ex.Message);
                 return;
@@ -181,7 +210,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.ResourceNotFound));
                 Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
@@ -209,7 +238,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.ResourceNotFound));
                 Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
@@ -249,7 +278,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.ResourceNotFound));
                 Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
@@ -262,7 +291,7 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            var updatedLayout = new GridLayout(rows: 2, columns: 2, inputIds: new List<List<string>> { new List<string> { "teamsMeeting" } })
+            var updatedLayout = new GridLayout(rows: 2, columns: 2, inputIds: new List<List<string>> { new List<string> { "acsGroupCall" } })
             {
                 Resolution = new(1920, 1080)
             };
@@ -291,7 +320,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.ResourceNotFound));
                 Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
@@ -308,7 +337,7 @@ namespace Azure.Communication.MediaComposition.Tests
             {
                 ["james"] = new ParticipantInput(
                     id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
-                    call: "teamsMeeting")
+                    call: "acsGroupCall")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
                 }
@@ -332,7 +361,7 @@ namespace Azure.Communication.MediaComposition.Tests
             {
                 ["presenter"] = new ParticipantInput(
                     id: new MicrosoftTeamsUserIdentifier(updatedUserId),
-                    call: "teamsMeeting")
+                    call: "acsGroupCall")
                     {
                         PlaceholderImageUri = "https://imageendpoint"
                     }
@@ -355,7 +384,7 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            var updatedLayout = new GridLayout(rows: 2, columns: 2, inputIds: new List<List<string>> { new List<string> { "teamsMeeting" } })
+            var updatedLayout = new GridLayout(rows: 2, columns: 2, inputIds: new List<List<string>> { new List<string> { "acsGroupCall" } })
             {
                 Resolution = new(1920, 1080)
             };
@@ -375,7 +404,7 @@ namespace Azure.Communication.MediaComposition.Tests
         }
 
         [Test]
-        public async Task RemoveTeamsMeetingInputShouldThrow()
+        public async Task RemoveAllInputShouldThrow()
         {
             try
             {
@@ -383,7 +412,7 @@ namespace Azure.Communication.MediaComposition.Tests
                 await CreateMediaCompositionHelper(mediaCompositionClient);
                 var inputIdsToRemove = new List<string>()
                 {
-                    "teamsMeeting"
+                    "acsGroupCall"
                 };
                 var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
             }
@@ -407,7 +436,7 @@ namespace Azure.Communication.MediaComposition.Tests
                 {
                     ["james"] = new ParticipantInput(
                         id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
-                        call: "teamsMeeting")
+                        call: "acsGroupCall")
                         {
                             PlaceholderImageUri = "https://imageendpoint"
                         }
@@ -416,7 +445,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.ResourceNotFound));
                 Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
@@ -472,7 +501,7 @@ namespace Azure.Communication.MediaComposition.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.NotNull(ex.Message);
+                Assert.IsTrue(ex.Message.Contains(TestConstants.ErrorMessage.ResourceNotFound));
                 Assert.AreEqual(ex.Status, 404);
                 Console.WriteLine(ex.Message);
                 return;
