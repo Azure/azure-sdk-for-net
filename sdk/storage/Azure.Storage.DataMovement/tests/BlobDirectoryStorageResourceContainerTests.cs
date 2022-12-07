@@ -98,6 +98,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32952")]
         public async Task GetChildStorageResourceAsync()
         {
             DisposingBlobContainer test = await GetTestContainerAsync();
