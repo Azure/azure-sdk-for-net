@@ -7,7 +7,7 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Optional parameters for <see cref="PageBlobStorageResource"/>.
+    /// Optional parameters for <see cref="PageBlobStorageResource"/> Service copy operations.
     /// </summary>
     public class PageBlobStorageResourceServiceCopyOptions
     {
@@ -18,13 +18,13 @@ namespace Azure.Storage.DataMovement.Blobs
         public TransferCopyMethod CopyMethod { get; set; }
 
         /// <summary>
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// Optional. See <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data to this page blob.
         /// </summary>
         public PageBlobRequestConditions DestinationConditions { get; set; }
 
         /// <summary>
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// Optional. See <see cref="PageBlobRequestConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </summary>
         public PageBlobRequestConditions SourceConditions { get; set; }

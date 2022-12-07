@@ -90,9 +90,9 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public abstract Task WriteFromStreamAsync(
             Stream stream,
+            long streamLength,
             bool overwrite,
             long position = 0,
-            long? streamLength = default,
             long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default);
