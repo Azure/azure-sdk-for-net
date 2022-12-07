@@ -100,6 +100,5 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Only applies when the <see cref="CopyMethod"/> is set to <see cref="TransferCopyMethod.SyncCopy"/>.
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
-
     }
 }

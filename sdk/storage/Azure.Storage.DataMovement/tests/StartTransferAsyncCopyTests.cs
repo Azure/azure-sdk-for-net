@@ -221,10 +221,7 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource destinationResource = new BlockBlobStorageResource(destClient,
                         new BlockBlobStorageResourceOptions()
                         {
-                            CopyOptions = new BlockBlobStorageResourceServiceCopyOptions()
-                            {
-                                CopyMethod = TransferCopyMethod.AsyncCopy
-                            }
+                            CopyMethod = TransferCopyMethod.AsyncCopy,
                         });
                     copyBlobInfo.Add(new VerifyBlockCopyFromUriInfo(
                         localSourceFile,

@@ -112,6 +112,24 @@ namespace Azure.Storage.DataMovement.Blobs
             return default;
         }
 
+        internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
+            this BlobStorageResourceContainerOptions options)
+        {
+            return new AppendBlobStorageResourceOptions()
+            {
+                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
+            };
+        }
+
+        internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
+            this BlobStorageResourceContainerOptions options)
+        {
+            return new BlockBlobStorageResourceOptions()
+            {
+                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
+            };
+        }
+
         /// <summary>
         /// Deep copies the Blob Request Conditions along with changing the IfNoneMatch to
         /// the wildcard value if overwrite is enabled.
@@ -134,8 +152,8 @@ namespace Azure.Storage.DataMovement.Blobs
             return new BlobDownloadOptions()
             {
                 Range = range,
-                Conditions = CreateRequestConditions(options?.DownloadOptions?.Conditions),
-                TransferValidation = options?.DownloadOptions?.TransferValidationOptions,
+                Conditions = CreateRequestConditions(options?.SourceConditions),
+                TransferValidation = options?.DownloadTransferValidationOptions,
             };
         }
 
@@ -143,14 +161,14 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new BlobUploadOptions()
             {
-                HttpHeaders = options?.UploadOptions?.HttpHeaders,
-                Metadata = options?.UploadOptions?.Metadata,
-                Tags = options?.UploadOptions?.Tags,
-                AccessTier = options?.UploadOptions?.AccessTier,
-                ImmutabilityPolicy = options?.UploadOptions?.ImmutabilityPolicy,
-                LegalHold = options?.UploadOptions?.LegalHold,
-                Conditions = CreateRequestConditions(options?.UploadOptions?.Conditions, overwrite),
-                TransferValidation = options?.UploadOptions?.TransferValidationOptions,
+                HttpHeaders = options?.HttpHeaders,
+                Metadata = options?.Metadata,
+                Tags = options?.Tags,
+                AccessTier = options?.AccessTier,
+                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
+                LegalHold = options?.LegalHold,
+                Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                TransferValidation = options?.UploadTransferValidationOptions,
             };
         }
 
@@ -164,10 +182,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 Conditions = new BlobRequestConditions()
                 {
-                    LeaseId = options?.UploadOptions?.Conditions?.LeaseId,
-                    TagConditions = options?.UploadOptions?.Conditions?.TagConditions,
+                    LeaseId = options?.DestinationConditions?.LeaseId,
+                    TagConditions = options?.DestinationConditions?.TagConditions,
                 },
-                TransferValidation = options?.UploadOptions?.TransferValidationOptions,
+                TransferValidation = options?.UploadTransferValidationOptions,
             };
         }
 
@@ -182,22 +200,22 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new BlobCopyFromUriOptions()
             {
-                Metadata = options?.CopyOptions?.Metadata,
-                Tags = options?.CopyOptions?.Tags,
-                AccessTier = options?.CopyOptions?.AccessTier,
+                Metadata = options?.Metadata,
+                Tags = options?.Tags,
+                AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()
                 {
-                    IfMatch = options?.CopyOptions?.SourceConditions.IfMatch,
-                    IfUnmodifiedSince = options?.CopyOptions?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.CopyOptions?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.CopyOptions?.SourceConditions?.TagConditions,
+                    IfMatch = options?.SourceConditions.IfMatch,
+                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
+                    TagConditions = options?.SourceConditions?.TagConditions,
                 },
-                DestinationConditions = CreateRequestConditions(options?.CopyOptions?.DestinationConditions, overwrite),
-                RehydratePriority = options?.CopyOptions?.RehydratePriority,
-                DestinationImmutabilityPolicy = options?.CopyOptions?.DestinationImmutabilityPolicy,
-                LegalHold = options?.CopyOptions?.LegalHold,
+                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                RehydratePriority = options?.RehydratePriority,
+                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
+                LegalHold = options?.LegalHold,
                 SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopyOptions?.CopySourceTagsMode,
+                CopySourceTagsMode = options?.CopySourceTagsMode,
             };
         }
 
@@ -212,20 +230,20 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new BlobSyncUploadFromUriOptions()
             {
-                CopySourceBlobProperties = options?.CopyOptions?.CopySourceBlobProperties,
-                HttpHeaders = options?.CopyOptions?.HttpHeaders,
-                Tags = options?.CopyOptions?.Tags,
-                AccessTier = options?.CopyOptions?.AccessTier,
+                CopySourceBlobProperties = options?.CopySourceBlobProperties,
+                HttpHeaders = options?.HttpHeaders,
+                Tags = options?.Tags,
+                AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()
                 {
-                    IfMatch = options?.CopyOptions?.SourceConditions.IfMatch,
-                    IfUnmodifiedSince = options?.CopyOptions?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.CopyOptions?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.CopyOptions?.SourceConditions?.TagConditions,
+                    IfMatch = options?.SourceConditions.IfMatch,
+                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
+                    TagConditions = options?.SourceConditions?.TagConditions,
                 },
-                DestinationConditions = CreateRequestConditions(options?.CopyOptions?.DestinationConditions, overwrite),
+                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopyOptions?.CopySourceTagsMode,
+                CopySourceTagsMode = options?.CopySourceTagsMode,
             };
         }
 
@@ -241,10 +259,10 @@ namespace Azure.Storage.DataMovement.Blobs
             return new StageBlockFromUriOptions()
             {
                 SourceRange = sourceRange,
-                SourceConditions = CreateRequestConditions(options?.CopyOptions?.SourceConditions, true),
+                SourceConditions = CreateRequestConditions(options?.SourceConditions, true),
                 DestinationConditions = new BlobRequestConditions()
                 {
-                    LeaseId = options?.CopyOptions?.DestinationConditions?.LeaseId,
+                    LeaseId = options?.DestinationConditions?.LeaseId,
                 },
                 SourceAuthentication = sourceAuthorization,
             };
@@ -258,13 +276,22 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new CommitBlockListOptions()
             {
-                HttpHeaders = options?.UploadOptions?.HttpHeaders,
-                Metadata = options?.UploadOptions?.Metadata,
-                Tags = options?.UploadOptions?.Tags,
-                AccessTier = options?.UploadOptions?.AccessTier,
-                ImmutabilityPolicy = options?.UploadOptions?.ImmutabilityPolicy,
-                LegalHold = options?.UploadOptions?.LegalHold,
-                Conditions = CreateRequestConditions(options?.UploadOptions?.Conditions, true)
+                HttpHeaders = options?.HttpHeaders,
+                Metadata = options?.Metadata,
+                Tags = options?.Tags,
+                AccessTier = options?.AccessTier,
+                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
+                LegalHold = options?.LegalHold,
+                Conditions = CreateRequestConditions(options?.DestinationConditions, true)
+            };
+        }
+
+        internal static PageBlobStorageResourceOptions ToPageBlobStorageResourceOptions(
+            this BlobStorageResourceContainerOptions options)
+        {
+            return new PageBlobStorageResourceOptions()
+            {
+                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
             };
         }
     }

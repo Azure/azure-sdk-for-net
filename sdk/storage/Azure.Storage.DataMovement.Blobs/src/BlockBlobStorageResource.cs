@@ -50,10 +50,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="BlockBlobStorageResourceServiceCopyOptions.CopyMethod"/> in
-        /// <see cref="BlockBlobStorageResourceOptions.CopyOptions"/>.
+        /// the options bag, see <see cref="BlockBlobStorageResourceOptions.CopyMethod"/>.
         /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyOptions?.CopyMethod ?? TransferCopyMethod.SyncCopy;
+        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.

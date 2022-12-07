@@ -28,22 +28,11 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobStates States { get; set; }
 
         /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
-        /// </summary>
-        public BlockBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }
-
-        /// <summary>
-        /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
-        /// and <see cref="BlockBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
-        /// These options will apply to the blob service requests to complete uploading to the block blob.
-        /// </summary>
-        public BlockBlobStorageResourceUploadOptions UploadOptions { get; set; }
-
-        /// <summary>
-        /// When calling for <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>
+        /// Optional. Defines the copy operation to take.
+        /// See <see cref="TransferCopyMethod"/>. Defaults to <see cref="TransferCopyMethod.SyncCopy"/>.
         ///
-        /// these options will apply to the blob service requests.
+        /// Only applies when calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
-        public BlobStorageResourceDownloadOptions DownloadOptions { get; set; }
+        public TransferCopyMethod CopyMethod { get; set; }
     }
 }

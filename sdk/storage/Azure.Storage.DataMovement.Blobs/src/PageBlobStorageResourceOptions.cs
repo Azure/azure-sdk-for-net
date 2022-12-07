@@ -14,6 +14,12 @@ namespace Azure.Storage.DataMovement.Blobs
     public class PageBlobStorageResourceOptions
     {
         /// <summary>
+        /// Optional. Defines the copy operation to take.
+        /// See <see cref="TransferCopyMethod"/>. Defaults to <see cref="TransferCopyMethod.SyncCopy"/>.
+        /// </summary>
+        public TransferCopyMethod CopyMethod { get; set; }
+
+        /// <summary>
         /// When calling <see cref="BlockBlobStorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
         public PageBlobStorageResourceServiceCopyOptions CopyOptions { get; set; }

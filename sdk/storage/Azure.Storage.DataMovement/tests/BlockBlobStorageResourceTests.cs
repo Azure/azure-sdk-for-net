@@ -61,8 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Arrange - Set up options specifying different async copy
             BlockBlobStorageResourceOptions optionsWithAsyncCopy = new BlockBlobStorageResourceOptions()
             {
-                CopyOptions = new BlockBlobStorageResourceServiceCopyOptions()
-                { CopyMethod = TransferCopyMethod.AsyncCopy },
+                CopyMethod = TransferCopyMethod.AsyncCopy,
             };
             BlockBlobStorageResource resourceSyncCopy = new BlockBlobStorageResource(blobClient, optionsWithAsyncCopy);
 
