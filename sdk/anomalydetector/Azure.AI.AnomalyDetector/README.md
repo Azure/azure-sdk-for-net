@@ -120,7 +120,8 @@ The following section provides several code snippets covering some of the most c
 
 ### Batch detection
 
-```csharp
+```C# Snippet:DetectEntireSeriesAnomaly
+//detect
 Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
@@ -146,11 +147,17 @@ catch (RequestFailedException ex)
     Console.WriteLine(String.Format("Entire detection failed: {0}", ex.Message));
     throw;
 }
+catch (Exception ex)
+{
+    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    throw;
+}
 ```
 
 ### Streaming Detection
 
-```csharp
+```C# Snippet:DetectLastPointAnomaly
+//detect
 Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
 
 try
@@ -171,11 +178,17 @@ catch (RequestFailedException ex)
     Console.WriteLine(String.Format("Last detection failed: {0}", ex.Message));
     throw;
 }
+catch (Exception ex)
+{
+    Console.WriteLine(String.Format("Detection error. {0}", ex.Message));
+    throw;
+}
 ```
 
 ### Detect change points
 
-```csharp
+```C# Snippet:DetectChangePoint
+//detect
 Console.WriteLine("Detecting the change point in the series.");
 
 UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
@@ -216,11 +229,6 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 ```
 
 To learn more about other logging mechanisms see [Diagnostics Samples][logging].
-
-### Optional Configuration
-
-Optional keyword arguments can be passed in at the client and per-operation level.
-The azure-core [reference documentation](https://azuresdkdocs.blob.core.windows.net/$web/python/azure-core/latest/azure.core.html) describes available configurations for retries, logging, transport protocols, and more.
 
 ## Next steps
 
