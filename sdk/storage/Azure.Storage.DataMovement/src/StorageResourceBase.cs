@@ -8,27 +8,27 @@ using System.Text;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Storage Resource Base
+    /// The abstract class StorageResourceBase.
     /// </summary>
     public abstract class StorageResourceBase
     {
         /// <summary>
-        /// For mocking
+        /// The protected constructor for the abstract StorageResourceBase class (to allow for mocking).
         /// </summary>
         protected StorageResourceBase() { }
 
         /// <summary>
-        /// Defines whether we can produce a Uri
+        /// Defines whether we can produce a Uri.
         /// </summary>
         public abstract ProduceUriType CanProduceUri { get; }
 
         /// <summary>
-        /// Gets Uri
+        /// Gets the Uri.
         /// </summary>
         public abstract Uri Uri { get; }
 
         /// <summary>
-        /// Gets path split up
+        /// Gets the path.
         /// </summary>
         public abstract string Path { get; }
 

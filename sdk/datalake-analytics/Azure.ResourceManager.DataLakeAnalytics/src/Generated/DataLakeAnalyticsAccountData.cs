@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The resource tags.
         /// Serialized Name: Resource.tags
         /// </param>
-        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts, IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies, IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores, IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, CommitmentTierType? newTier, CommitmentTierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts, IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies, IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores, IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, DataLakeAnalyticsCommitmentTierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             AccountId = accountId;
             ProvisioningState = provisioningState;
@@ -277,12 +277,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The commitment tier for the next month.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.newTier
         /// </summary>
-        public CommitmentTierType? NewTier { get; }
+        public DataLakeAnalyticsCommitmentTierType? NewTier { get; }
         /// <summary>
         /// The commitment tier in use for the current month.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.currentTier
         /// </summary>
-        public CommitmentTierType? CurrentTier { get; }
+        public DataLakeAnalyticsCommitmentTierType? CurrentTier { get; }
         /// <summary>
         /// The maximum supported jobs running under the account at the same time.
         /// Serialized Name: DataLakeAnalyticsAccount.properties.maxJobCount

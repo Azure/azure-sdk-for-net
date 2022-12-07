@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The MultivariateLastDetectionResult. </summary>
+    /// <summary> Results of last detection. </summary>
     public partial class MultivariateLastDetectionResult
     {
         /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>

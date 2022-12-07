@@ -215,9 +215,9 @@ namespace Azure.Storage.DataMovement
                             _cancellationTokenSource.Token).ConfigureAwait(false);
                         await _destinationResource.WriteFromStreamAsync(
                             stream: slicedStream,
+                            streamLength: blockSize,
                             overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                             position: 0,
-                            streamLength: blockSize,
                             completeLength: expectedlength,
                             default,
                             _cancellationTokenSource.Token).ConfigureAwait(false);
@@ -295,9 +295,9 @@ namespace Azure.Storage.DataMovement
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                     await _destinationResource.WriteFromStreamAsync(
                         stream: slicedStream,
+                        streamLength: blockLength,
                         overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                         position: offset,
-                        streamLength: blockLength,
                         completeLength: completeLength,
                         default,
                         _cancellationTokenSource.Token).ConfigureAwait(false);

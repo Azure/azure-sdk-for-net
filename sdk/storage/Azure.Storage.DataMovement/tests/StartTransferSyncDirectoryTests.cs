@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var data = GetRandomBuffer(size);
             using Stream originalStream = await CreateLimitedMemoryStream(size);
-            string blobName = string.Concat(sourceBlobDirectory, "\\", sourceFilePath);
+            string blobName = Path.Combine(sourceBlobDirectory, sourceFilePath);
             BlobClient originalBlob = InstrumentClient(containerClient.GetBlobClient(blobName));
             // create a new file and copy contents of stream into it, and then close the FileStream
             // so the StagedUploadAsync call is not prevented from reading using its FileStream.
