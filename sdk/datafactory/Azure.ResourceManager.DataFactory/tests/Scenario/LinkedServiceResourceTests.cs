@@ -15,30 +15,63 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
         private string _accessKey;
+        private ResourceIdentifier _resourceGroupIdentifier;
         private ResourceGroupResource _resourceGroup;
         private DataFactoryResource _dataFactory;
         public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
+        [OneTimeSetUp]
+        public async Task GlobalSetup()
+        {
+            var rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
+            var storageAccountName = SessionRecording.GenerateAssetName("datafactory");
+            if (Mode == RecordedTestMode.Playback)
+            {
+                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName);
+                _accessKey = "Sanitized";
+            }
+            else
+            {
+                using (SessionRecording.DisableRecording())
+                {
+                    var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+                    var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+                    _resourceGroupIdentifier = rgLro.Value.Data.Id;
+                    _accessKey = await GetStorageAccountAccessKey(rgLro.Value, storageAccountName);
+                }
+            }
+            await StopSessionRecordingAsync();
+        }
+
         [SetUp]
         public async Task TestSetUp()
         {
             string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            _resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
+            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
             _dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            _accessKey = await GetStorageAccountAccessKey(_resourceGroup);
         }
 
-        [TearDown]
-        public async Task TestTearDown()
+        [OneTimeTearDown]
+        public async Task GlobalTearDown()
         {
-            // Delete Storage Account ASAP.
-            var list = await _resourceGroup.GetStorageAccounts().GetAllAsync().ToEnumerableAsync();
-            foreach (var storageAccount in list)
+            if (Mode == RecordedTestMode.Playback)
             {
-                await storageAccount.DeleteAsync(WaitUntil.Completed);
+                return;
+            }
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await foreach (var storageAccount in _resourceGroup.GetStorageAccounts().GetAllAsync())
+                    {
+                        await storageAccount.DeleteAsync(WaitUntil.Completed);
+                    }
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
             }
         }
 

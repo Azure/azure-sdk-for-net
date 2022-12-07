@@ -93,7 +93,7 @@ Schema for <c>UnivariateDetectionOptions</c>:
 
 Response Body:
 
-Schema for <c>UnivariateDetectionResult</c>:
+Schema for <c>UnivariateEntireDetectionResult</c>:
 <code>{
   period: number, # Required.
   expectedValues: [number], # Required.
@@ -200,7 +200,7 @@ Schema for <c>UnivariateDetectionOptions</c>:
 
 Response Body:
 
-Schema for <c>UnivariateDetectionResult</c>:
+Schema for <c>UnivariateEntireDetectionResult</c>:
 <code>{
   period: number, # Required.
   expectedValues: [number], # Required.
@@ -789,12 +789,6 @@ var data = new {
         paddingValue = 123.45f,
     },
     status = "CREATED",
-    errors = new[] {
-        new {
-            code = "<code>",
-            message = "<message>",
-        }
-    },
     diagnosticsInfo = new {
         modelState = new {
             epochIds = new[] {
@@ -977,12 +971,6 @@ var data = new {
         paddingValue = 123.45f,
     },
     status = "CREATED",
-    errors = new[] {
-        new {
-            code = "<code>",
-            message = "<message>",
-        }
-    },
     diagnosticsInfo = new {
         modelState = new {
             epochIds = new[] {
@@ -1379,7 +1367,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>MultivariateDetectionOptions</c>:
+Schema for <c>MultivariateBatchDetectionOptions</c>:
 <code>{
   dataSource: string, # Required.
   topContributorCount: number, # Required.
@@ -1475,7 +1463,7 @@ Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-Schema for <c>MultivariateDetectionOptions</c>:
+Schema for <c>MultivariateBatchDetectionOptions</c>:
 <code>{
   dataSource: string, # Required.
   topContributorCount: number, # Required.
