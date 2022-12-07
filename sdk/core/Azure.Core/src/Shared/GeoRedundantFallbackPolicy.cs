@@ -125,17 +125,19 @@ namespace Azure.Core.Shared
         private void UpdateHost(HttpMessage message, string[] fallbackHosts, ref int fallbackIndex, ref long fallbackTicks)
         {
             long currentTicks = Volatile.Read(ref fallbackTicks);
+            int currentIndex = Volatile.Read(ref fallbackIndex);
+
             if (currentTicks != -1)
             {
                 long nowTicks = DateTimeOffset.UtcNow.Ticks;
                 if (nowTicks - currentTicks >= _primaryCoolDown.Ticks)
                 {
-                    Interlocked.Exchange(ref fallbackIndex, -1);
-                    Interlocked.Exchange(ref fallbackTicks, nowTicks);
+                    Interlocked.CompareExchange(ref fallbackIndex, -1, currentIndex);
+                    Interlocked.CompareExchange(ref fallbackTicks, nowTicks, currentTicks);
                 }
             }
 
-            var currentIndex = Volatile.Read(ref fallbackIndex);
+            currentIndex = Volatile.Read(ref fallbackIndex);
             message.Request.Uri.Host = currentIndex != -1 ? fallbackHosts[currentIndex] : GetPrimaryHost(message);
         }
 
