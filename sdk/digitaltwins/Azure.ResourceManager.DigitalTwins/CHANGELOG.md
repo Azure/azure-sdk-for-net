@@ -10,7 +10,6 @@
 
 ### Other Changes
 
-
 ## 1.0.0 (2022-09-13)
 
 This is the first stable release of the Digital Twins management library.
