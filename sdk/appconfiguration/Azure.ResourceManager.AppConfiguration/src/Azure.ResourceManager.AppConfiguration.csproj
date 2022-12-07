@@ -4,7 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.AppConfiguration</PackageId>
-    <Description>Azure management client SDK for Azure resource provider Microsoft.AppCon figuration.</Description>
+    <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.AppConfiguration.</Description>
     <PackageTags>azure;management;appconfiguration</PackageTags>
   </PropertyGroup>
 </Project>

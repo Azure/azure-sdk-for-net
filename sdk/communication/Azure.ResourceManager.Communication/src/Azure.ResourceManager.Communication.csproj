@@ -2,9 +2,7 @@
   <PropertyGroup>
     <Version>1.1.0-beta.6</Version>
     <PackageId>Azure.ResourceManager.Communication</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Microsoft.Communication.
-    </Description>
+    <Description>Microsoft Azure management client SDK for Azure resource provider Communication.</Description>
     <PackageTags>azure;management;communication</PackageTags>
   </PropertyGroup>
 </Project>
