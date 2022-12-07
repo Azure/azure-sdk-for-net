@@ -14,7 +14,9 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Blob Container Resource (no directories because of the flat namespace)
+    /// The Storage Resource class for the Blob Client. Directories are not supported
+    /// as blobs only support a flat namespace structure. See <see cref="BlobDirectoryStorageResourceContainer"/>
+    /// for directory support.
     /// </summary>
     public class BlobStorageResourceContainer : StorageResourceContainer
     {
@@ -22,10 +24,13 @@ namespace Azure.Storage.DataMovement.Blobs
         private BlobStorageResourceContainerOptions _options;
 
         /// <summary>
-        /// Constructor
+        /// The constructor to create an instance of the BlobStorageResourceContainer.
         /// </summary>
-        /// <param name="blobContainerClient"></param>
-        /// <param name="options"></param>
+        /// <param name="blobContainerClient">
+        /// The blob client which represents the storage container
+        /// to perform the transfer source or destination.
+        /// </param>
+        /// <param name="options">Options for the storage resource. See <see cref="BlobStorageResourceContainerOptions"/>.</param>
         public BlobStorageResourceContainer(BlobContainerClient blobContainerClient, BlobStorageResourceContainerOptions options = default)
         {
             _blobContainerClient = blobContainerClient;
@@ -33,35 +38,35 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Can produce uri
+        /// Defines whether the storage resource type can produce a URL.
         /// </summary>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
         /// <summary>
-        /// Returns the path
+        /// Gets the path of the storage resource.
         /// </summary>
         public override string Path => _blobContainerClient.Name;
 
         /// <summary>
-        /// Obtains the Uri of the blob directory resource, which means we can list
+        /// Gets the URL of the storage resource.
         /// </summary>
         public override Uri Uri => _blobContainerClient.Uri;
 
         /// <summary>
-        /// Creates new blob client based on the parent container client
+        /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">The path to the storage resource.</param>
         public override StorageResource GetChildStorageResource(string path)
         {
             return new BlockBlobStorageResource(_blobContainerClient.GetBlockBlobClient(string.Join("/", path)));
         }
 
         /// <summary>
-        /// Retrieves a single blob resoruce based on this respective resource.
+        /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath"></param>
-        /// <param name="length"></param>
-        /// <param name="type"></param>
+        /// <param name="encodedPath">A path as it would appear in a request URI.</param>
+        /// <param name="length">The content length of the blob.</param>
+        /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
@@ -131,7 +136,7 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Will throw because Blob container is considered root level.
+        /// Will throw an NotSupported exception because Blob container is considered the root level.
         /// </summary>
         /// <returns></returns>
         public override StorageResourceContainer GetParentStorageResourceContainer()
@@ -144,6 +149,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
+        /// <returns>List of the child resources in the storage container.</returns>
         public override async IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {

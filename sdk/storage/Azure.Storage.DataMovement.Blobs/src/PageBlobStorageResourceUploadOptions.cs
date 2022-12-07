@@ -7,18 +7,19 @@ using Azure.Storage.Blobs.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Optional parameters for uploading pages.
+    /// Optional parameters for uploading to a
+    /// PageBlobStorageResource.
     /// </summary>
     public class PageBlobStorageResourceUploadOptions
     {
         /// <summary>
-        /// Optional <see cref="PageBlobRequestConditions"/> to add
-        /// conditions on the upload of this Append Blob.
+        /// Optional. See <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on the upload of this page blob.
         /// </summary>
         public PageBlobRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
+        /// Optional. See <see cref="UploadTransferValidationOptions"/> for using transactional
         /// hashing on uploads.
         /// </summary>
         public UploadTransferValidationOptions TransferValidationOptions { get; set; }

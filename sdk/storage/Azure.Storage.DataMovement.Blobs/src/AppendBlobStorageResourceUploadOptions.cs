@@ -8,19 +8,19 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Optional parameters for upload for
-    /// Append Block Storage Resource
+    /// Optional parameters for uploading to a
+    /// AppendBlobStorageResource.
     /// </summary>
     public class AppendBlobStorageResourceUploadOptions
     {
         /// <summary>
-        /// Optional <see cref="AppendBlobRequestConditions"/> to add
-        /// conditions on the upload of this Append Blob.
+        /// Optional. See <see cref="AppendBlobRequestConditions"/> to add
+        /// conditions on the upload of this append Blob.
         /// </summary>
         public AppendBlobRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransferValidationOptions"/> for using additional
+        /// Optional. See <see cref="UploadTransferValidationOptions"/> for using additional
         /// transactional validation on block appending. Transactional checksums are
         /// discarded after use.
         ///
