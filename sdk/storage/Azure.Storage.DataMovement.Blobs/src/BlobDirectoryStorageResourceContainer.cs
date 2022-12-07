@@ -77,16 +77,16 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath">A path as it would appear in a request URI.</param>
+        /// <param name="path">A path as it would appear in a request URI.</param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        public override StorageResource GetChildStorageResource(string encodedPath)
+        public override StorageResource GetChildStorageResource(string path)
         {
             // Recreate the blobName using the existing parent directory path
             return new BlockBlobStorageResource(
-                _blobContainerClient.GetBlockBlobClient(System.IO.Path.Combine(_directoryPrefix, encodedPath)),
+                _blobContainerClient.GetBlockBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
                 new BlockBlobStorageResourceOptions()
                 {
                     CopyOptions = _options?.CopyOptions,
@@ -98,18 +98,18 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath">A path as it would appear in a request URI.</param>
+        /// <param name="path">A path as it would appear in a request URI.</param>
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        internal StorageResource GetChildStorageResource(string encodedPath, BlobType type = BlobType.Block)
+        internal StorageResource GetChildStorageResource(string path, BlobType type = BlobType.Block)
         {
             // Recreate the blobName using the existing parent directory path
             if (type == BlobType.Append)
             {
-                AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(encodedPath);
+                AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(path);
                 return new AppendBlobStorageResource(
                     client,
                     new AppendBlobStorageResourceOptions()
@@ -131,7 +131,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else if (type == BlobType.Page)
             {
-                PageBlobClient client = _blobContainerClient.GetPageBlobClient(encodedPath);
+                PageBlobClient client = _blobContainerClient.GetPageBlobClient(path);
                 return new PageBlobStorageResource(
                     client,
                     new PageBlobStorageResourceOptions()
@@ -153,7 +153,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else // (type == BlobType.Block)
             {
-                BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(encodedPath);
+                BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(path);
                 return new BlockBlobStorageResource(
                     client,
                     new BlockBlobStorageResourceOptions()
