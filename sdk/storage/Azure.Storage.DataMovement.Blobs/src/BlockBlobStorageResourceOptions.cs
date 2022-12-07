@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Storage.DataMovement;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -29,7 +29,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// When calling for <see cref="BlockBlobStorageResource.ReadStreamAsync(long, long?, System.Threading.CancellationToken)"/>
-        ///
         /// these options will apply to the blob service requests.
         /// </summary>
         public BlobStorageResourceDownloadOptions DownloadOptions { get; set; }

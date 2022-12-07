@@ -47,7 +47,13 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional. See <see cref="BlobRequestConditions"/> to add
         /// conditions on the copying of data from this source storage resource blob.
         /// </summary>
-        public BlobRequestConditions Conditions { get; set; }
+        public BlobRequestConditions SourceConditions { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the copying of data to this blob.
+        /// </summary>
+        public BlobRequestConditions DestinationConditions { get; set; }
 
         /// <summary>
         /// Optional. See <see cref="RehydratePriority"/>
@@ -78,5 +84,22 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Default is to replace.
         /// </summary>
         public BlobCopySourceTagsMode? CopySourceTagsMode { get; set; }
+
+        /// <summary>
+        /// The copy source blob properties behavior.  If true, the properties
+        /// of the source blob will be copied to the new blob.  Default is true.
+        ///
+        /// Only applies when the <see cref="CopyMethod"/> is set to <see cref="TransferCopyMethod.SyncCopy"/>.
+        /// </summary>
+        public bool? CopySourceBlobProperties { get; set; }
+
+        /// <summary>
+        /// Optional standard HTTP header properties that can be set for the
+        /// new block blob.
+        ///
+        /// Only applies when the <see cref="CopyMethod"/> is set to <see cref="TransferCopyMethod.SyncCopy"/>.
+        /// </summary>
+        public BlobHttpHeaders HttpHeaders { get; set; }
+
     }
 }
