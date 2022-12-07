@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Please note <see cref="LexicalNormalizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CustomNormalizer"/>.
     /// </summary>
-    public abstract partial class LexicalNormalizer
+    public partial class LexicalNormalizer
     {
         /// <summary> Initializes a new instance of LexicalNormalizer. </summary>
         /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        protected LexicalNormalizer(string name)
+        public LexicalNormalizer(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 

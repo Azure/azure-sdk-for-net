@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
     /// </summary>
-    public abstract partial class MediaJobOutput
+    public partial class MediaJobOutput
     {
         /// <summary> Initializes a new instance of MediaJobOutput. </summary>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
-        protected MediaJobOutput(long progress, MediaJobState state)
+        internal MediaJobOutput(long progress, MediaJobState state)
         {
             Progress = progress;
             State = state;

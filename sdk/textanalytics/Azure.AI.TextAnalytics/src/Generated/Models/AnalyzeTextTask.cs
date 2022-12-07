@@ -12,10 +12,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// Please note <see cref="AnalyzeTextTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AnalyzeTextDynamicClassificationInput"/>, <see cref="AnalyzeTextEntityLinkingInput"/>, <see cref="AnalyzeTextEntityRecognitionInput"/>, <see cref="AnalyzeTextKeyPhraseExtractionInput"/>, <see cref="AnalyzeTextLanguageDetectionInput"/>, <see cref="AnalyzeTextPiiEntitiesRecognitionInput"/> and <see cref="AnalyzeTextSentimentAnalysisInput"/>.
     /// </summary>
-    internal abstract partial class AnalyzeTextTask
+    internal partial class AnalyzeTextTask
     {
         /// <summary> Initializes a new instance of AnalyzeTextTask. </summary>
-        protected AnalyzeTextTask()
+        public AnalyzeTextTask()
         {
         }
 

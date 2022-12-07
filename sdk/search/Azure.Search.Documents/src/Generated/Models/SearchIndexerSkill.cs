@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Please note <see cref="SearchIndexerSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="WebApiSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkillV3"/>, <see cref="SentimentSkillV3"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/> and <see cref="OcrSkill"/>.
     /// </summary>
-    public abstract partial class SearchIndexerSkill
+    public partial class SearchIndexerSkill
     {
 
         /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>

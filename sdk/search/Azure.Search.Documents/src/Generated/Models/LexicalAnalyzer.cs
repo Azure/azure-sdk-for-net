@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Please note <see cref="LexicalAnalyzer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/> and <see cref="StopAnalyzer"/>.
     /// </summary>
-    public abstract partial class LexicalAnalyzer
+    public partial class LexicalAnalyzer
     {
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>

@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Please note <see cref="CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
     /// </summary>
-    public abstract partial class CognitiveServicesAccount
+    public partial class CognitiveServicesAccount
     {
 
         /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>

@@ -12,10 +12,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
     /// </summary>
-    public abstract partial class LinkedIntegrationRuntimeType
+    public partial class LinkedIntegrationRuntimeType
     {
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
-        protected LinkedIntegrationRuntimeType()
+        public LinkedIntegrationRuntimeType()
         {
         }
 

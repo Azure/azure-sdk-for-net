@@ -12,10 +12,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Please note <see cref="DataSourceCredentialPatch"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureSQLConnectionStringCredentialPatch"/>, <see cref="DataLakeGen2SharedKeyCredentialPatch"/>, <see cref="ServicePrincipalCredentialPatch"/> and <see cref="ServicePrincipalInKVCredentialPatch"/>.
     /// </summary>
-    internal abstract partial class DataSourceCredentialPatch
+    internal partial class DataSourceCredentialPatch
     {
         /// <summary> Initializes a new instance of DataSourceCredentialPatch. </summary>
-        protected DataSourceCredentialPatch()
+        public DataSourceCredentialPatch()
         {
         }
 
