@@ -115,33 +115,23 @@ namespace Azure.Core.Shared
         {
             public string[] Hosts { get; }
 
-            public int Index
-            {
-                get => Volatile.Read(ref _index);
-                set => _index = value;
-            }
+            public int Index => Volatile.Read(ref _index);
             private int _index;
-
-            public long Ticks
-            {
-                get => Volatile.Read(ref _ticks);
-                set => _ticks = value;
-            }
             private long _ticks;
             private readonly TimeSpan _cooldown;
 
             public Fallback(string[] hosts, TimeSpan cooldown)
             {
                 Hosts = hosts;
-                Index = -1;
-                Ticks = -1;
+                _index = -1;
+                _ticks = -1;
                 _cooldown = cooldown;
             }
 
             public void AdvanceIfNeeded(HttpMessage message)
             {
                 int currentIndex = Index;
-                long currentTicks = Ticks;
+                long currentTicks = Volatile.Read(ref _ticks);
 
                 // we should only advance if another thread hasn't already done so
                 if ((currentIndex == -1 && message.Request.Uri.Host!.Equals(GetPrimaryHost(message), StringComparison.Ordinal)) ||
@@ -165,7 +155,7 @@ namespace Azure.Core.Shared
 
             public void ResetPrimaryIfNeeded()
             {
-                long currentTicks = Ticks;
+                long currentTicks = Volatile.Read(ref _ticks);
                 int currentIndex = Index;
 
                 if (currentTicks != -1)
