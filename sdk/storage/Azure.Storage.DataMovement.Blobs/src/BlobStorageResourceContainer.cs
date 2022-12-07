@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a SAS URL.
+        /// Defines whether the storage resource type can produce a URL.
         /// </summary>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 
@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override string Path => _blobContainerClient.Name;
 
         /// <summary>
-        /// Gets the URL of the storage resource. If the URL can be obtained, this storage resource can be listed.
+        /// Gets the URL of the storage resource.
         /// </summary>
         public override Uri Uri => _blobContainerClient.Uri;
 
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath">A URL-encoded path as it would appear in a request URI.</param>
+        /// <param name="encodedPath">A path as it would appear in a request URI.</param>
         /// <param name="length">The content length of the blob.</param>
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <returns>

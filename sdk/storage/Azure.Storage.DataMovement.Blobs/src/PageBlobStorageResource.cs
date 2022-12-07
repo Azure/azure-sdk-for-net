@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override string Path => _blobClient.Name;
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a SAS URL.
+        /// Defines whether the storage resource type can produce a URL.
         /// </summary>
         public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
 

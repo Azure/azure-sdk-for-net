@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public TransferCopyMethod CopyMethod { get; set; }
 
         /// <summary>
-        /// See <see cref="AppendBlobRequestConditions"/> to apply when
+        /// Optional. See <see cref="AppendBlobRequestConditions"/> to apply when
         /// conditions on the copying of data to this append blob.
         /// </summary>
         public AppendBlobRequestConditions DestinationConditions { get; set; }
