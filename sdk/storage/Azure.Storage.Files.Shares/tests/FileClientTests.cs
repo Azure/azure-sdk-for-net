@@ -3830,7 +3830,7 @@ namespace Azure.Storage.Files.Shares.Tests
                         sourceUri: sourceUri,
                         range: destRange,
                         sourceRange: sourceRange),
-                    e => Assert.AreEqual(e.ErrorCode, "ResourceNotFound"));
+                    e => Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource"));
             }
         }
 
