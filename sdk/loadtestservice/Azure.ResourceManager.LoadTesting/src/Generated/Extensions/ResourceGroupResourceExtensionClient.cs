@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.LoadTesting
 
         /// <summary> Gets a collection of LoadTestingResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
-        public virtual LoadTestingCollection GetLoadTestings()
+        public virtual LoadTestingCollection GetAllLoadTesting()
         {
             return GetCachedClient(Client => new LoadTestingCollection(Client, Id));
         }

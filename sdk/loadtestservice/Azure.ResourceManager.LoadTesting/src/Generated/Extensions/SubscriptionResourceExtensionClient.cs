@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadTestingResource> GetLoadTestingsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadTestingResource> GetAllLoadTestingAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LoadTestingResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllLoadTesting");
                 scope.Start();
                 try
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LoadTesting
             }
             async Task<Page<LoadTestingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllLoadTesting");
                 scope.Start();
                 try
                 {
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadTestingResource> GetLoadTestings(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadTestingResource> GetAllLoadTesting(CancellationToken cancellationToken = default)
         {
             Page<LoadTestingResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllLoadTesting");
                 scope.Start();
                 try
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LoadTesting
             }
             Page<LoadTestingResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllLoadTesting");
                 scope.Start();
                 try
                 {

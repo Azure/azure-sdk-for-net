@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary>
     /// A class representing a collection of <see cref="LoadTestingResource" /> and their operations.
     /// Each <see cref="LoadTestingResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="LoadTestingCollection" /> instance call the GetLoadTestings method from an instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="LoadTestingCollection" /> instance call the GetLoadTesting method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
     public partial class LoadTestingCollection : ArmCollection, IEnumerable<LoadTestingResource>, IAsyncEnumerable<LoadTestingResource>
     {

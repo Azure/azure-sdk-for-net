@@ -18,6 +18,7 @@ modelerfour:
 
 irregular-plural-words:
   quota: quota
+  Testing: Testing
 
 rename-mapping:
   LoadTestResource: LoadTesting
