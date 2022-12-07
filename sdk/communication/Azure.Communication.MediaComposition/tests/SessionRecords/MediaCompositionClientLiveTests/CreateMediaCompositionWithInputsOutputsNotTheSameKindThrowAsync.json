@@ -6,17 +6,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "748",
+        "Content-Length": "865",
         "Content-Type": "application/json",
-        "traceparent": "00-3eb2094e80e03e429d1f3366246e7415-8fd03acd0af4cb4f-00",
+        "traceparent": "00-547ba4f34b5b174891cbbbe6b0d37571-61618a126d38ab4f-00",
         "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221207.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "90e0b1e00a8389e2b10fd73afaf6e4b3",
+        "x-ms-client-request-id": "899f6be4965dc00e3152ae3215405353",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-date": "Wed, 07 Dec 2022 17:46:45 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "id": "presentation",
+        "layout": {
+          "presenterId": "presenter",
+          "supportId": "support",
+          "kind": "presenter",
+          "resolution": {
+            "width": 1920,
+            "height": 1080
+          }
+        },
         "inputs": {
           "presenter": {
             "id": {
@@ -50,9 +59,9 @@
           }
         },
         "outputs": {
-          "acsGroupCall": {
-            "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193",
-            "kind": "groupCall"
+          "teamsMeeting": {
+            "teamsJoinUrl": "https://teamsJoinUrl",
+            "kind": "teamsMeeting"
           }
         }
       },
@@ -62,14 +71,14 @@
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 07 Dec 2022 17:46:45 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0htGQYwAAAADFtl9GdzKyS70weU4qg0rUWVZSMzExMDAwMTE1MDMxAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0htGQYwAAAAD\u002BvFf0rUR9Q7FOycK/3SN/WVZSMzExMDAwMTE1MDMxAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
-      "ResponseBody": "\u0022Layout is required to be defined for media composition\u0022"
+      "ResponseBody": "\u0022Call input and output must be of the same kind and referencing the same call. Call input kind is GroupCall and output kind is TeamsMeeting.\u0022"
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://mediacomposition-clientsdk-int.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "644672366"
+    "RandomSeed": "1759072662"
   }
 }
