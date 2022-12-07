@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DigitalTwins
 
             // invoke the operation
             string endpointName = "myServiceBus";
-            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsEndpointResourceProperties()
+            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties()
             {
                 EndpointType = EndpointType.ServiceBus,
                 AuthenticationType = DigitalTwinsAuthenticationType.KeyBased,
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DigitalTwins
 
             // invoke the operation
             string endpointName = "myServiceBus";
-            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsEndpointResourceProperties()
+            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties()
             {
                 EndpointType = EndpointType.ServiceBus,
                 AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DigitalTwins
 
             // invoke the operation
             string endpointName = "myServiceBus";
-            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsEndpointResourceProperties()
+            DigitalTwinsEndpointResourceData data = new DigitalTwinsEndpointResourceData(new DigitalTwinsServiceBusProperties()
             {
                 EndpointType = EndpointType.ServiceBus,
                 AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
