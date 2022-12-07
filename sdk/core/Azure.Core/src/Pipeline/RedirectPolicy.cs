@@ -8,15 +8,30 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed class RedirectPolicy : HttpPipelinePolicy
+    /// <summary>
+    /// A pipeline policy that detects a redirect response code and resends the request to the
+    /// location specified by the response.
+    /// </summary>
+    public sealed class RedirectPolicy : HttpPipelinePolicy
     {
         private readonly int _maxAutomaticRedirections;
+        private readonly bool _allowAutoRedirect = true;
 
-        public static RedirectPolicy Shared { get; } = new RedirectPolicy();
+        internal static RedirectPolicy Shared { get; } = new RedirectPolicy();
 
         private RedirectPolicy()
         {
             _maxAutomaticRedirections = 50;
+        }
+
+        /// <summary>
+        /// Sets a value that indicates whether redirects will be automatically followed for this message.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="allowAutoRedirect"></param>
+        public static void SetAllowAutoRedirect(HttpMessage message, bool allowAutoRedirect)
+        {
+            message.SetProperty(typeof(AllowRedirectsValueKey), allowAutoRedirect);
         }
 
         internal async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -35,6 +50,11 @@ namespace Azure.Core.Pipeline
 
             Request request = message.Request;
             Response response = message.Response;
+
+            if (!AllowAutoRedirect(message))
+            {
+                return;
+            }
 
             while ((redirectUri = GetUriForRedirect(request, message.Response)) != null)
             {
@@ -164,11 +184,13 @@ namespace Azure.Core.Pipeline
         internal static bool IsSecureWebSocketScheme(string scheme) =>
             string.Equals(scheme, "wss", StringComparison.OrdinalIgnoreCase);
 
+        /// <inheritdoc/>
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
+        /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
@@ -245,5 +267,17 @@ namespace Azure.Core.Pipeline
             }
             return input;
         }
+
+        private bool AllowAutoRedirect(HttpMessage message)
+        {
+            if (message.TryGetProperty(typeof(AllowRedirectsValueKey), out object? value))
+            {
+                return (bool)value!;
+            }
+
+            return _allowAutoRedirect;
+        }
+
+        private class AllowRedirectsValueKey { }
     }
 }
