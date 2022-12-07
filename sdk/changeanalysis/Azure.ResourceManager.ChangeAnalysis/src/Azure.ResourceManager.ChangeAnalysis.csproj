@@ -4,7 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ChangeAnalysis</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider ChangeAnalysis</Description>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Change Analysis.</Description>
     <PackageTags>azure;management;arm;resource manager;changeanalysis</PackageTags>
   </PropertyGroup>
 </Project>

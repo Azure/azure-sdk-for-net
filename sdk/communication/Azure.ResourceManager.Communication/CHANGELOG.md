@@ -150,18 +150,21 @@ Updated `Azure.ResourceManager.Communication` version.
 
 ## 1.0.0-beta.1 (2020-09-22)
 
-This is the first release of the management library for Azure Communication Services. For more information, please see the [README][read_me].
+### Breaking Changes
 
-Use the management library for Azure Communication Services to:
+New design of track 2 initial commit.
 
-- Create or update a resource
-- Get the keys for that resource
-- Delete a resource
+### General New Features
 
-For more information, please see the README.
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-This is a Public Preview version, so breaking changes are possible in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
 
-<!-- LINKS -->
-[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/README.md
+This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
