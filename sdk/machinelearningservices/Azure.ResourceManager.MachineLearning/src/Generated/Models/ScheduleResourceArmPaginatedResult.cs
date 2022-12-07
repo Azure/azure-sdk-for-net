@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of Schedule entities. </summary>
+    /// <summary>
+    /// A paginated list of Schedule entities.
+    /// Serialized Name: ScheduleResourceArmPaginatedResult
+    /// </summary>
     internal partial class ScheduleResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of ScheduleResourceArmPaginatedResult. </summary>
         internal ScheduleResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ScheduleData>();
+            Value = new ChangeTrackingList<MachineLearningScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of Schedule objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type Schedule. </param>
-        internal ScheduleResourceArmPaginatedResult(string nextLink, IReadOnlyList<ScheduleData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of Schedule objects. If null, there are no additional pages.
+        /// Serialized Name: ScheduleResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type Schedule.
+        /// Serialized Name: ScheduleResourceArmPaginatedResult.value
+        /// </param>
+        internal ScheduleResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningScheduleData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of Schedule objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of Schedule objects. If null, there are no additional pages.
+        /// Serialized Name: ScheduleResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type Schedule. </summary>
-        public IReadOnlyList<ScheduleData> Value { get; }
+        /// <summary>
+        /// An array of objects of type Schedule.
+        /// Serialized Name: ScheduleResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningScheduleData> Value { get; }
     }
 }

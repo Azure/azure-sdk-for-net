@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The VariableValues. </summary>
+    /// <summary> Variable values. </summary>
     public partial class VariableValues
     {
         /// <summary> Initializes a new instance of VariableValues. </summary>

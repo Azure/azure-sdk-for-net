@@ -24,8 +24,6 @@ namespace Azure.Communication.CallAutomation
         public string Text { get; }
         /// <summary> Source language locale to be played. </summary>
         public string SourceLocale { get; set; }
-        /// <summary> Target language locale to be played. </summary>
-        public string TargetLocale { get; set; }
         /// <summary> Voice gender type. </summary>
         public GenderType? VoiceGender { get; set; }
         /// <summary> Voice name to be played. </summary>
