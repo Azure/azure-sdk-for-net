@@ -97,6 +97,8 @@ namespace Azure.Storage.Files.Shares
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
         public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2021_12_02) { }
+        public bool? AllowTrailingDot { get { throw null; } set { } }
+        public bool? SourceAllowTrailingDot { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
