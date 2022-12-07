@@ -4,6 +4,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Chaos.Tests.TestDependencies;
 using Azure.ResourceManager.Chaos.Tests.TestDependencies.Utilities;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Chaos.Tests
         public async Task List()
         {
             var experimentList = await this.ExperimentCollection.GetAllAsync().ToListAsync().ConfigureAwait(false);
-            Assert.True(experimentList.Count > 0);
+            Assert.True(experimentList.Any());
         }
 
         [TestCase, Order(4)]
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Chaos.Tests
         [RecordedTest]
         public async Task StartAndCheckStatus()
         {
-            var experimentName = $"{ExperimentNamePrefix}execution-{this.VmssId}";
+            var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
             var startResponse = await experimentResourceResponse.Value.StartAsync().ConfigureAwait(false);
             Assert.AreEqual(experimentName, startResponse.Value.Name);
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Chaos.Tests
         [RecordedTest]
         public async Task Cancel()
         {
-            var experimentName = $"{ExperimentNamePrefix}execution-{this.VmssId}";
+            var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
             var cancelResponse = await experimentResourceResponse.Value.CancelAsync().ConfigureAwait(false);
             Assert.AreEqual(experimentName, cancelResponse.Value.Name);
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.Chaos.Tests
         [RecordedTest]
         public async Task ListAndGetDetails()
         {
-            var experimentName = $"{ExperimentNamePrefix}execution-{this.VmssId}";
+            var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
             var detailsList = await experimentResourceResponse.Value.GetExperimentExecutionDetails().ToListAsync().ConfigureAwait(false);
-            Assert.True(detailsList.Count > 0);
+            Assert.True(detailsList.Any());
 
             var detailId = UrlUtility.GetDetailsId(detailsList.FirstOrDefault().Id);
             var experimentDetailResponse = await experimentResourceResponse.Value.GetExperimentExecutionDetailAsync(detailId).ConfigureAwait(false);
