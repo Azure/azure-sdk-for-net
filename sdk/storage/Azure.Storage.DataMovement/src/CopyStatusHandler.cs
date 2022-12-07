@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement
             _updateTransferStatus = behaviors.UpdateTransferStatus
                 ?? throw Errors.ArgumentNull(nameof(behaviors.UpdateTransferStatus));
 
-            _getStatusHandler += AddStatusEvent();
+            _getStatusHandler += GetStatusEvent;
         }
 
         public void Dispose()
@@ -59,37 +59,34 @@ namespace Azure.Storage.DataMovement
 
         public void Cleanup()
         {
-            _getStatusHandler -= AddStatusEvent();
+            _getStatusHandler -= GetStatusEvent;
         }
 
-        public SyncAsyncEventHandler<CopyStatusEventArgs> AddStatusEvent()
+        public async Task GetStatusEvent(CopyStatusEventArgs args)
         {
-            return async (CopyStatusEventArgs args) =>
+            // Use progress tracker to get the amount of bytes transferred
+            // Nothing needs to be done except update the bytes transfered if it was updated.
+            _reportProgressInBytes(args.CurrentBytesTransferred);
+            if (args.CopyStatus == ServiceCopyStatus.Success)
             {
-                // Use progress tracker to get the amount of bytes transferred
-                // Nothing needs to be done except update the bytes transfered if it was updated.
-                _reportProgressInBytes(args.CurrentBytesTransferred);
-                if (args.CopyStatus == ServiceCopyStatus.Success)
-                {
-                    // Add CommitBlockList task to the channel
-                    await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
-                }
-                else if (args.CopyStatus == ServiceCopyStatus.Aborted)
-                {
-                    await _invokeFailedHandler(
-                            new Exception($"Error: Copy was aborted. Copy Id: {args.CopyId}")).ConfigureAwait(false);
-                }
-                else if (args.CopyStatus == ServiceCopyStatus.Failed)
-                {
-                    await _invokeFailedHandler(
-                            new Exception($"Error: Copy Failed. Copy Id: {args.CopyId}")).ConfigureAwait(false);
-                }
-                else // ServiceCopyStatus.Pending
-                {
-                    // If it's still pending let's queue up another task
-                    await _queueGetPropertiesTask().ConfigureAwait(false);
-                }
-            };
+                // Add CommitBlockList task to the channel
+                await _updateTransferStatus(StorageTransferStatus.Completed).ConfigureAwait(false);
+            }
+            else if (args.CopyStatus == ServiceCopyStatus.Aborted)
+            {
+                await _invokeFailedHandler(
+                        new Exception($"Error: Copy was aborted. Copy Id: {args.CopyId}")).ConfigureAwait(false);
+            }
+            else if (args.CopyStatus == ServiceCopyStatus.Failed)
+            {
+                await _invokeFailedHandler(
+                        new Exception($"Error: Copy Failed. Copy Id: {args.CopyId}")).ConfigureAwait(false);
+            }
+            else // ServiceCopyStatus.Pending
+            {
+                // If it's still pending let's queue up another task
+                await _queueGetPropertiesTask().ConfigureAwait(false);
+            }
         }
 
         public async Task InvokeEvent(CopyStatusEventArgs args)

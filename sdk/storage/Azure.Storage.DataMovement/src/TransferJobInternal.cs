@@ -228,7 +228,7 @@ namespace Azure.Storage.DataMovement
         {
             if (JobPartStatusEvents != default)
             {
-                JobPartStatusEvents -= JobPartEvent();
+                JobPartStatusEvents -= JobPartEvent;
             }
         }
 
@@ -269,31 +269,28 @@ namespace Azure.Storage.DataMovement
         /// In order to properly propagate the transfer status events of each job part up
         /// until all job parts have completed.
         /// </summary>
-        public SyncAsyncEventHandler<TransferStatusEventArgs> JobPartEvent()
+        public async Task JobPartEvent(TransferStatusEventArgs args)
         {
-            return async (TransferStatusEventArgs args) =>
+            if (args.StorageTransferStatus == StorageTransferStatus.Completed
+                && _transferStatus < StorageTransferStatus.Completed)
             {
-                if (args.StorageTransferStatus == StorageTransferStatus.Completed
-                    && _transferStatus < StorageTransferStatus.Completed)
+                // The respective job part has completed, however does not mean we set
+                // the entire job to completed.
+                if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
                 {
-                    // The respective job part has completed, however does not mean we set
-                    // the entire job to completed.
-                    if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
-                    {
-                        // TODO: Change to RaiseAsync
-                        await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
-                    }
+                    // TODO: Change to RaiseAsync
+                    await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
                 }
-                else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
-                        _transferStatus == StorageTransferStatus.Paused)
-                {
-                    await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
-                }
-                else if (args.StorageTransferStatus > _transferStatus)
-                {
-                    await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
-                }
-            };
+            }
+            else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
+                    _transferStatus == StorageTransferStatus.Paused)
+            {
+                await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
+            }
+            else if (args.StorageTransferStatus > _transferStatus)
+            {
+                await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
+            }
         }
 
         public async Task OnJobStatusChangedAsync(StorageTransferStatus status)

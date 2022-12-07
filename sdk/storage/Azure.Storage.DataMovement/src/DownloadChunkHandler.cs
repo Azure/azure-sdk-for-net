@@ -117,7 +117,7 @@ namespace Azure.Storage.DataMovement
             // Set size of the list of null streams
             _rangesCompleted = new ConcurrentDictionary<long, string>();
 
-            _downloadChunkEventHandler += AddDownloadChunkEvent();
+            _downloadChunkEventHandler += AddDownloadChunkEvent;
         }
 
         public void Dispose()
@@ -127,83 +127,69 @@ namespace Azure.Storage.DataMovement
 
         public void CleanUp()
         {
-            _downloadChunkEventHandler -= AddDownloadChunkEvent();
+            _downloadChunkEventHandler -= AddDownloadChunkEvent;
         }
 
-        public SyncAsyncEventHandler<DownloadRangeEventArgs> AddDownloadChunkEvent()
+        public async Task AddDownloadChunkEvent(DownloadRangeEventArgs args)
         {
-            return async (DownloadRangeEventArgs args) =>
+            if (args.Success && !_cancellationToken.IsCancellationRequested)
             {
-                if (args.Success && !_cancellationToken.IsCancellationRequested)
+                long currentRangeOffset = _ranges[_currentRangeIndex].Offset;
+                if (currentRangeOffset < args.Offset)
                 {
-                    long currentRangeOffset = _ranges[_currentRangeIndex].Offset;
-                    if (currentRangeOffset < args.Offset)
+                    // One of the chunks finished downloading before the chunk(s)
+                    // before it (early bird, or the last chunk)
+                    // Save the chunk to a temporary file to append later
+                    string chunkFilePath = Path.GetTempFileName();
+                    using (Stream chunkContent = args.Result)
                     {
-                        // One of the chunks finished downloading before the chunk(s)
-                        // before it (early bird, or the last chunk)
-                        // Save the chunk to a temporary file to append later
-                        string chunkFilePath = Path.GetTempFileName();
-                        using (Stream chunkContent = args.Result)
-                        {
-                            await _copyToChunkFile(chunkFilePath, chunkContent).ConfigureAwait(false);
-                        }
-                        if (!_rangesCompleted.TryAdd(args.Offset, chunkFilePath))
-                        {
-                            // Throw an error here that we were unable to idenity the
-                            // the range that has come back to us. We should never see this error
-                            // since we were the ones who calculated the range.
-                            await InvokeFailedEvent(
-                                new ArgumentOutOfRangeException(
-                                    nameof(args.Offset),
-                                    args.Offset,
-                                    $"Cannot find offset returned by Successful Download Range" +
-                                    $"in the expected Ranges: \"{args.Offset}\""))
-                            .ConfigureAwait(false);
-                        }
+                        await _copyToChunkFile(chunkFilePath, chunkContent).ConfigureAwait(false);
                     }
-                    else if (currentRangeOffset == args.Offset)
+                    if (!_rangesCompleted.TryAdd(args.Offset, chunkFilePath))
                     {
-                        // Start Copying the response to the file stream and any other chunks after
-                        // Most of the time we will always get the next chunk first so the loop
-                        // on averages runs once.
-                        using (Stream content = args.Result)
-                        {
-                            await _copyToDestinationFile(
-                                args.Offset,
-                                args.BytesTransferred,
-                                content,
-                                _expectedLength).ConfigureAwait(false);
-                        }
-                        UpdateBytesAndRange(args.BytesTransferred);
-
-                        await AppendEarlyChunksToFile().ConfigureAwait(false);
-
-                        // Check if we finished downloading the blob
-                        if (_bytesTransferred == _expectedLength)
-                        {
-                            await _queueCompleteFileDownload().ConfigureAwait(false);
-                        }
-                    }
-                    else
-                    {
-                        // We should never reach this point because that means
-                        // the range that came back was less than the next range that is supposed
-                        // to be copied to the file
+                        // Throw an error here that we were unable to idenity the
+                        // the range that has come back to us. We should never see this error
+                        // since we were the ones who calculated the range.
                         await InvokeFailedEvent(
-                            new ArgumentOutOfRangeException(
-                                nameof(args.Offset),
-                                args.Offset,
-                                $"Offset returned by Successful Download Range" +
-                                $"was not in the expected Ranges: \"{args.Offset}\""))
+                            new ArgumentException($"Cannot find offset returned by Successful Download Range" +
+                                $"in the expected Ranges: \"{args.Offset}\""))
                         .ConfigureAwait(false);
                     }
                 }
-            };
-        }
+                else if (currentRangeOffset == args.Offset)
+                {
+                    // Start Copying the response to the file stream and any other chunks after
+                    // Most of the time we will always get the next chunk first so the loop
+                    // on averages runs once.
+                    using (Stream content = args.Result)
+                    {
+                        await _copyToDestinationFile(
+                            args.Offset,
+                            args.BytesTransferred,
+                            content,
+                            _expectedLength).ConfigureAwait(false);
+                    }
+                    UpdateBytesAndRange(args.BytesTransferred);
 
-        public void AddEvent(SyncAsyncEventHandler<DownloadRangeEventArgs> stageBlockEvent)
-        {
-            _downloadChunkEventHandler += stageBlockEvent;
+                    await AppendEarlyChunksToFile().ConfigureAwait(false);
+
+                    // Check if we finished downloading the blob
+                    if (_bytesTransferred == _expectedLength)
+                    {
+                        await _queueCompleteFileDownload().ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    // We should never reach this point because that means
+                    // the range that came back was less than the next range that is supposed
+                    // to be copied to the file
+                    await InvokeFailedEvent(
+                        new ArgumentException($"Offset returned by Successful Download Range" +
+                            $"was not in the expected Ranges: \"{args.Offset}\""))
+                    .ConfigureAwait(false);
+                }
+            }
         }
 
         public async Task InvokeEvent(DownloadRangeEventArgs args)

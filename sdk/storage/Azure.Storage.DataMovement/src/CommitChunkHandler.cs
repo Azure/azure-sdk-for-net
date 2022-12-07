@@ -77,9 +77,9 @@ namespace Azure.Storage.DataMovement
             _transferType = transferType;
             if (_transferType == TransferType.Sequential)
             {
-                _commitBlockHandler += AddQueueBlockEvent();
+                _commitBlockHandler += GetQueueBlockEvent;
             }
-            _commitBlockHandler += AddCommitBlockEvent();
+            _commitBlockHandler += GetCommitBlockEvent;
         }
 
         public void Dispose()
@@ -91,67 +91,56 @@ namespace Azure.Storage.DataMovement
         {
             if (_transferType == TransferType.Sequential)
             {
-                _commitBlockHandler -= AddQueueBlockEvent();
+                _commitBlockHandler -= GetQueueBlockEvent;
             }
-            _commitBlockHandler -= AddCommitBlockEvent();
+            _commitBlockHandler -= GetCommitBlockEvent;
         }
 
-        public SyncAsyncEventHandler<StageChunkEventArgs> AddCommitBlockEvent()
+        private async Task GetCommitBlockEvent(StageChunkEventArgs args)
         {
-            return async (StageChunkEventArgs args) =>
+            if (args.Success)
             {
-                if (args.Success)
+                Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
+                // Use progress tracker to get the amount of bytes transferred
+                if (_bytesTransferred == _expectedLength)
                 {
-                    Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
-                    // Use progress tracker to get the amount of bytes transferred
-                    if (_bytesTransferred == _expectedLength)
-                    {
-                        // Add CommitBlockList task to the channel
-                        await _queueCommitBlockTask().ConfigureAwait(false);
-                    }
-                    else if (_bytesTransferred > _expectedLength)
-                    {
-                        await _updateTransferStatus(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
-                        await _invokeFailedEventHandler(
-                                new Exception("Unexpected Error: Amount of bytes transferred exceeds expected length.")).ConfigureAwait(false);
-                    }
-                    _reportProgressInBytes(_bytesTransferred);
+                    // Add CommitBlockList task to the channel
+                    await _queueCommitBlockTask().ConfigureAwait(false);
                 }
-                else
+                else if (_bytesTransferred > _expectedLength)
                 {
-                    // Set status to completed
-                    await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
+                    await _updateTransferStatus(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
+                    await _invokeFailedEventHandler(
+                            new Exception("Unexpected Error: Amount of bytes transferred exceeds expected length.")).ConfigureAwait(false);
                 }
-            };
-        }
-
-        public SyncAsyncEventHandler<StageChunkEventArgs> AddQueueBlockEvent()
-        {
-            return async (StageChunkEventArgs args) =>
+                _reportProgressInBytes(_bytesTransferred);
+            }
+            else
             {
-                if (args.Success)
-                {
-                    long oldOffset = args.Offset;
-                    long newOffset = oldOffset + _blockSize;
-                    if (newOffset < _expectedLength)
-                    {
-                        long blockLength = (newOffset + _blockSize < _expectedLength) ?
-                                        _blockSize :
-                                        _expectedLength - newOffset;
-                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    // Set status to completed with failed
-                    await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
-                }
-            };
+                // Set status to completed
+                await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
+            }
         }
 
-        public void AddEvent(SyncAsyncEventHandler<StageChunkEventArgs> stageBlockEvent)
+        private async Task GetQueueBlockEvent(StageChunkEventArgs args)
         {
-            _commitBlockHandler += stageBlockEvent;
+            if (args.Success)
+            {
+                long oldOffset = args.Offset;
+                long newOffset = oldOffset + _blockSize;
+                if (newOffset < _expectedLength)
+                {
+                    long blockLength = (newOffset + _blockSize < _expectedLength) ?
+                                    _blockSize :
+                                    _expectedLength - newOffset;
+                    await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
+                }
+            }
+            else
+            {
+                // Set status to completed with failed
+                await _invokeFailedEventHandler(new Exception("Failure on Stage Block")).ConfigureAwait(false);
+            }
         }
 
         public async Task InvokeEvent(StageChunkEventArgs args)
