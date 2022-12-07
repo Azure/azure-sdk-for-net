@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -89,11 +90,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 var data = GetRandomBuffer(size);
-                using (var stream = new MemoryStream(data))
-                {
-                    using FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate);
-                    await stream.CopyToAsync(fileStream);
-                }
+                File.WriteAllBytes(path, data);
 
                 // Act
                 LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
@@ -122,11 +119,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 var length = Constants.KB;
                 var data = GetRandomBuffer(length);
-                using (var stream = new MemoryStream(data))
-                {
-                    using FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate);
-                    await stream.CopyToAsync(fileStream);
-                }
+                File.WriteAllBytes(path, data);
 
                 // Act
                 var readPosition = 5;
