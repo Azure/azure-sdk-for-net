@@ -5,11 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
-    public abstract class ArmOperation : Operation
+    public class ArmOperation : Operation
     {
+        private readonly OperationInternal _operation;
+
+        /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
+        protected ArmOperation()
+        {
+        }
+
+        internal ArmOperation(Response response)
+        {
+            _operation = OperationInternal.Succeeded(response);
+        }
+
+        internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string operationTypeName)
+        {
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, operationTypeName, fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="ArmOperationRehydration"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The id of the ArmOperation. </param>
+        public ArmOperation(ArmClient client, string id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(client, nameof(client));
+
+            var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id, out string finalResponse);
+            // TODO: Get OperationTypeName from id
+            // TODO: Get optionsNamespace and providerNamespace from id?
+            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, "OperationTypeName", fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        /// <inheritdoc />
+        public override string Id => _operation.GetOperationId();
+
+        /// <inheritdoc />
+        public override bool HasCompleted => _operation.HasCompleted;
+
+        /// <inheritdoc />
+        public override Response GetRawResponse() => _operation.RawResponse;
+
+        /// <inheritdoc />
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

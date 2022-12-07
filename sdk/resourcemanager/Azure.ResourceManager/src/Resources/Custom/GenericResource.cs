@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
-    public partial class GenericResource : ArmResource
+    public partial class GenericResource : ArmResource, IOperationSourceProvider<GenericResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
@@ -67,6 +67,8 @@ namespace Azure.ResourceManager.Resources
                 return _data;
             }
         }
+
+        static IOperationSource<GenericResource> IOperationSourceProvider<GenericResource>.GetOperationSource(ArmClient client) => new GenericResourceOperationSource(client);
 
 #pragma warning disable CA1801 // Review unused parameters
         internal static void ValidateResourceId(ResourceIdentifier id)

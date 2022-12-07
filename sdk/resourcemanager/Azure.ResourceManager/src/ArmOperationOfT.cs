@@ -5,11 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
-    public abstract class ArmOperation<T> : Operation<T>
+    public class ArmOperation<T> : Operation<T>
     {
+        private readonly OperationInternal<T> _operation;
+
+        /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
+        protected ArmOperation()
+        {
+        }
+
+        internal ArmOperation(Response<T> response)
+        {
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+        }
+
+        internal ArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string resourceTypeName)
+        {
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, resourceTypeName, fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        /// <summary> Initializes a new instance of ArmOperation. </summary>
+        public ArmOperation(ArmClient client, string id)
+        {
+            var method = typeof(T).GetMethods(BindingFlags.NonPublic | BindingFlags.Static).FirstOrDefault(m => m.Name.EndsWith("GetOperationSource"));
+            if (method == null)
+                throw new InvalidOperationException($"The type {nameof(T)} does not implement the GetOperationSource method.");
+            var source = method.Invoke(null, new object[] { client }) as IOperationSource<T>;
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
+            // TODO: Get OperationTypeName from id
+            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
+            _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "OperationTypeName", fallbackStrategy: new ExponentialDelayStrategy());
+        }
+
+        /// <inheritdoc />
+        public override string Id => _operation.GetOperationId();
+
+        /// <inheritdoc />
+        public override T Value => _operation.Value;
+
+        /// <inheritdoc />
+        public override bool HasValue => _operation.HasValue;
+
+        /// <inheritdoc />
+        public override bool HasCompleted => _operation.HasCompleted;
+
+        /// <inheritdoc />
+        public override Response GetRawResponse() => _operation.RawResponse;
+
+        /// <inheritdoc />
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<T> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

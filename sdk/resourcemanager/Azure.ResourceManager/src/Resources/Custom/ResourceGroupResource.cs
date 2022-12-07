@@ -17,8 +17,11 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a ResourceGroupResource along with the instance operations that can be performed on it. </summary>
-    public partial class ResourceGroupResource : ArmResource
+    public partial class ResourceGroupResource : ArmResource, IOperationSourceProvider<ResourceGroupResource>
     {
+        /// <inheritdoc/>
+        static IOperationSource<ResourceGroupResource> IOperationSourceProvider<ResourceGroupResource>.GetOperationSource(ArmClient client) => new ResourceGroupOperationSource(client);
+
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_ListByResourceGroup

@@ -301,11 +301,8 @@ namespace Azure.Core
 
         public virtual string GetOperationId()
         {
-            try
-            {
-                return _operation.GetOperationId();
-            }
-            catch (NotImplementedException)
+            var id = _operation.GetOperationId();
+            if (string.IsNullOrEmpty(id))
             {
                 var serializeOptions = new JsonSerializerOptions { Converters = { new OperationInternal.StreamConverter() } };
                 var lroDetails = new Dictionary<string, string>()
@@ -313,8 +310,9 @@ namespace Azure.Core
                     ["FinalResponse"] = BinaryData.FromObjectAsJson<Response>(_rawResponse!, serializeOptions).ToString()
                 };
                 var lroData = BinaryData.FromObjectAsJson(lroDetails);
-                return Convert.ToBase64String(lroData.ToArray());
+                id = Convert.ToBase64String(lroData.ToArray());
             }
+            return id;
         }
 
         private static Response GetResponseFromState(OperationState<T> state)
@@ -332,10 +330,7 @@ namespace Azure.Core
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
 
-            public string GetOperationId()
-            {
-                throw new NotImplementedException();
-            }
+            public string GetOperationId() => string.Empty;
         }
     }
 
