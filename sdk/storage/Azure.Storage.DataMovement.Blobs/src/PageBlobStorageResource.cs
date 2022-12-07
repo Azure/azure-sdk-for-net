@@ -145,9 +145,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public override async Task WriteFromStreamAsync(
             Stream stream,
+            long streamLength,
             bool overwrite,
             long position = 0,
-            long? streamLength = default,
             long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
