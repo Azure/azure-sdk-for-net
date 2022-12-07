@@ -30,6 +30,7 @@ namespace Azure.Communication.CallAutomation
     public partial class AnswerCallOptions
     {
         public AnswerCallOptions(string incomingCallContext, System.Uri callbackUri) { }
+        public string AzureCognitiveServiceDomainName { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
@@ -351,6 +352,7 @@ namespace Azure.Communication.CallAutomation
     public partial class CreateCallOptions
     {
         public CreateCallOptions(Azure.Communication.CallAutomation.CallSource callSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
+        public string AzureCognitiveServiceDomainName { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallSource CallSource { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
@@ -573,10 +575,13 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.ReasonCode CompletedSuccessfully { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode PlayDownloadFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode PlayInvalidFileFormat { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeDtmfOptionMatched { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeInitialSilenceTimedOut { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeInterDigitTimedOut { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeMaxDigitsReceived { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizePlayPromptFailed { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeSpeechOptionMatched { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeSpeechOptionNotMatched { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeStopToneDetected { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode UnspecifiedError { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.ReasonCode other) { throw null; }
@@ -799,7 +804,6 @@ namespace Azure.Communication.CallAutomation
     {
         public TextSource(string text) { }
         public string SourceLocale { get { throw null; } set { } }
-        public string TargetLocale { get { throw null; } set { } }
         public string Text { get { throw null; } }
         public Azure.Communication.CallAutomation.GenderType? VoiceGender { get { throw null; } set { } }
         public string VoiceName { get { throw null; } set { } }
