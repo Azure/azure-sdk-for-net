@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -115,10 +116,19 @@ namespace Azure.Core.Dynamic
                     break;
                 default:
                     Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
-                    string json = JsonSerializer.Serialize(value, inputType, options);
-                    JsonElement e = JsonDocument.Parse(json).RootElement;
-                    _kind = e.ValueKind;
-                    InitFromElement(e);
+
+                    // TODO: Profile to determine if this is the best approach to serialize/parse
+                    using (var stream = new MemoryStream())
+                    {
+                        using (var writer = new Utf8JsonWriter(stream))
+                        {
+                            JsonSerializer.Serialize(writer, value, inputType, options);
+                            stream.Position = 0;
+                            JsonElement e = JsonDocument.Parse(stream).RootElement;
+                            _kind = e.ValueKind;
+                            InitFromElement(e);
+                        }
+                    }
                     break;
             }
         }

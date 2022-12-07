@@ -37,6 +37,7 @@ namespace Azure.Data.AppConfiguration.Performance
         {
             return _jsonData.a.b;
         }
+
         [Benchmark]
         public int ReadNewtonsoftJson()
         {
