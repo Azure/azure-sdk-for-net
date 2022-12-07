@@ -15,6 +15,7 @@ namespace Azure.Core.Pipeline
     public sealed class RedirectPolicy : HttpPipelinePolicy
     {
         private readonly int _maxAutomaticRedirections;
+        private readonly bool _allowAutoRedirect = true;
 
         internal static RedirectPolicy Shared { get; } = new RedirectPolicy();
 
@@ -50,8 +51,11 @@ namespace Azure.Core.Pipeline
             Request request = message.Request;
             Response response = message.Response;
 
-            bool allowAutoRedirect = GetAllowAutoRedirectValue(message);
-            if (!allowAutoRedirect) return;
+            if (!AllowAutoRedirect(message))
+            {
+                return;
+            }
+
             while ((redirectUri = GetUriForRedirect(request, message.Response)) != null)
             {
                 redirectCount++;
@@ -180,20 +184,13 @@ namespace Azure.Core.Pipeline
         internal static bool IsSecureWebSocketScheme(string scheme) =>
             string.Equals(scheme, "wss", StringComparison.OrdinalIgnoreCase);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             return ProcessAsync(message, pipeline, true);
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
+        /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
@@ -271,16 +268,14 @@ namespace Azure.Core.Pipeline
             return input;
         }
 
-        private static bool GetAllowAutoRedirectValue(HttpMessage message)
+        private bool AllowAutoRedirect(HttpMessage message)
         {
-            bool allowAutoRedirect = true;
-
             if (message.TryGetProperty(typeof(AllowRedirectsValueKey), out object? value))
             {
-                allowAutoRedirect = (bool)value!;
+                return (bool)value!;
             }
 
-            return allowAutoRedirect;
+            return _allowAutoRedirect;
         }
 
         private class AllowRedirectsValueKey { }

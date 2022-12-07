@@ -555,7 +555,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             message.Request.Method = RequestMethod.Get;
             message.Request.Uri = uri;
             message.Request.Headers.Add("Accept", "application/octet-stream");
-            RedirectPolicy.AllowAutoRedirect(message, false);
+            RedirectPolicy.SetAllowAutoRedirect(message, false);
 
             await client.Pipeline.SendAsync(message, CancellationToken.None);
             var response = message.Response;
