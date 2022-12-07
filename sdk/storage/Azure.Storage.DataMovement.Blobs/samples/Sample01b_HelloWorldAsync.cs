@@ -33,6 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string sourceLocalPath = CreateTempFile(SampleFileContent);
 
+            #region Snippet:UploadSingle_ConnectionStringAsync
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
@@ -67,6 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationResource: new BlockBlobStorageResource(destinationBlob));
                 await dataTransfer.AwaitCompletion();
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -86,6 +88,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempPath();
             string downloadPath2 = CreateTempPath();
 
+            #region Snippet:DownloadSingle_SharedKeyAuthAsync
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -148,6 +151,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         }),
                     destinationResource: new LocalFileStorageResource(downloadPath2));
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -174,6 +178,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string sourcePath2 = CreateSampleDirectoryTree();
 
+            #region Snippet:UploadDirectory_SasAsync
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -233,6 +238,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationResource: new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")),
                     transferOptions: options);
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -261,6 +267,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             string logFile = Path.GetTempFileName();
 
+            #region Snippet:UploadDirectory_CompletedEventHandler
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -319,6 +326,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     new LocalDirectoryStorageResourceContainer(sourcePath),
                     new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")));
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -347,6 +355,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             string logFile = Path.GetTempFileName();
 
+            #region Snippet:UploadDirectory_EventHandler_SasAsync
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -422,6 +431,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     new LocalDirectoryStorageResourceContainer(sourcePath),
                     new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")));
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -449,6 +459,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateSampleDirectoryTree();
             string downloadPath2 = CreateSampleDirectoryTree();
 
+            #region Snippet:DownloadDirectory_EventHandler_ActiveDirectoryAuthAsync
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
             TokenCredential credential =
@@ -512,6 +523,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     sourceDirectory2,
                     destinationDirectory2);
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -527,6 +539,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // Create a temporary Lorem Ipsum file on disk that we can upload
             string originalPath = CreateTempFile(SampleFileContent);
 
+            #region Snippet:CopySingle_ConnectionStringAsync
             // Get a connection string to our Azure Storage account.  You can
             // obtain your connection string from the Azure Portal (click
             // Access Keys under Settings in the Portal Storage account blade)
@@ -567,6 +580,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
                 await transfer.AwaitCompletion(cancellationTokenSource.Token);
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -586,6 +600,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempPath();
             string downloadPath2 = CreateTempPath();
 
+            #region Snippet:CopyDirectory
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -646,6 +661,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     sourceDirectory1,
                     destinationDirectory1);
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -666,6 +682,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempDirectoryPath();
             string downloadPath2 = CreateTempDirectoryPath();
 
+            #region Snippet:ErrorHandlingPermissions
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -746,6 +763,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationDirectory2);
                 jobProperties.EnsureCompleted();
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -762,6 +780,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempDirectoryPath();
             string downloadPath2 = CreateTempDirectoryPath();
 
+            #region Snippet:PauseAndResumeAllJobs
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -842,6 +861,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 //  When they decide to allow the transferManager to resume
                 //await transferManager.ResumeAllTransferJobsAsync();
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -859,6 +879,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath = CreateTempDirectoryPath();
             string downloadPath2 = CreateTempDirectoryPath();
 
+            #region Snippet:PauseAndResumeOneJob
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -948,6 +969,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationDirectory2,
                     resumeOptions);
             }
+            #endregion
             finally
             {
                 await container.DeleteIfExistsAsync();
@@ -965,6 +987,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath2 = CreateTempDirectoryPath();
             string downloadPath3 = CreateTempDirectoryPath();
 
+            #region Snippet:PauseAllJobsResumeOneJob
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -1063,6 +1086,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 }
             }
             finally
+            #endregion
             {
                 await container.DeleteIfExistsAsync();
             }
@@ -1093,6 +1117,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string downloadPath2 = CreateTempDirectoryPath();
             string checkpointerPath = CreateTempDirectoryPath();
 
+            #region Snippet:ResumeFromStoppedJobs
             // Get a Storage account name, shared key, and endpoint Uri.
             //
             // You can obtain both from the Azure Portal by clicking Access
@@ -1192,6 +1217,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     }
                 }
             }
+            #endregion
             finally
             {
                 await container1.DeleteIfExistsAsync();
