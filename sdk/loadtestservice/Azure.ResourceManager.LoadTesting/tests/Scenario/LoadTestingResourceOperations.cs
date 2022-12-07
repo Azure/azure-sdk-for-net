@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             var resourceGroupName = Recording.GenerateAssetName("SdkRg");
             await TryRegisterResourceGroupAsync(ResourceGroupsOperations, LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION, resourceGroupName);
 
-            _loadTestResourceCollection = (await GetResourceGroupAsync(resourceGroupName)).GetLoadTestings();
+            _loadTestResourceCollection = (await GetResourceGroupAsync(resourceGroupName)).GetAllLoadTesting();
             _loadTestResourceData = new LoadTestingData(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION);
         }
 
