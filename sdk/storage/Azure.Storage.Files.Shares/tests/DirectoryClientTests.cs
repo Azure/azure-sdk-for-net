@@ -312,28 +312,42 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2022_11_02)]
-        public async Task CreateAsync_TrailingDot()
+        public async Task CreateAsync_TrailingDot(bool? allowTrailingDot)
         {
             ShareClientOptions options = GetOptions();
-            options.AllowTrailingDot = true;
+            options.AllowTrailingDot = allowTrailingDot;
             await using DisposingShare test = await GetTestShareAsync(options: options);
             ShareClient share = test.Share;
 
             // Arrange
-            string name = GetNewDirectoryName() + ".";
-            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
+            ShareDirectoryClient rootDirectory = InstrumentClient(share.GetRootDirectoryClient());
+            string directoryName = GetNewDirectoryName();
+            string directoryNameWithDot = directoryName + ".";
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(directoryNameWithDot));
 
             // Act
-            Response<ShareDirectoryInfo> response = await directory.CreateAsync();
+            await directory.CreateAsync();
 
             // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            var accountName = new ShareUriBuilder(directory.Uri).AccountName;
-            TestHelper.AssertCacheableProperty(accountName, () => directory.AccountName);
-            var shareName = new ShareUriBuilder(directory.Uri).ShareName;
-            TestHelper.AssertCacheableProperty(shareName, () => directory.ShareName);
-            TestHelper.AssertCacheableProperty(name, () => directory.Name);
+            List<ShareFileItem> shareFileItems = new List<ShareFileItem>();
+            await foreach (ShareFileItem item in rootDirectory.GetFilesAndDirectoriesAsync())
+            {
+                shareFileItems.Add(item);
+            }
+            Assert.AreEqual(1, shareFileItems.Count);
+
+            if (allowTrailingDot == true)
+            {
+                Assert.AreEqual(directoryNameWithDot, shareFileItems[0].Name);
+            }
+            else
+            {
+                Assert.AreEqual(directoryName, shareFileItems[0].Name);
+            }
         }
 
         [RecordedTest]
