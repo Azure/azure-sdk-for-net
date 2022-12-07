@@ -189,6 +189,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private readonly object _syncLock = new();
         private readonly TimeSpan _operationTimeout;
+        private readonly AmqpInMemoryTerminusStore _terminusStore;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
@@ -256,6 +257,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     return await CreateControllerAsync(session, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                 },
                 controller => controller.Close());
+
+            _terminusStore = new AmqpInMemoryTerminusStore();
         }
 
         private async Task<Controller> CreateControllerAsync(AmqpSession amqpSession, TimeSpan timeout)
@@ -1312,7 +1315,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="amqpVersion">The version of AMQP to be used.</param>
         ///
         /// <returns>The settings for AMQP to use for communication with the Service Bus service.</returns>
-        private static AmqpSettings CreateAmpqSettings(Version amqpVersion)
+        private AmqpSettings CreateAmpqSettings(Version amqpVersion)
         {
             var saslProvider = new SaslTransportProvider();
             saslProvider.Versions.Add(new AmqpVersion(amqpVersion));
@@ -1324,7 +1327,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var settings = new AmqpSettings();
             settings.TransportProviders.Add(saslProvider);
             settings.TransportProviders.Add(amqpProvider);
-            settings.TerminusStore = new AmqpInMemoryTerminusStore();
+            settings.TerminusStore = _terminusStore;
 
             return settings;
         }
