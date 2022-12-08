@@ -34,95 +34,17 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// Function to check if test run is completed
+        /// UploadTestFile.
         /// </summary>
-        /// <param name="testRunId">unique identifier for the test run</param>
-        /// <param name="refreshTime">time in miliseconds to wait before checking the status of the JMX file (default = 10*1000 ms = 10 sec)</param>
-        /// <param name="timeOut">time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
-        /// <returns>TestRunStatus enum with appropirate status flag</returns>
-        public virtual TestRunStatus BeginTestRunStatus(string testRunId, int refreshTime = 10 * 1000, int timeOut = 60 * 1000)
+        public TestRunOperation beginTestRun(WaitUntil waitUntil, string testRunId, RequestContent content, string oldTestRunId, string fileType = null, RequestContext context = null)
         {
-            DateTime startTime = DateTime.Now;
-            string status;
-
-            while (true)
+            CreateOrUpdateTestRun(testRunId, content, oldTestRunId, context);
+            TestRunOperation operation = new(testRunId, this);
+            if (waitUntil == WaitUntil.Completed)
             {
-                Response response = GetTestRun(testRunId);
-
-                JsonNode jsonDocument = JsonNode.Parse(response.Content.ToString());
-                status = (jsonDocument!["status"]).ToString();
-
-                if (status.Equals("COMPLETED"))
-                {
-                    return TestRunStatus.Done;
-                }
-
-                if (status.Equals("FAILED"))
-                {
-                    return TestRunStatus.Failed;
-                }
-
-                if (status.Equals("CANCELLED"))
-                {
-                    return TestRunStatus.Cancelled;
-                }
-
-                DateTime timer = DateTime.Now;
-                int nextHitTime = (int)(timer - startTime).TotalSeconds + refreshTime;
-
-                if (nextHitTime > timeOut)
-                {
-                    return TestRunStatus.CheckTimeout;
-                }
-
-                Thread.Sleep(refreshTime * 1000);
+                operation.WaitForCompletion();
             }
-        }
-
-        /// <summary>
-        /// Function to check if test run is completed
-        /// </summary>
-        /// <param name="testRunId">unique identifier for the test run</param>
-        /// <param name="refreshTime">time in miliseconds to wait before checking the status of the JMX file (default = 10*1000 ms = 10 sec)</param>
-        /// <param name="timeOut">time in miliseconds to wait before time out (default = 600*1000ms = 600 sec)</param>
-        /// <returns>TestRunStatus enum with appropirate status flag</returns>
-        public virtual async Task<TestRunStatus> BeginTestRunStatusAsync(string testRunId, int refreshTime = 10 * 1000, int timeOut = 60 * 1000)
-        {
-            DateTime startTime = DateTime.Now;
-            string status;
-
-            while (true)
-            {
-                Response response = await GetTestRunAsync(testRunId).ConfigureAwait(false);
-
-                JsonNode jsonDocument = JsonNode.Parse(response.Content.ToString());
-                status = (jsonDocument!["status"]).ToString();
-
-                if (status.Equals("COMPLETED"))
-                {
-                    return TestRunStatus.Done;
-                }
-
-                if (status.Equals("FAILED"))
-                {
-                    return TestRunStatus.Failed;
-                }
-
-                if (status.Equals("CANCELLED"))
-                {
-                    return TestRunStatus.Cancelled;
-                }
-
-                DateTime timer = DateTime.Now;
-                int nextHitTime = (int)(timer - startTime).TotalSeconds + refreshTime;
-
-                if (nextHitTime > timeOut)
-                {
-                    return TestRunStatus.CheckTimeout;
-                }
-
-                await Task.Delay(refreshTime * 1000).ConfigureAwait(false);
-            }
+            return operation;
         }
     }
 }
