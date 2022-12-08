@@ -44,10 +44,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="PageBlobStorageResourceServiceCopyOptions.CopyMethod"/> in
-        /// <see cref="PageBlobStorageResourceOptions.CopyOptions"/>.
+        /// the options bag, see <see cref="PageBlobStorageResourceOptions.CopyMethod"/>.
         /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyOptions?.CopyMethod ?? TransferCopyMethod.SyncCopy;
+        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -113,10 +112,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new BlobDownloadOptions()
-                {
-                    Range = new HttpRange(position, length)
-                },
+                _options.ToBlobDownloadOptions(new HttpRange(position, length)),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -162,20 +158,15 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await _blobClient.CreateAsync(
                     size: completeLength,
-                    new PageBlobCreateOptions()
-                    {
-                        Conditions = conditions,
-                    }, cancellationToken).ConfigureAwait(false);
+                    options: _options.ToCreateOptions(overwrite),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
                 await _blobClient.UploadPagesAsync(
                     content: stream,
                     offset: position,
-                    options: new PageBlobUploadPagesOptions()
-                    {
-                        Conditions = conditions,
-                    },
+                    options: _options.ToUploadPagesOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -202,12 +193,18 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
-                await _blobClient.StartCopyFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _blobClient.StartCopyFromUriAsync(
+                    sourceResource.Uri,
+                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
                 // TODO: subject to change as we scale to suppport resource types outside of blobs.
-                await _blobClient.SyncCopyFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _blobClient.SyncCopyFromUriAsync(
+                    sourceResource.Uri,
+                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -249,20 +246,14 @@ namespace Azure.Storage.DataMovement.Blobs
                 {
                     await _blobClient.CreateAsync(
                         size: completeLength,
-                        new PageBlobCreateOptions()
-                        {
-                            Conditions = conditions,
-                        }, cancellationToken).ConfigureAwait(false);
+                        _options.ToCreateOptions(overwrite),
+                        cancellationToken).ConfigureAwait(false);
                 }
                 await _blobClient.UploadPagesFromUriAsync(
                     sourceResource.Uri,
                     sourceRange: range,
                     range: range,
-                    options: new PageBlobUploadPagesFromUriOptions()
-                    {
-                        SourceAuthentication = options?.SourceAuthentication,
-                        DestinationConditions = _options?.CopyOptions.DestinationConditions
-                    },
+                    options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else

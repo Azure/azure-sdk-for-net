@@ -56,14 +56,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(uri, resourceDefaultOptions.Uri);
             Assert.AreEqual(blobClient.Name, resourceDefaultOptions.Path);
             Assert.AreEqual(ProduceUriType.ProducesUri, resourceDefaultOptions.CanProduceUri);
-            // If no options were specified then we default to SyncCopy
-            Assert.AreEqual(TransferCopyMethod.SyncCopy, resourceDefaultOptions.ServiceCopyMethod);
+            Assert.AreEqual(TransferCopyMethod.None, resourceDefaultOptions.ServiceCopyMethod);
 
             // Arrange - Set up options specifying different async copy
             PageBlobStorageResourceOptions optionsWithAsyncCopy = new PageBlobStorageResourceOptions()
             {
-                CopyOptions = new PageBlobStorageResourceServiceCopyOptions()
-                { CopyMethod = TransferCopyMethod.AsyncCopy },
+                CopyMethod = TransferCopyMethod.AsyncCopy,
             };
             PageBlobStorageResource resourceSyncCopy = new PageBlobStorageResource(blobClient, optionsWithAsyncCopy);
 
@@ -288,15 +286,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     content: stream,
                     offset: 0);
             }
-
-            PageBlobStorageResourceServiceCopyOptions options = new PageBlobStorageResourceServiceCopyOptions()
-            {
-                CopyMethod = TransferCopyMethod.AsyncCopy
-            };
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(
                 destinationClient,
-                new PageBlobStorageResourceOptions() { CopyOptions = options });
+                new PageBlobStorageResourceOptions()
+                {
+                    CopyMethod = TransferCopyMethod.AsyncCopy
+                });
 
             // Act;
             await destinationResource.CopyFromUriAsync(sourceResource, false);

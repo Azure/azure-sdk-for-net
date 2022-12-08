@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using Azure.Core.Pipeline;
+
+#nullable enable
 
 namespace Azure.Core.Shared
 {
@@ -14,13 +17,8 @@ namespace Azure.Core.Shared
     /// </summary>
     internal class GeoRedundantFallbackPolicy : HttpPipelineSynchronousPolicy
     {
-        private readonly string[] _readFallbackHosts;
-        private readonly string[] _writeFallbackHosts;
-        private int _readFallbackIndex = -1;
-        private int _writeFallbackIndex = -1;
-        private long _readFallBackTicks = -1;
-        private long _writeFallbackTicks = -1;
-        private readonly TimeSpan _primaryCoolDown;
+        private readonly Fallback _writeFallback;
+        private readonly Fallback _readFallback;
 
         /// <summary>
         /// Construct a new instance of the GeoRedundantFallbackPolicy.
@@ -30,9 +28,9 @@ namespace Azure.Core.Shared
         /// <param name="primaryCoolDown">The amount of time to wait before the primary host will be used again after a failure.</param>
         public GeoRedundantFallbackPolicy(string[]? readFallbackHosts, string[]? writeFallbackHosts, TimeSpan? primaryCoolDown = default)
         {
-            _readFallbackHosts = readFallbackHosts ?? Array.Empty<string>();
-            _writeFallbackHosts = writeFallbackHosts ?? Array.Empty<string>();
-            _primaryCoolDown = primaryCoolDown ?? TimeSpan.FromMinutes(10);
+            var cooldown = primaryCoolDown ?? TimeSpan.FromMinutes(10);
+            _writeFallback = new Fallback(writeFallbackHosts ?? Array.Empty<string>(), cooldown);
+            _readFallback = new Fallback(readFallbackHosts ?? Array.Empty<string>(), cooldown);
         }
 
         /// <summary>
@@ -81,64 +79,30 @@ namespace Azure.Core.Shared
                 return;
 
             bool isRead = message.Request.Method == RequestMethod.Get || message.Request.Method == RequestMethod.Head;
+            Fallback fallback = isRead ? _readFallback : _writeFallback;
 
-            ref int fallbackIndex = ref isRead ? ref _readFallbackIndex : ref _writeFallbackIndex;
-            ref long fallbackTicks = ref isRead ? ref _readFallBackTicks : ref _writeFallbackTicks;
-            string[] fallbackHosts = isRead ? _readFallbackHosts : _writeFallbackHosts;
+            if (fallback.Hosts.Length == 0)
+                return;
 
             if (message.ProcessingContext.RetryNumber == 0)
             {
+                // store the primary host in the message
                 SetPrimaryHost(message);
                 // set the host based on the fallback information
-                UpdateHost(message, fallbackHosts, ref fallbackIndex, ref fallbackTicks);
+                UpdateHostIfNeeded(message, fallback);
                 return;
             }
 
-            if (fallbackHosts.Length == 0)
-                return;
-
-            int current = Volatile.Read(ref fallbackIndex);
-            long currentTicks = Volatile.Read(ref fallbackTicks);
-
-            // we should only advance if another thread hasn't already done so
-            if ((current == -1 && message.Request.Uri.Host.Equals(GetPrimaryHost(message), StringComparison.Ordinal)) ||
-                (current != -1 && message.Request.Uri.Host.Equals(fallbackHosts[current], StringComparison.Ordinal)))
-            {
-                int next = current + 1;
-
-                // reset to null to indicate primary should be used when we reach the end
-                if (next >= fallbackHosts.Length)
-                    next = -1;
-
-                // attempt to advance the index - it's possible another thread has already done so in which case the index will not be updated
-                // in this thread
-                Interlocked.CompareExchange(ref fallbackIndex, next, current);
-
-                // if we are falling back from primary, attempt to update the fallback ticks
-                if (current == -1)
-                    Interlocked.CompareExchange(ref fallbackTicks, DateTimeOffset.UtcNow.Ticks, currentTicks);
-            }
-
-            UpdateHost(message, fallbackHosts, ref fallbackIndex, ref fallbackTicks);
+            fallback.AdvanceIfNeeded(message);
+            UpdateHostIfNeeded(message, fallback);
         }
 
-        private void UpdateHost(HttpMessage message, string[] fallbackHosts, ref int fallbackIndex, ref long fallbackTicks)
+        private static void UpdateHostIfNeeded(HttpMessage message, Fallback fallback)
         {
-            long currentTicks = Volatile.Read(ref fallbackTicks);
-            int currentIndex = Volatile.Read(ref fallbackIndex);
+            fallback.ResetPrimaryIfNeeded();
 
-            if (currentTicks != -1)
-            {
-                long nowTicks = DateTimeOffset.UtcNow.Ticks;
-                if (nowTicks - currentTicks >= _primaryCoolDown.Ticks)
-                {
-                    Interlocked.CompareExchange(ref fallbackIndex, -1, currentIndex);
-                    Interlocked.CompareExchange(ref fallbackTicks, nowTicks, currentTicks);
-                }
-            }
-
-            currentIndex = Volatile.Read(ref fallbackIndex);
-            message.Request.Uri.Host = currentIndex != -1 ? fallbackHosts[currentIndex] : GetPrimaryHost(message);
+            int currentIndex = fallback.Index;
+            message.Request.Uri.Host = currentIndex != -1 ? fallback.Hosts[currentIndex] : GetPrimaryHost(message);
         }
 
         private class HostAffinityKey
@@ -147,6 +111,65 @@ namespace Azure.Core.Shared
 
         private class PrimaryHostKey
         {
+        }
+
+        private class Fallback
+        {
+            public string[] Hosts { get; }
+
+            public int Index => Volatile.Read(ref _index);
+            private int _index;
+            private long _ticks;
+            private readonly TimeSpan _cooldown;
+
+            public Fallback(string[] hosts, TimeSpan cooldown)
+            {
+                Hosts = hosts;
+                _index = -1;
+                _ticks = -1;
+                _cooldown = cooldown;
+            }
+
+            public void AdvanceIfNeeded(HttpMessage message)
+            {
+                int currentIndex = Index;
+                long currentTicks = Volatile.Read(ref _ticks);
+
+                // we should only advance if another thread hasn't already done so
+                if ((currentIndex == -1 && message.Request.Uri.Host!.Equals(GetPrimaryHost(message), StringComparison.Ordinal)) ||
+                    (currentIndex != -1 && message.Request.Uri.Host!.Equals(Hosts[currentIndex], StringComparison.Ordinal)))
+                {
+                    int next = currentIndex + 1;
+
+                    // reset to null to indicate primary should be used when we reach the end
+                    if (next >= Hosts.Length)
+                        next = -1;
+
+                    // attempt to advance the index - it's possible another thread has already done so in which case the index will not be updated
+                    // in this thread
+                    Interlocked.CompareExchange(ref _index, next, currentIndex);
+
+                    // if we are falling back from primary, attempt to update the fallback ticks
+                    if (currentIndex == -1)
+                        Interlocked.CompareExchange(ref _ticks, Stopwatch.GetTimestamp(), currentTicks);
+                }
+            }
+
+            public void ResetPrimaryIfNeeded()
+            {
+                long currentTicks = Volatile.Read(ref _ticks);
+                int currentIndex = Index;
+
+                if (currentTicks != -1)
+                {
+                    long nowTicks = Stopwatch.GetTimestamp();
+                    if (nowTicks - currentTicks >= _cooldown.Ticks)
+                    {
+                        Interlocked.CompareExchange(ref _index, -1, currentIndex);
+                        Interlocked.CompareExchange(ref _ticks, -1, currentTicks);
+                    }
+                }
+            }
         }
     }
 }

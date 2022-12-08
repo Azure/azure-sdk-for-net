@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -49,10 +50,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="BlockBlobStorageResourceServiceCopyOptions.CopyMethod"/> in
-        /// <see cref="BlockBlobStorageResourceOptions.CopyOptions"/>.
+        /// the options bag, see <see cref="BlockBlobStorageResourceOptions.CopyMethod"/>.
         /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyOptions?.CopyMethod ?? TransferCopyMethod.SyncCopy;
+        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
@@ -121,12 +121,10 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new BlobDownloadOptions()
-                {
-                    Range = new HttpRange(position, length)
-                },
-                cancellationToken).ConfigureAwait(false);
+            Response<BlobDownloadStreamingResult> response =
+                await _blobClient.DownloadStreamingAsync(
+                    _options.ToBlobDownloadOptions(new HttpRange(position, length)),
+                    cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
 
@@ -163,18 +161,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
             if ((streamLength == completeLength) && position == 0)
             {
-                BlobRequestConditions putBlobConditions = new BlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-                };
                 // Default to Upload
                 await _blobClient.UploadAsync(
                     stream,
-                    new BlobUploadOptions()
-                    {
-                        Conditions = putBlobConditions,
-                    },
+                    _options.ToBlobUploadOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
             }
@@ -191,10 +181,7 @@ namespace Azure.Storage.DataMovement.Blobs
             await _blobClient.StageBlockAsync(
                 id,
                 stream,
-                new BlockBlobStageBlockOptions()
-                {
-                    Conditions = stageBlockConditions,
-                },
+                _options.ToBlobStageBlockOptions(),
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -222,13 +209,19 @@ namespace Azure.Storage.DataMovement.Blobs
 
             if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
-                await _blobClient.StartCopyFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _blobClient.StartCopyFromUriAsync(
+                    sourceResource.Uri,
+                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
                 // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
                 // TODO: subject to change as we scale to suppport resource types outside of blobs.
-                await _blobClient.SyncUploadFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _blobClient.SyncUploadFromUriAsync(
+                    sourceResource.Uri,
+                    _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -262,10 +255,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
             if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
-                BlobRequestConditions conditions = new BlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                };
                 string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
                 if (!_blocks.TryAdd(range.Offset, id))
                 {
@@ -274,11 +263,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 await _blobClient.StageBlockFromUriAsync(
                     sourceResource.Uri,
                     id,
-                    options: new StageBlockFromUriOptions()
-                    {
-                        SourceRange = range,
-                        DestinationConditions = conditions
-                    },
+                    options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
@@ -311,7 +296,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await _blobClient.CommitBlockListAsync(
                     blockIds,
-                    default,
+                    _options.ToCommitBlockOptions(),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }
