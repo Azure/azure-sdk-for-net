@@ -44,9 +44,9 @@ namespace Azure.ResourceManager
                 throw new InvalidOperationException($"The type {nameof(T)} does not implement the GetOperationSource method.");
             var source = method.Invoke(null, new object[] { client }) as IOperationSource<T>;
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
-            // TODO: Get OperationTypeName from id
+            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "OperationTypeName", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />

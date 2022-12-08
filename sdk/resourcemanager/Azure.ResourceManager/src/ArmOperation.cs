@@ -34,7 +34,7 @@ namespace Azure.ResourceManager
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, operationTypeName, fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArmOperationRehydration"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmOperation"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the ArmOperation. </param>
         public ArmOperation(ArmClient client, string id)
@@ -43,10 +43,9 @@ namespace Azure.ResourceManager
             Argument.AssertNotNull(client, nameof(client));
 
             var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id, out string finalResponse);
-            // TODO: Get OperationTypeName from id
-            // TODO: Get optionsNamespace and providerNamespace from id?
+            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, "OperationTypeName", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
