@@ -19,7 +19,7 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
-            using var env = new TestEnvVar(new Dictionary<string, string> { { "TENANT_ID", TenantId } });
+            using var env = new TestEnvVar(new Dictionary<string, string> { { "IDENTITY_TENANT_ID", TenantId }, { "TENANT_ID", TenantId } });
             var environment = new IdentityTestEnvironment();
             var vscOptions = new VisualStudioCodeCredentialOptions
             {
@@ -47,7 +47,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public async Task AuthenticateWithVsCodeCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
-            using var env = new TestEnvVar(new Dictionary<string, string> { { "TENANT_ID", TenantId } });
+            using var env = new TestEnvVar(new Dictionary<string, string> { { "IDENTITY_TENANT_ID", TenantId }, { "TENANT_ID", TenantId } });
             var environment = new IdentityTestEnvironment();
             var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, AdditionallyAllowedTenants = { TenantIdHint }, Transport = new MockTransport() };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
@@ -71,7 +71,7 @@ namespace Azure.Identity.Tests
         {
             Console.WriteLine(parameters.ToDebugString());
 
-            using var env = new TestEnvVar(new Dictionary<string, string> { { "TENANT_ID", TenantId } });
+            using var env = new TestEnvVar(new Dictionary<string, string> { { "IDENTITY_TENANT_ID", TenantId }, { "TENANT_ID", TenantId } });
             var environment = new IdentityTestEnvironment();
             var options = new VisualStudioCodeCredentialOptions
             {

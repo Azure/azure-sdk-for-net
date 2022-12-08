@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27020")]
     public class VisualStudioCodeCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";

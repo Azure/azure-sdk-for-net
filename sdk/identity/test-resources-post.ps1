@@ -16,3 +16,4 @@ Remove-Item -Force -Recurse "$workingFolder/Pub"
 if ($null -eq $Env:AGENT_WORKFOLDER) {
     Remove-Item -Force -Recurse "$webappRoot/%AGENT_WORKFOLDER%"
 }
+az logout

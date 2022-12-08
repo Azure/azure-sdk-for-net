@@ -62,6 +62,7 @@ namespace Azure.Identity.Tests
 
         [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -102,6 +103,7 @@ namespace Azure.Identity.Tests
 
         [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
