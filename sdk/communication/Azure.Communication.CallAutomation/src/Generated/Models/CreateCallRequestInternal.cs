@@ -43,6 +43,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
-        public string AzureCognitiveServiceDomainName { get; set; }
+        public string AzureCognitiveServicesEndpointUrl { get; set; }
     }
 }
