@@ -444,7 +444,7 @@ namespace Azure.Storage.DataMovement
         private static LocalTransferCheckpointer CreateDefaultCheckpointer()
         {
             // Make folder path
-            string defaultPath = string.Concat(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultTransferFilesPath);
+            string defaultPath = Path.Combine(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultTransferFilesPath);
             // Create folder if it does not already exists. It's possible that this library could be run
             // multiple times in the same directory without defining a checkpointer.
             Directory.CreateDirectory(defaultPath);

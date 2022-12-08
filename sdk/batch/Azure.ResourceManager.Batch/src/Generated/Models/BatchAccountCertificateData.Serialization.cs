@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Batch
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteCertificateError = JsonSerializer.Deserialize<ResponseError>(property0.Value.ToString());
+                            deleteCertificateError = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
                     }
