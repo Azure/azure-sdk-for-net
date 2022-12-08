@@ -82,9 +82,17 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #endregion Snippet:ReleasePhoneNumbersAsync
 
-            purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
-            var afterReleaseNumberCount = (await purchasedPhoneNumbers.ToEnumerableAsync()).Count;
-            Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
+            var afterReleasePhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
+            var foundPhoneNumber = false;
+            foreach (PurchasedPhoneNumber number in (await afterReleasePhoneNumbers.ToEnumerableAsync()))
+            {
+                if (number.PhoneNumber == purchasedPhoneNumber)
+                {
+                    foundPhoneNumber = true;
+                    break;
+                }
+            }
+            Assert.IsFalse(foundPhoneNumber);
         }
 
         private ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation) where T : notnull
@@ -176,19 +184,25 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:ReleasePhoneNumbers
             //@@var purchasedPhoneNumber = "<purchased_phone_number>";
-            var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
+            var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber).WaitForCompletionResponseAsync();
 
-            while (!releaseOperation.HasCompleted)
-            {
-                //@@ Thread.Sleep(2000);
-                /*@@*/ SleepIfNotInPlaybackMode();
-                releaseOperation.UpdateStatus();
-            }
             #endregion Snippet:ReleasePhoneNumbers
 
-            purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
-            var afterReleaseNumberCount = purchasedPhoneNumbers.Count();
-            Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
+            if (releaseOperation.IsCompletedSuccessfully)
+            {
+                var foundReleasedNumber = false;
+                purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
+
+                foreach (var phoneNumber in purchasedPhoneNumbers)
+                {
+                    if (phoneNumber.PhoneNumber == purchasedPhoneNumber)
+                    {
+                        foundReleasedNumber = true;
+                        break;
+                    }
+                }
+                Assert.IsFalse(foundReleasedNumber);
+            }
         }
     }
 }
