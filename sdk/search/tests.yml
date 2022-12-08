@@ -16,4 +16,3 @@ extends:
     SupportedClouds: 'Preview,UsGov,China'
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live
-
