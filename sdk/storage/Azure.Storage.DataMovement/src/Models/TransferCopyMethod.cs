@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement.Models
     public enum TransferCopyMethod
     {
         /// <summary>
-        /// Default. Will automatically be set to Sync Copy
+        /// Default. Will automatically be set to <see cref="SyncCopy"/>.
         /// </summary>
         None = 0,
 

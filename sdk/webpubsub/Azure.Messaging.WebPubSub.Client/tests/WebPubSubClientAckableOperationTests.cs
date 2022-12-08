@@ -102,5 +102,115 @@ namespace Azure.Messaging.WebPubSub.Client.Tests
             client.HandleAckMessage(new AckMessage(1, false, new AckMessageError("Duplicate", "message")));
             await t.OrTimeout();
         }
+
+        [Test]
+        public async Task AckableOperationIntegrationTest_Success()
+        {
+            var wsPair = new TestWebSocketClientPair(_webSocketClientMoc);
+            var client = new WebPubSubClient(new Uri("wss://test.com"));
+            client.WebSocketClientFactory = _factoryMoc.Object;
+
+            await client.StartAsync();
+
+            var t = client.JoinGroupAsync("group", 1);
+            TestUtils.AssertTimeout(t);
+            await wsPair.Output().OrTimeout();
+
+            wsPair.Input(TestUtils.GetAckMessagePayload(1, null), false);
+            await t.OrTimeout();
+        }
+
+        [Test]
+        public async Task AckableOperationIntegrationTest_Failed()
+        {
+            var wsPair = new TestWebSocketClientPair(_webSocketClientMoc);
+            var options = new WebPubSubClientOptions();
+            options.MessageRetryOptions.MaxRetries = 0;
+            var client = new WebPubSubClient(new Uri("wss://test.com"), options);
+            client.WebSocketClientFactory = _factoryMoc.Object;
+
+            await client.StartAsync();
+
+            var t = client.JoinGroupAsync("group", 1);
+            TestUtils.AssertTimeout(t);
+            await wsPair.Output().OrTimeout();
+
+            wsPair.Input(TestUtils.GetAckMessagePayload(1, "InternalServerError"), false);
+            Assert.ThrowsAsync<SendMessageFailedException>(() => t);
+        }
+
+        [Test]
+        public async Task AckableOperationIntegrationTest_AllRetryFailed()
+        {
+            var wsPair = new TestWebSocketClientPair(_webSocketClientMoc);
+            var client = new WebPubSubClient(new Uri("wss://test.com"), TestUtils.GetClientOptionsForRetryTest());
+            client.WebSocketClientFactory = _factoryMoc.Object;
+
+            await client.StartAsync();
+
+            var t = client.JoinGroupAsync("group", 1);
+            TestUtils.AssertTimeout(t);
+
+            // return 4 times ack failure
+            for (var i = 0; i < 4; i++)
+            {
+                await wsPair.Output().OrTimeout();
+                wsPair.Input(TestUtils.GetAckMessagePayload(1, "InternalServerError"), false);
+            }
+            Assert.ThrowsAsync<SendMessageFailedException>(() => t);
+        }
+
+        [Test]
+        public async Task AckableOperationIntegrationTest_1FailedAndRetrySuccess()
+        {
+            var wsPair = new TestWebSocketClientPair(_webSocketClientMoc);
+            var client = new WebPubSubClient(new Uri("wss://test.com"), TestUtils.GetClientOptionsForRetryTest());
+            client.WebSocketClientFactory = _factoryMoc.Object;
+
+            await client.StartAsync();
+
+            var t = client.JoinGroupAsync("group", 1);
+
+            // 1
+            await wsPair.Output().OrTimeout();
+            wsPair.Input(TestUtils.GetAckMessagePayload(1, "InternalServerError"), false);
+
+            // 2
+            await wsPair.Output().OrTimeout();
+            wsPair.Input(TestUtils.GetAckMessagePayload(1, "InternalServerError"), false);
+
+            // 3
+            await wsPair.Output().OrTimeout();
+            wsPair.Input(TestUtils.GetAckMessagePayload(1, "InternalServerError"), false);
+
+            // 4
+            await wsPair.Output().OrTimeout();
+            wsPair.Input(TestUtils.GetAckMessagePayload(1, null), false);
+
+            await t.OrTimeout();
+        }
+
+        [Test]
+        public async Task CleanAckableAfterConnectionClose()
+        {
+            var wsPair = new TestWebSocketClientPair(_webSocketClientMoc);
+            var client = new WebPubSubClient(new Uri("wss://test.com"), TestUtils.GetClientOptionsForRetryTest(options => options.MaxRetries = 0));
+            client.WebSocketClientFactory = _factoryMoc.Object;
+
+            await client.StartAsync();
+            var t1 = client.JoinGroupAsync("group1", 1);
+            var t2 = client.JoinGroupAsync("group2", 2);
+            var t3 = client.JoinGroupAsync("group3", 3);
+
+            await wsPair.Output().OrTimeout();
+            await wsPair.Output().OrTimeout();
+            await wsPair.Output().OrTimeout();
+
+            // Close connection
+            wsPair.Input(default, true);
+            Assert.ThrowsAsync<SendMessageFailedException>(() => t1);
+            Assert.ThrowsAsync<SendMessageFailedException>(() => t2);
+            Assert.ThrowsAsync<SendMessageFailedException>(() => t3);
+        }
     }
 }
