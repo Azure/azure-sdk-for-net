@@ -55,8 +55,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(uri, resourceDefaultOptions.Uri);
             Assert.AreEqual(blobClient.Name, resourceDefaultOptions.Path);
             Assert.AreEqual(ProduceUriType.ProducesUri, resourceDefaultOptions.CanProduceUri);
-            // If no options were specified then we default to SyncCopy
-            Assert.AreEqual(TransferCopyMethod.SyncCopy, resourceDefaultOptions.ServiceCopyMethod);
+            Assert.AreEqual(TransferCopyMethod.None, resourceDefaultOptions.ServiceCopyMethod);
 
             // Arrange - Set up options specifying different async copy
             BlockBlobStorageResourceOptions optionsWithAsyncCopy = new BlockBlobStorageResourceOptions()
@@ -69,7 +68,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(uri, resourceSyncCopy.Uri);
             Assert.AreEqual(blobClient.Name, resourceSyncCopy.Path);
             Assert.AreEqual(ProduceUriType.ProducesUri, resourceSyncCopy.CanProduceUri);
-            // If no options were specified then we default to SyncCopy
             Assert.AreEqual(TransferCopyMethod.AsyncCopy, resourceSyncCopy.ServiceCopyMethod);
         }
 

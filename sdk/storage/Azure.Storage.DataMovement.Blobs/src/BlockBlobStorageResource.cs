@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await _blobClient.StartCopyFromUriAsync(
                     sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options.SourceAuthentication),
+                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
@@ -220,7 +220,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // TODO: subject to change as we scale to suppport resource types outside of blobs.
                 await _blobClient.SyncUploadFromUriAsync(
                     sourceResource.Uri,
-                    _options.ToSyncUploadFromUriOptions(overwrite, options.SourceAuthentication),
+                    _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -263,7 +263,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 await _blobClient.StageBlockFromUriAsync(
                     sourceResource.Uri,
                     id,
-                    options: _options.ToBlobStageBlockFromUriOptions(range, options.SourceAuthentication),
+                    options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else

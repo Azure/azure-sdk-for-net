@@ -112,24 +112,6 @@ namespace Azure.Storage.DataMovement.Blobs
             return default;
         }
 
-        internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
-            this BlobStorageResourceContainerOptions options)
-        {
-            return new AppendBlobStorageResourceOptions()
-            {
-                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
-            };
-        }
-
-        internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
-            this BlobStorageResourceContainerOptions options)
-        {
-            return new BlockBlobStorageResourceOptions()
-            {
-                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
-            };
-        }
-
         /// <summary>
         /// Deep copies the Blob Request Conditions along with changing the IfNoneMatch to
         /// the wildcard value if overwrite is enabled.
@@ -144,6 +126,164 @@ namespace Azure.Storage.DataMovement.Blobs
                 IfModifiedSince = conditions?.IfModifiedSince,
                 TagConditions = conditions?.TagConditions,
                 LeaseId = conditions?.LeaseId,
+            };
+        }
+
+        /// <summary>
+        /// Deep copies the Blob Request Conditions along with changing the IfNoneMatch to
+        /// the wildcard value if overwrite is enabled.
+        /// </summary>
+        internal static AppendBlobRequestConditions CreateRequestConditions(AppendBlobRequestConditions conditions, bool overwrite = true)
+        {
+            return new AppendBlobRequestConditions()
+            {
+                IfAppendPositionEqual = conditions?.IfAppendPositionEqual,
+                IfMaxSizeLessThanOrEqual = conditions?.IfMaxSizeLessThanOrEqual,
+                IfMatch = conditions?.IfMatch,
+                IfNoneMatch = overwrite ? conditions?.IfNoneMatch : new ETag(Constants.Wildcard),
+                IfUnmodifiedSince = conditions?.IfUnmodifiedSince,
+                IfModifiedSince = conditions?.IfModifiedSince,
+                TagConditions = conditions?.TagConditions,
+                LeaseId = conditions?.LeaseId,
+            };
+        }
+
+        /// <summary>
+        /// Deep copies the Blob Request Conditions along with changing the IfNoneMatch to
+        /// the wildcard value if overwrite is enabled.
+        /// </summary>
+        internal static PageBlobRequestConditions CreateRequestConditions(PageBlobRequestConditions conditions, bool overwrite = true)
+        {
+            return new PageBlobRequestConditions()
+            {
+                IfSequenceNumberEqual = conditions?.IfSequenceNumberEqual,
+                IfSequenceNumberLessThanOrEqual = conditions?.IfSequenceNumberLessThanOrEqual,
+                IfSequenceNumberLessThan = conditions?.IfSequenceNumberLessThan,
+                IfMatch = conditions?.IfMatch,
+                IfNoneMatch = overwrite ? conditions?.IfNoneMatch : new ETag(Constants.Wildcard),
+                IfUnmodifiedSince = conditions?.IfUnmodifiedSince,
+                IfModifiedSince = conditions?.IfModifiedSince,
+                TagConditions = conditions?.TagConditions,
+                LeaseId = conditions?.LeaseId,
+            };
+        }
+
+        internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
+            this BlobStorageResourceContainerOptions options)
+        {
+            return new AppendBlobStorageResourceOptions()
+            {
+                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
+            };
+        }
+
+        internal static BlobDownloadOptions ToBlobDownloadOptions(
+            this AppendBlobStorageResourceOptions options,
+            HttpRange range)
+        {
+            return new BlobDownloadOptions()
+            {
+                Range = range,
+                Conditions = CreateRequestConditions(options?.SourceConditions, true),
+                TransferValidation = options?.DownloadTransferValidationOptions,
+            };
+        }
+
+        internal static AppendBlobCreateOptions ToCreateOptions(
+            this AppendBlobStorageResourceOptions options,
+            bool overwrite)
+        {
+            return new AppendBlobCreateOptions()
+            {
+                HttpHeaders = options?.HttpHeaders,
+                Metadata = options?.Metadata,
+                Tags = options?.Tags,
+                Conditions = new AppendBlobRequestConditions()
+                {
+                    IfMatch = options?.DestinationConditions?.IfMatch,
+                    IfNoneMatch = overwrite ? options?.DestinationConditions?.IfNoneMatch : new ETag(Constants.Wildcard),
+                    IfUnmodifiedSince = options?.DestinationConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.DestinationConditions?.IfModifiedSince,
+                    TagConditions = options?.DestinationConditions?.TagConditions,
+                    LeaseId = options?.DestinationConditions?.LeaseId,
+                },
+                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
+                HasLegalHold = options?.LegalHold,
+            };
+        }
+
+        internal static AppendBlobAppendBlockOptions ToAppendBlockOptions(
+            this AppendBlobStorageResourceOptions options,
+            bool overwrite)
+        {
+            return new AppendBlobAppendBlockOptions()
+            {
+                Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                TransferValidation = options?.UploadTransferValidationOptions,
+            };
+        }
+
+        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
+            this AppendBlobStorageResourceOptions options,
+            bool overwrite,
+            HttpAuthorization sourceAuthorization)
+        {
+            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
+            // We need to omit them, but still apply them to other requests that do accept them.
+            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
+            // to see what headers are accepted.
+            return new BlobCopyFromUriOptions()
+            {
+                Metadata = options?.Metadata,
+                Tags = options?.Tags,
+                AccessTier = options?.AccessTier,
+                SourceConditions = new BlobRequestConditions()
+                {
+                    IfMatch = options?.SourceConditions?.IfMatch,
+                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
+                    TagConditions = options?.SourceConditions?.TagConditions,
+                },
+                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                ShouldSealDestination = options?.ShouldSealDestination,
+                RehydratePriority = options?.RehydratePriority,
+                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
+                LegalHold = options?.LegalHold,
+                SourceAuthentication = sourceAuthorization,
+                CopySourceTagsMode = options?.CopySourceTagsMode,
+            };
+        }
+
+        internal static AppendBlobAppendBlockFromUriOptions ToAppendBlockFromUriOptions(
+            this AppendBlobStorageResourceOptions options,
+            bool overwrite,
+            HttpRange range,
+            HttpAuthorization sourceAuthorization)
+        {
+            return new AppendBlobAppendBlockFromUriOptions()
+            {
+                SourceRange = range,
+                SourceConditions = new AppendBlobRequestConditions()
+                {
+                    IfAppendPositionEqual = options?.SourceConditions?.IfAppendPositionEqual,
+                    IfMaxSizeLessThanOrEqual = options?.SourceConditions?.IfMaxSizeLessThanOrEqual,
+                    IfMatch = options?.SourceConditions?.IfMatch,
+                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
+                    TagConditions = options?.SourceConditions?.TagConditions,
+                    LeaseId = options?.SourceConditions?.LeaseId,
+                },
+                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                SourceAuthentication = sourceAuthorization,
+            };
+        }
+
+        internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
+            this BlobStorageResourceContainerOptions options)
+        {
+            return new BlockBlobStorageResourceOptions()
+            {
+                CopyMethod = options != default ? options.CopyMethod : TransferCopyMethod.None,
             };
         }
 
@@ -205,7 +345,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()
                 {
-                    IfMatch = options?.SourceConditions.IfMatch,
+                    IfMatch = options?.SourceConditions?.IfMatch,
                     IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
                     IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
                     TagConditions = options?.SourceConditions?.TagConditions,
@@ -236,7 +376,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()
                 {
-                    IfMatch = options?.SourceConditions.IfMatch,
+                    IfMatch = options?.SourceConditions?.IfMatch,
                     IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
                     IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
                     TagConditions = options?.SourceConditions?.TagConditions,
@@ -292,6 +432,102 @@ namespace Azure.Storage.DataMovement.Blobs
             return new PageBlobStorageResourceOptions()
             {
                 CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
+            };
+        }
+
+        internal static BlobDownloadOptions ToBlobDownloadOptions(
+            this PageBlobStorageResourceOptions options,
+            HttpRange range)
+        {
+            return new BlobDownloadOptions()
+            {
+                Range = range,
+                Conditions = CreateRequestConditions(options?.SourceConditions, true),
+                TransferValidation = options?.DownloadTransferValidationOptions,
+            };
+        }
+
+        internal static PageBlobCreateOptions ToCreateOptions(
+            this PageBlobStorageResourceOptions options,
+            bool overwrite)
+        {
+            return new PageBlobCreateOptions()
+            {
+                SequenceNumber = options?.SequenceNumber,
+                HttpHeaders = options?.HttpHeaders,
+                Metadata = options?.Metadata,
+                Tags = options?.Tags,
+                Conditions = new PageBlobRequestConditions()
+                {
+                    IfMatch = options?.DestinationConditions?.IfMatch,
+                    IfNoneMatch = overwrite ? options?.DestinationConditions?.IfNoneMatch : new ETag(Constants.Wildcard),
+                    IfUnmodifiedSince = options?.DestinationConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.DestinationConditions?.IfModifiedSince,
+                    TagConditions = options?.DestinationConditions?.TagConditions,
+                    LeaseId = options?.DestinationConditions?.LeaseId,
+                },
+                ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
+                LegalHold = options?.LegalHold,
+            };
+        }
+
+        internal static PageBlobUploadPagesOptions ToUploadPagesOptions(
+            this PageBlobStorageResourceOptions options,
+            bool overwrite)
+        {
+            return new PageBlobUploadPagesOptions()
+            {
+                Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                TransferValidation = options?.UploadTransferValidationOptions,
+            };
+        }
+
+        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
+            this PageBlobStorageResourceOptions options,
+            bool overwrite,
+            HttpAuthorization sourceAuthorization)
+        {
+            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
+            // We need to omit them, but still apply them to other requests that do accept them.
+            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
+            // to see what headers are accepted.
+            return new BlobCopyFromUriOptions()
+            {
+                Metadata = options?.Metadata,
+                Tags = options?.Tags,
+                AccessTier = options?.AccessTier,
+                SourceConditions = new BlobRequestConditions()
+                {
+                    IfMatch = options?.SourceConditions?.IfMatch,
+                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
+                    TagConditions = options?.SourceConditions?.TagConditions,
+                },
+                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                RehydratePriority = options?.RehydratePriority,
+                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
+                LegalHold = options?.LegalHold,
+                SourceAuthentication = sourceAuthorization,
+                CopySourceTagsMode = options?.CopySourceTagsMode,
+            };
+        }
+
+        internal static PageBlobUploadPagesFromUriOptions ToUploadPagesFromUriOptions(
+            this PageBlobStorageResourceOptions options,
+            bool overwrite,
+            HttpAuthorization sourceAuthorization)
+        {
+            return new PageBlobUploadPagesFromUriOptions()
+            {
+                SourceConditions = new PageBlobRequestConditions()
+                {
+                    IfMatch = options?.SourceConditions?.IfMatch,
+                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
+                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
+                    LeaseId = options?.SourceConditions?.LeaseId,
+                },
+                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
+                SourceAuthentication = sourceAuthorization,
             };
         }
     }

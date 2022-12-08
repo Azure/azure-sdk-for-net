@@ -498,10 +498,7 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource destinationResource = new PageBlobStorageResource(destClient,
                         new PageBlobStorageResourceOptions()
                         {
-                            CopyOptions = new PageBlobStorageResourceServiceCopyOptions()
-                            {
-                                CopyMethod = TransferCopyMethod.AsyncCopy
-                            }
+                            CopyMethod = TransferCopyMethod.AsyncCopy
                         });
                     copyBlobInfo.Add(new VerifyPageCopyFromUriInfo(
                         localSourceFile,
@@ -792,10 +789,7 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource destinationResource = new AppendBlobStorageResource(destClient,
                         new AppendBlobStorageResourceOptions()
                         {
-                            CopyOptions = new AppendBlobStorageResourceServiceCopyOptions()
-                            {
-                                CopyMethod = TransferCopyMethod.AsyncCopy
-                            }
+                            CopyMethod = TransferCopyMethod.AsyncCopy,
                         });
                     copyBlobInfo.Add(new VerifyAppendCopyFromUriInfo(
                         localSourceFile,
