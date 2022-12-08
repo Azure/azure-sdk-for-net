@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added user assigned identity functionality
+- Added user assigned identity functionality to Digital Twins
 
 ## 1.0.0 (2022-09-13)
 
