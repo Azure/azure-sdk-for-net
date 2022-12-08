@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of ModelVersion entities. </summary>
+    /// <summary>
+    /// A paginated list of ModelVersion entities.
+    /// Serialized Name: ModelVersionResourceArmPaginatedResult
+    /// </summary>
     internal partial class ModelVersionResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
         internal ModelVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ModelVersionData>();
+            Value = new ChangeTrackingList<MachineLearningModelVersionData>();
         }
 
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of ModelVersion objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type ModelVersion. </param>
-        internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelVersionData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of ModelVersion objects. If null, there are no additional pages.
+        /// Serialized Name: ModelVersionResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type ModelVersion.
+        /// Serialized Name: ModelVersionResourceArmPaginatedResult.value
+        /// </param>
+        internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningModelVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of ModelVersion objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of ModelVersion objects. If null, there are no additional pages.
+        /// Serialized Name: ModelVersionResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type ModelVersion. </summary>
-        public IReadOnlyList<ModelVersionData> Value { get; }
+        /// <summary>
+        /// An array of objects of type ModelVersion.
+        /// Serialized Name: ModelVersionResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningModelVersionData> Value { get; }
     }
 }

@@ -16,5 +16,7 @@ namespace Azure.Communication.CallAutomation
         }
         /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
         public CollectTonesResult CollectTonesResult { get; }
+        /// <summary> Defines the result for RecognitionType = Choices. </summary>
+        public ChoiceResult ChoiceResult { get; }
     }
 }

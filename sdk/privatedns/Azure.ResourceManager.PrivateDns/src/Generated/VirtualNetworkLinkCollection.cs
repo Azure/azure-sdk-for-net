@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualNetworkLinkResource" /> and their operations.
-    /// Each <see cref="VirtualNetworkLinkResource" /> in the collection will belong to the same instance of <see cref="PrivateZoneResource" />.
-    /// To get a <see cref="VirtualNetworkLinkCollection" /> instance call the GetVirtualNetworkLinks method from an instance of <see cref="PrivateZoneResource" />.
+    /// Each <see cref="VirtualNetworkLinkResource" /> in the collection will belong to the same instance of <see cref="PrivateDnsZoneResource" />.
+    /// To get a <see cref="VirtualNetworkLinkCollection" /> instance call the GetVirtualNetworkLinks method from an instance of <see cref="PrivateDnsZoneResource" />.
     /// </summary>
     public partial class VirtualNetworkLinkCollection : ArmCollection, IEnumerable<VirtualNetworkLinkResource>, IAsyncEnumerable<VirtualNetworkLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.PrivateDns
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateZoneResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateZoneResource.ResourceType), nameof(id));
+            if (id.ResourceType != PrivateDnsZoneResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateDnsZoneResource.ResourceType), nameof(id));
         }
 
         /// <summary>

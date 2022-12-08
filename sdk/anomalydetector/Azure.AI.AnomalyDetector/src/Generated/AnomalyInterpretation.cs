@@ -7,7 +7,7 @@
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The AnomalyInterpretation. </summary>
+    /// <summary> Interpretation of the anomalous timestamp. </summary>
     public partial class AnomalyInterpretation
     {
         /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
