@@ -7,11 +7,9 @@
 - support for EZ-to-EZ scenarios for unplanned failover and recovery plans
 - added primary and recovery extended locations to fabric job and recovery plan
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded API version to 2022-10-01.
 
 ## 1.0.0-beta.1 (2022-09-25)
 
