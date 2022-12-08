@@ -64,19 +64,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
-        /// <param name="encodedPath">A path as it would appear in a request URI.</param>
+        /// <param name="path">A path as it would appear in a request URI.</param>
         /// <param name="length">The content length of the blob.</param>
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <returns>
         /// <see cref="StorageResource"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        internal StorageResource GetChildStorageResource(string encodedPath, long? length, BlobType type = BlobType.Block)
+        internal StorageResource GetChildStorageResource(string path, long? length, BlobType type = BlobType.Block)
         {
             // Recreate the blobName using the existing parent directory path
             if (type == BlobType.Append)
             {
-                AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(encodedPath);
+                AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(path);
                 return new AppendBlobStorageResource(
                     client,
                     length,
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else if (type == BlobType.Page)
             {
-                PageBlobClient client = _blobContainerClient.GetPageBlobClient(encodedPath);
+                PageBlobClient client = _blobContainerClient.GetPageBlobClient(path);
                 return new PageBlobStorageResource(
                     client,
                     length,
@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else // (type == BlobType.Block)
             {
-                BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(encodedPath);
+                BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(path);
                 return new BlockBlobStorageResource(
                     client,
                     length,

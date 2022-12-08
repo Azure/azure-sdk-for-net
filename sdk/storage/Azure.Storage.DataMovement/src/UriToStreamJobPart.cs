@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class UriToStreamJobPart : JobPartInternal
+    internal class UriToStreamJobPart : JobPartInternal, IDisposable
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -76,6 +76,11 @@ namespace Azure.Storage.DataMovement
                   job._cancellationTokenSource,
                   length)
         { }
+
+        public void Dispose()
+        {
+            DisposeHandlers();
+        }
 
         /// <summary>
         /// Processes the job to job parts
@@ -259,10 +264,15 @@ namespace Azure.Storage.DataMovement
         internal async Task CompleteFileDownload()
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
-
             try
             {
+                // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+
+                // Dispose the handlers
+                DisposeHandlers();
+
+                // Update the transfer status
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -413,5 +423,25 @@ namespace Azure.Storage.DataMovement
             return list;
         }
         #endregion PartitionedDownloader
+
+        public override async Task InvokeSkippedArg()
+        {
+            DisposeHandlers();
+            await base.InvokeSkippedArg().ConfigureAwait(false);
+        }
+
+        public override async Task InvokeFailedArg(Exception ex)
+        {
+            DisposeHandlers();
+            await base.InvokeFailedArg(ex).ConfigureAwait(false);
+        }
+
+        internal void DisposeHandlers()
+        {
+            if (_downloadChunkHandler != default)
+            {
+                _downloadChunkHandler.Dispose();
+            }
+        }
     }
 }
