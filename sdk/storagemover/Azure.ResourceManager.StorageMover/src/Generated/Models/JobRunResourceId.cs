@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> Response that identifies a Job Run. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Initializes a new instance of JobRunResourceId. </summary>
         /// <param name="jobRunResourceIdValue"> Fully qualified resource id of the Job Run. </param>
-        internal JobRunResourceId(string jobRunResourceIdValue)
+        internal JobRunResourceId(ResourceIdentifier jobRunResourceIdValue)
         {
             JobRunResourceIdValue = jobRunResourceIdValue;
         }
 
         /// <summary> Fully qualified resource id of the Job Run. </summary>
-        public string JobRunResourceIdValue { get; }
+        public ResourceIdentifier JobRunResourceIdValue { get; }
     }
 }

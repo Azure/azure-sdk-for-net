@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.StorageMover
             Optional<string> description = default;
             StorageMoverCopyMode copyMode = default;
             string sourceName = default;
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<string> sourceSubpath = default;
             string targetName = default;
-            Optional<string> targetResourceId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
             Optional<string> targetSubpath = default;
             Optional<string> latestJobRunName = default;
-            Optional<string> latestJobRunResourceId = default;
+            Optional<ResourceIdentifier> latestJobRunResourceId = default;
             Optional<JobRunStatus> latestJobRunStatus = default;
             Optional<string> agentName = default;
-            Optional<string> agentResourceId = default;
+            Optional<ResourceIdentifier> agentResourceId = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -122,7 +122,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("sourceResourceId"))
                         {
-                            sourceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceSubpath"))
@@ -137,7 +142,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("targetResourceId"))
                         {
-                            targetResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetSubpath"))
@@ -152,7 +162,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("latestJobRunResourceId"))
                         {
-                            latestJobRunResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            latestJobRunResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("latestJobRunStatus"))
@@ -172,7 +187,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("agentResourceId"))
                         {
-                            agentResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            agentResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

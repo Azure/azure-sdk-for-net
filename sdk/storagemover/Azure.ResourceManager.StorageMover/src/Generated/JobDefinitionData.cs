@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, string sourceResourceId, string sourceSubpath, string targetName, string targetResourceId, string targetSubpath, string latestJobRunName, string latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, string agentResourceId, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             CopyMode = copyMode;
@@ -74,25 +74,25 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> The name of the source Endpoint. </summary>
         public string SourceName { get; set; }
         /// <summary> Fully qualified resource ID of the source Endpoint. </summary>
-        public string SourceResourceId { get; }
+        public ResourceIdentifier SourceResourceId { get; }
         /// <summary> The subpath to use when reading from the source Endpoint. </summary>
         public string SourceSubpath { get; set; }
         /// <summary> The name of the target Endpoint. </summary>
         public string TargetName { get; set; }
         /// <summary> Fully qualified resource ID of the target Endpoint. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The subpath to use when writing to the target Endpoint. </summary>
         public string TargetSubpath { get; set; }
         /// <summary> The name of the Job Run in a non-terminal state, if exists. </summary>
         public string LatestJobRunName { get; }
         /// <summary> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </summary>
-        public string LatestJobRunResourceId { get; }
+        public ResourceIdentifier LatestJobRunResourceId { get; }
         /// <summary> The current status of the Job Run in a non-terminal state, if exists. </summary>
         public JobRunStatus? LatestJobRunStatus { get; }
         /// <summary> Name of the Agent to assign for new Job Runs of this Job Definition. </summary>
         public string AgentName { get; set; }
         /// <summary> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </summary>
-        public string AgentResourceId { get; }
+        public ResourceIdentifier AgentResourceId { get; }
         /// <summary> The provisioning state of this resource. </summary>
         public StorageMoverProvisioningState? ProvisioningState { get; }
     }

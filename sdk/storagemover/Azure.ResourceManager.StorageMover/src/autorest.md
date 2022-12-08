@@ -22,7 +22,14 @@ rename-mapping:
   AgentStatus: StorageMoverAgentStatus
   CopyMode: StorageMoverCopyMode
   ProvisioningState: StorageMoverProvisioningState
-  # JobDefinitionData.agentResourceId: -|arm-id
+  JobDefinition.properties.agentResourceId: -|arm-id
+  JobDefinition.properties.latestJobRunResourceId: -|arm-id
+  JobDefinition.properties.targetResourceId: -|arm-id
+  JobDefinition.properties.sourceResourceId: -|arm-id
+  JobRun.properties.agentResourceId: -|arm-id
+  JobRun.properties.sourceResourceId: -|arm-id
+  JobRun.properties.targetResourceId: -|arm-id
+  JobRunResourceId.jobRunResourceId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -53,18 +60,5 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
-# override-operation-name:
-#   Servers_ListSkusForExisting: GetExistingSkus
-#   Servers_CheckNameAvailability: CheckAnalysisServerNameAvailability
-
-# directive:
-#   - from: storagemover.json
-#     where: $.definitions
-#     transform: >
-#       $.JobDefinitionProperties.properties.agentResourceId['x-ms-enum'] = {
-#           "name": "ManagedMode",
-#           "modelAsString": true
-#         }
 
 ```

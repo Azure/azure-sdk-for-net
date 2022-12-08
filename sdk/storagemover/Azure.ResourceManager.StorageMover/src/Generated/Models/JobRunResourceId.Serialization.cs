@@ -14,12 +14,17 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         internal static JobRunResourceId DeserializeJobRunResourceId(JsonElement element)
         {
-            Optional<string> jobRunResourceId = default;
+            Optional<ResourceIdentifier> jobRunResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobRunResourceId"))
                 {
-                    jobRunResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    jobRunResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

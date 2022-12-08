@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageMover
             Optional<JobRunStatus> status = default;
             Optional<JobRunScanStatus> scanStatus = default;
             Optional<string> agentName = default;
-            Optional<string> agentResourceId = default;
+            Optional<ResourceIdentifier> agentResourceId = default;
             Optional<DateTimeOffset> executionStartTime = default;
             Optional<DateTimeOffset> executionEndTime = default;
             Optional<DateTimeOffset> lastStatusUpdate = default;
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.StorageMover
             Optional<long> bytesFailed = default;
             Optional<long> bytesTransferred = default;
             Optional<string> sourceName = default;
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<BinaryData> sourceProperties = default;
             Optional<string> targetName = default;
-            Optional<string> targetResourceId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
             Optional<BinaryData> targetProperties = default;
             Optional<BinaryData> jobDefinitionProperties = default;
             Optional<JobRunError> error = default;
@@ -121,7 +121,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("agentResourceId"))
                         {
-                            agentResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            agentResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("executionStartTime"))
@@ -281,7 +286,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("sourceResourceId"))
                         {
-                            sourceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceProperties"))
@@ -301,7 +311,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("targetResourceId"))
                         {
-                            targetResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetProperties"))

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StorageMover
     }
     public partial class JobDefinitionData : Azure.ResourceManager.Models.ResourceData
     {
-        public JobDefinitionData(Azure.ResourceManager.StorageMover.Models.CopyMode copyMode, string sourceName, string targetName) { }
+        public JobDefinitionData(Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode copyMode, string sourceName, string targetName) { }
         public string AgentName { get { throw null; } set { } }
-        public string AgentResourceId { get { throw null; } }
-        public Azure.ResourceManager.StorageMover.Models.CopyMode CopyMode { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AgentResourceId { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode CopyMode { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string LatestJobRunName { get { throw null; } }
-        public string LatestJobRunResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LatestJobRunResourceId { get { throw null; } }
         public Azure.ResourceManager.StorageMover.Models.JobRunStatus? LatestJobRunStatus { get { throw null; } }
-        public Azure.ResourceManager.StorageMover.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
         public string SourceName { get { throw null; } set { } }
-        public string SourceResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
         public string SourceSubpath { get { throw null; } set { } }
         public string TargetName { get { throw null; } set { } }
-        public string TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         public string TargetSubpath { get { throw null; } set { } }
     }
     public partial class JobDefinitionResource : Azure.ResourceManager.ArmResource
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageMover
     {
         public JobRunData() { }
         public string AgentName { get { throw null; } }
-        public string AgentResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AgentResourceId { get { throw null; } }
         public long? BytesExcluded { get { throw null; } }
         public long? BytesFailed { get { throw null; } }
         public long? BytesNoTransferNeeded { get { throw null; } }
@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.StorageMover
         public long? ItemsUnsupported { get { throw null; } }
         public System.BinaryData JobDefinitionProperties { get { throw null; } }
         public System.DateTimeOffset? LastStatusUpdate { get { throw null; } }
-        public Azure.ResourceManager.StorageMover.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.StorageMover.Models.JobRunScanStatus? ScanStatus { get { throw null; } }
         public string SourceName { get { throw null; } }
         public System.BinaryData SourceProperties { get { throw null; } }
-        public string SourceResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
         public Azure.ResourceManager.StorageMover.Models.JobRunStatus? Status { get { throw null; } }
         public string TargetName { get { throw null; } }
         public System.BinaryData TargetProperties { get { throw null; } }
-        public string TargetResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class JobRunResource : Azure.ResourceManager.ArmResource
     {
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.StorageMover
     public partial class StorageMoverAgentData : Azure.ResourceManager.Models.ResourceData
     {
         public StorageMoverAgentData(string arcResourceId, string arcVmUuid) { }
-        public Azure.ResourceManager.StorageMover.Models.AgentStatus? AgentStatus { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus? AgentStatus { get { throw null; } }
         public string AgentVersion { get { throw null; } }
         public string ArcResourceId { get { throw null; } set { } }
         public string ArcVmUuid { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageMover.Models.AgentPropertiesErrorDetails ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPropertiesErrorDetails ErrorDetails { get { throw null; } }
         public System.DateTimeOffset? LastStatusUpdate { get { throw null; } }
         public string LocalIPAddress { get { throw null; } }
         public long? MemoryInMB { get { throw null; } }
         public long? NumberOfCores { get { throw null; } }
-        public Azure.ResourceManager.StorageMover.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
         public long? UptimeInSeconds { get { throw null; } }
     }
     public partial class StorageMoverAgentResource : Azure.ResourceManager.ArmResource
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageMover
     {
         public StorageMoverData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageMover.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class StorageMoverEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>, System.Collections.IEnumerable
     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.StorageMover
     {
         public StorageMoverProjectData() { }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageMover.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class StorageMoverProjectResource : Azure.ResourceManager.ArmResource
     {
@@ -293,69 +293,23 @@ namespace Azure.ResourceManager.StorageMover
 }
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AgentPropertiesErrorDetails
-    {
-        internal AgentPropertiesErrorDetails() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgentStatus : System.IEquatable<Azure.ResourceManager.StorageMover.Models.AgentStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgentStatus(string value) { throw null; }
-        public static Azure.ResourceManager.StorageMover.Models.AgentStatus Executing { get { throw null; } }
-        public static Azure.ResourceManager.StorageMover.Models.AgentStatus Offline { get { throw null; } }
-        public static Azure.ResourceManager.StorageMover.Models.AgentStatus Online { get { throw null; } }
-        public static Azure.ResourceManager.StorageMover.Models.AgentStatus Registering { get { throw null; } }
-        public static Azure.ResourceManager.StorageMover.Models.AgentStatus RequiresAttention { get { throw null; } }
-        public static Azure.ResourceManager.StorageMover.Models.AgentStatus Unregistering { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StorageMover.Models.AgentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StorageMover.Models.AgentStatus left, Azure.ResourceManager.StorageMover.Models.AgentStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StorageMover.Models.AgentStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StorageMover.Models.AgentStatus left, Azure.ResourceManager.StorageMover.Models.AgentStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AzureStorageBlobContainerEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties
     {
         public AzureStorageBlobContainerEndpointProperties(string storageAccountResourceId, string blobContainerName) { }
         public string BlobContainerName { get { throw null; } set { } }
         public string StorageAccountResourceId { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CopyMode : System.IEquatable<Azure.ResourceManager.StorageMover.Models.CopyMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CopyMode(string value) { throw null; }
-        public static Azure.ResourceManager.StorageMover.Models.CopyMode Additive { get { throw null; } }
-        public static Azure.ResourceManager.StorageMover.Models.CopyMode Mirror { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StorageMover.Models.CopyMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StorageMover.Models.CopyMode left, Azure.ResourceManager.StorageMover.Models.CopyMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StorageMover.Models.CopyMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StorageMover.Models.CopyMode left, Azure.ResourceManager.StorageMover.Models.CopyMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public abstract partial class EndpointBaseProperties
     {
         protected EndpointBaseProperties() { }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageMover.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class JobDefinitionPatch
     {
         public JobDefinitionPatch() { }
         public string AgentName { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageMover.Models.CopyMode? CopyMode { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode? CopyMode { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
     }
     public partial class JobRunError
@@ -368,7 +322,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class JobRunResourceId
     {
         internal JobRunResourceId() { }
-        public string JobRunResourceIdValue { get { throw null; } }
+        public Azure.Core.ResourceIdentifier JobRunResourceIdValue { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobRunScanStatus : System.IEquatable<Azure.ResourceManager.StorageMover.Models.JobRunScanStatus>
@@ -439,27 +393,56 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator !=(Azure.ResourceManager.StorageMover.Models.NfsVersion left, Azure.ResourceManager.StorageMover.Models.NfsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.StorageMover.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.StorageMover.Models.ProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StorageMover.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StorageMover.Models.ProvisioningState left, Azure.ResourceManager.StorageMover.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StorageMover.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StorageMover.Models.ProvisioningState left, Azure.ResourceManager.StorageMover.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class StorageMoverAgentPatch
     {
         public StorageMoverAgentPatch() { }
         public string Description { get { throw null; } set { } }
+    }
+    public partial class StorageMoverAgentPropertiesErrorDetails
+    {
+        internal StorageMoverAgentPropertiesErrorDetails() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageMoverAgentStatus : System.IEquatable<Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageMoverAgentStatus(string value) { throw null; }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus Executing { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus Offline { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus Online { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus Registering { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus RequiresAttention { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus Unregistering { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus left, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus left, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageMoverCopyMode : System.IEquatable<Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageMoverCopyMode(string value) { throw null; }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode Additive { get { throw null; } }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode Mirror { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode left, Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode left, Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StorageMoverEndpointPatch
     {
@@ -476,5 +459,22 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         public StorageMoverProjectPatch() { }
         public string Description { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageMoverProvisioningState : System.IEquatable<Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageMoverProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState left, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState left, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

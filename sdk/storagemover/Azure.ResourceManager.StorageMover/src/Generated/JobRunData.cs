@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="jobDefinitionProperties"> Copy of parent Job Definition&apos;s properties at time of Job Run creation. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, string agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, string sourceResourceId, BinaryData sourceProperties, string targetName, string targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Status = status;
             ScanStatus = scanStatus;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Name of the Agent assigned to this run. </summary>
         public string AgentName { get; }
         /// <summary> Fully qualified resource id of the Agent assigned to this run. </summary>
-        public string AgentResourceId { get; }
+        public ResourceIdentifier AgentResourceId { get; }
         /// <summary> Start time of the run. Null if no Agent reported that the job has started. </summary>
         public DateTimeOffset? ExecutionStartOn { get; }
         /// <summary> End time of the run. Null if Agent has not reported that the job has ended. </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Name of source Endpoint resource. This resource may no longer exist. </summary>
         public string SourceName { get; }
         /// <summary> Fully qualified resource id of source Endpoint. This id may no longer exist. </summary>
-        public string SourceResourceId { get; }
+        public ResourceIdentifier SourceResourceId { get; }
         /// <summary>
         /// Copy of source Endpoint resource&apos;s properties at time of Job Run creation.
         /// <para>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Name of target Endpoint resource. This resource may no longer exist. </summary>
         public string TargetName { get; }
         /// <summary> Fully qualified resource id of of Endpoint. This id may no longer exist. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary>
         /// Copy of Endpoint resource&apos;s properties at time of Job Run creation.
         /// <para>
