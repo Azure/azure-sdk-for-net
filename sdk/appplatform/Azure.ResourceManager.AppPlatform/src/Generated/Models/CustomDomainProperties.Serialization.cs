@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> thumbprint = default;
             Optional<string> appName = default;
             Optional<string> certName = default;
+            Optional<CustomDomainResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"))
@@ -50,8 +51,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     certName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new CustomDomainResourceProvisioningState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new CustomDomainProperties(thumbprint.Value, appName.Value, certName.Value);
+            return new CustomDomainProperties(thumbprint.Value, appName.Value, certName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformCustomDomainResourceCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformCustomDomainResource>(new AppPlatformCustomDomainResourceOperationSource(Client), _appPlatformCustomDomainResourceCustomDomainsClientDiagnostics, Pipeline, _appPlatformCustomDomainResourceCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppPlatformCustomDomainResource>(new AppPlatformCustomDomainResourceOperationSource(Client), _appPlatformCustomDomainResourceCustomDomainsClientDiagnostics, Pipeline, _appPlatformCustomDomainResourceCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformCustomDomainResourceCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformCustomDomainResource>(new AppPlatformCustomDomainResourceOperationSource(Client), _appPlatformCustomDomainResourceCustomDomainsClientDiagnostics, Pipeline, _appPlatformCustomDomainResourceCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppPlatformCustomDomainResource>(new AppPlatformCustomDomainResourceOperationSource(Client), _appPlatformCustomDomainResourceCustomDomainsClientDiagnostics, Pipeline, _appPlatformCustomDomainResourceCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

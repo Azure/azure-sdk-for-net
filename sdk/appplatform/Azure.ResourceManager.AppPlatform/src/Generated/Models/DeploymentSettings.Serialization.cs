@@ -54,6 +54,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(LivenessProbe))
+            {
+                writer.WritePropertyName("livenessProbe");
+                writer.WriteObjectValue(LivenessProbe);
+            }
+            if (Optional.IsDefined(ReadinessProbe))
+            {
+                writer.WritePropertyName("readinessProbe");
+                writer.WriteObjectValue(ReadinessProbe);
+            }
+            if (Optional.IsDefined(StartupProbe))
+            {
+                writer.WritePropertyName("startupProbe");
+                writer.WriteObjectValue(StartupProbe);
+            }
+            if (Optional.IsDefined(TerminationGracePeriodSeconds))
+            {
+                writer.WritePropertyName("terminationGracePeriodSeconds");
+                writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
+            }
             if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings");
@@ -67,6 +87,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<ResourceRequests> resourceRequests = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
+            Optional<Probe> livenessProbe = default;
+            Optional<Probe> readinessProbe = default;
+            Optional<Probe> startupProbe = default;
+            Optional<int> terminationGracePeriodSeconds = default;
             Optional<ContainerProbeSettings> containerProbeSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -115,6 +139,46 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     addonConfigs = dictionary;
                     continue;
                 }
+                if (property.NameEquals("livenessProbe"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    livenessProbe = Probe.DeserializeProbe(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("readinessProbe"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    readinessProbe = Probe.DeserializeProbe(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("startupProbe"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startupProbe = Probe.DeserializeProbe(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("terminationGracePeriodSeconds"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    terminationGracePeriodSeconds = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("containerProbeSettings"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -126,7 +190,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new DeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), containerProbeSettings.Value);
+            return new DeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value);
         }
     }
 }

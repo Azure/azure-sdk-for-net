@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="env"> The environment variables for this build. </param>
         /// <param name="triggeredBuildResult"> The build result triggered by this build. </param>
-        internal AppBuildProperties(string relativePath, string builder, string agentPool, AppBuildProvisioningState? provisioningState, IDictionary<string, string> env, SubResource triggeredBuildResult)
+        /// <param name="resourceRequests"> The customized build resource for this build. </param>
+        internal AppBuildProperties(string relativePath, string builder, string agentPool, AppBuildProvisioningState? provisioningState, IDictionary<string, string> env, SubResource triggeredBuildResult, BuildResourceRequests resourceRequests)
         {
             RelativePath = relativePath;
             Builder = builder;
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ProvisioningState = provisioningState;
             Env = env;
             TriggeredBuildResult = triggeredBuildResult;
+            ResourceRequests = resourceRequests;
         }
 
         /// <summary> The relative path of source code. </summary>
@@ -54,5 +56,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             get => TriggeredBuildResult?.Id;
         }
+
+        /// <summary> The customized build resource for this build. </summary>
+        public BuildResourceRequests ResourceRequests { get; set; }
     }
 }

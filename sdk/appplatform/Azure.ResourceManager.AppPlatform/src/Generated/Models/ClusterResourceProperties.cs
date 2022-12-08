@@ -18,15 +18,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ClusterResourceProperties. </summary>
         /// <param name="provisioningState"> Provisioning state of the Service. </param>
         /// <param name="networkProfile"> Network profile of the Service. </param>
+        /// <param name="vnetAddons"> Additional Service settings in vnet injection instance. </param>
         /// <param name="version"> Version of the Service. </param>
         /// <param name="serviceId"> ServiceInstanceEntity GUID which uniquely identifies a created resource. </param>
         /// <param name="powerState"> Power state of the Service. </param>
         /// <param name="zoneRedundant"></param>
         /// <param name="fqdn"> Fully qualified dns name of the service instance. </param>
-        internal ClusterResourceProperties(ProvisioningState? provisioningState, NetworkProfile networkProfile, int? version, string serviceId, PowerState? powerState, bool? zoneRedundant, string fqdn)
+        internal ClusterResourceProperties(ProvisioningState? provisioningState, NetworkProfile networkProfile, ServiceVNetAddons vnetAddons, int? version, string serviceId, PowerState? powerState, bool? zoneRedundant, string fqdn)
         {
             ProvisioningState = provisioningState;
             NetworkProfile = networkProfile;
+            VnetAddons = vnetAddons;
             Version = version;
             ServiceId = serviceId;
             PowerState = powerState;
@@ -38,6 +40,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Network profile of the Service. </summary>
         public NetworkProfile NetworkProfile { get; set; }
+        /// <summary> Additional Service settings in vnet injection instance. </summary>
+        internal ServiceVNetAddons VnetAddons { get; set; }
+        /// <summary> Indicates whether the log stream in vnet injection instance could be accessed from internet. </summary>
+        public bool? LogStreamPublicEndpoint
+        {
+            get => VnetAddons is null ? default : VnetAddons.LogStreamPublicEndpoint;
+            set
+            {
+                if (VnetAddons is null)
+                    VnetAddons = new ServiceVNetAddons();
+                VnetAddons.LogStreamPublicEndpoint = value;
+            }
+        }
+
         /// <summary> Version of the Service. </summary>
         public int? Version { get; }
         /// <summary> ServiceInstanceEntity GUID which uniquely identifies a created resource. </summary>

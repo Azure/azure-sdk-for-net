@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Required inbound or outbound traffic for Azure Spring Cloud instance. </summary>
+    /// <summary> Required inbound or outbound traffic for Azure Spring Apps resource. </summary>
     public partial class RequiredTraffic
     {
         /// <summary> Initializes a new instance of RequiredTraffic. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Describes an available Azure Spring Cloud SKU. </summary>
+    /// <summary> Describes an available Azure Spring Apps SKU. </summary>
     public partial class AvailableAppPlatformSku
     {
         /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>

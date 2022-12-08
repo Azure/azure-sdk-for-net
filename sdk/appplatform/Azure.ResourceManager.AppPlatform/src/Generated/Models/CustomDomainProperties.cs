@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         /// <param name="appName"> The app name of domain. </param>
         /// <param name="certName"> The bound certificate name of domain. </param>
-        internal CustomDomainProperties(string thumbprint, string appName, string certName)
+        /// <param name="provisioningState"> Provisioning state of the Domain. </param>
+        internal CustomDomainProperties(string thumbprint, string appName, string certName, CustomDomainResourceProvisioningState? provisioningState)
         {
             Thumbprint = thumbprint;
             AppName = appName;
             CertName = certName;
+            ProvisioningState = provisioningState;
         }
 
         /// <summary> The thumbprint of bound certificate. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string AppName { get; }
         /// <summary> The bound certificate name of domain. </summary>
         public string CertName { get; set; }
+        /// <summary> Provisioning state of the Domain. </summary>
+        public CustomDomainResourceProvisioningState? ProvisioningState { get; }
     }
 }

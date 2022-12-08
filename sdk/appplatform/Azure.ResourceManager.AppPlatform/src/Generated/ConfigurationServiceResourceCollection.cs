@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _configurationServiceResourceConfigurationServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ConfigurationServiceResource>(new ConfigurationServiceResourceOperationSource(Client), _configurationServiceResourceConfigurationServicesClientDiagnostics, Pipeline, _configurationServiceResourceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ConfigurationServiceResource>(new ConfigurationServiceResourceOperationSource(Client), _configurationServiceResourceConfigurationServicesClientDiagnostics, Pipeline, _configurationServiceResourceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _configurationServiceResourceConfigurationServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<ConfigurationServiceResource>(new ConfigurationServiceResourceOperationSource(Client), _configurationServiceResourceConfigurationServicesClientDiagnostics, Pipeline, _configurationServiceResourceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ConfigurationServiceResource>(new ConfigurationServiceResourceOperationSource(Client), _configurationServiceResourceConfigurationServicesClientDiagnostics, Pipeline, _configurationServiceResourceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

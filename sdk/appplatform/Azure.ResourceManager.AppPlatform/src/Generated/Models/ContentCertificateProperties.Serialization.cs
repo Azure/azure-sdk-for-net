@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> activateDate = default;
             Optional<string> subjectName = default;
             Optional<IReadOnlyList<string>> dnsNames = default;
+            Optional<CertificateResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"))
@@ -94,8 +95,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     dnsNames = array;
                     continue;
                 }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new CertificateResourceProvisioningState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ContentCertificateProperties(type, thumbprint.Value, issuer.Value, issuedDate.Value, expirationDate.Value, activateDate.Value, subjectName.Value, Optional.ToList(dnsNames), content.Value);
+            return new ContentCertificateProperties(type, thumbprint.Value, issuer.Value, issuedDate.Value, expirationDate.Value, activateDate.Value, subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState), content.Value);
         }
     }
 }

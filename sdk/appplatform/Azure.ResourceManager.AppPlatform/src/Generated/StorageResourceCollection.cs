@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _storageResourceStoragesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<StorageResource>(new StorageResourceOperationSource(Client), _storageResourceStoragesClientDiagnostics, Pipeline, _storageResourceStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<StorageResource>(new StorageResourceOperationSource(Client), _storageResourceStoragesClientDiagnostics, Pipeline, _storageResourceStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _storageResourceStoragesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<StorageResource>(new StorageResourceOperationSource(Client), _storageResourceStoragesClientDiagnostics, Pipeline, _storageResourceStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<StorageResource>(new StorageResourceOperationSource(Client), _storageResourceStoragesClientDiagnostics, Pipeline, _storageResourceStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppPlatform
         }
 
         /// <summary>
-        /// List all the storages of one Azure Spring Cloud instance.
+        /// List all the storages of one Azure Spring Apps resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/storages
         /// Operation Id: Storages_List
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppPlatform
         }
 
         /// <summary>
-        /// List all the storages of one Azure Spring Cloud instance.
+        /// List all the storages of one Azure Spring Apps resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/storages
         /// Operation Id: Storages_List
         /// </summary>

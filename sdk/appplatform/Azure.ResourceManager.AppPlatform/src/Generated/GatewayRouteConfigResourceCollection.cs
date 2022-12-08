@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _gatewayRouteConfigResourceGatewayRouteConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<GatewayRouteConfigResource>(new GatewayRouteConfigResourceOperationSource(Client), _gatewayRouteConfigResourceGatewayRouteConfigsClientDiagnostics, Pipeline, _gatewayRouteConfigResourceGatewayRouteConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<GatewayRouteConfigResource>(new GatewayRouteConfigResourceOperationSource(Client), _gatewayRouteConfigResourceGatewayRouteConfigsClientDiagnostics, Pipeline, _gatewayRouteConfigResourceGatewayRouteConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _gatewayRouteConfigResourceGatewayRouteConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<GatewayRouteConfigResource>(new GatewayRouteConfigResourceOperationSource(Client), _gatewayRouteConfigResourceGatewayRouteConfigsClientDiagnostics, Pipeline, _gatewayRouteConfigResourceGatewayRouteConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<GatewayRouteConfigResource>(new GatewayRouteConfigResourceOperationSource(Client), _gatewayRouteConfigResourceGatewayRouteConfigsClientDiagnostics, Pipeline, _gatewayRouteConfigResourceGatewayRouteConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

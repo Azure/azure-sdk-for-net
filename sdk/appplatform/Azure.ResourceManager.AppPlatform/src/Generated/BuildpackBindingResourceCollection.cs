@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _buildpackBindingResourceBuildpackBindingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<BuildpackBindingResource>(new BuildpackBindingResourceOperationSource(Client), _buildpackBindingResourceBuildpackBindingClientDiagnostics, Pipeline, _buildpackBindingResourceBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<BuildpackBindingResource>(new BuildpackBindingResourceOperationSource(Client), _buildpackBindingResourceBuildpackBindingClientDiagnostics, Pipeline, _buildpackBindingResourceBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _buildpackBindingResourceBuildpackBindingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<BuildpackBindingResource>(new BuildpackBindingResourceOperationSource(Client), _buildpackBindingResourceBuildpackBindingClientDiagnostics, Pipeline, _buildpackBindingResourceBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<BuildpackBindingResource>(new BuildpackBindingResourceOperationSource(Client), _buildpackBindingResourceBuildpackBindingClientDiagnostics, Pipeline, _buildpackBindingResourceBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

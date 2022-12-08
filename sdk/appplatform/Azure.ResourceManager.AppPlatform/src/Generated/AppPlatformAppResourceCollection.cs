@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformAppResourceAppsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformAppResourceAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

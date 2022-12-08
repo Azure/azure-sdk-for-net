@@ -34,7 +34,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="customPersistentDisks"> List of custom persistent disks. </param>
         /// <param name="enableEndToEndTls"> Indicate if end to end TLS is enabled. </param>
         /// <param name="loadedCertificates"> Collection of loaded certificates. </param>
-        internal AppResourceProperties(bool? @public, Uri uri, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppResourceProvisioningState? provisioningState, string fqdn, bool? httpsOnly, TemporaryDisk temporaryDisk, PersistentDisk persistentDisk, IList<CustomPersistentDiskData> customPersistentDisks, bool? enableEndToEndTls, IList<LoadedCertificate> loadedCertificates)
+        /// <param name="vnetAddons"> Additional App settings in vnet injection instance. </param>
+        /// <param name="ingressSettings"> App ingress settings payload. </param>
+        internal AppResourceProperties(bool? @public, Uri uri, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppResourceProvisioningState? provisioningState, string fqdn, bool? httpsOnly, TemporaryDisk temporaryDisk, PersistentDisk persistentDisk, IList<CustomPersistentDiskData> customPersistentDisks, bool? enableEndToEndTls, IList<LoadedCertificate> loadedCertificates, AppVNetAddons vnetAddons, IngressSettings ingressSettings)
         {
             Public = @public;
             Uri = uri;
@@ -47,6 +49,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             CustomPersistentDisks = customPersistentDisks;
             EnableEndToEndTls = enableEndToEndTls;
             LoadedCertificates = loadedCertificates;
+            VnetAddons = vnetAddons;
+            IngressSettings = ingressSettings;
         }
 
         /// <summary> Indicates whether the App exposes public endpoint. </summary>
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Provisioning state of the App. </summary>
         public AppResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Fully qualified dns Name. </summary>
-        public string Fqdn { get; set; }
+        public string Fqdn { get; }
         /// <summary> Indicate if only https is allowed. </summary>
         public bool? HttpsOnly { get; set; }
         /// <summary> Temporary disk settings. </summary>
@@ -71,5 +75,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public bool? EnableEndToEndTls { get; set; }
         /// <summary> Collection of loaded certificates. </summary>
         public IList<LoadedCertificate> LoadedCertificates { get; }
+        /// <summary> Additional App settings in vnet injection instance. </summary>
+        public AppVNetAddons VnetAddons { get; set; }
+        /// <summary> App ingress settings payload. </summary>
+        public IngressSettings IngressSettings { get; set; }
     }
 }

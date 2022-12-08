@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _serviceRegistryResourceServiceRegistriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ServiceRegistryResource>(new ServiceRegistryResourceOperationSource(Client), _serviceRegistryResourceServiceRegistriesClientDiagnostics, Pipeline, _serviceRegistryResourceServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ServiceRegistryResource>(new ServiceRegistryResourceOperationSource(Client), _serviceRegistryResourceServiceRegistriesClientDiagnostics, Pipeline, _serviceRegistryResourceServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _serviceRegistryResourceServiceRegistriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName, cancellationToken);
-                var operation = new AppPlatformArmOperation<ServiceRegistryResource>(new ServiceRegistryResourceOperationSource(Client), _serviceRegistryResourceServiceRegistriesClientDiagnostics, Pipeline, _serviceRegistryResourceServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ServiceRegistryResource>(new ServiceRegistryResourceOperationSource(Client), _serviceRegistryResourceServiceRegistriesClientDiagnostics, Pipeline, _serviceRegistryResourceServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

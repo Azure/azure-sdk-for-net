@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _configServerResourceConfigServersRestClient.UpdatePatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _configServerResourceConfigServersRestClient.UpdatePatch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _configServerResourceConfigServersRestClient.UpdatePutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _configServerResourceConfigServersRestClient.UpdatePut(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<ConfigServerResource>(new ConfigServerResourceOperationSource(Client), _configServerResourceConfigServersClientDiagnostics, Pipeline, _configServerResourceConfigServersRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppPlatform.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appBuilderResourceBuildServiceBuilderRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appBuilderResourceBuildServiceBuilderRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appBuilderResourceBuildServiceBuilderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -271,10 +272,54 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appBuilderResourceBuildServiceBuilderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List deployments that are using the builder.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}/listUsingDeployments
+        /// Operation Id: BuildServiceBuilder_ListDeployments
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DeploymentList>> GetDeploymentsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _appBuilderResourceBuildServiceBuilderClientDiagnostics.CreateScope("AppBuilderResource.GetDeployments");
+            scope.Start();
+            try
+            {
+                var response = await _appBuilderResourceBuildServiceBuilderRestClient.ListDeploymentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List deployments that are using the builder.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}/listUsingDeployments
+        /// Operation Id: BuildServiceBuilder_ListDeployments
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DeploymentList> GetDeployments(CancellationToken cancellationToken = default)
+        {
+            using var scope = _appBuilderResourceBuildServiceBuilderClientDiagnostics.CreateScope("AppBuilderResource.GetDeployments");
+            scope.Start();
+            try
+            {
+                var response = _appBuilderResourceBuildServiceBuilderRestClient.ListDeployments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

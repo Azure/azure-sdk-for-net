@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="activateDate"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
-        internal UnknownCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames)
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
+        internal UnknownCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, CertificateResourceProvisioningState? provisioningState) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames, provisioningState)
         {
             CertificatePropertiesType = certificatePropertiesType ?? "Unknown";
         }

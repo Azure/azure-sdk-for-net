@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="activateDate"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
         /// <param name="content"> The content of uploaded certificate. </param>
-        internal ContentCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, string content) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames)
+        internal ContentCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, CertificateResourceProvisioningState? provisioningState, string content) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames, provisioningState)
         {
             Content = content;
             CertificatePropertiesType = certificatePropertiesType ?? "ContentCertificate";

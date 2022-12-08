@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appBuilderResourceBuildServiceBuilderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appBuilderResourceBuildServiceBuilderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppBuilderResource>(new AppBuilderResourceOperationSource(Client), _appBuilderResourceBuildServiceBuilderClientDiagnostics, Pipeline, _appBuilderResourceBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

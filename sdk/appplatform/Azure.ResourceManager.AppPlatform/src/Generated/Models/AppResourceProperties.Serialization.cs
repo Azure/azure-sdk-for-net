@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Fqdn))
-            {
-                writer.WritePropertyName("fqdn");
-                writer.WriteStringValue(Fqdn);
-            }
             if (Optional.IsDefined(HttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly");
@@ -88,6 +83,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(VnetAddons))
+            {
+                writer.WritePropertyName("vnetAddons");
+                writer.WriteObjectValue(VnetAddons);
+            }
+            if (Optional.IsDefined(IngressSettings))
+            {
+                writer.WritePropertyName("ingressSettings");
+                writer.WriteObjectValue(IngressSettings);
+            }
             writer.WriteEndObject();
         }
 
@@ -104,6 +109,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<CustomPersistentDiskData>> customPersistentDisks = default;
             Optional<bool> enableEndToEndTls = default;
             Optional<IList<LoadedCertificate>> loadedCertificates = default;
+            Optional<AppVNetAddons> vnetAddons = default;
+            Optional<IngressSettings> ingressSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("public"))
@@ -231,8 +238,28 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     loadedCertificates = array;
                     continue;
                 }
+                if (property.NameEquals("vnetAddons"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vnetAddons = AppVNetAddons.DeserializeAppVNetAddons(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("ingressSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ingressSettings = IngressSettings.DeserializeIngressSettings(property.Value);
+                    continue;
+                }
             }
-            return new AppResourceProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates));
+            return new AppResourceProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value);
         }
     }
 }

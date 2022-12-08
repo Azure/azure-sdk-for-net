@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01-preview";
+            _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppPlatform
             return message;
         }
 
-        /// <summary> List all the storages of one Azure Spring Cloud instance. </summary>
+        /// <summary> List all the storages of one Azure Spring Apps resource. </summary>
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        /// <summary> List all the storages of one Azure Spring Cloud instance. </summary>
+        /// <summary> List all the storages of one Azure Spring Apps resource. </summary>
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AppPlatform
             return message;
         }
 
-        /// <summary> List all the storages of one Azure Spring Cloud instance. </summary>
+        /// <summary> List all the storages of one Azure Spring Apps resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        /// <summary> List all the storages of one Azure Spring Cloud instance. </summary>
+        /// <summary> List all the storages of one Azure Spring Apps resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Gets subscription ID which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppDeploymentResource>(new AppDeploymentResourceOperationSource(Client), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppDeploymentResource>(new AppDeploymentResourceOperationSource(Client), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppDeploymentResource>(new AppDeploymentResourceOperationSource(Client), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation<AppDeploymentResource>(new AppDeploymentResourceOperationSource(Client), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -391,10 +391,160 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enable remote debugging.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/enableRemoteDebugging
+        /// Operation Id: Deployments_EnableRemoteDebugging
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="remoteDebuggingPayload"> Parameters for enable remote debugging. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<RemoteDebugging>> EnableRemoteDebuggingAsync(WaitUntil waitUntil, RemoteDebuggingPayload remoteDebuggingPayload = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.EnableRemoteDebugging");
+            scope.Start();
+            try
+            {
+                var response = await _appDeploymentResourceDeploymentsRestClient.EnableRemoteDebuggingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, remoteDebuggingPayload, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<RemoteDebugging>(new RemoteDebuggingOperationSource(), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateEnableRemoteDebuggingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, remoteDebuggingPayload).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enable remote debugging.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/enableRemoteDebugging
+        /// Operation Id: Deployments_EnableRemoteDebugging
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="remoteDebuggingPayload"> Parameters for enable remote debugging. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<RemoteDebugging> EnableRemoteDebugging(WaitUntil waitUntil, RemoteDebuggingPayload remoteDebuggingPayload = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.EnableRemoteDebugging");
+            scope.Start();
+            try
+            {
+                var response = _appDeploymentResourceDeploymentsRestClient.EnableRemoteDebugging(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, remoteDebuggingPayload, cancellationToken);
+                var operation = new AppPlatformArmOperation<RemoteDebugging>(new RemoteDebuggingOperationSource(), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateEnableRemoteDebuggingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, remoteDebuggingPayload).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable remote debugging.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/disableRemoteDebugging
+        /// Operation Id: Deployments_DisableRemoteDebugging
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<RemoteDebugging>> DisableRemoteDebuggingAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.DisableRemoteDebugging");
+            scope.Start();
+            try
+            {
+                var response = await _appDeploymentResourceDeploymentsRestClient.DisableRemoteDebuggingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<RemoteDebugging>(new RemoteDebuggingOperationSource(), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateDisableRemoteDebuggingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable remote debugging.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/disableRemoteDebugging
+        /// Operation Id: Deployments_DisableRemoteDebugging
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<RemoteDebugging> DisableRemoteDebugging(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.DisableRemoteDebugging");
+            scope.Start();
+            try
+            {
+                var response = _appDeploymentResourceDeploymentsRestClient.DisableRemoteDebugging(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppPlatformArmOperation<RemoteDebugging>(new RemoteDebuggingOperationSource(), _appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateDisableRemoteDebuggingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get remote debugging config.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/getRemoteDebuggingConfig
+        /// Operation Id: Deployments_GetRemoteDebuggingConfig
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RemoteDebugging>> GetRemoteDebuggingConfigAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetRemoteDebuggingConfig");
+            scope.Start();
+            try
+            {
+                var response = await _appDeploymentResourceDeploymentsRestClient.GetRemoteDebuggingConfigAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get remote debugging config.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}/getRemoteDebuggingConfig
+        /// Operation Id: Deployments_GetRemoteDebuggingConfig
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RemoteDebugging> GetRemoteDebuggingConfig(CancellationToken cancellationToken = default)
+        {
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetRemoteDebuggingConfig");
+            scope.Start();
+            try
+            {
+                var response = _appDeploymentResourceDeploymentsRestClient.GetRemoteDebuggingConfig(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -465,7 +615,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.GenerateHeapDumpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -495,7 +645,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.GenerateHeapDump(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -525,7 +675,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.GenerateThreadDumpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -555,7 +705,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.GenerateThreadDump(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -585,7 +735,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appDeploymentResourceDeploymentsRestClient.StartJfrAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -615,7 +765,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appDeploymentResourceDeploymentsRestClient.StartJfr(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

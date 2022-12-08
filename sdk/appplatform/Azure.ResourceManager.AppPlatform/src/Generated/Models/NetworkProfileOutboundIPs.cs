@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Desired outbound IP resources for Azure Spring Cloud instance. </summary>
+    /// <summary> Desired outbound IP resources for Azure Spring Apps resource. </summary>
     internal partial class NetworkProfileOutboundIPs
     {
         /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>

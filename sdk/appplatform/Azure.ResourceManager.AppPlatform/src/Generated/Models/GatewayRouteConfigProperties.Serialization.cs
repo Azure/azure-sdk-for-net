@@ -21,6 +21,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("appResourceId");
                 writer.WriteStringValue(AppResourceId);
             }
+            if (Optional.IsDefined(OpenApi))
+            {
+                writer.WritePropertyName("openApi");
+                writer.WriteObjectValue(OpenApi);
+            }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol");
+                writer.WriteStringValue(Protocol.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes");
@@ -38,6 +48,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<GatewayProvisioningState> provisioningState = default;
             Optional<string> appResourceId = default;
+            Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
+            Optional<GatewayRouteConfigProtocol> protocol = default;
             Optional<IList<GatewayApiRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,6 +68,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     appResourceId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("openApi"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("protocol"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    protocol = new GatewayRouteConfigProtocol(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("routes"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -72,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new GatewayRouteConfigProperties(Optional.ToNullable(provisioningState), appResourceId.Value, Optional.ToList(routes));
+            return new GatewayRouteConfigProperties(Optional.ToNullable(provisioningState), appResourceId.Value, openApi.Value, Optional.ToNullable(protocol), Optional.ToList(routes));
         }
     }
 }

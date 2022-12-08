@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
+            if (Optional.IsDefined(VnetAddons))
+            {
+                writer.WritePropertyName("vnetAddons");
+                writer.WriteObjectValue(VnetAddons);
+            }
             if (Optional.IsDefined(ZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<ProvisioningState> provisioningState = default;
             Optional<NetworkProfile> networkProfile = default;
+            Optional<ServiceVNetAddons> vnetAddons = default;
             Optional<int> version = default;
             Optional<string> serviceId = default;
             Optional<PowerState> powerState = default;
@@ -57,6 +63,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         continue;
                     }
                     networkProfile = NetworkProfile.DeserializeNetworkProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("vnetAddons"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vnetAddons = ServiceVNetAddons.DeserializeServiceVNetAddons(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -100,7 +116,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ClusterResourceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, Optional.ToNullable(version), serviceId.Value, Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value);
+            return new ClusterResourceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), serviceId.Value, Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value);
         }
     }
 }

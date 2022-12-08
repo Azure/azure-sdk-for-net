@@ -37,11 +37,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="activateDate"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
         /// <param name="vaultUri"> The vault uri of user key vault. </param>
         /// <param name="keyVaultCertName"> The certificate name of key vault. </param>
         /// <param name="certVersion"> The certificate version of key vault. </param>
         /// <param name="excludePrivateKey"> Optional. If set to true, it will not import private key from key vault. </param>
-        internal KeyVaultCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, Uri vaultUri, string keyVaultCertName, string certVersion, bool? excludePrivateKey) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames)
+        internal KeyVaultCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, CertificateResourceProvisioningState? provisioningState, Uri vaultUri, string keyVaultCertName, string certVersion, bool? excludePrivateKey) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames, provisioningState)
         {
             VaultUri = vaultUri;
             KeyVaultCertName = keyVaultCertName;

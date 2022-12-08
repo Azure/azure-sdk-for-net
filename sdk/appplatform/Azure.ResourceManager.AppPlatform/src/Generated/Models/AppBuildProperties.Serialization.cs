@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(ResourceRequests))
+            {
+                writer.WritePropertyName("resourceRequests");
+                writer.WriteObjectValue(ResourceRequests);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppBuildProvisioningState> provisioningState = default;
             Optional<IDictionary<string, string>> env = default;
             Optional<SubResource> triggeredBuildResult = default;
+            Optional<BuildResourceRequests> resourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativePath"))
@@ -106,8 +112,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     triggeredBuildResult = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("resourceRequests"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceRequests = BuildResourceRequests.DeserializeBuildResourceRequests(property.Value);
+                    continue;
+                }
             }
-            return new AppBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult);
+            return new AppBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value);
         }
     }
 }

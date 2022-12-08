@@ -20,14 +20,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
-        /// <param name="serviceRuntimeSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Cloud Service Runtime. </param>
-        /// <param name="appSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Cloud Apps. </param>
-        /// <param name="serviceCidr"> Azure Spring Cloud service reserved CIDR. </param>
-        /// <param name="serviceRuntimeNetworkResourceGroup"> Name of the resource group containing network resources of Azure Spring Cloud Service Runtime. </param>
-        /// <param name="appNetworkResourceGroup"> Name of the resource group containing network resources of Azure Spring Cloud Apps. </param>
-        /// <param name="outboundIPs"> Desired outbound IP resources for Azure Spring Cloud instance. </param>
-        /// <param name="requiredTraffics"> Required inbound or outbound traffics for Azure Spring Cloud instance. </param>
-        internal NetworkProfile(ResourceIdentifier serviceRuntimeSubnetId, ResourceIdentifier appSubnetId, string serviceCidr, string serviceRuntimeNetworkResourceGroup, string appNetworkResourceGroup, NetworkProfileOutboundIPs outboundIPs, IReadOnlyList<RequiredTraffic> requiredTraffics)
+        /// <param name="serviceRuntimeSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Apps Service Runtime. </param>
+        /// <param name="appSubnetId"> Fully qualified resource Id of the subnet to host customer apps in Azure Spring Apps. </param>
+        /// <param name="serviceCidr"> Azure Spring Apps service reserved CIDR. </param>
+        /// <param name="serviceRuntimeNetworkResourceGroup"> Name of the resource group containing network resources of Azure Spring Apps Service Runtime. </param>
+        /// <param name="appNetworkResourceGroup"> Name of the resource group containing network resources for customer apps in Azure Spring Apps. </param>
+        /// <param name="outboundIPs"> Desired outbound IP resources for Azure Spring Apps resource. </param>
+        /// <param name="requiredTraffics"> Required inbound or outbound traffics for Azure Spring Apps resource. </param>
+        /// <param name="ingressConfig"> Ingress configuration payload for Azure Spring Apps resource. </param>
+        /// <param name="outboundType"> The egress traffic type of Azure Spring Apps VNet instances. </param>
+        internal NetworkProfile(ResourceIdentifier serviceRuntimeSubnetId, ResourceIdentifier appSubnetId, string serviceCidr, string serviceRuntimeNetworkResourceGroup, string appNetworkResourceGroup, NetworkProfileOutboundIPs outboundIPs, IReadOnlyList<RequiredTraffic> requiredTraffics, IngressConfig ingressConfig, string outboundType)
         {
             ServiceRuntimeSubnetId = serviceRuntimeSubnetId;
             AppSubnetId = appSubnetId;
@@ -36,19 +38,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
             AppNetworkResourceGroup = appNetworkResourceGroup;
             OutboundIPs = outboundIPs;
             RequiredTraffics = requiredTraffics;
+            IngressConfig = ingressConfig;
+            OutboundType = outboundType;
         }
 
-        /// <summary> Fully qualified resource Id of the subnet to host Azure Spring Cloud Service Runtime. </summary>
+        /// <summary> Fully qualified resource Id of the subnet to host Azure Spring Apps Service Runtime. </summary>
         public ResourceIdentifier ServiceRuntimeSubnetId { get; set; }
-        /// <summary> Fully qualified resource Id of the subnet to host Azure Spring Cloud Apps. </summary>
+        /// <summary> Fully qualified resource Id of the subnet to host customer apps in Azure Spring Apps. </summary>
         public ResourceIdentifier AppSubnetId { get; set; }
-        /// <summary> Azure Spring Cloud service reserved CIDR. </summary>
+        /// <summary> Azure Spring Apps service reserved CIDR. </summary>
         public string ServiceCidr { get; set; }
-        /// <summary> Name of the resource group containing network resources of Azure Spring Cloud Service Runtime. </summary>
+        /// <summary> Name of the resource group containing network resources of Azure Spring Apps Service Runtime. </summary>
         public string ServiceRuntimeNetworkResourceGroup { get; set; }
-        /// <summary> Name of the resource group containing network resources of Azure Spring Cloud Apps. </summary>
+        /// <summary> Name of the resource group containing network resources for customer apps in Azure Spring Apps. </summary>
         public string AppNetworkResourceGroup { get; set; }
-        /// <summary> Desired outbound IP resources for Azure Spring Cloud instance. </summary>
+        /// <summary> Desired outbound IP resources for Azure Spring Apps resource. </summary>
         internal NetworkProfileOutboundIPs OutboundIPs { get; }
         /// <summary> A list of public IP addresses. </summary>
         public IReadOnlyList<string> OutboundPublicIPs
@@ -56,7 +60,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
             get => OutboundIPs?.PublicIPs;
         }
 
-        /// <summary> Required inbound or outbound traffics for Azure Spring Cloud instance. </summary>
+        /// <summary> Required inbound or outbound traffics for Azure Spring Apps resource. </summary>
         public IReadOnlyList<RequiredTraffic> RequiredTraffics { get; }
+        /// <summary> Ingress configuration payload for Azure Spring Apps resource. </summary>
+        internal IngressConfig IngressConfig { get; set; }
+        /// <summary> Ingress read time out in seconds. </summary>
+        public int? IngressConfigReadTimeoutInSeconds
+        {
+            get => IngressConfig is null ? default : IngressConfig.ReadTimeoutInSeconds;
+            set
+            {
+                if (IngressConfig is null)
+                    IngressConfig = new IngressConfig();
+                IngressConfig.ReadTimeoutInSeconds = value;
+            }
+        }
+
+        /// <summary> The egress traffic type of Azure Spring Apps VNet instances. </summary>
+        public string OutboundType { get; set; }
     }
 }

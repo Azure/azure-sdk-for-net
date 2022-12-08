@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="activateDate"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
-        internal CertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames)
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
+        internal CertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, CertificateResourceProvisioningState? provisioningState)
         {
             CertificatePropertiesType = certificatePropertiesType;
             Thumbprint = thumbprint;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ActivateDate = activateDate;
             SubjectName = subjectName;
             DnsNames = dnsNames;
+            ProvisioningState = provisioningState;
         }
 
         /// <summary> The type of the certificate source. </summary>
@@ -60,5 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string SubjectName { get; }
         /// <summary> The domain list of certificate. </summary>
         public IReadOnlyList<string> DnsNames { get; }
+        /// <summary> Provisioning state of the Certificate. </summary>
+        public CertificateResourceProvisioningState? ProvisioningState { get; }
     }
 }
