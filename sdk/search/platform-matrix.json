@@ -4,4 +4,3 @@
       "ArmTemplateParameters": "@{ enableCmk = $false }"
     }
   }
-  
