@@ -68,8 +68,13 @@ namespace Azure.Identity.Tests
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
 
-            Assert.That(tenantId, Is.EqualTo("e0bd2321-07fa-4cf0-87b8-00aa2a747329"));
-            Assert.That(username, Is.EqualTo("identitytestuser@azuresdkoutlook.onmicrosoft.com"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(TestEnvironment.ServicePrincipalTenantId, Is.EqualTo("c54fac88-3dd3-461f-a7c4-8a368e0340b3"), "SP_Tenant_ID");
+                Assert.That(TestEnvironment.TenantId, Is.Null, "Tenant_ID");
+                Assert.That(tenantId, Is.EqualTo("e0bd2321-07fa-4cf0-87b8-00aa2a747329"), "TES_Tenant_ID");
+                Assert.That(username, Is.EqualTo("identitytestuser@azuresdkoutlook.onmicrosoft.com"), "Username");
+            });
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
