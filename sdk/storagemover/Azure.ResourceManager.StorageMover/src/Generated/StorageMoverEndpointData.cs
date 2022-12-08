@@ -12,24 +12,24 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the Endpoint data model. </summary>
-    public partial class EndpointData : ResourceData
+    /// <summary> A class representing the StorageMoverEndpoint data model. </summary>
+    public partial class StorageMoverEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of EndpointData. </summary>
+        /// <summary> Initializes a new instance of StorageMoverEndpointData. </summary>
         /// <param name="properties">
         /// The resource specific properties for the Storage Mover resource.
         /// Please note <see cref="EndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointProperties"/> and <see cref="NfsMountEndpointProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public EndpointData(EndpointBaseProperties properties)
+        public StorageMoverEndpointData(EndpointBaseProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of EndpointData. </summary>
+        /// <summary> Initializes a new instance of StorageMoverEndpointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageMover
         /// Please note <see cref="EndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointProperties"/> and <see cref="NfsMountEndpointProperties"/>.
         /// </param>
-        internal EndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointBaseProperties properties) : base(id, name, resourceType, systemData)
+        internal StorageMoverEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointBaseProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

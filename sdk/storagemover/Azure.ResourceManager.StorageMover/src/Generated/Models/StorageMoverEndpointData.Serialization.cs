@@ -12,7 +12,7 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class EndpointData : IUtf8JsonSerializable
+    public partial class StorageMoverEndpointData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteEndObject();
         }
 
-        internal static EndpointData DeserializeEndpointData(JsonElement element)
+        internal static StorageMoverEndpointData DeserializeStorageMoverEndpointData(JsonElement element)
         {
             EndpointBaseProperties properties = default;
             ResourceIdentifier id = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageMover
                     continue;
                 }
             }
-            return new EndpointData(id, name, type, systemData.Value, properties);
+            return new StorageMoverEndpointData(id, name, type, systemData.Value, properties);
         }
     }
 }

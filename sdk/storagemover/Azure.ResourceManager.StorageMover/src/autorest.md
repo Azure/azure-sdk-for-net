@@ -14,7 +14,15 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  Agent: StorageMoverAgent
+  Endpoint: StorageMoverEndpoint
+  Project: StorageMoverProject
+  AgentPropertiesErrorDetails: StorageMoverAgentPropertiesErrorDetails
+  AgentStatus: StorageMoverAgentStatus
+  CopyMode: StorageMoverCopyMode
+  ProvisioningState: StorageMoverProvisioningState
+  JobDefinition.agentResourceId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -45,5 +53,18 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+# override-operation-name:
+#   Servers_ListSkusForExisting: GetExistingSkus
+#   Servers_CheckNameAvailability: CheckAnalysisServerNameAvailability
+
+# directive:
+#   - from: storagemover.json
+#     where: $.definitions
+#     transform: >
+#       $.JobDefinitionProperties.properties.agentResourceId['x-ms-enum'] = {
+#           "name": "ManagedMode",
+#           "modelAsString": true
+#         }
 
 ```

@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The Project resource. </summary>
-    public partial class ProjectPatch
+    public partial class StorageMoverProjectPatch
     {
-        /// <summary> Initializes a new instance of ProjectPatch. </summary>
-        public ProjectPatch()
+        /// <summary> Initializes a new instance of StorageMoverProjectPatch. </summary>
+        public StorageMoverProjectPatch()
         {
         }
 

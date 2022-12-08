@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of EndpointList. </summary>
         internal EndpointList()
         {
-            Value = new ChangeTrackingList<EndpointData>();
+            Value = new ChangeTrackingList<StorageMoverEndpointData>();
         }
 
         /// <summary> Initializes a new instance of EndpointList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
-        internal EndpointList(IReadOnlyList<EndpointData> value, string nextLink)
+        internal EndpointList(IReadOnlyList<StorageMoverEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<EndpointData> Value { get; }
+        public IReadOnlyList<StorageMoverEndpointData> Value { get; }
         /// <summary> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </summary>
         public string NextLink { get; }
     }

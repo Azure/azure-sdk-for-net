@@ -12,7 +12,7 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class ProjectData : IUtf8JsonSerializable
+    public partial class StorageMoverProjectData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteEndObject();
         }
 
-        internal static ProjectData DeserializeProjectData(JsonElement element)
+        internal static StorageMoverProjectData DeserializeStorageMoverProjectData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageMover
                     continue;
                 }
             }
-            return new ProjectData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(provisioningState));
+            return new StorageMoverProjectData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

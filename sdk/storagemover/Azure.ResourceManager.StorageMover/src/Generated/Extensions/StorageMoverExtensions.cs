@@ -121,58 +121,58 @@ namespace Azure.ResourceManager.StorageMover
         }
         #endregion
 
-        #region AgentResource
+        #region StorageMoverAgentResource
         /// <summary>
-        /// Gets an object representing an <see cref="AgentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentResource.CreateResourceIdentifier" /> to create an <see cref="AgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageMoverAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageMoverAgentResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentResource" /> object. </returns>
-        public static AgentResource GetAgentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageMoverAgentResource" /> object. </returns>
+        public static StorageMoverAgentResource GetStorageMoverAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AgentResource.ValidateResourceId(id);
-                return new AgentResource(client, id);
+                StorageMoverAgentResource.ValidateResourceId(id);
+                return new StorageMoverAgentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EndpointResource
+        #region StorageMoverEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageMoverEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageMoverEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageMoverEndpointResource" /> object. </returns>
+        public static StorageMoverEndpointResource GetStorageMoverEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EndpointResource.ValidateResourceId(id);
-                return new EndpointResource(client, id);
+                StorageMoverEndpointResource.ValidateResourceId(id);
+                return new StorageMoverEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProjectResource
+        #region StorageMoverProjectResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageMoverProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageMoverProjectResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource" /> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageMoverProjectResource" /> object. </returns>
+        public static StorageMoverProjectResource GetStorageMoverProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProjectResource.ValidateResourceId(id);
-                return new ProjectResource(client, id);
+                StorageMoverProjectResource.ValidateResourceId(id);
+                return new StorageMoverProjectResource(client, id);
             }
             );
         }

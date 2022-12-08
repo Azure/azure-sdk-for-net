@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageMover
     /// A Class representing a JobDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobDefinitionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetJobDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetJobDefinition method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageMoverProjectResource" /> using the GetJobDefinition method.
     /// </summary>
     public partial class JobDefinitionResource : ArmResource
     {

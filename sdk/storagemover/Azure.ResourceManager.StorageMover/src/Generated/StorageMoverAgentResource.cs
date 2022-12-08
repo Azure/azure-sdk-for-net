@@ -18,46 +18,46 @@ using Azure.ResourceManager.StorageMover.Models;
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
-    /// A Class representing an Agent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAgentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageMoverResource" /> using the GetAgent method.
+    /// A Class representing a StorageMoverAgent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageMoverAgentResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetStorageMoverAgentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageMoverResource" /> using the GetStorageMoverAgent method.
     /// </summary>
-    public partial class AgentResource : ArmResource
+    public partial class StorageMoverAgentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AgentResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="StorageMoverAgentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName, string agentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/agents/{agentName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _agentClientDiagnostics;
-        private readonly AgentsRestOperations _agentRestClient;
-        private readonly AgentData _data;
+        private readonly ClientDiagnostics _storageMoverAgentAgentsClientDiagnostics;
+        private readonly AgentsRestOperations _storageMoverAgentAgentsRestClient;
+        private readonly StorageMoverAgentData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AgentResource"/> class for mocking. </summary>
-        protected AgentResource()
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverAgentResource"/> class for mocking. </summary>
+        protected StorageMoverAgentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "StorageMoverAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AgentResource(ArmClient client, AgentData data) : this(client, data.Id)
+        internal StorageMoverAgentResource(ArmClient client, StorageMoverAgentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AgentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageMoverAgentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _agentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string agentApiVersion);
-            _agentRestClient = new AgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agentApiVersion);
+            _storageMoverAgentAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string storageMoverAgentAgentsApiVersion);
+            _storageMoverAgentAgentsRestClient = new AgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverAgentAgentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageMover
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AgentData Data
+        public virtual StorageMoverAgentData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.StorageMover
         /// Operation Id: Agents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AgentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageMoverAgentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentClientDiagnostics.CreateScope("AgentResource.Get");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentResource.Get");
             scope.Start();
             try
             {
-                var response = await _agentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _storageMoverAgentAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.StorageMover
         /// Operation Id: Agents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AgentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<StorageMoverAgentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentClientDiagnostics.CreateScope("AgentResource.Get");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentResource.Get");
             scope.Start();
             try
             {
-                var response = _agentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _storageMoverAgentAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _agentClientDiagnostics.CreateScope("AgentResource.Delete");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _agentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageMoverArmOperation(_agentClientDiagnostics, Pipeline, _agentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _storageMoverAgentAgentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageMoverArmOperation(_storageMoverAgentAgentsClientDiagnostics, Pipeline, _storageMoverAgentAgentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _agentClientDiagnostics.CreateScope("AgentResource.Delete");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentResource.Delete");
             scope.Start();
             try
             {
-                var response = _agentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageMoverArmOperation(_agentClientDiagnostics, Pipeline, _agentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _storageMoverAgentAgentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new StorageMoverArmOperation(_storageMoverAgentAgentsClientDiagnostics, Pipeline, _storageMoverAgentAgentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.StorageMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/agents/{agentName}
         /// Operation Id: Agents_Update
         /// </summary>
-        /// <param name="patch"> The AgentPatch to use. </param>
+        /// <param name="patch"> The StorageMoverAgentPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AgentResource>> UpdateAsync(AgentPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageMoverAgentResource>> UpdateAsync(StorageMoverAgentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentResource.Update");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentResource.Update");
             scope.Start();
             try
             {
-                var response = await _agentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                var response = await _storageMoverAgentAgentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,19 +218,19 @@ namespace Azure.ResourceManager.StorageMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/agents/{agentName}
         /// Operation Id: Agents_Update
         /// </summary>
-        /// <param name="patch"> The AgentPatch to use. </param>
+        /// <param name="patch"> The StorageMoverAgentPatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AgentResource> Update(AgentPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<StorageMoverAgentResource> Update(StorageMoverAgentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentResource.Update");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentResource.Update");
             scope.Start();
             try
             {
-                var response = _agentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                var response = _storageMoverAgentAgentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

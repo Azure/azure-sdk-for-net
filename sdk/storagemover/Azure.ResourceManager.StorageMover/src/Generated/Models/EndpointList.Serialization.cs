@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         internal static EndpointList DeserializeEndpointList(JsonElement element)
         {
-            Optional<IReadOnlyList<EndpointData>> value = default;
+            Optional<IReadOnlyList<StorageMoverEndpointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EndpointData> array = new List<EndpointData>();
+                    List<StorageMoverEndpointData> array = new List<StorageMoverEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointData.DeserializeEndpointData(item));
+                        array.Add(StorageMoverEndpointData.DeserializeStorageMoverEndpointData(item));
                     }
                     value = array;
                     continue;

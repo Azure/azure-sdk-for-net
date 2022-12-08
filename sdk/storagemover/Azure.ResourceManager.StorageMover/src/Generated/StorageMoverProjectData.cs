@@ -11,22 +11,22 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the Project data model. </summary>
-    public partial class ProjectData : ResourceData
+    /// <summary> A class representing the StorageMoverProject data model. </summary>
+    public partial class StorageMoverProjectData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProjectData. </summary>
-        public ProjectData()
+        /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>
+        public StorageMoverProjectData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectData. </summary>
+        /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> A description for the Project. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal ProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal StorageMoverProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ProvisioningState = provisioningState;

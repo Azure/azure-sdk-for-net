@@ -10,19 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AgentPatch : IUtf8JsonSerializable
+    public partial class StorageMoverEndpointPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

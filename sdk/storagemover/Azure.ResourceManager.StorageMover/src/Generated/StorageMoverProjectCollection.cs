@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectResource" /> and their operations.
-    /// Each <see cref="ProjectResource" /> in the collection will belong to the same instance of <see cref="StorageMoverResource" />.
-    /// To get a <see cref="ProjectCollection" /> instance call the GetProjects method from an instance of <see cref="StorageMoverResource" />.
+    /// A class representing a collection of <see cref="StorageMoverProjectResource" /> and their operations.
+    /// Each <see cref="StorageMoverProjectResource" /> in the collection will belong to the same instance of <see cref="StorageMoverResource" />.
+    /// To get a <see cref="StorageMoverProjectCollection" /> instance call the GetStorageMoverProjects method from an instance of <see cref="StorageMoverResource" />.
     /// </summary>
-    public partial class ProjectCollection : ArmCollection, IEnumerable<ProjectResource>, IAsyncEnumerable<ProjectResource>
+    public partial class StorageMoverProjectCollection : ArmCollection, IEnumerable<StorageMoverProjectResource>, IAsyncEnumerable<StorageMoverProjectResource>
     {
-        private readonly ClientDiagnostics _projectClientDiagnostics;
-        private readonly ProjectsRestOperations _projectRestClient;
+        private readonly ClientDiagnostics _storageMoverProjectProjectsClientDiagnostics;
+        private readonly ProjectsRestOperations _storageMoverProjectProjectsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectCollection"/> class for mocking. </summary>
-        protected ProjectCollection()
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverProjectCollection"/> class for mocking. </summary>
+        protected StorageMoverProjectCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProjectCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverProjectCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ProjectCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageMoverProjectCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _projectClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ProjectResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProjectResource.ResourceType, out string projectApiVersion);
-            _projectRestClient = new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, projectApiVersion);
+            _storageMoverProjectProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", StorageMoverProjectResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageMoverProjectResource.ResourceType, out string storageMoverProjectProjectsApiVersion);
+            _storageMoverProjectProjectsRestClient = new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverProjectProjectsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,21 +60,21 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the Project resource. </param>
-        /// <param name="data"> The Project to use. </param>
+        /// <param name="data"> The StorageMoverProject to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProjectResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string projectName, ProjectData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageMoverProjectResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string projectName, StorageMoverProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.CreateOrUpdate");
+            using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _projectRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageMoverArmOperation<ProjectResource>(Response.FromValue(new ProjectResource(Client, response), response.GetRawResponse()));
+                var response = await _storageMoverProjectProjectsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageMoverArmOperation<StorageMoverProjectResource>(Response.FromValue(new StorageMoverProjectResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the Project resource. </param>
-        /// <param name="data"> The Project to use. </param>
+        /// <param name="data"> The StorageMoverProject to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProjectResource> CreateOrUpdate(WaitUntil waitUntil, string projectName, ProjectData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageMoverProjectResource> CreateOrUpdate(WaitUntil waitUntil, string projectName, StorageMoverProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.CreateOrUpdate");
+            using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _projectRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken);
-                var operation = new StorageMoverArmOperation<ProjectResource>(Response.FromValue(new ProjectResource(Client, response), response.GetRawResponse()));
+                var response = _storageMoverProjectProjectsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken);
+                var operation = new StorageMoverArmOperation<StorageMoverProjectResource>(Response.FromValue(new StorageMoverProjectResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        public virtual async Task<Response<ProjectResource>> GetAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageMoverProjectResource>> GetAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.Get");
+            using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.Get");
             scope.Start();
             try
             {
-                var response = await _projectRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken).ConfigureAwait(false);
+                var response = await _storageMoverProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        public virtual Response<ProjectResource> Get(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageMoverProjectResource> Get(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.Get");
+            using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.Get");
             scope.Start();
             try
             {
-                var response = _projectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken);
+                var response = _storageMoverProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.StorageMover
         /// Operation Id: Projects_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProjectResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageMoverProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageMoverProjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProjectResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StorageMoverProjectResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetAll");
+                using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _projectRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _storageMoverProjectProjectsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.StorageMover
                     throw;
                 }
             }
-            async Task<Page<ProjectResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StorageMoverProjectResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetAll");
+                using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _projectRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _storageMoverProjectProjectsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +225,17 @@ namespace Azure.ResourceManager.StorageMover
         /// Operation Id: Projects_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProjectResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageMoverProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageMoverProjectResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProjectResource> FirstPageFunc(int? pageSizeHint)
+            Page<StorageMoverProjectResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetAll");
+                using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _projectRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _storageMoverProjectProjectsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.StorageMover
                     throw;
                 }
             }
-            Page<ProjectResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StorageMoverProjectResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetAll");
+                using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _projectRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _storageMoverProjectProjectsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.StorageMover
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.Exists");
+            using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _projectRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageMoverProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.StorageMover
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.Exists");
+            using var scope = _storageMoverProjectProjectsClientDiagnostics.CreateScope("StorageMoverProjectCollection.Exists");
             scope.Start();
             try
             {
-                var response = _projectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken);
+                var response = _storageMoverProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
-        IEnumerator<ProjectResource> IEnumerable<ProjectResource>.GetEnumerator()
+        IEnumerator<StorageMoverProjectResource> IEnumerable<StorageMoverProjectResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.StorageMover
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ProjectResource> IAsyncEnumerable<ProjectResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<StorageMoverProjectResource> IAsyncEnumerable<StorageMoverProjectResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

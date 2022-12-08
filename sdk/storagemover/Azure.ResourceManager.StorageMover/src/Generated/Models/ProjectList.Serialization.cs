@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     {
         internal static ProjectList DeserializeProjectList(JsonElement element)
         {
-            Optional<IReadOnlyList<ProjectData>> value = default;
+            Optional<IReadOnlyList<StorageMoverProjectData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProjectData> array = new List<ProjectData>();
+                    List<StorageMoverProjectData> array = new List<StorageMoverProjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectData.DeserializeProjectData(item));
+                        array.Add(StorageMoverProjectData.DeserializeStorageMoverProjectData(item));
                     }
                     value = array;
                     continue;

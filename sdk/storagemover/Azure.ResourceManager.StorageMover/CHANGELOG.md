@@ -12,7 +12,7 @@ New design of track 2 initial commit.
 - Corrected the type of property `ResourceType` of ExistingResourceSkuDetails from `String` to `ResourceType`.
 - The value of the int type generates an error when using ToSerialString() for type conversion, so the modelAsString in the corresponding property['x-ms-enum'] is converted to true in the autorest.md
 - Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
-- Prepended `AnalysisServices` prefix to all single / simple model names
+- Prepended `StorageMover` prefix to all single / simple model names
 - Optimized the name of some models and functions.
 
 ### General New Features

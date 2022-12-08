@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AgentResource" /> and their operations.
-    /// Each <see cref="AgentResource" /> in the collection will belong to the same instance of <see cref="StorageMoverResource" />.
-    /// To get an <see cref="AgentCollection" /> instance call the GetAgents method from an instance of <see cref="StorageMoverResource" />.
+    /// A class representing a collection of <see cref="StorageMoverAgentResource" /> and their operations.
+    /// Each <see cref="StorageMoverAgentResource" /> in the collection will belong to the same instance of <see cref="StorageMoverResource" />.
+    /// To get a <see cref="StorageMoverAgentCollection" /> instance call the GetStorageMoverAgents method from an instance of <see cref="StorageMoverResource" />.
     /// </summary>
-    public partial class AgentCollection : ArmCollection, IEnumerable<AgentResource>, IAsyncEnumerable<AgentResource>
+    public partial class StorageMoverAgentCollection : ArmCollection, IEnumerable<StorageMoverAgentResource>, IAsyncEnumerable<StorageMoverAgentResource>
     {
-        private readonly ClientDiagnostics _agentClientDiagnostics;
-        private readonly AgentsRestOperations _agentRestClient;
+        private readonly ClientDiagnostics _storageMoverAgentAgentsClientDiagnostics;
+        private readonly AgentsRestOperations _storageMoverAgentAgentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AgentCollection"/> class for mocking. </summary>
-        protected AgentCollection()
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverAgentCollection"/> class for mocking. </summary>
+        protected StorageMoverAgentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AgentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverAgentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageMoverAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _agentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", AgentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AgentResource.ResourceType, out string agentApiVersion);
-            _agentRestClient = new AgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agentApiVersion);
+            _storageMoverAgentAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", StorageMoverAgentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageMoverAgentResource.ResourceType, out string storageMoverAgentAgentsApiVersion);
+            _storageMoverAgentAgentsRestClient = new AgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverAgentAgentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,21 +60,21 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agentName"> The name of the Agent resource. </param>
-        /// <param name="data"> The Agent to use. </param>
+        /// <param name="data"> The StorageMoverAgent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentName, AgentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageMoverAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentName, StorageMoverAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.CreateOrUpdate");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _agentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageMoverArmOperation<AgentResource>(Response.FromValue(new AgentResource(Client, response), response.GetRawResponse()));
+                var response = await _storageMoverAgentAgentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageMoverArmOperation<StorageMoverAgentResource>(Response.FromValue(new StorageMoverAgentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agentName"> The name of the Agent resource. </param>
-        /// <param name="data"> The Agent to use. </param>
+        /// <param name="data"> The StorageMoverAgent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AgentResource> CreateOrUpdate(WaitUntil waitUntil, string agentName, AgentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageMoverAgentResource> CreateOrUpdate(WaitUntil waitUntil, string agentName, StorageMoverAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.CreateOrUpdate");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _agentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data, cancellationToken);
-                var operation = new StorageMoverArmOperation<AgentResource>(Response.FromValue(new AgentResource(Client, response), response.GetRawResponse()));
+                var response = _storageMoverAgentAgentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data, cancellationToken);
+                var operation = new StorageMoverArmOperation<StorageMoverAgentResource>(Response.FromValue(new StorageMoverAgentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public virtual async Task<Response<AgentResource>> GetAsync(string agentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageMoverAgentResource>> GetAsync(string agentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.Get");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _agentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken).ConfigureAwait(false);
+                var response = await _storageMoverAgentAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public virtual Response<AgentResource> Get(string agentName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageMoverAgentResource> Get(string agentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.Get");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Get");
             scope.Start();
             try
             {
-                var response = _agentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken);
+                var response = _storageMoverAgentAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageMoverAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.StorageMover
         /// Operation Id: Agents_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AgentResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageMoverAgentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageMoverAgentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AgentResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StorageMoverAgentResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.GetAll");
+                using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _agentRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _storageMoverAgentAgentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverAgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.StorageMover
                     throw;
                 }
             }
-            async Task<Page<AgentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StorageMoverAgentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.GetAll");
+                using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _agentRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _storageMoverAgentAgentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverAgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +225,17 @@ namespace Azure.ResourceManager.StorageMover
         /// Operation Id: Agents_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AgentResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageMoverAgentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageMoverAgentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AgentResource> FirstPageFunc(int? pageSizeHint)
+            Page<StorageMoverAgentResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.GetAll");
+                using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _agentRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _storageMoverAgentAgentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverAgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.StorageMover
                     throw;
                 }
             }
-            Page<AgentResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StorageMoverAgentResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.GetAll");
+                using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _agentRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _storageMoverAgentAgentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StorageMoverAgentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.StorageMover
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.Exists");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _agentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageMoverAgentAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.StorageMover
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            using var scope = _agentClientDiagnostics.CreateScope("AgentCollection.Exists");
+            using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _agentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken: cancellationToken);
+                var response = _storageMoverAgentAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
-        IEnumerator<AgentResource> IEnumerable<AgentResource>.GetEnumerator()
+        IEnumerator<StorageMoverAgentResource> IEnumerable<StorageMoverAgentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.StorageMover
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AgentResource> IAsyncEnumerable<AgentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<StorageMoverAgentResource> IAsyncEnumerable<StorageMoverAgentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

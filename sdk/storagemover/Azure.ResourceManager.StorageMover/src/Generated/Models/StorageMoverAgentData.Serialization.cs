@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class AgentData : IUtf8JsonSerializable
+    public partial class StorageMoverAgentData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteEndObject();
         }
 
-        internal static AgentData DeserializeAgentData(JsonElement element)
+        internal static StorageMoverAgentData DeserializeStorageMoverAgentData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.StorageMover
                     continue;
                 }
             }
-            return new AgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(agentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState));
+            return new StorageMoverAgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(agentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState));
         }
     }
 }
