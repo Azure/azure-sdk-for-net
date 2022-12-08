@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Peering.Tests
             _subscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        [TearDown]
-        public async Task TestTearDown()
-        {
-            var list = await _peerAsnCollection.GetAllAsync().ToEnumerableAsync();
-            foreach (var item in list)
-            {
-                await item.DeleteAsync(WaitUntil.Completed);
-            }
-        }
+        //[TearDown]
+        //public async Task TestTearDown()
+        //{
+        //    var list = await _peerAsnCollection.GetAllAsync().ToEnumerableAsync();
+        //    foreach (var item in list)
+        //    {
+        //        await item.DeleteAsync(WaitUntil.Completed);
+        //    }
+        //}
 
         [RecordedTest]
         public async Task CreateOrUpdate()
