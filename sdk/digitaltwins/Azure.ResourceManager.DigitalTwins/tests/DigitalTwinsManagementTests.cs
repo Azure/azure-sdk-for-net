@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
             digitalTwinsData.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
 
             var digitalTwinsResource = await rg.GetDigitalTwinsDescriptions().CreateOrUpdateAsync(WaitUntil.Completed, digitaltwinsName, digitalTwinsData).ConfigureAwait(false);
-            Assert.AreEqual(digitalTwinsResource.Value.Data.Name, digitaltwinsName);
+            Assert.AreEqual(digitaltwinsName, digitalTwinsResource.Value.Data.Name);
         }
     }
 }
