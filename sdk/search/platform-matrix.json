@@ -1,6 +1,10 @@
 {
+    "displayNames": {
+        "@{ enableCmk = $false }": "",
+        "@{ enableCmk = $true }": "CMK",
+    },
     "matrix": {
-      "$IMPORT": "eng/pipelines/templates/stages/platform-matrix.json"
-      "ArmTemplateParameters": "@{ enableCmk = $false }"
+        "$IMPORT": "eng/pipelines/templates/stages/platform-matrix.json",
+        "ArmTemplateParameters": "@{ enableCmk = $false }"
     }
-  }
+}

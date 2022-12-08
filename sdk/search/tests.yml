@@ -6,10 +6,15 @@ extends:
     ServiceDirectory: search
     ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
       MatrixReplace:
-        - ArmTemplateParameters=.*/@{ enableCmk = $true }
+        - ArmTemplateParameters=.*/@{ enableCmk \= $true }
     SDKType: client
     TimeoutInMinutes: 240
     MaxParallel: 2
+    MatrixConfigs:
+      - Name: Search_cmk
+        Path: sdk/search/platform-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
     # TODO: change 'Preview' cloud back to public after search RP fixes deletion metadata issue
     # https://github.com/Azure/azure-sdk-tools/issues/2216
     Clouds: 'Preview'
