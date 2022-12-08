@@ -3,6 +3,7 @@
 ## 1.1.0 (2022-12-08)
 
 ### Features Added
+
 - Added user assigned identity functionality
 
 ## 1.0.0 (2022-09-13)
