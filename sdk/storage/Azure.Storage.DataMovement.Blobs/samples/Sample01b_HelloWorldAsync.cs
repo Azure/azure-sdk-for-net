@@ -137,12 +137,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 await transferManager.StartTransferAsync(
                     sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
-                        {
-                            DownloadOptions = new BlobStorageResourceDownloadOptions()
-                            {
-                                Conditions = new BlobRequestConditions(){ LeaseId = "xyz" }
-                            }
-                        }),
+                    {
+                        DestinationConditions = new BlobRequestConditions(){ LeaseId = "xyz" }
+                    }),
                     destinationResource: new LocalFileStorageResource(downloadPath2));
             }
             finally

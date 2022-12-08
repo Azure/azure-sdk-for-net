@@ -80,22 +80,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new AppendBlobStorageResource(
                     client,
                     length,
-                    new AppendBlobStorageResourceOptions()
-                    {
-                        // TODO: change options bag to be applicable to child resources
-                        CopyOptions = new AppendBlobStorageResourceServiceCopyOptions()
-                        {
-                            CopyMethod = (TransferCopyMethod)_options?.CopyOptions?.CopyMethod,
-                        },
-                        UploadOptions = new AppendBlobStorageResourceUploadOptions()
-                        {
-                            Conditions = new AppendBlobRequestConditions(),
-                        },
-                        DownloadOptions = new BlobStorageResourceDownloadOptions()
-                        {
-                            Conditions = _options?.UploadOptions?.Conditions,
-                        }
-                    });
+                    _options.ToAppendBlobStorageResourceOptions());
+                ;
             }
             else if (type == BlobType.Page)
             {
@@ -103,22 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new PageBlobStorageResource(
                     client,
                     length,
-                    new PageBlobStorageResourceOptions()
-                    {
-                        // TODO: change options bag to be applicable to child resources
-                        CopyOptions = new PageBlobStorageResourceServiceCopyOptions()
-                        {
-                            CopyMethod = (TransferCopyMethod)_options?.CopyOptions?.CopyMethod,
-                        },
-                        UploadOptions = new PageBlobStorageResourceUploadOptions()
-                        {
-                            Conditions = new PageBlobRequestConditions(),
-                        },
-                        DownloadOptions = new BlobStorageResourceDownloadOptions()
-                        {
-                            Conditions = _options?.UploadOptions?.Conditions,
-                        }
-                    });
+                    _options.ToPageBlobStorageResourceOptions());
             }
             else // (type == BlobType.Block)
             {
@@ -126,12 +97,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 return new BlockBlobStorageResource(
                     client,
                     length,
-                    new BlockBlobStorageResourceOptions()
-                    {
-                        CopyOptions = _options?.CopyOptions,
-                        UploadOptions = _options?.UploadOptions,
-                        DownloadOptions = _options?.DownloadOptions,
-                    });
+                    _options.ToBlockBlobStorageResourceOptions());
             }
         }
 

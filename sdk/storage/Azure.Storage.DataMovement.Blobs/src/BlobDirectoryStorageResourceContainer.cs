@@ -87,12 +87,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // Recreate the blobName using the existing parent directory path
             return new BlockBlobStorageResource(
                 _blobContainerClient.GetBlockBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
-                new BlockBlobStorageResourceOptions()
-                {
-                    CopyOptions = _options?.CopyOptions,
-                    UploadOptions = _options?.UploadOptions,
-                    DownloadOptions = _options?.DownloadOptions,
-                }); ;
+                _options.ToBlockBlobStorageResourceOptions());
         }
 
         /// <summary>
@@ -112,56 +107,21 @@ namespace Azure.Storage.DataMovement.Blobs
                 AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(path);
                 return new AppendBlobStorageResource(
                     client,
-                    new AppendBlobStorageResourceOptions()
-                    {
-                        // TODO: change options bag to be applicable to child resources
-                        CopyOptions = new AppendBlobStorageResourceServiceCopyOptions()
-                        {
-                            CopyMethod = (TransferCopyMethod) _options?.CopyOptions?.CopyMethod,
-                        },
-                        UploadOptions = new AppendBlobStorageResourceUploadOptions()
-                        {
-                            Conditions = new AppendBlobRequestConditions(),
-                        },
-                        DownloadOptions = new BlobStorageResourceDownloadOptions()
-                        {
-                            Conditions = _options?.UploadOptions?.Conditions,
-                        }
-                    });
+                    _options?.ToAppendBlobStorageResourceOptions());
             }
             else if (type == BlobType.Page)
             {
                 PageBlobClient client = _blobContainerClient.GetPageBlobClient(path);
                 return new PageBlobStorageResource(
                     client,
-                    new PageBlobStorageResourceOptions()
-                    {
-                        // TODO: change options bag to be applicable to child resources
-                        CopyOptions = new PageBlobStorageResourceServiceCopyOptions()
-                        {
-                            CopyMethod = (TransferCopyMethod)_options?.CopyOptions?.CopyMethod,
-                        },
-                        UploadOptions = new PageBlobStorageResourceUploadOptions()
-                        {
-                            Conditions = new PageBlobRequestConditions(),
-                        },
-                        DownloadOptions = new BlobStorageResourceDownloadOptions()
-                        {
-                            Conditions = _options?.UploadOptions?.Conditions,
-                        }
-                    });
+                    _options?.ToPageBlobStorageResourceOptions());
             }
             else // (type == BlobType.Block)
             {
                 BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(path);
                 return new BlockBlobStorageResource(
                     client,
-                    new BlockBlobStorageResourceOptions()
-                    {
-                        CopyOptions = _options?.CopyOptions,
-                        UploadOptions = _options?.UploadOptions,
-                        DownloadOptions = _options?.DownloadOptions,
-                    });
+                    _options?.ToBlockBlobStorageResourceOptions());
             }
         }
 
