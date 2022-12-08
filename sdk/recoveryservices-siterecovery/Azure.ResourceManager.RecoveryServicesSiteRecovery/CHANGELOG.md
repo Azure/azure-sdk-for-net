@@ -1,8 +1,11 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2022-10-01)
 
 ### Features Added
+
+- support for EZ-to-EZ scenarios for unplanned failover and recovery plans
+- added primary and recovery extended locations to fabric job and recovery plan
 
 ### Breaking Changes
 

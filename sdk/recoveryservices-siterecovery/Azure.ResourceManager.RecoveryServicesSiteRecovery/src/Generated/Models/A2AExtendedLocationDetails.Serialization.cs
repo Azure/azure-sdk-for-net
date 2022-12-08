@@ -10,27 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanA2ADetails
+    public partial class A2AExtendedLocationDetails
     {
-        internal static RecoveryPlanA2ADetails DeserializeRecoveryPlanA2ADetails(JsonElement element)
+        internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element)
         {
-            Optional<string> primaryZone = default;
-            Optional<string> recoveryZone = default;
             Optional<ExtendedLocation> primaryExtendedLocation = default;
             Optional<ExtendedLocation> recoveryExtendedLocation = default;
-            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryZone"))
-                {
-                    primaryZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("recoveryZone"))
-                {
-                    recoveryZone = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("primaryExtendedLocation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -51,13 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
             }
-            return new RecoveryPlanA2ADetails(instanceType, primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value);
+            return new A2AExtendedLocationDetails(primaryExtendedLocation.Value, recoveryExtendedLocation.Value);
         }
     }
 }
