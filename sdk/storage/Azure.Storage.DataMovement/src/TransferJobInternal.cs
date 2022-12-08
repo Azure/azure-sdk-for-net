@@ -15,7 +15,7 @@ using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
-    internal abstract class TransferJobInternal
+    internal abstract class TransferJobInternal : IDisposable
     {
         #region Delegates
         public delegate Task QueueChunkTaskInternal(Func<Task> uploadTask);
@@ -219,6 +219,19 @@ namespace Azure.Storage.DataMovement
             _isSingleResource = false;
         }
 
+        public void Dispose()
+        {
+            DisposeHandlers();
+        }
+
+        public void DisposeHandlers()
+        {
+            if (JobPartStatusEvents != default)
+            {
+                JobPartStatusEvents -= JobPartEvent;
+            }
+        }
+
         /// <summary>
         /// Pauses all job parts within the job.
         /// </summary>
@@ -245,6 +258,7 @@ namespace Azure.Storage.DataMovement
 
         public void TriggerJobCancellation()
         {
+            DisposeHandlers();
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
@@ -255,31 +269,28 @@ namespace Azure.Storage.DataMovement
         /// In order to properly propagate the transfer status events of each job part up
         /// until all job parts have completed.
         /// </summary>
-        public void InitializeJobPartStatusEvents()
+        public async Task JobPartEvent(TransferStatusEventArgs args)
         {
-            JobPartStatusEvents += async (TransferStatusEventArgs args) =>
+            if (args.StorageTransferStatus == StorageTransferStatus.Completed
+                && _transferStatus < StorageTransferStatus.Completed)
             {
-                if (args.StorageTransferStatus == StorageTransferStatus.Completed
-                    && _transferStatus < StorageTransferStatus.Completed)
+                // The respective job part has completed, however does not mean we set
+                // the entire job to completed.
+                if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
                 {
-                    // The respective job part has completed, however does not mean we set
-                    // the entire job to completed.
-                    if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
-                    {
-                        // TODO: Change to RaiseAsync
-                        await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
-                    }
+                    // TODO: Change to RaiseAsync
+                    await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
                 }
-                else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
-                        _transferStatus == StorageTransferStatus.Paused)
-                {
-                    await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
-                }
-                else if (args.StorageTransferStatus > _transferStatus)
-                {
-                    await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
-                }
-            };
+            }
+            else if (args.StorageTransferStatus == StorageTransferStatus.Paused &&
+                    _transferStatus == StorageTransferStatus.Paused)
+            {
+                await OnJobStatusChangedAsync(StorageTransferStatus.Paused).ConfigureAwait(false);
+            }
+            else if (args.StorageTransferStatus > _transferStatus)
+            {
+                await OnJobStatusChangedAsync(args.StorageTransferStatus).ConfigureAwait(false);
+            }
         }
 
         public async Task OnJobStatusChangedAsync(StorageTransferStatus status)
