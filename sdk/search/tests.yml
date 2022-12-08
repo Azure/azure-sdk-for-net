@@ -6,7 +6,7 @@ extends:
     ServiceDirectory: search
     ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
       MatrixReplace:
-        - ArmTemplateParameters=.*/@{ enableCmk = $true }
+        - ArmTemplateParameters=.*/@{ enableCmk \= $true }
     SDKType: client
     TimeoutInMinutes: 240
     MaxParallel: 2
