@@ -4,6 +4,9 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: search
+    ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
+      MatrixReplace:
+        - ArmTemplateParameters=.*/@{ enableCmk = $true }
     SDKType: client
     TimeoutInMinutes: 240
     MaxParallel: 2
@@ -13,3 +16,4 @@ extends:
     SupportedClouds: 'Preview,UsGov,China'
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live
+

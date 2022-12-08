@@ -55,9 +55,16 @@
               "description": "The url suffix to use when accessing the storage data plane."
           }
         },
+        "enableCmk": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Whether to enable deployment of Managed CMK. The default is false."
+            }
+        },
         "searchSku": {
             "type": "string",
-            "defaultValue": "basic",
+            "defaultValue": "free",
             "allowedValues": [
                 "free",
                 "basic",
@@ -136,7 +143,7 @@
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "[variables('keyVaultApiVersion')]",
             "name": "[variables('keyVaultName')]",
-            "condition": "[and(contains(variables('searchEncryptionLocations'), parameters('location')), not(equals(parameters('searchSku'), 'free')))]",
+            "condition": "[parameters('enableCmk')]",
             "location": "[parameters('location')]",
             "properties": {
                 "sku": {
@@ -206,7 +213,7 @@
         },
         "SEARCH_KEYVAULT_URL": {
             "type": "string",
-            "condition": "[and(contains(variables('searchEncryptionLocations'), parameters('location')), not(equals(parameters('searchSku'), 'free')))]",
+            "condition": "[parameters('enableCmk')]",
             "value": "[reference(variables('keyVaultName')).vaultUri]"
         }
     }
