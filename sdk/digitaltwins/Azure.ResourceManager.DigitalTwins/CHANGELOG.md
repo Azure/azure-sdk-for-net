@@ -1,5 +1,17 @@
 # Release History
 
+## 1.1.0 (2022-12-08)
+
+### Features Added
+
+- Added user assigned identity functionality
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
