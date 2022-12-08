@@ -6,9 +6,7 @@ using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System;
 using Azure.ResourceManager.Models;
-using Azure.Identity;
 
 namespace Azure.ResourceManager.DigitalTwins.Tests
 {
