@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
                 ExcludeVisualStudioCredential = true,
                 ExcludeAzureCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var cloudName = Guid.NewGuid().ToString();
@@ -114,7 +114,7 @@ namespace Azure.Identity.Tests
                 ExcludeManagedIdentityCredential = true,
                 ExcludeAzureCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var cloudName = Guid.NewGuid().ToString();
@@ -151,7 +151,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
@@ -190,7 +190,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();

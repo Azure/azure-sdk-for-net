@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             using IDisposable fixture = await CredentialTestHelpers.CreateRefreshTokenFixtureAsync(TestEnvironment, Mode, ExpectedServiceName, cloudName);
 
-            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.IdentityTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystem, default));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] { TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
             var fileSystemService = new TestFileSystemService { ReadAllHandler = s => throw new FileNotFoundException() };
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", refreshToken);
 
-            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.IdentityTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] { TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
@@ -55,7 +55,7 @@ namespace Azure.Identity.Tests
             var fileSystemService = new TestFileSystemService { ReadAllHandler = s => "{a,}" };
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", refreshToken);
 
-            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.IdentityTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
@@ -68,7 +68,7 @@ namespace Azure.Identity.Tests
             var fileSystemService = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", refreshToken);
 
-            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.IdentityTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystemService, vscAdapter));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
@@ -98,7 +98,7 @@ namespace Azure.Identity.Tests
             var cloudName = Guid.NewGuid().ToString();
 
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
-            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var options = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.IdentityTenantId });
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options, default, default, fileSystem, default));
 
             Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None));
@@ -107,7 +107,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithVscCredential_NoRefreshToken()
         {
-            var tenantId = TestEnvironment.TestTenantId;
+            var tenantId = TestEnvironment.IdentityTenantId;
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
@@ -120,7 +120,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithVscCredential_AuthenticationCodeInsteadOfRefreshToken()
         {
-            var tenantId = TestEnvironment.TestTenantId;
+            var tenantId = TestEnvironment.IdentityTenantId;
             var fileSystemService = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
 
@@ -133,7 +133,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithVscCredential_InvalidRefreshToken()
         {
-            var tenantId = TestEnvironment.TestTenantId;
+            var tenantId = TestEnvironment.IdentityTenantId;
             var fileSystemService = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", Guid.NewGuid().ToString());
 
