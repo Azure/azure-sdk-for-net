@@ -29,16 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element);
                 }
             }
-            SecurityPolicyType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new SecurityPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecurityPolicyProperties(type);
+            return UnknownSecurityPolicyProperties.DeserializeUnknownSecurityPolicyProperties(element);
         }
     }
 }

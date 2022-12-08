@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The GetParticipantsResponse. </summary>
+    /// <summary> The response payload for getting participants of the call. </summary>
     internal partial class GetParticipantsResponseInternal
     {
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
@@ -20,17 +20,17 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
-        /// <param name="values"></param>
-        /// <param name="nextLink"></param>
+        /// <param name="values"> List of the current participants in the call. </param>
+        /// <param name="nextLink"> Continue of the list of participants. </param>
         internal GetParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> values, string nextLink)
         {
             Values = values;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the values. </summary>
+        /// <summary> List of the current participants in the call. </summary>
         public IReadOnlyList<AcsCallParticipantInternal> Values { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> Continue of the list of participants. </summary>
         public string NextLink { get; }
     }
 }

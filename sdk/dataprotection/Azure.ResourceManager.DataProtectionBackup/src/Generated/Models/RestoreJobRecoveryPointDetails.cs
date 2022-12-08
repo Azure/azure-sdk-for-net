@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of RestoreJobRecoveryPointDetails. </summary>
         /// <param name="recoveryPointId"></param>
-        /// <param name="recoveryPointOn"></param>
-        internal RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoveryPointOn)
+        /// <param name="recoverOn"></param>
+        internal RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn)
         {
             RecoveryPointId = recoveryPointId;
-            RecoveryPointOn = recoveryPointOn;
+            RecoverOn = recoverOn;
         }
 
         /// <summary> Gets the recovery point id. </summary>
         public string RecoveryPointId { get; }
-        /// <summary> Gets the recovery point on. </summary>
-        public DateTimeOffset? RecoveryPointOn { get; }
+        /// <summary> Gets the recover on. </summary>
+        public DateTimeOffset? RecoverOn { get; }
     }
 }

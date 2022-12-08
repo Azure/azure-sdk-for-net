@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.AI.TextAnalytics;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The DetectedLanguage. </summary>

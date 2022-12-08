@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static WorkloadNetworkPortMirroringProfileProvisioningState Succeeded { get; } = new WorkloadNetworkPortMirroringProfileProvisioningState(SucceededValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkPortMirroringProfileProvisioningState Deleting { get; } = new WorkloadNetworkPortMirroringProfileProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static WorkloadNetworkPortMirroringProfileProvisioningState Updating { get; } = new WorkloadNetworkPortMirroringProfileProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static WorkloadNetworkPortMirroringProfileProvisioningState Canceled { get; } = new WorkloadNetworkPortMirroringProfileProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkPortMirroringProfileProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkPortMirroringProfileProvisioningState left, WorkloadNetworkPortMirroringProfileProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkPortMirroringProfileProvisioningState"/> values are not the same. </summary>

@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Random": return RandomSamplingAlgorithm.DeserializeRandomSamplingAlgorithm(element);
                 }
             }
-            SamplingAlgorithmType samplingAlgorithmType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("samplingAlgorithmType"))
-                {
-                    samplingAlgorithmType = new SamplingAlgorithmType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSamplingAlgorithm(samplingAlgorithmType);
+            return UnknownSamplingAlgorithm.DeserializeUnknownSamplingAlgorithm(element);
         }
     }
 }

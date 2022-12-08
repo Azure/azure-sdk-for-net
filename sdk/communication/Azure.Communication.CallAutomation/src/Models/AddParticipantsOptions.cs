@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation
         public AddParticipantsOptions(IEnumerable<CommunicationIdentifier> participantsToAdd)
         {
             ParticipantsToAdd = participantsToAdd;
+            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -37,12 +38,14 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary>
         /// Timeout before invitation times out.
+        /// The minimum value is 1 second.
+        /// The maximum value is 180 seconds.
         /// </summary>
         public int? InvitationTimeoutInSeconds { get; set; }
 
         /// <summary>
         /// Repeatability Headers.
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; } = new RepeatabilityHeaders(Guid.NewGuid(), DateTimeOffset.UtcNow);
+        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
     }
 }

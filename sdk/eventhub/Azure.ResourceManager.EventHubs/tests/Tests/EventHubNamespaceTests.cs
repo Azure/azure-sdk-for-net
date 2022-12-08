@@ -687,7 +687,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //add a tag
             eventHubNamespace = await eventHubNamespace.AddTagAsync("key1", "value1");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
-            Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(eventHubNamespace.Data.Tags["key"], "value");
+            }
 
             //set the tag
             eventHubNamespace.Data.Tags.Add("key2", "value2");

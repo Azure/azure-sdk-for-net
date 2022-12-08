@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -16,16 +17,16 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaLiveEventCollection liveEventCollection => _mediaService.GetMediaLiveEvents();
 
-        public LiveEventTests(bool isAsync) : base(isAsync)
+        public LiveEventTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
-            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
-            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaforle"), storage.Id);
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatest");
+            _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
         }
 
         [Test]

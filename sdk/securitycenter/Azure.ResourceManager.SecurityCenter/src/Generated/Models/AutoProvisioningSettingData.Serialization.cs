@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AutoProvision> autoProvision = default;
+            Optional<AutoProvisionState> autoProvision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoProvision = new AutoProvision(property0.Value.GetString());
+                            autoProvision = new AutoProvisionState(property0.Value.GetString());
                             continue;
                         }
                     }

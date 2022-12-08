@@ -9,7 +9,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The AcsCallParticipant. </summary>
+    /// <summary> Contract model of an ACS call participant. </summary>
     internal partial class AcsCallParticipantInternal
     {
         /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>

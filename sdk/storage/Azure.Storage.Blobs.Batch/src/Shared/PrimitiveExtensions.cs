@@ -4,6 +4,7 @@
 // Copied from https://github.com/aspnet/Extensions/tree/master/src/Primitives/src/Extensions.cs
 
 using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Azure.Core.Http.Multipart
@@ -21,10 +22,12 @@ namespace Azure.Core.Http.Multipart
             return builder.Append(segment.Buffer, segment.Offset, segment.Length);
         }
 
+#if !NET6_0_OR_GREATER
         public static StringBuilder Append(this StringBuilder builder, ReadOnlySpan<char> span)
         {
             // Quick and dirty hack to work around missing extension
             return builder.Append(span.ToString());
         }
+#endif
     }
 }

@@ -34,7 +34,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     "/cloudevents/example/source",
                     "Example.Employee",
                     new Employee { Name = "Homer", Age = 39 });
-                ServiceBusMessage message = new ServiceBusMessage(new BinaryData(cloudEvent));
+                ServiceBusMessage message = new ServiceBusMessage(new BinaryData(cloudEvent))
+                {
+                    ContentType = "application/cloudevents+json"
+                };
 
                 // send the message
                 await sender.SendMessageAsync(message);
@@ -62,6 +65,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
 
                 Assert.AreEqual("Homer", receivedEmployee.Name);
+                Assert.AreEqual("application/cloudevents+json", receivedMessage.ContentType);
                 Assert.AreEqual(39, receivedEmployee.Age);
                 Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }

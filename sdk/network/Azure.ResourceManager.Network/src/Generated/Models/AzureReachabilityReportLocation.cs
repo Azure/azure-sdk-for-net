@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public AzureReachabilityReportLocation(string country)
         {
-            if (country == null)
-            {
-                throw new ArgumentNullException(nameof(country));
-            }
+            Argument.AssertNotNull(country, nameof(country));
 
             Country = country;
         }

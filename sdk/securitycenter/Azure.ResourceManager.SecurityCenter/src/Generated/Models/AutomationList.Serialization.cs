@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AutomationList DeserializeAutomationList(JsonElement element)
         {
-            IReadOnlyList<AutomationData> value = default;
+            IReadOnlyList<SecurityAutomationData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AutomationData> array = new List<AutomationData>();
+                    List<SecurityAutomationData> array = new List<SecurityAutomationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationData.DeserializeAutomationData(item));
+                        array.Add(SecurityAutomationData.DeserializeSecurityAutomationData(item));
                     }
                     value = array;
                     continue;

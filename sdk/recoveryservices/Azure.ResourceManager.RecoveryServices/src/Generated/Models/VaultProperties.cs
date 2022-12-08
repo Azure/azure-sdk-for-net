@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public VaultPropertiesRedundancySettings RedundancySettings { get; set; }
         /// <summary> Security Settings of the vault. </summary>
         internal SecuritySettings SecuritySettings { get; set; }
-        /// <summary> Gets or sets the immutability state. </summary>
+        /// <summary> Gets or sets the state. </summary>
         public ImmutabilityState? ImmutabilityState
         {
             get => SecuritySettings is null ? default : SecuritySettings.ImmutabilityState;

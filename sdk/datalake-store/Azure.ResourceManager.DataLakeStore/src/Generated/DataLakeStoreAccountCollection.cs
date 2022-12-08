@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataLakeStore
     /// Each <see cref="DataLakeStoreAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
     /// To get a <see cref="DataLakeStoreAccountCollection" /> instance call the GetDataLakeStoreAccounts method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class DataLakeStoreAccountCollection : ArmCollection, IEnumerable<DataLakeStoreAccountBasic>, IAsyncEnumerable<DataLakeStoreAccountBasic>
+    public partial class DataLakeStoreAccountCollection : ArmCollection, IEnumerable<DataLakeStoreAccountBasicData>, IAsyncEnumerable<DataLakeStoreAccountBasicData>
     {
         private readonly ClientDiagnostics _dataLakeStoreAccountAccountsClientDiagnostics;
         private readonly AccountsRestOperations _dataLakeStoreAccountAccountsRestClient;
@@ -187,19 +187,19 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeStoreAccountBasic> GetAllAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAllAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeStoreAccountBasic>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataLakeStoreAccountBasicData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.DataLakeStore
                     throw;
                 }
             }
-            async Task<Page<DataLakeStoreAccountBasic>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataLakeStoreAccountBasicData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -235,19 +235,19 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
+        /// <param name="orderBy"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeStoreAccountBasic> GetAll(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataLakeStoreAccountBasicData> GetAll(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            Page<DataLakeStoreAccountBasic> FirstPageFunc(int? pageSizeHint)
+            Page<DataLakeStoreAccountBasicData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataLakeStoreAccountAccountsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
+                    var response = _dataLakeStoreAccountAccountsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,13 +256,13 @@ namespace Azure.ResourceManager.DataLakeStore
                     throw;
                 }
             }
-            Page<DataLakeStoreAccountBasic> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataLakeStoreAccountBasicData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
+                    var response = _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
-        IEnumerator<DataLakeStoreAccountBasic> IEnumerable<DataLakeStoreAccountBasic>.GetEnumerator()
+        IEnumerator<DataLakeStoreAccountBasicData> IEnumerable<DataLakeStoreAccountBasicData>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DataLakeStore
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DataLakeStoreAccountBasic> IAsyncEnumerable<DataLakeStoreAccountBasic>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataLakeStoreAccountBasicData> IAsyncEnumerable<DataLakeStoreAccountBasicData>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

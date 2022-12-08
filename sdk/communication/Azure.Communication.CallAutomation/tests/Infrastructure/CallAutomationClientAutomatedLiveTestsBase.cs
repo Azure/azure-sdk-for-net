@@ -177,6 +177,34 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return await communicationIdentityClient.CreateUserAsync().ConfigureAwait(false);
         }
 
+        protected async Task WaitForOperationCompletion(int milliSeconds = 10000)
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                await Task.Delay(milliSeconds);
+        }
+
+        protected async Task CleanUpCall(CallAutomationClient client, string? callConnectionId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
         /// <summary>
         /// Creates a <see cref="CallAutomationClientOptions" />
         /// </summary>

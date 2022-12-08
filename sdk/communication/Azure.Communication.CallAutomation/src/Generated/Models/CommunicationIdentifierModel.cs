@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation;
-
 namespace Azure.Communication
 {
     /// <summary> The CommunicationIdentifierModel. </summary>
@@ -23,7 +21,7 @@ namespace Azure.Communication
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
-        internal CommunicationIdentifierModel(string rawId, CommunicationIdentifierModelKindInternal? kind, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        internal CommunicationIdentifierModel(string rawId, CommunicationIdentifierModelKind? kind, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
         {
             RawId = rawId;
             Kind = kind;
@@ -35,7 +33,7 @@ namespace Azure.Communication
         /// <summary> Full ID of the identifier. </summary>
         public string RawId { get; set; }
         /// <summary> Type of CommunicationIdentifierModel. </summary>
-        public CommunicationIdentifierModelKindInternal? Kind { get; set; }
+        public CommunicationIdentifierModelKind? Kind { get; set; }
         /// <summary> The communication user. </summary>
         public CommunicationUserIdentifierModel CommunicationUser { get; set; }
         /// <summary> The phone number. </summary>

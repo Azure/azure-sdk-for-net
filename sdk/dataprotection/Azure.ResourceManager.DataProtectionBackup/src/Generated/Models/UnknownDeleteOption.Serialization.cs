@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         internal static UnknownDeleteOption DeserializeUnknownDeleteOption(JsonElement element)
         {
             TimeSpan duration = default;
-            string objectType = default;
+            string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"))

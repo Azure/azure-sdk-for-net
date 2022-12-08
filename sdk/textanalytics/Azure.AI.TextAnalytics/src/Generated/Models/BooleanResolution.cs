@@ -5,29 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+using Azure.AI.TextAnalytics.Models;
+
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> A resolution for boolean expressions. </summary>
-    internal partial class BooleanResolution : BaseResolution
+    public partial class BooleanResolution : BaseResolution
     {
-        /// <summary> Initializes a new instance of BooleanResolution. </summary>
-        /// <param name="value"></param>
-        public BooleanResolution(bool value)
-        {
-            Value = value;
-            ResolutionKind = ResolutionKind.BooleanResolution;
-        }
-
-        /// <summary> Initializes a new instance of BooleanResolution. </summary>
-        /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="value"></param>
-        internal BooleanResolution(ResolutionKind resolutionKind, bool value) : base(resolutionKind)
-        {
-            Value = value;
-            ResolutionKind = resolutionKind;
-        }
-
-        /// <summary> Gets or sets the value. </summary>
-        public bool Value { get; set; }
     }
 }

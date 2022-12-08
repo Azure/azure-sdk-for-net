@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of TablesListResult. </summary>
         internal TablesListResult()
         {
-            Value = new ChangeTrackingList<TableData>();
+            Value = new ChangeTrackingList<OperationalInsightsTableData>();
         }
 
         /// <summary> Initializes a new instance of TablesListResult. </summary>
         /// <param name="value"> A list of data tables. </param>
-        internal TablesListResult(IReadOnlyList<TableData> value)
+        internal TablesListResult(IReadOnlyList<OperationalInsightsTableData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of data tables. </summary>
-        public IReadOnlyList<TableData> Value { get; }
+        public IReadOnlyList<OperationalInsightsTableData> Value { get; }
     }
 }

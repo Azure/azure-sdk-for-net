@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,12 +20,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
         {
-            if (targetParticipant == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipant));
-            }
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+            Choices = new ChangeTrackingList<RecognizeChoice>();
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
@@ -34,5 +34,7 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Defines configurations for DTMF. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }
+        /// <summary> Defines Ivr choices for recognize. </summary>
+        public IList<RecognizeChoice> Choices { get; }
     }
 }

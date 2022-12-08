@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.Delete");
             scope.Start();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.Delete");
             scope.Start();
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Compute_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeSecrets>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningComputeSecrets>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.GetKeys");
             scope.Start();
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Compute_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeSecrets> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningComputeSecrets> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.GetKeys");
             scope.Start();

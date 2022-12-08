@@ -121,7 +121,7 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ErrorResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
-        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] retry number {1} took {2:00.0}s")]
+        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] attempt number {1} took {2:00.0}s")]
         public void RequestRetrying(string requestId, int retryNumber, double seconds)
         {
             WriteEvent(RequestRetryingEvent, requestId, retryNumber, seconds);

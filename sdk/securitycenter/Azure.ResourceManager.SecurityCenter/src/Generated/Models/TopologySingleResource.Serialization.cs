@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static TopologySingleResource DeserializeTopologySingleResource(JsonElement element)
         {
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> severity = default;
             Optional<bool> recommendationsExist = default;
             Optional<string> networkZones = default;
@@ -27,7 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("severity"))

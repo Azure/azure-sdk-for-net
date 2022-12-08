@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return message;
         }
 
-        /// <summary> Get the AppComplianceAutomation report list. </summary>
+        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="top"> Number of elements to return when retrieving results. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
-        /// <summary> Get the AppComplianceAutomation report list. </summary>
+        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="top"> Number of elements to return when retrieving results. </param>
         /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return message;
         }
 
-        /// <summary> Get the AppComplianceAutomation report list. </summary>
+        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="top"> Number of elements to return when retrieving results. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
-        /// <summary> Get the AppComplianceAutomation report list. </summary>
+        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
         /// <param name="top"> Number of elements to return when retrieving results. </param>

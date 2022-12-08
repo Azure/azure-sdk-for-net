@@ -6,14 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-fa5260f84bf9cf48b45e4457407db2ae-461467a750631240-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "9a1b35a408b6dbd69a41e3cd3956705d",
+        "traceparent": "00-08f3308baa188c163c57b09927dd75fd-758de69d0b8915f7-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ac540f2dd5ec922555961f099130e517",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 23 Sep 2022 01:37:04 GMT",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:10 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -22,14 +21,14 @@
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
         "Content-Length": "31",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Sep 2022 01:37:03 GMT",
-        "MS-CV": "Bm7zs4IqQ0qlVyc45vy5qw.0",
+        "Date": "Tue, 06 Dec 2022 00:55:09 GMT",
+        "MS-CV": "9XNjFL2qikWPRZs9CytmPQ.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0wA0tYwAAAAA2KF8e8aNYR5ct\u002B6b77sx8V1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "07pKOYwAAAADRH84PPf/UTp78saPjBR0TWVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "9a1b35a408b6dbd69a41e3cd3956705d",
-        "X-Processing-Time": "55ms"
+        "x-ms-client-request-id": "ac540f2dd5ec922555961f099130e517",
+        "X-Processing-Time": "105ms"
       },
       "ResponseBody": {
         "identity": {
@@ -45,11 +44,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "traceparent": "00-5c5bff80b45d8144a3325a7c351755fe-075b351ec3879449-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "29fe740265b8c1537cc758f9cd45e5a7",
+        "traceparent": "00-6ea406193df57d7af883503ea95ca288-15d0e7752511dc56-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0995b0140e60605dd6e90e2ca9e4508e",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 23 Sep 2022 01:37:05 GMT",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:11 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -58,14 +57,14 @@
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
         "Content-Length": "31",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Sep 2022 01:37:03 GMT",
-        "MS-CV": "mS13pr50TEqGVg10xg6uGA.0",
+        "Date": "Tue, 06 Dec 2022 00:55:10 GMT",
+        "MS-CV": "cXZSrN8nL0q7\u002Br2/4h2gdg.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0wA0tYwAAAAC\u002BRwnDH1ofTKvRgGhV5j9HV1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "07pKOYwAAAAAYmkXiCzpcSp6lpjREL4qcWVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "29fe740265b8c1537cc758f9cd45e5a7",
-        "X-Processing-Time": "30ms"
+        "x-ms-client-request-id": "0995b0140e60605dd6e90e2ca9e4508e",
+        "X-Processing-Time": "110ms"
       },
       "ResponseBody": {
         "identity": {
@@ -80,39 +79,37 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
         "X-FORWARDED-HOST": "Sanitized",
-        "x-ms-client-request-id": "42bfcff34dec2de4cf48ac8eb128971d",
+        "x-ms-client-request-id": "3f50705c48424dc653c5217a1db1cbdd",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 23 Sep 2022 01:37:05 GMT",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:11 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Fri, 23 Sep 2022 01:37:06 GMT",
+        "Date": "Tue, 06 Dec 2022 00:55:11 GMT",
         "Server": "Kestrel"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/callConnections?api-version=2022-04-07-preview",
+      "RequestUri": "https://sanitized.skype.com/calling/callConnections?api-version=2023-01-15-preview",
       "RequestMethod": "POST",
-        "RequestHeaders": {
-            "Accept": "application/json",
-            "Authorization": "Sanitized",
-            "Content-Length": "254",
-            "Content-Type": "application/json",
-            "Repeatability-First-Sent": "Mon, 19 Sep 2022 22:20:00 GMT",
-            "Repeatability-Request-ID": "619e45a5-41f2-40bd-a20e-98b13944e146",
-            "traceparent": "00-5204a40255730442a5d1f3ba35425291-6ce8e34425e9294c-00",
-            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-            "x-ms-client-request-id": "b2cc0b06edb73e5de1591eeeb0dd0d54",
-            "x-ms-content-sha256": "Sanitized",
-            "x-ms-date": "Fri, 23 Sep 2022 01:37:08 GMT",
-            "x-ms-return-client-request-id": "true"
-        },
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "254",
+        "Content-Type": "application/json",
+        "traceparent": "00-48068b1143dba4e8dcf418e7aa42e87d-e185450b7547bebd-00",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f253481b7ecb1f5bb2f3d502c7f8e970",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:13 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
       "RequestBody": {
         "targets": [
           {
@@ -133,18 +130,17 @@
         "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"
       },
       "StatusCode": 201,
-        "ResponseHeaders": {
-            "Content-Length": "462",
-            "Content-Type": "application/json; charset=utf-8",
-            "Date": "Fri, 23 Sep 2022 01:37:07 GMT",
-            "Repeatability-Result": "accepted",
-            "X-Azure-Ref": "0ww0tYwAAAABFk99e5gyHTY6\u002B0gQU2\u002BGKV1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-            "X-Cache": "CONFIG_NOCACHE",
-            "X-Microsoft-Skype-Chain-ID": "8ebaff0e-74fa-48e3-9270-ed2b06c1ac14",
-            "x-ms-client-request-id": "b2cc0b06edb73e5de1591eeeb0dd0d54"
-        },
+      "ResponseHeaders": {
+        "Content-Length": "462",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Dec 2022 00:55:12 GMT",
+        "X-Azure-Ref": "08JKOYwAAAABBdWAVIbt6RYxWXD2/n4OGWVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Microsoft-Skype-Chain-ID": "70648e30-e4d9-45fd-9738-83936722e56d",
+        "x-ms-client-request-id": "f253481b7ecb1f5bb2f3d502c7f8e970"
+      },
       "ResponseBody": {
-        "callConnectionId": "411f0b00-2ac9-4c9e-9cde-8f8e4651a037",
+        "callConnectionId": "411f3500-14dd-4b9e-903d-41f47434751b",
         "source": {
           "identifier": {
             "rawId": "Sanitized",
@@ -165,44 +161,41 @@
         ],
         "callConnectionState": "connecting",
         "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized",
-        "mediaSubscriptionId": "47068868-6f71-493f-833e-8c13258221df"
+        "mediaSubscriptionId": "9769d2fd-b21b-42ce-9e3f-82c42db2e3b5"
       }
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/callConnections:answer?api-version=2022-04-07-preview",
+      "RequestUri": "https://sanitized.skype.com/calling/callConnections:answer?api-version=2023-01-15-preview",
       "RequestMethod": "POST",
-        "RequestHeaders": {
-            "Accept": "application/json",
-            "Authorization": "Sanitized",
-            "Content-Length": "7872",
-            "Content-Type": "application/json",
-            "Repeatability-First-Sent": "Mon, 19 Sep 2022 22:20:00 GMT",
-            "Repeatability-Request-ID": "1d58fb9f-24a9-4574-86df-6354ce7fa728",
-            "traceparent": "00-effc348f1015c740a4d00afdc85d6ba4-70f8a21ef4d0a74b-00",
-            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-            "x-ms-client-request-id": "6ad93b5b2e97b5718fd05970b8c51054",
-            "x-ms-content-sha256": "Sanitized",
-            "x-ms-date": "Fri, 23 Sep 2022 01:37:12 GMT",
-            "x-ms-return-client-request-id": "true"
-        },
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "7920",
+        "Content-Type": "application/json",
+        "traceparent": "00-d44c2ccd85e92c74a1cc5df09d3aee76-ac504e4887a79ef7-00",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "21ad9046a6dfcbd4ea47b69bece24224",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:14 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
       "RequestBody": {
-        "incomingCallContext": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJjYyI6Ikg0c0lBQUFBQUFBRUFNMVgrMi9idWhYK1Z3UVB1RDlzcFUxU0ZDVVJNQVpiVHRzMGladm0wUUZGc0lBaUtWdU5MQ21VL0VqdXpmKytROXRKbkxqcnVxMEZyb0xJNHV2N3ZuUDRPdWYzanBKRk1hN2FQTXVWYlBPcTdJamZPNW10WnU0MzF4M1JpWVJValNDcGxwS21NWW9ESENJV01JclNsRE1rdzVSU2hiR01OTHZHNjRjd2hFT2RvU0ROTk9JU3A4aG52c1FhbWpUaG5UY2RuVGQxSWUvR2NtWitDYjRwZFYzbFpYdm81QnVqVWg5empWaUVPV0lxVUE2VG96U2dLZGR4U29MVWpTbGtPWm5MaVhGanlubFJ2T25VMHJhNXltdTVCUW9rVDdHV0lRbzV3NGlSSUVSUytnQVVtcFJwM3llU1JnQTB6YlUyNE1WTUZvMTVlTk5wcTUvZ1NSWDdlNWFHUDlHVC93Ny9oU2Z4OWtIZmVEMCtQK1JKeVRJU0drMFE4WGtLQ21NT1dpT0pzSit4ekNpWmtZQit3NU5GWHQ0MHpwbXliYVdhQXRDMGJldEc5SHF5enJ0WmtVK21iVzJyMVYyM3VibXJUVmRWTTlmU1c5Q2VxbnRLb1hsamdJU2dCa3lXTjAxWHFaMmVTdlVXcEpkVjlzYm9YcW9qZzBPWWE4NGo4Q0hNT0lvem1pSk1GZWZVeENxTjB4NE5lem1CTis5dEJQMDk3eE9NT0VZa1FDUjBycGdabmN0QjJTeU5CYlZLZ2RTWmhIcFFPYkdtYWY1RUpqeEsyamZDbXE5R3RYOGlxUnRCKzBMbnVyNndzbXpxeWpxNVVBU3hBZTBTc3ZrUFl1R3pNT3AxSHJZemsxUmxhOHJXTFNtMStid0FmVzZCMW5XeFBRNTdqYTRCT3kycUZCb1dmWHhscjhxcWo3d2dDR0xmdzk3aDJEczhaUjZoWVJmREgzSHRUYjhCVjhKb1YxRDliUmNHclNUc0Jyd2JyVkhTZm5JaHlIYmp1SXEyajczMXg2d3Y1enF2dklERU1mYk9MazU3ZzgrbkhzSE1pK0h0ZTRRUWowUkFIbmx4Q0RWUWNwVVJxTURmcFpSOTI2b2EyU2EvTnp2bExCVi85VlpvQnFKaDQzcGd2dGZBMWhlNm1YcldxSVg3MkhSZm9TYWZsQksyNHVSN281NnhoYk9CYk1xNU1taWVXVGtSdGwyTW4rdnFwUmJ0eCtGUk1ycVlONStMTDlPamQzZVhQaUY2ZFB0cFIrVnN2dHFVbEN4MXJtVnJCQmp1WFk1T1BVcDhIR0xPZlBMQzVLMEQyenRRWnJOaTVWbXB0UVdIZFNtSllMS2d1M1dyWmROdkg1enVnQWN4K0hjUG5Qd2dPSGtOVGtHNU0wcXFGZ2dvTEFPT3cxY0VMSWFEOEFjSTF2MzJDZWl2SmZDM3ZpYzBpR2lNU1JoNDY4M0d1aVNLdXRUM1lMUEZhM0JyNEk3YWdyL2czM0crZDNKeGVUWStIQUY3VEdJZWhqRUxmQnBRRWhPK3oweWZtYU1Zem9qL2c1azhNUWNoQ1FHUHN6RHc0UXRqR3IxbVp0dFpxMlhUQUQyTFFDckgvQlY5UURHc2xSL2h4OXozOXpub0wrY0lkbGFmb3dpaTJDZjRKMVBRWDBOUnlOUVVZaWJ6RXExUHlVM3RMTmVDUEo1UjZkTElZbExadkozT1JMcFVYaTNWaldscm1WdHZhVkk0VGJacTdWM2RWckRSQndmbjE4bkpOYUhSOWZ1VFFYSjkvbjVBcm9FOEwrR2tNK0w0V0Y3T3lndjV0NDhmaHUvR2FaME1JM1Y4WW1RU250M09odWZ2T1I0Y3p3YWY5Qi8wbno3NWd6d0syY0xUL3dSL1c5N3I1dDFSOHRZZWZtV1pUUTdHUlpRUDM1NmZmdnFzRjR2aWxxNU1MekgzWjJ2NHh3T3huc2xhdUN2aC9QRDRxRWY0OWc1NWFvcTlkeUdsdmVoMXZicy8xa1AyVytCV09UODhPeGp2b21XemR0T1M1cTJGZWUzdk04RU1BbFc4QTdnWkZIbXlMTTBxN1pmVmkvN1lPMDFPTHZmNUkxYy8ySytISys3c1lQUXRTMkFSbThMVTA2bzB5Q3pnL3Q3VEFGMGdRdUF2eC9sZU12NlcrWkdyLzRaOUZMc0c5anlpYnZNWm5MQ1BUSEFaR2x0YmlKTkZNNVdJQnR3YmNFRzVpQmtvRUJFVjVFQ1FRQno0cmhpSElocUlFUkVqS2pBVFF5cFk0dnFFaVlnSEl1SGk3WUZJUm9JeEVXQXhqTVdBQ1I0S2Z5aVNRTVNKR0RLQmt3MnhXYlZyZlo2THpNUVZQTXZsc3J0WjROM0tUcTZ1ektvMkZyU1diWE4xQmVhZ3FiWXc2dXBLcGcxeWx6VnlscnhBODUvUm5zSzE3d0Jsc21tdlU5ajF5MXkzMCt2TUdKM0NadnZMd2xnWEFGMzdUM0ZEWXhXQzhHeGkxakVQSWx0dlBvYkp4MmF5VGc1OFNOZENneVBrQjZGTFg2SVlSUkdGR0E5TEZtZWFTUjVvbDVrMGtMaXVJN1NQU3MwdE9IK3l6UlRlZEVxei9KaGxMdVorVEIwZ0Zqd3lkeTdRMndabTYxSm5QUHI2WmRKY1RLTEVUb2RmeXV3dUdZM3ZCLzArNEVQQ0FpY0c5S0ZNMVo5UExnOCtuZVFmMk5HOUdldjh3NjNyOCtCQ1k1MURmT1JVbk5vS1BOVG1acDJoNU0zWnRtbFFGTlhTZ0dHdG5ac0hHQU9ScHZQTld2cGh1Y2picDZ4N3Q4V0ZwcllxaW5YaThGOEYzZ0N5RHIwcHhONWRWOXFOdXFIWWE0TGpQSS8vc2VBM00wWDA0R1FaK2xZUFhEak5mak45N29keHpEamhjQU82RUJlN05EQnZUdVpGbTU5Q0huZjM1T1c4R2RwS2FnVUw0Tm5SMnFUenlXNWNMWXRpUGEyUlNXV1dZWU5DbGtuSXhZMlBZaHBpWkRSTk1WZEVLc0k2LzJPcUNMd1RXODNyTmUrcTNhU2RELzhDZ0gwYXJkc1FBQUE9Iiwic2hyVG9rZW4iOiJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0k2SW5CdmNDSjkuZXlKaGRDSTZJbVY1U2pCbFdFRnBUMmxLUzFZeFVXbE1RMHBvWWtkamFVOXBTbE5WZWtreFRtbEpjMGx1WnpGa1EwazJTV3BLWVZWWVFrdE5NVlozV1cxd1FsZFdhRnBTTWtaWlVsVndjMDlIZUZkTlJsSlFVMU5KYzBsdGRIQmFRMGsyU1dwS1lWVllRa3ROTVZaM1dXMXdRbGRXYUZwU01rWlpVbFZ3YzA5SGVGZE5SbEpRVTFOS09TNWxlVXBvWkZkUmFVOXBTbWxPUkZac1RVUnJkMWxUTVd0WlYwcHRURlJSZUU1RVZYUlpWRUV5VDBNd2QwOUhSVFJOYW14cFRYcENiRTlIVVdsTVEwcHdZek5OYVU5cFNtOWtTRkozWTNwdmRrd3pUakJqZVRVellWYzFhMkl6WkhwTWJUVnNaRU01YWxwSFRURlpWMVpzV1ZNd2VFNVhUVEZNVkZKcldXcFpkRmxxUVROUFV6RnRXVEpHYTFwRVNURk5SRlpyV1hwSmRrbHBkMmxoVjBZd1NXcHZlRTVxV1hwUFJHdDVUbFJSTUV4RFNuVlpiVmxwVDJwRk1rNXFUVFJQVkVreFRrUlJjMGx0VmpSalEwazJUVlJaTWsxNmF6TlBWRWt3VGtOM2FWbFhiSFpKYW05cFVsUktZVm94YkU5YU0xSlJWa1ZvU1ZacmNEWlJhbHBUWTBSak5XRkZPWFJqYmtFeVUydEdRbEJVTUdsTVEwcG9ZMGhDY0ZwRFNUWkpiVVY2V1ZSTmVsbDZTbWhNVkVrMVQwZFZkRTVFUm10TlV6QTFUVlJOTTB4WFJURk9SRmw1VFcxVk1rOUVSbXBaZVVselNXMUdkMk5IYkd0WlYwNTVTV3B2YVUxcFNYTkpiVTUxV21sSk5tVjVTbkZrTW5OcFQyNXphV0V6VWpWSmFtOXBWV3hPUWtscGQybGlhVWsyU1c1bmVFMHdaR3BoYTJ4R1l6SkthR1ZXY0ZoaE0xSlFXakZDVVdWSFl6QlViR3hHWkRKa1ZsVklRbTFOYWxwRFQxaGFWVnBZUWtWVE1VNVNUbXh2TUU1NlNsQlViRXBPWWxaYVZsVXdjRk5aYWs1cFltNXdVV1JyUmsxVlYzUnVaRmRzUlZZeFRUSlZSRTVJVDFWUk1GVllSVFZTYTJ4TVZsWlNTRkpzYkZCYVJWWXlWRlJDVVZSWVFsUlRVekZOVm0wME1Ga3pSWHBqUjJoMVV6Qk9aazlGY0ROVFNGWjFXbXRvUjFwNldsTlZXR1JxVTBSS2NGUllZelZTTVRsVlZtdGtZVnBYUmxoaGJVWkRWMjVLV0dOV1JrbFNTRzk2WVd0ME1Gb3lXa2hUYlZKeFZsWktUbEl6Ums1VVZqbERZbXhPTVZscVJtNVhhM0IwWWxkcmVGVXhXbEpUTTJSUFkxZGFTV0ZYWXpKTk1WcHFZMnBDVDAxVWFFZGxSMVl6WVhwR2VWZFdSakpXTVRreVkzcG9WbVZIV21wUFJteHdWRmMxY2xaWGVGTk9NMVp2VmtoT2RWcDZTa0pVUjFwRFdraHZNRk5zWkVaVVZUVXpZakZDZEZZeVdrcFBSRVpIWkd0T2NtRlVWbkZoUjBaV1kxWmFWRTVHUmxsTVdFWjBZbGRLWVZaSGRFZGxSRUp5WW14a1VGSkVTa2xTU0UxNVUwUmFSRk5FUmpOU1JuQnJXa2hWTUU1cVpHRlNNMngzWVZob1VGZEljR1pPTUhBelpWWkdkRTVIZUVKbFJWcE5WVk5KYzBsdFZXbFBhVXBDVlZWR1EwbHBkMmxaVjNodVNXcHZhVlZzVFhsT1ZGbHBURU5LY21GWFVXbFBhVW95WVVVeFIxTkZPVzVNVlRWQ1ltMDFiMDlVVWxKaU1rcFpaRzVXU0ZWNll6SmpNbkJHWlZkSk5WUXdNVWRqTURWaFZGaG9lVmx0YnpSSmJqRTVURU5LY0ZwSVFXbFBhVXB2WkVoU2QyTjZiM1pNTTA0d1kzazFNMkZYTld0aU0yUjZURzAxYkdSRE9XcGFSMDB4V1ZkV2JGbFRNSGhPVjAweFRGUlNhMWxxV1hSWmFrRXpUMU14YlZreVJtdGFSRWt4VFVSV2ExbDZTWFpKYVhkcFkyMW5hVTlwU1hkTWEwWlRVMVZGTW1OVVpFZGxiVTVXVm01U2NrMXVaR3hhYm13d1RVZDRRMXBJWkc1aU1IQlpZMnhPWmsxdGRGZFJiVGxJV2pCc2VGRXlNVFpTUnpoM1ZUQkdRbEZUTkdsTVEwb3dZVmRSYVU5cFNtcGFSMDB4V1ZkV2JGbFRNSGhPVjAweFRGUlNhMWxxV1hSWmFrRXpUMU14YlZreVJtdGFSRWt4VFVSV2ExbDZTV2xNUTBveFpFZHJhVTlwU2tobGFscHZUVlJvZGxNd1ZrWlRNMmhRVFZVeGRWSnFaR0ZNVlVaQ1NXbDNhV1J0Vm5sSmFtOXBUVk0wZDBsdU1DNVFkRjg0VWtwT1EzSnBaakJoYzJFM1RGRlpkbTlmUzJSalVXNVhUemhaU2xOcmJYRlFhM0JhVFVSdmVqSnNPWGcxVUc1d1V6RjBUWFJ5YlVkVFdDMXhOa2gyVTFkSGRqWXlVMk5MU0RaaWFYRjNlUzFxVTBZeWQwZDRSVE5vUWxOb2JFRmxObVZJVlc1TFJtTklNVGxKZFRWRlVGZHFRbkJaTkRoRmQwWlZZMWRKVTBZMFpuSmZOMVZ6VGpkMFlsRlNUMUpJWkV4SFFqVnJjblJzUVhkdE4xRlRkM2gyVmtOMGNEYzJSVTR4WTFFMU9FVXdPRmhHVGpkMWRUbGxkRjl0YTFaTFZtOUtkMmM0Ylc5MGRGUmlibG93T1hneFJURlhVVFZFTm5RNU5tUnpaRlJoV0hkVVVHMDROMmMwVmtGQ2NHSXhPSFozWTAxdVUzZFVVMDh0TW5sSlFsSjBVMWhZVm1KUlJVRjVRVTQzVEY5amIxUkNaWFZSV1RsTFRYSnJNVmt0VGpkUmVuRm5ZMlJmVVRGZk5IVmxWR05ITmxOc05tbGFSWFUzUkhaS2NHNXZhVUZ6UjFoR2VraGhOVjlSVG1KVGVWRWlMQ0owY3lJNk1UWTJNemc1TnpBeU9Td2lZaUk2SWtJd2RFcFJVM1ExYUhabldERkliMnhSVkRSbVFtaDVOVk5rYmxCRlpFdFhOa3hRTUc0M1ZFTlNVRzhpTENKdWIyNWpaU0k2SWpaa01USTJabUUyWmpkak1UUTJOekU0WlRZNE1USmpNVFV6WmpsaU5XWTNJaXdpWTI1bUlqcDdJbXAzYXlJNmV5SnJhV1FpT2lKb1RrNXNNMG81YzJ4TmFqWXhNbms1WVhOWVQzZzVNRlJaWW5CNFJ6QnRhV3c1WWxCWmFYSnhaaTFGSWl3aVpTSTZJa0ZSUVVJaUxDSnJkSGtpT2lKU1UwRWlMQ0p1SWpvaWVERXpSMk5xU1VWelltRjVXbGRyZEU5blVGQjRaelJPV1VWM1oxVlFjR1l5TmtJNWRsUmxjRVJMVTFFMldqUTNNazlPVWsxdFZsVlRTbEppTTJKdWVsQjJRVXhSYTJkMWFVUlhVelpRTTBjNVJEUlJjVGxHU1V0VlZFZEdXVTlrUlhaTk1GQk5jRk5KTFV4V2JqUmpjVE53YUc1TFExODRTbmRJZFc1bVNFWm5ObEpSZDJOSU1tbE5kemxIWDFSV1IxcGxZVmRxWVVKYWNsZHhVVWhFZWpOcVMzUm5aa2RLWkdwVlVrMUhjVTFOWDBKdVUzVmlNV2RhU20xdGFURlRWbEZMZDA1eFpraHBaell6Vm1OeU1FNHhPRVo0Wlhkck1YSlpVWFpYWDNaek9GVjRabU00V1dsTmJtdFZiRkkzZFdoVWMyNW5Na0ZNWmtKa2VqUktWMFZOVG5kdlVHMVhaa2s0TVVaMlEydHBOV3BvWVZWeFZsTTBVVmd0Y1cxdFlscFVhMFo0TUd0dVYwOUVNa2hFY3pKSU5rTklNWGRFV21Sa2RUUTJOMXBIZVhCcGVFOVllbDgzU25kNVVXMDBiRUY0Umt4UkluMTlmUS5YdFp2RFYzTVMxTDBVRllxY1lJY2NDM2RVMGk1TXp1c0pWTWd6YzhiR2dVYXNnUFQzZkhvaW1DMDRuV1BfQ3hXVzVhV2NlRUdGM3hEZ3hPd1FrS0MyX2E3YWE2aHhSdXJDcjNQQWlRaGpoNHdGamc0enMwMmNnYUJVdlE5cnBmTng2eUxSQlNoVEVLZlMxWTVaS1lMNHlISjZKcUNQWWlVU1B4cFhiYXhIS3RvSFdWZ1RoZG1zN08tV3JvUkdwNDh2QWRmem9pMWxrN0VCZ2JlNHF1RzhsVGp4U0hFMjV6cExxeTAyWElIT1dGVFpjOGdLVU1oNUY0VDRhMkJOb2VqNTNHdGtmZGRXWk9FbTFnQlA4RTg4OFVHUHBoeEZXSVM5R0pKZU5iSUlDM2x1Z1hSUDUxSDdsYk5iejZhTGN5U0x0OTRiNGM5a1J5bEdXMEVzQ3NVNEEifQ.",
+        "incomingCallContext": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJjYyI6Ikg0c0lBQUFBQUFBQUNzMVlhMi9iT0JiOUs0SVhtQS9iMGlZcGlhSUlHQXZIVGhvbmNlckpvKzBNZ2cwb2tyTFZ5SkpLeVkrMDAvKytsN2FUT0hXMzA5MXRGNk1Bc2toZW5udDRTZDVIUHJXVXpQUHpzc25TVE1rbUs0dVcrTlJLYlRsenY1bHVpUllYVXRXQ0pGcEttc1FvRG5HRWdqQ2dLRWxZZ0dTVVVLb3dsbHdIdDNqOWtCRHhRS1Vvam1LTm9nQkxSSWd2c2NZNDRwSzBYclowVmxlNXZEK1hNL05UOEUyaHF6SXJtcUdqVDVuR01pRVkrWno3S0dBSlEwa2dFNFJUTHFrazBtZ21ZVTR1aThsY1RveWJVOHp6L0dXcmtyYkpWRmJKTFpCT05lWWNjNVNrUUROSWdHRWMrd1pGbkJuS2ZSM0ZxUTlBMDB4ckExWk1aVjZiSnk1WDk1VmJiRzNzd3RoZVZiVSt2MncxNVE4d01tZDh6d2owQnhyNTMrRS9NL0ptRHNib0s2K0g1N3VNekRnUUpMRkNJVGF3VzRRQkRaSXlGQVJHSlpFTVdZakpsMFlHUytaWmNWYzdZOHFta1dvS1FOT21xV3JSNmNncWE2ZDVOcGsybFMxWDkrMzZEamFpcmNxWkcra3NhRWRWSGFYUXZGNGFoRWxicVIwSnBUb0wwa2xMZTJkMGg3Q0ltU1NFMDhNakRIeWtRakxrUU0rbmNSaEYzR0RET3pUcVpBVGVyTE1oOG8rczYrak9qTTVrcndBZEZxZ3BCYnhtN3RBQnBZazFkZjBYNFB0QVpjdlltdmRHTlg4Qlhoc2lXMVp6WFYxWldkUlZhUjAzYUFLemtMWUpDZG9rak51RVVlRUhFZSs0MjdVMmVyOHNHbE9BOEtlVzJueHVMNktzcW56cjhUcTFyZ0E4eWNzRUJoWmRmR052aXJLTFBPNkhRUkI2MkJ1ZWU4Tng0QkVhdFRIOEVTZFFkMnN3RjB4M0RkWGRpbEFZQlQ1eDBLYVl1NUdrMjc4U1pIc0ZYRWZUeGQ3Nlk5YVZjNTJWWGtpeEgzZ1hWK05PNzgzWUl6andZbmo3SGlIRUl4eTBjeStPb0FkYXJwTUREZnh0bmJKckcxVWhXMmNmelU0N1RjVGZ2UldhQVcyNGd4NVl3S3ZoRmd0ZFR6MXIxTUo5Yk1SWHFNNG1oWVJiTmZuV3JDZHM0UllSYnRxWk1taWVXamtSZG5VeWV1cXJsbHI4L2lFMVYyZm5iL0ZKOCs3MDJNWlZoNDgrREk3akhaYXorV3JUVXJMUW1aYU5FYkJ5NzNvdzlpanhjWVJaNEpQbmE5NmFzTGtIYWpiTlY1NlZXbHN3V1pzU0R2c1ZVcys2STdPUjIwZW5PK2hoREJiZVJ3Ky9FejM4RXAwQ2Q3Y3NxUnJRUU9Fa01QQ2dYMmdJWWdJb2Y2NWhMYmV2Z2Y1a0RYRHMxaFlpTk9RMHhpUUt2WWRMeDNtYllPckJwWXZYNk5aQXpObWlQMmV3c3dQZTZPcjY0bnc0Z0FPTlkwNXdETEFjZzIrUDRNYnZLNmRQeW5uTUdQMmZsSWM3eWlNZkhFNU1mRVlEaGptWWJtL2xjT2ZYdHExa1hRT0RnQk1nZ05sekJwRVg0cGg4SndVU0VyS3ZoZjRmdElRN0o5RXBDWG5zRS96RGxkQ2ZwU1NYaWNuRlRHWUZXanZPVGU4czAySXJzRUxKMHNoOFV0cXNtYzVFc2xSZUpkV2RhU3FaV1c5cEV2QXZXNzcydm1wS3VQbTl3OHZiL3VpV1VINTdQT3IxYnkrUGUrU1dZeThyd1BjWmNibklwK1BSSkgwN2VISDk4VmZaK1ZqY2YrajFxbXkwK3UxcThQNk56ZlBCMkxEZlpuL1FmL3JrRC9KQVpBdFAvd3oreFRCOVZReU9WOUdNTE1adjA5RjRTWTlPcHpvZkx3Wm5pOVByRCtYMStDejBmMVZyK0FjWFdjMWtCUUVsOEM2SFo2Y1FUYmRoNVhFbzlsNUZsSGI0bC8wdXBLeW43STlBb0xrY1hoeWU3NktsczJZemttU05oWjN0N21zQ1J3bXE0aDNBelNUdXlhSXdxNlJibE0va3NUZnVqNjczOVhQWDM5dnZoNmgzY1RqNDJrcmdJSnZjVk5PeU1NZ3NJS2p2Y1FBUmpBaDdQcy8zK3VkZld6NTMvVjlaSDhWdUlIaWFVVFhaREJ6dWd5WUlqOFpXRnBKZ1VVOGxvaUh6K24zUmo4V1JMd2dUQjF6NGZSRWZpSU5ReE5BREgwVDRSK0tBQ1hvZ2pnNUYwQmMwRUVkRXhJRVk5RVV2Rmd5YWdRaTRPS1JpZ0lHYSt3WWN6TnowM2phNm1GV3o1dWU1NUV6Y3dMTmNMdHViQTk0dTdlVG14cXdxWTRGcjBkUTNON0FjTk5VV1p0M2N5S1JHTG53anQ1Sm5hUDRUMm1QbTlnMmdWTmJOYlFMM2ZwbnBabnFiR3FNVHVHeC9nK3JHSlVXMy9tTW1VVnVGSUdtYlFLUjFKWUY3dWJHSHRQak1URFoxR2xkUTBFSG1iM3djUUcyaWZTUlpHaU5NT1ZWK0VCb1dNMWQyMUZDd3J0TzIxMHJOTFJoLzhsaHJGV2I1T2sxZGp2MVFGMENHZUdydVhmYTNUZGJXcmRiSm5kOWY5ck8zZmZMNitHcll1N3ViQkpZdXUxM0FoMm9FUEFiSWxDZHByTStUcEhQL2dxbEpjWFlpMy85ZU9CbUF0VUFjTWliSFlteExzRkNUbVhYNWtkVVgyNkZlbnBkTEF3dHI3Tng4aGptUWZqcmJyS2tQaTBYV1BGYmJ1eU11WDdWbG5xOExoZjhvOXdhUWgrd2IxVHBGOHE0R2tXS3htNGREcy9OT3F2QXVaVzhDM0NmdmVxL2tqTCs2bjA1Y2dvMFJnKzJKRUkxL01WM21RMFFPcVI5ajZuTUc3dHJWdGxrOW11ZE5Ob2FpRGN5NHRYcFdIOWhTYWdVSDRzbncyaVR6eVc3eURmOWxXRyt6eTk4NGJERXlnWVlxT2t3MTFQRStoL1EvOWhrNExoTXk3U3FqLzZZdUJMMFRXODZydGQ0VjZIVTE1dWQvQVJhQjBXYmpFQUFBIiwic2hyVG9rZW4iOiJleUpoYkdjaU9pSlNVekkxTmlJc0luUjVjQ0k2SW5CdmNDSjkuZXlKaGRDSTZJbVY1U2pCbFdFRnBUMmxLUzFZeFVXbE1RMHBvWWtkamFVOXBTbE5WZWtreFRtbEpjMGx1WnpGa1EwazJTV3BLWVZWWVFrdE5NVlozV1cxd1FsZFdhRnBTTWtaWlVsVndjMDlIZUZkTlJsSlFVMU5KYzBsdGRIQmFRMGsyU1dwS1lWVllRa3ROTVZaM1dXMXdRbGRXYUZwU01rWlpVbFZ3YzA5SGVGZE5SbEpRVTFOS09TNWxlVXBvWkZkUmFVOXBTbWxPUkZac1RVUnJkMWxUTVd0WlYwcHRURlJSZUU1RVZYUlpWRUV5VDBNd2QwOUhSVFJOYW14cFRYcENiRTlIVVdsTVEwcHdZek5OYVU5cFNtOWtTRkozWTNwdmRrd3pUakJqZVRVellWYzFhMkl6WkhwTWJUVnNaRU01YWxwSFRURlpWMVpzV1ZNd2VFNVhUVEZNVkZKcldXcFpkRmxxUVROUFV6RnRXVEpHYTFwRVNURk5SRlpyV1hwSmRrbHBkMmxoVjBZd1NXcHZlRTVxWTNkTmFsRTFUV3BuTWt4RFNuVlpiVmxwVDJwRk1rNTZRWGxPUkd0NVQwUlpjMGx0VmpSalEwazJUVlJaTTAxRVRYcE9WR3MwVG1sM2FWbFhiSFpKYW05cFVsUktZVm94YkVoYU1EbFdVbGhzV21SWFZrNWlSVkY1V2tadmVWTllUbEJpYmtFeVVrVkdRbEJVTUdsTVEwcG9ZMGhDY0ZwRFNUWkpiVVY2V1ZSTmVsbDZTbWhNVkVrMVQwZFZkRTVFUm10TlV6QTFUVlJOTTB4WFJURk9SRmw1VFcxVk1rOUVSbXBaZVVselNXMUdkMk5IYkd0WlYwNTVTV3B2YVUxcFNYTkpiVTUxV21sSk5tVjVTbkZrTW5OcFQyNXphV0V6VWpWSmFtOXBWV3hPUWtscGQybGlhVWsyU1cxek1Gb3dXa2xpVlVwNlRrY3hTR0l5TVZsbFIzaElWRVU1ZUV4WVVsUmtWVXBZVlVNeFZHSkZSa3BVZWxKSllucFdSVTFWYUVKWlYwNU9UVmN3ZDFJeU9XcFVSVGd3VkZaV1NscFhkM2hoYTJScFpFY3hjMWRyYUU5U1IyaDVXVzV2ZUdSWVNsZFhWVEZOVlROWk1GUlVSa1JWTTFac1ZrVnpNMUZWZEhsalJGcEVWRzFLU1ZFelJsbGtiVXBUWVZoU2JWVlVaM2hYUjI4MFVXNXNUazB3VWtwWGJYaHNUVWhDTmxaWWF6RlRibFp2WldwT2RGVXlUVFJpTW5CR1pFWlplVlpyVGpCaVdFNHhWRWhKZDAxclpIcFJWemg0WkZoT1VtUnVXakpQVnpGclZtcEdkVlZWVW5salNHeDRUV3h3Um1WRk9WWk5NakF6WVhwQ00xSllVazlpUjFKb1VqSmtUbE5GV2xKTlIwbzJWV3hrU0U1cVZraE9hMnhHWTFWa2RsbHJPVUpSYTBacldqRTVTVTlXVGpKU2JYUk9aRVZaZUZJeVZUUlhWMFpaVkdwU1dGcEVRa1JsYXpBd1kycGtNbGd6VmtSWmJrWmFUVmhvZVdNd01YVlNSV1JhV1cxNE5GTkdhRWhpYVRGRVdUSlNWRkZXT1haV2VURjZZVVprUW1Jd1kzaGlWMHByVGxZNWJtRlhTalpWYkVVeFYxWk9TRkV5UmxaT2JrWnVWREZzVlZSRVFrSmtNMHBoVEZab2FXUnVUbE5XVmtabVZESkdkRk5HY0ZKWmFrWnlaSGxKYzBsdFZXbFBhVXBDVlZWR1EwbHBkMmxaVjNodVNXcHZhVlZzVFhsT1ZGbHBURU5LY21GWFVXbFBhVXB3WlZVNVJsVkdhSGxPYlRSNFZUSTBNVk50U21aU1JXeHVWakJOZWxkdE5VMVBXR3cxWWxkT01HTkhkRmhVTVZabVpFVlJNbVJZVWs1SmJqRTVURU5LY0ZwSVFXbFBhVXB2WkVoU2QyTjZiM1pNTTA0d1kzazFNMkZYTld0aU0yUjZURzAxYkdSRE9XcGFSMDB4V1ZkV2JGbFRNSGhPVjAweFRGUlNhMWxxV1hSWmFrRXpUMU14YlZreVJtdGFSRWt4VFVSV2ExbDZTWFpKYVhkcFkyMW5hVTlwU1hkTWEwWlRVMVZGTW1OVVpFZGxiVTVXVm01U2NrMXVaR3hhYm13d1RVZDRRMXBJWkc1aU1IQlpZMnhPWmsxdGRGZFJiVGxJV2pCc2VGRXlNVFpTUnpoM1ZUQkdRbEZUTkdsTVEwb3dZVmRSYVU5cFNtcGFSMDB4V1ZkV2JGbFRNSGhPVjAweFRGUlNhMWxxV1hSWmFrRXpUMU14YlZreVJtdGFSRWt4VFVSV2ExbDZTV2xNUTBveFpFZHJhVTlwU2pCVWFrRjNXbTVrU2xFd2FFWlRNSGh0VVcxNGRsTklVbEpoUlVaU1NXbDNhV1J0Vm5sSmFtOXBUVk0wZDBsdU1DNWhNRXRRV20xTVYyeEpkbWhOTTBKRlJGUk1lVmR3Tm1Kek4xTlNkVVZMTUdnNWVVczVjM2xvY0doUGEybGFVMVZyYzJoTlZYbDVPRUZtTmtoSU0zUjZUMlZQVGxKRU5XMU5TVWhHVUU5MWVtVTFSa010V0RCalVVUk1SVFo0V0RoUVVqTnZUV2h5TFY5VVIzcFVMVFpDWm5KdmMzVldiVXRhUnkxWmNsbGFabVZJY21aakxXOUpUV3M1VmxoWVRUa3hkVk0zWHkwMlZrMVhSRGN0Y1ZGd2MxSjZNVlp2WkVZM2JsOUpjRXR0Y1VsTlZtVnVZMmx3T1RFNFNYSjNVa0ZQUVVVM2RWcHVUbmh0ZFZkb1ZVcGlSVWRzWm5OaVFUQk9URGxwYkZGdFkxcGxOV2Q2U0hCalNtOXhSVGRtUjJwNlFqZDRSM2RxTWpGU1ZXbzJZMFZQZVVVMU9GRmZiMEpZUTJKelEzWTJRVUV0WldwbFVucDFTVlZTV0ZwdFNYUTBabkpXV1RaWVVuUlRWa2ROU0Y5RmEwOWhXVmhpTW5KZldXTjFUMGwwYWpaTFREVlFZV0ZIYkZoM1ZGbDRRbVZ3TjNkZmIzY2lMQ0owY3lJNk1UWTNNREk0T0RFeE15d2lZaUk2SW1wd1JESlhUbTlhUXpadE9WRnNWMXB6VEhWb2VTMVhXV013Y0RaUExVdHRSM0JhYkVvM01FWkJjVGdpTENKdWIyNWpaU0k2SWpabU4yWm1OR05qTkRVNU5EUTBZekk1TWpVNE1ERTJPREZpWTJZd00ySXdJaXdpWTI1bUlqcDdJbXAzYXlJNmV5SnJhV1FpT2lKd1NsSkhiSFJWU1VOVFpsQkVXR1pMWm5SUlIyVk9RVTkyWjA5dlNsOHRkVWxFYzBOdmEwSllNRmxuSWl3aVpTSTZJa0ZSUVVJaUxDSnJkSGtpT2lKU1UwRWlMQ0p1SWpvaWF6Um5Sa2h0UW5NMGJVZHZiVmg0YkVkTVQzRXRkRk4xUWxkUUxWTnNRVWxQTkVodk5VUXhTRUZoWTAweGJUQkhiMk5NVHpSTlZVbGxiREZxUjJKMGJXeGFTRTVFYUhKaWVqRjFjbFpaVFV4VGRqUk5NVU5UZFdWVVN6ZEJTM0p3TmtOT1lraERjVmgyWWxKcGRHWlJPREZZYWpoQ2VVMHpSRWxhYkdVd2NIcFZlVFZLZFdoNk0yMVRZemh2YWtWMFZqSldRM1J0YzNWTWNqQXlSM05CYnpGMWMxRjJkblk1YldSV01XNVJSSEp3ZVhFeVdrVjRUMVV6YlRkck1IZEZkRTVzWkdGSFowMUlSbEV3WW5wU1YwYzJOVWMyU1VWeFIyOWlUMEZDUVdSblgwZzVVM1pHYTAxMFJqRkhaVGhaWVZoT05GZGtNRU42VFRSeU4zWmZkVU5pY1ZreGVISnpUVzVFUjFsaWJIaElXRWR1TFVOalpGTkJYMjlYTFhOb1YwRnZSekZ0WW1RMVgyZHBZbnBTVVRWWlUwZERZVlUyY1dkUFdWUk1NRUYzY2xvdFdHSjJjMUpWVVY5UFlXMUlXbEZpTVd0M0luMTlmUS5OWGk2TEluRW92VFBDc2hYTTNpMVdOYTNWSU5XUEZSd01MbUg4UWk4WTJVSHBOYkRBcC1zUjIyeGZHZS1LcnN1X3FjakR5MkYyR2Q3b3BmLUlGeURVYVRyS0dFRlhheFlNcVlOcXlXeEZ1TzBlVC1zcFJMSWJPTFRsZGU1bWdWTU1mUHdIakotNjNRM2hYQU12UGlwVlZITGpVQ2RjYlBQUUlKV1BBSlhRSVhEM1Z0N0xQX013ZWV5YktzMl9aRDUxZUd2dkZYRm1TTFpKdW1pREJFS21hOWRxVVBHTV9YaFE0aGpOOXRScDJCOTgxd1RkcjhwbEdveTFCMFhvbDlIOFM3ZThZXzNLUjFNd1VBRUY2b1RCLUtnTmpvTmRVblhvcUlwWG1OVnVfakFaeXI2N09pT3JlMHFHVW5IbDN0TG9mYTJkMF9jYkxKOGgwVUNZTmRyb2cifQ.",
         "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"
       },
       "StatusCode": 200,
-        "ResponseHeaders": {
-            "Content-Length": "645",
-            "Content-Type": "application/json; charset=utf-8",
-            "Date": "Fri, 23 Sep 2022 01:37:11 GMT",
-            "Repeatability-Result": "accepted",
-            "X-Azure-Ref": "0xw0tYwAAAAAptoU5aEyWRLTXXhMU\u002B2R9V1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-            "X-Cache": "CONFIG_NOCACHE",
-            "X-Microsoft-Skype-Chain-ID": "8ebaff0e-74fa-48e3-9270-ed2b06c1ac14",
-            "x-ms-client-request-id": "6ad93b5b2e97b5718fd05970b8c51054"
-        },
+      "ResponseHeaders": {
+        "Content-Length": "669",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Dec 2022 00:55:13 GMT",
+        "X-Azure-Ref": "08ZKOYwAAAAAnXzvGufvkSb1PgdnySTFdWVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Microsoft-Skype-Chain-ID": "70648e30-e4d9-45fd-9738-83936722e56d",
+        "x-ms-client-request-id": "21ad9046a6dfcbd4ea47b69bece24224"
+      },
       "ResponseBody": {
-        "callConnectionId": "411f0b00-7519-4a6c-8dde-fa89b3a6d38d",
-        "serverCallId": "aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEyLTAxLmNvbnYuc2t5cGUuY29tL2NvbnYvczVMaWk5V3Y2a21jMWRBTXc3M3JkQT9pPTE0JmU9NjM3OTk0NjE2MTc4NTU1OTA3",
+        "callConnectionId": "411f3500-5e2a-41c6-ac9f-b1c1da5d0f8d",
+        "serverCallId": "aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzd2UtMDEtc2RmLWFrcy5jb252LnNreXBlLmNvbS9jb252L1hhYzVrZjZWNDBDMVhBR2FtOEd5aGc/aT0xMC02MC0xNy0yOSZlPTYzODA1NTIzOTAyMzg2OTE5Mw==",
         "source": {
           "identifier": {
             "rawId": "Sanitized",
@@ -223,35 +216,35 @@
         ],
         "callConnectionState": "unknown",
         "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized",
-        "mediaSubscriptionId": "483f3cd8-a3f6-490e-84f0-64a505db0d2c"
+        "mediaSubscriptionId": "58e45ae4-eeb3-427d-bd77-a40a7886656c"
       }
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/callConnections/411f0b00-2ac9-4c9e-9cde-8f8e4651a037?api-version=2022-04-07-preview",
+      "RequestUri": "https://sanitized.skype.com/calling/callConnections/411f3500-14dd-4b9e-903d-41f47434751b?api-version=2023-01-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "c2f23b2f337806f0728160922ef57df1",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6010311e5e90dec314318d4e72c3865a",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 23 Sep 2022 01:37:15 GMT",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:15 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "647",
+        "Content-Length": "671",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Sep 2022 01:37:13 GMT",
-        "X-Azure-Ref": "0yg0tYwAAAADKO7SElJqxSbb1wNicVMXYV1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Tue, 06 Dec 2022 00:55:14 GMT",
+        "X-Azure-Ref": "085KOYwAAAAABXOaRD\u002B8fQIFZn3WT/Z7/WVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "8ebaff0e-74fa-48e3-9270-ed2b06c1ac14",
-        "x-ms-client-request-id": "c2f23b2f337806f0728160922ef57df1"
+        "X-Microsoft-Skype-Chain-ID": "70648e30-e4d9-45fd-9738-83936722e56d",
+        "x-ms-client-request-id": "6010311e5e90dec314318d4e72c3865a"
       },
       "ResponseBody": {
-        "callConnectionId": "411f0b00-2ac9-4c9e-9cde-8f8e4651a037",
-        "serverCallId": "aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEyLTAxLmNvbnYuc2t5cGUuY29tL2NvbnYvczVMaWk5V3Y2a21jMWRBTXc3M3JkQT9pPTE0JmU9NjM3OTk0NjE2MTc4NTU1OTA3",
+        "callConnectionId": "411f3500-14dd-4b9e-903d-41f47434751b",
+        "serverCallId": "aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzd2UtMDEtc2RmLWFrcy5jb252LnNreXBlLmNvbS9jb252L1hhYzVrZjZWNDBDMVhBR2FtOEd5aGc/aT0xMC02MC0xNy0yOSZlPTYzODA1NTIzOTAyMzg2OTE5Mw==",
         "source": {
           "identifier": {
             "rawId": "Sanitized",
@@ -272,26 +265,26 @@
         ],
         "callConnectionState": "connected",
         "callbackUri": "https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized",
-        "mediaSubscriptionId": "47068868-6f71-493f-833e-8c13258221df"
+        "mediaSubscriptionId": "9769d2fd-b21b-42ce-9e3f-82c42db2e3b5"
       }
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/recordings?api-version=2022-04-07-preview",
+      "RequestUri": "https://sanitized.skype.com/calling/recordings?api-version=2023-01-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "410",
+        "Content-Length": "434",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "7533583a2d4ed8869a1723e793ec851c",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8d34b1dba90475fd73880783c7c033cf",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 23 Sep 2022 01:37:15 GMT",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:15 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "callLocator": {
-          "serverCallId": "aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzZWEyLTAxLmNvbnYuc2t5cGUuY29tL2NvbnYvczVMaWk5V3Y2a21jMWRBTXc3M3JkQT9pPTE0JmU9NjM3OTk0NjE2MTc4NTU1OTA3",
+          "serverCallId": "aHR0cHM6Ly9hcGkuZmxpZ2h0cHJveHkuc2t5cGUuY29tL2FwaS92Mi9jcC9jb252LXVzd2UtMDEtc2RmLWFrcy5jb252LnNreXBlLmNvbS9jb252L1hhYzVrZjZWNDBDMVhBR2FtOEd5aGc/aT0xMC02MC0xNy0yOSZlPTYzODA1NTIzOTAyMzg2OTE5Mw==",
           "kind": "serverCallLocator"
         },
         "recordingStateCallbackUri": "https://sanitized.skype.com/api/servicebuscallback/events",
@@ -303,87 +296,86 @@
       "ResponseHeaders": {
         "Content-Length": "208",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Sep 2022 01:37:17 GMT",
-        "X-Azure-Ref": "0yg0tYwAAAABJNNBQ74CaSK4TUvuarO9RV1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Tue, 06 Dec 2022 00:55:16 GMT",
+        "X-Azure-Ref": "085KOYwAAAAD0x6MQMuH6QbXzw5p/0zlFWVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "cddd4f21-9727-4c4f-9ad7-18c3357d5c50",
-        "x-ms-client-request-id": "7533583a2d4ed8869a1723e793ec851c"
+        "X-Microsoft-Skype-Chain-ID": "1a9705ce-5031-4f95-bf2e-567525503d25",
+        "x-ms-client-request-id": "8d34b1dba90475fd73880783c7c033cf"
       },
       "ResponseBody": {
-        "recordingId": "eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MTFmMGIwMC0xNmViLTRmY2UtOTI2OC01MTNmNjFkODBkZWIiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiJmZTNhNmRkMi04YzQ1LTQwNDQtOWI1ZC0zMDI5Mjg1MmNmZDcifQ",
+        "recordingId": "eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MTFmMzUwMC1jNWM2LTQzYTctYTQ1Ny1mNmViNWYzODUyZmIiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3MDUwNjQ0Ni1hNzljLTQ2ZTAtYjMwNS1iNTcwZGQxMzg2MzQifQ",
         "recordingState": "inactive"
       }
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MTFmMGIwMC0xNmViLTRmY2UtOTI2OC01MTNmNjFkODBkZWIiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiJmZTNhNmRkMi04YzQ1LTQwNDQtOWI1ZC0zMDI5Mjg1MmNmZDcifQ?api-version=2022-04-07-preview",
+      "RequestUri": "https://sanitized.skype.com/calling/recordings/eyJQbGF0Zm9ybUVuZHBvaW50SWQiOiI0MTFmMzUwMC1jNWM2LTQzYTctYTQ1Ny1mNmViNWYzODUyZmIiLCJSZXNvdXJjZVNwZWNpZmljSWQiOiI3MDUwNjQ0Ni1hNzljLTQ2ZTAtYjMwNS1iNTcwZGQxMzg2MzQifQ?api-version=2023-01-15-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "75bfca494beb27dc4bd3f816cdde8699",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "96e4b1b088e8e7e0cccf0dad18855827",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 23 Sep 2022 01:37:19 GMT",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:18 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Date": "Fri, 23 Sep 2022 01:37:18 GMT",
-        "X-Azure-Ref": "0zg0tYwAAAADe6r32yg/KSpPhtrNFLIu2V1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "Date": "Tue, 06 Dec 2022 00:55:17 GMT",
+        "X-Azure-Ref": "09ZKOYwAAAACmXI9aRDDMRLe0e4cW66c3WVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Microsoft-Skype-Chain-ID": "8ebaff0e-74fa-48e3-9270-ed2b06c1ac14",
-        "x-ms-client-request-id": "75bfca494beb27dc4bd3f816cdde8699"
+        "X-Microsoft-Skype-Chain-ID": "70648e30-e4d9-45fd-9738-83936722e56d",
+        "x-ms-client-request-id": "96e4b1b088e8e7e0cccf0dad18855827"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/callConnections/411f0b00-2ac9-4c9e-9cde-8f8e4651a037:terminate?api-version=2022-04-07-preview",
+      "RequestUri": "https://sanitized.skype.com/calling/callConnections/411f3500-14dd-4b9e-903d-41f47434751b:terminate?api-version=2023-01-15-preview",
       "RequestMethod": "POST",
-        "RequestHeaders": {
-            "Authorization": "Sanitized",
-            "Content-Length": "0",
-            "Repeatability-First-Sent": "Mon, 19 Sep 2022 22:20:00 GMT",
-            "Repeatability-Request-ID": "fed6e917-f1df-4e21-b7de-c26d0947124b",
-            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-            "x-ms-client-request-id": "603667529a920205b419276110097285",
-            "x-ms-content-sha256": "Sanitized",
-            "x-ms-date": "Fri, 23 Sep 2022 01:37:19 GMT",
-            "x-ms-return-client-request-id": "true"
-        },
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3bc05cc1b5ad741f339bed08563f1654",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:18 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
       "RequestBody": null,
       "StatusCode": 204,
-        "ResponseHeaders": {
-            "Date": "Fri, 23 Sep 2022 01:37:18 GMT",
-            "Repeatability-Result": "accepted",
-            "X-Azure-Ref": "0zw0tYwAAAACqC477MGk2SIXsSjPE/yzaV1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
-            "X-Cache": "CONFIG_NOCACHE",
-            "X-Microsoft-Skype-Chain-ID": "8ebaff0e-74fa-48e3-9270-ed2b06c1ac14",
-            "x-ms-client-request-id": "603667529a920205b419276110097285"
-        },
+      "ResponseHeaders": {
+        "Date": "Tue, 06 Dec 2022 00:55:17 GMT",
+        "X-Azure-Ref": "09ZKOYwAAAABL\u002B4FmgN9GR756IBbVJEv1WVZSMzExMDAwMTE1MDI5ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Microsoft-Skype-Chain-ID": "70648e30-e4d9-45fd-9738-83936722e56d",
+        "x-ms-client-request-id": "3bc05cc1b5ad741f339bed08563f1654"
+      },
       "ResponseBody": null
     },
     {
       "RequestUri": "https://sanitized.skype.com/api/servicebuscallback/unsubscribe",
       "RequestMethod": "POST",
-        "RequestHeaders": {
-            "Accept": "application/json",
-            "Authorization": "Sanitized",
-            "Content-Length": "158",
-            "Content-Type": "application/json",
-            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220922.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.22000 )",
-            "X-FORWARDED-HOST": "Sanitized",
-            "x-ms-client-request-id": "644944fb0836ee067c0b2a7a35700abc",
-            "x-ms-content-sha256": "Sanitized",
-            "x-ms-date": "Fri, 23 Sep 2022 01:37:20 GMT",
-            "x-ms-return-client-request-id": "true"
-        },
-      "RequestBody": "[\u00228acs1bdaa2b9-9507-4542-bb64-a7b22c00a8d4_00000014-07df-5bfd-6a0b-343a0d000d168acs1bdaa2b9-9507-4542-bb64-a7b22c00a8d4_00000014-07df-5c93-6a0b-343a0d000d17\u0022]",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "158",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20221205.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "X-FORWARDED-HOST": "Sanitized",
+        "x-ms-client-request-id": "c19dbdfef0de5372d04cc0359c4f5cee",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 06 Dec 2022 00:55:19 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[\u00228acs1bdaa2b9-9507-4542-bb64-a7b22c00a8d4_00000015-84cf-979d-740a-113a0d0078a18acs1bdaa2b9-9507-4542-bb64-a7b22c00a8d4_00000015-84cf-9868-740a-113a0d0078a2\u0022]",
       "StatusCode": 200,
-        "ResponseHeaders": {
-            "Content-Length": "0",
-            "Date": "Fri, 23 Sep 2022 01:37:20 GMT",
-            "Server": "Kestrel"
-        },
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 06 Dec 2022 00:55:18 GMT",
+        "Server": "Kestrel"
+      },
       "ResponseBody": null
     }
   ],
@@ -391,7 +383,7 @@
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://acs-callautomationtestsupporter.communication.azure.com/;accesskey=Kg==",
     "DISPATCHER_ENDPOINT": "https://sanitized.skype.com",
     "PMA_Endpoint": null,
-    "RandomSeed": "628575197",
+    "RandomSeed": "497156571",
     "SERVICEBUS_STRING": "Endpoint=sb://acs-callautomationtestservicebus.servicebus.windows.net/;SharedAccessKeyName=Sanitized;SharedAccessKey=Kg=="
   }
 }

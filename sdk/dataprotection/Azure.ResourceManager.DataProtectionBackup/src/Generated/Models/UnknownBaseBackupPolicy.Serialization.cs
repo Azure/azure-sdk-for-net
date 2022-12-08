@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceTypes");
             writer.WriteStartArray();
-            foreach (var item in DatasourceTypes)
+            foreach (var item in DataSourceTypes)
             {
                 writer.WriteStringValue(item);
             }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         internal static UnknownBaseBackupPolicy DeserializeUnknownBaseBackupPolicy(JsonElement element)
         {
             IList<string> datasourceTypes = default;
-            string objectType = default;
+            string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasourceTypes"))

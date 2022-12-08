@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyWithDisableServiceLogs()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -68,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchWithErrorTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var documents = new List<string>
             {
@@ -103,7 +104,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchConvenienceTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -130,7 +131,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchConvenienceWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -162,7 +163,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -189,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task MultiLabelClassifyBatchWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -222,7 +223,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task MultiLabelClassifyWithMultipleActions()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -259,7 +260,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartMultiLabelClassify()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartMultiLabelClassifyAsync(s_multiLabelClassifyBatchDocuments, TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName);
 
             await PollUntilTimeout(operation);
@@ -273,7 +274,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartMultiLabelClassifyWithName()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartMultiLabelClassifyAsync(s_multiLabelClassifyBatchDocuments, TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName, new MultiLabelClassifyOptions
             {
                 DisplayName = "StartMultiLabelClassifyWithName",
@@ -288,6 +289,80 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateSummaryBatchResult(resultCollection);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task MultiLabelClassifyBatchConvenienceWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            MultiLabelClassifyOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            ClassifyDocumentOperation operation = await client.StartMultiLabelClassifyAsync(
+                s_multiLabelClassifyBatchConvenienceDocuments,
+                TestEnvironment.MultiClassificationProjectName,
+                TestEnvironment.MultiClassificationDeploymentName,
+                "auto",
+                options);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationMultiLabelClassifyWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            List<string> documents = s_multiLabelClassifyBatchConvenienceDocuments;
+            TextAnalyticsActions actions = new()
+            {
+                MultiLabelClassifyActions = new List<MultiLabelClassifyAction>()
+                {
+                    new MultiLabelClassifyAction(TestEnvironment.MultiClassificationProjectName, TestEnvironment.MultiClassificationDeploymentName)
+                },
+                DisplayName = "MultiLabelClassifyWithAutoDetectedLanguage",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<MultiLabelClassifyActionResult> actionResults = resultCollection.MultiLabelClassifyResults;
+            Assert.IsNotNull(actionResults);
+
+            ClassifyDocumentResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void MultiLabelClassifyBatchWithDefaultLanguageThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            MultiLabelClassifyOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
+                async () => await client.StartMultiLabelClassifyAsync(
+                s_multiLabelClassifyBatchConvenienceDocuments,
+                TestEnvironment.MultiClassificationProjectName,
+                TestEnvironment.MultiClassificationDeploymentName,
+                "auto",
+                options));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
         private void ValidateSummaryDocumentResult(ClassificationCategoryCollection classificationCollection)
         {
             Assert.IsNotNull(classificationCollection.Warnings);
@@ -300,7 +375,10 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateSummaryBatchResult(ClassifyDocumentResultCollection results, bool includeStatistics = false)
+        private void ValidateSummaryBatchResult(
+            ClassifyDocumentResultCollection results,
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.AreEqual(results.ProjectName, TestEnvironment.MultiClassificationProjectName);
             Assert.AreEqual(results.DeploymentName, TestEnvironment.MultiClassificationDeploymentName);
@@ -333,6 +411,21 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
+                }
+
+                if (isLanguageAutoDetected)
+                {
+                    Assert.IsNotNull(result.DetectedLanguage);
+                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
+                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
+                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
+                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
+                }
+                else
+                {
+                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateSummaryDocumentResult(result.ClassificationCategories);

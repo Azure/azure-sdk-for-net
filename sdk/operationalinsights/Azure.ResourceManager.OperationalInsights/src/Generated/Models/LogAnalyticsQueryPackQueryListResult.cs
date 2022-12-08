@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LogAnalyticsQueryPackQueryListResult. </summary>
         /// <param name="value"> List of Log Analytics QueryPack Query definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LogAnalyticsQueryPackQueryListResult(IEnumerable<LogAnalyticsQueryPackQueryData> value)
+        internal LogAnalyticsQueryPackQueryListResult(IEnumerable<LogAnalyticsQueryData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,14 +29,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LogAnalyticsQueryPackQueryListResult. </summary>
         /// <param name="value"> List of Log Analytics QueryPack Query definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Log Analytics QueryPack definitions if too many QueryPack-Queries where returned in the result set. </param>
-        internal LogAnalyticsQueryPackQueryListResult(IReadOnlyList<LogAnalyticsQueryPackQueryData> value, string nextLink)
+        internal LogAnalyticsQueryPackQueryListResult(IReadOnlyList<LogAnalyticsQueryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Log Analytics QueryPack Query definitions. </summary>
-        public IReadOnlyList<LogAnalyticsQueryPackQueryData> Value { get; }
+        public IReadOnlyList<LogAnalyticsQueryData> Value { get; }
         /// <summary> The URI to get the next set of Log Analytics QueryPack definitions if too many QueryPack-Queries where returned in the result set. </summary>
         public string NextLink { get; }
     }
