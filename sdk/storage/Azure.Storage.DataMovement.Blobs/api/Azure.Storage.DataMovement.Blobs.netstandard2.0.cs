@@ -20,22 +20,20 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class AppendBlobStorageResourceOptions
     {
         public AppendBlobStorageResourceOptions() { }
-        public Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
-    }
-    public partial class AppendBlobStorageResourceServiceCopyOptions
-    {
-        public AppendBlobStorageResourceServiceCopyOptions() { }
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions DestinationConditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public bool? LegalHold { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
+        public bool? ShouldSealDestination { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
-    }
-    public partial class AppendBlobStorageResourceUploadOptions
-    {
-        public AppendBlobStorageResourceUploadOptions() { }
-        public Azure.Storage.Blobs.Models.AppendBlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
     public partial class BlobDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
@@ -60,17 +58,9 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class BlobStorageResourceContainerOptions
     {
         public BlobStorageResourceContainerOptions() { }
-        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobTraits Traits { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
-    }
-    public partial class BlobStorageResourceDownloadOptions
-    {
-        public BlobStorageResourceDownloadOptions() { }
-        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
     }
     public partial class BlockBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
@@ -92,34 +82,20 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class BlockBlobStorageResourceOptions
     {
         public BlockBlobStorageResourceOptions() { }
-        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
-    }
-    public partial class BlockBlobStorageResourceServiceCopyOptions
-    {
-        public BlockBlobStorageResourceServiceCopyOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
+        public bool? CopySourceBlobProperties { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
         public bool? LegalHold { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-    }
-    public partial class BlockBlobStorageResourceUploadOptions
-    {
-        public BlockBlobStorageResourceUploadOptions() { }
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy ImmutabilityPolicy { get { throw null; } set { } }
-        public bool? LegalHold { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
     public partial class PageBlobStorageResource : Azure.Storage.DataMovement.StorageResource
     {
@@ -141,21 +117,19 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class PageBlobStorageResourceOptions
     {
         public PageBlobStorageResourceOptions() { }
-        public Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceServiceCopyOptions CopyOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceDownloadOptions DownloadOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceUploadOptions UploadOptions { get { throw null; } set { } }
-    }
-    public partial class PageBlobStorageResourceServiceCopyOptions
-    {
-        public PageBlobStorageResourceServiceCopyOptions() { }
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Models.TransferCopyMethod CopyMethod { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobCopySourceTagsMode? CopySourceTagsMode { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions DestinationConditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
+        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public bool? LegalHold { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
+        public long? SequenceNumber { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions SourceConditions { get { throw null; } set { } }
-    }
-    public partial class PageBlobStorageResourceUploadOptions
-    {
-        public PageBlobStorageResourceUploadOptions() { }
-        public Azure.Storage.Blobs.Models.PageBlobRequestConditions Conditions { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions TransferValidationOptions { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
 }

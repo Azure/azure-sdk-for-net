@@ -44,10 +44,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Returns the preferred method of how to perform service to service
         /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="AppendBlobStorageResourceServiceCopyOptions.CopyMethod"/> in
-        /// <see cref="AppendBlobStorageResourceOptions.CopyOptions"/>.
+        /// the options bag, see <see cref="AppendBlobStorageResourceOptions.CopyMethod"/>
         /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyOptions?.CopyMethod ?? TransferCopyMethod.SyncCopy;
+        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -114,10 +113,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                new BlobDownloadOptions()
-                {
-                    Range = new HttpRange(position, length)
-                },
+                _options.ToBlobDownloadOptions(new HttpRange(position, length)),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -159,19 +155,14 @@ namespace Azure.Storage.DataMovement.Blobs
             if (position == 0)
             {
                 await _blobClient.CreateAsync(
-                    new AppendBlobCreateOptions()
-                    {
-                        Conditions = conditions,
-                    }, cancellationToken).ConfigureAwait(false);
+                    _options.ToCreateOptions(overwrite),
+                    cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
                 await _blobClient.AppendBlockAsync(
                     content: stream,
-                    new AppendBlobAppendBlockOptions()
-                    {
-                        Conditions = conditions
-                    },
+                    options: _options.ToAppendBlockOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -200,13 +191,17 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await _blobClient.StartCopyFromUriAsync(
                     sourceResource.Uri,
+                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
                 // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
                 // TODO: subject to change as we scale to suppport resource types outside of blobs.
-                await _blobClient.SyncCopyFromUriAsync(sourceResource.Uri, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _blobClient.SyncCopyFromUriAsync(
+                    sourceResource.Uri,
+                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -238,27 +233,18 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
-                AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-                };
                 if (range.Offset == 0)
                 {
                     await _blobClient.CreateAsync(
-                        new AppendBlobCreateOptions()
-                        {
-                            Conditions = conditions,
-                        }, cancellationToken).ConfigureAwait(false);
+                        _options.ToCreateOptions(overwrite),
+                        cancellationToken).ConfigureAwait(false);
                 }
                 await _blobClient.AppendBlockFromUriAsync(
                 sourceResource.Uri,
-                options: new AppendBlobAppendBlockFromUriOptions()
-                {
-                    SourceRange = range,
-                    SourceAuthentication = options?.SourceAuthentication,
-                    //TODO: convert options to this options bag
-                },
+                options: _options.ToAppendBlockFromUriOptions(
+                    overwrite,
+                    range,
+                    options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
