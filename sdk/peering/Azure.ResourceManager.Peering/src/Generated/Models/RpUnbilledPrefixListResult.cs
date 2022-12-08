@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> The list of RP unbilled prefixes. </summary>
         public IReadOnlyList<RoutingPreferenceUnbilledPrefix> Value { get; }
+        
         /// <summary> The link to fetch the next page of RP unbilled prefixes. </summary>
         public string NextLink { get; }
     }

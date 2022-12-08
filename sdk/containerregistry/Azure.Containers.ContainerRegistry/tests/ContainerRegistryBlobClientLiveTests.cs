@@ -5,9 +5,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
@@ -17,6 +21,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public async Task Setup()
+        {
+            // Handle redirects in the Client pipeline and not in the test proxy.
+            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { AllowAutoRedirect = false } });
         }
 
         /// <summary>
@@ -516,6 +527,46 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Clean up
             await registryClient.DeleteRepositoryAsync(name);
+        }
+
+        [RecordedTest]
+        public async Task CanGetBlobLocation()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact");
+            var blob = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact", blob);
+            string digest = default;
+            using (var fs = File.OpenRead(path))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+                digest = uploadResult.Value.Digest;
+            }
+
+            // Act
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(client.Endpoint.ToString(), false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(client.RepositoryName, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+
+            var message = client.Pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Get;
+            message.Request.Uri = uri;
+            message.Request.Headers.Add("Accept", "application/octet-stream");
+            RedirectPolicy.SetAllowAutoRedirect(message, false);
+
+            await client.Pipeline.SendAsync(message, CancellationToken.None);
+            var response = message.Response;
+
+            // Assert
+            Assert.AreEqual(307, response.Status);
+            Assert.IsTrue(response.Headers.TryGetValue("Location", out string value));
+            Assert.DoesNotThrow(() => { Uri redirectUri = new(value); });
+
+            // Clean up
+            await client.DeleteBlobAsync(digest);
         }
 
         private async Task<UploadManifestResult> Push(ContainerRegistryBlobClient client)

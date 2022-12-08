@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,17 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.1.0 (2022-12-06)
+
+### Bugs Fixed
+
 - Renamed `ExpiresOn` to `ExpireOn`.
 
 ### Other Changes
+
+- Upgraded API version to 2022-09-01
 
 ## 1.0.0 (2022-09-08)
 

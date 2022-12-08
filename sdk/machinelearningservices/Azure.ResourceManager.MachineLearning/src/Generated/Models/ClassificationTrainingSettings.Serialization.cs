@@ -51,30 +51,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTrainingAlgorithms");
                 }
             }
-            if (Optional.IsDefined(EnableDnnTraining))
+            if (Optional.IsDefined(IsDnnTrainingEnabled))
             {
                 writer.WritePropertyName("enableDnnTraining");
-                writer.WriteBooleanValue(EnableDnnTraining.Value);
+                writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
-            if (Optional.IsDefined(EnableModelExplainability))
+            if (Optional.IsDefined(IsModelExplainabilityEnabled))
             {
                 writer.WritePropertyName("enableModelExplainability");
-                writer.WriteBooleanValue(EnableModelExplainability.Value);
+                writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
-            if (Optional.IsDefined(EnableOnnxCompatibleModels))
+            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels");
-                writer.WriteBooleanValue(EnableOnnxCompatibleModels.Value);
+                writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
-            if (Optional.IsDefined(EnableStackEnsemble))
+            if (Optional.IsDefined(IsStackEnsembleEnabled))
             {
                 writer.WritePropertyName("enableStackEnsemble");
-                writer.WriteBooleanValue(EnableStackEnsemble.Value);
+                writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
-            if (Optional.IsDefined(EnableVoteEnsemble))
+            if (Optional.IsDefined(IsVoteEnsembleEnabled))
             {
                 writer.WritePropertyName("enableVoteEnsemble");
-                writer.WriteBooleanValue(EnableVoteEnsemble.Value);
+                writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
             if (Optional.IsDefined(EnsembleModelDownloadTimeout))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> enableStackEnsemble = default;
             Optional<bool> enableVoteEnsemble = default;
             Optional<TimeSpan> ensembleModelDownloadTimeout = default;
-            Optional<StackEnsembleSettings> stackEnsembleSettings = default;
+            Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedTrainingAlgorithms"))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = StackEnsembleSettings.DeserializeStackEnsembleSettings(property.Value);
+                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value);
                     continue;
                 }
             }

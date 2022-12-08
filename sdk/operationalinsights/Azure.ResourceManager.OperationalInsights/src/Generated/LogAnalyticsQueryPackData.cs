@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="queryPackId"> The unique ID of your application. This field cannot be changed. </param>
-        /// <param name="timeCreated"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
-        /// <param name="timeModified"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="createdOn"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="modifiedOn"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
         /// <param name="provisioningState"> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
-        internal LogAnalyticsQueryPackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string queryPackId, DateTimeOffset? timeCreated, DateTimeOffset? timeModified, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal LogAnalyticsQueryPackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? queryPackId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             QueryPackId = queryPackId;
-            TimeCreated = timeCreated;
-            TimeModified = timeModified;
+            CreatedOn = createdOn;
+            ModifiedOn = modifiedOn;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> The unique ID of your application. This field cannot be changed. </summary>
-        public string QueryPackId { get; }
+        public Guid? QueryPackId { get; }
         /// <summary> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </summary>
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </summary>
-        public DateTimeOffset? TimeModified { get; }
+        public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </summary>
         public string ProvisioningState { get; }
     }

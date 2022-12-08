@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     internal partial class TextSourceInternal : IUtf8JsonSerializable
     {
@@ -21,11 +21,6 @@ namespace Azure.Communication.CallAutomation.Models
             {
                 writer.WritePropertyName("sourceLocale");
                 writer.WriteStringValue(SourceLocale);
-            }
-            if (Optional.IsDefined(TargetLocale))
-            {
-                writer.WritePropertyName("targetLocale");
-                writer.WriteStringValue(TargetLocale);
             }
             if (Optional.IsDefined(VoiceGender))
             {
