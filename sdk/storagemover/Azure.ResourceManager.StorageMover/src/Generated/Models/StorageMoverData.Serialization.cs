@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageMover
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageMover
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="location"> The location. </param>
         /// <param name="description"> A description for the Storage Mover. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageMoverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> A description for the Storage Mover. </summary>
         public string Description { get; set; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public StorageMoverProvisioningState? ProvisioningState { get; }
     }
 }

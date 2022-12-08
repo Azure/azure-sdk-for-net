@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The AgentPropertiesErrorDetails. </summary>
-    public partial class AgentPropertiesErrorDetails
+    /// <summary> The StorageMoverAgentPropertiesErrorDetails. </summary>
+    public partial class StorageMoverAgentPropertiesErrorDetails
     {
-        /// <summary> Initializes a new instance of AgentPropertiesErrorDetails. </summary>
-        internal AgentPropertiesErrorDetails()
+        /// <summary> Initializes a new instance of StorageMoverAgentPropertiesErrorDetails. </summary>
+        internal StorageMoverAgentPropertiesErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPropertiesErrorDetails. </summary>
+        /// <summary> Initializes a new instance of StorageMoverAgentPropertiesErrorDetails. </summary>
         /// <param name="code"> Error code reported by Agent. </param>
         /// <param name="message"> Expanded description of reported error code. </param>
-        internal AgentPropertiesErrorDetails(string code, string message)
+        internal StorageMoverAgentPropertiesErrorDetails(string code, string message)
         {
             Code = code;
             Message = message;

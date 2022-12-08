@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.StorageMover
             Optional<string> agentVersion = default;
             string arcResourceId = default;
             string arcVmUuid = default;
-            Optional<AgentStatus> agentStatus = default;
+            Optional<StorageMoverAgentStatus> agentStatus = default;
             Optional<DateTimeOffset> lastStatusUpdate = default;
             Optional<string> localIPAddress = default;
             Optional<long> memoryInMB = default;
             Optional<long> numberOfCores = default;
             Optional<long> uptimeInSeconds = default;
-            Optional<AgentPropertiesErrorDetails> errorDetails = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<StorageMoverAgentPropertiesErrorDetails> errorDetails = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageMover
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            agentStatus = new AgentStatus(property0.Value.GetString());
+                            agentStatus = new StorageMoverAgentStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastStatusUpdate"))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.StorageMover
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            errorDetails = AgentPropertiesErrorDetails.DeserializeAgentPropertiesErrorDetails(property0.Value);
+                            errorDetails = StorageMoverAgentPropertiesErrorDetails.DeserializeStorageMoverAgentPropertiesErrorDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StorageMover
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

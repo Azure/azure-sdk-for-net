@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AgentPropertiesErrorDetails
+    public partial class StorageMoverAgentPropertiesErrorDetails
     {
-        internal static AgentPropertiesErrorDetails DeserializeAgentPropertiesErrorDetails(JsonElement element)
+        internal static StorageMoverAgentPropertiesErrorDetails DeserializeStorageMoverAgentPropertiesErrorDetails(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     continue;
                 }
             }
-            return new AgentPropertiesErrorDetails(code.Value, message.Value);
+            return new StorageMoverAgentPropertiesErrorDetails(code.Value, message.Value);
         }
     }
 }

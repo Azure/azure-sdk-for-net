@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> A description for the Project. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal StorageMoverProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> A description for the Project. </summary>
         public string Description { get; set; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public StorageMoverProvisioningState? ProvisioningState { get; }
     }
 }

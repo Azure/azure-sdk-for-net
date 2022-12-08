@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
         /// <param name="nfsVersion"> The NFS protocol version. </param>
         /// <param name="export"> The directory being exported from the server. </param>
-        internal NfsMountEndpointProperties(EndpointType endpointType, string description, ProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export) : base(endpointType, description, provisioningState)
+        internal NfsMountEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export) : base(endpointType, description, provisioningState)
         {
             Host = host;
             NfsVersion = nfsVersion;

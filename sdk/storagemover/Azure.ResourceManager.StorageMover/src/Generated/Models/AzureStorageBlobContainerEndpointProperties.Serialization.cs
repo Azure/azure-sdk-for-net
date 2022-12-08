@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             string blobContainerName = default;
             EndpointType endpointType = default;
             Optional<string> description = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountResourceId"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new StorageMoverProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

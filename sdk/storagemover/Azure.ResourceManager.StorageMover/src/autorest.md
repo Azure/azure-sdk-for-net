@@ -22,7 +22,7 @@ rename-mapping:
   AgentStatus: StorageMoverAgentStatus
   CopyMode: StorageMoverCopyMode
   ProvisioningState: StorageMoverProvisioningState
-  JobDefinition.agentResourceId: -|arm-id
+  # JobDefinitionData.agentResourceId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'

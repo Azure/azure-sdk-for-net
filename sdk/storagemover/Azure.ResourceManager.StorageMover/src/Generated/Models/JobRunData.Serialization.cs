@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageMover
             Optional<BinaryData> targetProperties = default;
             Optional<BinaryData> jobDefinitionProperties = default;
             Optional<JobRunError> error = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.StorageMover
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

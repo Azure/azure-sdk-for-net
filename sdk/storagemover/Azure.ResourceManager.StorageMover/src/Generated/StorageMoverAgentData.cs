@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
         /// <param name="errorDetails"></param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, AgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, AgentPropertiesErrorDetails errorDetails, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AgentVersion = agentVersion;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> The VM UUID of the Hybrid Compute resource for the Agent. </summary>
         public string ArcVmUuid { get; set; }
         /// <summary> The Agent status. </summary>
-        public AgentStatus? AgentStatus { get; }
+        public StorageMoverAgentStatus? AgentStatus { get; }
         /// <summary> The last updated time of the Agent status. </summary>
         public DateTimeOffset? LastStatusUpdate { get; }
         /// <summary> Local IP address reported by the Agent. </summary>
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Uptime of the Agent in seconds. </summary>
         public long? UptimeInSeconds { get; }
         /// <summary> Gets the error details. </summary>
-        public AgentPropertiesErrorDetails ErrorDetails { get; }
+        public StorageMoverAgentPropertiesErrorDetails ErrorDetails { get; }
         /// <summary> The provisioning state of this resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public StorageMoverProvisioningState? ProvisioningState { get; }
     }
 }

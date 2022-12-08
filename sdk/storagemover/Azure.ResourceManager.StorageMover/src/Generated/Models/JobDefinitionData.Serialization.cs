@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageMover
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            CopyMode copyMode = default;
+            StorageMoverCopyMode copyMode = default;
             string sourceName = default;
             Optional<string> sourceResourceId = default;
             Optional<string> sourceSubpath = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageMover
             Optional<JobRunStatus> latestJobRunStatus = default;
             Optional<string> agentName = default;
             Optional<string> agentResourceId = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("copyMode"))
                         {
-                            copyMode = new CopyMode(property0.Value.GetString());
+                            copyMode = new StorageMoverCopyMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceName"))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StorageMover
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
