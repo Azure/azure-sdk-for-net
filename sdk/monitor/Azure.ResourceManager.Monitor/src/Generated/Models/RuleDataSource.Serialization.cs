@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceUri");
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LegacyResourceId))
@@ -50,40 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element);
                 }
             }
-            string odataType = default;
-            Optional<string> resourceId = default;
-            Optional<string> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceId"))
-                {
-                    resourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("legacyResourceId"))
-                {
-                    legacyResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceLocation"))
-                {
-                    resourceLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metricNamespace"))
-                {
-                    metricNamespace = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new RuleDataSource(odataType, resourceId.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value);
+            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element);
         }
     }
 }

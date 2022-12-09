@@ -16,19 +16,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static PartitionMetric DeserializePartitionMetric(JsonElement element)
         {
-            Optional<string> partitionId = default;
+            Optional<Guid> partitionId = default;
             Optional<string> partitionKeyRangeId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> timeGrain = default;
-            Optional<UnitType> unit = default;
-            Optional<MetricName> name = default;
-            Optional<IReadOnlyList<MetricValue>> metricValues = default;
+            Optional<CosmosDBMetricUnitType> unit = default;
+            Optional<CosmosDBMetricName> name = default;
+            Optional<IReadOnlyList<CosmosDBMetricValue>> metricValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionId"))
                 {
-                    partitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    partitionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("partitionKeyRangeId"))
@@ -68,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UnitType(property.Value.GetString());
+                    unit = new CosmosDBMetricUnitType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -78,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = MetricName.DeserializeMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricValues"))
@@ -88,16 +93,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricValue> array = new List<MetricValue>();
+                    List<CosmosDBMetricValue> array = new List<CosmosDBMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricValue.DeserializeMetricValue(item));
+                        array.Add(CosmosDBMetricValue.DeserializeCosmosDBMetricValue(item));
                     }
                     metricValues = array;
                     continue;
                 }
             }
-            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), partitionId.Value, partitionKeyRangeId.Value);
+            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
         }
     }
 }

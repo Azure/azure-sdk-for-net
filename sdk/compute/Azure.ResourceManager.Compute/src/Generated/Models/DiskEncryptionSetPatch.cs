@@ -23,12 +23,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
         public DiskEncryptionSetType? EncryptionType { get; set; }
         /// <summary> Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots. </summary>
         public KeyForDiskEncryptionSet ActiveKey { get; set; }
         /// <summary> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </summary>
         public bool? RotationToLatestKeyVersionEnabled { get; set; }
+        /// <summary> Multi-tenant application client id to access key vault in a different tenant. Setting the value to &apos;None&apos; will clear the property. </summary>
+        public string FederatedClientId { get; set; }
     }
 }

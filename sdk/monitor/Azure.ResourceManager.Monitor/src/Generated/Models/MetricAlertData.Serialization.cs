@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("severity");
             writer.WriteNumberValue(Severity);
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("scopes");
             writer.WriteStartArray();
             foreach (var item in Scopes)
@@ -54,12 +57,12 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType");
-                writer.WriteStringValue(TargetResourceType);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion");
-                writer.WriteStringValue(TargetResourceRegion);
+                writer.WriteStringValue(TargetResourceRegion.Value);
             }
             if (Criteria != null)
             {
@@ -70,10 +73,10 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WriteNull("criteria");
             }
-            if (Optional.IsDefined(AutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate");
-                writer.WriteBooleanValue(AutoMitigate.Value);
+                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -91,20 +94,20 @@ namespace Azure.ResourceManager.Monitor
 
         internal static MetricAlertData DeserializeMetricAlertData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> description = default;
             int severity = default;
             bool enabled = default;
             IList<string> scopes = default;
             TimeSpan evaluationFrequency = default;
             TimeSpan windowSize = default;
-            Optional<string> targetResourceType = default;
-            Optional<string> targetResourceRegion = default;
+            Optional<ResourceType> targetResourceType = default;
+            Optional<AzureLocation> targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
             Optional<bool> autoMitigate = default;
             Optional<IList<MetricAlertAction>> actions = default;
@@ -114,6 +117,11 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -124,7 +132,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -139,12 +147,17 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -193,12 +206,22 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("targetResourceType"))
                         {
-                            targetResourceType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceType = new ResourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetResourceRegion"))
                         {
-                            targetResourceRegion = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceRegion = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("criteria"))
@@ -260,7 +283,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new MetricAlertData(id, name, type, systemData, tags, location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, targetResourceType.Value, targetResourceRegion.Value, criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated));
+            return new MetricAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated));
         }
     }
 }

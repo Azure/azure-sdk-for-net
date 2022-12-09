@@ -29,10 +29,12 @@ namespace Azure.ResourceManager.FluidRelay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<Guid> frsTenantId = default;
             Optional<Guid> frsContainerId = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<FluidRelayProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastAccessTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -47,12 +49,17 @@ namespace Azure.ResourceManager.FluidRelay
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -91,14 +98,34 @@ namespace Azure.ResourceManager.FluidRelay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new FluidRelayProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("creationTime"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            creationTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("lastAccessTime"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastAccessTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FluidRelayContainerData(id, name, type, systemData, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState));
+            return new FluidRelayContainerData(id, name, type, systemData.Value, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState), Optional.ToNullable(creationTime), Optional.ToNullable(lastAccessTime));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SignalRServiceExtension.Tests.Config
             services.AddAzureClientsCore();
             var factory = services.BuildServiceProvider().GetRequiredService<AzureComponentFactory>();
             var config = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            Assert.False(config.GetSection("eastus").TryGetNamedEndpointFromIdentity(factory, out _));
+            Assert.False(config.GetSection("eastus").TryGetEndpointFromIdentity(factory, out _));
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace SignalRServiceExtension.Tests.Config
             var uri = "http://signalr.service.uri.com:441";
             config["eastus:serviceUri"] = uri;
 
-            Assert.True(config.GetSection("eastus").TryGetNamedEndpointFromIdentity(factory, out var endpoint));
+            Assert.True(config.GetSection("eastus").TryGetEndpointFromIdentity(factory, out var endpoint));
             Assert.Equal("eastus", endpoint.Name);
             Assert.Equal(uri, endpoint.Endpoint);
             Assert.IsType<DefaultAzureCredential>((endpoint.AccessKey as AadAccessKey).TokenCredential);
@@ -60,7 +60,7 @@ namespace SignalRServiceExtension.Tests.Config
             config["eastus:serverEndpoint"] = "https://serverEndpoint.com";
             config["eastus:clientEndpoint"] = "https://clientEndpoint.com";
 
-            Assert.True(config.GetSection("eastus").TryGetNamedEndpointFromIdentity(factory, out var endpoint));
+            Assert.True(config.GetSection("eastus").TryGetEndpointFromIdentity(factory, out var endpoint));
             Assert.Equal("eastus", endpoint.Name);
             Assert.Equal(uri, endpoint.Endpoint);
             Assert.Equal(new Uri("https://serverEndpoint.com"), endpoint.ServerEndpoint);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Update. </summary>
-    public partial class VirtualMachinePatch : UpdateResource
+    public partial class VirtualMachinePatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of VirtualMachinePatch. </summary>
         public VirtualMachinePatch()
@@ -28,15 +29,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The virtual machine zones. </summary>
         public IList<string> Zones { get; }
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public HardwareProfile HardwareProfile { get; set; }
+        public VirtualMachineHardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public StorageProfile StorageProfile { get; set; }
+        public VirtualMachineStorageProfile StorageProfile { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OSProfile { get; set; }
+        public VirtualMachineOSProfile OSProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public VirtualMachineNetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
         public SecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </summary>
@@ -96,9 +97,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the priority for the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
-        public VirtualMachinePriorityTypes? Priority { get; set; }
+        public VirtualMachinePriorityType? Priority { get; set; }
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2017-10-30-preview. </summary>
-        public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
+        public VirtualMachineEvictionPolicyType? EvictionPolicy { get; set; }
         /// <summary> Specifies the billing related details of a Azure Spot virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
         internal BillingProfile BillingProfile { get; set; }
         /// <summary> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
         internal ApplicationProfile ApplicationProfile { get; set; }
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VmGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {
@@ -195,5 +196,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return ApplicationProfile.GalleryApplications;
             }
         }
+
+        /// <summary> Specifies the time at which the Virtual Machine resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        public DateTimeOffset? TimeCreated { get; }
     }
 }

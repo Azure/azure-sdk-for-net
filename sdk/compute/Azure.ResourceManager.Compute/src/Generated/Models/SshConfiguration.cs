@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SshConfiguration. </summary>
         public SshConfiguration()
         {
-            PublicKeys = new ChangeTrackingList<SshPublicKeyInfo>();
+            PublicKeys = new ChangeTrackingList<SshPublicKeyConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SshConfiguration. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
-        internal SshConfiguration(IList<SshPublicKeyInfo> publicKeys)
+        internal SshConfiguration(IList<SshPublicKeyConfiguration> publicKeys)
         {
             PublicKeys = publicKeys;
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKeyInfo> PublicKeys { get; }
+        public IList<SshPublicKeyConfiguration> PublicKeys { get; }
     }
 }

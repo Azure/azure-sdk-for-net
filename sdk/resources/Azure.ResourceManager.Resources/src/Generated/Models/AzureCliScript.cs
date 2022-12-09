@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azCliVersion"/> is null. </exception>
         public AzureCliScript(AzureLocation location, TimeSpan retentionInterval, string azCliVersion) : base(location)
         {
-            if (azCliVersion == null)
-            {
-                throw new ArgumentNullException(nameof(azCliVersion));
-            }
+            Argument.AssertNotNull(azCliVersion, nameof(azCliVersion));
 
             SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
@@ -101,7 +98,36 @@ namespace Azure.ResourceManager.Resources.Models
         public ScriptProvisioningState? ProvisioningState { get; }
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
-        /// <summary> List of script outputs. </summary>
+        /// <summary>
+        /// List of script outputs.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
         public Uri PrimaryScriptUri { get; set; }

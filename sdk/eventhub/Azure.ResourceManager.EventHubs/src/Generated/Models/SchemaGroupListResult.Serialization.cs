@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static SchemaGroupListResult DeserializeSchemaGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SchemaGroupData>> value = default;
+            Optional<IReadOnlyList<EventHubsSchemaGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SchemaGroupData> array = new List<SchemaGroupData>();
+                    List<EventHubsSchemaGroupData> array = new List<EventHubsSchemaGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SchemaGroupData.DeserializeSchemaGroupData(item));
+                        array.Add(EventHubsSchemaGroupData.DeserializeEventHubsSchemaGroupData(item));
                     }
                     value = array;
                     continue;

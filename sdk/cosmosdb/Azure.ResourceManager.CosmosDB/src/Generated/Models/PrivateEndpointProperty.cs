@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Private endpoint which the connection belongs to. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of PrivateEndpointProperty. </summary>
         /// <param name="id"> Resource id of the private endpoint. </param>
-        internal PrivateEndpointProperty(string id)
+        internal PrivateEndpointProperty(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> Resource id of the private endpoint. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

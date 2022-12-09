@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("severity");
                 writer.WriteNumberValue(Severity.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType");
-                writer.WriteStringValue(TargetResourceType);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion");
-                writer.WriteStringValue(TargetResourceRegion);
+                writer.WriteStringValue(TargetResourceRegion.Value);
             }
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria");
                 writer.WriteObjectValue(Criteria);
             }
-            if (Optional.IsDefined(AutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate");
-                writer.WriteBooleanValue(AutoMitigate.Value);
+                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Actions))
             {

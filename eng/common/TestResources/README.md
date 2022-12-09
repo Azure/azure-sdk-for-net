@@ -49,7 +49,7 @@ ${env:KEYVAULT_CLIENT_ID} = '<<secret>>'
 ${env:KEYVAULT_CLIENT_SECRET} = '<<secret>>'
 ${env:KEYVAULT_SUBSCRIPTION_ID} = 'YOUR SUBSCRIPTION ID'
 ${env:KEYVAULT_RESOURCE_GROUP} = 'rg-myusername'
-${env:KEYVAULT_LOCATION} = 'westus2'
+${env:KEYVAULT_LOCATION} = 'westus'
 ${env:KEYVAULT_SKU} = 'premium'
 ${env:AZURE_KEYVAULT_URL} = '<<url>>'
 ```

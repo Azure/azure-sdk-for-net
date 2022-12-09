@@ -60,18 +60,20 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
+        /// <param name="data"> The parameters to provide to create a table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual async Task<ArmOperation<TableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<TableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tableName, TableData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _tableClientDiagnostics.CreateScope("TableCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _tableRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken).ConfigureAwait(false);
+                var response = await _tableRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tableName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new StorageArmOperation<TableResource>(Response.FromValue(new TableResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -91,18 +93,20 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
+        /// <param name="data"> The parameters to provide to create a table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual ArmOperation<TableResource> CreateOrUpdate(WaitUntil waitUntil, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<TableResource> CreateOrUpdate(WaitUntil waitUntil, string tableName, TableData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _tableClientDiagnostics.CreateScope("TableCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _tableRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tableName, cancellationToken);
+                var response = _tableRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, tableName, data, cancellationToken);
                 var operation = new StorageArmOperation<TableResource>(Response.FromValue(new TableResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

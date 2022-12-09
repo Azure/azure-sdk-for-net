@@ -11,7 +11,8 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         public override WebPubSubClientCertificate Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var element = JsonDocument.ParseValue(ref reader).RootElement;
+            using var jsonDocument = JsonDocument.ParseValue(ref reader);
+            var element = jsonDocument.RootElement;
 
             return new WebPubSubClientCertificate(
                 element.ReadString(WebPubSubClientCertificate.ThumbprintProperty));

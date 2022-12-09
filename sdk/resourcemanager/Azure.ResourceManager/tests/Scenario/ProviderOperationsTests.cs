@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Unregister()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.insights");
+            Response<ResourceProviderResource> response = await providerCollection.GetAsync("Microsoft.HealthBot");
             var result = response.Value;
             var unregister = await result.UnregisterAsync();
             Assert.IsNotNull(unregister);

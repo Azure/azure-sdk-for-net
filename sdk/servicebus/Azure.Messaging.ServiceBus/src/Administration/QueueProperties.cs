@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private string _userMetadata;
 
         /// <summary>
-        /// Initializes a new instance of QueueProperties class with the specified relative name.
+        /// Initializes a new instance of <see cref="QueueProperties"/> with the specified relative name.
         /// </summary>
         /// <param name="name">Name of the queue relative to the namespace base address.</param>
         internal QueueProperties(string name)
@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of QueueProperties from the provided options.
+        /// Initializes a new instance of <see cref="QueueProperties"/> from the provided options.
         /// </summary>
         /// <param name="options">Options used to create the properties instance.</param>
         internal QueueProperties(CreateQueueOptions options)
@@ -105,7 +105,8 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// This indicates whether the queue supports the concept of session. Sessionful-messages follow FIFO ordering.
         /// </summary>
         /// <remarks>
-        /// If true, the receiver can only receive messages using <see cref="ServiceBusSessionReceiver"/>.
+        /// If true, the <see cref="ServiceBusSessionProcessor"/> or <see cref="ServiceBusSessionReceiver"/> must be used to receive
+        /// messages from the queue.
         /// Defaults to false.
         /// </remarks>
         public bool RequiresSession { get; internal set; }
@@ -275,7 +276,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public bool EnablePartitioning { get; internal set; }
 
         /// <summary>
-        /// Custom metadata that user can associate with the description.
+        /// Custom metadata that user can associate with the queue.
         /// </summary>
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata
@@ -319,8 +320,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         public long? MaxMessageSizeInKilobytes { get; set; }
 
         /// <summary>
-        /// List of properties that were retrieved using GetQueue but are not understood by this version of client is stored here.
-        /// The list will be sent back when an already retrieved QueueDescription will be used in UpdateQueue call.
+        /// List of properties that were retrieved using <see cref="ServiceBusAdministrationClient.GetQueueAsync"/> but are not understood by
+        /// this version of client is stored here. The list will be sent back when an already retrieved <see cref="QueueProperties"/> is used in an
+        /// <see cref="ServiceBusAdministrationClient.UpdateQueueAsync"/> call.
         /// </summary>
         internal List<XElement> UnknownProperties { get; set; }
 
@@ -342,29 +344,29 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
         public bool Equals(QueueProperties other)
         {
-            if (other is QueueProperties otherDescription
-                && Name.Equals(otherDescription.Name, StringComparison.OrdinalIgnoreCase)
-                && AutoDeleteOnIdle.Equals(otherDescription.AutoDeleteOnIdle)
-                && DefaultMessageTimeToLive.Equals(otherDescription.DefaultMessageTimeToLive)
-                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherDescription.DuplicateDetectionHistoryTimeWindow))
-                && EnableBatchedOperations == otherDescription.EnableBatchedOperations
-                && DeadLetteringOnMessageExpiration == otherDescription.DeadLetteringOnMessageExpiration
-                && EnablePartitioning == otherDescription.EnablePartitioning
-                && string.Equals(ForwardDeadLetteredMessagesTo, otherDescription.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(ForwardTo, otherDescription.ForwardTo, StringComparison.OrdinalIgnoreCase)
-                && LockDuration.Equals(otherDescription.LockDuration)
-                && MaxDeliveryCount == otherDescription.MaxDeliveryCount
-                && MaxSizeInMegabytes == otherDescription.MaxSizeInMegabytes
-                && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
-                && RequiresSession.Equals(otherDescription.RequiresSession)
-                && Status.Equals(otherDescription.Status)
+            if (other is QueueProperties otherProperties
+                && Name.Equals(otherProperties.Name, StringComparison.OrdinalIgnoreCase)
+                && AutoDeleteOnIdle.Equals(otherProperties.AutoDeleteOnIdle)
+                && DefaultMessageTimeToLive.Equals(otherProperties.DefaultMessageTimeToLive)
+                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(otherProperties.DuplicateDetectionHistoryTimeWindow))
+                && EnableBatchedOperations == otherProperties.EnableBatchedOperations
+                && DeadLetteringOnMessageExpiration == otherProperties.DeadLetteringOnMessageExpiration
+                && EnablePartitioning == otherProperties.EnablePartitioning
+                && string.Equals(ForwardDeadLetteredMessagesTo, otherProperties.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ForwardTo, otherProperties.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                && LockDuration.Equals(otherProperties.LockDuration)
+                && MaxDeliveryCount == otherProperties.MaxDeliveryCount
+                && MaxSizeInMegabytes == otherProperties.MaxSizeInMegabytes
+                && RequiresDuplicateDetection.Equals(otherProperties.RequiresDuplicateDetection)
+                && RequiresSession.Equals(otherProperties.RequiresSession)
+                && Status.Equals(otherProperties.Status)
                 && SupportOrdering.Equals(other.SupportOrdering)
                 && EnableExpress == other.EnableExpress
                 && IsAnonymousAccessible == other.IsAnonymousAccessible
-                && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
-                    || AuthorizationRules == null && otherDescription.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules))
+                && string.Equals(_userMetadata, otherProperties._userMetadata, StringComparison.OrdinalIgnoreCase)
+                && (AuthorizationRules != null && otherProperties.AuthorizationRules != null
+                    || AuthorizationRules == null && otherProperties.AuthorizationRules == null)
+                && (AuthorizationRules == null || AuthorizationRules.Equals(otherProperties.AuthorizationRules))
                 && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes))
             {
                 return true;

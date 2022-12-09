@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Readme_AuthClient
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.Core;
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             // Code omitted for brevity
 
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            #endregion Snippet:Readme_AuthClient
         }
 
         [Test]

@@ -7,21 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> ACL for a private endpoint. </summary>
-    public partial class PrivateEndpointAcl : NetworkAcl
+    public partial class PrivateEndpointAcl : PublicNetworkAcls
     {
         /// <summary> Initializes a new instance of PrivateEndpointAcl. </summary>
         /// <param name="name"> Name of the private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PrivateEndpointAcl(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

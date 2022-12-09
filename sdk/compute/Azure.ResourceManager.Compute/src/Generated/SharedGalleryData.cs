@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the SharedGallery data model. </summary>
-    public partial class SharedGalleryData : PirSharedGalleryResource
+    public partial class SharedGalleryData : PirSharedGalleryResourceData
     {
         /// <summary> Initializes a new instance of SharedGalleryData. </summary>
         internal SharedGalleryData()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        internal SharedGalleryData(string name, string location, string uniqueId) : base(name, location, uniqueId)
+        internal SharedGalleryData(string name, AzureLocation? location, string uniqueId) : base(name, location, uniqueId)
         {
         }
 

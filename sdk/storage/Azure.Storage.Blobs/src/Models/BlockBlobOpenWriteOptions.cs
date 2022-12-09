@@ -49,12 +49,12 @@ namespace Azure.Storage.Blobs.Models
         public Tags Tags { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
 
-        ///// <summary>
-        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        ///// hashing on uploads.
-        ///// </summary>
-        // TODO #27253
-        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        /// <summary>
+        /// Optional override settings for this client's <see cref="BlobClientOptions.TransferValidation"/> settings.
+        /// This operation does not allow <see cref="UploadTransferValidationOptions.PrecalculatedChecksum"/>
+        /// to be set.
+        /// </summary>
+        public UploadTransferValidationOptions TransferValidation { get; set; }
 
         internal string OperationName { get; set; }
     }

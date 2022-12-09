@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -16,9 +17,11 @@ namespace Azure.ResourceManager.Compute
         internal static SharedGalleryImageVersionData DeserializeSharedGalleryImageVersionData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<bool> excludeFromLatest = default;
+            Optional<SharedGalleryImageVersionStorageProfile> storageProfile = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,7 +32,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -61,6 +69,26 @@ namespace Azure.ResourceManager.Compute
                             endOfLifeDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("excludeFromLatest"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            excludeFromLatest = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageProfile = SharedGalleryImageVersionStorageProfile.DeserializeSharedGalleryImageVersionStorageProfile(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -82,7 +110,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageVersionData(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate));
+            return new SharedGalleryImageVersionData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(excludeFromLatest), storageProfile.Value);
         }
     }
 }

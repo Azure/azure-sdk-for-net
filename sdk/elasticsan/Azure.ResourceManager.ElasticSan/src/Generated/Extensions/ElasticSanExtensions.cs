@@ -19,43 +19,6 @@ namespace Azure.ResourceManager.ElasticSan
     /// <summary> A class to add extension methods to Azure.ResourceManager.ElasticSan. </summary>
     public static partial class ElasticSanExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// List all the available Skus in the region and information related to them
-        /// Request Path: /providers/Microsoft.ElasticSan/skus
-        /// Operation Id: Skus_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceTypeSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceTypeSku> GetSkusAsync(this TenantResource tenantResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetSkusAsync(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the available Skus in the region and information related to them
-        /// Request Path: /providers/Microsoft.ElasticSan/skus
-        /// Operation Id: Skus_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceTypeSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceTypeSku> GetSkus(this TenantResource tenantResource, string filter = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetSkus(filter, cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>
@@ -63,6 +26,34 @@ namespace Azure.ResourceManager.ElasticSan
                 return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
             }
             );
+        }
+
+        /// <summary>
+        /// List all the available Skus in the region and information related to them
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetSkusAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the available Skus in the region and information related to them
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ElasticSanSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetSkus(filter, cancellationToken);
         }
 
         /// <summary>

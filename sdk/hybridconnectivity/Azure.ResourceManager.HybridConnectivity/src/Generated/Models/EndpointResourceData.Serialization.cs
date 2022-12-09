@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<EndpointType> type0 = default;
             Optional<string> resourceId = default;
             Optional<string> provisioningState = default;
@@ -96,12 +96,17 @@ namespace Azure.ResourceManager.HybridConnectivity
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -199,7 +204,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     continue;
                 }
             }
-            return new EndpointResourceData(id, name, type, systemData, Optional.ToNullable(type0), resourceId.Value, provisioningState.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new EndpointResourceData(id, name, type, systemData.Value, Optional.ToNullable(type0), resourceId.Value, provisioningState.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }

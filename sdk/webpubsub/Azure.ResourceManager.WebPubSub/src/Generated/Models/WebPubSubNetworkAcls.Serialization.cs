@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         internal static WebPubSubNetworkAcls DeserializeWebPubSubNetworkAcls(JsonElement element)
         {
             Optional<AclAction> defaultAction = default;
-            Optional<NetworkAcl> publicNetwork = default;
+            Optional<PublicNetworkAcls> publicNetwork = default;
             Optional<IList<PrivateEndpointAcl>> privateEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetwork = NetworkAcl.DeserializeNetworkAcl(property.Value);
+                    publicNetwork = PublicNetworkAcls.DeserializePublicNetworkAcls(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateEndpoints"))

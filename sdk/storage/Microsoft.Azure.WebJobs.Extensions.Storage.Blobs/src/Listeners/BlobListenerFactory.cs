@@ -113,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             SharedBlobQueueListener sharedBlobQueueListener = _sharedContextProvider.GetOrCreateInstance<SharedBlobQueueListener>(
                 new SharedBlobQueueListenerFactory(_hostQueueServiceClient, blobTriggerQueueWriter.SharedQueueWatcher, blobTriggerQueueWriter.QueueClient,
                      _blobsOptions, _exceptionHandler, _loggerFactory, sharedBlobListener?.BlobWritterWatcher, _functionDescriptor, _blobTriggerSource, _concurrencyManager));
-            var queueListener = new BlobListener(sharedBlobQueueListener);
+            var queueListener = new BlobListener(sharedBlobQueueListener, _container, _input, _loggerFactory);
 
             // the client to use for the poison queue
             // by default this should target the same storage account
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 // want a single instance of the blob poll/scan logic to be running
                 // across host instances
                 var singletonBlobListener = _singletonManager.CreateHostSingletonListener(
-                    new BlobListener(sharedBlobListener), SingletonBlobListenerScopeId);
+                    new BlobListener(sharedBlobListener, _container, _input, _loggerFactory), SingletonBlobListenerScopeId);
                 _sharedContextProvider.SetValue(SingletonBlobListenerScopeId, true);
 
                 return new CompositeListener(singletonBlobListener, queueListener);

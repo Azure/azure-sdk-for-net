@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>This is the client library for the Question Answering service, a cloud-based Natural Language Processing (NLP) service that allows you to create a natural conversational layer over your data. It is used to find the most appropriate answer for any input from your custom knowledge base (KB) of information.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Language.QuestionAnswering client library</AssemblyTitle>
-    <Version>1.1.0-beta.2</Version>
+    <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure AI Language Question Answering QnA Maker</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>

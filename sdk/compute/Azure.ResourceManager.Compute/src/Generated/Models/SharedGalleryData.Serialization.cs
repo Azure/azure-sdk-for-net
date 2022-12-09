@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute
         internal static SharedGalleryData DeserializeSharedGalleryData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identifier"))
@@ -47,7 +52,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryData(name.Value, location.Value, uniqueId.Value);
+            return new SharedGalleryData(name.Value, Optional.ToNullable(location), uniqueId.Value);
         }
     }
 }

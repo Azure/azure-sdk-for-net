@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetConnectionSharedKey API service call. </summary>
-    public partial class ConnectionSharedKey : SubResource
+    public partial class ConnectionSharedKey : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
         /// <param name="value"> The virtual network connection shared key value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionSharedKey(string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }
@@ -28,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="value"> The virtual network connection shared key value. </param>
-        internal ConnectionSharedKey(string id, string value) : base(id)
+        internal ConnectionSharedKey(ResourceIdentifier id, string value) : base(id)
         {
             Value = value;
         }

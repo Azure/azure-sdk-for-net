@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sourceDatabaseId");
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate");
-                writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
+                writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("catalogCollation");
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql
     public partial class SubscriptionLongTermRetentionBackupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionLongTermRetentionBackupResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}";
             return new ResourceIdentifier(resourceId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionLongTermRetentionBackupResource(Client, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.DeleteAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateDeleteRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Delete(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Delete(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlArmOperation(_subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateDeleteRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -194,19 +194,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: LongTermRetentionBackups_Copy
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> The parameters needed for long term retention copy request. </param>
+        /// <param name="content"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<ArmOperation<LongTermRetentionBackupOperationResult>> CopyAsync(WaitUntil waitUntil, CopyLongTermRetentionBackupOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<LongTermRetentionBackupOperationResult>> CopyAsync(WaitUntil waitUntil, CopyLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.Copy");
             scope.Start();
             try
             {
-                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CopyAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateCopyRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CopyAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateCopyRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -224,19 +224,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: LongTermRetentionBackups_Copy
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> The parameters needed for long term retention copy request. </param>
+        /// <param name="content"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation<LongTermRetentionBackupOperationResult> Copy(WaitUntil waitUntil, CopyLongTermRetentionBackupOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<LongTermRetentionBackupOperationResult> Copy(WaitUntil waitUntil, CopyLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.Copy");
             scope.Start();
             try
             {
-                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Copy(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
-                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateCopyRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Copy(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateCopyRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -254,19 +254,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: LongTermRetentionBackups_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> The requested backup resource state. </param>
+        /// <param name="content"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<ArmOperation<LongTermRetentionBackupOperationResult>> UpdateAsync(WaitUntil waitUntil, UpdateLongTermRetentionBackupOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<LongTermRetentionBackupOperationResult>> UpdateAsync(WaitUntil waitUntil, UpdateLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.Update");
             scope.Start();
             try
             {
-                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.UpdateAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = await _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.UpdateAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateUpdateRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: LongTermRetentionBackups_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> The requested backup resource state. </param>
+        /// <param name="content"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation<LongTermRetentionBackupOperationResult> Update(WaitUntil waitUntil, UpdateLongTermRetentionBackupOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<LongTermRetentionBackupOperationResult> Update(WaitUntil waitUntil, UpdateLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.Update");
             scope.Start();
             try
             {
-                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Update(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options, cancellationToken);
-                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options).Request, response, OperationFinalStateVia.Location);
+                var response = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.Update(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new SqlArmOperation<LongTermRetentionBackupOperationResult>(new LongTermRetentionBackupOperationResultOperationSource(), _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics, Pipeline, _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient.CreateUpdateRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

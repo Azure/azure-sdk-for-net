@@ -12,7 +12,6 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 //using Sku = Azure.ResourceManager.Storage.Models.Sku;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        PublicIPAddress = new SubResource() { Id = nic1publicIp.Id }, Subnet = new SubResource() { Id = getSubnetResponse.Value.Id }
+                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id }, Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Basic, Tier = VirtualNetworkGatewaySkuTier.Basic }

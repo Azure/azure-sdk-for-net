@@ -1,16 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
-using KeyType = Azure.ResourceManager.EventHubs.Models.KeyType;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using KeyType = Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType;
+using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -27,25 +29,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             _eventHubCollection = eventHubNamespace.GetEventHubs();
-        }
-
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubNamespaceResource eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-                }
-                _resourceGroup = null;
-            }
         }
 
         [Test]
@@ -73,21 +59,25 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("exceed 8s")]
         public async Task CreateEventhubWithParameter()
         {
             //prepare a storage account
             string accountName = Recording.GenerateAssetName("storage");
-            StorageSku sku = new StorageSku("Standard_LRS");
-            var storageAccountCreateParameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.StorageV2, "eastus2")
+
+            GenericResourceData input = new GenericResourceData(AzureLocation.EastUS2)
             {
-                AccessTier = AccessTier.Hot
+                Sku = new ResourcesSku
+                {
+                    Name = "Standard_LRS"
+                },
+                Kind = "StorageV2",
+                Properties = BinaryData.FromObjectAsJson(new JsonObject()
+                {
+                    {"accessTier", "Hot"}
+                })
             };
-            StorageAccountResource account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageAccountCreateParameters)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            ResourceIdentifier storageAccountId = _resourceGroup.Id.AppendProviderResource("Microsoft.Storage", "storageAccounts", accountName);
+            GenericResource account = (await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountId, input)).Value;
 
             //create eventhub
             string eventHubName = Recording.GenerateAssetName("eventhub");
@@ -95,7 +85,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 MessageRetentionInDays = 4,
                 PartitionCount = 4,
-                Status = EntityStatus.Active,
+                Status = EventHubEntityStatus.Active,
                 CaptureDescription = new CaptureDescription()
                 {
                     Enabled = true,
@@ -107,7 +97,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                         Name = "EventHubArchive.AzureBlockBlob",
                         BlobContainer = "container",
                         ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-                        StorageAccountResourceId = account.Id.ToString()
+                        StorageAccountResourceId = new ResourceIdentifier(account.Id.ToString())
                     }
                 }
             };
@@ -167,9 +157,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create an authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             EventHubAuthorizationRuleCollection ruleCollection = eventHub.GetEventHubAuthorizationRules();
-            AuthorizationRuleData parameter = new AuthorizationRuleData()
+            EventHubsAuthorizationRuleData parameter = new EventHubsAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
@@ -197,7 +187,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.True(isContainAuthorizationRuleName);
 
             //update authorization rule
-            parameter.Rights.Add(AccessRights.Manage);
+            parameter.Rights.Add(EventHubsAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
@@ -222,20 +212,20 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            AuthorizationRuleData parameter = new AuthorizationRuleData()
+            EventHubsAuthorizationRuleData parameter = new EventHubsAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
             EventHubAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
-            AccessKeys keys1 = await authorizationRule.GetKeysAsync();
+            EventHubsAccessKeys keys1 = await authorizationRule.GetKeysAsync();
             Assert.NotNull(keys1);
             Assert.NotNull(keys1.PrimaryConnectionString);
             Assert.NotNull(keys1.SecondaryConnectionString);
 
-            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.PrimaryKey));
+            EventHubsAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(KeyType.PrimaryKey));
 
             //the recordings are sanitized therefore cannot be compared
             if (Mode != RecordedTestMode.Playback)
@@ -244,11 +234,36 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
             }
 
-            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.SecondaryKey));
+            EventHubsAccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(KeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
                 Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+            }
+
+            var updatePrimaryKey = GenerateRandomKey();
+            EventHubsAccessKeys currentKeys = keys3;
+
+            EventHubsAccessKeys keys4 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.PrimaryKey)
+            {
+                Key = updatePrimaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
+                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+            }
+
+            currentKeys = keys4;
+            var updateSecondaryKey = GenerateRandomKey();
+            EventHubsAccessKeys keys5 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.SecondaryKey)
+            {
+                Key = updateSecondaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
+                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
             }
         }
     }

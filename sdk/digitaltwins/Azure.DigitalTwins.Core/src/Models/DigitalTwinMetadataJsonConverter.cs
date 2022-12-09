@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core
                 {
                     metadata.PropertyMetadata[propertyName] = JsonSerializer.Deserialize<DigitalTwinPropertyMetadata>(ref reader, options);
                 }
-                else
+                else if (propertyName != DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)
                 {
                     // Unexpected
                     throw new JsonException();
@@ -61,6 +61,7 @@ namespace Azure.DigitalTwins.Core
         {
             writer.WriteStartObject();
             writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataModel, value.ModelId);
+
             foreach (KeyValuePair<string, DigitalTwinPropertyMetadata> p in value.PropertyMetadata)
             {
                 writer.WritePropertyName(p.Key);

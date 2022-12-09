@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> sourceAddresses = default;
             Optional<IList<string>> destinationAddresses = default;
             Optional<IList<string>> destinationPorts = default;
-            Optional<IList<string>> sourceIpGroups = default;
-            Optional<IList<string>> destinationIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
+            Optional<IList<string>> destinationIPGroups = default;
             Optional<IList<string>> destinationFqdns = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("destinationIpGroups"))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    destinationIpGroups = array;
+                    destinationIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("destinationFqdns"))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(sourceIpGroups), Optional.ToList(destinationIpGroups), Optional.ToList(destinationFqdns));
+            return new NetworkRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups), Optional.ToList(destinationFqdns));
         }
     }
 }

@@ -90,6 +90,7 @@ namespace Azure.Core.Pipeline
             SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
             HttpResponseMessage responseMessage;
             Stream? contentStream = null;
+            message.ClearResponse();
             try
             {
 #if NET5_0_OR_GREATER
@@ -207,25 +208,61 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
         {
+#if NET6_0_OR_GREATER
+            if (headers.NonValidated.TryGetValues(name, out HeaderStringValues values) ||
+                content is not null && content.Headers.NonValidated.TryGetValues(name, out values))
+            {
+                value = JoinHeaderValues(values);
+                return true;
+            }
+#else
             if (TryGetHeader(headers, content, name, out IEnumerable<string>? values))
             {
                 value = JoinHeaderValues(values);
                 return true;
             }
-
+#endif
             value = null;
             return false;
         }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
+#if NET6_0_OR_GREATER
+            if (headers.NonValidated.TryGetValues(name, out HeaderStringValues headerStringValues) ||
+                content != null &&
+                content.Headers.NonValidated.TryGetValues(name, out headerStringValues))
+            {
+                values = headerStringValues;
+                return true;
+            }
+
+            values = null;
+            return false;
+#else
             return headers.TryGetValues(name, out values) ||
                    content != null &&
                    content.Headers.TryGetValues(name, out values);
+#endif
+
         }
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
         {
+#if NET6_0_OR_GREATER
+            foreach (var (key, value) in headers.NonValidated)
+            {
+                yield return new HttpHeader(key, JoinHeaderValues(value));
+            }
+
+            if (content is not null)
+            {
+                foreach (var (key, value) in content.Headers.NonValidated)
+                {
+                    yield return new HttpHeader(key, JoinHeaderValues(value));
+                }
+            }
+#else
             foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
             {
                 yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
@@ -238,28 +275,43 @@ namespace Azure.Core.Pipeline
                     yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
                 }
             }
+#endif
+
         }
 
         internal static bool RemoveHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Remove throws on invalid header name so use TryGet here to check
+#if NET6_0_OR_GREATER
+            if (headers.NonValidated.Contains(name) && headers.Remove(name))
+            {
+                return true;
+            }
+
+            return content is not null && content.Headers.NonValidated.Contains(name) && content.Headers.Remove(name);
+#else
             if (headers.TryGetValues(name, out _) && headers.Remove(name))
             {
                 return true;
             }
 
             return content?.Headers.TryGetValues(name, out _) == true && content.Headers.Remove(name);
+#endif
         }
 
         internal static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Contains throws on invalid header name so use TryGet here
+#if NET6_0_OR_GREATER
+            return headers.NonValidated.Contains(name) || content is not null && content.Headers.NonValidated.Contains(name);
+#else
             if (headers.TryGetValues(name, out _))
             {
                 return true;
             }
 
             return content?.Headers.TryGetValues(name, out _) == true;
+#endif
         }
 
         internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
@@ -272,11 +324,22 @@ namespace Azure.Core.Pipeline
                 }
             }
         }
-
+#if NET6_0_OR_GREATER
+        private static string JoinHeaderValues(HeaderStringValues values)
+        {
+            return values.Count switch
+            {
+                0 => string.Empty,
+                1 => values.ToString(),
+                _ => string.Join(",", values)
+            };
+        }
+#else
         private static string JoinHeaderValues(IEnumerable<string> values)
         {
             return string.Join(",", values);
         }
+#endif
 
         private sealed class PipelineRequest : Request
         {
@@ -558,18 +621,25 @@ namespace Azure.Core.Pipeline
                 return httpHandler;
             }
 
+#pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
             // ServerCertificateCustomValidationCallback
             if (options.ServerCertificateCustomValidationCallback != null)
             {
                 httpHandler.SslOptions.RemoteCertificateValidationCallback = (_, certificate, x509Chain, sslPolicyErrors) =>
-#pragma warning disable CA1416 // 'X509Certificate2' is unsupported on 'browser'
                     options.ServerCertificateCustomValidationCallback(
                         new ServerCertificateCustomValidationArgs(
                             certificate is { } ? new X509Certificate2(certificate) : null,
                             x509Chain,
                             sslPolicyErrors));
-#pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             }
+            // Set ClientCertificates
+             foreach (var cert in options.ClientCertificates)
+            {
+               httpHandler.SslOptions ??= new System.Net.Security.SslClientAuthenticationOptions();
+               httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
+               httpHandler.SslOptions.ClientCertificates!.Add(cert);
+            }
+#pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
         }
 #endif
@@ -584,12 +654,16 @@ namespace Azure.Core.Pipeline
             // ServerCertificateCustomValidationCallback
             if (options.ServerCertificateCustomValidationCallback != null)
             {
-                httpHandler.ServerCertificateCustomValidationCallback =
-                    (_, certificate2, x509Chain, sslPolicyErrors) =>
-                    {
-                        return options.ServerCertificateCustomValidationCallback(
-                            new ServerCertificateCustomValidationArgs(certificate2, x509Chain, sslPolicyErrors));
-                    };
+                httpHandler.ServerCertificateCustomValidationCallback = (_, certificate2, x509Chain, sslPolicyErrors) =>
+                {
+                    return options.ServerCertificateCustomValidationCallback(
+                        new ServerCertificateCustomValidationArgs(certificate2, x509Chain, sslPolicyErrors));
+                };
+            }
+            // Set ClientCertificates
+            foreach (var cert in options.ClientCertificates)
+            {
+               httpHandler.ClientCertificates.Add(cert);
             }
             return httpHandler;
         }

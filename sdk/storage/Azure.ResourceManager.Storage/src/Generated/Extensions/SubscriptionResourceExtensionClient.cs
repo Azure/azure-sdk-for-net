@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(StorageAccountCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageAccountNameAvailability");
             scope.Start();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckStorageAccountNameAvailability");
             scope.Start();
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageUsage> GetUsagesByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<StorageUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location of the Azure Storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageUsage> GetUsagesByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<StorageUsage> FirstPageFunc(int? pageSizeHint)
             {

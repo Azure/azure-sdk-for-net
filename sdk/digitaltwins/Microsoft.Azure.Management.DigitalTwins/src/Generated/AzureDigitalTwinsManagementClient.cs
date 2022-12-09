@@ -100,6 +100,11 @@ namespace Microsoft.Azure.Management.DigitalTwins
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
+        /// Gets the ITimeSeriesDatabaseConnectionsOperations.
+        /// </summary>
+        public virtual ITimeSeriesDatabaseConnectionsOperations TimeSeriesDatabaseConnections { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AzureDigitalTwinsManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -345,8 +350,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
             Operations = new Operations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            TimeSeriesDatabaseConnections = new TimeSeriesDatabaseConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-12-01";
+            ApiVersion = "2022-05-31";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -378,6 +384,8 @@ namespace Microsoft.Azure.Management.DigitalTwins
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DigitalTwinsEndpointResourceProperties>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DigitalTwinsEndpointResourceProperties>("endpointType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TimeSeriesDatabaseConnectionProperties>("connectionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TimeSeriesDatabaseConnectionProperties>("connectionType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

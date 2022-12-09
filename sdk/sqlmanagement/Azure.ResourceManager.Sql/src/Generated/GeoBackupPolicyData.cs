@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> Backup policy location. </param>
         /// <param name="state"> The state of the geo backup policy. </param>
         /// <param name="storageType"> The storage type of the geo backup policy. </param>
-        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, GeoBackupPolicyState state, string storageType) : base(id, name, resourceType, systemData)
+        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, GeoBackupPolicyState state, string storageType) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> Backup policy location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The state of the geo backup policy. </summary>
         public GeoBackupPolicyState State { get; set; }
         /// <summary> The storage type of the geo backup policy. </summary>

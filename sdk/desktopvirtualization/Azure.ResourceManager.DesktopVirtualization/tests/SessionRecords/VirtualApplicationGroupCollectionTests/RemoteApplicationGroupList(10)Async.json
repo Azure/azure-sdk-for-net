@@ -1,0 +1,2574 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0944672b3654d24ea5d26eb074b2f8ea-ac593b0095f3d544-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3d66c2bf76cbb31c2ac6652db947fc18",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "387",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "af95260a-8695-4bc4-a090-234c8145e8f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11783",
+        "x-ms-request-id": "af95260a-8695-4bc4-a090-234c8145e8f8",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185106Z:af95260a-8695-4bc4-a090-234c8145e8f8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [],
+        "subscriptionId": "292d7caa-a878-4de8-b774-689097666272",
+        "tenantId": "01884692-6d96-44fa-8c58-11b4e90fef19",
+        "displayName": "Microsoft Azure",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "CSP_2015-05-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8f29a013e7def24b930cfb91a4b4be49-efe09704e127a746-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e0cd3c6845b95d85ada1dbfd2308843b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "22c1803a-9cd3-4cad-b8d3-98b289b142d7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11782",
+        "x-ms-request-id": "22c1803a-9cd3-4cad-b8d3-98b289b142d7",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185106Z:22c1803a-9cd3-4cad-b8d3-98b289b142d7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG",
+        "name": "azsdkRG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "brazilsouth",
+        "tags": {
+          "ServiceDirectory": "desktopvirtualization",
+          "Creator": "sampa",
+          "DeleteAfter": "2022-05-22T20:49:28.1719085Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/RemoteApplicationGroupListHP?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "143",
+        "Content-Type": "application/json",
+        "traceparent": "00-6e9140e2913d894f86db30de625f0652-763a6e44d3a6b949-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8fce912ef4505b2c140dfd9607834135",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolType": "Pooled",
+          "loadBalancerType": "BreadthFirst",
+          "preferredAppGroupType": "Desktop"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1261",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:08 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "0884b0e6-7df8-49df-9d69-23959b13714c",
+        "x-ms-correlation-request-id": "4fd9c0ff-a8e2-41a8-863f-804c6eab6452",
+        "x-ms-lamport-ts": "11181",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vaG9zdFBvb2xzL1JlbW90ZUFwcGxpY2F0aW9uR3JvdXBMaXN0SFA=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1127",
+        "x-ms-request-id": "8fce912e-f450-5b2c-140d-fd9607834135",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185108Z:4fd9c0ff-a8e2-41a8-863f-804c6eab6452",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListHP",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+        "type": "Microsoft.DesktopVirtualization/hostpools",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": null,
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:07.99Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:07.99Z"
+        },
+        "properties": {
+          "friendlyName": null,
+          "description": null,
+          "hostPoolType": "Pooled",
+          "personalDesktopAssignmentType": "Automatic",
+          "applicationGroupReferences": [],
+          "customRdpProperty": "",
+          "maxSessionLimit": 999999,
+          "loadBalancerType": "BreadthFirst",
+          "validationEnvironment": true,
+          "ring": 0,
+          "registrationInfo": {
+            "expirationTime": "0001-01-01T00:00:00",
+            "token": "",
+            "registrationTokenOperation": "None"
+          },
+          "vmTemplate": null,
+          "preferredAppGroupType": "Desktop",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "startVMOnConnect": false,
+          "ssoadfsAuthority": null,
+          "ssoClientId": null,
+          "ssoClientSecretKeyVaultPath": null,
+          "ssoSecretType": "SharedKey",
+          "objectId": "6b66f65f-d3a7-478a-9007-6e6c07da2e82"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG0?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-b1d70e8621787d478c013b577be33452-cbc412c08f35b74d-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4cebc3cc56067a8d3d09902a9b1e9021",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:10 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG0",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "c90a7ed8-c49c-4f69-ba18-cc1aab5c3a6a",
+        "x-ms-correlation-request-id": "8953e9cf-a6a1-4ac8-9bea-2ee92cdd3954",
+        "x-ms-lamport-ts": "11189",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzA=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1126",
+        "x-ms-request-id": "4cebc3cc-5606-7a8d-3d09-902a9b1e9021",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185110Z:8953e9cf-a6a1-4ac8-9bea-2ee92cdd3954",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG0",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG0",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:09.64Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:09.64Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "1a0765ec-107e-4b1d-b400-e4001b2d411b"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG1?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-023d252c57fffd499aaa5189461ba66e-bc35752544540d48-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "28ff29416c7974c71071ccab47ef5629",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:16 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "f7a4c49a-8ea6-4ce3-b6fa-830a4c47e24c",
+        "x-ms-correlation-request-id": "32b4369d-1efa-4b44-8ad9-03ae4cc2aee7",
+        "x-ms-lamport-ts": "11207",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzE=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "28ff2941-6c79-74c7-1071-ccab47ef5629",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185116Z:32b4369d-1efa-4b44-8ad9-03ae4cc2aee7",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG1",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG1",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.00Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.00Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "525c35f2-6dad-460b-b9dd-0888f321aab2"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG7?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-adfb0b6cc5e8094ea068cb05ccd8f1d3-b2654f7f8340f84d-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b4e32d67c6b33ab3c1830a1ccb5e0d53",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:16 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG7",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "9b7d4f0e-0fd4-4591-95ca-866f31ffefbf",
+        "x-ms-correlation-request-id": "0be9d71c-c139-4c28-addb-5c26bbcff15c",
+        "x-ms-lamport-ts": "11209",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzc=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "b4e32d67-c6b3-3ab3-c183-0a1ccb5e0d53",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185116Z:0be9d71c-c139-4c28-addb-5c26bbcff15c",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG7",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG7",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.08Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.08Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "0a84166b-bee1-4f4d-b9eb-fe6abad2d906"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG8?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-503ed992d0440043b65ed481af65a9d4-7341b8d0a041ce42-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "160304d912ebe5d8cde1954f8e475453",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:16 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG8",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "8106d5ee-be4a-4162-b342-585307fd17df",
+        "x-ms-correlation-request-id": "5cf74a1c-1a51-40d9-ba88-55c8a9d13f9c",
+        "x-ms-lamport-ts": "11211",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzg=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "160304d9-12eb-e5d8-cde1-954f8e475453",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185116Z:5cf74a1c-1a51-40d9-ba88-55c8a9d13f9c",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG8",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG8",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.21Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.21Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "82a7e318-0fcc-4b42-9081-f91ec0cc79a8"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG2?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-fede8743d259b74684156c73a62a766d-6bc1240d7e2bcb4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6030a65f381dd735035352476401c0f6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:16 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG2",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "80a539be-380d-4e01-bb1d-789095c1c0f9",
+        "x-ms-correlation-request-id": "7b31c405-94ad-448e-a468-6b7fbd6d9795",
+        "x-ms-lamport-ts": "11201",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzI=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "6030a65f-381d-d735-0353-52476401c0f6",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185116Z:7b31c405-94ad-448e-a468-6b7fbd6d9795",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG2",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG2",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:14.84Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:14.84Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "6d86013d-7308-4cbb-a8c0-53199ba0ec0b"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG5?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-091852afdf9fd3428e2b85d5ee179055-3e40e0027fdddb45-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6c2ed6b1789a47a4ead064a6fba04d21",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:16 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG5",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "d98fa0dc-ab14-485c-91dc-18f380113d43",
+        "x-ms-correlation-request-id": "5abc9967-bdd1-4014-a277-b2f8583e34ec",
+        "x-ms-lamport-ts": "11203",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzU=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "6c2ed6b1-789a-47a4-ead0-64a6fba04d21",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185117Z:5abc9967-bdd1-4014-a277-b2f8583e34ec",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG5",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG5",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:14.91Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:14.91Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "2239d98d-eb73-49d6-b1a7-5db5ae5f6383"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG6?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-be047f589110ad4fae318afe68a6b1ec-c677310b78f73a4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "fd940421cb364c08d64be95df396447b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:16 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG6",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "59c88319-b8cf-472f-9904-47b77290830a",
+        "x-ms-correlation-request-id": "c8176164-ca2e-4e21-80ea-a61f01afa5d7",
+        "x-ms-lamport-ts": "11213",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzY=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "fd940421-cb36-4c08-d64b-e95df396447b",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185117Z:c8176164-ca2e-4e21-80ea-a61f01afa5d7",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG6",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG6",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.30Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.30Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "fd104f6f-e8f4-4371-aece-c25ef4cf4c56"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG9?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-bb5e7acd46a76c4d9658ddf26cfc1731-4ca492eb2db81647-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ce3ee88c98bc5b6d51593cb2c1eb8178",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:17 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG9",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "f8781628-55b9-42bc-af51-9f0735e8fe8e",
+        "x-ms-correlation-request-id": "63fbf84e-acb2-418c-a4e8-3d21389b6cfd",
+        "x-ms-lamport-ts": "11218",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzk=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "ce3ee88c-98bc-5b6d-5159-3cb2c1eb8178",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185117Z:63fbf84e-acb2-418c-a4e8-3d21389b6cfd",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG9",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG9",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.72Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.72Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "3fbd1ee3-107b-4c91-973c-1e8fa7928db6"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG3?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-6aff9f5064a9544599f276cb097de9b7-7e859fba4e378f48-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "dd54db7d18845fbbfb773c948ae2324d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:17 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG3",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "3d0a0bb4-0b8c-4756-a5e7-2a1070efe118",
+        "x-ms-correlation-request-id": "cf09a769-781e-45c3-9957-18b12b52b006",
+        "x-ms-lamport-ts": "11221",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzM=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "dd54db7d-1884-5fbb-fb77-3c948ae2324d",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185117Z:cf09a769-781e-45c3-9957-18b12b52b006",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG3",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG3",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.81Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.81Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "25c07671-b67d-48d7-a236-5ddba873cf75"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG4?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "262",
+        "Content-Type": "application/json",
+        "traceparent": "00-24c4553e30dd4444be28a9abdf1c42ab-2a2d6a07706cb04f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f4cb66b230ed0904f32725251a800f0e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "applicationGroupType": "RemoteApp"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:17 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG4",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "c74ef1d4-985e-46c6-a7c7-ef78c2a1bfa2",
+        "x-ms-correlation-request-id": "9837514e-4715-4818-b6b9-31086a62edf5",
+        "x-ms-lamport-ts": "11223",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzQ=",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "f4cb66b2-30ed-0904-f327-25251a800f0e",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185118Z:9837514e-4715-4818-b6b9-31086a62edf5",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG4",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG4",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:16.24Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:16.24Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "2ddbd205-9ffc-4365-a8b9-fb9bc6dc2500"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-357b10ce4366724884010d782575058a-0f47adef9dd3f544-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ee83963d2e92558f54fde6d13063ac7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "10147",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "9118de1e-4f75-4392-aa44-1c9c653fbd4e",
+        "x-ms-correlation-request-id": "4e86d8c2-6137-4359-bdf6-872ff7d16630",
+        "x-ms-lamport-ts": "11232",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkc=",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "ee83963d-2e92-558f-54fd-e6d13063ac7a",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185118Z:4e86d8c2-6137-4359-bdf6-872ff7d16630",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "RemoteApplicationGroupListAG0",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG0",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:09.64Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:09.64Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "1a0765ec-107e-4b1d-b400-e4001b2d411b"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG1",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG1",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.00Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.00Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "525c35f2-6dad-460b-b9dd-0888f321aab2"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG2",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG2",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:14.84Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:14.84Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "6d86013d-7308-4cbb-a8c0-53199ba0ec0b"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG3",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG3",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.81Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.81Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "25c07671-b67d-48d7-a236-5ddba873cf75"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG4",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG4",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:16.24Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:16.24Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "2ddbd205-9ffc-4365-a8b9-fb9bc6dc2500"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG5",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG5",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:14.91Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:14.91Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "2239d98d-eb73-49d6-b1a7-5db5ae5f6383"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG6",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG6",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.30Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.30Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "fd104f6f-e8f4-4371-aece-c25ef4cf4c56"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG7",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG7",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.08Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.08Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "0a84166b-bee1-4f4d-b9eb-fe6abad2d906"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG8",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG8",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.21Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.21Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "82a7e318-0fcc-4b42-9081-f91ec0cc79a8"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG9",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG9",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.72Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.72Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "3fbd1ee3-107b-4c91-973c-1e8fa7928db6"
+            }
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-55f01e0542c8984881fe299e217dbe9e-755f96a0bc43a94b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e290b62f3f1f419696a8c591d52624e2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6b07ee63-c8fc-471a-808e-a4363fbed1ce",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "6b07ee63-c8fc-471a-808e-a4363fbed1ce",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185118Z:6b07ee63-c8fc-471a-808e-a4363fbed1ce"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG",
+        "name": "azsdkRG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "brazilsouth",
+        "tags": {
+          "ServiceDirectory": "desktopvirtualization",
+          "Creator": "sampa",
+          "DeleteAfter": "2022-05-22T20:49:28.1719085Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7a3cd2ec932d75418e2c9e4095f0d8f5-7896367619f2c341-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f7111d6065c45dc159e979bfb29b2bed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "10147",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "f5625bf0-6739-4da0-a624-77db7498e8c5",
+        "x-ms-correlation-request-id": "ee82c29e-0523-4ef0-951a-0521f8cdf55d",
+        "x-ms-lamport-ts": "11235",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkc=",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "f7111d60-65c4-5dc1-59e9-79bfb29b2bed",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185118Z:ee82c29e-0523-4ef0-951a-0521f8cdf55d",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "RemoteApplicationGroupListAG0",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG0",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:09.64Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:09.64Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "1a0765ec-107e-4b1d-b400-e4001b2d411b"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG1",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG1",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.00Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.00Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "525c35f2-6dad-460b-b9dd-0888f321aab2"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG2",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG2",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:14.84Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:14.84Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "6d86013d-7308-4cbb-a8c0-53199ba0ec0b"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG3",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG3",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.81Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.81Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "25c07671-b67d-48d7-a236-5ddba873cf75"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG4",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG4",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:16.24Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:16.24Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "2ddbd205-9ffc-4365-a8b9-fb9bc6dc2500"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG5",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG5",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:14.91Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:14.91Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "2239d98d-eb73-49d6-b1a7-5db5ae5f6383"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG6",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG6",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.30Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.30Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "fd104f6f-e8f4-4371-aece-c25ef4cf4c56"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG7",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG7",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.08Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.08Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "0a84166b-bee1-4f4d-b9eb-fe6abad2d906"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG8",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG8",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.21Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.21Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "82a7e318-0fcc-4b42-9081-f91ec0cc79a8"
+            }
+          },
+          {
+            "name": "RemoteApplicationGroupListAG9",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG9",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": "RemoteApp",
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:15.72Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:15.72Z"
+            },
+            "properties": {
+              "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+              "workspaceArmPath": null,
+              "description": null,
+              "friendlyName": null,
+              "applicationGroupType": "RemoteApp",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "objectId": "3fbd1ee3-107b-4c91-973c-1e8fa7928db6"
+            }
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG0?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2977094e0e47754c8ef4abe9b0c6e804-73c86b3282c58e4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0a82c2ad9e5afe58ff4258ea68fd7f2d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "b84880d3-8641-419c-9ec3-81401b701e60",
+        "x-ms-correlation-request-id": "57d9ffcb-7ab6-4094-a674-3a603c404322",
+        "x-ms-lamport-ts": "11258",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzA=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "0a82c2ad-9e5a-fe58-ff42-58ea68fd7f2d",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185124Z:57d9ffcb-7ab6-4094-a674-3a603c404322",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG0",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG0",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:09.64Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:09.64Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "1a0765ec-107e-4b1d-b400-e4001b2d411b"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG1?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ab4d48e8c2979e4baf67db9e6a355292-76ac08c5b8e51744-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "127104d8b452cab5f5338936c5d78ffa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "5135aa89-303b-4891-8cd0-c5d8f2958dbe",
+        "x-ms-correlation-request-id": "901a2795-f5d4-461b-ae48-89230cd3ed63",
+        "x-ms-lamport-ts": "11264",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzE=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14998",
+        "x-ms-request-id": "127104d8-b452-cab5-f533-8936c5d78ffa",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185125Z:901a2795-f5d4-461b-ae48-89230cd3ed63",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG1",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG1",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.00Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.00Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "525c35f2-6dad-460b-b9dd-0888f321aab2"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG2?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-14152c9d7544c349a722bc0855f24a99-caa1d0ec677e1743-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "13e4d87d1aa3c287c413f8810cd7f55b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "62aa86a6-913d-41b1-adc8-ab4e6865adf4",
+        "x-ms-correlation-request-id": "21ecaa16-32f8-4db6-a0d8-98757561d73d",
+        "x-ms-lamport-ts": "11270",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzI=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14997",
+        "x-ms-request-id": "13e4d87d-1aa3-c287-c413-f8810cd7f55b",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185127Z:21ecaa16-32f8-4db6-a0d8-98757561d73d",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG2",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG2",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:14.84Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:14.84Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "6d86013d-7308-4cbb-a8c0-53199ba0ec0b"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG3?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c02fbcf5128fdf4ca6f8ecf47978c880-09585fe5f5132a4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ade64b69182af99a0cb8152714223828",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "6b743c10-9903-4144-aad6-b703de83160b",
+        "x-ms-correlation-request-id": "c6d2da49-13da-4487-add6-b31125da4b0d",
+        "x-ms-lamport-ts": "11276",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzM=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14996",
+        "x-ms-request-id": "ade64b69-182a-f99a-0cb8-152714223828",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185128Z:c6d2da49-13da-4487-add6-b31125da4b0d",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG3",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG3",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.81Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.81Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "25c07671-b67d-48d7-a236-5ddba873cf75"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG4?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8a236ab85b641f4b9fc02decef1d1c3a-1499cf3d9f46e44a-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "906c5eb36c19be8a7cae4e3fbb34bd1d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "7a6a9484-fed0-430c-a2bc-1a74cf7b7953",
+        "x-ms-correlation-request-id": "93687059-ce6f-4cf2-9d0b-21af1f994572",
+        "x-ms-lamport-ts": "11282",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzQ=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14995",
+        "x-ms-request-id": "906c5eb3-6c19-be8a-7cae-4e3fbb34bd1d",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185129Z:93687059-ce6f-4cf2-9d0b-21af1f994572",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG4",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG4",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:16.24Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:16.24Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "2ddbd205-9ffc-4365-a8b9-fb9bc6dc2500"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG5?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-134345cf97241346abb76fbbb1f80754-cf18686817b9814f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "79cc2e3de1f165cf3dea07eb0560aea2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "40699003-fe9e-4051-b8f0-52c8fa6d6d66",
+        "x-ms-correlation-request-id": "a2594ba2-1c59-4608-bf06-941b43d798ba",
+        "x-ms-lamport-ts": "11292",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzU=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14994",
+        "x-ms-request-id": "79cc2e3d-e1f1-65cf-3dea-07eb0560aea2",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185131Z:a2594ba2-1c59-4608-bf06-941b43d798ba",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG5",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG5",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:14.91Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:14.91Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "2239d98d-eb73-49d6-b1a7-5db5ae5f6383"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG6?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5cf74157356cbb4a9620bf1ceb20cebf-cbd92541dab29a4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "aeced0da646afd41c127307cca5b3dd8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "9a044ce7-d76c-4877-ab10-3c823d8ed626",
+        "x-ms-correlation-request-id": "40f40d17-3f33-440a-accd-8cfc6eb5e447",
+        "x-ms-lamport-ts": "11295",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzY=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14993",
+        "x-ms-request-id": "aeced0da-646a-fd41-c127-307cca5b3dd8",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185132Z:40f40d17-3f33-440a-accd-8cfc6eb5e447",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG6",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG6",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.30Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.30Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "fd104f6f-e8f4-4371-aece-c25ef4cf4c56"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG7?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-60e94c194eee9f46988e192ab81bc27d-376e43ee43030f41-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e6e9f7fabf55d1368e07522f649eb91c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "e53d8b45-a44a-44c9-9cb6-2bf6076bf97b",
+        "x-ms-correlation-request-id": "d7393f99-1348-431d-99f0-1199221375c0",
+        "x-ms-lamport-ts": "11298",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzc=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14992",
+        "x-ms-request-id": "e6e9f7fa-bf55-d136-8e07-522f649eb91c",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185133Z:d7393f99-1348-431d-99f0-1199221375c0",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG7",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG7",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.08Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.08Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "0a84166b-bee1-4f4d-b9eb-fe6abad2d906"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG8?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bed20cfb876e054c814503a3fdf0929a-ed8ad4893c2ed947-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "eb64ab000f65d9b3ecceb8c9b0539ae1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "cd6638ba-e1aa-46d4-aabf-dfe113c72348",
+        "x-ms-correlation-request-id": "8a8faa4b-803e-46f9-8d96-ed2734894172",
+        "x-ms-lamport-ts": "11310",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzg=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14991",
+        "x-ms-request-id": "eb64ab00-0f65-d9b3-ecce-b8c9b0539ae1",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185134Z:8a8faa4b-803e-46f9-8d96-ed2734894172",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG8",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG8",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.21Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.21Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "82a7e318-0fcc-4b42-9081-f91ec0cc79a8"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups/RemoteApplicationGroupListAG9?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dc30122d14326642a087396ccbb7eb73-35438cce03cd4b45-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0df02fadc7761b4c99fd1f6311129822",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "f6716b0f-bb6c-4649-8a62-7d2eb3b9abe0",
+        "x-ms-correlation-request-id": "d1011192-4fea-46e8-b32c-9af18a146739",
+        "x-ms-lamport-ts": "11313",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vYXBwbGljYXRpb25Hcm91cHMvUmVtb3RlQXBwbGljYXRpb25Hcm91cExpc3RBRzk=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14990",
+        "x-ms-request-id": "0df02fad-c776-1b4c-99fd-1f6311129822",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185136Z:d1011192-4fea-46e8-b32c-9af18a146739",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListAG9",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationgroups/RemoteApplicationGroupListAG9",
+        "type": "Microsoft.DesktopVirtualization/applicationgroups",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": "RemoteApp",
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:15.72Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:15.72Z"
+        },
+        "properties": {
+          "hostPoolArmPath": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+          "workspaceArmPath": null,
+          "description": null,
+          "friendlyName": null,
+          "applicationGroupType": "RemoteApp",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "objectId": "3fbd1ee3-107b-4c91-973c-1e8fa7928db6"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5f2dcf2e72c786499256d1fc3becb474-11983eaab4bb8f47-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1e7b136e52f7eb724410fa87066d203b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1289",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "425c7ca5-8630-4c20-b247-d6a3eab6c797",
+        "x-ms-correlation-request-id": "9365f03f-234b-4e81-941e-310e530c8bb5",
+        "x-ms-lamport-ts": "11322",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkc=",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "1e7b136e-52f7-eb72-4410-fa87066d203b",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185136Z:9365f03f-234b-4e81-941e-310e530c8bb5",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "RemoteApplicationGroupListHP",
+            "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+            "type": "Microsoft.DesktopVirtualization/hostpools",
+            "location": "brazilsouth",
+            "tags": {},
+            "kind": null,
+            "systemData": {
+              "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "createdByType": "Application",
+              "createdAt": "2022-06-14T18:51:07.99Z",
+              "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2022-06-14T18:51:07.99Z"
+            },
+            "properties": {
+              "friendlyName": null,
+              "description": null,
+              "hostPoolType": "Pooled",
+              "personalDesktopAssignmentType": "Automatic",
+              "applicationGroupReferences": [],
+              "customRdpProperty": "",
+              "maxSessionLimit": 999999,
+              "loadBalancerType": "BreadthFirst",
+              "validationEnvironment": true,
+              "ring": 0,
+              "registrationInfo": {
+                "expirationTime": "0001-01-01T00:00:00",
+                "token": "",
+                "registrationTokenOperation": "None"
+              },
+              "vmTemplate": null,
+              "preferredAppGroupType": "Desktop",
+              "migrationRequest": {
+                "operation": "",
+                "migrationPath": ""
+              },
+              "cloudPcResource": false,
+              "startVMOnConnect": false,
+              "ssoadfsAuthority": null,
+              "ssoClientId": null,
+              "ssoClientSecretKeyVaultPath": null,
+              "ssoSecretType": "SharedKey",
+              "objectId": "6b66f65f-d3a7-478a-9007-6e6c07da2e82"
+            }
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/RemoteApplicationGroupListHP?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ede329fc207b7447b663a15c14f862dd-e470d9e6eec67444-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3582716cabae39a65e495168ef4fc7d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1261",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:51:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "42e993a6-2175-446b-a469-4f9d88334355",
+        "x-ms-correlation-request-id": "ccc54aab-0ff2-430d-a9e6-a467495205ad",
+        "x-ms-lamport-ts": "11325",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vaG9zdFBvb2xzL1JlbW90ZUFwcGxpY2F0aW9uR3JvdXBMaXN0SFA=",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14989",
+        "x-ms-request-id": "3582716c-abae-39a6-5e49-5168ef4fc7d9",
+        "x-ms-routing-request-id": "WESTUS2:20220614T185140Z:ccc54aab-0ff2-430d-a9e6-a467495205ad",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "RemoteApplicationGroupListHP",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/RemoteApplicationGroupListHP",
+        "type": "Microsoft.DesktopVirtualization/hostpools",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": null,
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:51:07.99Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:51:07.99Z"
+        },
+        "properties": {
+          "friendlyName": null,
+          "description": null,
+          "hostPoolType": "Pooled",
+          "personalDesktopAssignmentType": "Automatic",
+          "applicationGroupReferences": [],
+          "customRdpProperty": "",
+          "maxSessionLimit": 999999,
+          "loadBalancerType": "BreadthFirst",
+          "validationEnvironment": true,
+          "ring": 0,
+          "registrationInfo": {
+            "expirationTime": "0001-01-01T00:00:00",
+            "token": "",
+            "registrationTokenOperation": "None"
+          },
+          "vmTemplate": null,
+          "preferredAppGroupType": "Desktop",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "startVMOnConnect": false,
+          "ssoadfsAuthority": null,
+          "ssoClientId": null,
+          "ssoClientSecretKeyVaultPath": null,
+          "ssoSecretType": "SharedKey",
+          "objectId": "6b66f65f-d3a7-478a-9007-6e6c07da2e82"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DESKTOPVIRTUALIZATION_RESOURCE_GROUP": "azsdkRG",
+    "RandomSeed": "2008643547",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "292d7caa-a878-4de8-b774-689097666272"
+  }
+}

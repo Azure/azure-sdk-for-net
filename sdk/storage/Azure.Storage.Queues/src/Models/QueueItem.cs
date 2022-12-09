@@ -21,13 +21,11 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The name of the Queue.
         /// </summary>
-        [CodeGenMember("Property")]
         public string Name { get; internal set; }
 
         /// <summary>
         /// Metadata
         /// </summary>
-        [CodeGenMember("Property")]
         public IDictionary<string, string> Metadata { get; internal set; }
     }
 }

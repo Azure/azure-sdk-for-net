@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this virtual cluster. </param>
-        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string subnetId, string family, IReadOnlyList<string> childResources, string maintenanceConfigurationId) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string family, IReadOnlyList<string> childResources, ResourceIdentifier maintenanceConfigurationId) : base(id, name, resourceType, systemData, tags, location)
         {
             SubnetId = subnetId;
             Family = family;
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
-        public string SubnetId { get; }
+        public ResourceIdentifier SubnetId { get; }
         /// <summary> If the service has different generations of hardware, for the same SKU, then that can be captured here. </summary>
         public string Family { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
         public IReadOnlyList<string> ChildResources { get; }
         /// <summary> Specifies maintenance configuration id to apply to this virtual cluster. </summary>
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
     }
 }

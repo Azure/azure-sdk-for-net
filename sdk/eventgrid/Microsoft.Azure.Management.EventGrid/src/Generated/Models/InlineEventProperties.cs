@@ -31,13 +31,16 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="description">The description for the inline
         /// event.</param>
+        /// <param name="displayName">The displayName for the inline
+        /// event.</param>
         /// <param name="documentationUrl">The documentationUrl for the inline
         /// event.</param>
         /// <param name="dataSchemaUrl">The dataSchemaUrl for the inline
         /// event.</param>
-        public InlineEventProperties(string description = default(string), string documentationUrl = default(string), string dataSchemaUrl = default(string))
+        public InlineEventProperties(string description = default(string), string displayName = default(string), string documentationUrl = default(string), string dataSchemaUrl = default(string))
         {
             Description = description;
+            DisplayName = displayName;
             DocumentationUrl = documentationUrl;
             DataSchemaUrl = dataSchemaUrl;
             CustomInit();
@@ -53,6 +56,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the displayName for the inline event.
+        /// </summary>
+        [JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the documentationUrl for the inline event.

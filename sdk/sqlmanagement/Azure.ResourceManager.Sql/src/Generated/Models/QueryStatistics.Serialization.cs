@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> databaseName = default;
             Optional<string> queryId = default;
             Optional<string> startTime = default;
@@ -58,12 +58,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new QueryStatistics(id, name, type, systemData, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
+            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
         }
     }
 }

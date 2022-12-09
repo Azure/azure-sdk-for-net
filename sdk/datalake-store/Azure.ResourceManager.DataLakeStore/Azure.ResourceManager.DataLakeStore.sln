@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{DE4A9698-CCB2-42FE-A84B-A9264A3E53F3}") = "Azure.ResourceManager.DataLakeStore", "src\Azure.ResourceManager.DataLakeStore.csproj", "{770CB276-A64F-423E-8604-0F168C2C4DF9}"
+EndProject
+Project("{DE4A9698-CCB2-42FE-A84B-A9264A3E53F3}") = "Azure.ResourceManager.DataLakeStore.Tests", "tests\Azure.ResourceManager.DataLakeStore.Tests.csproj", "{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8588DDD-6CD5-4E3B-9977-09CA2449F6DE}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Debug|x64.Build.0 = Debug|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Debug|x86.Build.0 = Debug|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Release|x64.ActiveCfg = Release|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Release|x64.Build.0 = Release|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Release|x86.ActiveCfg = Release|Any CPU
+		{770CB276-A64F-423E-8604-0F168C2C4DF9}.Release|x86.Build.0 = Release|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Debug|x64.Build.0 = Debug|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Debug|x86.Build.0 = Debug|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Release|x64.ActiveCfg = Release|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Release|x64.Build.0 = Release|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{27022DB9-F475-4D23-AEA6-4E06B3EF1BEE}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

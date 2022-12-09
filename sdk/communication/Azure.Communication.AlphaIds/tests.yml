@@ -1,0 +1,18 @@
+trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: communication
+    Project: Azure.Communication.AlphaIds
+    CloudConfig:
+      Public:
+        SubscriptionConfigurations:
+          - $(sub-config-azure-cloud-test-resources)
+          - $(sub-config-communication-services-cloud-test-resources-common)
+          - $(sub-config-communication-services-cloud-test-resources-net)
+      Int:
+        SubscriptionConfigurations:
+          - $(sub-config-communication-int-test-resources-common)
+          - $(sub-config-communication-int-test-resources-net)
+    Clouds: Public,Int

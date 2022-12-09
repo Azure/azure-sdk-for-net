@@ -184,9 +184,6 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ValidateResourceInRestApi()
         {
-#if NET461
-            await Task.Delay(1); //no op due to header differences on 461
-#else
             var namespacesToSkip = new HashSet<string>
             {
                 "Microsoft.MarketplaceNotifications",
@@ -218,7 +215,6 @@ namespace Azure.ResourceManager.Tests
                     }
                 }, $"Error getting rest apis for {provider.Data.Namespace}");
             }
-#endif
         }
     }
 }

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static SystemAssignedIdentityAuthInfo DeserializeSystemAssignedIdentityAuthInfo(JsonElement element)
         {
-            AuthType authType = default;
+            LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authType"))
                 {
-                    authType = new AuthType(property.Value.GetString());
+                    authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
             }

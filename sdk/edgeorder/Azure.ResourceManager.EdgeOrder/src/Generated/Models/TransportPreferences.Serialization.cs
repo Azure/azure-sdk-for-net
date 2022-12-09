@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static TransportPreferences DeserializeTransportPreferences(JsonElement element)
         {
-            TransportShipmentTypes preferredShipmentType = default;
+            TransportShipmentType preferredShipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preferredShipmentType"))
                 {
-                    preferredShipmentType = new TransportShipmentTypes(property.Value.GetString());
+                    preferredShipmentType = new TransportShipmentType(property.Value.GetString());
                     continue;
                 }
             }

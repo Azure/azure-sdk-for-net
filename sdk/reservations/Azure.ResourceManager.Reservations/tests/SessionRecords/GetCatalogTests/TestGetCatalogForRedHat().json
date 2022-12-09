@@ -1,0 +1,82 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bf221f84a3d0fb2471c7b5ea08cf3e42-4ee7a30d143a8f98-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "0aa792013b2a97ee659e2e3d3fb2f22c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "400",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 16 May 2022 23:10:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4bcc74e5-dd20-4809-817d-834f3fa78dcd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "4bcc74e5-dd20-4809-817d-834f3fa78dcd",
+        "x-ms-routing-request-id": "WESTUS:20220516T231004Z:4bcc74e5-dd20-4809-817d-834f3fa78dcd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
+        "displayName": "Azure subscription 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=RedHat",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b7678da8d5e90c8fbe89fc3a4716f00b-31fe5ff61d936c96-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "4bbc6e941e5fef022b95d8a5ae7c11ba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1611",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 16 May 2022 23:10:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9b532a3a-0398-4c03-8584-8141bf627b68",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "4bbc6e941e5fef022b95d8a5ae7c11ba",
+        "x-ms-routing-request-id": "WESTUS:20220516T231004Z:9b532a3a-0398-4c03-8584-8141bf627b68",
+        "x-ms-version": "1.0.1957.1107"
+      },
+      "ResponseBody": "[{\u0022resourceType\u0022:\u0022RedHat\u0022,\u0022name\u0022:\u0022rhel_1-4_vcpu\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:420.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Red Hat Ent Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Red Hat Enterprise Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00221-4 vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00222f96d035-3bac-46d6-b2bc-c6daa0938536\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 1-vCPU VM License Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00221-4 vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022RedHat\u0022,\u0022name\u0022:\u0022rhel_5plus_vcpu\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:911.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Red Hat Ent Linux\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Red Hat Enterprise Linux\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022a838cfb1-0bd3-4965-84f0-663f49afc2e2\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u00221 128-vCPU VM License Hour\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u00225\u002B vCPU VM\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2086691299",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+  }
+}

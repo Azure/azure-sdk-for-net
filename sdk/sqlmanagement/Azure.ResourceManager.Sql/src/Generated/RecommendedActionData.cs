@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
         /// <param name="details"> Gets additional details specific to this recommended action. </param>
-        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartOn, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartOn, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedOn, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedOn, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, BinaryData> details) : base(id, name, resourceType, systemData)
+        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartOn, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartOn, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedOn, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedOn, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, BinaryData> details) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Resource kind. </summary>
         public string Kind { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Gets the reason for recommending this action. e.g., DuplicateIndex. </summary>
         public string RecommendationReason { get; }
         /// <summary> Gets the time since when this recommended action is valid. </summary>
@@ -133,7 +133,36 @@ namespace Azure.ResourceManager.Sql
         public IReadOnlyList<RecommendedActionMetricInfo> TimeSeries { get; }
         /// <summary> Gets the linked objects, if any. </summary>
         public IReadOnlyList<string> LinkedObjects { get; }
-        /// <summary> Gets additional details specific to this recommended action. </summary>
+        /// <summary>
+        /// Gets additional details specific to this recommended action.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Details { get; }
     }
 }

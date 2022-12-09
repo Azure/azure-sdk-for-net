@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegistrationInfo>> RetrieveRegistrationTokenAsync(string subscriptionId, string resourceGroupName, string hostPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(string subscriptionId, string resourceGroupName, string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        RegistrationInfo value = default;
+                        HostPoolRegistrationInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistrationInfo.DeserializeRegistrationInfo(document.RootElement);
+                        value = HostPoolRegistrationInfo.DeserializeHostPoolRegistrationInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegistrationInfo> RetrieveRegistrationToken(string subscriptionId, string resourceGroupName, string hostPoolName, CancellationToken cancellationToken = default)
+        public Response<HostPoolRegistrationInfo> RetrieveRegistrationToken(string subscriptionId, string resourceGroupName, string hostPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -578,9 +578,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case 200:
                     {
-                        RegistrationInfo value = default;
+                        HostPoolRegistrationInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistrationInfo.DeserializeRegistrationInfo(document.RootElement);
+                        value = HostPoolRegistrationInfo.DeserializeHostPoolRegistrationInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

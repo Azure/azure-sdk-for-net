@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
             PublicIPAddressData ipData = new PublicIPAddressData()
             {
                 Location = AzureLocation.WestUS2,
-                PublicIPAllocationMethod = IPAllocationMethod.Static,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
                 Sku = new PublicIPAddressSku() { Name = PublicIPAddressSkuName.Standard },
             };
             var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("publicIp-"), ipData);

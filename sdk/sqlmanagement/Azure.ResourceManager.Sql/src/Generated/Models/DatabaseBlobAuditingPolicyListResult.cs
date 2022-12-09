@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicyListResult. </summary>
         internal DatabaseBlobAuditingPolicyListResult()
         {
-            Value = new ChangeTrackingList<DatabaseBlobAuditingPolicyData>();
+            Value = new ChangeTrackingList<SqlDatabaseBlobAuditingPolicyData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicyListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DatabaseBlobAuditingPolicyListResult(IReadOnlyList<DatabaseBlobAuditingPolicyData> value, string nextLink)
+        internal DatabaseBlobAuditingPolicyListResult(IReadOnlyList<SqlDatabaseBlobAuditingPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<DatabaseBlobAuditingPolicyData> Value { get; }
+        public IReadOnlyList<SqlDatabaseBlobAuditingPolicyData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

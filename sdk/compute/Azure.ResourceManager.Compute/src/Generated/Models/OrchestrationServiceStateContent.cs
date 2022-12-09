@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of OrchestrationServiceStateContent. </summary>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="action"> The action to be performed. </param>
-        public OrchestrationServiceStateContent(OrchestrationServiceNames serviceName, OrchestrationServiceStateAction action)
+        public OrchestrationServiceStateContent(OrchestrationServiceName serviceName, OrchestrationServiceStateAction action)
         {
             ServiceName = serviceName;
             Action = action;
         }
 
         /// <summary> The name of the service. </summary>
-        public OrchestrationServiceNames ServiceName { get; }
+        public OrchestrationServiceName ServiceName { get; }
         /// <summary> The action to be performed. </summary>
         public OrchestrationServiceStateAction Action { get; }
     }

@@ -142,6 +142,7 @@ $content =
       <QueueServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
       <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <EncryptionScope>encryptionScope</EncryptionScope>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>SoftDeleteTenant</TenantName>

@@ -24,7 +24,7 @@ using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     [NonParallelizable]
-    [LiveOnly]
+    [LiveOnly(alwaysRunLocally: true)]
     public class WebJobsServiceBusTestBase
     {
         // surrounding with % indicates that this is used as a pointer to an app setting rather than
@@ -55,7 +55,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         protected const int SBTimeoutMills = 120 * 1000;
         protected const int DrainWaitTimeoutMills = 120 * 1000;
-        protected const int DrainSleepMills = 5 * 1000;
         internal const int MaxAutoRenewDurationMin = 5;
         protected static TimeSpan HostShutdownTimeout = TimeSpan.FromSeconds(120);
 
@@ -73,6 +72,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static EventWaitHandle _drainValidationPreDelay;
         protected static EventWaitHandle _drainValidationPostDelay;
 
+        protected static int ExpectedRemainingMessages { get; set; }
+
         protected WebJobsServiceBusTestBase(bool isSession)
         {
             _isSession = isSession;
@@ -86,6 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [SetUp]
         public async Task FixtureSetUp()
         {
+            ExpectedRemainingMessages = 0;
             FirstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             SecondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
@@ -192,11 +194,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Subject = "subject",
                 To = "to",
                 ReplyTo = "replyTo",
-                ApplicationProperties = {{ "key", "value"}}
+                ApplicationProperties = {{ "key", "value"}},
+                PartitionKey = "partitionKey"
             };
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -217,6 +221,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     // evenly distribute the messages across sessions
                     message.SessionId = sessionIds[sessionCounter++ % sessionIds.Length];
+                    message.ReplyToSessionId = message.SessionId;
                 }
 
                 if (!batch.TryAddMessage(message))
@@ -248,6 +253,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -260,6 +266,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -279,6 +286,26 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     sbOptions.MaxAutoLockRenewalDuration = TimeSpan.Zero;
                     sbOptions.MaxConcurrentCalls = 1;
                 }));
+
+        protected static class DrainModeHelper
+        {
+            public static async Task WaitForCancellationAsync(CancellationToken cancellationToken)
+            {
+                // Wait until the drain operation begins, signalled by the cancellation token
+                int elapsedTimeMills = 0;
+                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        await Task.Delay(elapsedTimeMills += 500, cancellationToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
+                }
+            }
+        }
+
         private class ServiceBusEndToEndTestService : IHostedService
         {
             private readonly IHost _host;
@@ -296,11 +323,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public async Task StopAsync(CancellationToken cancellationToken)
             {
                 var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
-                var errors = logs.Where(
-                    p => p.Level == LogLevel.Error &&
-                         (p.FormattedMessage == null ||
-                         // Ignore this error that the SDK logs when cancelling batch receive
-                         !p.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException")));
+                var errors = logs.Where(IsError);
                 Assert.IsEmpty(errors, string.Join(
                     ",",
                     errors.Select(e => e.Exception != null ? e.Exception.StackTrace : e.FormattedMessage)));
@@ -311,7 +334,29 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(FirstQueueScope.QueueName, CancellationToken.None);
-                Assert.AreEqual(0, properties.TotalMessageCount);
+                Assert.AreEqual(ExpectedRemainingMessages, properties.TotalMessageCount);
+            }
+
+            private static bool IsError(LogMessage logMessage)
+            {
+                if (logMessage.Level < LogLevel.Error)
+                {
+                    return false;
+                }
+                // if the inner exception message contains "Test exception" then it's an expected exception
+                if (logMessage.Exception != null && logMessage.Exception.InnerException != null &&
+                    logMessage.Exception.InnerException.Message.Contains("Test exception"))
+                {
+                    return false;
+                }
+                // if the formatted message is not null and it contains "ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"
+                // then it's an expected exception
+                if (logMessage.FormattedMessage != null && logMessage.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"))
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
     }

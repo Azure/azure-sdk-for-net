@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerKeyListResult DeserializeServerKeyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerKeyData>> value = default;
+            Optional<IReadOnlyList<SqlServerKeyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerKeyData> array = new List<ServerKeyData>();
+                    List<SqlServerKeyData> array = new List<SqlServerKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerKeyData.DeserializeServerKeyData(item));
+                        array.Add(SqlServerKeyData.DeserializeSqlServerKeyData(item));
                     }
                     value = array;
                     continue;

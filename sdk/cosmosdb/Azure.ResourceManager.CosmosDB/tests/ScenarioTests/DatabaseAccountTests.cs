@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             if (await DatabaseAccountCollection.ExistsAsync(_databaseAccountName))
             {
                 var id = DatabaseAccountCollection.Id;
-                id = DatabaseAccountResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, _databaseAccountName);
-                DatabaseAccountResource account = this.ArmClient.GetDatabaseAccountResource(id);
+                id = CosmosDBAccountResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, _databaseAccountName);
+                CosmosDBAccountResource account = this.ArmClient.GetCosmosDBAccountResource(id);
                 await account.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task DatabaseAccountCreateAndUpdateTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             bool ifExists = await DatabaseAccountCollection.ExistsAsync(_databaseAccountName);
             Assert.AreEqual(true, ifExists);
 
-            DatabaseAccountResource account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
+            CosmosDBAccountResource account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account, account2);
 
-            var updateOptions = new DatabaseAccountPatch()
+            var updateOptions = new CosmosDBAccountPatch()
             {
                 IsVirtualNetworkFilterEnabled = false,
                 EnableAutomaticFailover = true,
@@ -65,29 +65,30 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             updateOptions.Tags.Add("key4", "value4");
             await account2.UpdateAsync(WaitUntil.Completed, updateOptions);
 
-            var failoverPolicyList = new List<FailoverPolicy>
+            var failoverPolicyList = new List<CosmosDBFailoverPolicy>
             {
-                new FailoverPolicy()
+                new CosmosDBFailoverPolicy()
                 {
                     LocationName = AzureLocation.WestUS,
                     FailoverPriority = 0
                 }
             };
-            FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
+            CosmosDBFailoverPolicies failoverPolicies = new CosmosDBFailoverPolicies(failoverPolicyList);
             await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, failoverPolicies);
 
-            DatabaseAccountResource account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
+            CosmosDBAccountResource account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account3, updateOptions);
             VerifyFailoverPolicies(failoverPolicyList, account3.Data.FailoverPolicies);
         }
 
         [Test]
         [RecordedTest]
+        [Ignore("Flaky test: Need diagnose that the test is not generating the recordings by RP team")]
         public async Task DatabaseAccountListBySubscriptionTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
-            var accounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetDatabaseAccountsAsync().ToEnumerableAsync();
+            var accounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBAccountsAsync().ToEnumerableAsync();
             Assert.IsNotNull(accounts);
 
             var accountInList = accounts.Single(account => account.Data.Name == _databaseAccountName);
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task DatabaseAccountListByResourceGroupTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             var accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(accounts);
@@ -112,24 +113,24 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task DatabaseAccountListKeysAndRegenerateKeysTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
-            DatabaseAccountKeyList keys = await account.GetKeysAsync();
+            CosmosDBAccountKeyList keys = await account.GetKeysAsync();
             Assert.IsNotNull(keys.PrimaryMasterKey);
             Assert.IsNotNull(keys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(keys.SecondaryMasterKey);
             Assert.IsNotNull(keys.SecondaryReadonlyMasterKey);
 
-            DatabaseAccountReadOnlyKeyList readOnlyKeys = await account.GetReadOnlyKeysAsync();
+            CosmosDBAccountReadOnlyKeyList readOnlyKeys = await account.GetReadOnlyKeysAsync();
             Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
 
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.Primary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.Secondary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.PrimaryReadonly));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.SecondaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind.Primary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind.Secondary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind.PrimaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new CosmosDBAccountRegenerateKeyContent(CosmosDBAccountKeyKind.SecondaryReadonly));
 
-            DatabaseAccountKeyList regeneratedKeys = await account.GetKeysAsync();
+            CosmosDBAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreNotEqual(keys.PrimaryMasterKey, regeneratedKeys.PrimaryMasterKey);
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task DatabaseAccountListConnectionStringsTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             var connectionStrings = await account.GetConnectionStringsAsync().ToEnumerableAsync();
             Assert.That(connectionStrings, Has.Count.EqualTo(4));
@@ -153,9 +154,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task DatabaseAccountListUsageTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
-            List<BaseUsage> usages = await account.GetUsagesAsync().ToEnumerableAsync();
+            List<CosmosDBBaseUsage> usages = await account.GetUsagesAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(usages);
         }
 
@@ -163,9 +164,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task DatabaseAccountListMetricsDefinitionAndMetricsTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
-            List<MetricDefinition> metricDefinitions =
+            List<CosmosDBMetricDefinition> metricDefinitions =
                 await account.GetMetricDefinitionsAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(metricDefinitions);
 
@@ -181,16 +182,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task DatabaseAccountDeleteTest()
         {
-            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB);
+            var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);
 
             await account.DeleteAsync(WaitUntil.Completed);
 
-            List<DatabaseAccountResource> accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
+            List<CosmosDBAccountResource> accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(accounts);
             Assert.False(accounts.Any(a => a.Id == account.Id));
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccountResource expectedValue, DatabaseAccountResource actualValue)
+        private void VerifyCosmosDBAccount(CosmosDBAccountResource expectedValue, CosmosDBAccountResource actualValue)
         {
             var expectedData = expectedValue.Data;
             var actualData = actualValue.Data;
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.DocumentEndpoint, actualData.DocumentEndpoint);
             Assert.AreEqual(expectedData.DatabaseAccountOfferType, actualData.DatabaseAccountOfferType);
             Assert.AreEqual(expectedData.IPRules.Count, actualData.IPRules.Count);
-            Assert.AreEqual(expectedData.IPRules[0].IPAddressOrRangeValue, actualData.IPRules[0].IPAddressOrRangeValue);
+            Assert.AreEqual(expectedData.IPRules[0].IPAddressOrRange, actualData.IPRules[0].IPAddressOrRange);
             Assert.AreEqual(expectedData.IsVirtualNetworkFilterEnabled, actualData.IsVirtualNetworkFilterEnabled);
             Assert.AreEqual(expectedData.EnableAutomaticFailover, actualData.EnableAutomaticFailover);
             VerifyConsistencyPolicy(expectedData.ConsistencyPolicy, actualData.ConsistencyPolicy);
@@ -220,13 +221,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.DisableKeyBasedMetadataWriteAccess, actualData.DisableKeyBasedMetadataWriteAccess);
             Assert.AreEqual(expectedData.KeyVaultKeyUri, actualData.KeyVaultKeyUri);
             Assert.AreEqual(expectedData.PublicNetworkAccess, actualData.PublicNetworkAccess);
-            Assert.AreEqual(expectedData.EnableFreeTier, actualData.EnableFreeTier);
+            Assert.AreEqual(expectedData.IsFreeTierEnabled, actualData.IsFreeTierEnabled);
             Assert.AreEqual(expectedData.ApiProperties.ServerVersion.ToString(), actualData.ApiProperties.ServerVersion.ToString());
-            Assert.AreEqual(expectedData.EnableAnalyticalStorage, actualData.EnableAnalyticalStorage);
+            Assert.AreEqual(expectedData.IsAnalyticalStorageEnabled, actualData.IsAnalyticalStorageEnabled);
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccountResource databaseAccount, DatabaseAccountPatch parameters)
+        private void VerifyCosmosDBAccount(CosmosDBAccountResource databaseAccount, CosmosDBAccountPatch parameters)
         {
             Assert.True(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags));
             Assert.AreEqual(databaseAccount.Data.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);
@@ -234,14 +235,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(databaseAccount.Data.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
         }
 
-        private void VerifyLocations(IReadOnlyList<DatabaseAccountLocation> expectedData, IReadOnlyList<DatabaseAccountLocation> actualData)
+        private void VerifyLocations(IReadOnlyList<CosmosDBAccountLocation> expectedData, IReadOnlyList<CosmosDBAccountLocation> actualData)
         {
             Assert.AreEqual(expectedData.Count, actualData.Count);
             if (expectedData.Count != 0)
             {
-                foreach (DatabaseAccountLocation expexctedLocation in expectedData)
+                foreach (CosmosDBAccountLocation expexctedLocation in expectedData)
                 {
-                    foreach (DatabaseAccountLocation actualLocation in actualData)
+                    foreach (CosmosDBAccountLocation actualLocation in actualData)
                     {
                         if (expexctedLocation.Id == actualLocation.Id)
                         {
@@ -256,14 +257,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        private void VerifyFailoverPolicies(IReadOnlyList<FailoverPolicy> expectedData, IReadOnlyList<FailoverPolicy> actualData)
+        private void VerifyFailoverPolicies(IReadOnlyList<CosmosDBFailoverPolicy> expectedData, IReadOnlyList<CosmosDBFailoverPolicy> actualData)
         {
             Assert.AreEqual(expectedData.Count, actualData.Count);
             if (expectedData.Count != 0)
             {
-                foreach (FailoverPolicy expexctedFailoverPolicy in expectedData)
+                foreach (CosmosDBFailoverPolicy expexctedFailoverPolicy in expectedData)
                 {
-                    foreach (FailoverPolicy actualFailoverPolicy in actualData)
+                    foreach (CosmosDBFailoverPolicy actualFailoverPolicy in actualData)
                     {
                         if (expexctedFailoverPolicy.Id == actualFailoverPolicy.Id)
                         {

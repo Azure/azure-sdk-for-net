@@ -422,7 +422,7 @@ Optional location where resources should be created.
 If left empty, the default
 is based on the cloud to which the template is being deployed:
 
-* AzureCloud -\> 'westus2'
+* AzureCloud -\> 'westus'
 * AzureUSGovernment -\> 'usgovvirginia'
 * AzureChinaCloud -\> 'chinaeast2'
 * Dogfood -\> 'westus'

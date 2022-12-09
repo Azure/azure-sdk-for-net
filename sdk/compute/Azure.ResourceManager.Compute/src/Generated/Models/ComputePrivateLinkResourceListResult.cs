@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>
         internal ComputePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ComputePrivateLinkResource>();
+            Value = new ChangeTrackingList<ComputePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal ComputePrivateLinkResourceListResult(IReadOnlyList<ComputePrivateLinkResource> value)
+        internal ComputePrivateLinkResourceListResult(IReadOnlyList<ComputePrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<ComputePrivateLinkResource> Value { get; }
+        public IReadOnlyList<ComputePrivateLinkResourceData> Value { get; }
     }
 }

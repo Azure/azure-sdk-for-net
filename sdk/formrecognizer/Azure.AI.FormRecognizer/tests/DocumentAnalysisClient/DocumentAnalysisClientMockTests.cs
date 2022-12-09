@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Analyze Document
 
         [Test]
-        public async Task StartAnalyzeDocumentSendsContentType()
+        public async Task AnalyzeDocumentSendsContentType()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream);
 
             var request = mockTransport.Requests.Single();
 
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("")]
         [TestCase("en-US")]
-        public async Task StartAnalyzeDocumentSendsUserSpecifiedLocale(string locale)
+        public async Task AnalyzeDocumentSendsUserSpecifiedLocale(string locale)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Locale = locale };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("")]
         [TestCase("en-US")]
-        public async Task StartAnalyzeDocumentFromUriSendsUserSpecifiedLocale(string locale)
+        public async Task AnalyzeDocumentFromUriSendsUserSpecifiedLocale(string locale)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Locale = locale };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
@@ -117,7 +117,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1")]
         [TestCase("1-2")]
-        public async Task StartAnalyzeDocumentSendsOnePageArgument(string pages)
+        public async Task AnalyzeDocumentSendsOnePageArgument(string pages)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -128,7 +128,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
@@ -139,7 +139,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1")]
         [TestCase("1-2")]
-        public async Task StartAnalyzeDocumentFromUriSendsOnePageArgument(string pages)
+        public async Task AnalyzeDocumentFromUriSendsOnePageArgument(string pages)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -150,7 +150,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1", "3")]
         [TestCase("1-2", "3")]
-        public async Task StartAnalyzeDocumentSendsMultiplePageArgument(string page1, string page2)
+        public async Task AnalyzeDocumentSendsMultiplePageArgument(string page1, string page2)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
@@ -183,7 +183,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1", "3")]
         [TestCase("1-2", "3")]
-        public async Task StartAnalyzeDocumentFromUriSendsMultiplePageArgument(string page1, string page2)
+        public async Task AnalyzeDocumentFromUriSendsMultiplePageArgument(string page1, string page2)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -194,7 +194,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
@@ -203,7 +203,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartAnalyzeDocumentFromUriEncodesBlankSpaces()
+        public async Task AnalyzeDocumentFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -215,8 +215,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var encodedUriString = "https://fakeuri.com/blank%20space";
             var decodedUriString = "https://fakeuri.com/blank space";
 
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, new Uri(encodedUriString));
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, new Uri(decodedUriString));
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(encodedUriString));
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(decodedUriString));
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
 

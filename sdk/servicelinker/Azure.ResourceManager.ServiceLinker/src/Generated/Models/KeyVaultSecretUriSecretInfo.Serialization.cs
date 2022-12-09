@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal static KeyVaultSecretUriSecretInfo DeserializeKeyVaultSecretUriSecretInfo(JsonElement element)
         {
             Optional<string> value = default;
-            SecretType secretType = default;
+            LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("secretType"))
                 {
-                    secretType = new SecretType(property.Value.GetString());
+                    secretType = new LinkerSecretType(property.Value.GetString());
                     continue;
                 }
             }

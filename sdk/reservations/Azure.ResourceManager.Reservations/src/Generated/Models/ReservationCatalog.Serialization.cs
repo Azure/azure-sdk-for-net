@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element)
         {
-            Optional<ResourceType> resourceType = default;
+            Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
             Optional<IReadOnlyList<ReservationTerm>> terms = default;
@@ -30,12 +30,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resourceType = new ResourceType(property.Value.GetString());
+                    resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -159,7 +154,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationCatalog(Optional.ToNullable(resourceType), name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities));
+            return new ReservationCatalog(resourceType.Value, name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities));
         }
     }
 }

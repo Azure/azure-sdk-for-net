@@ -55,7 +55,11 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
+        /// <summary> Submit a document translation request to the Document Translation service. </summary>
+        /// <param name="body"> request details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks>
         /// Use this API to submit a bulk (batch) translation request to the Document Translation service.
         /// Each request can contain multiple documents and must contain a source and destination container for each document.
         ///             
@@ -65,10 +69,7 @@ namespace Azure.AI.Translation.Document
         ///             
         /// If the glossary is invalid or unreachable during translation, an error is indicated in the document status.
         /// If a file with the same name already exists at the destination, it will be overwritten. The targetUrl for each target language must be unique.
-        /// </summary>
-        /// <param name="body"> request details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// </remarks>
         public async Task<ResponseWithHeaders<DocumentTranslationStartTranslationHeaders>> StartTranslationAsync(StartTranslationDetails body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -88,7 +89,11 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
+        /// <summary> Submit a document translation request to the Document Translation service. </summary>
+        /// <param name="body"> request details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks>
         /// Use this API to submit a bulk (batch) translation request to the Document Translation service.
         /// Each request can contain multiple documents and must contain a source and destination container for each document.
         ///             
@@ -98,10 +103,7 @@ namespace Azure.AI.Translation.Document
         ///             
         /// If the glossary is invalid or unreachable during translation, an error is indicated in the document status.
         /// If a file with the same name already exists at the destination, it will be overwritten. The targetUrl for each target language must be unique.
-        /// </summary>
-        /// <param name="body"> request details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// </remarks>
         public ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> StartTranslation(StartTranslationDetails body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -167,31 +169,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
-        /// Returns a list of batch requests submitted and the status for each request.
-        /// This list only contains batch requests submitted by the user (based on the resource).
-        ///             
-        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
-        /// The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns a list of batch requests submitted and the status for each request. </summary>
         /// <param name="top">
         /// $top indicates the total number of records the user wants to be returned across all pages.
         ///             
@@ -219,6 +197,31 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// Returns a list of batch requests submitted and the status for each request.
+        /// This list only contains batch requests submitted by the user (based on the resource).
+        ///             
+        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
+        /// The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public async Task<ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusAsync(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationsStatusRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
@@ -238,31 +241,7 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
-        /// Returns a list of batch requests submitted and the status for each request.
-        /// This list only contains batch requests submitted by the user (based on the resource).
-        ///             
-        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
-        /// The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns a list of batch requests submitted and the status for each request. </summary>
         /// <param name="top">
         /// $top indicates the total number of records the user wants to be returned across all pages.
         ///             
@@ -290,6 +269,31 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// Returns a list of batch requests submitted and the status for each request.
+        /// This list only contains batch requests submitted by the user (based on the resource).
+        ///             
+        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
+        /// The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatus(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationsStatusRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
@@ -326,10 +330,11 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary> Returns the translation status for a specific document based on the request Id and document Id. </summary>
+        /// <summary> Returns the status for a specific document. </summary>
         /// <param name="id"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the translation status for a specific document based on the request Id and document Id. </remarks>
         public async Task<ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders>> GetDocumentStatusAsync(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentStatusRequest(id, documentId);
@@ -349,10 +354,11 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary> Returns the translation status for a specific document based on the request Id and document Id. </summary>
+        /// <summary> Returns the status for a specific document. </summary>
         /// <param name="id"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the translation status for a specific document based on the request Id and document Id. </remarks>
         public ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders> GetDocumentStatus(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentStatusRequest(id, documentId);
@@ -387,12 +393,13 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
-        /// Returns the status for a document translation request.
-        /// The status includes the overall request status, as well as the status for documents that are being translated as part of that request.
-        /// </summary>
+        /// <summary> Returns the status for a document translation request. </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// Returns the status for a document translation request.
+        /// The status includes the overall request status, as well as the status for documents that are being translated as part of that request.
+        /// </remarks>
         public async Task<ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationStatusRequest(id);
@@ -412,12 +419,13 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
-        /// Returns the status for a document translation request.
-        /// The status includes the overall request status, as well as the status for documents that are being translated as part of that request.
-        /// </summary>
+        /// <summary> Returns the status for a document translation request. </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// Returns the status for a document translation request.
+        /// The status includes the overall request status, as well as the status for documents that are being translated as part of that request.
+        /// </remarks>
         public ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationStatusRequest(id);
@@ -452,15 +460,16 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
+        /// <summary> Cancel a currently processing or queued translation. </summary>
+        /// <param name="id"> Format - uuid.  The operation-id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         /// Cancel a currently processing or queued translation.
         /// Cancel a currently processing or queued translation.
         /// A translation will not be cancelled if it is already completed or failed or cancelling. A bad request will be returned.
         /// All documents that have completed translation will not be cancelled and will be charged.
         /// All pending documents will be cancelled if possible.
-        /// </summary>
-        /// <param name="id"> Format - uuid.  The operation-id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public async Task<Response<TranslationStatusResult>> CancelTranslationAsync(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelTranslationRequest(id);
@@ -479,15 +488,16 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
+        /// <summary> Cancel a currently processing or queued translation. </summary>
+        /// <param name="id"> Format - uuid.  The operation-id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         /// Cancel a currently processing or queued translation.
         /// Cancel a currently processing or queued translation.
         /// A translation will not be cancelled if it is already completed or failed or cancelling. A bad request will be returned.
         /// All documents that have completed translation will not be cancelled and will be charged.
         /// All pending documents will be cancelled if possible.
-        /// </summary>
-        /// <param name="id"> Format - uuid.  The operation-id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public Response<TranslationStatusResult> CancelTranslation(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelTranslationRequest(id);
@@ -554,28 +564,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
-        /// Returns the status for all documents in a batch document translation request.
-        ///             
-        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
-        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns the status for all documents in a batch document translation request. </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="top">
         /// $top indicates the total number of records the user wants to be returned across all pages.
@@ -604,6 +593,28 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// Returns the status for all documents in a batch document translation request.
+        ///             
+        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
+        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public async Task<ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusAsync(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
@@ -623,28 +634,7 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
-        /// Returns the status for all documents in a batch document translation request.
-        ///             
-        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
-        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns the status for all documents in a batch document translation request. </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="top">
         /// $top indicates the total number of records the user wants to be returned across all pages.
@@ -673,6 +663,28 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// Returns the status for all documents in a batch document translation request.
+        ///             
+        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
+        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatus(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
@@ -706,11 +718,12 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
+        /// <summary> Returns a list of supported document formats. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         /// The list of supported document formats supported by the Document Translation service.
         /// The list includes the common file extension, as well as the content-type if using the upload API.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public async Task<ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedDocumentFormatsRequest();
@@ -730,11 +743,12 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
+        /// <summary> Returns a list of supported document formats. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         /// The list of supported document formats supported by the Document Translation service.
         /// The list includes the common file extension, as well as the content-type if using the upload API.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedDocumentFormatsRequest();
@@ -768,11 +782,12 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
+        /// <summary> Returns the list of supported glossary formats. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         /// The list of supported glossary formats supported by the Document Translation service.
         /// The list includes the common file extension used.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public async Task<ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedGlossaryFormatsRequest();
@@ -792,11 +807,12 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
+        /// <summary> Returns the list of supported glossary formats. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
         /// The list of supported glossary formats supported by the Document Translation service.
         /// The list includes the common file extension used.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// </remarks>
         public ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedGlossaryFormatsRequest();
@@ -830,8 +846,9 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary> Returns a list of storage sources/options supported by the Document Translation service. </summary>
+        /// <summary> Returns a list of supported storage sources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns a list of storage sources/options supported by the Document Translation service. </remarks>
         public async Task<ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders>> GetSupportedStorageSourcesAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedStorageSourcesRequest();
@@ -851,8 +868,9 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary> Returns a list of storage sources/options supported by the Document Translation service. </summary>
+        /// <summary> Returns a list of supported storage sources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns a list of storage sources/options supported by the Document Translation service. </remarks>
         public ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders> GetSupportedStorageSources(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedStorageSourcesRequest();
@@ -886,31 +904,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
-        /// Returns a list of batch requests submitted and the status for each request.
-        /// This list only contains batch requests submitted by the user (based on the resource).
-        ///             
-        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
-        /// The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns a list of batch requests submitted and the status for each request. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="top">
         /// $top indicates the total number of records the user wants to be returned across all pages.
@@ -940,6 +934,31 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks>
+        /// Returns a list of batch requests submitted and the status for each request.
+        /// This list only contains batch requests submitted by the user (based on the resource).
+        ///             
+        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
+        /// The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public async Task<ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusNextPageAsync(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -964,31 +983,7 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
-        /// Returns a list of batch requests submitted and the status for each request.
-        /// This list only contains batch requests submitted by the user (based on the resource).
-        ///             
-        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
-        /// The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns a list of batch requests submitted and the status for each request. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="top">
         /// $top indicates the total number of records the user wants to be returned across all pages.
@@ -1018,6 +1013,31 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks>
+        /// Returns a list of batch requests submitted and the status for each request.
+        /// This list only contains batch requests submitted by the user (based on the resource).
+        ///             
+        /// If the number of requests exceeds our paging limit, server-side paging is used. Paginated responses indicate a partial result and include a continuation token in the response.
+        /// The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of batches based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// The server honors the values specified by the client. However, clients must be prepared to handle responses that contain a different page size or contain a continuation token.
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatusNextPage(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1056,28 +1076,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        /// <summary>
-        /// Returns the status for all documents in a batch document translation request.
-        ///             
-        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
-        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns the status for all documents in a batch document translation request. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="top">
@@ -1108,6 +1107,28 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks>
+        /// Returns the status for all documents in a batch document translation request.
+        ///             
+        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
+        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public async Task<ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusNextPageAsync(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1132,28 +1153,7 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        /// <summary>
-        /// Returns the status for all documents in a batch document translation request.
-        ///             
-        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
-        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
-        ///             
-        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
-        ///             
-        /// $top indicates the total number of records the user wants to be returned across all pages.
-        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
-        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
-        ///             
-        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
-        /// The default sorting is descending by createdDateTimeUtc.
-        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
-        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
-        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
-        ///             
-        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
-        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
-        /// This reduces the risk of the client making assumptions about the data returned.
-        /// </summary>
+        /// <summary> Returns the status for all documents in a batch document translation request. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="top">
@@ -1184,6 +1184,28 @@ namespace Azure.AI.Translation.Document
         /// <param name="orderBy"> the sorting query for the collection (ex: &apos;CreatedDateTimeUtc asc&apos;, &apos;CreatedDateTimeUtc desc&apos;). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks>
+        /// Returns the status for all documents in a batch document translation request.
+        ///             
+        /// If the number of documents in the response exceeds our paging limit, server-side paging is used.
+        /// Paginated responses indicate a partial result and include a continuation token in the response. The absence of a continuation token means that no additional pages are available.
+        ///             
+        /// $top, $skip and $maxpagesize query parameters can be used to specify a number of results to return and an offset for the collection.
+        ///             
+        /// $top indicates the total number of records the user wants to be returned across all pages.
+        /// $skip indicates the number of records to skip from the list of document status held by the server based on the sorting method specified.  By default, we sort by descending start time.
+        /// $maxpagesize is the maximum items returned in a page.  If more items are requested via $top (or $top is not specified and there are more items to be returned), @nextLink will contain the link to the next page.
+        ///             
+        /// $orderBy query parameter can be used to sort the returned list (ex &quot;$orderBy=createdDateTimeUtc asc&quot; or &quot;$orderBy=createdDateTimeUtc desc&quot;).
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query parameters can be used to filter the returned list (ex: &quot;status=Succeeded,Cancelled&quot;) will only return succeeded and cancelled documents.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used combined or separately to specify a range of datetime to filter the returned list by.
+        /// The supported filtering query parameters are (status, ids, createdDateTimeUtcStart, createdDateTimeUtcEnd).
+        ///             
+        /// When both $top and $skip are included, the server should first apply $skip and then $top on the collection.
+        /// Note: If the server can&apos;t honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
+        /// This reduces the risk of the client making assumptions about the data returned.
+        /// </remarks>
         public ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatusNextPage(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

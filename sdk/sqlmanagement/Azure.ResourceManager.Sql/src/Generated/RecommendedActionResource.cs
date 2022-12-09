@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
     /// A Class representing a RecommendedAction along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecommendedActionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetRecommendedActionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServerDatabaseAdvisorResource" /> using the GetRecommendedAction method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseAdvisorResource" /> using the GetRecommendedAction method.
     /// </summary>
     public partial class RecommendedActionResource : ArmResource
     {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ConnectionMonitorTestConfiguration(string name, ConnectionMonitorTestConfigurationProtocol protocol)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Protocol = protocol;
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tcpConfiguration"> The parameters used to perform test evaluation over TCP. </param>
         /// <param name="icmpConfiguration"> The parameters used to perform test evaluation over ICMP. </param>
         /// <param name="successThreshold"> The threshold for declaring a test successful. </param>
-        internal ConnectionMonitorTestConfiguration(string name, int? testFrequencySec, ConnectionMonitorTestConfigurationProtocol protocol, PreferredIPVersion? preferredIPVersion, ConnectionMonitorHttpConfiguration httpConfiguration, ConnectionMonitorTcpConfiguration tcpConfiguration, ConnectionMonitorIcmpConfiguration icmpConfiguration, ConnectionMonitorSuccessThreshold successThreshold)
+        internal ConnectionMonitorTestConfiguration(string name, int? testFrequencySec, ConnectionMonitorTestConfigurationProtocol protocol, TestEvalPreferredIPVersion? preferredIPVersion, ConnectionMonitorHttpConfiguration httpConfiguration, ConnectionMonitorTcpConfiguration tcpConfiguration, ConnectionMonitorIcmpConfiguration icmpConfiguration, ConnectionMonitorSuccessThreshold successThreshold)
         {
             Name = name;
             TestFrequencySec = testFrequencySec;
@@ -55,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The protocol to use in test evaluation. </summary>
         public ConnectionMonitorTestConfigurationProtocol Protocol { get; set; }
         /// <summary> The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters. </summary>
-        public PreferredIPVersion? PreferredIPVersion { get; set; }
+        public TestEvalPreferredIPVersion? PreferredIPVersion { get; set; }
         /// <summary> The parameters used to perform test evaluation over HTTP. </summary>
         public ConnectionMonitorHttpConfiguration HttpConfiguration { get; set; }
         /// <summary> The parameters used to perform test evaluation over TCP. </summary>

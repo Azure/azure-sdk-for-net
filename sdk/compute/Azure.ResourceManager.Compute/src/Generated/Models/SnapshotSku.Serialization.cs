@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SnapshotSku DeserializeSnapshotSku(JsonElement element)
         {
-            Optional<SnapshotStorageAccountTypes> name = default;
+            Optional<SnapshotStorageAccountType> name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new SnapshotStorageAccountTypes(property.Value.GetString());
+                    name = new SnapshotStorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))

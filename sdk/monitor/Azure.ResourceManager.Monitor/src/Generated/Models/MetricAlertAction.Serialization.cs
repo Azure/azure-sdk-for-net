@@ -37,13 +37,18 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricAlertAction DeserializeMetricAlertAction(JsonElement element)
         {
-            Optional<string> actionGroupId = default;
+            Optional<ResourceIdentifier> actionGroupId = default;
             Optional<IDictionary<string, string>> webHookProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroupId"))
                 {
-                    actionGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    actionGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("webHookProperties"))

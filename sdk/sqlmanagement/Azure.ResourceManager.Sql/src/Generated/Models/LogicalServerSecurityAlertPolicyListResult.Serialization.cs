@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static LogicalServerSecurityAlertPolicyListResult DeserializeLogicalServerSecurityAlertPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerSecurityAlertPolicyData>> value = default;
+            Optional<IReadOnlyList<SqlServerSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerSecurityAlertPolicyData> array = new List<ServerSecurityAlertPolicyData>();
+                    List<SqlServerSecurityAlertPolicyData> array = new List<SqlServerSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(item));
+                        array.Add(SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(item));
                     }
                     value = array;
                     continue;

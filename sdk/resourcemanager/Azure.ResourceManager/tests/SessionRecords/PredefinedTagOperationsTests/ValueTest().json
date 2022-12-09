@@ -6,34 +6,43 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2b26153ace4dd146bf87abbb54543553-1060491272b59a47-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "39b40d35884a2453a616d274cf3032bc",
+        "traceparent": "00-8b605a80fe058141875d512d59fe67bf-a12c01fcd15c9547-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "bebf5a53627ee975f2f482a34fea7418",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "468",
+        "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 17 Jan 2022 02:23:32 GMT",
+        "Date": "Thu, 23 Jun 2022 03:48:59 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "bc7eec0c-b0cc-4d0b-a6e6-0eb33987689b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11922",
-        "x-ms-request-id": "bc7eec0c-b0cc-4d0b-a6e6-0eb33987689b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022333Z:bc7eec0c-b0cc-4d0b-a6e6-0eb33987689b"
+        "x-ms-correlation-request-id": "f9442890-0888-4893-b4a4-9e5492367976",
+        "x-ms-ratelimit-remaining-subscription-reads": "11953",
+        "x-ms-request-id": "f9442890-0888-4893-b4a4-9e5492367976",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034859Z:f9442890-0888-4893-b4a4-9e5492367976"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
         },
         "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
@@ -47,13 +56,15 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "ec7bf6031c13ebc7417b1139a7b52e9b",
+        "Content-Length": "0",
+        "traceparent": "00-cc0d4971fa1bdc4582f59941183ec570-d39f83fd2898c74b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2f59246c00919f8498c5f4955d33c64f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -62,19 +73,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "152",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 17 Jan 2022 02:23:34 GMT",
+        "Date": "Thu, 23 Jun 2022 03:49:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2a6e4f15-41cc-4bc8-90d3-65f3fa53ac4e",
-        "x-ms-ratelimit-remaining-subscription-writes": "1184",
-        "x-ms-request-id": "2a6e4f15-41cc-4bc8-90d3-65f3fa53ac4e",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022335Z:2a6e4f15-41cc-4bc8-90d3-65f3fa53ac4e"
+        "x-ms-correlation-request-id": "b8e6ceba-cfc8-42af-b8b4-6392e8ea415e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1182",
+        "x-ms-request-id": "b8e6ceba-cfc8-42af-b8b4-6392e8ea415e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034900Z:b8e6ceba-cfc8-42af-b8b4-6392e8ea415e"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344",
-        "tagName": "tagName6344",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398",
+        "tagName": "tagName9398",
         "count": {
           "type": "Total",
           "value": 0
@@ -83,13 +94,15 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344/tagValues/testValue?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398/tagValues/testValue?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "f4efbb5b20d399eade32fd98cdaea934",
+        "Content-Length": "0",
+        "traceparent": "00-fb2ce7ef5042c240aed6b5bcf7cd5751-9768011f636e2e48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "71f2cf51466bea46a01a2dac4941e0dc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -98,18 +111,18 @@
         "Cache-Control": "no-cache",
         "Content-Length": "159",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 17 Jan 2022 02:23:36 GMT",
+        "Date": "Thu, 23 Jun 2022 03:49:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9a40f5ae-8b31-4447-8dd8-26cd4639d131",
-        "x-ms-ratelimit-remaining-subscription-writes": "1183",
-        "x-ms-request-id": "9a40f5ae-8b31-4447-8dd8-26cd4639d131",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022337Z:9a40f5ae-8b31-4447-8dd8-26cd4639d131"
+        "x-ms-correlation-request-id": "dc6726b1-4ac9-459f-9314-07365835754e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1181",
+        "x-ms-request-id": "dc6726b1-4ac9-459f-9314-07365835754e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034902Z:dc6726b1-4ac9-459f-9314-07365835754e"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344/tagValues/testValue",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398/tagValues/testValue",
         "tagValue": "testValue",
         "count": {
           "type": "Total",
@@ -118,13 +131,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344/tagValues/testValue?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398/tagValues/testValue?api-version=2021-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "77bf4984f83918cb46c9f7cf77197df0",
+        "traceparent": "00-dba35761ba159c4d9e9870f4f34d8525-b0bd68800b181143-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6a1f01b11f5b5379d51f25b96de08cbe",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -132,17 +146,17 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 17 Jan 2022 02:23:38 GMT",
+        "Date": "Thu, 23 Jun 2022 03:49:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2ea2b437-91df-4a3f-9cf5-59084994ce34",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14986",
-        "x-ms-request-id": "2ea2b437-91df-4a3f-9cf5-59084994ce34",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022339Z:2ea2b437-91df-4a3f-9cf5-59084994ce34"
+        "x-ms-correlation-request-id": "899a603c-91e6-438c-85c4-415d62c4a468",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14984",
+        "x-ms-request-id": "899a603c-91e6-438c-85c4-415d62c4a468",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034904Z:899a603c-91e6-438c-85c4-415d62c4a468"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames?api-version=2021-04-01",
@@ -150,25 +164,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "131837e73d41e3e90ce10ee01f2f1d93",
+        "traceparent": "00-7f53fbad93482947a4bc7258d01cca47-e14deed34c217648-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8051322e03f726acdd6f8f77d2d75657",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4185",
+        "Content-Length": "7883",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 17 Jan 2022 02:23:39 GMT",
+        "Date": "Thu, 23 Jun 2022 03:49:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "66e7912b-e732-4f04-8580-18ffba27ac91",
-        "x-ms-ratelimit-remaining-subscription-reads": "11921",
-        "x-ms-request-id": "66e7912b-e732-4f04-8580-18ffba27ac91",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022339Z:66e7912b-e732-4f04-8580-18ffba27ac91"
+        "x-ms-correlation-request-id": "9d109983-1102-443c-85ca-a3025d217766",
+        "x-ms-ratelimit-remaining-subscription-reads": "11952",
+        "x-ms-request-id": "9d109983-1102-443c-85ca-a3025d217766",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034904Z:9d109983-1102-443c-85ca-a3025d217766"
       },
       "ResponseBody": {
         "value": [
@@ -219,6 +234,42 @@
               {
                 "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tag2/tagValues/value2",
                 "tagValue": "value2",
+                "count": {
+                  "type": "Total",
+                  "value": 2
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack",
+            "tagName": "azsecpack",
+            "count": {
+              "type": "Total",
+              "value": 2
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack/tagValues/nonprod",
+                "tagValue": "nonprod",
+                "count": {
+                  "type": "Total",
+                  "value": 2
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/platformsettings.host_environment.service.platform_optedin_for_rootcerts",
+            "tagName": "platformsettings.host_environment.service.platform_optedin_for_rootcerts",
+            "count": {
+              "type": "Total",
+              "value": 2
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/platformsettings.host_environment.service.platform_optedin_for_rootcerts/tagValues/true",
+                "tagValue": "true",
                 "count": {
                   "type": "Total",
                   "value": 2
@@ -285,7 +336,7 @@
             "tagName": "key1",
             "count": {
               "type": "Total",
-              "value": 5
+              "value": 10
             },
             "values": [
               {
@@ -293,7 +344,7 @@
                 "tagValue": "value1",
                 "count": {
                   "type": "Total",
-                  "value": 5
+                  "value": 10
                 }
               }
             ]
@@ -303,7 +354,7 @@
             "tagName": "key2",
             "count": {
               "type": "Total",
-              "value": 5
+              "value": 10
             },
             "values": [
               {
@@ -311,7 +362,7 @@
                 "tagValue": "value2",
                 "count": {
                   "type": "Total",
-                  "value": 5
+                  "value": 10
                 }
               }
             ]
@@ -339,7 +390,7 @@
             "tagName": "test",
             "count": {
               "type": "Total",
-              "value": 7
+              "value": 21
             },
             "values": [
               {
@@ -347,22 +398,22 @@
                 "tagValue": "env",
                 "count": {
                   "type": "Total",
-                  "value": 7
+                  "value": 21
                 }
               }
             ]
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey1",
-            "tagName": "tagKey1",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-9823",
+            "tagName": "TagKey-9823",
             "count": {
               "type": "Total",
               "value": 1
             },
             "values": [
               {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey1/tagValues/tagValue1",
-                "tagValue": "tagValue1",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-9823/tagValues/TagValue-566",
+                "tagValue": "TagValue-566",
                 "count": {
                   "type": "Total",
                   "value": 1
@@ -371,16 +422,178 @@
             ]
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey2",
-            "tagName": "tagKey2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3481",
+            "tagName": "TagKey-3481",
             "count": {
               "type": "Total",
               "value": 1
             },
             "values": [
               {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey2/tagValues/tagValue2",
-                "tagValue": "tagValue2",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3481/tagValues/TagValue-320",
+                "tagValue": "TagValue-320",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4926",
+            "tagName": "TagKey-4926",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4926/tagValues/TagValue-1187",
+                "tagValue": "TagValue-1187",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-751",
+            "tagName": "TagKey-751",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-751/tagValues/TagValue-3921",
+                "tagValue": "TagValue-3921",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-1866",
+            "tagName": "TagKey-1866",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-1866/tagValues/TagValue-8559",
+                "tagValue": "TagValue-8559",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3094",
+            "tagName": "TagKey-3094",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3094/tagValues/TagValue-9190",
+                "tagValue": "TagValue-9190",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-2449",
+            "tagName": "TagKey-2449",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-2449/tagValues/TagValue-9",
+                "tagValue": "TagValue-9",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-8379",
+            "tagName": "TagKey-8379",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-8379/tagValues/TagValue-164",
+                "tagValue": "TagValue-164",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-7470",
+            "tagName": "TagKey-7470",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-7470/tagValues/TagValue-2205",
+                "tagValue": "TagValue-2205",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4236",
+            "tagName": "TagKey-4236",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4236/tagValues/TagValue-3698",
+                "tagValue": "TagValue-3698",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-5316",
+            "tagName": "TagKey-5316",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-5316/tagValues/TagValue-2725",
+                "tagValue": "TagValue-2725",
                 "count": {
                   "type": "Total",
                   "value": 1
@@ -407,8 +620,8 @@
             "values": []
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344",
-            "tagName": "tagName6344",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398",
+            "tagName": "tagName9398",
             "count": {
               "type": "Total",
               "value": 0
@@ -424,25 +637,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "5eb5ddd1b7f66361efd7ae09291a21c4",
+        "traceparent": "00-db77e509e8e7a3469cb602c892142da4-5e177c039ba9c341-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5be418e55b1432f3569f9b4c208d7dc0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4185",
+        "Content-Length": "7883",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 17 Jan 2022 02:23:39 GMT",
+        "Date": "Thu, 23 Jun 2022 03:49:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "29850a96-2cce-40ab-b347-d56ca1f8f7a1",
-        "x-ms-ratelimit-remaining-subscription-reads": "11920",
-        "x-ms-request-id": "29850a96-2cce-40ab-b347-d56ca1f8f7a1",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022340Z:29850a96-2cce-40ab-b347-d56ca1f8f7a1"
+        "x-ms-correlation-request-id": "fb786fdc-01ed-491a-886c-707860d4ffed",
+        "x-ms-ratelimit-remaining-subscription-reads": "11951",
+        "x-ms-request-id": "fb786fdc-01ed-491a-886c-707860d4ffed",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034905Z:fb786fdc-01ed-491a-886c-707860d4ffed"
       },
       "ResponseBody": {
         "value": [
@@ -493,6 +707,42 @@
               {
                 "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tag2/tagValues/value2",
                 "tagValue": "value2",
+                "count": {
+                  "type": "Total",
+                  "value": 2
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack",
+            "tagName": "azsecpack",
+            "count": {
+              "type": "Total",
+              "value": 2
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack/tagValues/nonprod",
+                "tagValue": "nonprod",
+                "count": {
+                  "type": "Total",
+                  "value": 2
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/platformsettings.host_environment.service.platform_optedin_for_rootcerts",
+            "tagName": "platformsettings.host_environment.service.platform_optedin_for_rootcerts",
+            "count": {
+              "type": "Total",
+              "value": 2
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/platformsettings.host_environment.service.platform_optedin_for_rootcerts/tagValues/true",
+                "tagValue": "true",
                 "count": {
                   "type": "Total",
                   "value": 2
@@ -559,7 +809,7 @@
             "tagName": "key1",
             "count": {
               "type": "Total",
-              "value": 5
+              "value": 10
             },
             "values": [
               {
@@ -567,7 +817,7 @@
                 "tagValue": "value1",
                 "count": {
                   "type": "Total",
-                  "value": 5
+                  "value": 10
                 }
               }
             ]
@@ -577,7 +827,7 @@
             "tagName": "key2",
             "count": {
               "type": "Total",
-              "value": 5
+              "value": 10
             },
             "values": [
               {
@@ -585,7 +835,7 @@
                 "tagValue": "value2",
                 "count": {
                   "type": "Total",
-                  "value": 5
+                  "value": 10
                 }
               }
             ]
@@ -613,7 +863,7 @@
             "tagName": "test",
             "count": {
               "type": "Total",
-              "value": 7
+              "value": 21
             },
             "values": [
               {
@@ -621,22 +871,22 @@
                 "tagValue": "env",
                 "count": {
                   "type": "Total",
-                  "value": 7
+                  "value": 21
                 }
               }
             ]
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey1",
-            "tagName": "tagKey1",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-9823",
+            "tagName": "TagKey-9823",
             "count": {
               "type": "Total",
               "value": 1
             },
             "values": [
               {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey1/tagValues/tagValue1",
-                "tagValue": "tagValue1",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-9823/tagValues/TagValue-566",
+                "tagValue": "TagValue-566",
                 "count": {
                   "type": "Total",
                   "value": 1
@@ -645,16 +895,178 @@
             ]
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey2",
-            "tagName": "tagKey2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3481",
+            "tagName": "TagKey-3481",
             "count": {
               "type": "Total",
               "value": 1
             },
             "values": [
               {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagKey2/tagValues/tagValue2",
-                "tagValue": "tagValue2",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3481/tagValues/TagValue-320",
+                "tagValue": "TagValue-320",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4926",
+            "tagName": "TagKey-4926",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4926/tagValues/TagValue-1187",
+                "tagValue": "TagValue-1187",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-751",
+            "tagName": "TagKey-751",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-751/tagValues/TagValue-3921",
+                "tagValue": "TagValue-3921",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-1866",
+            "tagName": "TagKey-1866",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-1866/tagValues/TagValue-8559",
+                "tagValue": "TagValue-8559",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3094",
+            "tagName": "TagKey-3094",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-3094/tagValues/TagValue-9190",
+                "tagValue": "TagValue-9190",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-2449",
+            "tagName": "TagKey-2449",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-2449/tagValues/TagValue-9",
+                "tagValue": "TagValue-9",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-8379",
+            "tagName": "TagKey-8379",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-8379/tagValues/TagValue-164",
+                "tagValue": "TagValue-164",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-7470",
+            "tagName": "TagKey-7470",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-7470/tagValues/TagValue-2205",
+                "tagValue": "TagValue-2205",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4236",
+            "tagName": "TagKey-4236",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-4236/tagValues/TagValue-3698",
+                "tagValue": "TagValue-3698",
+                "count": {
+                  "type": "Total",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-5316",
+            "tagName": "TagKey-5316",
+            "count": {
+              "type": "Total",
+              "value": 1
+            },
+            "values": [
+              {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/TagKey-5316/tagValues/TagValue-2725",
+                "tagValue": "TagValue-2725",
                 "count": {
                   "type": "Total",
                   "value": 1
@@ -681,8 +1093,8 @@
             "values": []
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344",
-            "tagName": "tagName6344",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398",
+            "tagName": "tagName9398",
             "count": {
               "type": "Total",
               "value": 0
@@ -693,13 +1105,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName6344?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/tagName9398?api-version=2021-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220117.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "96b00db4959546f25fdb6a58e9eaf916",
+        "traceparent": "00-fd23ca804f65b648a2a05f3742c4ff63-b1e172198b695744-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "167e6f8e60efade455f88dec900180fe",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -707,22 +1120,22 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 17 Jan 2022 02:23:40 GMT",
+        "Date": "Thu, 23 Jun 2022 03:49:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d7790436-06c5-4775-add8-40a559f89bf2",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14985",
-        "x-ms-request-id": "d7790436-06c5-4775-add8-40a559f89bf2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220117T022341Z:d7790436-06c5-4775-add8-40a559f89bf2"
+        "x-ms-correlation-request-id": "2f03944f-71a6-4daf-b106-44749e880a2f",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14983",
+        "x-ms-request-id": "2f03944f-71a6-4daf-b106-44749e880a2f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034906Z:2f03944f-71a6-4daf-b106-44749e880a2f"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "377403337",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "221161504",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

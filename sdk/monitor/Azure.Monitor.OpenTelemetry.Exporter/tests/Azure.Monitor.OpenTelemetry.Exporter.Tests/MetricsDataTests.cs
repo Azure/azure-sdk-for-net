@@ -41,7 +41,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 name = "TestGauge";
                 meter.CreateObservableGauge(name, () => 123.45);
-                dataPointType = DataPointType.Measurement;
             }
 
             provider.ForceFlush();
@@ -53,10 +52,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(2, metricData.Version);
             Assert.Equal(name, metricData.Metrics.First().Name);
+            Assert.Equal(nameof(ValidateZeroDimension), metricData.Metrics.First().Namespace);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
-            Assert.Equal(dataPointType, metricData.Metrics.First().DataPointType);
-            // Properties will contain _MS.AggregationIntervalMs
-            Assert.Equal(1, metricData.Properties.Count);
+            Assert.Null(metricData.Metrics.First().DataPointType);
         }
 
         [InlineData(MetricType.DoubleSum)]
@@ -89,7 +87,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     {
                     new(123.45, new KeyValuePair<string, object>("tag", "value")),
                     });
-                dataPointType = DataPointType.Measurement;
             }
 
             provider.ForceFlush();
@@ -101,8 +98,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(2, metricData.Version);
             Assert.Equal(name, metricData.Metrics.First().Name);
+            Assert.Equal(nameof(ValidateOneDimension), metricData.Metrics.First().Namespace);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
-            Assert.Equal(dataPointType, metricData.Metrics.First().DataPointType);
+            Assert.Null(metricData.Metrics.First().DataPointType);
             Assert.Equal("value", metricData.Properties["tag"]);
         }
 
@@ -128,8 +126,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var metricPoint = enumerator.Current;
 
             var metricData = new MetricsData(Version, metrics[0], metricPoint);
+            Assert.Equal(nameof(ValidateSumDoubles), metricData.Metrics.First().Namespace);
             Assert.Equal(double.PositiveInfinity, metricData.Metrics.First().Value);
-            Assert.Equal(DataPointType.Aggregation, metricData.Metrics.First().DataPointType);
+            Assert.Null(metricData.Metrics.First().DataPointType);
         }
 
         [Fact]
@@ -173,6 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             enumerator.MoveNext();
             metricPoint = enumerator.Current;
             metricData = new MetricsData(Version, metrics[2], metricPoint);
+            Assert.Equal(nameof(ValidateLimits), metricData.Metrics.First().Namespace);
             Assert.Equal(double.NaN, metricData.Metrics.First().Value);
         }
 

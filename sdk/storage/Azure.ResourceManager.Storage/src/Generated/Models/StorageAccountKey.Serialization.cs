@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<string> keyName = default;
             Optional<string> value = default;
-            Optional<KeyPermission> permissions = default;
+            Optional<StorageAccountKeyPermission> permissions = default;
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    permissions = property.Value.GetString().ToKeyPermission();
+                    permissions = property.Value.GetString().ToStorageAccountKeyPermission();
                     continue;
                 }
                 if (property.NameEquals("creationTime"))

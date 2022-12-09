@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,6 +52,21 @@ namespace Azure.Messaging.ServiceBus
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
+        /// The path of the Service Bus entity that the message was received from.
+        /// </summary>
+        public string EntityPath => _sessionReceiver.EntityPath;
+
+        /// <summary>
+        /// The identifier of the <see cref="ServiceBusSessionProcessor"/>.
+        /// </summary>
+        public string Identifier { get; }
+
+        /// <summary>
+        /// The fully qualified Service Bus namespace that the message was received from.
+        /// </summary>
+        public string FullyQualifiedNamespace => _sessionReceiver.FullyQualifiedNamespace;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
         /// </summary>
         ///
@@ -57,12 +74,31 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
         /// for the args.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
             ServiceBusSessionReceiver receiver,
             CancellationToken cancellationToken) : this(message, manager: null, cancellationToken)
         {
             _sessionReceiver = receiver;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
+        /// </summary>
+        ///
+        /// <param name="message">The current <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
+        /// for the args.</param>
+        /// <param name="identifier">The identifier of the processor.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        public ProcessSessionMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            ServiceBusSessionReceiver receiver,
+            string identifier,
+            CancellationToken cancellationToken) : this(message, receiver, cancellationToken)
+        {
+            Identifier = identifier;
         }
 
         internal ProcessSessionMessageEventArgs(
@@ -77,6 +113,16 @@ namespace Azure.Messaging.ServiceBus
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
             _receiveActions = new ProcessorReceiveActions(message, manager, false);
             CancellationToken = cancellationToken;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal ProcessSessionMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            SessionReceiverManager manager,
+            string identifier,
+            CancellationToken cancellationToken) : this(message, manager, cancellationToken)
+        {
+            Identifier = identifier;
         }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
@@ -143,6 +189,24 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
+        /// <inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
+            ServiceBusReceivedMessage message,
+            Dictionary<string, object> propertiesToModify,
+            string deadLetterReason,
+            string deadLetterErrorDescription = default,
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.DeadLetterMessageAsync(
+                message,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterErrorDescription,
+                cancellationToken)
+            .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
+
         /// <inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
@@ -167,7 +231,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual void ReleaseSession() =>
             // manager will be null if instance created using the public constructor which is exposed for testing purposes
-            _manager?.CancelSession();
+            // This will be awaited when closing the receiver.
+            _ = _manager?.CancelAsync();
 
         ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)

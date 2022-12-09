@@ -34,8 +34,7 @@ namespace Azure.Storage
             Stream contentStream,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             string operationName,
             bool async,
             CancellationToken cancellationToken);
@@ -43,8 +42,7 @@ namespace Azure.Storage
             long offset,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
@@ -93,11 +91,10 @@ namespace Azure.Storage
         /// </summary>
         private readonly long? _blockSize;
 
-        ///// <summary>
-        ///// Hashing options to use for paritioned upload calls.
-        ///// </summary>
-        // TODO #27253
-        //private readonly UploadTransactionalHashingOptions _hashingOptions;
+        /// <summary>
+        /// Hashing options to use for paritioned upload calls.
+        /// </summary>
+        private readonly UploadTransferValidationOptions _validationOptions;
 
         /// <summary>
         /// The name of the calling operaiton.
@@ -107,7 +104,7 @@ namespace Azure.Storage
         public PartitionedUploader(
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions transferValidation,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {
@@ -155,13 +152,12 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
-            // TODO #27253
-            //_hashingOptions = hashingOptions;
-            // partitioned uploads don't support pre-calculated hashes
-            //if (_hashingOptions?.PrecalculatedHash != default)
-            //{
-            //    throw Errors.PrecalculatedHashNotSupportedOnSplit();
-            //}
+            _validationOptions = transferValidation;
+            //partitioned uploads don't support pre-calculated hashes
+            if (!(_validationOptions?.PrecalculatedChecksum.IsEmpty ?? true))
+            {
+                throw Errors.PrecalculatedHashNotSupportedOnSplit();
+            }
 
             _operationName = operationName;
         }
@@ -217,8 +213,7 @@ namespace Azure.Storage
                     content,
                     args,
                     progressHandler,
-                    // TODO #27253
-                    //_hashingOptions,
+                    _validationOptions,
                     _operationName,
                     async,
                     cancellationToken)
@@ -483,8 +478,7 @@ namespace Azure.Storage
                     offset,
                     args,
                     progressHandler,
-                    // TODO #27253
-                    //_hashingOptions,
+                    _validationOptions,
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);

@@ -23,24 +23,24 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         private const string MD5Value = "MD5";
-        private const string SHA1Value = "SHA1";
-        private const string SHA256Value = "SHA256";
-        private const string Gcmaes128Value = "GCMAES128";
-        private const string Gcmaes192Value = "GCMAES192";
-        private const string Gcmaes256Value = "GCMAES256";
+        private const string Sha1Value = "SHA1";
+        private const string Sha256Value = "SHA256";
+        private const string Sha384Value = "SHA384";
+        private const string GcmAes256Value = "GCMAES256";
+        private const string GcmAes128Value = "GCMAES128";
 
         /// <summary> MD5. </summary>
         public static IPsecIntegrity MD5 { get; } = new IPsecIntegrity(MD5Value);
         /// <summary> SHA1. </summary>
-        public static IPsecIntegrity SHA1 { get; } = new IPsecIntegrity(SHA1Value);
+        public static IPsecIntegrity Sha1 { get; } = new IPsecIntegrity(Sha1Value);
         /// <summary> SHA256. </summary>
-        public static IPsecIntegrity SHA256 { get; } = new IPsecIntegrity(SHA256Value);
-        /// <summary> GCMAES128. </summary>
-        public static IPsecIntegrity Gcmaes128 { get; } = new IPsecIntegrity(Gcmaes128Value);
-        /// <summary> GCMAES192. </summary>
-        public static IPsecIntegrity Gcmaes192 { get; } = new IPsecIntegrity(Gcmaes192Value);
+        public static IPsecIntegrity Sha256 { get; } = new IPsecIntegrity(Sha256Value);
+        /// <summary> SHA384. </summary>
+        public static IPsecIntegrity Sha384 { get; } = new IPsecIntegrity(Sha384Value);
         /// <summary> GCMAES256. </summary>
-        public static IPsecIntegrity Gcmaes256 { get; } = new IPsecIntegrity(Gcmaes256Value);
+        public static IPsecIntegrity GcmAes256 { get; } = new IPsecIntegrity(GcmAes256Value);
+        /// <summary> GCMAES128. </summary>
+        public static IPsecIntegrity GcmAes128 { get; } = new IPsecIntegrity(GcmAes128Value);
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are the same. </summary>
         public static bool operator ==(IPsecIntegrity left, IPsecIntegrity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are not the same. </summary>

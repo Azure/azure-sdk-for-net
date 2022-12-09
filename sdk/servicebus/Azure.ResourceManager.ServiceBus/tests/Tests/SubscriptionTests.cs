@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 DefaultMessageTimeToLive = TimeSpan.Parse("00:05:00"),
                 DeadLetteringOnMessageExpiration = true,
                 MaxDeliveryCount = 14,
-                Status = EntityStatus.Active,
+                Status = ServiceBusMessagingEntityStatus.Active,
                 AutoDeleteOnIdle = TimeSpan.Parse("00:07:00"),
                 DeadLetteringOnFilterEvaluationExceptions = true
             };
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             serviceBusSubscription = await serviceBusSubscriptionCollection.GetAsync(subscriptionName);
             Assert.NotNull(serviceBusSubscription);
             Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
-            Assert.AreEqual(serviceBusSubscription.Data.Status, EntityStatus.Active);
+            Assert.AreEqual(serviceBusSubscription.Data.Status, ServiceBusMessagingEntityStatus.Active);
 
             //get all subscriptions
             List<ServiceBusSubscriptionResource> serviceBusSubscriptions = await serviceBusSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, updateParameters)).Value;
             Assert.NotNull(serviceBusSubscription);
             Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
-            Assert.AreEqual(serviceBusSubscription.Data.Status, EntityStatus.Active);
+            Assert.AreEqual(serviceBusSubscription.Data.Status, ServiceBusMessagingEntityStatus.Active);
             Assert.IsTrue(serviceBusSubscription.Data.EnableBatchedOperations);
             Assert.AreEqual(serviceBusSubscription.Data.ForwardTo, topicName1);
 

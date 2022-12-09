@@ -35,32 +35,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="tags">Tags of the partner registration
         /// resource.</param>
-        /// <param name="partnerTopicTypeName">Name of the partner topic
-        /// type.</param>
-        /// <param name="partnerTopicTypeDisplayName">Display name of the
-        /// partner topic type.</param>
-        /// <param name="partnerTopicTypeDescription">Description of the
-        /// partner topic type.</param>
-        /// <param name="setupUri">URI of the partner website that can be used
-        /// by Azure customers to setup Event Grid
-        /// integration on an event source.</param>
-        /// <param name="logoUri">URI of the partner logo.</param>
-        /// <param name="authorizedAzureSubscriptionIds">List of IDs of Azure
-        /// AD applications that are authorized to create a partner namespace
-        /// associated with this partner registration. This is an optional
-        /// property. Creating
-        /// partner namespaces is always permitted under the same Azure
-        /// subscription as the one used
-        /// for creating the partner registration.</param>
-        public PartnerRegistrationUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string partnerTopicTypeName = default(string), string partnerTopicTypeDisplayName = default(string), string partnerTopicTypeDescription = default(string), string setupUri = default(string), string logoUri = default(string), IList<string> authorizedAzureSubscriptionIds = default(IList<string>))
+        public PartnerRegistrationUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Tags = tags;
-            PartnerTopicTypeName = partnerTopicTypeName;
-            PartnerTopicTypeDisplayName = partnerTopicTypeDisplayName;
-            PartnerTopicTypeDescription = partnerTopicTypeDescription;
-            SetupUri = setupUri;
-            LogoUri = logoUri;
-            AuthorizedAzureSubscriptionIds = authorizedAzureSubscriptionIds;
             CustomInit();
         }
 
@@ -74,50 +51,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of the partner topic type.
-        /// </summary>
-        [JsonProperty(PropertyName = "partnerTopicTypeName")]
-        public string PartnerTopicTypeName { get; set; }
-
-        /// <summary>
-        /// Gets or sets display name of the partner topic type.
-        /// </summary>
-        [JsonProperty(PropertyName = "partnerTopicTypeDisplayName")]
-        public string PartnerTopicTypeDisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets description of the partner topic type.
-        /// </summary>
-        [JsonProperty(PropertyName = "partnerTopicTypeDescription")]
-        public string PartnerTopicTypeDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets URI of the partner website that can be used by Azure
-        /// customers to setup Event Grid
-        /// integration on an event source.
-        /// </summary>
-        [JsonProperty(PropertyName = "setupUri")]
-        public string SetupUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets URI of the partner logo.
-        /// </summary>
-        [JsonProperty(PropertyName = "logoUri")]
-        public string LogoUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of IDs of Azure AD applications that are
-        /// authorized to create a partner namespace
-        /// associated with this partner registration. This is an optional
-        /// property. Creating
-        /// partner namespaces is always permitted under the same Azure
-        /// subscription as the one used
-        /// for creating the partner registration.
-        /// </summary>
-        [JsonProperty(PropertyName = "authorizedAzureSubscriptionIds")]
-        public IList<string> AuthorizedAzureSubscriptionIds { get; set; }
 
     }
 }

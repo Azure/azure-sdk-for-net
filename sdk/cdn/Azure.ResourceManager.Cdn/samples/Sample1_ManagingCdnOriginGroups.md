@@ -100,7 +100,7 @@ CdnOriginGroupPatch input = new CdnOriginGroupPatch()
     {
         ProbePath = "/healthz",
         ProbeRequestType = HealthProbeRequestType.Head,
-        ProbeProtocol = ProbeProtocol.Https,
+        ProbeProtocol = HealthProbeProtocol.Https,
         ProbeIntervalInSeconds = 60
     }
 };
@@ -123,4 +123,4 @@ await originGroup.DeleteAsync(WaitUntil.Completed);
 
 
 ## Next steps
-Take a look at the [Managing Azure Front Door Rules](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingAfdRules.md) samples.
+Take a look at the [Managing Azure Front Door Rules](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingFrontDoorRules.md) samples.

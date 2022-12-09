@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     {
         private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
 
-        // Temporary solution since the one in Azure.ResourceManager.AppService is internal
+        // Temporary solution since the one in Azure.ResourceManager.Monitor is internal
         public static IDictionary<string, string> ReplaceWith(this IDictionary<string, string> dest, IDictionary<string, string> src)
         {
             dest.Clear();
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 EmailReceivers =
                 {
-                    new EmailReceiver("name", "a@b.c")
+                    new MonitorEmailReceiver("name", "a@b.c")
                 },
-                Enabled = true,
+                IsEnabled = true,
                 GroupShortName = "name"
             };
             return data;
@@ -67,22 +67,24 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static ActivityLogAlertData GetBasicActivityLogAlertData(AzureLocation location, string subID)
         {
-            IEnumerable<ActivityLogAlertLeafCondition> allOf;
-            allOf = new List<ActivityLogAlertLeafCondition>()
-            {
-                new ActivityLogAlertLeafCondition( "category", "Administrative"),
-                new ActivityLogAlertLeafCondition( "level", "Error")
-            };
             var data = new ActivityLogAlertData(location)
             {
                 Scopes =
                 {
                     subID
                 },
-                Condition = new ActivityLogAlertAllOfCondition(allOf),
-                Actions =
+                ConditionAllOf = new List<ActivityLogAlertAnyOfOrLeafCondition>()
                 {
-                    ActionGroups = {}
+                    new()
+                    {
+                        Field = "category",
+                        EqualsValue = "Administrative"
+                    },
+                    new()
+                    {
+                        Field = "level",
+                        EqualsValue = "Error"
+                    }
                 }
             };
             return data;
@@ -116,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 MetricName = "testrulemetric",
                 MetricNamespace = "Microsoft.Compute/virtualMachines",
                 ResourceLocation = location,
-                ResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01"
+                ResourceId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01")
             };
             //var ruleCondition = new ThresholdRuleCondition(
             //    "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria",
@@ -125,10 +127,10 @@ namespace Azure.ResourceManager.Monitor.Tests
             //    3.0,
             //    TimeSpan.FromMinutes(15),
             //    TimeAggregationOperator.Average);
-            var ruleCondition = new ThresholdRuleCondition(ConditionOperator.GreaterThan, 3.0)
+            var ruleCondition = new ThresholdRuleCondition(MonitorConditionOperator.GreaterThan, 3.0)
             {
                 WindowSize = TimeSpan.FromMinutes(15),
-                TimeAggregation = TimeAggregationOperator.Average,
+                TimeAggregation = ThresholdRuleConditionTimeAggregationType.Average,
                 DataSource = ruleDataSource
             };
             var data = new AlertRuleData(location, "testAlertRule", true, ruleCondition)
@@ -143,31 +145,42 @@ namespace Azure.ResourceManager.Monitor.Tests
         public static void AssertAutoscaleSetting(AutoscaleSettingData setting1, AutoscaleSettingData setting2)
         {
             AssertTrackedResource(setting1, setting2);
-            Assert.AreEqual(setting1.NamePropertiesName, setting2.NamePropertiesName);
+            Assert.AreEqual(setting1.AutoscaleSettingName, setting2.AutoscaleSettingName);
         }
 
         public static AutoscaleSettingData GetBasicAutoscaleSettingData(AzureLocation location)
         {
-            var fixDate = new TimeWindow("UTC", DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
-            var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
+            var fixDate = new MonitorTimeWindow(DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"))
+            {
+                TimeZone = "UTC"
+            };
+            var Schedule = new RecurrentSchedule("UTC-11", new MonitorDayOfWeek[] { "Monday" }, new[] { 0 }, new[] { 10 });
             var recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, Schedule);
-            ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
-            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892", "Eest US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
-            IList<ScaleRule> rules = new List<ScaleRule>()
+            var scaleCapacity = new MonitorScaleCapacity(1, 1, 1);
+            var metricTrigger = new MetricTrigger("AbandonMessage", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), MetricTriggerTimeAggregationType.Average, MetricTriggerComparisonOperation.GreaterThan, 70)
             {
-                new ScaleRule(metricTtigger, new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
+                MetricNamespace = "microsoft.servicebus/namespaces",
+                MetricResourceLocation = AzureLocation.EastUS2,
+                IsDividedPerInstance = false
             };
-            IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
-            {
-                //new AutoscaleProfile("Profiles2", scaleCapacity, rules)
-                new AutoscaleProfile("Profiles2", scaleCapacity, rules, fixDate, null),
-                new AutoscaleProfile("Profiles3", scaleCapacity, rules,null, recurrence),
-            };
+            var rules = new List<AutoscaleRule>()
+                {
+                    new(
+                        metricTrigger,
+                        new MonitorScaleAction(MonitorScaleDirection.Increase, MonitorScaleType.ServiceAllowedNextValue, TimeSpan.FromMinutes(5)) { Value = "1" }
+                    )
+                };
+            var profiles = new List<AutoscaleProfile>()
+                {
+                    //new AutoscaleProfile("Profiles2", scaleCapacity, rules)
+                    new AutoscaleProfile("Profiles2", scaleCapacity, rules, fixDate, null),
+                    new AutoscaleProfile("Profiles3", scaleCapacity, rules,null, recurrence),
+                };
             var data = new AutoscaleSettingData(location, profiles)
             {
-                Enabled = true,
+                IsEnabled = true,
                 TargetResourceLocation = location,
-                TargetResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
+                TargetResourceId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"),
                 /*Notifications =
                 {
                     new AutoscaleNotification()
@@ -193,25 +206,25 @@ namespace Azure.ResourceManager.Monitor.Tests
                         }
                     },
                 },*/
-                Tags = {},
+                Tags = { },
             };
             return data;
         }
         #endregion
 
         #region DiagnosticSettings
-        public static void AssertDiagnosticSetting(DiagnosticSettingsData data1, DiagnosticSettingsData data2)
+        public static void AssertDiagnosticSetting(DiagnosticSettingData data1, DiagnosticSettingData data2)
         {
             //AssertTrackedResource(data1, data2);
             Assert.AreEqual(data1.Id, data2.Id);
             Assert.AreEqual(data1.Name, data2.Name);
         }
 
-        public static DiagnosticSettingsData GetBasicDiagnosticSettingsData()
+        public static DiagnosticSettingData GetBasicDiagnosticSettingsData()
         {
-            var data = new DiagnosticSettingsData()
+            var data = new DiagnosticSettingData()
             {
-                StorageAccountId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/lockformonitor/providers/Microsoft.Storage/storageAccounts/testaccountforlog2",
+                StorageAccountId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/lockformonitor/providers/Microsoft.Storage/storageAccounts/testaccountforlog2"),
                 //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892/AuthorizationRules/testfordiagnostic",
                 //EventHubAuthorizationRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280/eventhubs/testfordiagnosticsetting/authorizationRules/testfordiagonst",
                 //EventHubName = "myeventhub",
@@ -248,12 +261,12 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static LogProfileData GetBasicLogProfileData(AzureLocation location)
         {
-            IEnumerable<string> locations = new List<string>()
+            var locations = new List<AzureLocation>()
             {
                 "global",
                 "eastus"
             };
-            IEnumerable<string> categories = new List<string>()
+            var categories = new List<string>()
             {
                 "Delete",
                 "write"
@@ -262,7 +275,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var data = new LogProfileData(location, locations, categories, retentionPolicy)
             {
                 //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892",
-                StorageAccountId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/deleteme0122/providers/Microsoft.Storage/storageAccounts/testlogaccount0129"
+                StorageAccountId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/deleteme0122/providers/Microsoft.Storage/storageAccounts/testlogaccount0129")
             };
             return data;
         }
@@ -284,10 +297,10 @@ namespace Azure.ResourceManager.Monitor.Tests
             };
             var metricAlertAction = new MetricAlertAction()
             {
-                ActionGroupId = actionGroup.Id.ToString(),
-                WebHookProperties = { new KeyValuePair<string, string>("key1","value1") }
+                ActionGroupId = actionGroup.Id,
+                WebHookProperties = { new KeyValuePair<string, string>("key1", "value1") }
             };
-            var metricCriteria = new MetricCriteria("High_CPU_80", "Percentage CPU", AggregationTypeEnum.Average, Operator.GreaterThan, 80.50){};
+            var metricCriteria = new MetricCriteria("High_CPU_80", "Percentage CPU", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.50) { };
             return new MetricAlertData(
                 location,
                 3,

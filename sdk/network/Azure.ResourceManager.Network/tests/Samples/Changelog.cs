@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             IPsecPolicy policy = new IPsecPolicy(
                300,
                1024,
-               IPsecEncryption.AES128,
-               IPsecIntegrity.SHA256,
-               IkeEncryption.AES192,
-               IkeIntegrity.SHA1,
-               DhGroup.DHGroup2,
-               PfsGroup.PFS1);
+               IPsecEncryption.Aes128,
+               IPsecIntegrity.Sha256,
+               IkeEncryption.Aes192,
+               IkeIntegrity.Sha1,
+               DHGroup.DHGroup2,
+               PfsGroup.Pfs1);
             #endregion
         }
     }

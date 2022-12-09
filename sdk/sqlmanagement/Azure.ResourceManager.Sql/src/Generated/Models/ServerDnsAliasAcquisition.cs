@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,17 +16,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerDnsAliasAcquisition. </summary>
         /// <param name="oldServerDnsAliasId"> The id of the server alias that will be acquired to point to this server instead. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oldServerDnsAliasId"/> is null. </exception>
-        public ServerDnsAliasAcquisition(string oldServerDnsAliasId)
+        public ServerDnsAliasAcquisition(ResourceIdentifier oldServerDnsAliasId)
         {
-            if (oldServerDnsAliasId == null)
-            {
-                throw new ArgumentNullException(nameof(oldServerDnsAliasId));
-            }
+            Argument.AssertNotNull(oldServerDnsAliasId, nameof(oldServerDnsAliasId));
 
             OldServerDnsAliasId = oldServerDnsAliasId;
         }
 
         /// <summary> The id of the server alias that will be acquired to point to this server instead. </summary>
-        public string OldServerDnsAliasId { get; }
+        public ResourceIdentifier OldServerDnsAliasId { get; }
     }
 }

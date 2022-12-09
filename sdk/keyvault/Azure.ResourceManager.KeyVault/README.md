@@ -2,14 +2,14 @@
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
 Install the Azure Key Vault management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.KeyVault --prerelease
+dotnet add package Azure.ResourceManager.KeyVault
 ```
 
 ### Prerequisites
@@ -18,7 +18,7 @@ dotnet add package Azure.ResourceManager.KeyVault --prerelease
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+To create an authenticated client and start interacting with Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
 
 ## Key concepts
 
@@ -28,14 +28,14 @@ Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/
 
 Documentation is available to help you learn how to use this package
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet)
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [.NET Management Library Code Samples](https://learn.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ## Troubleshooting
 

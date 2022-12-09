@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static SkuList DeserializeSkuList(JsonElement element)
         {
-            Optional<IReadOnlyList<WebPubSubResourceSku>> value = default;
+            Optional<IReadOnlyList<WebPubSubSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WebPubSubResourceSku> array = new List<WebPubSubResourceSku>();
+                    List<WebPubSubSku> array = new List<WebPubSubSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubResourceSku.DeserializeWebPubSubResourceSku(item));
+                        array.Add(WebPubSubSku.DeserializeWebPubSubSku(item));
                     }
                     value = array;
                     continue;

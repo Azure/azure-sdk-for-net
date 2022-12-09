@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal MongoDBCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoDBCollectionPropertiesResource resource, MongoDBCollectionPropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal MongoDBCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedMongoDBCollectionResourceInfo resource, MongoDBCollectionPropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public MongoDBCollectionPropertiesResource Resource { get; set; }
+        public ExtendedMongoDBCollectionResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public MongoDBCollectionPropertiesOptions Options { get; set; }
+        public MongoDBCollectionPropertiesConfig Options { get; set; }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM proxy resource. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        internal ProxyResourceWithWritableName(string id, string name, string resourceType) : base(id, name, resourceType)
+        internal ProxyResourceWithWritableName(ResourceIdentifier id, string name, ResourceType? resourceType) : base(id, name, resourceType)
         {
         }
     }

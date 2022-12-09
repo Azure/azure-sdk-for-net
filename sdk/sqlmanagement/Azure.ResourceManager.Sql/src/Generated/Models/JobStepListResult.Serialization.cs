@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobStepListResult DeserializeJobStepListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobStepData>> value = default;
+            Optional<IReadOnlyList<SqlServerJobStepData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobStepData> array = new List<JobStepData>();
+                    List<SqlServerJobStepData> array = new List<SqlServerJobStepData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobStepData.DeserializeJobStepData(item));
+                        array.Add(SqlServerJobStepData.DeserializeSqlServerJobStepData(item));
                     }
                     value = array;
                     continue;

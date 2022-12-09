@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static LegalHoldProperties DeserializeLegalHoldProperties(JsonElement element)
         {
             Optional<bool> hasLegalHold = default;
-            Optional<IReadOnlyList<TagProperty>> tags = default;
+            Optional<IReadOnlyList<LegalHoldTag>> tags = default;
             Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagProperty> array = new List<TagProperty>();
+                    List<LegalHoldTag> array = new List<LegalHoldTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagProperty.DeserializeTagProperty(item));
+                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
                     }
                     tags = array;
                     continue;

@@ -23,9 +23,11 @@
   </ItemGroup>
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
+    <Compile Remove="Shared\*.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared\Core" />
   </ItemGroup>
     
   <ItemGroup>

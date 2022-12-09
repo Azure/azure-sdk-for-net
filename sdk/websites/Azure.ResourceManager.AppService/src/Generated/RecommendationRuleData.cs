@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the RecommendationRule data model. </summary>
-    public partial class RecommendationRuleData : ProxyOnlyResource
+    public partial class RecommendationRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
         public RecommendationRuleData()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="recommendationName"> Unique name of the rule. </param>
         /// <param name="displayName"> UI friendly name of the rule. </param>
         /// <param name="message"> Localized name of the rule (Good for UI). </param>
@@ -44,7 +43,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="extensionName"> Extension name of the portal if exists. Applicable to dynamic rule only. </param>
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
         {
             RecommendationName = recommendationName;
             DisplayName = displayName;
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.AppService
             ExtensionName = extensionName;
             BladeName = bladeName;
             ForwardLink = forwardLink;
+            Kind = kind;
         }
 
         /// <summary> Unique name of the rule. </summary>
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Level of impact indicating how critical this rule is. </summary>
         public NotificationLevel? Level { get; set; }
         /// <summary> List of available channels that this rule applies. </summary>
-        public Channels? Channels { get; set; }
+        public RecommendationChannel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> True if this is associated with a dynamically added rule. </summary>
@@ -90,5 +91,7 @@ namespace Azure.ResourceManager.AppService
         public string BladeName { get; set; }
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
         public string ForwardLink { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

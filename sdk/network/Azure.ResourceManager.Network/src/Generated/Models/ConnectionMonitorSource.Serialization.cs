@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorSource DeserializeConnectionMonitorSource(JsonElement element)
         {
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))

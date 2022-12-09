@@ -657,7 +657,10 @@ namespace Azure.Storage.Blobs.Test
                     Response<PageInfo> response = await blob.UploadPagesAsync(
                         content: stream,
                         offset: 0,
-                        conditions: accessConditions);
+                        options: new PageBlobUploadPagesOptions
+                        {
+                            Conditions = accessConditions
+                        });
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -705,7 +708,10 @@ namespace Azure.Storage.Blobs.Test
                         blob.UploadPagesAsync(
                             content: stream,
                             offset: 0,
-                            conditions: accessConditions),
+                            options: new PageBlobUploadPagesOptions
+                            {
+                                Conditions = accessConditions
+                            }),
                         e => Assert.IsTrue(true));
                 }
             }
@@ -739,7 +745,10 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadPagesAsync(
                 content: stream,
                 offset: Constants.KB,
-                conditions: conditions);
+                options: new PageBlobUploadPagesOptions
+                {
+                    Conditions = conditions
+                });
         }
 
         [RecordedTest]
@@ -765,7 +774,10 @@ namespace Azure.Storage.Blobs.Test
                 blob.UploadPagesAsync(
                     content: stream,
                     offset: Constants.KB,
-                    conditions: conditions),
+                    options: new PageBlobUploadPagesOptions
+                    {
+                        Conditions = conditions
+                    }),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -806,7 +818,10 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
+                await blobFaulty.UploadPagesAsync(stream, offset, new PageBlobUploadPagesOptions
+                {
+                    ProgressHandler = progressHandler
+                });
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
@@ -841,7 +856,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadPagesAsync(
                     content: stream,
                     offset: 0,
-                    progressHandler: progress);
+                    new PageBlobUploadPagesOptions
+                    {
+                        ProgressHandler = progress
+                    });
             }
 
             // Assert
@@ -3097,6 +3115,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3137,6 +3156,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3172,6 +3192,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task SetTierAsync_AccessTier()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3189,6 +3210,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task SetTierAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,11 +16,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IPAddress);
-            }
+            writer.WritePropertyName("ipAddress");
+            writer.WriteStringValue(IPAddress.ToString());
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
@@ -30,13 +28,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static TargetDnsServer DeserializeTargetDnsServer(JsonElement element)
         {
-            Optional<string> ipAddress = default;
+            IPAddress ipAddress = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"))
                 {
-                    ipAddress = property.Value.GetString();
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     continue;
                 }
             }
-            return new TargetDnsServer(ipAddress.Value, Optional.ToNullable(port));
+            return new TargetDnsServer(ipAddress, Optional.ToNullable(port));
         }
     }
 }

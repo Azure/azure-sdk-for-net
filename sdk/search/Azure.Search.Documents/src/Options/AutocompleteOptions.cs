@@ -26,14 +26,14 @@ namespace Azure.Search.Documents
         /// <summary>
         /// The search text on which to base autocomplete results.
         /// </summary>
-        [CodeGenMember("search")]
+        [CodeGenMember("Search")]
         internal string SearchText { get; set; }
 
         /// <summary>
         /// The name of the suggester as specified in the suggesters collection
         /// that's part of the index definition.
         /// </summary>
-        [CodeGenMember("suggesterName")]
+        [CodeGenMember("SuggesterName")]
         internal string SuggesterName { get; set; }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents
         /// <see cref="AutocompleteMode.OneTermWithContext"/> to use the
         /// current context while producing auto-completed terms.
         /// </summary>
-        [CodeGenMember("autocompleteMode")]
+        [CodeGenMember("AutocompleteMode")]
         public AutocompleteMode? Mode { get; set; }
 
         /// <summary>
@@ -52,14 +52,14 @@ namespace Azure.Search.Documents
         /// <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        [CodeGenMember("filter")]
+        [CodeGenMember("Filter")]
         public string Filter { get; set; }
 
         /// <summary>
         /// The number of auto-completed terms to retrieve. This must be a
         /// value between 1 and 100. The default is 5.
         /// </summary>
-        [CodeGenMember("top")]
+        [CodeGenMember("Top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenMember("searchFields")]
+        [CodeGenMember("SearchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();

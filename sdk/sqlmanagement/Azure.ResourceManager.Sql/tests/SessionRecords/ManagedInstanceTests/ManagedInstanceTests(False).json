@@ -1,1006 +1,971 @@
 {
-  "Entries": [
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-0e19caad937921468506e1658ed23890-8f29b8564293774f-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "166488a0304f6f5b8cb43e56274c05fb",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "468",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:23:55 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0995f657-7a2a-4ff7-9c84-faf0169342c8",
-        "x-ms-ratelimit-remaining-subscription-reads": "11893",
-        "x-ms-request-id": "0995f657-7a2a-4ff7-9c84-faf0169342c8",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162356Z:0995f657-7a2a-4ff7-9c84-faf0169342c8"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "authorizationSource": "RoleBased",
-        "managedByTenants": [],
-        "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
-        },
-        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
-        "state": "Enabled",
-        "subscriptionPolicies": {
-          "locationPlacementId": "Internal_2014-09-01",
-          "quotaId": "Internal_2014-09-01",
-          "spendingLimit": "Off"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-5197?api-version=2021-04-01",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "32",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "026c8ea8dd6e8b5f44ca37331457091e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "tags": {},
-        "location": "westus2"
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "220",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:23:56 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "60c98f4e-781b-4c69-94fb-05fbe75f93bb",
-        "x-ms-ratelimit-remaining-subscription-writes": "1194",
-        "x-ms-request-id": "60c98f4e-781b-4c69-94fb-05fbe75f93bb",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162357Z:60c98f4e-781b-4c69-94fb-05fbe75f93bb"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197",
-        "name": "Sql-RG-5197",
-        "type": "Microsoft.Resources/resourceGroups",
-        "location": "westus2",
-        "properties": {
-          "provisioningState": "Succeeded"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260?api-version=2021-02-01",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "38",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Network/1.0.0-beta.3",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "214ddfe7db878c44e398fb87ca8136c6",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "location": "westus2",
-        "properties": {}
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/5bccbdb5-8bb0-423f-a76c-4ce1159ae15f?api-version=2021-02-01",
-        "Cache-Control": "no-cache",
-        "Content-Length": "6646",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:23:59 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "3",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "219363d1-5dd1-4844-b27a-e642ff719ed1",
-        "x-ms-client-request-id": "214ddfe7db878c44e398fb87ca8136c6",
-        "x-ms-correlation-request-id": "7b965a83-61fc-4a84-8be9-483e9da28ade",
-        "x-ms-ratelimit-remaining-subscription-writes": "1193",
-        "x-ms-request-id": "5bccbdb5-8bb0-423f-a76c-4ce1159ae15f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162400Z:7b965a83-61fc-4a84-8be9-483e9da28ade"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"name\": \"networkSecurityGroup-3260\",\r\n",
-        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260\",\r\n",
-        "  \"etag\": \"W/\\\"f13f161a-7f6a-4464-94aa-8df69c288218\\\"\",\r\n",
-        "  \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n",
-        "  \"location\": \"westus2\",\r\n",
-        "  \"properties\": {\r\n",
-        "    \"provisioningState\": \"Updating\",\r\n",
-        "    \"resourceGuid\": \"25a7c0b0-0c96-41f9-a388-acba8ff46b21\",\r\n",
-        "    \"securityRules\": [],\r\n",
-        "    \"defaultSecurityRules\": [\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowVnetInBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowVnetInBound\",\r\n",
-        "        \"etag\": \"W/\\\"f13f161a-7f6a-4464-94aa-8df69c288218\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65000,\r\n",
-        "          \"direction\": \"Inbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowAzureLoadBalancerInBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n",
-        "        \"etag\": \"W/\\\"f13f161a-7f6a-4464-94aa-8df69c288218\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"description\": \"Allow inbound traffic from azure load balancer\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n",
-        "          \"destinationAddressPrefix\": \"*\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65001,\r\n",
-        "          \"direction\": \"Inbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"DenyAllInBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/DenyAllInBound\",\r\n",
-        "        \"etag\": \"W/\\\"f13f161a-7f6a-4464-94aa-8df69c288218\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"description\": \"Deny all inbound traffic\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"*\",\r\n",
-        "          \"destinationAddressPrefix\": \"*\",\r\n",
-        "          \"access\": \"Deny\",\r\n",
-        "          \"priority\": 65500,\r\n",
-        "          \"direction\": \"Inbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowVnetOutBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowVnetOutBound\",\r\n",
-        "        \"etag\": \"W/\\\"f13f161a-7f6a-4464-94aa-8df69c288218\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65000,\r\n",
-        "          \"direction\": \"Outbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowInternetOutBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowInternetOutBound\",\r\n",
-        "        \"etag\": \"W/\\\"f13f161a-7f6a-4464-94aa-8df69c288218\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"*\",\r\n",
-        "          \"destinationAddressPrefix\": \"Internet\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65001,\r\n",
-        "          \"direction\": \"Outbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"DenyAllOutBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/DenyAllOutBound\",\r\n",
-        "        \"etag\": \"W/\\\"f13f161a-7f6a-4464-94aa-8df69c288218\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"description\": \"Deny all outbound traffic\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"*\",\r\n",
-        "          \"destinationAddressPrefix\": \"*\",\r\n",
-        "          \"access\": \"Deny\",\r\n",
-        "          \"priority\": 65500,\r\n",
-        "          \"direction\": \"Outbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ]\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/5bccbdb5-8bb0-423f-a76c-4ce1159ae15f?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "25642e3726aeb22028768a4464047a48",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "29",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:23:59 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "d3351620-9da8-4f3a-a3bb-ba33fe2ecc2f",
-        "x-ms-client-request-id": "25642e3726aeb22028768a4464047a48",
-        "x-ms-correlation-request-id": "5c44f94d-b083-4698-9f8f-235d13a2cbac",
-        "x-ms-ratelimit-remaining-subscription-reads": "11892",
-        "x-ms-request-id": "c5b571d5-0058-4846-b6cd-2e1c4196e817",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162400Z:5c44f94d-b083-4698-9f8f-235d13a2cbac"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"status\": \"Succeeded\"\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "e4786c004538b6243548967d7520506c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "6653",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:00 GMT",
-        "ETag": "W/\"d0af8e31-b968-4f5c-88a0-9a25dacba045\"",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "3eec88b9-337a-40bf-86ee-03bb206a283b",
-        "x-ms-client-request-id": "e4786c004538b6243548967d7520506c",
-        "x-ms-correlation-request-id": "dc2bd3e2-7a85-4a67-bb86-75b46c50e5ea",
-        "x-ms-ratelimit-remaining-subscription-reads": "11891",
-        "x-ms-request-id": "bb7334e4-03c7-4fc9-bcf6-f601d147543f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162400Z:dc2bd3e2-7a85-4a67-bb86-75b46c50e5ea"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"name\": \"networkSecurityGroup-3260\",\r\n",
-        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260\",\r\n",
-        "  \"etag\": \"W/\\\"d0af8e31-b968-4f5c-88a0-9a25dacba045\\\"\",\r\n",
-        "  \"type\": \"Microsoft.Network/networkSecurityGroups\",\r\n",
-        "  \"location\": \"westus2\",\r\n",
-        "  \"properties\": {\r\n",
-        "    \"provisioningState\": \"Succeeded\",\r\n",
-        "    \"resourceGuid\": \"25a7c0b0-0c96-41f9-a388-acba8ff46b21\",\r\n",
-        "    \"securityRules\": [],\r\n",
-        "    \"defaultSecurityRules\": [\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowVnetInBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowVnetInBound\",\r\n",
-        "        \"etag\": \"W/\\\"d0af8e31-b968-4f5c-88a0-9a25dacba045\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"description\": \"Allow inbound traffic from all VMs in VNET\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65000,\r\n",
-        "          \"direction\": \"Inbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowAzureLoadBalancerInBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowAzureLoadBalancerInBound\",\r\n",
-        "        \"etag\": \"W/\\\"d0af8e31-b968-4f5c-88a0-9a25dacba045\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"description\": \"Allow inbound traffic from azure load balancer\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"AzureLoadBalancer\",\r\n",
-        "          \"destinationAddressPrefix\": \"*\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65001,\r\n",
-        "          \"direction\": \"Inbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"DenyAllInBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/DenyAllInBound\",\r\n",
-        "        \"etag\": \"W/\\\"d0af8e31-b968-4f5c-88a0-9a25dacba045\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"description\": \"Deny all inbound traffic\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"*\",\r\n",
-        "          \"destinationAddressPrefix\": \"*\",\r\n",
-        "          \"access\": \"Deny\",\r\n",
-        "          \"priority\": 65500,\r\n",
-        "          \"direction\": \"Inbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowVnetOutBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowVnetOutBound\",\r\n",
-        "        \"etag\": \"W/\\\"d0af8e31-b968-4f5c-88a0-9a25dacba045\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"description\": \"Allow outbound traffic from all VMs to all VMs in VNET\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"destinationAddressPrefix\": \"VirtualNetwork\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65000,\r\n",
-        "          \"direction\": \"Outbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"AllowInternetOutBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/AllowInternetOutBound\",\r\n",
-        "        \"etag\": \"W/\\\"d0af8e31-b968-4f5c-88a0-9a25dacba045\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"description\": \"Allow outbound traffic from all VMs to Internet\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"*\",\r\n",
-        "          \"destinationAddressPrefix\": \"Internet\",\r\n",
-        "          \"access\": \"Allow\",\r\n",
-        "          \"priority\": 65001,\r\n",
-        "          \"direction\": \"Outbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"DenyAllOutBound\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260/defaultSecurityRules/DenyAllOutBound\",\r\n",
-        "        \"etag\": \"W/\\\"d0af8e31-b968-4f5c-88a0-9a25dacba045\\\"\",\r\n",
-        "        \"type\": \"Microsoft.Network/networkSecurityGroups/defaultSecurityRules\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"description\": \"Deny all outbound traffic\",\r\n",
-        "          \"protocol\": \"*\",\r\n",
-        "          \"sourcePortRange\": \"*\",\r\n",
-        "          \"destinationPortRange\": \"*\",\r\n",
-        "          \"sourceAddressPrefix\": \"*\",\r\n",
-        "          \"destinationAddressPrefix\": \"*\",\r\n",
-        "          \"access\": \"Deny\",\r\n",
-        "          \"priority\": 65500,\r\n",
-        "          \"direction\": \"Outbound\",\r\n",
-        "          \"sourcePortRanges\": [],\r\n",
-        "          \"destinationPortRanges\": [],\r\n",
-        "          \"sourceAddressPrefixes\": [],\r\n",
-        "          \"destinationAddressPrefixes\": []\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ]\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/routeTables/routeTable-5749?api-version=2021-02-01",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "38",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Network/1.0.0-beta.3",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "1c9c4fc6181052751eb05fa666a0878f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "location": "westus2",
-        "properties": {}
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/eceb7a5d-b5e6-45d9-b573-1d69503c6aa6?api-version=2021-02-01",
-        "Cache-Control": "no-cache",
-        "Content-Length": "491",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:03 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "8ce22e7e-e6c0-42f5-bb7c-fb9b3ffcfc23",
-        "x-ms-client-request-id": "1c9c4fc6181052751eb05fa666a0878f",
-        "x-ms-correlation-request-id": "0aeb3ac7-24a9-4999-aa76-cf5e73b0830e",
-        "x-ms-ratelimit-remaining-subscription-writes": "1192",
-        "x-ms-request-id": "eceb7a5d-b5e6-45d9-b573-1d69503c6aa6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162404Z:0aeb3ac7-24a9-4999-aa76-cf5e73b0830e"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"name\": \"routeTable-5749\",\r\n",
-        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/routeTables/routeTable-5749\",\r\n",
-        "  \"etag\": \"W/\\\"ed491c6d-423a-4f4f-ac27-b47753337ba1\\\"\",\r\n",
-        "  \"type\": \"Microsoft.Network/routeTables\",\r\n",
-        "  \"location\": \"westus2\",\r\n",
-        "  \"properties\": {\r\n",
-        "    \"provisioningState\": \"Updating\",\r\n",
-        "    \"resourceGuid\": \"25bd5112-38fa-42f1-bb21-f1ef0d697c88\",\r\n",
-        "    \"disableBgpRoutePropagation\": false,\r\n",
-        "    \"routes\": []\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/eceb7a5d-b5e6-45d9-b573-1d69503c6aa6?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "b49e091e2cde53f002911994c40fcfa7",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "29",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:03 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "f78c34ab-f8ed-4179-8347-09f5625008a2",
-        "x-ms-client-request-id": "b49e091e2cde53f002911994c40fcfa7",
-        "x-ms-correlation-request-id": "a4bc2f63-d0a1-4d7d-9f4c-fa3881d81c1e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11890",
-        "x-ms-request-id": "cf7df3f9-7f4a-4814-af91-71d844c59dc8",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162404Z:a4bc2f63-d0a1-4d7d-9f4c-fa3881d81c1e"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"status\": \"Succeeded\"\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/routeTables/routeTable-5749?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "fd57ed0e6d80c9c35c926d1fb2e5afe1",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "492",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:03 GMT",
-        "ETag": "W/\"eab87a5a-f8f7-4ab3-80b7-2305c5ce7613\"",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "cf4ebafe-333a-4d8c-adf7-23b8b3075b5c",
-        "x-ms-client-request-id": "fd57ed0e6d80c9c35c926d1fb2e5afe1",
-        "x-ms-correlation-request-id": "3d016bae-abf5-428b-8589-dfa3f777465c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11889",
-        "x-ms-request-id": "c21e794c-ad87-4329-9ba4-135d25f8bf36",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162404Z:3d016bae-abf5-428b-8589-dfa3f777465c"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"name\": \"routeTable-5749\",\r\n",
-        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/routeTables/routeTable-5749\",\r\n",
-        "  \"etag\": \"W/\\\"eab87a5a-f8f7-4ab3-80b7-2305c5ce7613\\\"\",\r\n",
-        "  \"type\": \"Microsoft.Network/routeTables\",\r\n",
-        "  \"location\": \"westus2\",\r\n",
-        "  \"properties\": {\r\n",
-        "    \"provisioningState\": \"Succeeded\",\r\n",
-        "    \"resourceGuid\": \"25bd5112-38fa-42f1-bb21-f1ef0d697c88\",\r\n",
-        "    \"disableBgpRoutePropagation\": false,\r\n",
-        "    \"routes\": []\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777?api-version=2021-02-01",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "759",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Network/1.0.0-beta.3",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "025c8839b1d232f17bfce6e25d449f21",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "location": "westus2",
-        "properties": {
-          "addressSpace": {
-            "addressPrefixes": [
-              "10.10.0.0/16"
-            ]
-          },
-          "subnets": [
-            {
-              "name": "subnet01",
-              "properties": {
-                "addressPrefix": "10.10.1.0/24"
-              }
+    "Entries": [
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Connection": "keep-alive",
+                "traceparent": "00-118c94ff3fe16e498e313cac910295af-df86d5f75f6d1946-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "07b9705bf1caabeca526f7f641cec23b",
+                "x-ms-return-client-request-id": "true"
             },
-            {
-              "name": "ManagedInstance",
-              "properties": {
-                "addressPrefix": "10.10.2.0/24",
-                "networkSecurityGroup": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260",
-                  "properties": {}
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "747",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:07 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-correlation-request-id": "0a74168f-45d9-4401-8329-a9392182d115",
+                "x-ms-ratelimit-remaining-subscription-reads": "11999",
+                "x-ms-request-id": "0a74168f-45d9-4401-8329-a9392182d115",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121107Z:0a74168f-45d9-4401-8329-a9392182d115"
+            },
+            "ResponseBody": {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+                "authorizationSource": "RoleBased",
+                "managedByTenants": [],
+                "tags": {
+                    "TagKey-9823": "TagValue-566",
+                    "TagKey-3481": "TagValue-320",
+                    "TagKey-4926": "TagValue-1187",
+                    "TagKey-751": "TagValue-3921",
+                    "TagKey-1866": "TagValue-8559",
+                    "TagKey-3094": "TagValue-9190",
+                    "TagKey-2449": "TagValue-9",
+                    "TagKey-8379": "TagValue-164",
+                    "TagKey-7470": "TagValue-2205",
+                    "TagKey-4236": "TagValue-3698",
+                    "TagKey-5316": "TagValue-2725"
                 },
-                "routeTable": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/routeTables/routeTable-5749",
-                  "properties": {}
-                },
-                "delegations": [
-                  {
-                    "name": "Microsoft.Sql/managedInstances",
-                    "type": "Microsoft.Sql",
-                    "properties": {
-                      "serviceName": "Microsoft.Sql/managedInstances"
-                    }
-                  }
-                ]
-              }
+                "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+                "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+                "state": "Enabled",
+                "subscriptionPolicies": {
+                    "locationPlacementId": "Internal_2014-09-01",
+                    "quotaId": "Internal_2014-09-01",
+                    "spendingLimit": "Off"
+                }
             }
-          ]
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Sql-RG-5660?api-version=2021-04-01",
+            "RequestMethod": "PUT",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "32",
+                "Content-Type": "application/json",
+                "traceparent": "00-9d023cdae5563a48b437517a453b19f5-8ef0478918708d42-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "eec5f5e428ae870b3fe1f73e1323084f",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": {
+                "location": "westus2"
+            },
+            "StatusCode": 201,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "230",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:11 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-correlation-request-id": "4dea6db8-90e1-4e49-bca4-f30d1d331103",
+                "x-ms-ratelimit-remaining-subscription-writes": "1199",
+                "x-ms-request-id": "4dea6db8-90e1-4e49-bca4-f30d1d331103",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121111Z:4dea6db8-90e1-4e49-bca4-f30d1d331103"
+            },
+            "ResponseBody": {
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660",
+                "name": "Sql-RG-5660",
+                "type": "Microsoft.Resources/resourceGroups",
+                "location": "westus2",
+                "tags": {},
+                "properties": {
+                    "provisioningState": "Succeeded"
+                }
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598?api-version=2021-02-01",
+            "RequestMethod": "PUT",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "38",
+                "Content-Type": "application/json",
+                "traceparent": "00-a3bb9e28e95fd340aafe79c175d03172-b178de7eb43aad4c-00",
+                "User-Agent": "azsdk-net-ResourceManager.Network/1.0.0-alpha.20220510.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "41d8ff141aead8844dd8c229945d1883",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": {
+                "location": "westus2",
+                "properties": {}
+            },
+            "StatusCode": 201,
+            "ResponseHeaders": {
+                "Azure-AsyncNotification": "Enabled",
+                "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/d8300dea-61d0-49bf-8dd8-e87a232d2c37?api-version=2021-02-01",
+                "Cache-Control": "no-cache",
+                "Content-Length": "6646",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:17 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Retry-After": "3",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "d5dd259c-2ca5-4e8d-881b-600a8df3760f",
+                "x-ms-client-request-id": "41d8ff141aead8844dd8c229945d1883",
+                "x-ms-correlation-request-id": "27447827-e76f-408b-8708-6c7c9de245d1",
+                "x-ms-ratelimit-remaining-subscription-writes": "1198",
+                "x-ms-request-id": "d8300dea-61d0-49bf-8dd8-e87a232d2c37",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121117Z:27447827-e76f-408b-8708-6c7c9de245d1"
+            },
+            "ResponseBody": {
+                "name": "networkSecurityGroup-5598",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598",
+                "etag": "W/\u002289dd2000-1189-49ba-a1e5-07934fecd7f2\u0022",
+                "type": "Microsoft.Network/networkSecurityGroups",
+                "location": "westus2",
+                "properties": {
+                    "provisioningState": "Updating",
+                    "resourceGuid": "dea8b505-c141-413b-b4f3-6a378b303ed5",
+                    "securityRules": [],
+                    "defaultSecurityRules": [
+                        {
+                            "name": "AllowVnetInBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowVnetInBound",
+                            "etag": "W/\u002289dd2000-1189-49ba-a1e5-07934fecd7f2\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "description": "Allow inbound traffic from all VMs in VNET",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "VirtualNetwork",
+                                "destinationAddressPrefix": "VirtualNetwork",
+                                "access": "Allow",
+                                "priority": 65000,
+                                "direction": "Inbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "AllowAzureLoadBalancerInBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+                            "etag": "W/\u002289dd2000-1189-49ba-a1e5-07934fecd7f2\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "description": "Allow inbound traffic from azure load balancer",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "AzureLoadBalancer",
+                                "destinationAddressPrefix": "*",
+                                "access": "Allow",
+                                "priority": 65001,
+                                "direction": "Inbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "DenyAllInBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/DenyAllInBound",
+                            "etag": "W/\u002289dd2000-1189-49ba-a1e5-07934fecd7f2\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "description": "Deny all inbound traffic",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "*",
+                                "destinationAddressPrefix": "*",
+                                "access": "Deny",
+                                "priority": 65500,
+                                "direction": "Inbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "AllowVnetOutBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowVnetOutBound",
+                            "etag": "W/\u002289dd2000-1189-49ba-a1e5-07934fecd7f2\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "VirtualNetwork",
+                                "destinationAddressPrefix": "VirtualNetwork",
+                                "access": "Allow",
+                                "priority": 65000,
+                                "direction": "Outbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "AllowInternetOutBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowInternetOutBound",
+                            "etag": "W/\u002289dd2000-1189-49ba-a1e5-07934fecd7f2\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "description": "Allow outbound traffic from all VMs to Internet",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "*",
+                                "destinationAddressPrefix": "Internet",
+                                "access": "Allow",
+                                "priority": 65001,
+                                "direction": "Outbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "DenyAllOutBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/DenyAllOutBound",
+                            "etag": "W/\u002289dd2000-1189-49ba-a1e5-07934fecd7f2\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "description": "Deny all outbound traffic",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "*",
+                                "destinationAddressPrefix": "*",
+                                "access": "Deny",
+                                "priority": 65500,
+                                "direction": "Outbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/d8300dea-61d0-49bf-8dd8-e87a232d2c37?api-version=2021-02-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Authorization": "Sanitized",
+                "traceparent": "00-a3bb9e28e95fd340aafe79c175d03172-22228e3d3e2bb148-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "c3bae7a7bc62dafa40166150495daa84",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "29",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:17 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "4556b42f-d42a-40f1-8d86-90eb126bd551",
+                "x-ms-client-request-id": "c3bae7a7bc62dafa40166150495daa84",
+                "x-ms-correlation-request-id": "03462a8a-4827-429a-9445-2bd19ea3f866",
+                "x-ms-ratelimit-remaining-subscription-reads": "11998",
+                "x-ms-request-id": "4d7aa50d-6a46-4e96-add5-d96088572aad",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121118Z:03462a8a-4827-429a-9445-2bd19ea3f866"
+            },
+            "ResponseBody": {
+                "status": "Succeeded"
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598?api-version=2021-02-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Authorization": "Sanitized",
+                "traceparent": "00-a3bb9e28e95fd340aafe79c175d03172-586495d9590e5746-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "1e05baded3bb6704b62ac15e0a906abb",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "6653",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:18 GMT",
+                "ETag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "295204c9-9c61-4aa2-b295-a65182b0bbf7",
+                "x-ms-client-request-id": "1e05baded3bb6704b62ac15e0a906abb",
+                "x-ms-correlation-request-id": "f7997993-3eac-4294-9401-03371b5e99dd",
+                "x-ms-ratelimit-remaining-subscription-reads": "11997",
+                "x-ms-request-id": "9038d849-a759-4d79-9573-4a5f0ba510d9",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121118Z:f7997993-3eac-4294-9401-03371b5e99dd"
+            },
+            "ResponseBody": {
+                "name": "networkSecurityGroup-5598",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598",
+                "etag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                "type": "Microsoft.Network/networkSecurityGroups",
+                "location": "westus2",
+                "properties": {
+                    "provisioningState": "Succeeded",
+                    "resourceGuid": "dea8b505-c141-413b-b4f3-6a378b303ed5",
+                    "securityRules": [],
+                    "defaultSecurityRules": [
+                        {
+                            "name": "AllowVnetInBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowVnetInBound",
+                            "etag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "description": "Allow inbound traffic from all VMs in VNET",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "VirtualNetwork",
+                                "destinationAddressPrefix": "VirtualNetwork",
+                                "access": "Allow",
+                                "priority": 65000,
+                                "direction": "Inbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "AllowAzureLoadBalancerInBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+                            "etag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "description": "Allow inbound traffic from azure load balancer",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "AzureLoadBalancer",
+                                "destinationAddressPrefix": "*",
+                                "access": "Allow",
+                                "priority": 65001,
+                                "direction": "Inbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "DenyAllInBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/DenyAllInBound",
+                            "etag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "description": "Deny all inbound traffic",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "*",
+                                "destinationAddressPrefix": "*",
+                                "access": "Deny",
+                                "priority": 65500,
+                                "direction": "Inbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "AllowVnetOutBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowVnetOutBound",
+                            "etag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "VirtualNetwork",
+                                "destinationAddressPrefix": "VirtualNetwork",
+                                "access": "Allow",
+                                "priority": 65000,
+                                "direction": "Outbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "AllowInternetOutBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/AllowInternetOutBound",
+                            "etag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "description": "Allow outbound traffic from all VMs to Internet",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "*",
+                                "destinationAddressPrefix": "Internet",
+                                "access": "Allow",
+                                "priority": 65001,
+                                "direction": "Outbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        },
+                        {
+                            "name": "DenyAllOutBound",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598/defaultSecurityRules/DenyAllOutBound",
+                            "etag": "W/\u0022797cf8ec-9445-4b7c-9348-6a102a903d49\u0022",
+                            "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "description": "Deny all outbound traffic",
+                                "protocol": "*",
+                                "sourcePortRange": "*",
+                                "destinationPortRange": "*",
+                                "sourceAddressPrefix": "*",
+                                "destinationAddressPrefix": "*",
+                                "access": "Deny",
+                                "priority": 65500,
+                                "direction": "Outbound",
+                                "sourcePortRanges": [],
+                                "destinationPortRanges": [],
+                                "sourceAddressPrefixes": [],
+                                "destinationAddressPrefixes": []
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/routeTables/routeTable-2047?api-version=2021-02-01",
+            "RequestMethod": "PUT",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "38",
+                "Content-Type": "application/json",
+                "traceparent": "00-46271f0f6985564495387b9edb4608ae-36157b98feb03547-00",
+                "User-Agent": "azsdk-net-ResourceManager.Network/1.0.0-alpha.20220510.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "a2ad82d321550a51723b3f4bf86422e0",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": {
+                "location": "westus2",
+                "properties": {}
+            },
+            "StatusCode": 201,
+            "ResponseHeaders": {
+                "Azure-AsyncNotification": "Enabled",
+                "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/36d52c2f-358f-4182-acc6-04a64dfecdee?api-version=2021-02-01",
+                "Cache-Control": "no-cache",
+                "Content-Length": "491",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:21 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Retry-After": "2",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "1c5e03a4-9fe0-473b-8ad8-25928d7d5457",
+                "x-ms-client-request-id": "a2ad82d321550a51723b3f4bf86422e0",
+                "x-ms-correlation-request-id": "35446e9e-dda1-4860-a68d-1f97ecc2e3a2",
+                "x-ms-ratelimit-remaining-subscription-writes": "1197",
+                "x-ms-request-id": "36d52c2f-358f-4182-acc6-04a64dfecdee",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121122Z:35446e9e-dda1-4860-a68d-1f97ecc2e3a2"
+            },
+            "ResponseBody": {
+                "name": "routeTable-2047",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/routeTables/routeTable-2047",
+                "etag": "W/\u00222030d278-ea60-4c8a-b662-3de31ac275c1\u0022",
+                "type": "Microsoft.Network/routeTables",
+                "location": "westus2",
+                "properties": {
+                    "provisioningState": "Updating",
+                    "resourceGuid": "eefd8aed-0aab-456e-aa52-29498d8cf39f",
+                    "disableBgpRoutePropagation": false,
+                    "routes": []
+                }
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/36d52c2f-358f-4182-acc6-04a64dfecdee?api-version=2021-02-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Authorization": "Sanitized",
+                "traceparent": "00-46271f0f6985564495387b9edb4608ae-1df540ef2cf6344f-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "db767aa5e1fd9989b4144998c51bbec6",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "29",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:22 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "9ffc19e1-d683-4e47-a36a-1d7e2156495f",
+                "x-ms-client-request-id": "db767aa5e1fd9989b4144998c51bbec6",
+                "x-ms-correlation-request-id": "48e13307-6a9b-4606-9a61-a41838ee4128",
+                "x-ms-ratelimit-remaining-subscription-reads": "11996",
+                "x-ms-request-id": "2ef36c56-6dc6-48c3-8e02-e8965d7970ed",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121122Z:48e13307-6a9b-4606-9a61-a41838ee4128"
+            },
+            "ResponseBody": {
+                "status": "Succeeded"
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/routeTables/routeTable-2047?api-version=2021-02-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Authorization": "Sanitized",
+                "traceparent": "00-46271f0f6985564495387b9edb4608ae-42382f9d649f4243-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "7a7e7e9f2fb7a0f0aec94f48e9566ea1",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "492",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:22 GMT",
+                "ETag": "W/\u00227c875004-21d4-4562-b05b-0dc58e005b48\u0022",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "3e559a59-9575-41c7-a6a1-c67a69fb4e6b",
+                "x-ms-client-request-id": "7a7e7e9f2fb7a0f0aec94f48e9566ea1",
+                "x-ms-correlation-request-id": "3e67d99e-fb77-4982-9efc-7e331033d2b5",
+                "x-ms-ratelimit-remaining-subscription-reads": "11995",
+                "x-ms-request-id": "4b57c22c-eb3a-4196-9287-4784e28bec8d",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121123Z:3e67d99e-fb77-4982-9efc-7e331033d2b5"
+            },
+            "ResponseBody": {
+                "name": "routeTable-2047",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/routeTables/routeTable-2047",
+                "etag": "W/\u00227c875004-21d4-4562-b05b-0dc58e005b48\u0022",
+                "type": "Microsoft.Network/routeTables",
+                "location": "westus2",
+                "properties": {
+                    "provisioningState": "Succeeded",
+                    "resourceGuid": "eefd8aed-0aab-456e-aa52-29498d8cf39f",
+                    "disableBgpRoutePropagation": false,
+                    "routes": []
+                }
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541?api-version=2021-02-01",
+            "RequestMethod": "PUT",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "759",
+                "Content-Type": "application/json",
+                "traceparent": "00-e4525d09d8ac7f448dd042a44268fec6-004b894785d3ae44-00",
+                "User-Agent": "azsdk-net-ResourceManager.Network/1.0.0-alpha.20220510.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "ee7da693e2468caa19d8d0e83b1e374d",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": {
+                "location": "westus2",
+                "properties": {
+                    "addressSpace": {
+                        "addressPrefixes": [
+                            "10.10.0.0/16"
+                        ]
+                    },
+                    "subnets": [
+                        {
+                            "name": "subnet01",
+                            "properties": {
+                                "addressPrefix": "10.10.1.0/24"
+                            }
+                        },
+                        {
+                            "name": "ManagedInstance",
+                            "properties": {
+                                "addressPrefix": "10.10.2.0/24",
+                                "networkSecurityGroup": {
+                                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598",
+                                    "properties": {}
+                                },
+                                "routeTable": {
+                                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/routeTables/routeTable-2047",
+                                    "properties": {}
+                                },
+                                "delegations": [
+                                    {
+                                        "name": "Microsoft.Sql/managedInstances",
+                                        "type": "Microsoft.Sql/managedInstances",
+                                        "properties": {
+                                            "serviceName": "Microsoft.Sql/managedInstances"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "StatusCode": 201,
+            "ResponseHeaders": {
+                "Azure-AsyncNotification": "Enabled",
+                "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/93698b46-169e-49e1-8be7-9cf6369138a3?api-version=2021-02-01",
+                "Cache-Control": "no-cache",
+                "Content-Length": "3216",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:25 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Retry-After": "3",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "c0b0ed73-7ad0-44ba-a6ce-e6d2f6023c36",
+                "x-ms-client-request-id": "ee7da693e2468caa19d8d0e83b1e374d",
+                "x-ms-correlation-request-id": "e594d0a1-e7b9-47bc-89f6-cecb19874934",
+                "x-ms-ratelimit-remaining-subscription-writes": "1196",
+                "x-ms-request-id": "93698b46-169e-49e1-8be7-9cf6369138a3",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121126Z:e594d0a1-e7b9-47bc-89f6-cecb19874934"
+            },
+            "ResponseBody": {
+                "name": "vnet-541",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541",
+                "etag": "W/\u0022ab3a56db-f5b3-42b2-ba44-0521fa67d6f8\u0022",
+                "type": "Microsoft.Network/virtualNetworks",
+                "location": "westus2",
+                "properties": {
+                    "provisioningState": "Updating",
+                    "resourceGuid": "81067a89-83ba-4703-b769-914ba69d91c6",
+                    "addressSpace": {
+                        "addressPrefixes": [
+                            "10.10.0.0/16"
+                        ]
+                    },
+                    "subnets": [
+                        {
+                            "name": "subnet01",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541/subnets/subnet01",
+                            "etag": "W/\u0022ab3a56db-f5b3-42b2-ba44-0521fa67d6f8\u0022",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "addressPrefix": "10.10.1.0/24",
+                                "delegations": [],
+                                "privateEndpointNetworkPolicies": "Enabled",
+                                "privateLinkServiceNetworkPolicies": "Enabled"
+                            },
+                            "type": "Microsoft.Network/virtualNetworks/subnets"
+                        },
+                        {
+                            "name": "ManagedInstance",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541/subnets/ManagedInstance",
+                            "etag": "W/\u0022ab3a56db-f5b3-42b2-ba44-0521fa67d6f8\u0022",
+                            "properties": {
+                                "provisioningState": "Updating",
+                                "addressPrefix": "10.10.2.0/24",
+                                "networkSecurityGroup": {
+                                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598"
+                                },
+                                "routeTable": {
+                                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/routeTables/routeTable-2047"
+                                },
+                                "delegations": [
+                                    {
+                                        "name": "Microsoft.Sql/managedInstances",
+                                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541/subnets/ManagedInstance/delegations/Microsoft.Sql/managedInstances",
+                                        "etag": "W/\u0022ab3a56db-f5b3-42b2-ba44-0521fa67d6f8\u0022",
+                                        "properties": {
+                                            "provisioningState": "Succeeded",
+                                            "serviceName": "Microsoft.Sql/managedInstances",
+                                            "actions": [
+                                                "Microsoft.Network/virtualNetworks/subnets/join/action",
+                                                "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+                                                "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
+                                            ]
+                                        },
+                                        "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                                    }
+                                ],
+                                "privateEndpointNetworkPolicies": "Enabled",
+                                "privateLinkServiceNetworkPolicies": "Enabled"
+                            },
+                            "type": "Microsoft.Network/virtualNetworks/subnets"
+                        }
+                    ],
+                    "virtualNetworkPeerings": [],
+                    "enableDdosProtection": false
+                }
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/93698b46-169e-49e1-8be7-9cf6369138a3?api-version=2021-02-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Authorization": "Sanitized",
+                "traceparent": "00-e4525d09d8ac7f448dd042a44268fec6-72e1e94de6009f4d-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "74310da7d8419b58d3ee9d5720b772ab",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "30",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:26 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Retry-After": "10",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "36dd27a4-bb57-41d5-a703-03985fc62b2f",
+                "x-ms-client-request-id": "74310da7d8419b58d3ee9d5720b772ab",
+                "x-ms-correlation-request-id": "590c972a-2d6a-4b54-81f6-6b27bab51387",
+                "x-ms-ratelimit-remaining-subscription-reads": "11994",
+                "x-ms-request-id": "804d4fb9-d1e5-4d03-af41-4cc152d3f225",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121126Z:590c972a-2d6a-4b54-81f6-6b27bab51387"
+            },
+            "ResponseBody": {
+                "status": "InProgress"
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/93698b46-169e-49e1-8be7-9cf6369138a3?api-version=2021-02-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Authorization": "Sanitized",
+                "traceparent": "00-e4525d09d8ac7f448dd042a44268fec6-a8839c79c4b37740-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "fa77fb1750519f5530f21819af174b6a",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "29",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:36 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "b830015b-b4bd-4213-91f8-24b333180308",
+                "x-ms-client-request-id": "fa77fb1750519f5530f21819af174b6a",
+                "x-ms-correlation-request-id": "f6efe316-4d84-4587-9729-91a3e29c0276",
+                "x-ms-ratelimit-remaining-subscription-reads": "11993",
+                "x-ms-request-id": "f00ff501-5117-44e4-addc-24161e7c17a9",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121136Z:f6efe316-4d84-4587-9729-91a3e29c0276"
+            },
+            "ResponseBody": {
+                "status": "Succeeded"
+            }
+        },
+        {
+            "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541?api-version=2021-02-01",
+            "RequestMethod": "GET",
+            "RequestHeaders": {
+                "Authorization": "Sanitized",
+                "traceparent": "00-e4525d09d8ac7f448dd042a44268fec6-39ffac42aa7aa049-00",
+                "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+                "x-ms-client-request-id": "2e412a7ac2ec990c03817d47561e691d",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": null,
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "3219",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Mon, 23 May 2022 12:11:37 GMT",
+                "ETag": "W/\u0022263b675d-8c9c-4ee9-a74d-6bdfac7e9c3c\u0022",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0",
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-arm-service-request-id": "5166d57e-0f6e-43ef-90a5-73402fcb492d",
+                "x-ms-client-request-id": "2e412a7ac2ec990c03817d47561e691d",
+                "x-ms-correlation-request-id": "a98edfec-2b5f-4bd5-8eee-1f93ba52aac5",
+                "x-ms-ratelimit-remaining-subscription-reads": "11992",
+                "x-ms-request-id": "ce6af5fd-bb72-4112-9dc2-e79d7b94d4ed",
+                "x-ms-routing-request-id": "KOREASOUTH:20220523T121137Z:a98edfec-2b5f-4bd5-8eee-1f93ba52aac5"
+            },
+            "ResponseBody": {
+                "name": "vnet-541",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541",
+                "etag": "W/\u0022263b675d-8c9c-4ee9-a74d-6bdfac7e9c3c\u0022",
+                "type": "Microsoft.Network/virtualNetworks",
+                "location": "westus2",
+                "properties": {
+                    "provisioningState": "Succeeded",
+                    "resourceGuid": "81067a89-83ba-4703-b769-914ba69d91c6",
+                    "addressSpace": {
+                        "addressPrefixes": [
+                            "10.10.0.0/16"
+                        ]
+                    },
+                    "subnets": [
+                        {
+                            "name": "subnet01",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541/subnets/subnet01",
+                            "etag": "W/\u0022263b675d-8c9c-4ee9-a74d-6bdfac7e9c3c\u0022",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "addressPrefix": "10.10.1.0/24",
+                                "delegations": [],
+                                "privateEndpointNetworkPolicies": "Enabled",
+                                "privateLinkServiceNetworkPolicies": "Enabled"
+                            },
+                            "type": "Microsoft.Network/virtualNetworks/subnets"
+                        },
+                        {
+                            "name": "ManagedInstance",
+                            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541/subnets/ManagedInstance",
+                            "etag": "W/\u0022263b675d-8c9c-4ee9-a74d-6bdfac7e9c3c\u0022",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "addressPrefix": "10.10.2.0/24",
+                                "networkSecurityGroup": {
+                                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-5598"
+                                },
+                                "routeTable": {
+                                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/routeTables/routeTable-2047"
+                                },
+                                "delegations": [
+                                    {
+                                        "name": "Microsoft.Sql/managedInstances",
+                                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5660/providers/Microsoft.Network/virtualNetworks/vnet-541/subnets/ManagedInstance/delegations/Microsoft.Sql/managedInstances",
+                                        "etag": "W/\u0022263b675d-8c9c-4ee9-a74d-6bdfac7e9c3c\u0022",
+                                        "properties": {
+                                            "provisioningState": "Succeeded",
+                                            "serviceName": "Microsoft.Sql/managedInstances",
+                                            "actions": [
+                                                "Microsoft.Network/virtualNetworks/subnets/join/action",
+                                                "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+                                                "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
+                                            ]
+                                        },
+                                        "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                                    }
+                                ],
+                                "privateEndpointNetworkPolicies": "Enabled",
+                                "privateLinkServiceNetworkPolicies": "Enabled"
+                            },
+                            "type": "Microsoft.Network/virtualNetworks/subnets"
+                        }
+                    ],
+                    "virtualNetworkPeerings": [],
+                    "enableDdosProtection": false
+                }
+            }
         }
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/74ef1625-f6da-420b-955d-62d8dd8072d0?api-version=2021-02-01",
-        "Cache-Control": "no-cache",
-        "Content-Length": "3216",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:08 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "3",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "a23ad75c-8ab2-439f-b5de-aca91b2f658b",
-        "x-ms-client-request-id": "025c8839b1d232f17bfce6e25d449f21",
-        "x-ms-correlation-request-id": "e8bb64d7-8caa-4f0b-affa-d19a4ec55060",
-        "x-ms-ratelimit-remaining-subscription-writes": "1191",
-        "x-ms-request-id": "74ef1625-f6da-420b-955d-62d8dd8072d0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162408Z:e8bb64d7-8caa-4f0b-affa-d19a4ec55060"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"name\": \"vnet-777\",\r\n",
-        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777\",\r\n",
-        "  \"etag\": \"W/\\\"459d2cfa-c169-4a63-8539-1a95af18c70c\\\"\",\r\n",
-        "  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n",
-        "  \"location\": \"westus2\",\r\n",
-        "  \"properties\": {\r\n",
-        "    \"provisioningState\": \"Updating\",\r\n",
-        "    \"resourceGuid\": \"7818b9e6-f2cd-42c1-a821-74a3d9aa2488\",\r\n",
-        "    \"addressSpace\": {\r\n",
-        "      \"addressPrefixes\": [\r\n",
-        "        \"10.10.0.0/16\"\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \"subnets\": [\r\n",
-        "      {\r\n",
-        "        \"name\": \"subnet01\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777/subnets/subnet01\",\r\n",
-        "        \"etag\": \"W/\\\"459d2cfa-c169-4a63-8539-1a95af18c70c\\\"\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"addressPrefix\": \"10.10.1.0/24\",\r\n",
-        "          \"delegations\": [],\r\n",
-        "          \"privateEndpointNetworkPolicies\": \"Enabled\",\r\n",
-        "          \"privateLinkServiceNetworkPolicies\": \"Enabled\"\r\n",
-        "        },\r\n",
-        "        \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"ManagedInstance\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777/subnets/ManagedInstance\",\r\n",
-        "        \"etag\": \"W/\\\"459d2cfa-c169-4a63-8539-1a95af18c70c\\\"\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Updating\",\r\n",
-        "          \"addressPrefix\": \"10.10.2.0/24\",\r\n",
-        "          \"networkSecurityGroup\": {\r\n",
-        "            \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260\"\r\n",
-        "          },\r\n",
-        "          \"routeTable\": {\r\n",
-        "            \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/routeTables/routeTable-5749\"\r\n",
-        "          },\r\n",
-        "          \"delegations\": [\r\n",
-        "            {\r\n",
-        "              \"name\": \"Microsoft.Sql/managedInstances\",\r\n",
-        "              \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777/subnets/ManagedInstance/delegations/Microsoft.Sql/managedInstances\",\r\n",
-        "              \"etag\": \"W/\\\"459d2cfa-c169-4a63-8539-1a95af18c70c\\\"\",\r\n",
-        "              \"properties\": {\r\n",
-        "                \"provisioningState\": \"Succeeded\",\r\n",
-        "                \"serviceName\": \"Microsoft.Sql/managedInstances\",\r\n",
-        "                \"actions\": [\r\n",
-        "                  \"Microsoft.Network/virtualNetworks/subnets/join/action\",\r\n",
-        "                  \"Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action\",\r\n",
-        "                  \"Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action\"\r\n",
-        "                ]\r\n",
-        "              },\r\n",
-        "              \"type\": \"Microsoft.Network/virtualNetworks/subnets/delegations\"\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \"privateEndpointNetworkPolicies\": \"Enabled\",\r\n",
-        "          \"privateLinkServiceNetworkPolicies\": \"Enabled\"\r\n",
-        "        },\r\n",
-        "        \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \"virtualNetworkPeerings\": [],\r\n",
-        "    \"enableDdosProtection\": false\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/74ef1625-f6da-420b-955d-62d8dd8072d0?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "878beb38a5723c3b66ca0570dce7ff4d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "30",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:08 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "d49ad6d3-23ee-4a2f-88e2-c760e91af9d0",
-        "x-ms-client-request-id": "878beb38a5723c3b66ca0570dce7ff4d",
-        "x-ms-correlation-request-id": "78af7599-920e-4ca9-ab5b-45a714399e4c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11888",
-        "x-ms-request-id": "5a58e6dd-fb21-4c8e-8a8b-fe38c331b038",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162408Z:78af7599-920e-4ca9-ab5b-45a714399e4c"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"status\": \"InProgress\"\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus2/operations/74ef1625-f6da-420b-955d-62d8dd8072d0?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "62f4fecefbfa949ed7162d7b653262da",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "29",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:09 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "4460654a-ead3-492c-ab88-39b34b4b9387",
-        "x-ms-client-request-id": "62f4fecefbfa949ed7162d7b653262da",
-        "x-ms-correlation-request-id": "6177a2de-58ee-48de-8bc7-961b0f4770ec",
-        "x-ms-ratelimit-remaining-subscription-reads": "11887",
-        "x-ms-request-id": "fea134aa-9a92-47f5-9640-36091f812a33",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162409Z:6177a2de-58ee-48de-8bc7-961b0f4770ec"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"status\": \"Succeeded\"\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-beta.5",
-          "(.NET Core 3.1.21; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "71a904df18b918af46787f3f9f4069ed",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "3219",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Nov 2021 16:24:09 GMT",
-        "ETag": "W/\"c0273b39-8d97-4e70-9c6d-d46d98c4ca57\"",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "87f6d8d4-194c-4cc5-aa53-ecbb9d2c3140",
-        "x-ms-client-request-id": "71a904df18b918af46787f3f9f4069ed",
-        "x-ms-correlation-request-id": "2ee76e16-3494-4f6a-b0b9-5566f01d0a76",
-        "x-ms-ratelimit-remaining-subscription-reads": "11886",
-        "x-ms-request-id": "692eb422-83ac-4c38-8336-b8f9902030f0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20211109T162409Z:2ee76e16-3494-4f6a-b0b9-5566f01d0a76"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \"name\": \"vnet-777\",\r\n",
-        "  \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777\",\r\n",
-        "  \"etag\": \"W/\\\"c0273b39-8d97-4e70-9c6d-d46d98c4ca57\\\"\",\r\n",
-        "  \"type\": \"Microsoft.Network/virtualNetworks\",\r\n",
-        "  \"location\": \"westus2\",\r\n",
-        "  \"properties\": {\r\n",
-        "    \"provisioningState\": \"Succeeded\",\r\n",
-        "    \"resourceGuid\": \"7818b9e6-f2cd-42c1-a821-74a3d9aa2488\",\r\n",
-        "    \"addressSpace\": {\r\n",
-        "      \"addressPrefixes\": [\r\n",
-        "        \"10.10.0.0/16\"\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \"subnets\": [\r\n",
-        "      {\r\n",
-        "        \"name\": \"subnet01\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777/subnets/subnet01\",\r\n",
-        "        \"etag\": \"W/\\\"c0273b39-8d97-4e70-9c6d-d46d98c4ca57\\\"\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"addressPrefix\": \"10.10.1.0/24\",\r\n",
-        "          \"delegations\": [],\r\n",
-        "          \"privateEndpointNetworkPolicies\": \"Enabled\",\r\n",
-        "          \"privateLinkServiceNetworkPolicies\": \"Enabled\"\r\n",
-        "        },\r\n",
-        "        \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \"name\": \"ManagedInstance\",\r\n",
-        "        \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777/subnets/ManagedInstance\",\r\n",
-        "        \"etag\": \"W/\\\"c0273b39-8d97-4e70-9c6d-d46d98c4ca57\\\"\",\r\n",
-        "        \"properties\": {\r\n",
-        "          \"provisioningState\": \"Succeeded\",\r\n",
-        "          \"addressPrefix\": \"10.10.2.0/24\",\r\n",
-        "          \"networkSecurityGroup\": {\r\n",
-        "            \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/networkSecurityGroups/networkSecurityGroup-3260\"\r\n",
-        "          },\r\n",
-        "          \"routeTable\": {\r\n",
-        "            \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/routeTables/routeTable-5749\"\r\n",
-        "          },\r\n",
-        "          \"delegations\": [\r\n",
-        "            {\r\n",
-        "              \"name\": \"Microsoft.Sql/managedInstances\",\r\n",
-        "              \"id\": \"/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Sql-RG-5197/providers/Microsoft.Network/virtualNetworks/vnet-777/subnets/ManagedInstance/delegations/Microsoft.Sql/managedInstances\",\r\n",
-        "              \"etag\": \"W/\\\"c0273b39-8d97-4e70-9c6d-d46d98c4ca57\\\"\",\r\n",
-        "              \"properties\": {\r\n",
-        "                \"provisioningState\": \"Succeeded\",\r\n",
-        "                \"serviceName\": \"Microsoft.Sql/managedInstances\",\r\n",
-        "                \"actions\": [\r\n",
-        "                  \"Microsoft.Network/virtualNetworks/subnets/join/action\",\r\n",
-        "                  \"Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action\",\r\n",
-        "                  \"Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action\"\r\n",
-        "                ]\r\n",
-        "              },\r\n",
-        "              \"type\": \"Microsoft.Network/virtualNetworks/subnets/delegations\"\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \"privateEndpointNetworkPolicies\": \"Enabled\",\r\n",
-        "          \"privateLinkServiceNetworkPolicies\": \"Enabled\"\r\n",
-        "        },\r\n",
-        "        \"type\": \"Microsoft.Network/virtualNetworks/subnets\"\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \"virtualNetworkPeerings\": [],\r\n",
-        "    \"enableDdosProtection\": false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+    ],
+    "Variables": {
+        "RandomSeed": "862907401",
+        "RESOURCE_MANAGER_URL": null,
+        "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
     }
-  ],
-  "Variables": {
-    "RandomSeed": "576084928",
-    "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
-  }
 }

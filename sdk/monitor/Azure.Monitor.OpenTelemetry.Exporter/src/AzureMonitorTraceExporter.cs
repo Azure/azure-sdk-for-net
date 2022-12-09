@@ -6,12 +6,13 @@ using System.Diagnostics;
 using System.Threading;
 
 using Azure.Core.Pipeline;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class AzureMonitorTraceExporter : BaseExporter<Activity>
+    internal class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
@@ -28,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
 
-            if (transmitter is AzureMonitorTransmitter _azureMonitorTransmitter && _azureMonitorTransmitter._storage != null)
+            if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
             {
                 _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
             }
@@ -58,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
                 return ExportResult.Failure;
             }
         }

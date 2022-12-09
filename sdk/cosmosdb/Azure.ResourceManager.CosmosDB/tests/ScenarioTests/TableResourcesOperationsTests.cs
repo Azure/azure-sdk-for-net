@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     resourceGroupName,
                     databaseAccountName,
                     tableName,
-                    new TableCreateUpdateParameters(new TableResource(tableName), new CreateUpdateOptions())));
+                    new TableCreateUpdateParameters(new TableResource(tableName), new CosmosDBCreateUpdateConfig())));
             Assert.IsNotNull(table1);
             Assert.AreEqual(tableName, table1.Resource.Id);
             ThroughputSettingsData throughputSettings1 =
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     resourceGroupName,
                     databaseAccountName,
                     tableName,
-                    new TableCreateUpdateParameters(new TableResource(tableName), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()))));
+                    new TableCreateUpdateParameters(new TableResource(tableName), new CosmosDBCreateUpdateConfig(sampleThroughput, new AutoscaleSettings()))));
             Assert.IsNotNull(table3);
             Assert.AreEqual(tableName, table3.Resource.Id);
             ThroughputSettingsData throughputSettings2 =
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
         }
     }
 }

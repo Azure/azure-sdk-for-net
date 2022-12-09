@@ -169,16 +169,18 @@
         "participants": [
           {
             "communicationIdentifier": {
-              "communicationUser": {
-                "id": "8:acs:95af91c6-a2de-43ac-87cb-7a3bf10a23f5_0000000e-32d3-c228-d68a-0848220016cd"
-              }
+                "rawId": "8:acs:95af91c6-a2de-43ac-87cb-7a3bf10a23f5_0000000e-32d3-c228-d68a-0848220016cd",
+                "communicationUser": {
+                    "id": "8:acs:95af91c6-a2de-43ac-87cb-7a3bf10a23f5_0000000e-32d3-c228-d68a-0848220016cd"
+                }
             }
           },
           {
             "communicationIdentifier": {
-              "communicationUser": {
-                "id": "8:acs:95af91c6-a2de-43ac-87cb-7a3bf10a23f5_0000000e-32d3-c2e8-02c3-593a0d0013fb"
-              }
+                "rawId": "8:acs:95af91c6-a2de-43ac-87cb-7a3bf10a23f5_0000000e-32d3-c2e8-02c3-593a0d0013fb",
+                "communicationUser": {
+                    "id": "8:acs:95af91c6-a2de-43ac-87cb-7a3bf10a23f5_0000000e-32d3-c2e8-02c3-593a0d0013fb"
+                }
             }
           }
         ]

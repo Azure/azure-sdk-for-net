@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -13,19 +14,13 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class CustomTaskParameters : TaskParameters
     {
         /// <summary> Initializes a new instance of CustomTaskParameters. </summary>
-        /// <param name="projectName"></param>
-        /// <param name="deploymentName"></param>
+        /// <param name="projectName"> This field indicates the project name for the model. </param>
+        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public CustomTaskParameters(string projectName, string deploymentName)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
@@ -33,17 +28,17 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of CustomTaskParameters. </summary>
         /// <param name="loggingOptOut"></param>
-        /// <param name="projectName"></param>
-        /// <param name="deploymentName"></param>
+        /// <param name="projectName"> This field indicates the project name for the model. </param>
+        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         internal CustomTaskParameters(bool? loggingOptOut, string projectName, string deploymentName) : base(loggingOptOut)
         {
             ProjectName = projectName;
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Gets or sets the project name. </summary>
+        /// <summary> This field indicates the project name for the model. </summary>
         public string ProjectName { get; set; }
-        /// <summary> Gets or sets the deployment name. </summary>
+        /// <summary> This field indicates the deployment name for the model. </summary>
         public string DeploymentName { get; set; }
     }
 }

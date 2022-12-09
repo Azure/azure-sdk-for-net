@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(VirtualNetworks))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<bool> enabled = default;
             Optional<IList<PrivateAccessVirtualNetwork>> virtualNetworks = default;
             foreach (var property in element.EnumerateObject())
@@ -72,12 +72,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -118,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PrivateAccessData(id, name, type, systemData, kind.Value, Optional.ToNullable(enabled), Optional.ToList(virtualNetworks));
+            return new PrivateAccessData(id, name, type, systemData.Value, Optional.ToNullable(enabled), Optional.ToList(virtualNetworks), kind.Value);
         }
     }
 }

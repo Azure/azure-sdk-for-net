@@ -84,18 +84,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Validates functionality of the <see cref="ClientLibraryInformation.EnumerateProperties" />
+        ///   Validates functionality of the <see cref="ClientLibraryInformation.SerializedProperties" />
         ///   property.
         /// </summary>
         ///
         [Test]
-        public void PropertiesCanBeEnumerated()
+        public void SerializedPropertiesCanBeEnumerated()
         {
             Dictionary<string, string> expectedNames = typeof(ClientLibraryInformation)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .ToDictionary(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant(), property => property.Name);
 
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
                 Assert.That(expectedNames.ContainsKey(property.Key), Is.True, $"The property, { property.Key }, was not expected.");
 
@@ -108,12 +108,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Validates functionality of the <see cref="ClientLibraryInformation.EnumerateProperties" />
+        ///   Validates functionality of the <see cref="ClientLibraryInformation.SerializedProperties" />
         ///   property.
         /// </summary>
         ///
         [Test]
-        public void EnumeratedPropertiesUseDescriptionsWhenPresent()
+        public void SerializedPropertiesUseDescriptionsWhenPresent()
         {
             ClientLibraryInformation instance = ClientLibraryInformation.Current;
 
@@ -122,21 +122,21 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                     .Select(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant()));
 
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
                 Assert.That(expectedNames.Contains(property.Key), Is.True, $"The property, { property.Key }, was not found.");
             }
         }
 
         /// <summary>
-        ///   Validates functionality of the <see cref="ClientLibraryInformation.EnumerateProperties" />
+        ///   Validates functionality of the <see cref="ClientLibraryInformation.SerializedProperties" />
         ///   property.
         /// </summary>
         ///
         [Test]
-        public void PropertiesArePopulated()
+        public void SerializedPropertiesArePopulated()
         {
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
                 Assert.That(property.Value, Is.Not.Null.And.Not.Empty, $"The property, { property.Key }, was not populated.");
             }

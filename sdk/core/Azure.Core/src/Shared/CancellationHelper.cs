@@ -32,7 +32,7 @@ namespace Azure.Core
 #pragma warning disable CA1801 // Unused parameter
         internal static Exception CreateOperationCanceledException(Exception? innerException, CancellationToken cancellationToken, string? message = null) =>
 #pragma warning restore CA1801 // Unused parameter
-#if NETCOREAPP2_1_OR_GREATER_OR_GREATER
+#if NETCOREAPP2_1_OR_GREATER
             new TaskCanceledException(message ?? s_cancellationMessage, innerException, cancellationToken); // TCE for compatibility with other handlers that use TaskCompletionSource.TrySetCanceled()
 #else
             new TaskCanceledException(message ?? s_cancellationMessage, innerException);

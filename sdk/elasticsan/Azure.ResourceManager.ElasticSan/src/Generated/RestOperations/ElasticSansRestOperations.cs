@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string elasticSanName, bool? forceDeleteElasticSanVolumeGroups)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string elasticSanName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -348,10 +348,6 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath(elasticSanName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (forceDeleteElasticSanVolumeGroups != null)
-            {
-                request.Headers.Add("x-ms-delete-volumegroups", forceDeleteElasticSanVolumeGroups.Value);
-            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -361,17 +357,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
-        /// <param name="forceDeleteElasticSanVolumeGroups"> Required if the San has associated Volume Groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string elasticSanName, bool? forceDeleteElasticSanVolumeGroups = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, elasticSanName, forceDeleteElasticSanVolumeGroups);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, elasticSanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -388,17 +383,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
-        /// <param name="forceDeleteElasticSanVolumeGroups"> Required if the San has associated Volume Groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string elasticSanName, bool? forceDeleteElasticSanVolumeGroups = null, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, elasticSanName, forceDeleteElasticSanVolumeGroups);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, elasticSanName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

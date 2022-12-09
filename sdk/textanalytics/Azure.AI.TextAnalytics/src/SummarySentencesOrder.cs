@@ -6,19 +6,10 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The order in which extracted sentences will be returned on extractive text summarization.
+    /// The order in which the extracted sentences will be returned in the result of extractive summarization.
     /// </summary>
-    [CodeGenModel("ExtractiveSummarizationTaskParametersSortBy")]
-    public enum SummarySentencesOrder
+    [CodeGenModel("ExtractiveSummarizationSortingCriteria")]
+    public readonly partial struct SummarySentencesOrder
     {
-        /// <summary>
-        /// Keeps the original order in which the sentences appear in the input.
-        /// </summary>
-        Offset,
-
-        /// <summary>
-        /// Orders sentences according to their relevance to the input document, as decided by the service.
-        /// </summary>
-        Rank
     }
 }

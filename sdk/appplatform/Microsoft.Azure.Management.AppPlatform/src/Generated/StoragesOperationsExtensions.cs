@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
-            /// List all the storages of one Azure Spring Cloud instance.
+            /// List all the storages of one Azure Spring Apps resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
-            /// List all the storages of one Azure Spring Cloud instance.
+            /// List all the storages of one Azure Spring Apps resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
-            /// List all the storages of one Azure Spring Cloud instance.
+            /// List all the storages of one Azure Spring Apps resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
-            /// List all the storages of one Azure Spring Cloud instance.
+            /// List all the storages of one Azure Spring Apps resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

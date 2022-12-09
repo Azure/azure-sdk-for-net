@@ -6,34 +6,43 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ff5885d76a66284fbd3a1e1733b2645d-4870aa548c88864a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220111.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "3b6719a043a00e80b2cc78c0ce08fd1d",
+        "traceparent": "00-392db7fd3b45b445a57dd6d9400b11a6-b4fd8578da419743-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "bd8289c253bb9c7c7bd5af4212387298",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "468",
+        "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 Jan 2022 05:08:53 GMT",
+        "Date": "Thu, 23 Jun 2022 05:08:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "041826bc-d094-4e72-8b54-53e26b1845d0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "041826bc-d094-4e72-8b54-53e26b1845d0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220111T050854Z:041826bc-d094-4e72-8b54-53e26b1845d0"
+        "x-ms-correlation-request-id": "4b942213-a5ea-4407-8099-62ce4cc859dc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11707",
+        "x-ms-request-id": "4b942213-a5ea-4407-8099-62ce4cc859dc",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T050823Z:4b942213-a5ea-4407-8099-62ce4cc859dc"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "tagKey1": "tagValue1",
-          "tagKey2": "tagValue2"
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
         },
         "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
@@ -52,27 +61,27 @@
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e3aadb4d43bb994aa6b840180d831336-244ec70b480c9d46-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220111.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "f940f331ae329243f0c8255faf89e093",
+        "traceparent": "00-eaa4ee5e493ff749a3df5f4560e0706c-076317b548a23b40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d76acb1d1e0a096a4677298887f811a1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "584455",
+        "Content-Length": "660090",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 Jan 2022 05:08:53 GMT",
+        "Date": "Thu, 23 Jun 2022 05:08:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b612b76c-7bb6-4b0f-850f-e0affa467739",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "southeastasia:55622949-5513-43a3-8422-69143cdbad93",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220111T050854Z:b612b76c-7bb6-4b0f-850f-e0affa467739"
+        "x-ms-correlation-request-id": "7eacb124-c1a9-47a5-acc0-9435e57c188e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11706",
+        "x-ms-request-id": "southeastasia:00d18d06-33bd-4894-8538-4cacdeb0b798",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T050823Z:7eacb124-c1a9-47a5-acc0-9435e57c188e"
       },
       "ResponseBody": {
         "value": [
@@ -608,14 +617,6 @@
             "properties": {
               "state": "NotRegistered"
             },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableRnlRemoveForSqlmiMigration",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Network/EnableRnlRemoveForSqlmiMigration"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/DataMoverPreviewAccess",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.Storage/DataMoverPreviewAccess"
@@ -803,22 +804,6 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/G8LMLIDedicatedHost",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.Compute/G8LMLIDedicatedHost"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/G8MMLIDedicatedHost",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Compute/G8MMLIDedicatedHost"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AzureSphere/features/preview",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.AzureSphere/preview"
           },
           {
             "properties": {
@@ -1179,6 +1164,2022 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AVS/features/scriptingPreview",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.AVS/scriptingPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/AllowRegularPremiumPageBlobOnEdgeZone",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/AllowRegularPremiumPageBlobOnEdgeZone"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/EnableTaskService",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/EnableTaskService"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Security/features/AttackPaths",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Security/AttackPaths"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Security/features/OrionStage",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Security/OrionStage"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/ArchivePolicyAffinityID",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/ArchivePolicyAffinityID"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/ArchivePolicyRehdyrateDelayInMinutes",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/ArchivePolicyRehdyrateDelayInMinutes"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/ArchivePolicyMinimumArchiveSize",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/ArchivePolicyMinimumArchiveSize"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/ArchivePolicyPropertiesCompanyMetUK",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/ArchivePolicyPropertiesCompanyMetUK"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/ArchivePolicyPropertiesTapeZonality",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/ArchivePolicyPropertiesTapeZonality"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.testbase/features/API20211201",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.testbase/API20211201"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.StorSimple/features/ShowBannerForDeviceUpdate52",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.StorSimple/ShowBannerForDeviceUpdate52"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.IoTFirmwareDefense/features/AccessControl",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.IoTFirmwareDefense/AccessControl"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableRnlRemoveForMigration",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableRnlRemoveForMigration"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Insights/features/GraphDeprecation",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Insights/GraphDeprecation"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.KubernetesConfiguration/features/ExtensionTypes",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.KubernetesConfiguration/ExtensionTypes"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Confluent/features/DataMigrationCleanup",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Confluent/DataMigrationCleanup"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/DisableAZFWSubnetPermissionCheck",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/DisableAZFWSubnetPermissionCheck"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableAZFWSubnetPermissionCheck",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableAZFWSubnetPermissionCheck"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/BaltimoreCA",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/BaltimoreCA"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/TruncateCollectionsOnNRPGetVnet",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/TruncateCollectionsOnNRPGetVnet"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Web/features/SiteSecretsCollectionEnabled",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Web/SiteSecretsCollectionEnabled"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFReestablishReplication",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFReestablishReplication"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/EnableDTF",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/EnableDTF"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFEnableVolumeUserGroupQuota",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFEnableVolumeUserGroupQuota"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowAdminRulesOnNipBasedServices",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AllowAdminRulesOnNipBasedServices"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/openAINewModel",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/openAINewModel"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/hidePgCfsEventInfobox",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/hidePgCfsEventInfobox"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/flexibleServerDatabases",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/flexibleServerDatabases"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.SecurityDevOps/features/DfdGitHubConnector",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.SecurityDevOps/DfdGitHubConnector"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableApplicationGatewaySubnetPermissionCheck",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableApplicationGatewaySubnetPermissionCheck"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowDeleteAddressPrefixesOnSubnet",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AllowDeleteAddressPrefixesOnSubnet"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/CloudServicesEnhancedPackageSize",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/CloudServicesEnhancedPackageSize"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/PreviewGuardRails",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/PreviewGuardRails"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/CapacityReservationGroupPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/CapacityReservationGroupPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/DedicatedHostGroupPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/DedicatedHostGroupPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ContainerInstance/features/spotPriorityContainerGroup",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ContainerInstance/spotPriorityContainerGroup"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Web/features/ASEPrivateLinkHost",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Web/ASEPrivateLinkHost"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Kusto/features/UseComputeSubscriptionAMD",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Kusto/UseComputeSubscriptionAMD"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/haServerAdditionalIOPs",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/haServerAdditionalIOPs"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/openAI1PFtModel",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/openAI1PFtModel"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/Container.TA.IssueResolutionSummarization",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/Container.TA.IssueResolutionSummarization"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-MWH",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-MWH"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-CDM",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-CDM"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-BY1",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-BY1"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-DM1",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-DM1"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-SN6",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-SN6"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-DB3",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-DB3"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-AM5",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-AM5"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-HKN",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-HKN"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/Region-Route-BL2",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/Region-Route-BL2"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/SpecialSkusForVmssFlex",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/SpecialSkusForVmssFlex"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/marlinWorkbooks",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/marlinWorkbooks"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.LoadTestService/features/DeprecatedAPIVersion",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.LoadTestService/DeprecatedAPIVersion"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/InGuestAutoPatchVmssUniformPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/InGuestAutoPatchVmssUniformPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DataProtection/features/BlobVaultedBackup",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DataProtection/BlobVaultedBackup"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableApplicationGatewayTlsProxyBackendHealth",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableApplicationGatewayTlsProxyBackendHealth"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDb/features/MongoTest",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDb/MongoTest"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/AHBEnabledForPAYG",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/AHBEnabledForPAYG"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/ManagedClusterSnapshotPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/ManagedClusterSnapshotPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AzureArcData/features/ArcDataActiveDirectory",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AzureArcData/ArcDataActiveDirectory"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ManagedIdentity/features/FederatedIdentityCredentials",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ManagedIdentity/FederatedIdentityCredentials"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/PremiumFilesFirstTierWithBurstSettings",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/PremiumFilesFirstTierWithBurstSettings"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/AzureKeyVaultKmsPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/AzureKeyVaultKmsPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.eventgrid/features/BypassPartnerAuthorizationFeature",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.eventgrid/BypassPartnerAuthorizationFeature"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableMoveLinks",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableMoveLinks"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/enableMoveLinks",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/enableMoveLinks"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableMarlinLogs",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableMarlinLogs"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/offlineMigrations",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/offlineMigrations"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AVS/features/smartSwitchConfigExperience",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AVS/smartSwitchConfigExperience"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AutonomousDevelopmentPlatform/features/DevExp01",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AutonomousDevelopmentPlatform/DevExp01"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AutonomousDevelopmentPlatform/features/DevExp02",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AutonomousDevelopmentPlatform/DevExp02"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AutonomousDevelopmentPlatform/features/DevExp03",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AutonomousDevelopmentPlatform/DevExp03"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AutonomousDevelopmentPlatform/features/DevExp04",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AutonomousDevelopmentPlatform/DevExp04"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDb/features/Mongo16MB",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDb/Mongo16MB"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Databricks/features/EnableAccessConnectorPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Databricks/EnableAccessConnectorPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/enableSameZoneHA",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/enableSameZoneHA"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.IotSecurity/features/PrivatePreviewParticipation",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.IotSecurity/PrivatePreviewParticipation"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/AllowPremiumBlockBlobsInMicroRegions",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/AllowPremiumBlockBlobsInMicroRegions"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/PartitionedDnsPublicPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/PartitionedDnsPublicPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/RollingTest01",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/RollingTest01"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/RollingTest02",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/RollingTest02"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/RollingTest03",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/RollingTest03"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/RollingTest04",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/RollingTest04"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/RollingTest05",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/RollingTest05"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/RollingTest06",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/RollingTest06"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Databricks/features/EnableDatabricks20220401PreviewApiVersion",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Databricks/EnableDatabricks20220401PreviewApiVersion"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/BypassPreflightValidation",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/BypassPreflightValidation"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.eventgrid/features/PartnerAuthorizationFeature",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.eventgrid/PartnerAuthorizationFeature"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DataReplication/features/PPEAccess",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DataReplication/PPEAccess"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/geoRestoreForNonZRServer",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/geoRestoreForNonZRServer"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Logic/features/ISVSubscription",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Logic/ISVSubscription"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/FleetResourcePreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/FleetResourcePreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/AKSInfinibandSupport",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/AKSInfinibandSupport"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/enableBackupAndRestoreBlade",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/enableBackupAndRestoreBlade"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/AllowDataSharing",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/AllowDataSharing"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowSpecificIpAddressInPublicIP",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AllowSpecificIpAddressInPublicIP"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.portal/features/SelfService",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.portal/SelfService"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ContainerInstance/features/ContainerScaleSetsPreview1",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ContainerInstance/ContainerScaleSetsPreview1"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/VMScaleSetFlexPriorityMix",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/VMScaleSetFlexPriorityMix"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/UseForceDeleteOnEviction",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/UseForceDeleteOnEviction"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/SpotTryRestoreFastRestoration",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/SpotTryRestoreFastRestoration"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/GitHub.Enterprise/features/PreviewRegion",
+            "type": "Microsoft.Features/providers/features",
+            "name": "GitHub.Enterprise/PreviewRegion"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Search/features/HOBOv2Support",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Search/HOBOv2Support"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDB/features/DeleteAllItemsByPartitionKey",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDB/DeleteAllItemsByPartitionKey"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/FastPathMigrationEnabled",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/FastPathMigrationEnabled"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/FormRecognizer.NeuralLimimt50",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/FormRecognizer.NeuralLimimt50"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Search/features/InternalFeatures",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Search/InternalFeatures"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Test.shoebox/features/TestInProduction",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Test.shoebox/TestInProduction"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AutonomousDevelopmentPlatform/features/WorkspacesPrivatePreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AutonomousDevelopmentPlatform/WorkspacesPrivatePreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/AKS-KedaPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/AKS-KedaPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.PlayFab/features/scus",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.PlayFab/scus"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.PlayFab/features/eus2",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.PlayFab/eus2"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDb/features/APIForMongoDbRBAC",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDb/APIForMongoDbRBAC"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDb/features/APIForMongoDbUniqueReindex",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDb/APIForMongoDbUniqueReindex"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cdn/features/EnableZtna",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cdn/EnableZtna"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.MobileNetwork/features/Routing-SecondaryCanaryEastUS2EUAP",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.MobileNetwork/Routing-SecondaryCanaryEastUS2EUAP"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.MobileNetwork/features/Routing-SecondaryCanaryCentralUSEUAP",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.MobileNetwork/Routing-SecondaryCanaryCentralUSEUAP"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.alertsmanagement/features/prometheusRulesInt",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.alertsmanagement/prometheusRulesInt"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/CustomConfiguration",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/CustomConfiguration"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/citusLargeScaleStorage",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/citusLargeScaleStorage"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Security/features/VmScanners.Preview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Security/VmScanners.Preview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.syntex/features/PrivatePreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.syntex/PrivatePreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.SecurityDevOps/features/AlphaRegions",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.SecurityDevOps/AlphaRegions"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableEditPrivateDns",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableEditPrivateDns"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/CustomCATrustPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/CustomCATrustPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ApiSecurity/features/PP2CanaryAccessDEV",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ApiSecurity/PP2CanaryAccessDEV"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableHideCitusConInformationBanner",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableHideCitusConInformationBanner"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.OperationalInsights/features/NewRegionsTest",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.OperationalInsights/NewRegionsTest"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ApiSecurity/features/PP2CanaryCentralUSAccessDEV",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ApiSecurity/PP2CanaryCentralUSAccessDEV"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/AKSWindows2022Preview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/AKSWindows2022Preview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.EventGrid/features/qac-9abfce26-7dfa-49fe-9a8d-a3d6cb13afd6",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.EventGrid/qac-9abfce26-7dfa-49fe-9a8d-a3d6cb13afd6"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/FormRecognizer.Neural100",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/FormRecognizer.Neural100"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFSMBNonBrowsable",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFSMBNonBrowsable"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFSMBAccessBasedEnumeration",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFSMBAccessBasedEnumeration"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Cache/features/qac-59fe8ab9-6707-4b3c-afb0-f5ed4214b531",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Cache/qac-59fe8ab9-6707-4b3c-afb0-f5ed4214b531"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableHideFreeAccountMessages",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableHideFreeAccountMessages"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/enableHideFreeAccountMessages",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/enableHideFreeAccountMessages"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DeviceUpdate/features/PreviewRegion",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DeviceUpdate/PreviewRegion"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.GuestConfiguration/features/TestParticipation",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.GuestConfiguration/TestParticipation"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.kusto/features/qac-e02603c6-3469-498a-994c-b0df4ceae1d0",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.kusto/qac-e02603c6-3469-498a-994c-b0df4ceae1d0"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ApiManagement/features/qac-6ba70dfa-ead9-4cc1-b894-049f8a17c22b",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ApiManagement/qac-6ba70dfa-ead9-4cc1-b894-049f8a17c22b"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/SpotAsHarvestShrink",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/SpotAsHarvestShrink"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/SpotAsHarvestExpand",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/SpotAsHarvestExpand"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/SpotAsHarvestShrinkByDefault",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/SpotAsHarvestShrinkByDefault"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/SpotAsHarvestExpandByDefault",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/SpotAsHarvestExpandByDefault"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/ADHHarvestShrink",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/ADHHarvestShrink"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Logic/features/IntegrationAccountArtifactsLargeCapacity",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Logic/IntegrationAccountArtifactsLargeCapacity"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/FormRecognizer.Neural50",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/FormRecognizer.Neural50"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/hidePostgreSql9.6Version",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/hidePostgreSql9.6Version"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.RecoveryServices/features/ArchiveV1SmartTiering",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.RecoveryServices/ArchiveV1SmartTiering"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ElasticSan/features/AllowValidationRegions",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ElasticSan/AllowValidationRegions"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ContainerRegistry/features/qac-3c737fd7-1389-4626-868f-c18df5790cb6",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ContainerRegistry/qac-3c737fd7-1389-4626-868f-c18df5790cb6"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowAppGwWafCustomBlockResponse",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AllowAppGwWafCustomBlockResponse"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AzureActiveDirectory/features/CIAMApiBeta",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AzureActiveDirectory/CIAMApiBeta"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.GuestConfiguration/features/TestParticipation2",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.GuestConfiguration/TestParticipation2"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.GuestConfiguration/features/TestParticipation3",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.GuestConfiguration/TestParticipation3"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.GuestConfiguration/features/TestParticipation4",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.GuestConfiguration/TestParticipation4"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.GuestConfiguration/features/TestParticipation5",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.GuestConfiguration/TestParticipation5"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Devices/features/BlockedRegion",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Devices/BlockedRegion"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.insights/features/actiongroupswedenc",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.insights/actiongroupswedenc"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/PaloAltoNetworks.Cloudngfw/features/PAN-Firewall",
+            "type": "Microsoft.Features/providers/features",
+            "name": "PaloAltoNetworks.Cloudngfw/PAN-Firewall"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.PlayFab/features/pfci",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.PlayFab/pfci"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.insights/features/qac-53601923-fb1a-4937-bcf2-ae71190acf34",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.insights/qac-53601923-fb1a-4937-bcf2-ae71190acf34"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Logic/features/IseCreationInRestrictedRegionAllowed",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Logic/IseCreationInRestrictedRegionAllowed"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/EnableAzureDiskCSIDriverV2",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/EnableAzureDiskCSIDriverV2"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/AKS-ExtensionRegionParity",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/AKS-ExtensionRegionParity"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Automation/features/qac-57605519-c17a-4786-a6c8-069635a2ee48",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Automation/qac-57605519-c17a-4786-a6c8-069635a2ee48"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.PortalServices/features/PrivatePreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.PortalServices/PrivatePreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.BackupSolutions/features/PublicPreviewTesting",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.BackupSolutions/PublicPreviewTesting"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowThrottleByOperationCounter",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AllowThrottleByOperationCounter"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/FormRecognizer.Neural5",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/FormRecognizer.Neural5"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowIpv6ApplicationGateway",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AllowIpv6ApplicationGateway"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ContainerInstance/features/snpEnabledContainerGroup",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ContainerInstance/snpEnabledContainerGroup"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.AutonomousDevelopmentPlatform/features/DevExp01",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.AutonomousDevelopmentPlatform/DevExp01"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.AutonomousDevelopmentPlatform/features/DevExp02",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.AutonomousDevelopmentPlatform/DevExp02"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.AutonomousDevelopmentPlatform/features/DevExp03",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.AutonomousDevelopmentPlatform/DevExp03"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.AutonomousDevelopmentPlatform/features/DevExp04",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.AutonomousDevelopmentPlatform/DevExp04"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ApiSecurity/features/PP2PPE",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ApiSecurity/PP2PPE"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableDefaultLoadBalancerForFastPathVirtualNetworks",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableDefaultLoadBalancerForFastPathVirtualNetworks"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/FormRecognizer.Neural150",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/FormRecognizer.Neural150"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Logic/features/LogicApps-2022-05-RegionsPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Logic/LogicApps-2022-05-RegionsPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ApiSecurity/features/PP2CanaryAccessPROD",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.ApiSecurity/PP2CanaryAccessPROD"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/SupportOutboundNatVirtualIPForCloudServices",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/SupportOutboundNatVirtualIPForCloudServices"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Insights/features/EnableCustomMetricsV2",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Insights/EnableCustomMetricsV2"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Insights/features/EnablePercentilesMAC",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Insights/EnablePercentilesMAC"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.HealthcareApis/features/IntTestEnv",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.HealthcareApis/IntTestEnv"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AFWEnableTcpConnectionLogging",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AFWEnableTcpConnectionLogging"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFHanaHonorPinning",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFHanaHonorPinning"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFHonorPinning",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFHonorPinning"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableActiveDirectoryAdmins",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableActiveDirectoryAdmins"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/FormRecognizer.Neural4500",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/FormRecognizer.Neural4500"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.PlayFab/features/Microsoft.PlayFab",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.PlayFab/Microsoft.PlayFab"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableSharedVNet",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableSharedVNet"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.PlayFab/features/segments",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.PlayFab/segments"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDB/features/ThroughputRedistributionAcrossPartitions",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDB/ThroughputRedistributionAcrossPartitions"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDB/features/Serverless1TBContainer",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDB/Serverless1TBContainer"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDB/features/PartitionMerge",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDB/PartitionMerge"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Easm/features/EasmAccess",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Easm/EasmAccess"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Resources/features/ItalyCentral",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Resources/ItalyCentral"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Resources/features/TagNamespace",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Resources/TagNamespace"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/Face.HighRisk",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/Face.HighRisk"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LimitedAccess.HighRisk",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/LimitedAccess.HighRisk"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/enableBusinessCriticalWorkloadType",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/enableBusinessCriticalWorkloadType"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.AutonomousDevelopmentPlatform/features/Dev",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.AutonomousDevelopmentPlatform/Dev"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AVS/features/AddOnHCXEEMetering",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AVS/AddOnHCXEEMetering"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFPopulateAvailabilityZone",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFPopulateAvailabilityZone"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowAVNMPreviewJuly2022",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AllowAVNMPreviewJuly2022"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDB/features/BurstCapacity1",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDB/BurstCapacity1"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Kusto/features/UseComputeSubscriptionEUDB",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Kusto/UseComputeSubscriptionEUDB"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/FormRecognizer.PodMode.msform",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/FormRecognizer.PodMode.msform"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Web/features/qac-df36aee8-c644-400b-a0ab-fd0f1191211d",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Web/qac-df36aee8-c644-400b-a0ab-fd0f1191211d"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.MachineLearningServices/features/registriesprivatepreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.MachineLearningServices/registriesprivatepreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/ServiceGroupARCOPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/ServiceGroupARCOPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableIPV6CAAllocationByNRP",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableIPV6CAAllocationByNRP"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.RecoveryServices/features/EdgeZoneVMBackupPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.RecoveryServices/EdgeZoneVMBackupPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableNameReservation",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableNameReservation"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/GenerateUniqueVhdIdForAllDisks",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/GenerateUniqueVhdIdForAllDisks"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/showAdvisorRecommendations",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/showAdvisorRecommendations"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.HDInsight/features/qac-6c014cb4-2247-46e7-a4b1-103991f0dc04",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.HDInsight/qac-6c014cb4-2247-46e7-a4b1-103991f0dc04"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/ColdTier",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/ColdTier"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/AllowSettingSystemTime",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/AllowSettingSystemTime"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/SetFolderExpiry",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Storage/SetFolderExpiry"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.SignalRService/features/qac-624c481d-e51c-4016-a522-fbe180d125fc",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.SignalRService/qac-624c481d-e51c-4016-a522-fbe180d125fc"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Easm/features/EasmRoutingPPE",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Easm/EasmRoutingPPE"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.eventgrid/features/EventGridFeatures2022",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.eventgrid/EventGridFeatures2022"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.IoTFirmwareDefense/features/Staging",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.IoTFirmwareDefense/Staging"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/SIGCVMSupportedPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/SIGCVMSupportedPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/DnsppProd",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/DnsppProd"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/DnsppReleaseCandidate",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/DnsppReleaseCandidate"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/showPendingRestartInfobox",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/showPendingRestartInfobox"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/SupportVnetPeeringAutoUpdateAfterVNetEncryptionChange",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/SupportVnetPeeringAutoUpdateAfterVNetEncryptionChange"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/AzureOverlayPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/AzureOverlayPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/AKS-PrometheusAddonPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/AKS-PrometheusAddonPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForMySQL/features/enableConnectSettings",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForMySQL/enableConnectSettings"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Appconfiguration/features/SwitzerlandWestPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Appconfiguration/SwitzerlandWestPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFManagedHsmEncryption",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFManagedHsmEncryption"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.OperationalInsights/features/SearchOverADLS",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.OperationalInsights/SearchOverADLS"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Insights/features/PrometheusPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Insights/PrometheusPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AFWEnableStructuredLogs",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AFWEnableStructuredLogs"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.AutonomousDevelopmentPlatform/features/PPE1",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.AutonomousDevelopmentPlatform/PPE1"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/AFWEnableIPv6",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/AFWEnableIPv6"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableSameZoneHA",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableSameZoneHA"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableCitusCrossRegionReplica",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableCitusCrossRegionReplica"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.OperationalInsights/features/qac-fe63f845-4aee-4313-9b2e-3a8a2fe61897",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.OperationalInsights/qac-fe63f845-4aee-4313-9b2e-3a8a2fe61897"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Insights/features/qac-fe63f845-4aee-4313-9b2e-3a8a2fe61897",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Insights/qac-fe63f845-4aee-4313-9b2e-3a8a2fe61897"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.OperationsManagement/features/qac-fe63f845-4aee-4313-9b2e-3a8a2fe61897",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.OperationsManagement/qac-fe63f845-4aee-4313-9b2e-3a8a2fe61897"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DataProtection/features/PPEV2Access",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DataProtection/PPEV2Access"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/WindowsNetworkPolicyPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/WindowsNetworkPolicyPreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/enableCrossRegionReplica",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DBForPostgreSQL/enableCrossRegionReplica"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.ContainerService/features/EnableBlobCSIDriver",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.ContainerService/EnableBlobCSIDriver"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.securityinsights/features/strictConnectorsThrottlingLimits",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.securityinsights/strictConnectorsThrottlingLimits"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AlertsManagement/features/prometheusRulesPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.AlertsManagement/prometheusRulesPreview"
           },
           {
             "properties": {
@@ -2699,14 +4700,6 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ContainerService/features/AKS-EnableAzureDataPlanePolicy",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.ContainerService/AKS-EnableAzureDataPlanePolicy"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ContainerService/features/AKS-INT",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.ContainerService/AKS-INT"
           },
           {
             "properties": {
@@ -6336,6 +8329,14 @@
             "properties": {
               "state": "NotRegistered"
             },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Security/features/WindowsDefenderAtpExclude",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Security/WindowsDefenderAtpExclude"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.SerialConsole/features/PreviewAccess",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.SerialConsole/PreviewAccess"
@@ -9840,14 +11841,6 @@
             "properties": {
               "state": "NotRegistered"
             },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Resources/features/westus2mockedge",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Resources/westus2mockedge"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Notebooks/features/AzureNBCanaryTraffic",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.Notebooks/AzureNBCanaryTraffic"
@@ -10235,14 +12228,6 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ServiceFabric/features/ManagedClustersPreview",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.ServiceFabric/ManagedClustersPreview"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Resources/features/EastUS2EUAPMockEdge",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Resources/EastUS2EUAPMockEdge"
           },
           {
             "properties": {
@@ -11323,6 +13308,14 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/Fabric.AzSM.NewDeployment.AzPE.OptOut",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.Compute/Fabric.AzSM.NewDeployment.AzPE.OptOut"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/CloudServicesDisablePackageValidation",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/CloudServicesDisablePackageValidation"
           },
           {
             "properties": {
@@ -14136,38 +16129,6 @@
             "properties": {
               "state": "NotRegistered"
             },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.Face.PoliceTermsAccepted",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.CognitiveServices/LegalTerms.Face.PoliceTermsAccepted"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.TextAnalytics.TAForHealthRAITermsAccepted",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.CognitiveServices/LegalTerms.TextAnalytics.TAForHealthRAITermsAccepted"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.TextAnalytics.TAForPIIRAITermsAccepted",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.CognitiveServices/LegalTerms.TextAnalytics.TAForPIIRAITermsAccepted"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.ComputerVision.SpatialAnaysisRAITermsAccepted",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.CognitiveServices/LegalTerms.ComputerVision.SpatialAnaysisRAITermsAccepted"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.ConfidentialLedger/features/betaAccess",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.ConfidentialLedger/betaAccess"
@@ -14491,14 +16452,6 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.PowerPlatform/features/accountPreview",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.PowerPlatform/accountPreview"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Storage/features/ZRSPremiumPageBlobs",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Storage/ZRSPremiumPageBlobs"
           },
           {
             "properties": {
@@ -14923,14 +16876,6 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.RecoveryServices/features/EnableMultipleBackupsInAFSPolicy",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.RecoveryServices/EnableMultipleBackupsInAFSPolicy"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Insights/features/Fabric.KyberVmAvailabilityMetric",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Insights/Fabric.KyberVmAvailabilityMetric"
           },
           {
             "properties": {
@@ -15392,14 +17337,6 @@
             "properties": {
               "state": "NotRegistered"
             },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AVS/features/testRouting",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.AVS/testRouting"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DBForPostgreSQL/features/marlinisallowedjw",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.DBForPostgreSQL/marlinisallowedjw"
@@ -15451,14 +17388,6 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/Face.LegacyPreview",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.CognitiveServices/Face.LegacyPreview"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/Face.Legacy",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.CognitiveServices/Face.Legacy"
           },
           {
             "properties": {
@@ -15747,22 +17676,6 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.AVS/features/publicIpOnNsx",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.AVS/publicIpOnNsx"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Resources/features/microsoftrrdclab4",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Resources/microsoftrrdclab4"
-          },
-          {
-            "properties": {
-              "state": "NotRegistered"
-            },
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Resources/features/microsoftrrdclab5",
-            "type": "Microsoft.Features/providers/features",
-            "name": "Microsoft.Resources/microsoftrrdclab5"
           },
           {
             "properties": {
@@ -16142,6 +18055,110 @@
           },
           {
             "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.Commvault/features/EnableProvider",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.Commvault/EnableProvider"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Logz/features/metricsBetaAccess",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Logz/metricsBetaAccess"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Databricks/features/EnableRDFERP",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Databricks/EnableRDFERP"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.NetApp/features/ANFResetADAccountForVolume",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.NetApp/ANFResetADAccountForVolume"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/microsoft.connectedopenstack/features/OpenstackPrivatePreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "microsoft.connectedopenstack/OpenstackPrivatePreview"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.RedTeam/features/EnableProvider",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.RedTeam/EnableProvider"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Private.Devices/features/EnableProvider",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Private.Devices/EnableProvider"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/UsePreprovisionedVMsForDirectSharedOrCommunityGalleryImages",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/UsePreprovisionedVMsForDirectSharedOrCommunityGalleryImages"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/CommunityGalleriesVMApplications",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/CommunityGalleriesVMApplications"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.DocumentDB/features/BurstCapacity",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.DocumentDB/BurstCapacity"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/EnableUpdatingStoppedVMInRunningVMSS",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/EnableUpdatingStoppedVMInRunningVMSS"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Network/features/vWANNFVRPMigrationQAC",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Network/vWANNFVRPMigrationQAC"
+          },
+          {
+            "properties": {
+              "state": "NotRegistered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/CGPublicNameUpdate",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.Compute/CGPublicNameUpdate"
+          },
+          {
+            "properties": {
               "state": "Registered"
             },
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Automation/features/dsc",
@@ -16206,11 +18223,27 @@
           },
           {
             "properties": {
-              "state": "Registered"
+              "state": "NotRegistered"
             },
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Resources/features/KoreaSouth",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.Resources/KoreaSouth"
+          },
+          {
+            "properties": {
+              "state": "Registered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.cdn/features/PrivateProductionRPV2",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.cdn/PrivateProductionRPV2"
+          },
+          {
+            "properties": {
+              "state": "Registered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/byoxPreview",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/byoxPreview"
           },
           {
             "properties": {
@@ -16267,14 +18300,46 @@
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.KeyVault/features/MHSM_HighCapacitySKU",
             "type": "Microsoft.Features/providers/features",
             "name": "Microsoft.KeyVault/MHSM_HighCapacitySKU"
+          },
+          {
+            "properties": {
+              "state": "Registered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.ComputerVision.SpatialAnaysisRAITermsAccepted",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/LegalTerms.ComputerVision.SpatialAnaysisRAITermsAccepted"
+          },
+          {
+            "properties": {
+              "state": "Registered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.TextAnalytics.TAForPIIRAITermsAccepted",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/LegalTerms.TextAnalytics.TAForPIIRAITermsAccepted"
+          },
+          {
+            "properties": {
+              "state": "Registered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.TextAnalytics.TAForHealthRAITermsAccepted",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/LegalTerms.TextAnalytics.TAForHealthRAITermsAccepted"
+          },
+          {
+            "properties": {
+              "state": "Registered"
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.CognitiveServices/features/LegalTerms.Face.PoliceTermsAccepted",
+            "type": "Microsoft.Features/providers/features",
+            "name": "Microsoft.CognitiveServices/LegalTerms.Face.PoliceTermsAccepted"
           }
         ]
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "441933110",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "988060864",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

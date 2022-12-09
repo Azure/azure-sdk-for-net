@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static Checkpoint DeserializeCheckpoint(JsonElement element)
         {
-            Optional<string> parentCheckpointID = default;
-            Optional<string> checkpointID = default;
+            Optional<string> parentCheckpointId = default;
+            Optional<string> checkpointId = default;
             Optional<string> name = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentCheckpointID"))
                 {
-                    parentCheckpointID = property.Value.GetString();
+                    parentCheckpointId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("checkpointID"))
                 {
-                    checkpointID = property.Value.GetString();
+                    checkpointId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new Checkpoint(parentCheckpointID.Value, checkpointID.Value, name.Value, description.Value);
+            return new Checkpoint(parentCheckpointId.Value, checkpointId.Value, name.Value, description.Value);
         }
     }
 }

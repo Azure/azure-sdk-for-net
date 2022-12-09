@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> contentVersion = default;
             Optional<BinaryData> parameters = default;
             Optional<IReadOnlyList<BinaryData>> resources = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"))
@@ -71,7 +71,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

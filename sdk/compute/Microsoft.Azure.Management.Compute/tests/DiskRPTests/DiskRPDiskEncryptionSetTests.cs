@@ -38,13 +38,13 @@ namespace Compute.Tests.DiskRPTests
             DiskEncryptionSet_List_Execute("DiskEncryptionSet_List", location: supportedZoneLocation);
         }
 
-        [Fact]
+        [Fact(Skip = "Resources no longer exist")]
         public void DiskEncryptionSet_CreateDisk()
         {
             DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: "centraluseuap");
         }
 
-        [Fact]
+        [Fact (Skip = "Resources no longer exist")]
         public void DiskEncryptionSet_AddDESToExistingDisk()
         {
             DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: "centraluseuap");

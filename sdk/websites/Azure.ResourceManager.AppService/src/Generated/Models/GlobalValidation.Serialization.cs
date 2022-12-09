@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequireAuthentication))
+            if (Optional.IsDefined(IsAuthenticationRequired))
             {
                 writer.WritePropertyName("requireAuthentication");
-                writer.WriteBooleanValue(RequireAuthentication.Value);
+                writer.WriteBooleanValue(IsAuthenticationRequired.Value);
             }
             if (Optional.IsDefined(UnauthenticatedClientAction))
             {

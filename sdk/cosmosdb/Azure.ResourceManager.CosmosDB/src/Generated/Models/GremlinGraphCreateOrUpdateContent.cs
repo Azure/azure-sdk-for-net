@@ -19,12 +19,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Gremlin graph. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public GremlinGraphCreateOrUpdateContent(AzureLocation location, GremlinGraphResource resource) : base(location)
+        public GremlinGraphCreateOrUpdateContent(AzureLocation location, GremlinGraphResourceInfo resource) : base(location)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -38,15 +35,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Gremlin graph. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal GremlinGraphCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinGraphResource resource, CreateUpdateOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal GremlinGraphCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinGraphResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> The standard JSON format of a Gremlin graph. </summary>
-        public GremlinGraphResource Resource { get; set; }
+        public GremlinGraphResourceInfo Resource { get; set; }
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateOptions Options { get; set; }
+        public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

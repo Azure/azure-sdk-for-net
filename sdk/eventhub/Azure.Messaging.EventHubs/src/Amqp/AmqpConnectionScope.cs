@@ -1312,7 +1312,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 HostName = hostName
             };
 
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
                 connectionSettings.AddProperty(property.Key, property.Value);
             }

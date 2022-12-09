@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
+    // Data plane generated client. The RoleAssignments service client.
     /// <summary> The RoleAssignments service client. </summary>
     public partial class RoleAssignmentsClient
     {
@@ -60,61 +61,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId (required),
-        ///     groupIds: [SubjectInfoGroupIdsItem]
-        ///   } (required),
-        ///   actions: [
-        ///     {
-        ///       id: string (required),
-        ///       isDataAction: boolean (required)
-        ///     }
-        ///   ] (required),
-        ///   scope: string (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   accessDecisions: [
-        ///     {
-        ///       accessDecision: string,
-        ///       actionId: string,
-        ///       roleAssignment: {
-        ///         id: string,
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///         principalId: RoleAssignmentDetailsPrincipalId,
-        ///         scope: string,
-        ///         principalType: string
-        ///       }
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CheckPrincipalAccessAsync(RequestContent,ContentType,RequestContext)']/*" />
+        public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -122,7 +76,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -133,61 +87,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId (required),
-        ///     groupIds: [SubjectInfoGroupIdsItem]
-        ///   } (required),
-        ///   actions: [
-        ///     {
-        ///       id: string (required),
-        ///       isDataAction: boolean (required)
-        ///     }
-        ///   ] (required),
-        ///   scope: string (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   accessDecisions: [
-        ///     {
-        ///       accessDecision: string,
-        ///       actionId: string,
-        ///       roleAssignment: {
-        ///         id: string,
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///         principalId: RoleAssignmentDetailsPrincipalId,
-        ///         scope: string,
-        ///         principalType: string
-        ///       }
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response CheckPrincipalAccess(RequestContent content, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CheckPrincipalAccess(RequestContent,ContentType,RequestContext)']/*" />
+        public virtual Response CheckPrincipalAccess(RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -195,7 +102,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -210,40 +117,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   value: [
-        ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentsAsync(String,String,String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
@@ -265,40 +142,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   value: [
-        ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignments(String,String,String,String,RequestContext)']/*" />
         public virtual Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
@@ -317,165 +164,76 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId (required),
-        ///   principalId: RoleAssignmentRequestPrincipalId (required),
-        ///   scope: string (required),
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CreateRoleAssignmentAsync(String,RequestContent,ContentType,RequestContext)']/*" />
+        public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId (required),
-        ///   principalId: RoleAssignmentRequestPrincipalId (required),
-        ///   scope: string (required),
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CreateRoleAssignment(String,RequestContent,ContentType,RequestContext)']/*" />
+        public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentByIdAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
@@ -483,50 +241,25 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentById(String,RequestContext)']/*" />
         public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, context);
@@ -534,7 +267,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -542,28 +275,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='DeleteRoleAssignmentByIdAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
@@ -585,28 +302,12 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='DeleteRoleAssignmentById(String,String,RequestContext)']/*" />
         public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
@@ -625,7 +326,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -636,7 +337,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }
@@ -671,7 +372,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
-        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -683,7 +384,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }

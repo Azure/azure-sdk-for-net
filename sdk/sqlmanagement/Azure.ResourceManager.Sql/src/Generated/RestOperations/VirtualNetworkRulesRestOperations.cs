@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="virtualNetworkRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlServerVirtualNetworkRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        SqlServerVirtualNetworkRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkRuleData)null, message.Response);
+                    return Response.FromValue((SqlServerVirtualNetworkRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="virtualNetworkRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkRuleData> Get(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public Response<SqlServerVirtualNetworkRuleData> Get(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        VirtualNetworkRuleData value = default;
+                        SqlServerVirtualNetworkRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkRuleData.DeserializeVirtualNetworkRuleData(document.RootElement);
+                        value = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkRuleData)null, message.Response);
+                    return Response.FromValue((SqlServerVirtualNetworkRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRuleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, SqlServerVirtualNetworkRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRuleData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, SqlServerVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRuleData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName, SqlServerVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

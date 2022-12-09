@@ -38,7 +38,6 @@ namespace Azure.Data.Tables.Samples
             }
             #endregion
 
-            #region Snippet:TablesSample1DeleteNonexistentTable
             try
             {
                 // Deletes the table.
@@ -52,7 +51,6 @@ namespace Azure.Data.Tables.Samples
                 Console.WriteLine("Deleting a nonexistent table throws the following exception:");
                 Console.WriteLine(e.Message);
             }
-            #endregion
         }
     }
 }

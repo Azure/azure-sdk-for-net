@@ -1,0 +1,715 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4f59ec7f47014d4f9b45fc4fa6cf3582-6271332baf4c2c4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3bb319545d59dd7da37074fd52e994d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "387",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e04417fb-6b36-4bef-b30d-80aee56e9147",
+        "x-ms-ratelimit-remaining-subscription-reads": "11911",
+        "x-ms-request-id": "e04417fb-6b36-4bef-b30d-80aee56e9147",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184812Z:e04417fb-6b36-4bef-b30d-80aee56e9147"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [],
+        "subscriptionId": "292d7caa-a878-4de8-b774-689097666272",
+        "tenantId": "01884692-6d96-44fa-8c58-11b4e90fef19",
+        "displayName": "Microsoft Azure",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "CSP_2015-05-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-74eca430a01d4d44893c17074862812e-5e983ca488575347-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3ab590ebfc2a4dd149c01b15287af0cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "503b9db5-90b7-4c4d-ae20-aa51d6ec481c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11910",
+        "x-ms-request-id": "503b9db5-90b7-4c4d-ae20-aa51d6ec481c",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184812Z:503b9db5-90b7-4c4d-ae20-aa51d6ec481c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG",
+        "name": "azsdkRG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "brazilsouth",
+        "tags": {
+          "ServiceDirectory": "desktopvirtualization",
+          "Creator": "sampa",
+          "DeleteAfter": "2022-05-22T20:49:28.1719085Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testHostPoolCrud4?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "154",
+        "Content-Type": "application/json",
+        "traceparent": "00-e0c0a9889f0ddc49b7ac41735074088e-84fc805adecf104a-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "953f4273083f910fe986288291cb5cce",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "hostPoolType": "Personal",
+          "loadBalancerType": "BreadthFirst",
+          "preferredAppGroupType": "RailApplications"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1248",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:14 GMT",
+        "Expires": "-1",
+        "Location": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/testHostPoolCrud4",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "798a83fc-8500-4adc-b4c8-0afefd496da6",
+        "x-ms-correlation-request-id": "58b244f1-a9c6-40dd-b814-9622c47ca111",
+        "x-ms-lamport-ts": "10527",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vaG9zdFBvb2xzL3Rlc3RIb3N0UG9vbENydWQ0",
+        "x-ms-ratelimit-remaining-subscription-writes": "1177",
+        "x-ms-request-id": "953f4273-083f-910f-e986-288291cb5cce",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184814Z:58b244f1-a9c6-40dd-b814-9622c47ca111",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "testHostPoolCrud4",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/testHostPoolCrud4",
+        "type": "Microsoft.DesktopVirtualization/hostpools",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": null,
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:48:13.36Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:48:13.36Z"
+        },
+        "properties": {
+          "friendlyName": null,
+          "description": null,
+          "hostPoolType": "Personal",
+          "personalDesktopAssignmentType": "Automatic",
+          "applicationGroupReferences": [],
+          "customRdpProperty": "",
+          "maxSessionLimit": 999999,
+          "loadBalancerType": "Persistent",
+          "validationEnvironment": true,
+          "ring": 0,
+          "registrationInfo": {
+            "expirationTime": "0001-01-01T00:00:00",
+            "token": "",
+            "registrationTokenOperation": "None"
+          },
+          "vmTemplate": null,
+          "preferredAppGroupType": "RailApplications",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "startVMOnConnect": false,
+          "ssoadfsAuthority": null,
+          "ssoClientId": null,
+          "ssoClientSecretKeyVaultPath": null,
+          "ssoSecretType": "SharedKey",
+          "objectId": "ade78622-6e7f-4375-8933-35b21f2b8249"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testHostPoolCrud4?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-aa69aaece61fb74a8f22f4be6b9db82b-ec17e48014adb04f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "61b55a54dfed58064865f1994168b528",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1248",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "93736ead-4371-4ff2-b9d8-73fba110ad12",
+        "x-ms-correlation-request-id": "addc49f5-ddca-45cc-a152-b958fb7d15aa",
+        "x-ms-lamport-ts": "10539",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vaG9zdFBvb2xzL3Rlc3RIb3N0UG9vbENydWQ0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11909",
+        "x-ms-request-id": "61b55a54-dfed-5806-4865-f1994168b528",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184814Z:addc49f5-ddca-45cc-a152-b958fb7d15aa",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "testHostPoolCrud4",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/testHostPoolCrud4",
+        "type": "Microsoft.DesktopVirtualization/hostpools",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": null,
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:48:13.36Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:48:13.36Z"
+        },
+        "properties": {
+          "friendlyName": null,
+          "description": null,
+          "hostPoolType": "Personal",
+          "personalDesktopAssignmentType": "Automatic",
+          "applicationGroupReferences": [],
+          "customRdpProperty": "",
+          "maxSessionLimit": 999999,
+          "loadBalancerType": "Persistent",
+          "validationEnvironment": true,
+          "ring": 0,
+          "registrationInfo": {
+            "expirationTime": "0001-01-01T00:00:00",
+            "token": "",
+            "registrationTokenOperation": "None"
+          },
+          "vmTemplate": null,
+          "preferredAppGroupType": "RailApplications",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "startVMOnConnect": false,
+          "ssoadfsAuthority": null,
+          "ssoClientId": null,
+          "ssoClientSecretKeyVaultPath": null,
+          "ssoSecretType": "SharedKey",
+          "objectId": "ade78622-6e7f-4375-8933-35b21f2b8249"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testHostPoolCrud4?api-version=2021-07-12",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "185",
+        "Content-Type": "application/json",
+        "traceparent": "00-d056dcbe52be8b4f9175d1e7b5d20844-40a30b9eec0f8f4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0f8aa57ffeaae399802451a3d44ebb7e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "brazilsouth",
+        "properties": {
+          "friendlyName": "Friendly Name",
+          "hostPoolType": "Personal",
+          "loadBalancerType": "BreadthFirst",
+          "preferredAppGroupType": "RailApplications"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1259",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "86d8cbf4-e107-4918-94d3-3bffb1b61c2b",
+        "x-ms-correlation-request-id": "f00509e9-0993-43f7-8636-78b4658ea076",
+        "x-ms-lamport-ts": "10542",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vaG9zdFBvb2xzL3Rlc3RIb3N0UG9vbENydWQ0",
+        "x-ms-ratelimit-remaining-subscription-writes": "1176",
+        "x-ms-request-id": "0f8aa57f-feaa-e399-8024-51a3d44ebb7e",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184814Z:f00509e9-0993-43f7-8636-78b4658ea076",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "testHostPoolCrud4",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/testHostPoolCrud4",
+        "type": "Microsoft.DesktopVirtualization/hostpools",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": null,
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:48:13.36Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:48:14.34Z"
+        },
+        "properties": {
+          "friendlyName": "Friendly Name",
+          "description": null,
+          "hostPoolType": "Personal",
+          "personalDesktopAssignmentType": "Automatic",
+          "applicationGroupReferences": [],
+          "customRdpProperty": "",
+          "maxSessionLimit": 999999,
+          "loadBalancerType": "Persistent",
+          "validationEnvironment": true,
+          "ring": 0,
+          "registrationInfo": {
+            "expirationTime": "0001-01-01T00:00:00",
+            "token": "",
+            "registrationTokenOperation": "None"
+          },
+          "vmTemplate": null,
+          "preferredAppGroupType": "RailApplications",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "startVMOnConnect": false,
+          "ssoadfsAuthority": null,
+          "ssoClientId": null,
+          "ssoClientSecretKeyVaultPath": null,
+          "ssoSecretType": "SharedKey",
+          "objectId": "ade78622-6e7f-4375-8933-35b21f2b8249"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testHostPoolCrud4?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d5cf79f9b6f54b4695fce750d5178982-7c6b6113e5623c44-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cdc04c638ec593e13ce74dd917754f80",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1259",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "7501cab9-c4bb-4b22-b642-aee5cff99d9e",
+        "x-ms-correlation-request-id": "34f31b85-429e-4211-90b0-34d5a78be2da",
+        "x-ms-lamport-ts": "10545",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vaG9zdFBvb2xzL3Rlc3RIb3N0UG9vbENydWQ0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11908",
+        "x-ms-request-id": "cdc04c63-8ec5-93e1-3ce7-4dd917754f80",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184814Z:34f31b85-429e-4211-90b0-34d5a78be2da",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "testHostPoolCrud4",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/testHostPoolCrud4",
+        "type": "Microsoft.DesktopVirtualization/hostpools",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": null,
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:48:13.36Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:48:14.34Z"
+        },
+        "properties": {
+          "friendlyName": "Friendly Name",
+          "description": null,
+          "hostPoolType": "Personal",
+          "personalDesktopAssignmentType": "Automatic",
+          "applicationGroupReferences": [],
+          "customRdpProperty": "",
+          "maxSessionLimit": 999999,
+          "loadBalancerType": "Persistent",
+          "validationEnvironment": true,
+          "ring": 0,
+          "registrationInfo": {
+            "expirationTime": "0001-01-01T00:00:00",
+            "token": "",
+            "registrationTokenOperation": "None"
+          },
+          "vmTemplate": null,
+          "preferredAppGroupType": "RailApplications",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "startVMOnConnect": false,
+          "ssoadfsAuthority": null,
+          "ssoClientId": null,
+          "ssoClientSecretKeyVaultPath": null,
+          "ssoSecretType": "SharedKey",
+          "objectId": "ade78622-6e7f-4375-8933-35b21f2b8249"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testHostPoolCrud4?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f0bcfd45061b3d469349f21082bb4fba-e3ccf88d91da2d48-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "eb02ffd14c415524c0d1e1c88d6283f9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1259",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Set-Cookie": [
+          "ARRAffinity=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;Secure;Domain=rdarmprovider.dev03.avdtest.net",
+          "ARRAffinitySameSite=3815f870faefb5586c964e997f19c9c687f9ec3d8051f30672296989b835faa3;Path=/;HttpOnly;SameSite=None;Secure;Domain=rdarmprovider.dev03.avdtest.net"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "2064ac80-d8d3-4baa-918d-bb31cf1bae10",
+        "x-ms-correlation-request-id": "86fcbf92-e9ff-4bd1-ae54-4ff918e9b2f6",
+        "x-ms-lamport-ts": "10548",
+        "x-ms-opsarmpath64": "L3N1YnNjcmlwdGlvbnMvMjkyZDdjYWEtYTg3OC00ZGU4LWI3NzQtNjg5MDk3NjY2MjcyL3Jlc291cmNlR3JvdXBzL2F6c2RrUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXNrdG9wVmlydHVhbGl6YXRpb24vaG9zdFBvb2xzL3Rlc3RIb3N0UG9vbENydWQ0",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14977",
+        "x-ms-request-id": "eb02ffd1-4c41-5524-c0d1-e1c88d6283f9",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184816Z:86fcbf92-e9ff-4bd1-ae54-4ff918e9b2f6",
+        "X-Powered-By": "ASP.NET",
+        "X-Rate-Limit-Limit": "0",
+        "X-Rate-Limit-Remaining": "9223372036854775807",
+        "X-Rate-Limit-Reset": "0"
+      },
+      "ResponseBody": {
+        "name": "testHostPoolCrud4",
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostpools/testHostPoolCrud4",
+        "type": "Microsoft.DesktopVirtualization/hostpools",
+        "location": "brazilsouth",
+        "tags": {},
+        "kind": null,
+        "systemData": {
+          "createdBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "createdByType": "Application",
+          "createdAt": "2022-06-14T18:48:13.36Z",
+          "lastModifiedBy": "4d623718-752b-4325-9960-46e070a92bca",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-14T18:48:14.34Z"
+        },
+        "properties": {
+          "friendlyName": "Friendly Name",
+          "description": null,
+          "hostPoolType": "Personal",
+          "personalDesktopAssignmentType": "Automatic",
+          "applicationGroupReferences": [],
+          "customRdpProperty": "",
+          "maxSessionLimit": 999999,
+          "loadBalancerType": "Persistent",
+          "validationEnvironment": true,
+          "ring": 0,
+          "registrationInfo": {
+            "expirationTime": "0001-01-01T00:00:00",
+            "token": "",
+            "registrationTokenOperation": "None"
+          },
+          "vmTemplate": null,
+          "preferredAppGroupType": "RailApplications",
+          "migrationRequest": {
+            "operation": "",
+            "migrationPath": ""
+          },
+          "cloudPcResource": false,
+          "startVMOnConnect": false,
+          "ssoadfsAuthority": null,
+          "ssoClientId": null,
+          "ssoClientSecretKeyVaultPath": null,
+          "ssoSecretType": "SharedKey",
+          "objectId": "ade78622-6e7f-4375-8933-35b21f2b8249"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testHostPoolCrud4?api-version=2021-07-12",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-43e2004927327e428b1aae3119842cf3-3f6cf8475ce80946-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f43572aae7a8f163c3f6d3c2b1c0cc0a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Date": "Tue, 14 Jun 2022 18:48:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "74bbd1d4-b14a-40f7-9851-9ce70087ee9f",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14976",
+        "x-ms-request-id": "74bbd1d4-b14a-40f7-9851-9ce70087ee9f",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184816Z:74bbd1d4-b14a-40f7-9851-9ce70087ee9f"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools/testHostPoolCrud4?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e76b53e079454646a861195a4b17f05f-d334ac2b2aa85d47-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d5d2d0d5cf4b163d286a0cf3ad1905d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "238",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3a6a9545-b01d-4572-b494-9750080bd9c9",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "3a6a9545-b01d-4572-b494-9750080bd9c9",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184816Z:3a6a9545-b01d-4572-b494-9750080bd9c9"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.DesktopVirtualization/hostpools/testHostPoolCrud4\u0027 under resource group \u0027azsdkRG\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourcegroups/azsdkRG?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-74ae3501ec98c54e8911dcdc341d3564-ebbe55a250f7394a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a42f53645a40e9d89b11284a7861a400",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "331",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "de2c0359-5023-4331-aef5-20e84fb1b24c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11906",
+        "x-ms-request-id": "de2c0359-5023-4331-aef5-20e84fb1b24c",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184816Z:de2c0359-5023-4331-aef5-20e84fb1b24c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG",
+        "name": "azsdkRG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "brazilsouth",
+        "tags": {
+          "ServiceDirectory": "desktopvirtualization",
+          "Creator": "sampa",
+          "DeleteAfter": "2022-05-22T20:49:28.1719085Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/applicationGroups?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cd072b542b48e243b21f136686a855c6-d168ebed40fb654a-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bdf2d605ad8fdaad351ecc3dda6f44aa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "12",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "97acf235-bf81-4d24-8dd4-1cdac15dd98e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11905",
+        "x-ms-request-id": "97acf235-bf81-4d24-8dd4-1cdac15dd98e",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184817Z:97acf235-bf81-4d24-8dd4-1cdac15dd98e"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/292d7caa-a878-4de8-b774-689097666272/resourceGroups/azsdkRG/providers/Microsoft.DesktopVirtualization/hostPools?api-version=2021-07-12",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cc659eac3b46ad4392188a4b691be03b-89c607ec5c73844b-00",
+        "User-Agent": "azsdk-net-ResourceManager.DesktopVirtualization/1.0.0-alpha.20220614.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5e5efaf028917acaf8e8393aa7f29ec6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "12",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Jun 2022 18:48:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "020ac858-2c41-47bb-af8d-35c5a86a32ee",
+        "x-ms-ratelimit-remaining-subscription-reads": "11904",
+        "x-ms-request-id": "020ac858-2c41-47bb-af8d-35c5a86a32ee",
+        "x-ms-routing-request-id": "WESTUS2:20220614T184817Z:020ac858-2c41-47bb-af8d-35c5a86a32ee"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    }
+  ],
+  "Variables": {
+    "DESKTOPVIRTUALIZATION_RESOURCE_GROUP": "azsdkRG",
+    "RandomSeed": "420268745",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "292d7caa-a878-4de8-b774-689097666272"
+  }
+}

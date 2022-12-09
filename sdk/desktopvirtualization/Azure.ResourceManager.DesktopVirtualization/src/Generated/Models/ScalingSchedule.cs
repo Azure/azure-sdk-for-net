@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="rampDownNotificationMessage"> Notification message for users during ramp down period. </param>
         /// <param name="offPeakStartOn"> Starting time for off-peak period. </param>
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
-        internal ScalingSchedule(string name, IList<ScalingScheduleDaysOfWeekItem> daysOfWeek, DateTimeOffset? rampUpStartOn, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, DateTimeOffset? peakStartOn, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, DateTimeOffset? rampDownStartOn, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, StopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, DateTimeOffset? offPeakStartOn, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm)
+        internal ScalingSchedule(string name, IList<ScalingScheduleDaysOfWeekItem> daysOfWeek, DateTimeOffset? rampUpStartOn, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm, int? rampUpMinimumHostsPct, int? rampUpCapacityThresholdPct, DateTimeOffset? peakStartOn, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm, DateTimeOffset? rampDownStartOn, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm, int? rampDownMinimumHostsPct, int? rampDownCapacityThresholdPct, bool? rampDownForceLogoffUsers, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen, int? rampDownWaitTimeMinutes, string rampDownNotificationMessage, DateTimeOffset? offPeakStartOn, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm)
         {
             Name = name;
             DaysOfWeek = daysOfWeek;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Should users be logged off forcefully from hosts. </summary>
         public bool? RampDownForceLogoffUsers { get; set; }
         /// <summary> Specifies when to stop hosts during ramp down period. </summary>
-        public StopHostsWhen? RampDownStopHostsWhen { get; set; }
+        public DesktopVirtualizationStopHostsWhen? RampDownStopHostsWhen { get; set; }
         /// <summary> Number of minutes to wait to stop hosts during ramp down period. </summary>
         public int? RampDownWaitTimeMinutes { get; set; }
         /// <summary> Notification message for users during ramp down period. </summary>

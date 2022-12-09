@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ValidateOperationResult>> ValidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LinkerValidateOperationResult>> ValidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Validate");
             scope.Start();
             try
             {
                 var response = await _linkerResourceLinkerRestClient.ValidateAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<ValidateOperationResult>(new ValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ValidateOperationResult> Validate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LinkerValidateOperationResult> Validate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Validate");
             scope.Start();
             try
             {
                 var response = _linkerResourceLinkerRestClient.Validate(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<ValidateOperationResult>(new ValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

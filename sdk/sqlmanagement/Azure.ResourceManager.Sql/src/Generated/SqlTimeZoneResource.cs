@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlTimeZoneResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlTimeZoneResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string timeZoneId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string timeZoneId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}";
             return new ResourceIdentifier(resourceId);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlTimeZoneTimeZonesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlTimeZoneResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _sqlTimeZoneTimeZonesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlTimeZoneResource(Client, response.Value), response.GetRawResponse());

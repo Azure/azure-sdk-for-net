@@ -44,21 +44,18 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// partner.</param>
         /// <param name="partnerTopicDetails">Details of the partner topic
         /// scenario.</param>
-        /// <param name="partnerDestinationDetails">Details of the partner
-        /// destination scenario.</param>
         /// <param name="provisioningState">Provisioning state of the verified
         /// partner. Possible values include: 'Creating', 'Updating',
         /// 'Deleting', 'Succeeded', 'Canceled', 'Failed'</param>
         /// <param name="systemData">The system metadata relating to Verified
         /// Partner resource.</param>
-        public VerifiedPartner(string id = default(string), string name = default(string), string type = default(string), System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string organizationName = default(string), string partnerDisplayName = default(string), PartnerDetails partnerTopicDetails = default(PartnerDetails), PartnerDetails partnerDestinationDetails = default(PartnerDetails), string provisioningState = default(string), SystemData systemData = default(SystemData))
+        public VerifiedPartner(string id = default(string), string name = default(string), string type = default(string), System.Guid? partnerRegistrationImmutableId = default(System.Guid?), string organizationName = default(string), string partnerDisplayName = default(string), PartnerDetails partnerTopicDetails = default(PartnerDetails), string provisioningState = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             OrganizationName = organizationName;
             PartnerDisplayName = partnerDisplayName;
             PartnerTopicDetails = partnerTopicDetails;
-            PartnerDestinationDetails = partnerDestinationDetails;
             ProvisioningState = provisioningState;
             SystemData = systemData;
             CustomInit();
@@ -92,12 +89,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerTopicDetails")]
         public PartnerDetails PartnerTopicDetails { get; set; }
-
-        /// <summary>
-        /// Gets or sets details of the partner destination scenario.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.partnerDestinationDetails")]
-        public PartnerDetails PartnerDestinationDetails { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the verified partner. Possible

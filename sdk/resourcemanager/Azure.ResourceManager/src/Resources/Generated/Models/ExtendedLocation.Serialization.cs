@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
+    [JsonConverter(typeof(ExtendedLocationConverter))]
     public partial class ExtendedLocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -51,6 +54,19 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             return new ExtendedLocation(Optional.ToNullable(type), name.Value);
+        }
+
+        internal partial class ExtendedLocationConverter : JsonConverter<ExtendedLocation>
+        {
+            public override void Write(Utf8JsonWriter writer, ExtendedLocation model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ExtendedLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeExtendedLocation(document.RootElement);
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DateTimeOffset> preMaintenanceWindowEndTime = default;
             Optional<DateTimeOffset> maintenanceWindowStartTime = default;
             Optional<DateTimeOffset> maintenanceWindowEndTime = default;
-            Optional<MaintenanceOperationResultCodeTypes> lastOperationResultCode = default;
+            Optional<MaintenanceOperationResultCodeType> lastOperationResultCode = default;
             Optional<string> lastOperationMessage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastOperationResultCode = property.Value.GetString().ToMaintenanceOperationResultCodeTypes();
+                    lastOperationResultCode = property.Value.GetString().ToMaintenanceOperationResultCodeType();
                     continue;
                 }
                 if (property.NameEquals("lastOperationMessage"))

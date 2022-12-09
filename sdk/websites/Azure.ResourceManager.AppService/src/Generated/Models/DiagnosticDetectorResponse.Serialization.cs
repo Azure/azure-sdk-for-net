@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<bool> issueDetected = default;
             Optional<DetectorDefinition> detectorDefinition = default;
             Optional<IList<DiagnosticMetricSet>> metrics = default;
             Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<IList<NameValuePair>>> data = default;
-            Optional<ResponseMetaData> responseMetaData = default;
+            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            Optional<DetectorMetadata> responseMetaData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -123,12 +123,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -217,13 +222,13 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IList<NameValuePair>> array = new List<IList<NameValuePair>>();
+                            List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                List<NameValuePair> array0 = new List<NameValuePair>();
+                                List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                                 foreach (var item0 in item.EnumerateArray())
                                 {
-                                    array0.Add(NameValuePair.DeserializeNameValuePair(item0));
+                                    array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
                                 }
                                 array.Add(array0);
                             }
@@ -237,14 +242,14 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            responseMetaData = ResponseMetaData.DeserializeResponseMetaData(property0.Value);
+                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DiagnosticDetectorResponse(id, name, type, systemData, kind.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value);
+            return new DiagnosticDetectorResponse(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value, kind.Value);
         }
     }
 }

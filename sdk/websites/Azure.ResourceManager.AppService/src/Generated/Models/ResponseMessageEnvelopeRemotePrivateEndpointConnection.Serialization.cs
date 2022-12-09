@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ResponseMessageEnvelopeRemotePrivateEndpointConnection DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<ArmPlan> plan = default;
+            Optional<AppServiceArmPlan> plan = default;
             Optional<RemotePrivateEndpointConnection> properties = default;
-            Optional<SkuDescription> sku = default;
+            Optional<AppServiceSkuDescription> sku = default;
             Optional<string> status = default;
             Optional<ResponseError> error = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -29,12 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -59,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = ArmPlan.DeserializeArmPlan(property.Value);
+                    plan = AppServiceArmPlan.DeserializeAppServiceArmPlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -79,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -94,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -104,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -134,16 +139,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, Optional.ToList(zones));
+            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, Optional.ToList(zones));
         }
     }
 }

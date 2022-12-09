@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,13 +30,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ImageDiskReference class.
         /// </summary>
         /// <param name="id">A relative uri containing either a Platform Image
-        /// Repository or user image reference.</param>
+        /// Repository, user image, or Azure Compute Gallery image
+        /// reference.</param>
+        /// <param name="sharedGalleryImageId">A relative uri containing a
+        /// direct shared Azure Compute Gallery image reference.</param>
+        /// <param name="communityGalleryImageId">A relative uri containing a
+        /// community Azure Compute Gallery image reference.</param>
         /// <param name="lun">If the disk is created from an image's data disk,
         /// this is an index that indicates which of the data disks in the
         /// image to use. For OS disks, this field is null.</param>
-        public ImageDiskReference(string id, int? lun = default(int?))
+        public ImageDiskReference(string id = default(string), string sharedGalleryImageId = default(string), string communityGalleryImageId = default(string), int? lun = default(int?))
         {
             Id = id;
+            SharedGalleryImageId = sharedGalleryImageId;
+            CommunityGalleryImageId = communityGalleryImageId;
             Lun = lun;
             CustomInit();
         }
@@ -49,10 +55,24 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets a relative uri containing either a Platform Image
-        /// Repository or user image reference.
+        /// Repository, user image, or Azure Compute Gallery image reference.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets a relative uri containing a direct shared Azure
+        /// Compute Gallery image reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "sharedGalleryImageId")]
+        public string SharedGalleryImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a relative uri containing a community Azure Compute
+        /// Gallery image reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "communityGalleryImageId")]
+        public string CommunityGalleryImageId { get; set; }
 
         /// <summary>
         /// Gets or sets if the disk is created from an image's data disk, this
@@ -62,18 +82,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "lun")]
         public int? Lun { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-        }
     }
 }

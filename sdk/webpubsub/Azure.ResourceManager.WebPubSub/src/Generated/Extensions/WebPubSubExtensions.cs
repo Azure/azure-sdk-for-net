@@ -37,11 +37,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).CheckWebPubSubNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
@@ -56,11 +54,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).CheckWebPubSubNameAvailability(location, content, cancellationToken);
@@ -100,13 +96,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
@@ -118,13 +110,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SignalRServiceUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<SignalRServiceUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
@@ -234,20 +222,20 @@ namespace Azure.ResourceManager.WebPubSub
         }
         #endregion
 
-        #region SharedPrivateLinkResource
+        #region WebPubSubSharedPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="SharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebPubSubSharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLinkResource" /> object. </returns>
-        public static SharedPrivateLinkResource GetSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubSharedPrivateLinkResource" /> object. </returns>
+        public static WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SharedPrivateLinkResource.ValidateResourceId(id);
-                return new SharedPrivateLinkResource(client, id);
+                WebPubSubSharedPrivateLinkResource.ValidateResourceId(id);
+                return new WebPubSubSharedPrivateLinkResource(client, id);
             }
             );
         }

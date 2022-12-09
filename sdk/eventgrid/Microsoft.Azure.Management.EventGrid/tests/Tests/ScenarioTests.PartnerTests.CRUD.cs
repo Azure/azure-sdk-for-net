@@ -15,7 +15,7 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Skip as EventChannels is deprecated and marked for deletion.")]
         public void PartnerCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -53,7 +53,7 @@ namespace EventGrid.Tests.ScenarioTests
                 };
 
                 Guid uniqueId = Guid.NewGuid();
-                string subId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+                // string subId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
 
                 try
                 {
@@ -61,16 +61,20 @@ namespace EventGrid.Tests.ScenarioTests
                     {
                         Location = "global",
                         Tags = originalTagsDictionary,
+
+                        /* --- These properties are being deprecated and are marked to be deleted ---*/
+                        /*
                         LogoUri = "https://www.contoso.com/logo.png",
                         SetupUri = "https://www.contoso.com/setup.html",
                         PartnerName = "Contoso",
                         PartnerResourceTypeName = $"Accounts.{uniqueId}",
                         PartnerResourceTypeDisplayName = $"DisplayName Text -- {uniqueId}",
                         PartnerResourceTypeDescription = $"Description Text -- {uniqueId}",
-                        AuthorizedAzureSubscriptionIds = new List<string>
-                    {
-                        subId
-                    },
+                        AuthorizedAzureSubscriptionIds = new List<string> 
+                        {
+                            subId
+                        },
+                        */
                     };
 
                     var createPartnerRegistrationResponse = this.EventGridManagementClient.PartnerRegistrations.CreateOrUpdateAsync(resourceGroup, partnerRegistrationName, partnerRegistration).Result;
@@ -301,13 +305,15 @@ namespace EventGrid.Tests.ScenarioTests
                     Assert.Contains(replacePartnerNamespaceResponse.Tags, tag => tag.Key == "replacedTag111");
                     Assert.DoesNotContain(replacePartnerNamespaceResponse.Tags, tag => tag.Key == "originalTag111");
 
-                    // EventChannel/PartnerTopic operations
+                    // EventChannel/Channel/PartnerTopic operations
                     var originalPartnerTopicTagsDictionary = new Dictionary<string, string>()
                     {
                         {"originalTag11111", "originalValue11111"},
                         {"originalTag22222", "originalValue22222"}
                     };
 
+                    /* --- EventChannel is being deprecated and are marked to be deleted ---*/
+                    /*
                     EventChannel eventChannel = new EventChannel()
                     {
                         Source = new EventChannelSource
@@ -361,6 +367,7 @@ namespace EventGrid.Tests.ScenarioTests
                     Assert.True(eventChannelsInPartnerNamespaceList.Count() >= 1);
                     Assert.Contains(eventChannelsInPartnerNamespaceList, t => t.Name == eventChannelName);
                     Assert.True(eventChannelsInPartnerNamespaceList.All(ns => ns.Id.Contains(resourceGroup)));
+                    */
 
                     // Partner topic operations
 
@@ -458,10 +465,10 @@ namespace EventGrid.Tests.ScenarioTests
                             SubjectEndsWith = "TestSuffix"
                         },
                         Labels = new List<string>()
-                    {
-                        "TestLabel1",
-                        "TestLabel2"
-                    }
+                        {
+                            "TestLabel1",
+                            "TestLabel2"
+                        }
                     };
 
                     // Activate the partner topic.
@@ -500,18 +507,18 @@ namespace EventGrid.Tests.ScenarioTests
                         Filter = new EventSubscriptionFilter()
                         {
                             IncludedEventTypes = new List<string>()
-                        {
-                            "Event1",
-                            "Event2"
-                        },
+                            {
+                                "Event1",
+                                "Event2"
+                            },
                             SubjectEndsWith = ".jpg",
                             SubjectBeginsWith = "TestPrefix"
                         },
                         Labels = new List<string>()
-                    {
-                        "UpdatedLabel1",
-                        "UpdatedLabel2",
-                    }
+                        {
+                            "UpdatedLabel1",
+                            "UpdatedLabel2",
+                        }
                     };
 
                     eventSubscriptionResponse = this.eventGridManagementClient.PartnerTopicEventSubscriptions.UpdateAsync(resourceGroup, partnerTopicName, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
@@ -551,8 +558,8 @@ namespace EventGrid.Tests.ScenarioTests
 
                     if (eventChannelCreated)
                     {
-                        // Delete eventChannel
-                        this.EventGridManagementClient.EventChannels.DeleteAsync(resourceGroup, partnerNamespaceName, eventChannelName).Wait();
+                        // Delete channel
+                        this.EventGridManagementClient.Channels.DeleteAsync(resourceGroup, partnerNamespaceName, eventChannelName).Wait();
                     }
 
                     if (partnerNamespaceCreated)
@@ -617,6 +624,9 @@ namespace EventGrid.Tests.ScenarioTests
                     {
                         Location = "global",
                         Tags = originalTagsDictionary,
+
+                        /*--- These properties are deprecatred and marked for removal ---*/
+                        /*
                         LogoUri = "https://www.contoso.com/logo.png",
                         SetupUri = "https://www.contoso.com/setup.html",
                         PartnerName = "Contoso",
@@ -624,9 +634,10 @@ namespace EventGrid.Tests.ScenarioTests
                         PartnerResourceTypeDisplayName = $"DisplayName Text -- {uniqueId}",
                         PartnerResourceTypeDescription = $"Description Text -- {uniqueId}",
                         AuthorizedAzureSubscriptionIds = new List<string>
-                    {
-                        subId
-                    },
+                        {
+                            subId
+                        },
+                        */
                     };
 
                     var createPartnerRegistrationResponse = this.EventGridManagementClient.PartnerRegistrations.CreateOrUpdateAsync(resourceGroup, partnerRegistrationName, partnerRegistration).Result;
@@ -846,7 +857,7 @@ namespace EventGrid.Tests.ScenarioTests
                     Assert.Contains(replacePartnerNamespaceResponse.Tags, tag => tag.Key == "replacedTag111");
                     Assert.DoesNotContain(replacePartnerNamespaceResponse.Tags, tag => tag.Key == "originalTag111");
 
-                    // EventChannel/PartnerTopic operations
+                    // Channel/PartnerTopic operations
                     var originalPartnerTopicTagsDictionary = new Dictionary<string, string>()
                     {
                         {"originalTag11111", "originalValue11111"},
@@ -927,11 +938,11 @@ namespace EventGrid.Tests.ScenarioTests
                         ExpirationTimeIfNotActivatedUtc = DateTime.UtcNow.AddDays(2),
                         MessageForActivation = "This is sample message.",
                         PartnerTopicInfo = new PartnerTopicInfo(
-                            azureSubscriptionId: subId,
-                            resourceGroupName: resourceGroup,
-                            name: partnerTopicName,
-                            eventTypeInfo: eventTypeInfo,
-                            source: $"Accounts.User.{uniqueId}")
+                        azureSubscriptionId: subId,
+                        resourceGroupName: resourceGroup,
+                        name: partnerTopicName,
+                        eventTypeInfo: eventTypeInfo,
+                        source: $"Accounts.User.{uniqueId}")
                     };
 
                     var createChannelResponse = this.EventGridManagementClient.Channels.CreateOrUpdateAsync(resourceGroup, partnerNamespaceName, channelName, channel).Result;
@@ -1071,10 +1082,10 @@ namespace EventGrid.Tests.ScenarioTests
                             SubjectEndsWith = "TestSuffix"
                         },
                         Labels = new List<string>()
-                    {
-                        "TestLabel1",
-                        "TestLabel2"
-                    }
+                        {
+                            "TestLabel1",
+                            "TestLabel2"
+                        }
                     };
 
                     // Activate the partner topic.
@@ -1113,18 +1124,18 @@ namespace EventGrid.Tests.ScenarioTests
                         Filter = new EventSubscriptionFilter()
                         {
                             IncludedEventTypes = new List<string>()
-                        {
-                            "Event1",
-                            "Event2"
-                        },
+                            {
+                                "Event1",
+                                "Event2"
+                            },
                             SubjectEndsWith = ".jpg",
                             SubjectBeginsWith = "TestPrefix"
                         },
                         Labels = new List<string>()
-                    {
-                        "UpdatedLabel1",
-                        "UpdatedLabel2",
-                    }
+                        {
+                            "UpdatedLabel1",
+                            "UpdatedLabel2",
+                        }
                     };
 
                     eventSubscriptionResponse = this.eventGridManagementClient.PartnerTopicEventSubscriptions.UpdateAsync(resourceGroup, partnerTopicName, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
@@ -1180,8 +1191,8 @@ namespace EventGrid.Tests.ScenarioTests
 
                     if (channelCreated)
                     {
-                        // Delete eventChannel
-                        this.EventGridManagementClient.EventChannels.DeleteAsync(resourceGroup, partnerNamespaceName, channelName).Wait();
+                        // Delete  hannel
+                        this.EventGridManagementClient.Channels.DeleteAsync(resourceGroup, partnerNamespaceName, channelName).Wait();
                     }
 
                     if (partnerNamespaceCreated)

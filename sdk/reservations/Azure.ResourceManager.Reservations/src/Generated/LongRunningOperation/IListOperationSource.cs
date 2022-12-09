@@ -14,26 +14,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations
 {
-    internal class IListOperationSource : IOperationSource<IList<ReservationResponseData>>
+    internal class IListOperationSource : IOperationSource<IList<ReservationDetailData>>
     {
-        IList<ReservationResponseData> IOperationSource<IList<ReservationResponseData>>.CreateResult(Response response, CancellationToken cancellationToken)
+        IList<ReservationDetailData> IOperationSource<IList<ReservationDetailData>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            List<ReservationResponseData> array = new List<ReservationResponseData>();
+            List<ReservationDetailData> array = new List<ReservationDetailData>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(ReservationResponseData.DeserializeReservationResponseData(item));
+                array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
             }
             return array;
         }
 
-        async ValueTask<IList<ReservationResponseData>> IOperationSource<IList<ReservationResponseData>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IList<ReservationDetailData>> IOperationSource<IList<ReservationDetailData>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<ReservationResponseData> array = new List<ReservationResponseData>();
+            List<ReservationDetailData> array = new List<ReservationDetailData>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(ReservationResponseData.DeserializeReservationResponseData(item));
+                array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
             }
             return array;
         }

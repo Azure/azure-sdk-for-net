@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<IList<CassandraColumn>> columns = default;
             Optional<IList<CassandraPartitionKey>> partitionKeys = default;
-            Optional<IList<ClusterKey>> clusterKeys = default;
+            Optional<IList<CassandraClusterKey>> clusterKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columns"))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterKey> array = new List<ClusterKey>();
+                    List<CassandraClusterKey> array = new List<CassandraClusterKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterKey.DeserializeClusterKey(item));
+                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item));
                     }
                     clusterKeys = array;
                     continue;

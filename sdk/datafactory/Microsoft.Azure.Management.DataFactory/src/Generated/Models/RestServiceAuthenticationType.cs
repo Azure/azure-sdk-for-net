@@ -20,5 +20,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public const string Basic = "Basic";
         public const string AadServicePrincipal = "AadServicePrincipal";
         public const string ManagedServiceIdentity = "ManagedServiceIdentity";
+        public const string OAuth2ClientCredential = "OAuth2ClientCredential";
     }
 }

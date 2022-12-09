@@ -6,36 +6,27 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is servicePrincipal certificate. </summary>
-    public partial class ServicePrincipalCertificateAuthInfo : AuthInfoBase
+    public partial class ServicePrincipalCertificateAuthInfo : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/>, <paramref name="principalId"/> or <paramref name="certificate"/> is null. </exception>
-        public ServicePrincipalCertificateAuthInfo(string clientId, string principalId, string certificate)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="certificate"/> is null. </exception>
+        public ServicePrincipalCertificateAuthInfo(string clientId, Guid principalId, string certificate)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
-            if (certificate == null)
-            {
-                throw new ArgumentNullException(nameof(certificate));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(certificate, nameof(certificate));
 
             ClientId = clientId;
             PrincipalId = principalId;
             Certificate = certificate;
-            AuthType = AuthType.ServicePrincipalCertificate;
+            AuthType = LinkerAuthType.ServicePrincipalCertificate;
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
@@ -43,7 +34,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
-        internal ServicePrincipalCertificateAuthInfo(AuthType authType, string clientId, string principalId, string certificate) : base(authType)
+        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, string clientId, Guid principalId, string certificate) : base(authType)
         {
             ClientId = clientId;
             PrincipalId = principalId;
@@ -54,7 +45,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Application clientId for servicePrincipal auth. </summary>
         public string ClientId { get; set; }
         /// <summary> Principal Id for servicePrincipal auth. </summary>
-        public string PrincipalId { get; set; }
+        public Guid PrincipalId { get; set; }
         /// <summary> ServicePrincipal certificate for servicePrincipal auth. </summary>
         public string Certificate { get; set; }
     }

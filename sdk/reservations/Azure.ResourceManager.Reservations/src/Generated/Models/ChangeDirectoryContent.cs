@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ChangeDirectoryRequest. </summary>
+    /// <summary> The ChangeDirectoryContent. </summary>
     public partial class ChangeDirectoryContent
     {
         /// <summary> Initializes a new instance of ChangeDirectoryContent. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Tenant id GUID that reservation order is to be transferred to. </summary>
-        public string DestinationTenantId { get; set; }
+        public Guid? DestinationTenantId { get; set; }
     }
 }

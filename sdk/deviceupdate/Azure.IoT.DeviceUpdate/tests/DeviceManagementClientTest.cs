@@ -2,17 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using System.Net.Http;
 using Azure.Core.Pipeline;
-using System.Text.Json;
-using System.IO;
+using System.Net;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.IoT.DeviceUpdate.Tests
 {
@@ -22,6 +17,171 @@ namespace Azure.IoT.DeviceUpdate.Tests
         {
         }
 
+        [RecordedTest]
+        public async Task GetDevices()
+        {
+            DeviceManagementClient client = CreateClient();
+            AsyncPageable<BinaryData> response = client.GetDevicesAsync();
+            int counter = 0;
+            await foreach (var item in response)
+            {
+                Assert.IsNotNull(item);
+                counter++;
+            }
+
+            Assert.IsTrue(counter > 0);
+        }
+
+        [RecordedTest]
+        public async Task GetDevice_NotFound()
+        {
+            DeviceManagementClient client = CreateClient();
+            try
+            {
+                await client.GetDeviceAsync("foo");
+            }
+            catch (RequestFailedException e)
+            {
+                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetGroups()
+        {
+            DeviceManagementClient client = CreateClient();
+            AsyncPageable<BinaryData> response = client.GetGroupsAsync();
+            int counter = 0;
+            await foreach (var item in response)
+            {
+                System.Diagnostics.Debug.WriteLine(item);
+                Assert.IsNotNull(item);
+                counter++;
+            }
+
+            Assert.IsTrue(counter > 0);
+        }
+
+        [RecordedTest]
+        public async Task GetGroup()
+        {
+            DeviceManagementClient client = CreateClient();
+            Response response = await client.GetGroupAsync(TestEnvironment.DeviceGroup);
+            Assert.IsNotNull(response.Content);
+        }
+
+        [RecordedTest]
+        public async Task GetGroup_NotFound()
+        {
+            DeviceManagementClient client = CreateClient();
+            try
+            {
+                await client.GetGroupAsync("foo-bar-dpokluda-completely-fake");
+                Assert.Fail("NotFound response expected");
+            }
+            catch (RequestFailedException e)
+            {
+                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetDeviceClasses()
+        {
+            DeviceManagementClient client = CreateClient();
+            AsyncPageable<BinaryData> response = client.GetDeviceClassesAsync();
+            int counter = 0;
+            await foreach (var item in response)
+            {
+                Assert.IsNotNull(item);
+                counter++;
+            }
+
+            Assert.IsTrue(counter > 0);
+        }
+
+        [RecordedTest]
+        public async Task GetDeviceClass_NotFound()
+        {
+            DeviceManagementClient client = CreateClient();
+            try
+            {
+                await client.GetDeviceClassAsync("foo");
+                Assert.Fail("NotFound response expected");
+            }
+            catch (RequestFailedException e)
+            {
+                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetBestUpdatesForGroups()
+        {
+            DeviceManagementClient client = CreateClient();
+            AsyncPageable<BinaryData> response = client.GetBestUpdatesForGroupsAsync(TestEnvironment.DeviceGroup);
+            int counter = 0;
+            await foreach (var item in response)
+            {
+                Assert.IsNotNull(item);
+                counter++;
+            }
+
+            Assert.IsTrue(counter > 0);
+        }
+
+        [RecordedTest]
+        public async Task GetBestUpdatesForGroups_NotFound()
+        {
+            DeviceManagementClient client = CreateClient();
+            try
+            {
+                AsyncPageable<BinaryData> response = client.GetBestUpdatesForGroupsAsync("foo");
+                await foreach (var _ in response)
+                {
+                    Assert.Fail("NotFound response expected");
+                }
+            }
+            catch (RequestFailedException e)
+            {
+                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+            }
+        }
+
+        //  Temporary disabled because the service doesn't properly handle this method yet
+        [RecordedTest]
+        public async Task GetDeploymentsForGroups()
+        {
+            DeviceManagementClient client = CreateClient();
+            AsyncPageable<BinaryData> response = client.GetDeploymentsForGroupsAsync(TestEnvironment.DeviceGroup);
+            int counter = 0;
+            await foreach (var item in response)
+            {
+                Assert.IsNotNull(item);
+                counter++;
+            }
+
+            Assert.IsTrue(counter > 0);
+        }
+
+        [RecordedTest]
+        public async Task GetDeploymentsForGroups_NotFound()
+        {
+            DeviceManagementClient client = CreateClient();
+            try
+            {
+                AsyncPageable<BinaryData> response = client.GetDeploymentsForGroupsAsync("foo");
+                await foreach (var item in response)
+                {
+                    Assert.Fail("NotFound response expected");
+                }
+            }
+            catch (RequestFailedException e)
+            {
+                Assert.AreEqual((int)HttpStatusCode.NotFound, e.Status);
+            }
+        }
+
         private DeviceManagementClient CreateClient()
         {
             var httpHandler = new HttpClientHandler();
@@ -29,127 +189,18 @@ namespace Azure.IoT.DeviceUpdate.Tests
             {
                 return true;
             };
-            var options = new DeviceUpdateClientOptions { Transport = new HttpClientTransport(httpHandler) };
+
             var client = InstrumentClient(
-                new DeviceManagementClient(TestEnvironment.AccountEndPoint, TestEnvironment.InstanceId, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                new DeviceManagementClient(
+                    TestEnvironment.AccountEndPoint,
+                    TestEnvironment.InstanceId,
+                    TestEnvironment.Credential,
+                    InstrumentClientOptions(new DeviceUpdateClientOptions
+                    {
+                        Transport = new HttpClientTransport(httpHandler)
+                    })));
+
             return client;
-        }
-
-        [RecordedTest]
-        public async Task GetDevices()
-        {
-            DeviceManagementClient client = CreateClient();
-            AsyncPageable<BinaryData> fetchResponse = client.GetDevicesAsync();
-            int counter = 0;
-            await foreach (var item in fetchResponse)
-            {
-                Assert.IsNotNull(item);
-                counter++;
-            }
-
-            Assert.IsTrue(counter > 0);
-        }
-
-        [RecordedTest]
-        public async Task GetDeviceTags()
-        {
-            DeviceManagementClient client = CreateClient();
-            AsyncPageable<BinaryData> fetchResponse = client.GetDeviceTagsAsync();
-            int counter = 0;
-            await foreach (var item in fetchResponse)
-            {
-                Assert.IsNotNull(item);
-                counter++;
-            }
-
-            Assert.IsTrue(counter > 0);
-        }
-
-        [RecordedTest]
-        public async Task GetGroups()
-        {
-            DeviceManagementClient client = CreateClient();
-            AsyncPageable<BinaryData> fetchResponse = client.GetGroupsAsync(new RequestContext());
-            int counter = 0;
-            await foreach (var item in fetchResponse)
-            {
-                Assert.IsNotNull(item);
-                counter++;
-            }
-
-            Assert.IsTrue(counter > 0);
-        }
-
-        [RecordedTest]
-        public async Task GroupAndDeployment()
-        {
-            DeviceManagementClient client = CreateClient();
-            string groupid = "joegroup";
-
-            /* list groups. */
-            AsyncPageable<BinaryData> fetchResponse = client.GetGroupsAsync(new RequestContext());
-            int counter = 0;
-            await foreach (var item in fetchResponse)
-            {
-                Assert.IsNotNull(item);
-                counter++;
-            }
-
-            Assert.IsTrue(counter > 0);
-
-            /* create a group. */
-            var body = new
-            {
-                groupId = groupid,
-                tags = new string[] { groupid },
-                createdDateTime = "2021-11-17T16:29:56.5770502+00:00",
-                groupType = "DeviceClassIdAndIoTHubTag",
-                deviceClassId = "0919e3ae422a2bfa8c84ff905813e60351e456d1"
-            };
-            Response createResponse = await client.CreateOrUpdateGroupAsync(groupid, RequestContent.Create(body), new RequestContext());
-            Assert.IsTrue(createResponse.Status == 200);
-
-            /* get a group. */
-            Response getResponse = await client.GetGroupAsync(groupid, new RequestContext());
-            Assert.IsTrue(getResponse.Status == 200);
-
-            /* create a deployment. */
-            string deploymentid = "testdeployment1";
-            var deploymentBody = new
-            {
-                deploymentId = deploymentid,
-                startDateTime = "2021-09-02T16:29:56.5770502Z",
-                groupId = groupid,
-                updateId = new
-                {
-                    provider = "fabrikam",
-                    name = "vacuum",
-                    version = "2021.1117.1036.48"
-                }
-            };
-            Response createDeploymentResponse = await client.CreateOrUpdateDeploymentAsync(groupid, deploymentid, RequestContent.Create(deploymentBody), new RequestContext());
-            Assert.IsTrue(createDeploymentResponse.Status == 200);
-            /* get deployment. */
-            Response getDepoloymentResponse = await client.GetDeploymentAsync(groupid, deploymentid, new RequestContext());
-            Assert.IsTrue(getDepoloymentResponse.Status == 200);
-
-            /* delete deployment. */
-            Response deleteDeploymentResponse = await client.DeleteDeploymentAsync(groupid, deploymentid, new RequestContext());
-            Assert.IsTrue(deleteDeploymentResponse.Status == 204);
-
-            /* delete group. */
-            Response deleteGroupResponse = await client.DeleteGroupAsync(groupid, new RequestContext());
-            Assert.IsTrue(deleteGroupResponse.Status == 204);
-        }
-
-        private static BinaryData GetContentFromResponse(Response r)
-        {
-            // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses
-            // from the playback system.
-
-            MemoryStream ms = new MemoryStream();
-            r.ContentStream.CopyTo(ms);
-            return new BinaryData(ms.ToArray());
         }
     }
 }

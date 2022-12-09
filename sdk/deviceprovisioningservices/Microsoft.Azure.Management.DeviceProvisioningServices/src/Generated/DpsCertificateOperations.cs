@@ -277,12 +277,12 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         /// <param name='certificateName'>
         /// The name of the certificate create or update.
         /// </param>
-        /// <param name='certificateDescription'>
-        /// The certificate body.
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the certificate. This is required to update an existing
         /// certificate, and ignored while creating a brand new certificate.
+        /// </param>
+        /// <param name='properties'>
+        /// properties of a certificate
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch = default(string), CertificateProperties properties = default(CertificateProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -327,9 +327,10 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
             }
-            if (certificateDescription == null)
+            CertificateResponse certificateDescription = new CertificateResponse();
+            if (properties != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "certificateDescription");
+                certificateDescription.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -341,8 +342,8 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("provisioningServiceName", provisioningServiceName);
                 tracingParameters.Add("certificateName", certificateName);
-                tracingParameters.Add("certificateDescription", certificateDescription);
                 tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("certificateDescription", certificateDescription);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }

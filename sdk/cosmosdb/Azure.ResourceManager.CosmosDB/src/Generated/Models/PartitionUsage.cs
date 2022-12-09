@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The partition level usage data for a usage request. </summary>
-    public partial class PartitionUsage : BaseUsage
+    public partial class PartitionUsage : CosmosDBBaseUsage
     {
         /// <summary> Initializes a new instance of PartitionUsage. </summary>
         internal PartitionUsage()
@@ -23,14 +25,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="currentValue"> Current value for this metric. </param>
         /// <param name="partitionId"> The partition id (GUID identifier) of the usages. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the usages. </param>
-        internal PartitionUsage(UnitType? unit, MetricName name, string quotaPeriod, long? limit, long? currentValue, string partitionId, string partitionKeyRangeId) : base(unit, name, quotaPeriod, limit, currentValue)
+        internal PartitionUsage(CosmosDBMetricUnitType? unit, CosmosDBMetricName name, string quotaPeriod, long? limit, long? currentValue, Guid? partitionId, string partitionKeyRangeId) : base(unit, name, quotaPeriod, limit, currentValue)
         {
             PartitionId = partitionId;
             PartitionKeyRangeId = partitionKeyRangeId;
         }
 
         /// <summary> The partition id (GUID identifier) of the usages. </summary>
-        public string PartitionId { get; }
+        public Guid? PartitionId { get; }
         /// <summary> The partition key range id (integer identifier) of the usages. </summary>
         public string PartitionKeyRangeId { get; }
     }

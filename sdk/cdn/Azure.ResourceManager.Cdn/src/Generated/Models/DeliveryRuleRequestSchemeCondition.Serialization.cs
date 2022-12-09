@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue(Properties);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleRequestSchemeCondition DeserializeDeliveryRuleRequestSchemeCondition(JsonElement element)
         {
-            RequestSchemeMatchConditionDefinition parameters = default;
+            RequestSchemeMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = RequestSchemeMatchConditionDefinition.DeserializeRequestSchemeMatchConditionDefinition(property.Value);
+                    parameters = RequestSchemeMatchCondition.DeserializeRequestSchemeMatchCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

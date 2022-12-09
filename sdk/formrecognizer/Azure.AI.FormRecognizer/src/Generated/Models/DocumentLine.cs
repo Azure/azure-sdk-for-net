@@ -21,28 +21,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
         internal DocumentLine(string content, IEnumerable<DocumentSpan> spans)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(spans, nameof(spans));
 
             Content = content;
-            BoundingBoxPrivate = new ChangeTrackingList<float>();
+            Polygon = new ChangeTrackingList<float>();
             Spans = spans.ToList();
         }
 
         /// <summary> Initializes a new instance of DocumentLine. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
-        /// <param name="boundingBoxPrivate"> Bounding box of the line. </param>
+        /// <param name="polygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
-        internal DocumentLine(string content, IReadOnlyList<float> boundingBoxPrivate, IReadOnlyList<DocumentSpan> spans)
+        internal DocumentLine(string content, IReadOnlyList<float> polygon, IReadOnlyList<DocumentSpan> spans)
         {
             Content = content;
-            BoundingBoxPrivate = boundingBoxPrivate;
+            Polygon = polygon;
             Spans = spans;
         }
 

@@ -1,0 +1,130 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/batch/sync/json?api-version=1.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "104",
+        "Content-Type": "application/json",
+        "traceparent": "00-f7f402ad2158a66518a76f5618c536aa-3718b9e9286a4695-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "8c6705781fb0eb19357693f0aad62541",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "batchItems": [
+          {
+            "query": "?query=24%2C121\u0026language=en"
+          },
+          {
+            "query": "?query=47.606038%2C-122.333345"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Thu, 08 Sep 2022 18:56:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 5B47731FDAF8466CA48C7F1D4CAE7BAA Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:25Z"
+      },
+      "ResponseBody": {
+        "batchItems": [
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "queryTime": 6,
+                "numResults": 1
+              },
+              "addresses": [
+                {
+                  "address": {
+                    "buildingNumber": "1-20",
+                    "streetNumber": "1-20",
+                    "routeNumbers": [],
+                    "street": "Niuwei Road",
+                    "streetName": "Niuwei Road",
+                    "streetNameAndNumber": "1-20Niuwei Road",
+                    "countryCode": "TW",
+                    "countrySubdivision": "Taiwan",
+                    "municipality": "Nantou County",
+                    "postalCode": "545",
+                    "municipalitySubdivision": "Puli Township",
+                    "country": "Taiwan",
+                    "countryCodeISO3": "TWN",
+                    "freeformAddress": "1-20, Niuwei Road, Puli Township, Nantou County 54558",
+                    "boundingBox": {
+                      "northEast": "24.000558,120.988821",
+                      "southWest": "24.000178,120.987017",
+                      "entity": "position"
+                    },
+                    "extendedPostalCode": "54558",
+                    "localName": "Puli Township"
+                  },
+                  "position": "24.000296,120.988716"
+                }
+              ]
+            }
+          },
+          {
+            "statusCode": 200,
+            "response": {
+              "summary": {
+                "queryTime": 4,
+                "numResults": 1
+              },
+              "addresses": [
+                {
+                  "address": {
+                    "buildingNumber": "1016",
+                    "streetNumber": "1016",
+                    "routeNumbers": [],
+                    "street": "3rd Avenue",
+                    "streetName": "3rd Avenue",
+                    "streetNameAndNumber": "1016 3rd Avenue",
+                    "countryCode": "US",
+                    "countrySubdivision": "WA",
+                    "countrySecondarySubdivision": "King",
+                    "municipality": "Seattle",
+                    "postalCode": "98104",
+                    "municipalitySubdivision": "Central Business District",
+                    "country": "United States",
+                    "countryCodeISO3": "USA",
+                    "freeformAddress": "1016 3rd Avenue, Seattle, WA 98104",
+                    "boundingBox": {
+                      "northEast": "47.606332,-122.334075",
+                      "southWest": "47.605617,-122.334708",
+                      "entity": "position"
+                    },
+                    "extendedPostalCode": "98104-1107",
+                    "countrySubdivisionName": "Washington",
+                    "localName": "Seattle"
+                  },
+                  "position": "47.605797,-122.334236"
+                }
+              ]
+            }
+          }
+        ],
+        "summary": {
+          "successfulRequests": 2,
+          "totalRequests": 2
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1884399834"
+  }
+}

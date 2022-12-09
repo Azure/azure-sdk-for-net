@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(InventoryRuleType.ToString());
+            writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("rules");
             writer.WriteStartArray();
             foreach (var item in Rules)
@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Storage.Models
         internal static BlobInventoryPolicySchema DeserializeBlobInventoryPolicySchema(JsonElement element)
         {
             bool enabled = default;
-            InventoryRuleType type = default;
+            Optional<string> destination = default;
+            BlobInventoryRuleType type = default;
             IList<BlobInventoryPolicyRule> rules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,9 +43,14 @@ namespace Azure.ResourceManager.Storage.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("destination"))
+                {
+                    destination = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
-                    type = new InventoryRuleType(property.Value.GetString());
+                    type = new BlobInventoryRuleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rules"))
@@ -58,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobInventoryPolicySchema(enabled, type, rules);
+            return new BlobInventoryPolicySchema(enabled, destination.Value, type, rules);
         }
     }
 }

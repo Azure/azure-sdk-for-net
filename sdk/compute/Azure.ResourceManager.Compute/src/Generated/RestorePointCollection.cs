@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -122,10 +123,11 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: RestorePoints_Get
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual async Task<Response<RestorePointResource>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointResource>> GetAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -133,7 +135,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
@@ -151,10 +153,11 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: RestorePoints_Get
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<RestorePointResource> Get(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointResource> Get(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -162,7 +165,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken);
+                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
@@ -180,10 +183,11 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: RestorePoints_Get
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -207,10 +211,11 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: RestorePoints_Get
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<bool> Exists(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -218,7 +223,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

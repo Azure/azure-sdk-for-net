@@ -14,7 +14,7 @@ namespace Azure.Communication.Pipeline
 {
     internal class HMACAuthenticationPolicy : HttpPipelinePolicy
     {
-        private readonly String DATE_HEADER_NAME = "x-ms-date";
+        private readonly string DATE_HEADER_NAME = "x-ms-date";
         private readonly AzureKeyCredential _keyCredential;
 
 		public HMACAuthenticationPolicy(AzureKeyCredential keyCredential)
@@ -95,11 +95,9 @@ namespace Azure.Communication.Pipeline
 
         private string ComputeHMAC(string value)
         {
-            using (var hmac = new HMACSHA256(Convert.FromBase64String(_keyCredential.Key)))
-            {
-                var hash = hmac.ComputeHash(Encoding.ASCII.GetBytes(value));
-                return Convert.ToBase64String(hash);
-            }
+            using var hmac = new HMACSHA256(Convert.FromBase64String(_keyCredential.Key));
+            var hash = hmac.ComputeHash(Encoding.ASCII.GetBytes(value));
+            return Convert.ToBase64String(hash);
         }
     }
 }

@@ -1,0 +1,90 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-26d0e98cf821924984a7dbc8468500a6-9cba6f3bd7c5b849-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f95a55e13427c9e0fc902f41bb26d033",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Sep 2022 06:08:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "10207787-17e1-4ce1-a4fa-60e47bff8501",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "10207787-17e1-4ce1-a4fa-60e47bff8501",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220914T060831Z:10207787-17e1-4ce1-a4fa-60e47bff8501"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Billing/billingAccounts/testBillingAccountId/providers/Microsoft.Subscription/policies/default?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8f6a1aa982af6543b8feb657bdc4a3ab-9869d2038f744c4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.Subscription/1.0.0-alpha.20220914.1 (.NET Core 3.1.29; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d2b4dd5463925f622ba744f5a7fa5903",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "165",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Sep 2022 06:08:31 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "9d51c081-f56b-409b-b873-c96f96b7deb4",
+        "MS-CV": "mZ3BEWKsjE\u002B7U/5BolWNCw.0",
+        "Pragma": "no-cache",
+        "Request-Id": "7377e7c9-92b4-4ead-8799-9985bebf9c64",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-gsm": "1.0.0.0",
+        "x-ms-correlation-request-id": "7377e7c9-92b4-4ead-8799-9985bebf9c64",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "7377e7c9-92b4-4ead-8799-9985bebf9c64",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220914T060831Z:7377e7c9-92b4-4ead-8799-9985bebf9c64",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidBillingAccountName",
+          "message": "Invalid billing account name."
+        },
+        "code": "InvalidBillingAccountName",
+        "message": "Invalid billing account name."
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "301104095",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

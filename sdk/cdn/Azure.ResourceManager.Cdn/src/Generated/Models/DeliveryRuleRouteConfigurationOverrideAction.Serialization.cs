@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue(Properties);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleRouteConfigurationOverrideAction DeserializeDeliveryRuleRouteConfigurationOverrideAction(JsonElement element)
         {
-            RouteConfigurationOverrideActionDefinition parameters = default;
+            RouteConfigurationOverrideActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = RouteConfigurationOverrideActionDefinition.DeserializeRouteConfigurationOverrideActionDefinition(property.Value);
+                    parameters = RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

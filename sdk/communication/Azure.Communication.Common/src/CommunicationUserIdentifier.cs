@@ -12,6 +12,12 @@ namespace Azure.Communication
         public string Id { get; }
 
         /// <summary>
+        /// Returns the canonical string representation of the <see cref="CommunicationUserIdentifier"/>.
+        /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
+        /// </summary>
+        public override string RawId => Id;
+
+        /// <summary>
         /// Initializes a new instance of <see cref="CommunicationUserIdentifier"/>.
         /// </summary>
         /// <param name="id">Id of the communication user.</param>
@@ -31,10 +37,7 @@ namespace Azure.Communication
         public override string ToString() => Id;
 
         /// <inheritdoc />
-        public override int GetHashCode() => Id.GetHashCode();
-
-        /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
-            => other is CommunicationUserIdentifier otherId && otherId.Id == Id;
+            => other is CommunicationUserIdentifier otherId && otherId.RawId == RawId;
     }
 }

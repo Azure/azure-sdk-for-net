@@ -12,7 +12,7 @@ BeforeAll {
         "operatingSystem": [
           "windows-2019",
           "ubuntu-18.04",
-          "macOS-10.15"
+          "macos-11"
         ],
         "framework": [
           "net461",
@@ -36,11 +36,11 @@ BeforeAll {
             "framework": "net461"
         },
         {
-            "operatingSystem": "macOS-10.15",
+            "operatingSystem": "macos-11",
             "framework": "netcoreapp2.1"
         },
         {
-            "operatingSystem": ["macOS-10.15", "ubuntu-18.04"],
+            "operatingSystem": ["macos-11", "ubuntu-18.04"],
             "additionalArguments": "--enableFoo"
         }
     ]
@@ -275,7 +275,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         "operatingSystem": [
           "windows-2019",
           "ubuntu-18.04",
-          "macOS-10.15"
+          "macos-11"
         ],
         "framework": [
           "net461",
@@ -340,7 +340,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         $element.parameters.additionalArguments | Should -Be "--enableFoo"
 
         $element = GetNdMatrixElement @(2, 1, 1) $matrix $dimensions
-        $element.parameters.operatingSystem | Should -Be "macOS-10.15"
+        $element.parameters.operatingSystem | Should -Be "macos-11"
         $element.parameters.framework | Should -Be "netcoreapp2.1"
         $element.parameters.additionalArguments | Should -Be "--enableFoo"
     }
@@ -348,7 +348,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     It "Should initialize a sparse matrix from an N-dimensional matrix" -TestCases @(
         @{ i = 0; name = "windows2019_net461"; operatingSystem = "windows-2019"; framework = "net461"; additionalArguments = ""; }
         @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
-        @{ i = 2; name = "macOS1015_net461"; operatingSystem = "macOS-10.15"; framework = "net461"; additionalArguments = ""; }
+        @{ i = 2; name = "macOS11_net461"; operatingSystem = "macos-11"; framework = "net461"; additionalArguments = ""; }
     ) {
         $sparseMatrix = GenerateSparseMatrix $generateConfig.matrixParameters $generateConfig.displayNamesLookup
         $dimensions = GetMatrixDimensions $generateConfig.matrixParameters
@@ -440,9 +440,9 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         $matrix[2].parameters.operatingSystem | Should -Be "ubuntu-18.04"
         $matrix[2].parameters.additionalArguments | Should -Be ""
 
-        $matrix[4].name | Should -Be "macOS1015_net461"
+        $matrix[4].name | Should -Be "macOS11_net461"
         $matrix[4].parameters.framework | Should -Be "net461"
-        $matrix[4].parameters.operatingSystem | Should -Be "macOS-10.15"
+        $matrix[4].parameters.operatingSystem | Should -Be "macos-11"
         $matrix[4].parameters.additionalArguments | Should -Be ""
 
         $matrix[7].name | Should -Be "windows2019_net50_enableWindowsFoo"

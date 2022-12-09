@@ -19,12 +19,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public ThroughputSettingsUpdateData(AzureLocation location, ThroughputSettingsResource resource) : base(location)
+        public ThroughputSettingsUpdateData(AzureLocation location, ThroughputSettingsResourceInfo resource) : base(location)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -37,12 +34,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
-        internal ThroughputSettingsUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsResource resource) : base(id, name, resourceType, systemData, tags, location)
+        internal ThroughputSettingsUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ThroughputSettingsResourceInfo resource) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
         }
 
         /// <summary> The standard JSON format of a resource throughput. </summary>
-        public ThroughputSettingsResource Resource { get; set; }
+        public ThroughputSettingsResourceInfo Resource { get; set; }
     }
 }

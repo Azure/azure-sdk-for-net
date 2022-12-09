@@ -96,8 +96,3 @@ To delete an entity, invoke `DeleteEntity` and pass in its partition and row key
 // Delete the entity given the partition and row key.
 tableClient.DeleteEntity(partitionKey, rowKey);
 ```
-
----
-To see the full example source files, see:
-- [Synchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntities.cs)
-- [Asynchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntitiesAsync.cs)

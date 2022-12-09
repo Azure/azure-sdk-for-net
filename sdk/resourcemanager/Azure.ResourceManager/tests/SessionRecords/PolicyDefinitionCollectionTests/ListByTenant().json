@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5430531c77805e4db662333b96b7d233-699fbd9a56fb8942-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "a8a4e01185e05bc07b4d0e5777eb8da9",
+        "traceparent": "00-6328ad1426c25946a97f4d4a7fa48a49-2f65ef3dbc8f2a41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "bd3744db657faa1d6a1dd71b4a0cc706",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 Jan 2022 05:51:52 GMT",
+        "Date": "Thu, 23 Jun 2022 03:47:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "451f81f3-d438-41c0-adbc-dd1ae214a309",
-        "x-ms-ratelimit-remaining-tenant-reads": "11997",
-        "x-ms-request-id": "451f81f3-d438-41c0-adbc-dd1ae214a309",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T055152Z:451f81f3-d438-41c0-adbc-dd1ae214a309"
+        "x-ms-correlation-request-id": "0aaa066c-4e5d-4fb5-8192-ea44fd7de871",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "0aaa066c-4e5d-4fb5-8192-ea44fd7de871",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034740Z:0aaa066c-4e5d-4fb5-8192-ea44fd7de871"
       },
       "ResponseBody": {
         "value": [
@@ -38,32 +38,32 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Authorization/policyDefinitions?api-version=2020-09-01\u0026$filter=category eq \u0027Compute\u0027",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Authorization/policyDefinitions?api-version=2020-09-01\u0026$filter=category%20eq%20\u0027Compute\u0027",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5a5f3792954611469765c4da4830c4cc-e305119c6c0b4d46-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "8148cdee33373864c3f1bcfe2fdb510c",
+        "traceparent": "00-55ccb6e0bd9a3a47bfc136e770c30d1d-c176ce7fa3238841-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "08f428815b3ac6cbbcde7abc961d9b0b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "58474",
+        "Content-Length": "58530",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 Jan 2022 05:51:52 GMT",
+        "Date": "Thu, 23 Jun 2022 03:47:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d61f6aba-d40b-42ae-ae0e-a52d14bd07b7",
-        "x-ms-ratelimit-remaining-tenant-reads": "11996",
-        "x-ms-request-id": "d61f6aba-d40b-42ae-ae0e-a52d14bd07b7",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T055153Z:d61f6aba-d40b-42ae-ae0e-a52d14bd07b7"
+        "x-ms-correlation-request-id": "82f2893c-08cd-498d-8a8c-d45dc8da8fff",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "82f2893c-08cd-498d-8a8c-d45dc8da8fff",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034740Z:82f2893c-08cd-498d-8a8c-d45dc8da8fff"
       },
       "ResponseBody": {
         "value": [
@@ -216,7 +216,7 @@
               "mode": "Indexed",
               "description": "This policy deploys a Microsoft IaaSAntimalware extension with a default configuration when a VM is not configured with the antimalware extension.",
               "metadata": {
-                "version": "1.0.0",
+                "version": "1.1.0",
                 "category": "Compute"
               },
               "parameters": {},
@@ -255,6 +255,7 @@
                         "2019-Datacenter-Core-smalldisk",
                         "2019-Datacenter-Core-with-Containers",
                         "2019-Datacenter-Core-with-Containers-smalldisk",
+                        "2019-datacenter-gensecond",
                         "2019-Datacenter-smalldisk",
                         "2019-Datacenter-with-Containers",
                         "2019-Datacenter-with-Containers-smalldisk"
@@ -1220,7 +1221,7 @@
               "mode": "Indexed",
               "description": "This policy audits any Windows server VM without Microsoft IaaSAntimalware extension deployed.",
               "metadata": {
-                "version": "1.0.0",
+                "version": "1.1.0",
                 "category": "Compute"
               },
               "parameters": {
@@ -1272,6 +1273,7 @@
                         "2019-Datacenter-Core-smalldisk",
                         "2019-Datacenter-Core-with-Containers",
                         "2019-Datacenter-Core-with-Containers-smalldisk",
+                        "2019-datacenter-gensecond",
                         "2019-Datacenter-smalldisk",
                         "2019-Datacenter-with-Containers",
                         "2019-Datacenter-with-Containers-smalldisk"
@@ -2483,8 +2485,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1672848527",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "586508372",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

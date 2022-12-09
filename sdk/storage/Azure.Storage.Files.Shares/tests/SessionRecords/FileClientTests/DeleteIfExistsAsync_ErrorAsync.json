@@ -1,7 +1,7 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary3.file.core.windows.net/?sv=2021-08-06&ss=f&srt=s&se=2021-01-26T20%3A32%3A55Z&sp=r&sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/?sv=2021-12-02&ss=f&srt=s&se=2021-01-26T20%3A32%3A55Z&sp=r&sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<string> category = default;
-            Optional<IReadOnlyList<SupportTopic>> supportTopicList = default;
+            Optional<IReadOnlyList<DetectorSupportTopic>> supportTopicList = default;
             Optional<IReadOnlyList<string>> analysisType = default;
             Optional<DetectorType> type = default;
             Optional<float> score = default;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SupportTopic> array = new List<SupportTopic>();
+                    List<DetectorSupportTopic> array = new List<DetectorSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportTopic.DeserializeSupportTopic(item));
+                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item));
                     }
                     supportTopicList = array;
                     continue;

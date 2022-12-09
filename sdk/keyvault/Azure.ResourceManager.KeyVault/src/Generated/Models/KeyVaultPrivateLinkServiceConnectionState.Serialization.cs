@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Optional<KeyVaultPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
-            Optional<ActionsRequiredMessage> actionsRequired = default;
+            Optional<KeyVaultActionsRequiredMessage> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionsRequired = new ActionsRequiredMessage(property.Value.GetString());
+                    actionsRequired = new KeyVaultActionsRequiredMessage(property.Value.GetString());
                     continue;
                 }
             }

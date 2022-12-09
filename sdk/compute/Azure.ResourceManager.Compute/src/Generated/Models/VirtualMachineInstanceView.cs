@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="patchStatus"> [Preview Feature] The status of virtual machine patch operations. </param>
-        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGenerationType? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus)
+        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The version of Operating System running on the virtual machine. </summary>
         public string OSVersion { get; }
         /// <summary> Specifies the HyperVGeneration Type associated with a resource. </summary>
-        public HyperVGenerationType? HyperVGeneration { get; }
+        public HyperVGeneration? HyperVGeneration { get; }
         /// <summary> The Remote desktop certificate thumbprint. </summary>
         public string RdpThumbPrint { get; }
         /// <summary> The VM Agent running on the virtual machine. </summary>

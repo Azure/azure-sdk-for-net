@@ -117,7 +117,7 @@ namespace Azure.Data.Tables
         internal static List<T> ToTableEntityList<T>(this IReadOnlyList<IDictionary<string, object>> entityList) where T : class, ITableEntity, new()
         {
             var result = new List<T>(entityList.Count);
-            var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(typeof(T));
+            var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(typeof(T), typeof(ITableEntity));
 
             foreach (var entity in entityList)
             {
@@ -148,7 +148,7 @@ namespace Azure.Data.Tables
                 return result;
             }
 
-            typeInfo ??= TablesTypeBinder.Shared.GetBinderInfo(typeof(T));
+            typeInfo ??= TablesTypeBinder.Shared.GetBinderInfo(typeof(T), typeof(ITableEntity));
             return typeInfo.Deserialize<T>(entity);
         }
     }

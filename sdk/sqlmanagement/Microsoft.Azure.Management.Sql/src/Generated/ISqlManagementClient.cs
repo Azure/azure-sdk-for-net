@@ -98,11 +98,6 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolsOperations ElasticPools { get; }
 
         /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        IReplicationLinksOperations ReplicationLinks { get; }
-
-        /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
         /// </summary>
         IServerCommunicationLinksOperations ServerCommunicationLinks { get; }
@@ -296,16 +291,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedDatabaseQueriesOperations.
         /// </summary>
         IManagedDatabaseQueriesOperations ManagedDatabaseQueries { get; }
-
-        /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
-        /// </summary>
-        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
-
-        /// <summary>
-        /// Gets the IManagedDatabasesOperations.
-        /// </summary>
-        IManagedDatabasesOperations ManagedDatabases { get; }
 
         /// <summary>
         /// Gets the IManagedDatabaseSchemasOperations.
@@ -676,6 +661,126 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
         /// </summary>
         IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        IDatabaseAdvancedThreatProtectionSettingsOperations DatabaseAdvancedThreatProtectionSettings { get; }
+
+        /// <summary>
+        /// Gets the IServerAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        IServerAdvancedThreatProtectionSettingsOperations ServerAdvancedThreatProtectionSettings { get; }
+
+        /// <summary>
+        /// Gets the IManagedServerDnsAliasesOperations.
+        /// </summary>
+        IManagedServerDnsAliasesOperations ManagedServerDnsAliases { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentBaselinesOperations.
+        /// </summary>
+        IDatabaseSqlVulnerabilityAssessmentBaselinesOperations DatabaseSqlVulnerabilityAssessmentBaselines { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentExecuteScanOperations.
+        /// </summary>
+        IDatabaseSqlVulnerabilityAssessmentExecuteScanOperations DatabaseSqlVulnerabilityAssessmentExecuteScan { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        IDatabaseSqlVulnerabilityAssessmentRuleBaselinesOperations DatabaseSqlVulnerabilityAssessmentRuleBaselines { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentScanResultOperations.
+        /// </summary>
+        IDatabaseSqlVulnerabilityAssessmentScanResultOperations DatabaseSqlVulnerabilityAssessmentScanResult { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        IDatabaseSqlVulnerabilityAssessmentScansOperations DatabaseSqlVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSqlVulnerabilityAssessmentsSettingsOperations.
+        /// </summary>
+        IDatabaseSqlVulnerabilityAssessmentsSettingsOperations DatabaseSqlVulnerabilityAssessmentsSettings { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceDtcsOperations.
+        /// </summary>
+        IManagedInstanceDtcsOperations ManagedInstanceDtcs { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        IManagedDatabaseAdvancedThreatProtectionSettingsOperations ManagedDatabaseAdvancedThreatProtectionSettings { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        IManagedInstanceAdvancedThreatProtectionSettingsOperations ManagedInstanceAdvancedThreatProtectionSettings { get; }
+
+        /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        IReplicationLinksOperations ReplicationLinks { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentBaselineOperations SqlVulnerabilityAssessmentBaseline { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselinesOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentBaselinesOperations SqlVulnerabilityAssessmentBaselines { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentExecuteScanOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentExecuteScanOperations SqlVulnerabilityAssessmentExecuteScan { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentRuleBaselineOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentRuleBaselineOperations SqlVulnerabilityAssessmentRuleBaseline { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentRuleBaselinesOperations SqlVulnerabilityAssessmentRuleBaselines { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScanResultOperations SqlVulnerabilityAssessmentScanResult { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentsSettingsOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentsSettingsOperations SqlVulnerabilityAssessmentsSettings { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentsOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentsOperations SqlVulnerabilityAssessments { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        IManagedDatabasesOperations ManagedDatabases { get; }
 
     }
 }

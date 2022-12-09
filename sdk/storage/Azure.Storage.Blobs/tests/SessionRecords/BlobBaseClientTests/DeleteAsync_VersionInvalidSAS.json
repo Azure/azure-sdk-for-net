@@ -140,7 +140,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-02-17T18:46:26Z</SignedStart><SignedExpiry>2021-02-17T19:46:26Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-06-12</SignedVersion><Value>B+I8GwMLWlFl3DThYQcif1fDbanUXStWjSjbbJ4hy3Q=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-6949d85b-a76d-4288-1c24-d21cbd32d011/test-blob-a2c69f68-0f41-a359-adb6-ac4add848a88?versionid=2021-02-17T18%3A46%3A26.2058742Z&skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-17T18%3A46%3A26Z&ske=2021-02-17T19%3A46%3A26Z&sks=b&skv=2020-06-12&sv=2021-08-06&st=2021-02-17T17%3A46%3A26Z&se=2021-02-17T19%3A46%3A26Z&sr=b&sp=r&sig=Sanitized",
+      "RequestUri": "https://seanoauthcanary.blob.core.windows.net/test-container-6949d85b-a76d-4288-1c24-d21cbd32d011/test-blob-a2c69f68-0f41-a359-adb6-ac4add848a88?versionid=2021-02-17T18%3A46%3A26.2058742Z&skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-17T18%3A46%3A26Z&ske=2021-02-17T19%3A46%3A26Z&sks=b&skv=2020-06-12&sv=2021-12-02&st=2021-02-17T17%3A46%3A26Z&se=2021-02-17T19%3A46%3A26Z&sr=b&sp=r&sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",

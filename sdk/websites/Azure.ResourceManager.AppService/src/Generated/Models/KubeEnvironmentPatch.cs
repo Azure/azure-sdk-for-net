@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a KubeEnvironment when patching. </summary>
-    public partial class KubeEnvironmentPatch : ProxyOnlyResource
+    public partial class KubeEnvironmentPatch : ResourceData
     {
         /// <summary> Initializes a new instance of KubeEnvironmentPatch. </summary>
         public KubeEnvironmentPatch()
@@ -23,10 +23,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="internalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
+        /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
         /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
         /// <param name="arcConfiguration">
@@ -40,16 +39,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// supported
         /// </param>
         /// <param name="aksResourceId"></param>
-        internal KubeEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal KubeEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ResourceIdentifier aksResourceId, string kind) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
-            InternalLoadBalancerEnabled = internalLoadBalancerEnabled;
+            IsInternalLoadBalancerEnabled = isInternalLoadBalancerEnabled;
             DefaultDomain = defaultDomain;
             StaticIP = staticIP;
             ArcConfiguration = arcConfiguration;
             AppLogsConfiguration = appLogsConfiguration;
             AksResourceId = aksResourceId;
+            Kind = kind;
         }
 
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
         public string DeploymentErrors { get; }
         /// <summary> Only visible within Vnet/Subnet. </summary>
-        public bool? InternalLoadBalancerEnabled { get; set; }
+        public bool? IsInternalLoadBalancerEnabled { get; set; }
         /// <summary> Default Domain Name for the cluster. </summary>
         public string DefaultDomain { get; }
         /// <summary> Static IP of the KubeEnvironment. </summary>
@@ -75,6 +76,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Gets or sets the aks resource id. </summary>
-        public string AksResourceId { get; set; }
+        public ResourceIdentifier AksResourceId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static FirewallRuleListResult DeserializeFirewallRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FirewallRuleData>> value = default;
+            Optional<IReadOnlyList<SqlFirewallRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FirewallRuleData> array = new List<FirewallRuleData>();
+                    List<SqlFirewallRuleData> array = new List<SqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallRuleData.DeserializeFirewallRuleData(item));
+                        array.Add(SqlFirewallRuleData.DeserializeSqlFirewallRuleData(item));
                     }
                     value = array;
                     continue;

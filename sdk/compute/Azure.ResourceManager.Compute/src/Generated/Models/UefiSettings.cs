@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of UefiSettings. </summary>
-        /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
-        /// <param name="vTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
-        internal UefiSettings(bool? secureBootEnabled, bool? vTpmEnabled)
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
+        /// <param name="isVirtualTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
+        internal UefiSettings(bool? isSecureBootEnabled, bool? isVirtualTpmEnabled)
         {
-            SecureBootEnabled = secureBootEnabled;
-            VTpmEnabled = vTpmEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
+            IsVirtualTpmEnabled = isVirtualTpmEnabled;
         }
 
         /// <summary> Specifies whether secure boot should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </summary>
-        public bool? SecureBootEnabled { get; set; }
+        public bool? IsSecureBootEnabled { get; set; }
         /// <summary> Specifies whether vTPM should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </summary>
-        public bool? VTpmEnabled { get; set; }
+        public bool? IsVirtualTpmEnabled { get; set; }
     }
 }

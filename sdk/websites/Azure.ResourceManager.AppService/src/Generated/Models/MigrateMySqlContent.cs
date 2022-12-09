@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MySQL migration request. </summary>
-    public partial class MigrateMySqlContent : ProxyOnlyResource
+    public partial class MigrateMySqlContent : ResourceData
     {
         /// <summary> Initializes a new instance of MigrateMySqlContent. </summary>
         public MigrateMySqlContent()
@@ -23,18 +23,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="connectionString"> Connection string to the remote MySQL database. </param>
         /// <param name="migrationType"> The type of migration operation to be done. </param>
-        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string connectionString, MySqlMigrationType? migrationType) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectionString, MySqlMigrationType? migrationType, string kind) : base(id, name, resourceType, systemData)
         {
             ConnectionString = connectionString;
             MigrationType = migrationType;
+            Kind = kind;
         }
 
         /// <summary> Connection string to the remote MySQL database. </summary>
         public string ConnectionString { get; set; }
         /// <summary> The type of migration operation to be done. </summary>
         public MySqlMigrationType? MigrationType { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

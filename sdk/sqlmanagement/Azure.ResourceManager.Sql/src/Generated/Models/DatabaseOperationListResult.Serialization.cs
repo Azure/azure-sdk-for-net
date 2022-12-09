@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static DatabaseOperationListResult DeserializeDatabaseOperationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabaseOperation>> value = default;
+            Optional<IReadOnlyList<DatabaseOperationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseOperation> array = new List<DatabaseOperation>();
+                    List<DatabaseOperationData> array = new List<DatabaseOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseOperation.DeserializeDatabaseOperation(item));
+                        array.Add(DatabaseOperationData.DeserializeDatabaseOperationData(item));
                     }
                     value = array;
                     continue;

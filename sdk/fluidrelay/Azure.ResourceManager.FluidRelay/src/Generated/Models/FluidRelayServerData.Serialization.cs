@@ -24,14 +24,17 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -41,6 +44,16 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("provisioningState");
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption");
+                writer.WriteObjectValue(Encryption);
+            }
+            if (Optional.IsDefined(StorageSku))
+            {
+                writer.WritePropertyName("storagesku");
+                writer.WriteStringValue(StorageSku.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -48,15 +61,17 @@ namespace Azure.ResourceManager.FluidRelay
         internal static FluidRelayServerData DeserializeFluidRelayServerData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<Guid> frsTenantId = default;
             Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<FluidRelayProvisioningState> provisioningState = default;
+            Optional<Models.EncryptionProperties> encryption = default;
+            Optional<FluidRelayStorageSku> storagesku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -66,11 +81,16 @@ namespace Azure.ResourceManager.FluidRelay
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -81,7 +101,7 @@ namespace Azure.ResourceManager.FluidRelay
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -96,12 +116,17 @@ namespace Azure.ResourceManager.FluidRelay
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -140,14 +165,34 @@ namespace Azure.ResourceManager.FluidRelay
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new FluidRelayProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("storagesku"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storagesku = new FluidRelayStorageSku(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FluidRelayServerData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState));
+            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku));
         }
     }
 }

@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="version">Schema version.</param>
         /// <param name="alertType">Unique identifier for the detection logic
         /// (all alert instances from the same detection logic will have the
         /// same alertType).</param>
@@ -75,7 +76,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="vendorName">The name of the vendor that raises the
         /// alert.</param>
         /// <param name="status">The life cycle status of the alert. Possible
-        /// values include: 'Active', 'Resolved', 'Dismissed'</param>
+        /// values include: 'Active', 'InProgress', 'Resolved',
+        /// 'Dismissed'</param>
         /// <param name="extendedLinks">Links related to the alert</param>
         /// <param name="alertUri">A direct link to the alert page in Azure
         /// Portal.</param>
@@ -98,9 +100,16 @@ namespace Microsoft.Azure.Management.Security.Models
         /// alert.</param>
         /// <param name="compromisedEntity">The display name of the resource
         /// most related to this alert.</param>
-        public Alert(string id = default(string), string name = default(string), string type = default(string), string alertType = default(string), string systemAlertId = default(string), string productComponentName = default(string), string alertDisplayName = default(string), string description = default(string), string severity = default(string), string intent = default(string), System.DateTime? startTimeUtc = default(System.DateTime?), System.DateTime? endTimeUtc = default(System.DateTime?), IList<ResourceIdentifier> resourceIdentifiers = default(IList<ResourceIdentifier>), IList<string> remediationSteps = default(IList<string>), string vendorName = default(string), string status = default(string), IList<IDictionary<string, string>> extendedLinks = default(IList<IDictionary<string, string>>), string alertUri = default(string), System.DateTime? timeGeneratedUtc = default(System.DateTime?), string productName = default(string), System.DateTime? processingEndTimeUtc = default(System.DateTime?), IList<AlertEntity> entities = default(IList<AlertEntity>), bool? isIncident = default(bool?), string correlationKey = default(string), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), string compromisedEntity = default(string))
+        /// <param name="techniques">kill chain related techniques behind the
+        /// alert.</param>
+        /// <param name="subTechniques">Kill chain related sub-techniques
+        /// behind the alert.</param>
+        /// <param name="supportingEvidence">Changing set of properties
+        /// depending on the supportingEvidence type.</param>
+        public Alert(string id = default(string), string name = default(string), string type = default(string), string version = default(string), string alertType = default(string), string systemAlertId = default(string), string productComponentName = default(string), string alertDisplayName = default(string), string description = default(string), string severity = default(string), string intent = default(string), System.DateTime? startTimeUtc = default(System.DateTime?), System.DateTime? endTimeUtc = default(System.DateTime?), IList<ResourceIdentifier> resourceIdentifiers = default(IList<ResourceIdentifier>), IList<string> remediationSteps = default(IList<string>), string vendorName = default(string), string status = default(string), IList<IDictionary<string, string>> extendedLinks = default(IList<IDictionary<string, string>>), string alertUri = default(string), System.DateTime? timeGeneratedUtc = default(System.DateTime?), string productName = default(string), System.DateTime? processingEndTimeUtc = default(System.DateTime?), IList<AlertEntity> entities = default(IList<AlertEntity>), bool? isIncident = default(bool?), string correlationKey = default(string), IDictionary<string, string> extendedProperties = default(IDictionary<string, string>), string compromisedEntity = default(string), IList<string> techniques = default(IList<string>), IList<string> subTechniques = default(IList<string>), AlertPropertiesSupportingEvidence supportingEvidence = default(AlertPropertiesSupportingEvidence))
             : base(id, name, type)
         {
+            Version = version;
             AlertType = alertType;
             SystemAlertId = systemAlertId;
             ProductComponentName = productComponentName;
@@ -124,6 +133,9 @@ namespace Microsoft.Azure.Management.Security.Models
             CorrelationKey = correlationKey;
             ExtendedProperties = extendedProperties;
             CompromisedEntity = compromisedEntity;
+            Techniques = techniques;
+            SubTechniques = subTechniques;
+            SupportingEvidence = supportingEvidence;
             CustomInit();
         }
 
@@ -131,6 +143,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets schema version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; private set; }
 
         /// <summary>
         /// Gets unique identifier for the detection logic (all alert instances
@@ -222,7 +240,7 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets the life cycle status of the alert. Possible values include:
-        /// 'Active', 'Resolved', 'Dismissed'
+        /// 'Active', 'InProgress', 'Resolved', 'Dismissed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -290,6 +308,25 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.compromisedEntity")]
         public string CompromisedEntity { get; private set; }
+
+        /// <summary>
+        /// Gets kill chain related techniques behind the alert.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; private set; }
+
+        /// <summary>
+        /// Gets kill chain related sub-techniques behind the alert.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subTechniques")]
+        public IList<string> SubTechniques { get; private set; }
+
+        /// <summary>
+        /// Gets or sets changing set of properties depending on the
+        /// supportingEvidence type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportingEvidence")]
+        public AlertPropertiesSupportingEvidence SupportingEvidence { get; set; }
 
     }
 }

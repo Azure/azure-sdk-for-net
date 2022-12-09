@@ -135,7 +135,7 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <param name="blobName">The blob name to use.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         /// <remarks>
-        /// The container referenced by <paramref name="containerName"/><paramref name="blobName"/> must already exist.
+        /// The container referenced by <paramref name="containerName"/> must already exist.
         /// </remarks>
         public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, string connectionString, string containerName, string blobName)
         {

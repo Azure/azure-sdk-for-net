@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.Perf", "Azure.Messaging.EventHubs.Processor\perf\Azure.Messaging.EventHubs.Processor.Perf.csproj", "{E9EF4740-4B32-401C-BE22-70CE11C62629}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Stress", "Azure.Messaging.EventHubs\stress\src\Azure.Messaging.EventHubs.Stress.csproj", "{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

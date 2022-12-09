@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
-            string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id.ToString();
-            string partnerManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(partnerManagedInstanceName)).Value.Data.Id.ToString();
+            ResourceIdentifier primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(primaryManagedInstanceName)).Value.Data.Id;
+            ResourceIdentifier partnerManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(partnerManagedInstanceName)).Value.Data.Id;
 
             // create InstanceFailoverGroup
             InstanceFailoverGroupReadWriteEndpoint instanceFailoverGroupReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 ReadWriteEndpoint = instanceFailoverGroupReadWriteEndpoint,
                 ManagedInstancePairs =
                 {
-                    new ManagedInstancePairInfo(primaryManagedInstanceId,partnerManagedInstanceId),
+                    new ManagedInstancePairInfo(primaryManagedInstanceId, partnerManagedInstanceId),
                 },
             };
             var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups(locationName).CreateOrUpdateAsync(WaitUntil.Completed, instanceFailoverGroupName, data);

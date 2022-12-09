@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("contactTech");
                 writer.WriteObjectValue(ContactTech);
             }
-            if (Optional.IsDefined(Privacy))
+            if (Optional.IsDefined(IsDomainPrivacyEnabled))
             {
                 writer.WritePropertyName("privacy");
-                writer.WriteBooleanValue(Privacy.Value);
+                writer.WriteBooleanValue(IsDomainPrivacyEnabled.Value);
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew");
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (Optional.IsDefined(Consent))
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<ContactInformation> contactAdmin = default;
-            Optional<ContactInformation> contactBilling = default;
-            Optional<ContactInformation> contactRegistrant = default;
-            Optional<ContactInformation> contactTech = default;
-            Optional<DomainStatus> registrationStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<RegistrationContactInfo> contactAdmin = default;
+            Optional<RegistrationContactInfo> contactBilling = default;
+            Optional<RegistrationContactInfo> contactRegistrant = default;
+            Optional<RegistrationContactInfo> contactTech = default;
+            Optional<AppServiceDomainStatus> registrationStatus = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<string>> nameServers = default;
             Optional<bool> privacy = default;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> lastRenewedTime = default;
             Optional<bool> autoRenew = default;
             Optional<bool> readyForDnsRecordManagement = default;
-            Optional<IReadOnlyList<HostName>> managedHostNames = default;
+            Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
             Optional<DomainPurchaseConsent> consent = default;
-            Optional<IReadOnlyList<DomainNotRenewableReasons>> domainNotRenewableReasons = default;
-            Optional<DnsType> dnsType = default;
+            Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
+            Optional<AppServiceDnsType> dnsType = default;
             Optional<string> dnsZoneId = default;
-            Optional<DnsType> targetDnsType = default;
+            Optional<AppServiceDnsType> targetDnsType = default;
             Optional<string> authCode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -130,12 +130,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -154,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactAdmin = ContactInformation.DeserializeContactInformation(property0.Value);
+                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactBilling"))
@@ -164,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactBilling = ContactInformation.DeserializeContactInformation(property0.Value);
+                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactRegistrant"))
@@ -174,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactRegistrant = ContactInformation.DeserializeContactInformation(property0.Value);
+                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("contactTech"))
@@ -184,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactTech = ContactInformation.DeserializeContactInformation(property0.Value);
+                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("registrationStatus"))
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            registrationStatus = property0.Value.GetString().ToDomainStatus();
+                            registrationStatus = property0.Value.GetString().ToAppServiceDomainStatus();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -289,10 +294,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<HostName> array = new List<HostName>();
+                            List<AppServiceHostName> array = new List<AppServiceHostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostName.DeserializeHostName(item));
+                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
                             }
                             managedHostNames = array;
                             continue;
@@ -314,10 +319,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DomainNotRenewableReasons> array = new List<DomainNotRenewableReasons>();
+                            List<DomainNotRenewableReason> array = new List<DomainNotRenewableReason>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new DomainNotRenewableReasons(item.GetString()));
+                                array.Add(new DomainNotRenewableReason(item.GetString()));
                             }
                             domainNotRenewableReasons = array;
                             continue;
@@ -329,7 +334,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dnsType = property0.Value.GetString().ToDnsType();
+                            dnsType = property0.Value.GetString().ToAppServiceDnsType();
                             continue;
                         }
                         if (property0.NameEquals("dnsZoneId"))
@@ -344,7 +349,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetDnsType = property0.Value.GetString().ToDnsType();
+                            targetDnsType = property0.Value.GetString().ToAppServiceDnsType();
                             continue;
                         }
                         if (property0.NameEquals("authCode"))
@@ -356,7 +361,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceDomainPatch(id, name, type, systemData, kind.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value);
+            return new AppServiceDomainPatch(id, name, type, systemData.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value);
         }
     }
 }

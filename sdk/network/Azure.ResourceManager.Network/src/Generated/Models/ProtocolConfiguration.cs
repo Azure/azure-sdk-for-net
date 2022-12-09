@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> HTTP configuration of the connectivity check. </summary>
-        public HttpConfiguration HttpProtocolConfiguration { get; set; }
+        public NetworkHttpConfiguration HttpProtocolConfiguration { get; set; }
     }
 }

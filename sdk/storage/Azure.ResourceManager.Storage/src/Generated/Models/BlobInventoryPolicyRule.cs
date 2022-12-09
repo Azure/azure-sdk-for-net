@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -13,34 +14,25 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class BlobInventoryPolicyRule
     {
         /// <summary> Initializes a new instance of BlobInventoryPolicyRule. </summary>
-        /// <param name="enabled"> Rule is enabled when set to true. </param>
+        /// <param name="isEnabled"> Rule is enabled when set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="destination"> Container name where blob inventory files are stored. Must be pre-created. </param>
         /// <param name="definition"> An object that defines the blob inventory policy rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destination"/> or <paramref name="definition"/> is null. </exception>
-        public BlobInventoryPolicyRule(bool enabled, string name, string destination, BlobInventoryPolicyDefinition definition)
+        public BlobInventoryPolicyRule(bool isEnabled, string name, string destination, BlobInventoryPolicyDefinition definition)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(destination, nameof(destination));
+            Argument.AssertNotNull(definition, nameof(definition));
 
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Name = name;
             Destination = destination;
             Definition = definition;
         }
 
         /// <summary> Rule is enabled when set to true. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
         public string Name { get; set; }
         /// <summary> Container name where blob inventory files are stored. Must be pre-created. </summary>

@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string docType = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            IReadOnlyDictionary<string, DocumentField> fields = default;
+            Optional<IReadOnlyDictionary<string, DocumentField>> fields = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,6 +54,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("fields"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, DocumentField> dictionary = new Dictionary<string, DocumentField>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -68,7 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzedDocument(docType, Optional.ToList(boundingRegions), spans, fields, confidence);
+            return new AnalyzedDocument(docType, Optional.ToList(boundingRegions), spans, Optional.ToDictionary(fields), confidence);
         }
     }
 }

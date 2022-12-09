@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             Optional<string> probePath = default;
             Optional<HealthProbeRequestType> probeRequestType = default;
-            Optional<ProbeProtocol> probeProtocol = default;
+            Optional<HealthProbeProtocol> probeProtocol = default;
             Optional<int> probeIntervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    probeProtocol = property.Value.GetString().ToProbeProtocol();
+                    probeProtocol = property.Value.GetString().ToHealthProbeProtocol();
                     continue;
                 }
                 if (property.NameEquals("probeIntervalInSeconds"))

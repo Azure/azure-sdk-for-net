@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraTablePropertiesResource resource, CassandraTablePropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraTableResourceInfo resource, CassandraTablePropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public CassandraTablePropertiesResource Resource { get; set; }
+        public ExtendedCassandraTableResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public CassandraTablePropertiesOptions Options { get; set; }
+        public CassandraTablePropertiesConfig Options { get; set; }
     }
 }

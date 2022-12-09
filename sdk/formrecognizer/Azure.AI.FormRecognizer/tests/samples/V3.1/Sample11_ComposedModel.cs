@@ -10,13 +10,12 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
-        [Test]
+        [RecordedTest]
         public async Task CreateComposedModel()
         {
             string endpoint = TestEnvironment.Endpoint;

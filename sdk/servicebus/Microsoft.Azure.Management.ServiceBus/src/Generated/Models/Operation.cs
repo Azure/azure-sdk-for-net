@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Linq;
 
     /// <summary>
-    /// A ServiceBus REST API operation
+    /// A Service Bus REST API operation
     /// </summary>
     public partial class Operation
     {
@@ -31,12 +31,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}</param>
-        /// <param name="display">The object that represents the
-        /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
+        /// <param name="display">Display of the operation</param>
+        /// <param name="origin">Origin of the operation</param>
+        /// <param name="properties">Properties of the operation</param>
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), object properties = default(object))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
+            Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -52,10 +58,28 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the object that represents the operation.
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets display of the operation
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets origin of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
     }
 }

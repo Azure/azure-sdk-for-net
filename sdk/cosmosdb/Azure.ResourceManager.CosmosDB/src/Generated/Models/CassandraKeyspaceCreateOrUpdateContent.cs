@@ -19,12 +19,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Cassandra keyspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public CassandraKeyspaceCreateOrUpdateContent(AzureLocation location, CassandraKeyspaceResource resource) : base(location)
+        public CassandraKeyspaceCreateOrUpdateContent(AzureLocation location, CassandraKeyspaceResourceInfo resource) : base(location)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -38,22 +35,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Cassandra keyspace. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal CassandraKeyspaceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraKeyspaceResource resource, CreateUpdateOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal CassandraKeyspaceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraKeyspaceResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> The standard JSON format of a Cassandra keyspace. </summary>
-        internal CassandraKeyspaceResource Resource { get; set; }
+        internal CassandraKeyspaceResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB Cassandra keyspace. </summary>
-        public string ResourceId
+        public string ResourceKeyspaceName
         {
-            get => Resource is null ? default : Resource.Id;
-            set => Resource = new CassandraKeyspaceResource(value);
+            get => Resource is null ? default : Resource.KeyspaceName;
+            set => Resource = new CassandraKeyspaceResourceInfo(value);
         }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateOptions Options { get; set; }
+        public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

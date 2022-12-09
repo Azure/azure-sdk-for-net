@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
         /// <param name="description"> The reason for approval or rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal ManagedHsmPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, ActionsRequired? actionsRequired)
+        internal ManagedHsmPrivateLinkServiceConnectionState(ManagedHsmPrivateEndpointServiceConnectionStatus? status, string description, ManagedHsmActionsRequiredMessage? actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </summary>
-        public KeyVaultPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public ManagedHsmPrivateEndpointServiceConnectionStatus? Status { get; set; }
         /// <summary> The reason for approval or rejection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
-        public ActionsRequired? ActionsRequired { get; set; }
+        public ManagedHsmActionsRequiredMessage? ActionsRequired { get; set; }
     }
 }

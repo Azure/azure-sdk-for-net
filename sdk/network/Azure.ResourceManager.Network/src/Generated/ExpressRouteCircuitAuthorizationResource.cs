@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitAuthorizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteCircuitAuthorizationResource(ArmClient client, ExpressRouteCircuitAuthorizationData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ExpressRouteCircuitAuthorizationResource(ArmClient client, ExpressRouteCircuitAuthorizationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

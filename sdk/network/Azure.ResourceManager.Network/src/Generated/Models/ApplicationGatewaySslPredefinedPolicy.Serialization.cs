@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ApplicationGatewaySslPredefinedPolicy : IUtf8JsonSerializable
+    public partial class ApplicationGatewaySslPredefinedPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -45,65 +45,6 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
-        }
-
-        internal static ApplicationGatewaySslPredefinedPolicy DeserializeApplicationGatewaySslPredefinedPolicy(JsonElement element)
-        {
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
-            Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("cipherSuites"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<ApplicationGatewaySslCipherSuite> array = new List<ApplicationGatewaySslCipherSuite>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new ApplicationGatewaySslCipherSuite(item.GetString()));
-                            }
-                            cipherSuites = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("minProtocolVersion"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            minProtocolVersion = new ApplicationGatewaySslProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-            }
-            return new ApplicationGatewaySslPredefinedPolicy(id.Value, name.Value, Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
         }
     }
 }

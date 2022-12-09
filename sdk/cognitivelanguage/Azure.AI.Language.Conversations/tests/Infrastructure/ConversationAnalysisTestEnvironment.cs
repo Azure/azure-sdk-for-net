@@ -14,40 +14,30 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Gets the master API key.
         /// </summary>
-        public string ApiKey => GetRecordedVariable("AZURE_CONVERSATIONS_KEY", options => options.IsSecret());
+        public string ApiKey => GetRecordedVariable("CONVERSATIONS_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the primary test project name.
         /// </summary>
-        public string ProjectName => GetRecordedVariable("AZURE_CONVERSATIONS_PROJECT_NAME");
+        public string ProjectName => GetRecordedVariable("CONVERSATIONS_PROJECT_NAME");
 
         /// <summary>
         /// Gets the deployment name.
         /// </summary>
-        public string DeploymentName => GetRecordedVariable("AZURE_CONVERSATIONS_DEPLOYMENT_NAME");
+        public string DeploymentName => GetRecordedVariable("CONVERSATIONS_DEPLOYMENT_NAME");
 
         /// <summary>
         /// Gets the orchestration test project name.
         /// </summary>
-        public string OrchestrationProjectName => GetRecordedVariable("AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME");
+        public string OrchestrationProjectName => GetRecordedVariable("CONVERSATIONS_WORKFLOW_PROJECT_NAME");
 
         /// <summary>
         /// Gets the orchestration test deploymentName name.
         /// </summary>
-        public string OrchestrationDeploymentName => GetRecordedVariable("AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME");
+        public string OrchestrationDeploymentName => GetRecordedVariable("CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME");
         /// <summary>
         /// Gets the endpoint.
         /// </summary>
-        public Uri Endpoint => new(GetRecordedVariable("AZURE_CONVERSATIONS_ENDPOINT"), UriKind.Absolute);
-
-        /// <summary>
-        /// Gets a <see cref="ConversationsProject"/> using the <see cref="ProjectName"/> and <see cref="DeploymentName"/>.
-        /// </summary>
-        public ConversationsProject Project => new ConversationsProject(ProjectName, DeploymentName);
-
-        /// <summary>
-        /// Gets an orchestration <see cref="ConversationsProject"/> using the <see cref="OrchestrationProjectName"/> and <see cref="DeploymentName"/>.
-        /// </summary>
-        public ConversationsProject OrchestrationProject => new ConversationsProject(OrchestrationProjectName, OrchestrationDeploymentName);
+        public Uri Endpoint => new(GetRecordedVariable("CONVERSATIONS_ENDPOINT"), UriKind.Absolute);
     }
 }

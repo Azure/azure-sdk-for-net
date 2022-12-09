@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the CommunityGalleryInfo class.
         /// </summary>
-        /// <param name="publisherUri">Community gallery publisher uri</param>
-        /// <param name="publisherContact">Community gallery publisher contact
-        /// email</param>
-        /// <param name="eula">Community gallery publisher eula</param>
-        /// <param name="publicNamePrefix">Community gallery public name
-        /// prefix</param>
+        /// <param name="publisherUri">The link to the publisher website.
+        /// Visible to all users.</param>
+        /// <param name="publisherContact">Community gallery publisher support
+        /// email. The email address of the publisher. Visible to all
+        /// users.</param>
+        /// <param name="eula">End-user license agreement for community gallery
+        /// image.</param>
+        /// <param name="publicNamePrefix">The prefix of the gallery name that
+        /// will be displayed publicly. Visible to all users.</param>
         /// <param name="communityGalleryEnabled">Contains info about whether
         /// community gallery sharing is enabled.</param>
         /// <param name="publicNames">Community gallery public name
@@ -59,25 +62,29 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets community gallery publisher uri
+        /// Gets or sets the link to the publisher website. Visible to all
+        /// users.
         /// </summary>
         [JsonProperty(PropertyName = "publisherUri")]
         public string PublisherUri { get; set; }
 
         /// <summary>
-        /// Gets or sets community gallery publisher contact email
+        /// Gets or sets community gallery publisher support email. The email
+        /// address of the publisher. Visible to all users.
         /// </summary>
         [JsonProperty(PropertyName = "publisherContact")]
         public string PublisherContact { get; set; }
 
         /// <summary>
-        /// Gets or sets community gallery publisher eula
+        /// Gets or sets end-user license agreement for community gallery
+        /// image.
         /// </summary>
         [JsonProperty(PropertyName = "eula")]
         public string Eula { get; set; }
 
         /// <summary>
-        /// Gets or sets community gallery public name prefix
+        /// Gets or sets the prefix of the gallery name that will be displayed
+        /// publicly. Visible to all users.
         /// </summary>
         [JsonProperty(PropertyName = "publicNamePrefix")]
         public string PublicNamePrefix { get; set; }

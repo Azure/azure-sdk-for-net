@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourcegroups/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlZ3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourcegroups/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlZ3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d54da0cc-2e39-4460-9763-ae2fe3bf57fb"
+          "f35c236f-3182-4953-a9d5-f628396a713b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "98f99631-f360-4cc2-805d-0fded682572e"
+          "c6324786-97e8-411b-8421-0a4996fa2fbb"
         ],
         "x-ms-correlation-request-id": [
-          "98f99631-f360-4cc2-805d-0fded682572e"
+          "c6324786-97e8-411b-8421-0a4996fa2fbb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205857Z:98f99631-f360-4cc2-805d-0fded682572e"
+          "WESTUS2:20220628T233829Z:c6324786-97e8-411b-8421-0a4996fa2fbb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:58:57 GMT"
+          "Tue, 28 Jun 2022 23:38:29 GMT"
         ],
         "Content-Length": [
           "254"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja1Byb3Zpc2lvbmluZ1NlcnZpY2VOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMjEtMTAtMTU=",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9jaGVja1Byb3Zpc2lvbmluZ1NlcnZpY2VOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMjItMDItMDU=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3816e380-53b7-448e-935b-3e8303083907"
+          "21361a1e-f7c9-4a2c-a001-26a1429ec117"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -105,13 +105,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "5dc0771c-0230-4fb2-8dbd-a36ea6ddeb74"
+          "5c6052e7-6a1f-419f-bc4c-b52d4eea1af4"
         ],
         "x-ms-correlation-request-id": [
-          "5dc0771c-0230-4fb2-8dbd-a36ea6ddeb74"
+          "5c6052e7-6a1f-419f-bc4c-b52d4eea1af4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205858Z:5dc0771c-0230-4fb2-8dbd-a36ea6ddeb74"
+          "WESTUS2:20220628T233830Z:5c6052e7-6a1f-419f-bc4c-b52d4eea1af4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,7 +120,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:58:57 GMT"
+          "Tue, 28 Jun 2022 23:38:29 GMT"
         ],
         "Content-Length": [
           "56"
@@ -136,22 +136,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIyLTAyLTA1",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e72801da-a37d-4dd8-81bd-e98de0d75754"
+          "8eb99fb3-1fee-45b3-aa56-63c3897d4677"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -168,7 +168,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfMWFkNzUzZWEtMTZiNS00M2IxLWFjMzItZjFhMDA2Y2ZiMTUzO3JlZ2lvbj13ZXN0dXMy?api-version=2021-10-15&asyncinfo"
+          "https://management.azure.com/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfMGU3ZDRlZDAtNGJiZS00MGRiLWJhNTMtYTBmOGQ3ZTllNTdkO3JlZ2lvbj13ZXN0dXMy?api-version=2022-02-05&asyncinfo"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -177,13 +177,13 @@
           "4999"
         ],
         "x-ms-request-id": [
-          "4e6b54a2-10af-4f37-b786-5d8513f4a7d3"
+          "f920bf79-e35b-4a12-86e9-926bf4035d5a"
         ],
         "x-ms-correlation-request-id": [
-          "4e6b54a2-10af-4f37-b786-5d8513f4a7d3"
+          "f920bf79-e35b-4a12-86e9-926bf4035d5a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205901Z:4e6b54a2-10af-4f37-b786-5d8513f4a7d3"
+          "WESTUS2:20220628T233832Z:f920bf79-e35b-4a12-86e9-926bf4035d5a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -192,7 +192,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:59:00 GMT"
+          "Tue, 28 Jun 2022 23:38:31 GMT"
         ],
         "Content-Length": [
           "651"
@@ -204,26 +204,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Activating\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"53cd450b-b108-4e6e-b048-f63c1dcc8c8f\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIyLTAyLTA1",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"etag\": \"AAAAAA2fh8A=\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      },\r\n      {\r\n        \"keyName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n        \"rights\": \"RegistrationStatusWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"etag\": \"AAAAABEg2GQ=\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      },\r\n      {\r\n        \"keyName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n        \"rights\": \"RegistrationStatusWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "111dd555-4fcb-49cd-a64e-51b4d191d192"
+          "117d23fa-daa6-4f1d-96cd-21416be0b8e3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -240,7 +240,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfNDdhODExNWItM2UxOC00ZGVhLWI4ZDktYmM3ZjA0Yjc4MTdmO3JlZ2lvbj13ZXN0dXMy?api-version=2021-10-15&asyncinfo"
+          "https://management.azure.com/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfOTQwMzMzZTQtOGRlMS00YTQxLThkZmQtZmQ5MjNkOTdhYjRmO3JlZ2lvbj13ZXN0dXMy?api-version=2022-02-05&asyncinfo"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -249,13 +249,13 @@
           "4998"
         ],
         "x-ms-request-id": [
-          "2d173ba2-505b-4f34-95f1-d591297181fb"
+          "f64eac8c-acbb-4c23-be8b-fc1c3da5910a"
         ],
         "x-ms-correlation-request-id": [
-          "2d173ba2-505b-4f34-95f1-d591297181fb"
+          "f64eac8c-acbb-4c23-be8b-fc1c3da5910a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205933Z:2d173ba2-505b-4f34-95f1-d591297181fb"
+          "WESTUS2:20220628T233904Z:f64eac8c-acbb-4c23-be8b-fc1c3da5910a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -264,7 +264,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:59:32 GMT"
+          "Tue, 28 Jun 2022 23:39:03 GMT"
         ],
         "Content-Length": [
           "1155"
@@ -276,26 +276,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"etag\": \"AAAAAA2fh8A=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null,\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      },\r\n      {\r\n        \"keyName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"RegistrationStatusWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"etag\": \"AAAAABEg2GQ=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null,\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      },\r\n      {\r\n        \"keyName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"RegistrationStatusWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"53cd450b-b108-4e6e-b048-f63c1dcc8c8f\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIyLTAyLTA1",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"etag\": \"AAAAAA2fh8A=\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"etag\": \"AAAAABEg2GQ=\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "95af7357-08f1-4b42-afcc-1cb4e38d52df"
+          "890377a3-6fa7-431c-b13c-e51f8076fe59"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -312,7 +312,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfNDc1ZDE3OTMtZDQ2YS00ZTNkLTg0YWUtZTViNjI1MzFkNjgwO3JlZ2lvbj13ZXN0dXMy?api-version=2021-10-15&asyncinfo"
+          "https://management.azure.com/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfYTYyM2VkNjAtODgwZi00ODc1LTgxOGYtODNmYWU3ZWIxM2I5O3JlZ2lvbj13ZXN0dXMy?api-version=2022-02-05&asyncinfo"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -321,13 +321,13 @@
           "4997"
         ],
         "x-ms-request-id": [
-          "14648ef5-1f6a-4252-a171-13692b019011"
+          "601dbdc7-c721-4a88-b9af-1f28fd848047"
         ],
         "x-ms-correlation-request-id": [
-          "14648ef5-1f6a-4252-a171-13692b019011"
+          "601dbdc7-c721-4a88-b9af-1f28fd848047"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T210004Z:14648ef5-1f6a-4252-a171-13692b019011"
+          "WESTUS2:20220628T233935Z:601dbdc7-c721-4a88-b9af-1f28fd848047"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -336,7 +336,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 21:00:03 GMT"
+          "Tue, 28 Jun 2022 23:39:34 GMT"
         ],
         "Content-Length": [
           "933"
@@ -348,20 +348,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"etag\": \"AAAAAA2fh8A=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null,\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"etag\": \"AAAAABEg2GQ=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Transitioning\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"idScope\": null,\r\n    \"authorizationPolicies\": [\r\n      {\r\n        \"keyName\": \"provisioningserviceowner\",\r\n        \"primaryKey\": \"Sanitized\",\r\n        \"secondaryKey\": \"Sanitized\",\r\n        \"rights\": \"ServiceConfig, DeviceConnect, EnrollmentWrite\"\r\n      }\r\n    ]\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"53cd450b-b108-4e6e-b048-f63c1dcc8c8f\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfMWFkNzUzZWEtMTZiNS00M2IxLWFjMzItZjFhMDA2Y2ZiMTUzO3JlZ2lvbj13ZXN0dXMy?api-version=2021-10-15&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9vcGVyYXRpb25SZXN1bHRzL2FXUTliM05mYVdSZk1XRmtOelV6WldFdE1UWmlOUzAwTTJJeExXRmpNekl0WmpGaE1EQTJZMlppTVRVek8zSmxaMmx2YmoxM1pYTjBkWE15P2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUmYXN5bmNpbmZv",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfMGU3ZDRlZDAtNGJiZS00MGRiLWJhNTMtYTBmOGQ3ZTllNTdkO3JlZ2lvbj13ZXN0dXMy?api-version=2022-02-05&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9vcGVyYXRpb25SZXN1bHRzL2FXUTliM05mYVdSZk1HVTNaRFJsWkRBdE5HSmlaUzAwTUdSaUxXSmhOVE10WVRCbU9HUTNaVGxsTlRka08zSmxaMmx2YmoxM1pYTjBkWE15P2FwaS12ZXJzaW9uPTIwMjItMDItMDUmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -378,13 +378,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "25ed439b-ed68-4536-b8b2-86904bd5cf61"
+          "15a4a01e-3965-4201-a3e1-12af0522a91a"
         ],
         "x-ms-correlation-request-id": [
-          "25ed439b-ed68-4536-b8b2-86904bd5cf61"
+          "15a4a01e-3965-4201-a3e1-12af0522a91a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205931Z:25ed439b-ed68-4536-b8b2-86904bd5cf61"
+          "WESTUS2:20220628T233902Z:15a4a01e-3965-4201-a3e1-12af0522a91a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -393,7 +393,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:59:30 GMT"
+          "Tue, 28 Jun 2022 23:39:02 GMT"
         ],
         "Content-Length": [
           "22"
@@ -409,16 +409,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIyLTAyLTA1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -435,13 +435,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "b03f8ae5-66c1-43ac-90ea-e3251a784b5e"
+          "18c820e2-c491-457a-a846-8ed7d88e07bb"
         ],
         "x-ms-correlation-request-id": [
-          "b03f8ae5-66c1-43ac-90ea-e3251a784b5e"
+          "18c820e2-c491-457a-a846-8ed7d88e07bb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205931Z:b03f8ae5-66c1-43ac-90ea-e3251a784b5e"
+          "WESTUS2:20220628T233903Z:18c820e2-c491-457a-a846-8ed7d88e07bb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -450,7 +450,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:59:30 GMT"
+          "Tue, 28 Jun 2022 23:39:02 GMT"
         ],
         "Content-Length": [
           "873"
@@ -462,20 +462,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"etag\": \"AAAAAA2fh8A=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne004C5568\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"etag\": \"AAAAABEg2GQ=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne00679246\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"53cd450b-b108-4e6e-b048-f63c1dcc8c8f\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIyLTAyLTA1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -492,13 +492,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "2a86b139-1635-4137-aea1-4cce2ed8e55d"
+          "5da2a9e6-d397-49a4-b4f4-94f468beec62"
         ],
         "x-ms-correlation-request-id": [
-          "2a86b139-1635-4137-aea1-4cce2ed8e55d"
+          "5da2a9e6-d397-49a4-b4f4-94f468beec62"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T210003Z:2a86b139-1635-4137-aea1-4cce2ed8e55d"
+          "WESTUS2:20220628T233934Z:5da2a9e6-d397-49a4-b4f4-94f468beec62"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -507,7 +507,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 21:00:02 GMT"
+          "Tue, 28 Jun 2022 23:39:34 GMT"
         ],
         "Content-Length": [
           "873"
@@ -519,20 +519,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"etag\": \"AAAAAA2fiBA=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne004C5568\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"etag\": \"AAAAABEg2No=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne00679246\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"53cd450b-b108-4e6e-b048-f63c1dcc8c8f\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIxLTEwLTE1",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZT9hcGktdmVyc2lvbj0yMDIyLTAyLTA1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -549,13 +549,13 @@
           "11994"
         ],
         "x-ms-request-id": [
-          "e293b4a7-aa4f-48b0-b934-f42f3c64dfcb"
+          "e4d3cd46-bbb8-4caa-90bf-ab150914de0f"
         ],
         "x-ms-correlation-request-id": [
-          "e293b4a7-aa4f-48b0-b934-f42f3c64dfcb"
+          "e4d3cd46-bbb8-4caa-90bf-ab150914de0f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T210034Z:e293b4a7-aa4f-48b0-b934-f42f3c64dfcb"
+          "WESTUS2:20220628T234005Z:e4d3cd46-bbb8-4caa-90bf-ab150914de0f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -564,7 +564,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 21:00:33 GMT"
+          "Tue, 28 Jun 2022 23:40:04 GMT"
         ],
         "Content-Length": [
           "873"
@@ -576,26 +576,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"etag\": \"AAAAAA2fiIw=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne004C5568\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"etag\": \"AAAAABEg2SY=\",\r\n  \"name\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne00679246\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete\",\r\n  \"subscriptionid\": \"53cd450b-b108-4e6e-b048-f63c1dcc8c8f\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/provisioningserviceowner/listkeys?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3Byb3Zpc2lvbmluZ3NlcnZpY2Vvd25lci9saXN0a2V5cz9hcGktdmVyc2lvbj0yMDIxLTEwLTE1",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/provisioningserviceowner/listkeys?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3Byb3Zpc2lvbmluZ3NlcnZpY2Vvd25lci9saXN0a2V5cz9hcGktdmVyc2lvbj0yMDIyLTAyLTA1",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4f4f60d1-c94a-472e-9ea0-78ecfffbbbc6"
+          "fa4a76a9-bcb7-4628-96cc-4726c5fb1329"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -612,13 +612,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "8505ffa2-c3d0-4d21-a19d-451d3c19d6fb"
+          "bb949fa1-c5b4-45a9-86f6-04387fad6b4e"
         ],
         "x-ms-correlation-request-id": [
-          "8505ffa2-c3d0-4d21-a19d-451d3c19d6fb"
+          "bb949fa1-c5b4-45a9-86f6-04387fad6b4e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205931Z:8505ffa2-c3d0-4d21-a19d-451d3c19d6fb"
+          "WESTUS2:20220628T233903Z:bb949fa1-c5b4-45a9-86f6-04387fad6b4e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -627,7 +627,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:59:30 GMT"
+          "Tue, 28 Jun 2022 23:39:02 GMT"
         ],
         "Content-Length": [
           "217"
@@ -643,22 +643,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/unitTestingDPSSharedAccessPoliciesListCreateDelete/listkeys?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTU=",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/unitTestingDPSSharedAccessPoliciesListCreateDelete/listkeys?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMjItMDItMDU=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c2528d95-0de0-4cdc-84cb-76421156ef1a"
+          "ad9198c2-ad7b-4304-9c87-af0f426f5f40"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -675,13 +675,13 @@
           "1197"
         ],
         "x-ms-request-id": [
-          "8fb110cd-6643-4ad9-86b9-f61636b129d3"
+          "4a0a701e-bfa4-4983-8831-b493d953644a"
         ],
         "x-ms-correlation-request-id": [
-          "8fb110cd-6643-4ad9-86b9-f61636b129d3"
+          "4a0a701e-bfa4-4983-8831-b493d953644a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T205931Z:8fb110cd-6643-4ad9-86b9-f61636b129d3"
+          "WESTUS2:20220628T233903Z:4a0a701e-bfa4-4983-8831-b493d953644a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -690,7 +690,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 20:59:30 GMT"
+          "Tue, 28 Jun 2022 23:39:02 GMT"
         ],
         "Content-Length": [
           "303"
@@ -702,26 +702,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": 404001,\r\n  \"httpStatusCode\": \"NotFound\",\r\n  \"message\": \"Key name not found: unitTestingDPSSharedAccessPoliciesListCreateDelete. If you contact a support representative please include this correlation identifier: 305f5364-01a1-4c3f-98aa-d9dbaf461da8, timestamp: 2022-02-04 20:59:31Z, errorcode: IH404001.\"\r\n}",
+      "ResponseBody": "{\r\n  \"code\": 404001,\r\n  \"httpStatusCode\": \"NotFound\",\r\n  \"message\": \"Key name not found: unitTestingDPSSharedAccessPoliciesListCreateDelete. If you contact a support representative please include this correlation identifier: e6bf0bce-c13f-4f72-8535-56780922f076, timestamp: 2022-06-28 23:39:03Z, errorcode: IH404001.\"\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/unitTestingDPSSharedAccessPoliciesListCreateDelete/listkeys?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTU=",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/unitTestingDPSSharedAccessPoliciesListCreateDelete/listkeys?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMjItMDItMDU=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ba41aa38-6496-4a66-92e1-652bf5428e12"
+          "221c2b94-ae33-44fd-befd-46737b53a1cb"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -738,13 +738,13 @@
           "1196"
         ],
         "x-ms-request-id": [
-          "0afbecd6-83f9-481d-b3d3-ba7a4d6ead87"
+          "b800849b-825f-4a96-9d41-36dd72d0d2f0"
         ],
         "x-ms-correlation-request-id": [
-          "0afbecd6-83f9-481d-b3d3-ba7a4d6ead87"
+          "b800849b-825f-4a96-9d41-36dd72d0d2f0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T210003Z:0afbecd6-83f9-481d-b3d3-ba7a4d6ead87"
+          "WESTUS2:20220628T233934Z:b800849b-825f-4a96-9d41-36dd72d0d2f0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -753,7 +753,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 21:00:02 GMT"
+          "Tue, 28 Jun 2022 23:39:34 GMT"
         ],
         "Content-Length": [
           "221"
@@ -769,22 +769,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/unitTestingDPSSharedAccessPoliciesListCreateDelete/listkeys?api-version=2021-10-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMjEtMTAtMTU=",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/keys/unitTestingDPSSharedAccessPoliciesListCreateDelete/listkeys?api-version=2022-02-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9rZXlzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL2xpc3RrZXlzP2FwaS12ZXJzaW9uPTIwMjItMDItMDU=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fa5d1831-27ce-4771-b4f3-ac93a0b69bad"
+          "0bb91752-33ef-415e-a0cc-b7e6053f3bd2"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -801,13 +801,13 @@
           "1195"
         ],
         "x-ms-request-id": [
-          "dde1e017-f35a-4c4b-a329-b559ac4a9c00"
+          "92cbf42b-0e48-4d03-9536-ff8d5a747e74"
         ],
         "x-ms-correlation-request-id": [
-          "dde1e017-f35a-4c4b-a329-b559ac4a9c00"
+          "92cbf42b-0e48-4d03-9536-ff8d5a747e74"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T210034Z:dde1e017-f35a-4c4b-a329-b559ac4a9c00"
+          "WESTUS2:20220628T234005Z:92cbf42b-0e48-4d03-9536-ff8d5a747e74"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -816,7 +816,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 21:00:33 GMT"
+          "Tue, 28 Jun 2022 23:40:04 GMT"
         ],
         "Content-Length": [
           "303"
@@ -828,20 +828,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": 404001,\r\n  \"httpStatusCode\": \"NotFound\",\r\n  \"message\": \"Key name not found: unitTestingDPSSharedAccessPoliciesListCreateDelete. If you contact a support representative please include this correlation identifier: 241229cb-afbd-4500-ab8b-2a990db1d895, timestamp: 2022-02-04 21:00:34Z, errorcode: IH404001.\"\r\n}",
+      "ResponseBody": "{\r\n  \"code\": 404001,\r\n  \"httpStatusCode\": \"NotFound\",\r\n  \"message\": \"Key name not found: unitTestingDPSSharedAccessPoliciesListCreateDelete. If you contact a support representative please include this correlation identifier: 7931be22-96f1-4c90-a362-761cd32ea534, timestamp: 2022-06-28 23:40:05Z, errorcode: IH404001.\"\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfNDdhODExNWItM2UxOC00ZGVhLWI4ZDktYmM3ZjA0Yjc4MTdmO3JlZ2lvbj13ZXN0dXMy?api-version=2021-10-15&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9vcGVyYXRpb25SZXN1bHRzL2FXUTliM05mYVdSZk5EZGhPREV4TldJdE0yVXhPQzAwWkdWaExXSTRaRGt0WW1NM1pqQTBZamM0TVRkbU8zSmxaMmx2YmoxM1pYTjBkWE15P2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUmYXN5bmNpbmZv",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfOTQwMzMzZTQtOGRlMS00YTQxLThkZmQtZmQ5MjNkOTdhYjRmO3JlZ2lvbj13ZXN0dXMy?api-version=2022-02-05&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9vcGVyYXRpb25SZXN1bHRzL2FXUTliM05mYVdSZk9UUXdNek16WlRRdE9HUmxNUzAwWVRReExUaGtabVF0Wm1RNU1qTmtPVGRoWWpSbU8zSmxaMmx2YmoxM1pYTjBkWE15P2FwaS12ZXJzaW9uPTIwMjItMDItMDUmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -858,13 +858,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "a39f285b-7618-4a3f-8de4-c60ed84a54b6"
+          "af8f395b-3ff3-446a-9f17-7447fa4ad014"
         ],
         "x-ms-correlation-request-id": [
-          "a39f285b-7618-4a3f-8de4-c60ed84a54b6"
+          "af8f395b-3ff3-446a-9f17-7447fa4ad014"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T210003Z:a39f285b-7618-4a3f-8de4-c60ed84a54b6"
+          "WESTUS2:20220628T233934Z:af8f395b-3ff3-446a-9f17-7447fa4ad014"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -873,7 +873,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 21:00:02 GMT"
+          "Tue, 28 Jun 2022 23:39:33 GMT"
         ],
         "Content-Length": [
           "22"
@@ -889,16 +889,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfNDc1ZDE3OTMtZDQ2YS00ZTNkLTg0YWUtZTViNjI1MzFkNjgwO3JlZ2lvbj13ZXN0dXMy?api-version=2021-10-15&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGVjMmE1YWQtMWI0MC00Y2U0LTk3MmQtYzZmYzcwYTNlMjk5L3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9vcGVyYXRpb25SZXN1bHRzL2FXUTliM05mYVdSZk5EYzFaREUzT1RNdFpEUTJZUzAwWlROa0xUZzBZV1V0WlRWaU5qSTFNekZrTmpnd08zSmxaMmx2YmoxM1pYTjBkWE15P2FwaS12ZXJzaW9uPTIwMjEtMTAtMTUmYXN5bmNpbmZv",
+      "RequestUri": "/subscriptions/53cd450b-b108-4e6e-b048-f63c1dcc8c8f/resourceGroups/unitTestingDPSSharedAccessPoliciesListCreateDelete/providers/Microsoft.Devices/provisioningServices/unitTestingDPSSharedAccessPoliciesListCreateDelete/operationResults/aWQ9b3NfaWRfYTYyM2VkNjAtODgwZi00ODc1LTgxOGYtODNmYWU3ZWIxM2I5O3JlZ2lvbj13ZXN0dXMy?api-version=2022-02-05&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTNjZDQ1MGItYjEwOC00ZTZlLWIwNDgtZjYzYzFkY2M4YzhmL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTU2hhcmVkQWNjZXNzUG9saWNpZXNMaXN0Q3JlYXRlRGVsZXRlL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGV2aWNlcy9wcm92aXNpb25pbmdTZXJ2aWNlcy91bml0VGVzdGluZ0RQU1NoYXJlZEFjY2Vzc1BvbGljaWVzTGlzdENyZWF0ZURlbGV0ZS9vcGVyYXRpb25SZXN1bHRzL2FXUTliM05mYVdSZllUWXlNMlZrTmpBdE9EZ3daaTAwT0RjMUxUZ3hPR1l0T0RObVlXVTNaV0l4TTJJNU8zSmxaMmx2YmoxM1pYTjBkWE15P2FwaS12ZXJzaW9uPTIwMjItMDItMDUmYXN5bmNpbmZv",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/3.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -915,13 +915,13 @@
           "11995"
         ],
         "x-ms-request-id": [
-          "aa83fad0-8ece-4dc9-ae77-955abd03ac51"
+          "0fd16c0a-a0e1-4b97-ad6d-3b6af314a537"
         ],
         "x-ms-correlation-request-id": [
-          "aa83fad0-8ece-4dc9-ae77-955abd03ac51"
+          "0fd16c0a-a0e1-4b97-ad6d-3b6af314a537"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20220204T210034Z:aa83fad0-8ece-4dc9-ae77-955abd03ac51"
+          "WESTUS2:20220628T234005Z:0fd16c0a-a0e1-4b97-ad6d-3b6af314a537"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -930,7 +930,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 04 Feb 2022 21:00:33 GMT"
+          "Tue, 28 Jun 2022 23:40:04 GMT"
         ],
         "Content-Length": [
           "22"
@@ -948,6 +948,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "8ec2a5ad-1b40-4ce4-972d-c6fc70a3e299"
+    "SubscriptionId": "53cd450b-b108-4e6e-b048-f63c1dcc8c8f"
   }
 }

@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(StackName))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(NamePropertiesName);
+                writer.WriteStringValue(StackName);
             }
             if (Optional.IsDefined(Display))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> name0 = default;
             Optional<string> display = default;
             Optional<string> dependency = default;
@@ -105,12 +105,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -186,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ApplicationStackResource(id, name, type, systemData, kind.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated));
+            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), kind.Value);
         }
     }
 }

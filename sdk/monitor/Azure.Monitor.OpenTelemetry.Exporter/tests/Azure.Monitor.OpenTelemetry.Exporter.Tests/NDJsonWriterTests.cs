@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Text;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests

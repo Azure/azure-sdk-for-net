@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobVersionListResult DeserializeJobVersionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobVersionData>> value = default;
+            Optional<IReadOnlyList<SqlServerJobVersionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobVersionData> array = new List<JobVersionData>();
+                    List<SqlServerJobVersionData> array = new List<SqlServerJobVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobVersionData.DeserializeJobVersionData(item));
+                        array.Add(SqlServerJobVersionData.DeserializeSqlServerJobVersionData(item));
                     }
                     value = array;
                     continue;

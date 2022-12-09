@@ -65,6 +65,8 @@ namespace Azure.Core.Pipeline
 
             ServicePointHelpers.SetLimits(request.ServicePoint);
 
+            message.ClearResponse();
+
             using var registration = message.CancellationToken.Register(state => ((HttpWebRequest)state).Abort(), request);
             try
             {
@@ -388,6 +390,11 @@ namespace Azure.Core.Pipeline
                             new X509Certificate2(certificate),
                             x509Chain,
                             sslPolicyErrors));
+            }
+            // Set ClientCertificates
+            foreach (var cert in options.ClientCertificates)
+            {
+                request.ClientCertificates.Add(cert);
             }
         }
     }

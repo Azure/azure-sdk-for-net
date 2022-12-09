@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8fbd4c094e5ea44190174413ead0c024-6dd9063c10fc254d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220112.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "e039c96fe3b97aa3a44d114281be64d1",
+        "traceparent": "00-3eb353589cbdf8479c21ebe895228f9f-dbfec47e285ebd4b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "375420b6f911df6305031099d1bb55b3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 12 Jan 2022 03:52:00 GMT",
+        "Date": "Thu, 23 Jun 2022 05:13:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c23a3430-ecd2-4c8d-b027-6538b2d77ac0",
-        "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "c23a3430-ecd2-4c8d-b027-6538b2d77ac0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220112T035201Z:c23a3430-ecd2-4c8d-b027-6538b2d77ac0"
+        "x-ms-correlation-request-id": "c593f0dc-8b6c-492c-a1d1-84854aea55de",
+        "x-ms-ratelimit-remaining-tenant-reads": "11826",
+        "x-ms-request-id": "c593f0dc-8b6c-492c-a1d1-84854aea55de",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T051314Z:c593f0dc-8b6c-492c-a1d1-84854aea55de"
       },
       "ResponseBody": {
         "value": [
@@ -39,8 +39,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1284681173",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "1025114687",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Data.Tables
@@ -19,7 +20,7 @@ namespace Azure.Data.Tables
                 return dictEntity.ToOdataAnnotatedDictionary();
             }
 
-            var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(entity.GetType());
+            var typeInfo = TablesTypeBinder.Shared.GetBinderInfo(entity.GetType(), typeof(ITableEntity));
             var dictionary = new Dictionary<string, object>(typeInfo.MemberCount * 2);
             typeInfo.Serialize(entity, dictionary);
             return dictionary;

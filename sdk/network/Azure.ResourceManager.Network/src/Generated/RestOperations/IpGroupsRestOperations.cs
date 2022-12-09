@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateGroupsRequest(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject tagsObject)
+        internal HttpMessage CreateUpdateGroupsRequest(string subscriptionId, string resourceGroupName, string ipGroupsName, NetworkTagsObject networkTagsObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagsObject);
+            content.JsonWriter.WriteObjectValue(networkTagsObject);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -231,18 +231,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="tagsObject"> Parameters supplied to the update ipGroups operation. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="networkTagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPGroupData>> UpdateGroupsAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public async Task<Response<IPGroupData>> UpdateGroupsAsync(string subscriptionId, string resourceGroupName, string ipGroupsName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, tagsObject);
+            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, networkTagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -262,18 +262,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="tagsObject"> Parameters supplied to the update ipGroups operation. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ipGroupsName"/> or <paramref name="networkTagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPGroupData> UpdateGroups(string subscriptionId, string resourceGroupName, string ipGroupsName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public Response<IPGroupData> UpdateGroups(string subscriptionId, string resourceGroupName, string ipGroupsName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, tagsObject);
+            using var message = CreateUpdateGroupsRequest(subscriptionId, resourceGroupName, ipGroupsName, networkTagsObject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

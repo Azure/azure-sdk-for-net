@@ -25,12 +25,17 @@
     }
   },
   "variables": {
-    "apiVersion": "2020-04-01-preview",
+    "apiVersion": "2022-06-15",
     "eventGridTopicName": "[concat(parameters('baseName'), 'topic')]",
     "eventGridDomainName": "[concat(parameters('baseName'), 'domain')]",
     "cloudeventDomainName": "[concat(parameters('baseName'), 'cloudevent-domain')]",
     "cloudeventTopicName": "[concat(parameters('baseName'), 'cloudevent-topic')]",
     "customeventTopicName": "[concat(parameters('baseName'), 'customevent-topic')]",
+    "partnerRegistrationName": "[concat(parameters('baseName'), 'partner-registration')]",
+    "partnerConfigurationName": "default",
+    "partnerNamespaceName": "[concat(parameters('baseName'), 'partner-namespace')]",
+    "partnerChannelName": "[concat(parameters('baseName'), 'partner-channel')]",
+    "partnerTopicName": "[concat(parameters('baseName'), 'partner-topic')]",
     "eventGridDataSenderRoleId": "d5a91429-5739-47e2-a06b-3470a27159e7"
   },
   "resources": [
@@ -101,6 +106,60 @@
       }
     },
     {
+      "type": "Microsoft.EventGrid/partnerRegistrations",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('partnerRegistrationName')]",
+      "location": "global"
+    },
+    {
+      "type": "Microsoft.EventGrid/partnerConfigurations",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('partnerConfigurationName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.EventGrid/partnerRegistrations', variables('partnerRegistrationName'))]"
+      ],
+      "location": "global",
+      "properties": {
+        "partnerAuthorization": {
+          "authorizedPartnersList": [
+            {
+              "partnerRegistrationImmutableId": "[reference(variables('partnerRegistrationName')).partnerRegistrationImmutableId]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.EventGrid/partnerNamespaces",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('partnerNamespaceName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.EventGrid/partnerConfigurations', variables('partnerConfigurationName'))]"
+      ],
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "partnerRegistrationFullyQualifiedId": "[resourceId('Microsoft.EventGrid/partnerRegistrations', variables('partnerRegistrationName'))]",
+        "partnerTopicRoutingMode": "ChannelNameHeader"
+      }
+    },
+    {
+      "type": "Microsoft.EventGrid/partnerNamespaces/channels",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[concat(variables('partnerNamespaceName'), '/', variables('partnerChannelName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.EventGrid/partnerNamespaces', variables('partnerNamespaceName'))]"
+      ],
+      "properties": {
+        "channelType": "PartnerTopic",
+        "partnerTopicInfo": {
+          "azureSubscriptionId": "[subscription().subscriptionId]",
+          "name": "[variables('partnerTopicName')]",
+          "resourceGroupName": "[resourceGroup().Name]",
+          "source": "customSource"
+        }
+      }
+    },
+    {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('eventGridDataSenderRoleId'))]",
@@ -151,6 +210,18 @@
     "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.EventGrid/topics', variables('customeventTopicName')), variables('apiVersion')).key1]"
+    },
+    "EVENT_GRID_PARTNER_NAMESPACE_ENDPOINT": {
+      "type": "string",
+      "value": "[reference(variables('partnerNamespaceName')).endpoint]"
+    },
+    "EVENT_GRID_PARTNER_NAMESPACE_KEY": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.EventGrid/partnerNamespaces', variables('partnerNamespaceName')), variables('apiVersion')).key1]"
+    },
+    "EVENT_GRID_PARTNER_CHANNEL_NAME": {
+      "type": "string",
+      "value": "[variables('partnerChannelName')]"
     }
   }
 }

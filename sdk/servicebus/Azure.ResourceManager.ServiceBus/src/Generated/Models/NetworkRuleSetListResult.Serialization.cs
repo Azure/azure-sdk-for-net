@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkRuleSetData>> value = default;
+            Optional<IReadOnlyList<ServiceBusNetworkRuleSetData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkRuleSetData> array = new List<NetworkRuleSetData>();
+                    List<ServiceBusNetworkRuleSetData> array = new List<ServiceBusNetworkRuleSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkRuleSetData.DeserializeNetworkRuleSetData(item));
+                        array.Add(ServiceBusNetworkRuleSetData.DeserializeServiceBusNetworkRuleSetData(item));
                     }
                     value = array;
                     continue;

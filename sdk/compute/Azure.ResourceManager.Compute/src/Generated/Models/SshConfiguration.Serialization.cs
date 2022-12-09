@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SshConfiguration DeserializeSshConfiguration(JsonElement element)
         {
-            Optional<IList<SshPublicKeyInfo>> publicKeys = default;
+            Optional<IList<SshPublicKeyConfiguration>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKeys"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SshPublicKeyInfo> array = new List<SshPublicKeyInfo>();
+                    List<SshPublicKeyConfiguration> array = new List<SshPublicKeyConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKeyInfo.DeserializeSshPublicKeyInfo(item));
+                        array.Add(SshPublicKeyConfiguration.DeserializeSshPublicKeyConfiguration(item));
                     }
                     publicKeys = array;
                     continue;

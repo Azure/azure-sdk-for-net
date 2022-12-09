@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com). </param>
         /// <param name="apiVersion"> Text Analytics API version (for example, v3.0). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.2-preview.2")
+        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.1")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -62,9 +62,10 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <summary> Submit analysis job. </summary>
         /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </remarks>
         public async Task<ResponseWithHeaders<TextAnalyticsAnalyzeHeaders>> AnalyzeAsync(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeRequest(body);
@@ -79,9 +80,10 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <summary> Submit analysis job. </summary>
         /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </remarks>
         public ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> Analyze(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeRequest(body);
@@ -124,13 +126,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> Job ID for Analyze. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </remarks>
         public async Task<Response<AnalyzeJobState>> AnalyzeStatusAsync(string jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
@@ -154,13 +157,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> Job ID for Analyze. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <remarks> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </remarks>
         public Response<AnalyzeJobState> AnalyzeStatus(string jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             if (jobId == null)
@@ -212,12 +216,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <summary> Get healthcare analysis job status and results. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get details of the healthcare prediction job specified by the jobId. </remarks>
         public async Task<Response<HealthcareJobState>> HealthStatusAsync(Guid jobId, int? top = null, int? skip = null, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateHealthStatusRequest(jobId, top, skip, showStats);
@@ -236,12 +241,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <summary> Get healthcare analysis job status and results. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="top"> (Optional) Set the maximum number of results per task. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="skip"> (Optional) Set the number of elements to offset in the response. When both $top and $skip are specified, $skip is applied first. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get details of the healthcare prediction job specified by the jobId. </remarks>
         public Response<HealthcareJobState> HealthStatus(Guid jobId, int? top = null, int? skip = null, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateHealthStatusRequest(jobId, top, skip, showStats);
@@ -279,6 +285,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <summary> Cancel healthcare prediction job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancel healthcare prediction job. </remarks>
         public async Task<ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders>> CancelHealthJobAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelHealthJobRequest(jobId);
@@ -296,6 +303,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <summary> Cancel healthcare prediction job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancel healthcare prediction job. </remarks>
         public ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> CancelHealthJob(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelHealthJobRequest(jobId);
@@ -341,13 +349,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </summary>
+        /// <summary> Submit healthcare analysis job. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </remarks>
         public async Task<ResponseWithHeaders<TextAnalyticsHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -367,13 +376,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </summary>
+        /// <summary> Submit healthcare analysis job. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </remarks>
         public ResponseWithHeaders<TextAnalyticsHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -428,7 +438,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> The API returns a list of general named entities in a given document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/taner&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Named Entity Recognition. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -436,6 +446,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a list of general named entities in a given document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/taner&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public async Task<Response<EntitiesResult>> EntitiesRecognitionGeneralAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -459,7 +470,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> The API returns a list of general named entities in a given document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/taner&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Named Entity Recognition. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -467,6 +478,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a list of general named entities in a given document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/taner&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public Response<EntitiesResult> EntitiesRecognitionGeneral(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -533,10 +545,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary>
-        /// The API returns a list of entities with personal information (\&quot;SSN\&quot;, \&quot;Bank Account\&quot; etc) in the document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/tanerpii&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// 
-        /// </summary>
+        /// <summary> Entities containing personal information. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -546,6 +555,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks>
+        /// The API returns a list of entities with personal information (\&quot;SSN\&quot;, \&quot;Bank Account\&quot; etc) in the document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/tanerpii&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
+        /// 
+        /// </remarks>
         public async Task<Response<PiiResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -569,10 +582,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary>
-        /// The API returns a list of entities with personal information (\&quot;SSN\&quot;, \&quot;Bank Account\&quot; etc) in the document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/tanerpii&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// 
-        /// </summary>
+        /// <summary> Entities containing personal information. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -582,6 +592,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks>
+        /// The API returns a list of entities with personal information (\&quot;SSN\&quot;, \&quot;Bank Account\&quot; etc) in the document. For the list of supported entity types, check &lt;a href=&quot;https://aka.ms/tanerpii&quot;&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
+        /// 
+        /// </remarks>
         public Response<PiiResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -640,7 +654,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> The API returns a list of recognized entities with links to a well known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Linked entities from a well known knowledge base. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -648,6 +662,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a list of recognized entities with links to a well known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public async Task<Response<EntityLinkingResult>> EntitiesLinkingAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -671,7 +686,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> The API returns a list of recognized entities with links to a well known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Linked entities from a well known knowledge base. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -679,6 +694,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a list of recognized entities with links to a well known knowledge base. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public Response<EntityLinkingResult> EntitiesLinking(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -733,13 +749,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> The API returns a list of strings denoting the key phrases in the input text. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Key Phrases. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a list of strings denoting the key phrases in the input text. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public async Task<Response<KeyPhraseResult>> KeyPhrasesAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -763,13 +780,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> The API returns a list of strings denoting the key phrases in the input text. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Key Phrases. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a list of strings denoting the key phrases in the input text. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public Response<KeyPhraseResult> KeyPhrases(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -824,13 +842,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> The API returns the detected language and a numeric score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Detect Language. </summary>
         /// <param name="input"> Collection of documents to analyze for language endpoint. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns the detected language and a numeric score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public async Task<Response<LanguageResult>> LanguagesAsync(LanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -854,13 +873,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> The API returns the detected language and a numeric score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </summary>
+        /// <summary> Detect Language. </summary>
         /// <param name="input"> Collection of documents to analyze for language endpoint. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="loggingOptOut"> (Optional) If set to true, you opt-out of having your text input logged for troubleshooting. By default, Text Analytics logs your input text for 48 hours, solely to allow for troubleshooting issues in providing you with the Text Analytics natural language processing functions. Setting this parameter to true, disables input logging and may limit our ability to remediate issues that occur.  Please see Cognitive Services Compliance and Privacy notes at https://aka.ms/cs-compliance for additional details, and Microsoft Responsible AI principles at https://www.microsoft.com/en-us/ai/responsible-ai. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns the detected language and a numeric score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. See the &lt;a href=&quot;https://aka.ms/talangs&quot;&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages. </remarks>
         public Response<LanguageResult> Languages(LanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -923,7 +943,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (targets and assessments). </summary>
+        /// <summary> Sentiment. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -932,6 +952,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (targets and assessments). </remarks>
         public async Task<Response<SentimentResponse>> SentimentAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, bool? opinionMining = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -955,7 +976,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (targets and assessments). </summary>
+        /// <summary> Sentiment. </summary>
         /// <param name="input"> Collection of documents to analyze. </param>
         /// <param name="modelVersion"> (Optional) This value indicates which model will be used for scoring. If a model-version is not specified, the API should default to the latest, non-preview version. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
@@ -964,6 +985,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="stringIndexType"> (Optional) Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <remarks> The API returns a detailed sentiment analysis for the input text. The analysis is done in multiple levels of granularity, start from the a document level, down to sentence and key terms (targets and assessments). </remarks>
         public Response<SentimentResponse> Sentiment(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, bool? opinionMining = null, StringIndexType? stringIndexType = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
@@ -1003,10 +1025,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <summary> Get healthcare analysis job status and results. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get details of the healthcare prediction job specified by the jobId. </remarks>
         public async Task<Response<HealthcareJobState>> HealthStatusNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1030,10 +1053,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <summary> Get healthcare analysis job status and results. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get details of the healthcare prediction job specified by the jobId. </remarks>
         public Response<HealthcareJobState> HealthStatusNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1073,10 +1097,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </remarks>
         public async Task<Response<AnalyzeJobState>> AnalyzeStatusNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1100,10 +1125,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="nextLink"> Next link for list operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </remarks>
         public Response<AnalyzeJobState> AnalyzeStatusNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1142,10 +1168,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <summary> Get healthcare analysis job status and results. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get details of the healthcare prediction job specified by the jobId. </remarks>
         public async Task<Response<HealthcareJobState>> HealthStatusNextPageNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1169,10 +1196,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Get details of the healthcare prediction job specified by the jobId. </summary>
+        /// <summary> Get healthcare analysis job status and results. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get details of the healthcare prediction job specified by the jobId. </remarks>
         public Response<HealthcareJobState> HealthStatusNextPageNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1211,10 +1239,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             return message;
         }
 
-        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </remarks>
         public async Task<Response<AnalyzeJobState>> AnalyzeStatusNextPageNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1238,10 +1267,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
-        /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are completed, the job will transition to the completed state and results will be available for each task. </remarks>
         public Response<AnalyzeJobState> AnalyzeStatusNextPageNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

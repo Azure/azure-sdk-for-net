@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Properties of the regional restorable account. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The name of the continuous backup restore location. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

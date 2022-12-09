@@ -15,15 +15,20 @@ namespace Azure.Core
     internal abstract class OperationInternalBase
     {
         private readonly ClientDiagnostics _diagnostics;
-        private readonly string _updateStatusScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
         private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
+
+        private readonly string _waitForCompletionResponseScopeName;
+        protected readonly string _updateStatusScopeName;
+        protected readonly string _waitForCompletionScopeName;
 
         protected OperationInternalBase(Response rawResponse)
         {
             _diagnostics = new ClientDiagnostics(ClientOptions.Default);
             _updateStatusScopeName = string.Empty;
+            _waitForCompletionResponseScopeName = string.Empty;
+            _waitForCompletionScopeName = string.Empty;
             _scopeAttributes = default;
             _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
@@ -32,7 +37,9 @@ namespace Azure.Core
         protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
         {
             _diagnostics = clientDiagnostics;
-            _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
+            _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
+            _waitForCompletionResponseScopeName = $"{operationTypeName}.{nameof(WaitForCompletionResponse)}";
+            _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
@@ -114,7 +121,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken)
-            => await WaitForCompletionResponseAsync(async: true, null, cancellationToken).ConfigureAwait(false);
+            => await WaitForCompletionResponseAsync(async: true, null, _waitForCompletionResponseScopeName, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
@@ -135,7 +142,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
-            => await WaitForCompletionResponseAsync(async: true, pollingInterval, cancellationToken).ConfigureAwait(false);
+            => await WaitForCompletionResponseAsync(async: true, pollingInterval, _waitForCompletionResponseScopeName, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatus(CancellationToken)"/> until the long-running operation completes.
@@ -155,7 +162,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public Response WaitForCompletionResponse(CancellationToken cancellationToken)
-            => WaitForCompletionResponseAsync(async: false, null, cancellationToken).EnsureCompleted();
+            => WaitForCompletionResponseAsync(async: false, null, _waitForCompletionResponseScopeName, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Periodically calls <see cref="UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
@@ -176,9 +183,9 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken)
-            => WaitForCompletionResponseAsync(async: false, pollingInterval, cancellationToken).EnsureCompleted();
+            => WaitForCompletionResponseAsync(async: false, pollingInterval, _waitForCompletionResponseScopeName, cancellationToken).EnsureCompleted();
 
-        private async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        protected async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, string scopeName, CancellationToken cancellationToken)
         {
             // If _responseLock has the value, lockOrValue will contain that value, and no lock is acquired.
             // If _responseLock doesn't have the value, GetLockOrValueAsync will acquire the lock that will be released when lockOrValue is disposed
@@ -188,20 +195,29 @@ namespace Azure.Core
                 return lockOrValue.Value;
             }
 
-            var poller = new OperationPoller(_fallbackStrategy);
-            var response = async
-                ? await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false)
-                : poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
+            using var scope = CreateScope(scopeName);
+            try
+            {
+                var poller = new OperationPoller(_fallbackStrategy);
+                var response = async
+                    ? await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false)
+                    : poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
 
-            lockOrValue.SetValue(response);
-            return response;
+                lockOrValue.SetValue(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         protected abstract ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken);
 
-        protected DiagnosticScope CreateScope()
+        protected DiagnosticScope CreateScope(string scopeName)
         {
-            DiagnosticScope scope = _diagnostics.CreateScope(_updateStatusScopeName);
+            DiagnosticScope scope = _diagnostics.CreateScope(scopeName);
 
             if (_scopeAttributes != null)
             {

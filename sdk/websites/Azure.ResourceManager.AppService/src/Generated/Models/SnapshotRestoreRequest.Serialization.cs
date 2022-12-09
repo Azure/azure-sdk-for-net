@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("recoverySource");
                 writer.WriteObjectValue(RecoverySource);
             }
-            if (Optional.IsDefined(Overwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(Overwrite.Value);
+                writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(RecoverConfiguration))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> snapshotTime = default;
             Optional<SnapshotRecoverySource> recoverySource = default;
             Optional<bool> overwrite = default;
@@ -89,12 +89,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -165,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SnapshotRestoreRequest(id, name, type, systemData, kind.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary));
+            return new SnapshotRestoreRequest(id, name, type, systemData.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary), kind.Value);
         }
     }
 }

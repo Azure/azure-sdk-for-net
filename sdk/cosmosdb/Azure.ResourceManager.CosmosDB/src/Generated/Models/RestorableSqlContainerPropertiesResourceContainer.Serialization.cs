@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy");
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> self = default;
             Optional<string> rid = default;
             Optional<float> ts = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             string id = default;
-            Optional<IndexingPolicy> indexingPolicy = default;
-            Optional<ContainerPartitionKey> partitionKey = default;
+            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
+            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
             Optional<int> defaultTtl = default;
-            Optional<UniqueKeyPolicy> uniqueKeyPolicy = default;
+            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
             Optional<long> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("_etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -102,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    indexingPolicy = IndexingPolicy.DeserializeIndexingPolicy(property.Value);
+                    indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"))
@@ -112,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionKey = ContainerPartitionKey.DeserializeContainerPartitionKey(property.Value);
+                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"))
@@ -132,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    uniqueKeyPolicy = UniqueKeyPolicy.DeserializeUniqueKeyPolicy(property.Value);
+                    uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("conflictResolutionPolicy"))
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), self.Value, rid.Value, Optional.ToNullable(ts), etag.Value);
+            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

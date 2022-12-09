@@ -1,6 +1,6 @@
 # Release History
 
-## 4.11.0-beta.1 (Unreleased)
+## 4.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,35 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.12.0 (2022-11-08)
+
+### Features Added
+
+- Added extension builder method that can be used to inject an `EventGridPublisherClient` instance using a `TokenCredential` for authentication.
+- Added new Dicom Healthcare events.
+
+### Breaking Changes
+
+- Fixed bug where the CloudEvents Distributed Tracing extensions were populated even when distributed tracing was disabled.
+
+## 4.11.0 (2022-07-07)
+
+### Features Added
+
+- Added support for sending events to partner channels.
+
+## 4.11.0-beta.2 (2022-05-10)
+
+### Breaking Changes
+
+- Removed `SendCloudEventsOptions` type in favor of a string parameter that can be used to specify the channel name.
+
+## 4.11.0-beta.1 (2022-04-07)
+
+### Features Added
+
+- Added Partner Topic support for channels
 
 ## 4.10.0 (2022-04-05)
 

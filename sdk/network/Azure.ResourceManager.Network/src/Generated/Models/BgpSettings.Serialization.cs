@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> asn = default;
             Optional<string> bgpPeeringAddress = default;
             Optional<int> peerWeight = default;
-            Optional<IList<IPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
+            Optional<IList<NetworkIPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"))
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPConfigurationBgpPeeringAddress> array = new List<IPConfigurationBgpPeeringAddress>();
+                    List<NetworkIPConfigurationBgpPeeringAddress> array = new List<NetworkIPConfigurationBgpPeeringAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPConfigurationBgpPeeringAddress.DeserializeIPConfigurationBgpPeeringAddress(item));
+                        array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item));
                     }
                     bgpPeeringAddresses = array;
                     continue;

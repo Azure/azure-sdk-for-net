@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static DataDiskImageEncryption DeserializeDataDiskImageEncryption(JsonElement element)
         {
             int lun = default;
-            Optional<string> diskEncryptionSetId = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
@@ -38,7 +38,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("diskEncryptionSetId"))
                 {
-                    diskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -16,23 +17,17 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <param name="connectionString"> Connection string for the notification hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="connectionString"/> is null. </exception>
-        public LinkNotificationHubContent(string resourceId, string connectionString)
+        public LinkNotificationHubContent(ResourceIdentifier resourceId, string connectionString)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             ResourceId = resourceId;
             ConnectionString = connectionString;
         }
 
         /// <summary> The resource ID of the notification hub. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Connection string for the notification hub. </summary>
         public string ConnectionString { get; }
     }

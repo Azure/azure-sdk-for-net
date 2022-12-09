@@ -8,11 +8,10 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         /// This sample demonstrates the differences in output that arise when BeginRecognizeCustomForms
         /// is called with custom models trained with fixed vs. dynamic table tags.
@@ -28,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// A conceptual explanation of using table tags to train your custom form model can be found in the
         /// service documentation: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/supervised-table-tags
 
-        [Test]
+        [RecordedTest]
         public async Task OutputModelsTrainedWithFixedRowsTables()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -96,7 +95,7 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OutputModelsTrainedWithDynamicRowsTables()
         {
             string endpoint = TestEnvironment.Endpoint;

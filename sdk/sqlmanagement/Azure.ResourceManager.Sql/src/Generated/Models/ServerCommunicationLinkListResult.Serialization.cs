@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerCommunicationLinkListResult DeserializeServerCommunicationLinkListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerCommunicationLinkData>> value = default;
+            Optional<IReadOnlyList<SqlServerCommunicationLinkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerCommunicationLinkData> array = new List<ServerCommunicationLinkData>();
+                    List<SqlServerCommunicationLinkData> array = new List<SqlServerCommunicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerCommunicationLinkData.DeserializeServerCommunicationLinkData(item));
+                        array.Add(SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(item));
                     }
                     value = array;
                     continue;

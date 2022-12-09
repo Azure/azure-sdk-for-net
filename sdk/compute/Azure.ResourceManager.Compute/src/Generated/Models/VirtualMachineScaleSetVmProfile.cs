@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
         /// <param name="capacityReservation"> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile)
+        /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
+        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile)
         {
             OSProfile = osProfile;
             StorageProfile = storageProfile;
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             UserData = userData;
             CapacityReservation = capacityReservation;
             ApplicationProfile = applicationProfile;
+            HardwareProfile = hardwareProfile;
         }
 
         /// <summary> Specifies the operating system settings for the virtual machines in the scale set. </summary>
@@ -78,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
         public string LicenseType { get; set; }
         /// <summary> Specifies the priority for the virtual machines in the scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2017-10-30-preview. </summary>
-        public VirtualMachinePriorityTypes? Priority { get; set; }
+        public VirtualMachinePriorityType? Priority { get; set; }
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both &apos;Deallocate&apos; and &apos;Delete&apos; are supported and the minimum api-version is 2017-10-30-preview. </summary>
-        public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
+        public VirtualMachineEvictionPolicyType? EvictionPolicy { get; set; }
         /// <summary> Specifies the billing related details of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
         internal BillingProfile BillingProfile { get; set; }
         /// <summary> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
@@ -128,13 +130,27 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
         internal ApplicationProfile ApplicationProfile { get; set; }
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VmGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {
                 if (ApplicationProfile is null)
                     ApplicationProfile = new ApplicationProfile();
                 return ApplicationProfile.GalleryApplications;
+            }
+        }
+
+        /// <summary> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
+        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2022-03-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
+        public VirtualMachineSizeProperties HardwareVmSizeProperties
+        {
+            get => HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;
+            set
+            {
+                if (HardwareProfile is null)
+                    HardwareProfile = new VirtualMachineScaleSetHardwareProfile();
+                HardwareProfile.VmSizeProperties = value;
             }
         }
     }

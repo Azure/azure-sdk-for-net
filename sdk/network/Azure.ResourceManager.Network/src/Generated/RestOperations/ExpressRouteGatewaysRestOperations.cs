@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, NetworkTagsObject expressRouteGatewayParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/> or <paramref name="expressRouteGatewayParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, NetworkTagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/> or <paramref name="expressRouteGatewayParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateTags(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public Response UpdateTags(string subscriptionId, string resourceGroupName, string expressRouteGatewayName, NetworkTagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

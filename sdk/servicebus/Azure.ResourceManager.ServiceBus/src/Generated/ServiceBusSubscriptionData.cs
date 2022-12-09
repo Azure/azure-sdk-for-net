@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
         /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
         /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
-        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? messageCount, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? updatedOn, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties) : base(id, name, resourceType, systemData)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? messageCount, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? updatedOn, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             MessageCount = messageCount;
             CreatedOn = createdOn;
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.ServiceBus
             ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
             IsClientAffine = isClientAffine;
             ClientAffineProperties = clientAffineProperties;
+            Location = location;
         }
 
         /// <summary> Number of messages. </summary>
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Number of maximum deliveries. </summary>
         public int? MaxDeliveryCount { get; set; }
         /// <summary> Enumerates the possible values for the status of a messaging entity. </summary>
-        public EntityStatus? Status { get; set; }
+        public ServiceBusMessagingEntityStatus? Status { get; set; }
         /// <summary> Value that indicates whether server-side batched operations are enabled. </summary>
         public bool? EnableBatchedOperations { get; set; }
         /// <summary> ISO 8061 timeSpan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </summary>
@@ -105,5 +107,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? IsClientAffine { get; set; }
         /// <summary> Properties specific to client affine subscriptions. </summary>
         public ServiceBusClientAffineProperties ClientAffineProperties { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

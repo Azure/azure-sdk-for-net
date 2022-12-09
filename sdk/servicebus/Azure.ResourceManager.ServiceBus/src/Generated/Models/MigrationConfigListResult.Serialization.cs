@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static MigrationConfigListResult DeserializeMigrationConfigListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MigrationConfigPropertiesData>> value = default;
+            Optional<IReadOnlyList<MigrationConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MigrationConfigPropertiesData> array = new List<MigrationConfigPropertiesData>();
+                    List<MigrationConfigurationData> array = new List<MigrationConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrationConfigPropertiesData.DeserializeMigrationConfigPropertiesData(item));
+                        array.Add(MigrationConfigurationData.DeserializeMigrationConfigurationData(item));
                     }
                     value = array;
                     continue;

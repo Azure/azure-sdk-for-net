@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class OutboundEndpointTests : DnsResolverTestBase
     {
-        private DnsResolverResource dnsResolver;
-        private string vnetId;
-        private string subnetId;
+        private DnsResolverResource _dnsResolver;
+        private string _vnetId;
+        private string _subnetId;
 
         public OutboundEndpointTests(bool async) : base(async)
         {
@@ -26,27 +26,25 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateDnsResolverCollection()
         {
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("dnsResolver-");
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation);
+            var vnetName = Recording.GenerateAssetName("vnet-");
 
-            vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
-            subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/snet-sim2";
+            _vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            _subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
-            if (Mode == RecordedTestMode.Record)
+            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(_vnetId)
+            });
+
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 await CreateVirtualNetworkAsync(vnetName);
-                await CreateSubnetAsync(vnetName);
             }
-
-            dnsResolverData.VirtualNetwork = new WritableSubResource()
-            {
-                Id = new ResourceIdentifier(vnetId)
-            };
 
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
             var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
 
-            dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
+            _dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
         }
 
         [Test]
@@ -54,20 +52,18 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateOutboundEndpoint()
         {
             // ARRANGE
-            var outboundEndpointData = new OutboundEndpointData(this.DefaultLocation);
-
-            outboundEndpointData.Subnet = new WritableSubResource()
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(subnetId),
-            };
+                Id = new ResourceIdentifier(_subnetId),
+            });
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
 
             // ACT
-            var outboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
+            var outboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             // ASSERT
-            Assert.AreEqual(outboundEndpoint.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(outboundEndpoint.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
         }
 
         [Test]
@@ -75,18 +71,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task GetOutboundEndpoint()
         {
             // ARRANGE
-            var outboundEndpointData = new OutboundEndpointData(this.DefaultLocation);
-
-            outboundEndpointData.Subnet = new WritableSubResource()
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(subnetId),
-            };
+                Id = new ResourceIdentifier(_subnetId),
+            });
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
+            await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             // ACT
-            var retrievedOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().GetAsync(outboundEndpointName);
+            var retrievedOutboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().GetAsync(outboundEndpointName);
 
             // ASSERT
             Assert.AreEqual(retrievedOutboundEndpoint.Value.Data.Name, outboundEndpointName);
@@ -98,15 +92,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task UpdateOutboundEndpoint()
         {
             // ARRANGE
-            var outboundEndpointData = new OutboundEndpointData(this.DefaultLocation);
-
-            outboundEndpointData.Subnet = new WritableSubResource()
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(subnetId),
-            };
+                Id = new ResourceIdentifier(_subnetId),
+            });
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            var createdOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
+            var createdOutboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
@@ -123,21 +115,19 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task RemoveOutboundEndpoint()
         {
             // ARRANGE
-            var outboundEndpointData = new OutboundEndpointData(this.DefaultLocation);
-
-            outboundEndpointData.Subnet = new WritableSubResource()
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(subnetId),
-            };
+                Id = new ResourceIdentifier(_subnetId),
+            });
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            var createdOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
+            var createdOutboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             // ACT
             await createdOutboundEndpoint.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
-            var getOutboundEndpointResult = await dnsResolver.GetOutboundEndpoints().ExistsAsync(outboundEndpointName);
+            var getOutboundEndpointResult = await _dnsResolver.GetDnsResolverOutboundEndpoints().ExistsAsync(outboundEndpointName);
             Assert.AreEqual(getOutboundEndpointResult.Value, false);
         }
     }

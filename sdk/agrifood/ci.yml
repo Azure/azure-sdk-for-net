@@ -7,7 +7,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/agrifood/
+    - sdk/agrifood/ci.yml
+    - sdk/agrifood/service.projects
+    - sdk/agrifood/Azure.Verticals.AgriFood.Farming
 
 pr:
   branches:
@@ -18,11 +20,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/agrifood/
+    - sdk/agrifood/ci.yml
+    - sdk/agrifood/service.projects
+    - sdk/agrifood/Azure.Verticals.AgriFood.Farming
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: agrifood
     ArtifactName: packages
     Artifacts:

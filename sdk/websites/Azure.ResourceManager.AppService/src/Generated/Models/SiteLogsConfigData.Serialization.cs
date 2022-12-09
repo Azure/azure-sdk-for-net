@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("httpLogs");
                 writer.WriteObjectValue(HttpLogs);
             }
-            if (Optional.IsDefined(FailedRequestsTracing))
+            if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing");
-                writer.WriteObjectValue(FailedRequestsTracing);
+                writer.WriteObjectValue(IsFailedRequestsTracing);
             }
-            if (Optional.IsDefined(DetailedErrorMessages))
+            if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages");
-                writer.WriteObjectValue(DetailedErrorMessages);
+                writer.WriteObjectValue(IsDetailedErrorMessages);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ApplicationLogsConfig> applicationLogs = default;
-            Optional<HttpLogsConfig> httpLogs = default;
-            Optional<EnabledConfig> failedRequestsTracing = default;
-            Optional<EnabledConfig> detailedErrorMessages = default;
+            Optional<AppServiceHttpLogsConfig> httpLogs = default;
+            Optional<WebAppEnabledConfig> failedRequestsTracing = default;
+            Optional<WebAppEnabledConfig> detailedErrorMessages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -78,12 +78,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -112,7 +117,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            httpLogs = HttpLogsConfig.DeserializeHttpLogsConfig(property0.Value);
+                            httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("failedRequestsTracing"))
@@ -122,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            failedRequestsTracing = EnabledConfig.DeserializeEnabledConfig(property0.Value);
+                            failedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("detailedErrorMessages"))
@@ -132,14 +137,14 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            detailedErrorMessages = EnabledConfig.DeserializeEnabledConfig(property0.Value);
+                            detailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SiteLogsConfigData(id, name, type, systemData, kind.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value);
+            return new SiteLogsConfigData(id, name, type, systemData.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value, kind.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal WebPubSubPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus? status, string description, string actionsRequired)
+        internal WebPubSubPrivateLinkServiceConnectionState(WebPubSubPrivateLinkServiceConnectionStatus? status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public PrivateLinkServiceConnectionStatus? Status { get; set; }
+        public WebPubSubPrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The reason for approval/rejection of the connection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>

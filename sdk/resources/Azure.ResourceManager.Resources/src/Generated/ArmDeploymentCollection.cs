@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArmDeploymentResource" /> and their operations.
-    /// Each <see cref="ArmDeploymentResource" /> in the collection will belong to the same instance of <see cref="ManagementGroupResource" />.
-    /// To get an <see cref="ArmDeploymentCollection" /> instance call the GetArmDeployments method from an instance of <see cref="ManagementGroupResource" />.
+    /// Each <see cref="ArmDeploymentResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />, <see cref="ResourceGroupResource" />, <see cref="ManagementGroupResource" /> or <see cref="TenantResource" />.
+    /// To get an <see cref="ArmDeploymentCollection" /> instance call the GetArmDeployments method from an instance of <see cref="SubscriptionResource" />, <see cref="ResourceGroupResource" />, <see cref="ManagementGroupResource" /> or <see cref="TenantResource" />.
     /// </summary>
     public partial class ArmDeploymentCollection : ArmCollection, IEnumerable<ArmDeploymentResource>, IAsyncEnumerable<ArmDeploymentResource>
     {

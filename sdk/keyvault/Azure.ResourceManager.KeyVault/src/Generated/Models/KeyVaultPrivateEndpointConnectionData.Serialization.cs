@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.KeyVault
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag.Value.ToString());
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.KeyVault
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -54,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
@@ -107,12 +102,17 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.KeyVault
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

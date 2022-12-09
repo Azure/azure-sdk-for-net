@@ -193,6 +193,17 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
 
+            var data2 = ConstructGenericAvailabilitySet();
+            var asetOp2 = await aset.UpdateAsync(WaitUntil.Completed, data2);
+            aset = asetOp2.Value;
+            // Tags should not be changed with Tags:{} when constructing GenericResourceData
+            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
+            Assert.AreEqual("value", aset.Data.Tags["key"]);
+
+            data2.Tags.Clear();
+            var asetOp3 = await aset.UpdateAsync(WaitUntil.Completed, data2);
+            Assert.AreEqual(0, asetOp3.Value.Data.Tags.Count);
+
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await aset.UpdateAsync(WaitUntil.Completed, null));
         }
 

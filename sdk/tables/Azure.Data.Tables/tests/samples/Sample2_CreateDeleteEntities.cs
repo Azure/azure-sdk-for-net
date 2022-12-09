@@ -100,9 +100,7 @@ namespace Azure.Data.Tables.Samples
             tableClient.DeleteEntity(partitionKey, rowKey);
             #endregion
 
-            #region Snippet:TablesSample2DeleteTableWithTableClient
             tableClient.Delete();
-            #endregion
         }
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity

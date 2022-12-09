@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobCredentialListResult DeserializeJobCredentialListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobCredentialData>> value = default;
+            Optional<IReadOnlyList<SqlServerJobCredentialData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobCredentialData> array = new List<JobCredentialData>();
+                    List<SqlServerJobCredentialData> array = new List<SqlServerJobCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobCredentialData.DeserializeJobCredentialData(item));
+                        array.Add(SqlServerJobCredentialData.DeserializeSqlServerJobCredentialData(item));
                     }
                     value = array;
                     continue;

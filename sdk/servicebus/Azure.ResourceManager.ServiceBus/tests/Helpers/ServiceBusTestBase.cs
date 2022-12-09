@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.Core;
+using System.Security.Cryptography;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
@@ -20,12 +21,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
+        protected const string VaultName = "ps-testing-keyvault";
+        protected const string Key1 = "key1";
+        protected const string Key2 = "key2";
+        protected const string Key3 = "key3";
+
         protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             // Lazy sanitize fields in the request and response bodies
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
             JsonPathSanitizers.Add("$..keyName");
+            JsonPathSanitizers.Add("$..primaryKey");
+            JsonPathSanitizers.Add("$..secondaryKey");
+            JsonPathSanitizers.Add("$..primaryConnectionString");
+            JsonPathSanitizers.Add("$..secondaryConnectionString");
+            JsonPathSanitizers.Add("$..key");
         }
 
         [SetUp]
@@ -50,14 +61,31 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             return operation.Value;
         }
 
+        public static string GenerateRandomKey()
+        {
+            byte[] key256 = new byte[32];
+            using (var rngCryptoServiceProvider = RandomNumberGenerator.Create())
+            {
+                rngCryptoServiceProvider.GetBytes(key256);
+            }
+
+            return Convert.ToBase64String(key256);
+        }
+
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string resourceGroupName)
+        {
+            Response<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().GetAsync(resourceGroupName);
+            return operation.Value;
+        }
+
         public async Task<string> CreateValidNamespaceName(string prefix)
         {
             string namespaceName = "";
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckServiceBusNameAvailabilityAsync(new CheckNameAvailability(namespaceName));
-                if (res.NameAvailable == true)
+                ServiceBusNameAvailabilityResult res = await DefaultSubscription.CheckServiceBusNamespaceNameAvailabilityAsync(new ServiceBusNameAvailabilityContent(namespaceName));
+                if (res.IsNameAvailable == true)
                 {
                     return namespaceName;
                 }

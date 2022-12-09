@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RoleInstanceListResult DeserializeRoleInstanceListResult(JsonElement element)
         {
-            IReadOnlyList<RoleInstanceData> value = default;
+            IReadOnlyList<CloudServiceRoleInstanceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<RoleInstanceData> array = new List<RoleInstanceData>();
+                    List<CloudServiceRoleInstanceData> array = new List<CloudServiceRoleInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleInstanceData.DeserializeRoleInstanceData(item));
+                        array.Add(CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(item));
                     }
                     value = array;
                     continue;

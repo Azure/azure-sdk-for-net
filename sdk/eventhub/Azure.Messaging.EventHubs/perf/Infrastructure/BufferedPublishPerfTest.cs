@@ -109,13 +109,9 @@ namespace Azure.Messaging.EventHubs.Perf
                 return Task.CompletedTask;
             };
 
-            // Read the available partitions and buffer a single events to establish the
-            // connection and link and start reading the buffers.
+            // Initialize the set of available partitions and start the background publishing task.
 
             Partitions = await _producer.GetPartitionIdsAsync().ConfigureAwait(false);
-            await _producer.EnqueueEventsAsync(EventGenerator.CreateEvents(1)).ConfigureAwait(false);
-
-            // Start the background publishing task.
 
             _backgroundCancellationSource = new CancellationTokenSource();
             _backgroundBufferingTask = EnqueueEvents(_backgroundCancellationSource.Token);

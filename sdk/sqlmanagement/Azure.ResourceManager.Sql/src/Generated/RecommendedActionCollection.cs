@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing a collection of <see cref="RecommendedActionResource" /> and their operations.
-    /// Each <see cref="RecommendedActionResource" /> in the collection will belong to the same instance of <see cref="ServerDatabaseAdvisorResource" />.
-    /// To get a <see cref="RecommendedActionCollection" /> instance call the GetRecommendedActions method from an instance of <see cref="ServerDatabaseAdvisorResource" />.
+    /// Each <see cref="RecommendedActionResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseAdvisorResource" />.
+    /// To get a <see cref="RecommendedActionCollection" /> instance call the GetRecommendedActions method from an instance of <see cref="SqlDatabaseAdvisorResource" />.
     /// </summary>
     public partial class RecommendedActionCollection : ArmCollection, IEnumerable<RecommendedActionResource>, IAsyncEnumerable<RecommendedActionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerDatabaseAdvisorResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseAdvisorResource.ResourceType), nameof(id));
+            if (id.ResourceType != SqlDatabaseAdvisorResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseAdvisorResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
             Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
             Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
-            Optional<IList<IPsecPolicy>> vpnClientIpsecPolicies = default;
+            Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
             Optional<string> radiusServerAddress = default;
             Optional<string> radiusServerSecret = default;
             Optional<IList<RadiusServer>> radiusServers = default;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                     }
-                    vpnClientIpsecPolicies = array;
+                    vpnClientIPsecPolicies = array;
                     continue;
                 }
                 if (property.NameEquals("radiusServerAddress"))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value);
+            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value);
         }
     }
 }

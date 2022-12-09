@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static AdministratorListResult DeserializeAdministratorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerAzureADAdministratorData>> value = default;
+            Optional<IReadOnlyList<SqlServerAzureADAdministratorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerAzureADAdministratorData> array = new List<ServerAzureADAdministratorData>();
+                    List<SqlServerAzureADAdministratorData> array = new List<SqlServerAzureADAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(item));
+                        array.Add(SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(item));
                     }
                     value = array;
                     continue;

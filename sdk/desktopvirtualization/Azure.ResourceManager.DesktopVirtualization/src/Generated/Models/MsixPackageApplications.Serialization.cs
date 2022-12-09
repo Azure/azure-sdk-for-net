@@ -44,12 +44,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RawIcon))
             {
                 writer.WritePropertyName("rawIcon");
-                writer.WriteBase64StringValue(RawIcon, "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RawIcon);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RawIcon.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(RawPng))
             {
                 writer.WritePropertyName("rawPng");
-                writer.WriteBase64StringValue(RawPng, "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RawPng);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(RawPng.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -58,11 +66,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             Optional<string> appId = default;
             Optional<string> description = default;
-            Optional<string> appUserModelID = default;
+            Optional<string> appUserModelId = default;
             Optional<string> friendlyName = default;
             Optional<string> iconImageName = default;
-            Optional<byte[]> rawIcon = default;
-            Optional<byte[]> rawPng = default;
+            Optional<BinaryData> rawIcon = default;
+            Optional<BinaryData> rawPng = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"))
@@ -77,7 +85,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (property.NameEquals("appUserModelID"))
                 {
-                    appUserModelID = property.Value.GetString();
+                    appUserModelId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("friendlyName"))
@@ -97,7 +105,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rawIcon = property.Value.GetBytesFromBase64("D");
+                    rawIcon = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rawPng"))
@@ -107,11 +115,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rawPng = property.Value.GetBytesFromBase64("D");
+                    rawPng = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new MsixPackageApplications(appId.Value, description.Value, appUserModelID.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value);
+            return new MsixPackageApplications(appId.Value, description.Value, appUserModelId.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value);
         }
     }
 }

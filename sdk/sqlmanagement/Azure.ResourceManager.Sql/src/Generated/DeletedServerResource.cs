@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class DeletedServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedServerResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string deletedServerName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string deletedServerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}";
             return new ResourceIdentifier(resourceId);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedServerResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _deletedServerRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deletedServerRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedServerResource(Client, response.Value), response.GetRawResponse());
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _deletedServerRestClient.RecoverAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _deletedServerRestClient.RecoverAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _deletedServerRestClient.Recover(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _deletedServerRestClient.Recover(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

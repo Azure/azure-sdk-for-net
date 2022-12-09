@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM usage. </summary>
@@ -18,16 +20,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="instancePoolUsageType"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="unit"> Usage unit. </param>
         /// <param name="currentValue"> Usage current value. </param>
         /// <param name="limit"> Usage limit. </param>
         /// <param name="requestedLimit"> Usage requested limit. </param>
-        internal InstancePoolUsage(string id, UsageName name, string instancePoolUsageType, string unit, int? currentValue, int? limit, int? requestedLimit)
+        internal InstancePoolUsage(ResourceIdentifier id, InstancePoolUsageName name, ResourceType? resourceType, string unit, int? currentValue, int? limit, int? requestedLimit)
         {
             Id = id;
             Name = name;
-            InstancePoolUsageType = instancePoolUsageType;
+            ResourceType = resourceType;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
@@ -35,11 +37,11 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Resource name. </summary>
-        public UsageName Name { get; }
+        public InstancePoolUsageName Name { get; }
         /// <summary> Resource type. </summary>
-        public string InstancePoolUsageType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Usage unit. </summary>
         public string Unit { get; }
         /// <summary> Usage current value. </summary>

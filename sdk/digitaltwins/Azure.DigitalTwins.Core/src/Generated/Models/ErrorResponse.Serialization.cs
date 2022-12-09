@@ -14,21 +14,16 @@ namespace Azure.DigitalTwins.Core
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            Optional<Error> error = default;
+            Error error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     error = Error.DeserializeError(property.Value);
                     continue;
                 }
             }
-            return new ErrorResponse(error.Value);
+            return new ErrorResponse(error);
         }
     }
 }

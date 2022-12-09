@@ -3,7 +3,8 @@
 ## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
-
+* Upgraded MessagePack for performance and security improvements.
+* Upgraded `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.16.1 to 1.18.0
 ### Breaking Changes
 
 ### Bugs Fixed

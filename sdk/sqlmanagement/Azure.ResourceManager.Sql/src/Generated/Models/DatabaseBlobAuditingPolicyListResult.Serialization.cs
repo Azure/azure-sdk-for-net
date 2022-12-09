@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static DatabaseBlobAuditingPolicyListResult DeserializeDatabaseBlobAuditingPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabaseBlobAuditingPolicyData>> value = default;
+            Optional<IReadOnlyList<SqlDatabaseBlobAuditingPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseBlobAuditingPolicyData> array = new List<DatabaseBlobAuditingPolicyData>();
+                    List<SqlDatabaseBlobAuditingPolicyData> array = new List<SqlDatabaseBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseBlobAuditingPolicyData.DeserializeDatabaseBlobAuditingPolicyData(item));
+                        array.Add(SqlDatabaseBlobAuditingPolicyData.DeserializeSqlDatabaseBlobAuditingPolicyData(item));
                     }
                     value = array;
                     continue;

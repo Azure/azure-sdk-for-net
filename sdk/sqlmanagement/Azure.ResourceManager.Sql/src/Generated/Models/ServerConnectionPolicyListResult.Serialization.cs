@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerConnectionPolicyListResult DeserializeServerConnectionPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerConnectionPolicyData>> value = default;
+            Optional<IReadOnlyList<SqlServerConnectionPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerConnectionPolicyData> array = new List<ServerConnectionPolicyData>();
+                    List<SqlServerConnectionPolicyData> array = new List<SqlServerConnectionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(item));
+                        array.Add(SqlServerConnectionPolicyData.DeserializeSqlServerConnectionPolicyData(item));
                     }
                     value = array;
                     continue;

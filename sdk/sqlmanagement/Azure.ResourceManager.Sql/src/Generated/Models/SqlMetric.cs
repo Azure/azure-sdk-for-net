@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlMetric. </summary>
         internal SqlMetric()
         {
-            MetricValues = new ChangeTrackingList<MetricValue>();
+            MetricValues = new ChangeTrackingList<SqlMetricValue>();
         }
 
         /// <summary> Initializes a new instance of SqlMetric. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
-        internal SqlMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, UnitType? unit, MetricName name, IReadOnlyList<MetricValue> metricValues)
+        internal SqlMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, SqlMetricUnitType? unit, SqlMetricName name, IReadOnlyList<SqlMetricValue> metricValues)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The time step to be used to summarize the metric values. </summary>
         public string TimeGrain { get; }
         /// <summary> The unit of the metric. </summary>
-        public UnitType? Unit { get; }
+        public SqlMetricUnitType? Unit { get; }
         /// <summary> The name information for the metric. </summary>
-        public MetricName Name { get; }
+        public SqlMetricName Name { get; }
         /// <summary> The metric values for the specified time window and timestep. </summary>
-        public IReadOnlyList<MetricValue> MetricValues { get; }
+        public IReadOnlyList<SqlMetricValue> MetricValues { get; }
     }
 }

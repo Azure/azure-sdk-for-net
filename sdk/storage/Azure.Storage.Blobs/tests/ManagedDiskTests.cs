@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
@@ -37,6 +38,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/30035")]
         public async Task CanDiffPagesBetweenSnapshots()
         {
             // Arrange
@@ -155,7 +157,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         private async Task<byte[]> DownloadRange(PageBlobClient client, HttpRange range)
         {
             var memoryStream = new MemoryStream();
-            using BlobDownloadStreamingResult result1 = await client.DownloadStreamingAsync(range: range);
+            using BlobDownloadStreamingResult result1 = await client.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                Range = range
+            });
             await result1.Content.CopyToAsync(memoryStream);
             return memoryStream.ToArray();
         }

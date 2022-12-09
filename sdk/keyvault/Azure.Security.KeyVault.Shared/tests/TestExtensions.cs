@@ -68,5 +68,12 @@ namespace Azure.Security.KeyVault.Tests
             response.AddHeader(new HttpHeader(name, value));
             return response;
         }
+
+        public static MockResponse WithJson(this MockResponse response, string json)
+        {
+            response.AddHeader(HttpHeader.Common.JsonContentType);
+            response.SetContent(json);
+            return response;
+        }
     }
 }

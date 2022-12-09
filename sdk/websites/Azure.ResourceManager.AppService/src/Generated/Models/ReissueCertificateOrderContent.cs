@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing certificate reissue request. </summary>
-    public partial class ReissueCertificateOrderContent : ProxyOnlyResource
+    public partial class ReissueCertificateOrderContent : ResourceData
     {
         /// <summary> Initializes a new instance of ReissueCertificateOrderContent. </summary>
         public ReissueCertificateOrderContent()
@@ -23,17 +23,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="keySize"> Certificate Key Size. </param>
         /// <param name="delayExistingRevokeInHours"> Delay in hours to revoke existing certificate after the new certificate is issued. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        internal ReissueCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? keySize, int? delayExistingRevokeInHours, string csr, bool? isPrivateKeyExternal) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ReissueCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? keySize, int? delayExistingRevokeInHours, string csr, bool? isPrivateKeyExternal, string kind) : base(id, name, resourceType, systemData)
         {
             KeySize = keySize;
             DelayExistingRevokeInHours = delayExistingRevokeInHours;
             Csr = csr;
             IsPrivateKeyExternal = isPrivateKeyExternal;
+            Kind = kind;
         }
 
         /// <summary> Certificate Key Size. </summary>
@@ -44,5 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Csr { get; set; }
         /// <summary> Should we change the ASC type (from managed private key to external private key and vice versa). </summary>
         public bool? IsPrivateKeyExternal { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

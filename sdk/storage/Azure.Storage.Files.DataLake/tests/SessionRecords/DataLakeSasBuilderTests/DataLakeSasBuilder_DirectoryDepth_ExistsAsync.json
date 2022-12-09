@@ -223,7 +223,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-02-19T18:58:12Z</SignedStart><SignedExpiry>2021-02-19T19:58:13Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-06-12</SignedVersion><Value>V/Zi1xDvrDQtcthY0Ew4l4wjl21uD6+7sr+OVc7x27U=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-fe654c9f-4290-943b-ce15-dd876f03f71d/test-directory-e9d727b1-b9a3-ce28-78a5-f252ca055161/test-directory-22a3e5e8-abc1-aa09-7d9a-cf0de0694414/test-directory-c20162e4-7487-b3e9-1735-d887f8251a9f/test-directory-132ffebe-7615-44ce-0dec-9cb264401b44?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T18%3A58%3A12Z&ske=2021-02-19T19%3A58%3A13Z&sks=b&skv=2020-06-12&sv=2021-08-06&st=2021-02-19T17%3A58%3A13Z&se=2021-02-19T19%3A58%3A13Z&sr=d&sp=racwdlmeop&sdd=4&sig=Sanitized",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-fe654c9f-4290-943b-ce15-dd876f03f71d/test-directory-e9d727b1-b9a3-ce28-78a5-f252ca055161/test-directory-22a3e5e8-abc1-aa09-7d9a-cf0de0694414/test-directory-c20162e4-7487-b3e9-1735-d887f8251a9f/test-directory-132ffebe-7615-44ce-0dec-9cb264401b44?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T18%3A58%3A12Z&ske=2021-02-19T19%3A58%3A13Z&sks=b&skv=2020-06-12&sv=2021-12-02&st=2021-02-19T17%3A58%3A13Z&se=2021-02-19T19%3A58%3A13Z&sr=d&sp=racwdlmeop&sdd=4&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

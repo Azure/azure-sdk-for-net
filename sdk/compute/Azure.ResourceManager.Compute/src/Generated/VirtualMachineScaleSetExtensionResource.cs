@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetExtensionResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmScaleSetName, string vmssExtensionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string vmssExtensionName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/extensions/{vmssExtensionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineScaleSetExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetExtensionResource(ArmClient client, VirtualMachineScaleSetExtensionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualMachineScaleSetExtensionResource(ArmClient client, VirtualMachineScaleSetExtensionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

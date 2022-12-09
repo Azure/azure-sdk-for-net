@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("days");
             writer.WriteNumberValue(Days);
             writer.WriteEndObject();

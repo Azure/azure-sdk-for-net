@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -18,52 +19,92 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(DataCollectionEndpointId))
+            {
+                writer.WritePropertyName("dataCollectionEndpointId");
+                writer.WriteStringValue(DataCollectionEndpointId);
+            }
+            if (Optional.IsCollectionDefined(StreamDeclarations))
+            {
+                writer.WritePropertyName("streamDeclarations");
+                writer.WriteStartObject();
+                foreach (var item in StreamDeclarations)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(DataSources))
+            {
+                writer.WritePropertyName("dataSources");
+                writer.WriteObjectValue(DataSources);
+            }
+            if (Optional.IsDefined(Destinations))
+            {
+                writer.WritePropertyName("destinations");
+                writer.WriteObjectValue(Destinations);
+            }
+            if (Optional.IsCollectionDefined(DataFlows))
+            {
+                writer.WritePropertyName("dataFlows");
+                writer.WriteStartArray();
+                foreach (var item in DataFlows)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element)
         {
-            Optional<DataCollectionRuleProperties> properties = default;
-            Optional<KnownDataCollectionRuleResourceKind> kind = default;
-            Optional<string> etag = default;
-            IDictionary<string, string> tags = default;
+            Optional<DataCollectionRuleResourceKind> kind = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> immutableId = default;
+            Optional<ResourceIdentifier> dataCollectionEndpointId = default;
+            Optional<DataCollectionRuleMetadata> metadata = default;
+            Optional<IDictionary<string, DataStreamDeclaration>> streamDeclarations = default;
+            Optional<DataCollectionRuleDataSources> dataSources = default;
+            Optional<DataCollectionRuleDestinations> destinations = default;
+            Optional<IList<DataFlow>> dataFlows = default;
+            Optional<DataCollectionRuleProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = DataCollectionRuleProperties.DeserializeDataCollectionRuleProperties(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("kind"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -71,16 +112,26 @@ namespace Azure.ResourceManager.Monitor
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new KnownDataCollectionRuleResourceKind(property.Value.GetString());
+                    kind = new DataCollectionRuleResourceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -91,7 +142,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -106,16 +157,123 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("immutableId"))
+                        {
+                            immutableId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("dataCollectionEndpointId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataCollectionEndpointId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metadata = DataCollectionRuleMetadata.DeserializeDataCollectionRuleMetadata(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("streamDeclarations"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, DataStreamDeclaration> dictionary = new Dictionary<string, DataStreamDeclaration>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, DataStreamDeclaration.DeserializeDataStreamDeclaration(property1.Value));
+                            }
+                            streamDeclarations = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("dataSources"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSources = DataCollectionRuleDataSources.DeserializeDataCollectionRuleDataSources(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("destinations"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            destinations = DataCollectionRuleDestinations.DeserializeDataCollectionRuleDestinations(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("dataFlows"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<DataFlow> array = new List<DataFlow>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DataFlow.DeserializeDataFlow(item));
+                            }
+                            dataFlows = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new DataCollectionRuleProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new DataCollectionRuleData(id, name, type, systemData, tags, location, properties.Value, Optional.ToNullable(kind), etag.Value);
+            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
         }
     }
 }

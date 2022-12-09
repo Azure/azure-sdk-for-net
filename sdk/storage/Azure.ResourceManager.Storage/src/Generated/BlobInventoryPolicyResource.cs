@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage
     public partial class BlobInventoryPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlobInventoryPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string blobInventoryPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, BlobInventoryPolicyName blobInventoryPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}";
             return new ResourceIdentifier(resourceId);
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="data"> The blob inventory policy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BlobInventoryPolicyResource>> UpdateAsync(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BlobInventoryPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicyResource.Update");
+            using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="data"> The blob inventory policy set to a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BlobInventoryPolicyResource> Update(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BlobInventoryPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicyResource.Update");
+            using var scope = _blobInventoryPolicyClientDiagnostics.CreateScope("BlobInventoryPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {

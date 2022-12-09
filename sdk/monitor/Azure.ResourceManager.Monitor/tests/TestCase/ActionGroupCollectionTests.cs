@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class ActionGroupCollectionTests : MonitorTestBase
     {
         public ActionGroupCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

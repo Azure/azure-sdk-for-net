@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> availableCapacity = default;
             Optional<long> totalCapacity = default;
             Optional<string> unit = default;
-            Optional<ComputeModeOptions> computeMode = default;
-            Optional<WorkerSizeOptions> workerSize = default;
+            Optional<ComputeModeOption> computeMode = default;
+            Optional<WorkerSizeOption> workerSize = default;
             Optional<int> workerSizeId = default;
             Optional<bool> excludeFromCapacityAllocation = default;
             Optional<bool> isApplicableForAllComputeModes = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    computeMode = property.Value.GetString().ToComputeModeOptions();
+                    computeMode = property.Value.GetString().ToComputeModeOption();
                     continue;
                 }
                 if (property.NameEquals("workerSize"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workerSize = property.Value.GetString().ToWorkerSizeOptions();
+                    workerSize = property.Value.GetString().ToWorkerSizeOption();
                     continue;
                 }
                 if (property.NameEquals("workerSizeId"))

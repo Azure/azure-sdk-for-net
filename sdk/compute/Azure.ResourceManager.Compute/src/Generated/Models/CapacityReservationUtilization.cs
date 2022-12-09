@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CapacityReservationUtilization. </summary>
         internal CapacityReservationUtilization()
         {
-            VirtualMachinesAllocated = new ChangeTrackingList<Resources.Models.SubResource>();
+            VirtualMachinesAllocated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CapacityReservationUtilization. </summary>
         /// <param name="virtualMachinesAllocated"> A list of all virtual machines resource ids allocated against the capacity reservation. </param>
-        internal CapacityReservationUtilization(IReadOnlyList<Resources.Models.SubResource> virtualMachinesAllocated)
+        internal CapacityReservationUtilization(IReadOnlyList<SubResource> virtualMachinesAllocated)
         {
             VirtualMachinesAllocated = virtualMachinesAllocated;
         }
 
         /// <summary> A list of all virtual machines resource ids allocated against the capacity reservation. </summary>
-        public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAllocated { get; }
+        public IReadOnlyList<SubResource> VirtualMachinesAllocated { get; }
     }
 }

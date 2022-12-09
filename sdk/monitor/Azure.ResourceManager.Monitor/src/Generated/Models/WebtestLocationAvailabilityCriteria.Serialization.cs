@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element)
         {
-            string webTestId = default;
-            string componentId = default;
+            ResourceIdentifier webTestId = default;
+            ResourceIdentifier componentId = default;
             float failedLocationCount = default;
-            Odatatype odataType = default;
+            MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webTestId"))
                 {
-                    webTestId = property.Value.GetString();
+                    webTestId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("componentId"))
                 {
-                    componentId = property.Value.GetString();
+                    componentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failedLocationCount"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("odata.type"))
                 {
-                    odataType = new Odatatype(property.Value.GetString());
+                    odataType = new MonitorOdataType(property.Value.GetString());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

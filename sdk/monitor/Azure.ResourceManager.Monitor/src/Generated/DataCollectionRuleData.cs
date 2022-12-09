@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -19,6 +20,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public DataCollectionRuleData(AzureLocation location) : base(location)
         {
+            StreamDeclarations = new ChangeTrackingDictionary<string, DataStreamDeclaration>();
+            DataFlows = new ChangeTrackingList<DataFlow>();
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
@@ -28,21 +31,65 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, string etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="description"> Description of the data collection rule. </param>
+        /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
+        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that this rule can be used with. </param>
+        /// <param name="metadata"> Metadata about the resource. </param>
+        /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
+        /// <param name="dataSources">
+        /// The specification of data sources. 
+        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// </param>
+        /// <param name="destinations"> The specification of destinations. </param>
+        /// <param name="dataFlows"> The specification of data flows. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
-            Properties = properties;
             Kind = kind;
-            Etag = etag;
+            ETag = etag;
+            Description = description;
+            ImmutableId = immutableId;
+            DataCollectionEndpointId = dataCollectionEndpointId;
+            Metadata = metadata;
+            StreamDeclarations = streamDeclarations;
+            DataSources = dataSources;
+            Destinations = destinations;
+            DataFlows = dataFlows;
+            ProvisioningState = provisioningState;
         }
 
-        /// <summary> Resource properties. </summary>
-        public DataCollectionRuleProperties Properties { get; set; }
         /// <summary> The kind of the resource. </summary>
-        public KnownDataCollectionRuleResourceKind? Kind { get; set; }
+        public DataCollectionRuleResourceKind? Kind { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
+        /// <summary> Description of the data collection rule. </summary>
+        public string Description { get; set; }
+        /// <summary> The immutable ID of this data collection rule. This property is READ-ONLY. </summary>
+        public string ImmutableId { get; }
+        /// <summary> The resource ID of the data collection endpoint that this rule can be used with. </summary>
+        public ResourceIdentifier DataCollectionEndpointId { get; set; }
+        /// <summary> Metadata about the resource. </summary>
+        internal DataCollectionRuleMetadata Metadata { get; }
+        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
+        public string MetadataProvisionedBy
+        {
+            get => Metadata?.ProvisionedBy;
+        }
+
+        /// <summary> Declaration of custom streams used in this rule. </summary>
+        public IDictionary<string, DataStreamDeclaration> StreamDeclarations { get; }
+        /// <summary>
+        /// The specification of data sources. 
+        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// </summary>
+        public DataCollectionRuleDataSources DataSources { get; set; }
+        /// <summary> The specification of destinations. </summary>
+        public DataCollectionRuleDestinations Destinations { get; set; }
+        /// <summary> The specification of data flows. </summary>
+        public IList<DataFlow> DataFlows { get; }
+        /// <summary> The resource provisioning state. </summary>
+        public DataCollectionRuleProvisioningState? ProvisioningState { get; }
     }
 }

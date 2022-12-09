@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public ScVmmVirtualNetworkData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
         {
-            if (extendedLocation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocation));
-            }
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
         }

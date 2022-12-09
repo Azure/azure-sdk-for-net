@@ -39,32 +39,62 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="managedDatabaseRestoreDetailsResultType">Restore
+        /// type.</param>
         /// <param name="status">Restore status.</param>
-        /// <param name="currentRestoringFileName">Current restoring file
-        /// name.</param>
+        /// <param name="blockReason">The reason why restore is in Blocked
+        /// state.</param>
+        /// <param name="lastUploadedFileName">Last uploaded file name.</param>
+        /// <param name="lastUploadedFileTime">Last uploaded file time.</param>
         /// <param name="lastRestoredFileName">Last restored file name.</param>
         /// <param name="lastRestoredFileTime">Last restored file time.</param>
         /// <param name="percentCompleted">Percent completed.</param>
-        /// <param name="unrestorableFiles">List of unrestorable files.</param>
+        /// <param name="currentRestoredSizeMB">Current restored size
+        /// MB.</param>
+        /// <param name="currentRestorePlanSizeMB">Current restore plan size
+        /// MB.</param>
+        /// <param name="currentBackupType">Current backup type.</param>
+        /// <param name="currentRestoringFileName">Current restoring file
+        /// name.</param>
         /// <param name="numberOfFilesDetected">Number of files
         /// detected.</param>
-        /// <param name="lastUploadedFileName">Last uploaded file name.</param>
-        /// <param name="lastUploadedFileTime">Last uploaded file time.</param>
-        /// <param name="blockReason">The reason why restore is in Blocked
-        /// state.</param>
-        public ManagedDatabaseRestoreDetailsResult(string id = default(string), string name = default(string), string type = default(string), string status = default(string), string currentRestoringFileName = default(string), string lastRestoredFileName = default(string), System.DateTime? lastRestoredFileTime = default(System.DateTime?), double? percentCompleted = default(double?), IList<string> unrestorableFiles = default(IList<string>), long? numberOfFilesDetected = default(long?), string lastUploadedFileName = default(string), System.DateTime? lastUploadedFileTime = default(System.DateTime?), string blockReason = default(string))
+        /// <param name="numberOfFilesQueued">Number of files queued.</param>
+        /// <param name="numberOfFilesSkipped">Number of files skipped.</param>
+        /// <param name="numberOfFilesRestoring">Number of files
+        /// restoring.</param>
+        /// <param name="numberOfFilesRestored">Number of files
+        /// restored.</param>
+        /// <param name="numberOfFilesUnrestorable">Number of files
+        /// unrestorable.</param>
+        /// <param name="fullBackupSets">Full backup sets.</param>
+        /// <param name="diffBackupSets">Diff backup sets.</param>
+        /// <param name="logBackupSets">Log backup sets.</param>
+        /// <param name="unrestorableFiles">Unrestorable files.</param>
+        public ManagedDatabaseRestoreDetailsResult(string id = default(string), string name = default(string), string type = default(string), string managedDatabaseRestoreDetailsResultType = default(string), string status = default(string), string blockReason = default(string), string lastUploadedFileName = default(string), System.DateTime? lastUploadedFileTime = default(System.DateTime?), string lastRestoredFileName = default(string), System.DateTime? lastRestoredFileTime = default(System.DateTime?), int? percentCompleted = default(int?), int? currentRestoredSizeMB = default(int?), int? currentRestorePlanSizeMB = default(int?), string currentBackupType = default(string), string currentRestoringFileName = default(string), int? numberOfFilesDetected = default(int?), int? numberOfFilesQueued = default(int?), int? numberOfFilesSkipped = default(int?), int? numberOfFilesRestoring = default(int?), int? numberOfFilesRestored = default(int?), int? numberOfFilesUnrestorable = default(int?), IList<ManagedDatabaseRestoreDetailsBackupSetProperties> fullBackupSets = default(IList<ManagedDatabaseRestoreDetailsBackupSetProperties>), IList<ManagedDatabaseRestoreDetailsBackupSetProperties> diffBackupSets = default(IList<ManagedDatabaseRestoreDetailsBackupSetProperties>), IList<ManagedDatabaseRestoreDetailsBackupSetProperties> logBackupSets = default(IList<ManagedDatabaseRestoreDetailsBackupSetProperties>), IList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties> unrestorableFiles = default(IList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties>))
             : base(id, name, type)
         {
+            ManagedDatabaseRestoreDetailsResultType = managedDatabaseRestoreDetailsResultType;
             Status = status;
-            CurrentRestoringFileName = currentRestoringFileName;
+            BlockReason = blockReason;
+            LastUploadedFileName = lastUploadedFileName;
+            LastUploadedFileTime = lastUploadedFileTime;
             LastRestoredFileName = lastRestoredFileName;
             LastRestoredFileTime = lastRestoredFileTime;
             PercentCompleted = percentCompleted;
-            UnrestorableFiles = unrestorableFiles;
+            CurrentRestoredSizeMB = currentRestoredSizeMB;
+            CurrentRestorePlanSizeMB = currentRestorePlanSizeMB;
+            CurrentBackupType = currentBackupType;
+            CurrentRestoringFileName = currentRestoringFileName;
             NumberOfFilesDetected = numberOfFilesDetected;
-            LastUploadedFileName = lastUploadedFileName;
-            LastUploadedFileTime = lastUploadedFileTime;
-            BlockReason = blockReason;
+            NumberOfFilesQueued = numberOfFilesQueued;
+            NumberOfFilesSkipped = numberOfFilesSkipped;
+            NumberOfFilesRestoring = numberOfFilesRestoring;
+            NumberOfFilesRestored = numberOfFilesRestored;
+            NumberOfFilesUnrestorable = numberOfFilesUnrestorable;
+            FullBackupSets = fullBackupSets;
+            DiffBackupSets = diffBackupSets;
+            LogBackupSets = logBackupSets;
+            UnrestorableFiles = unrestorableFiles;
             CustomInit();
         }
 
@@ -74,16 +104,34 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets restore type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.type")]
+        public string ManagedDatabaseRestoreDetailsResultType { get; private set; }
+
+        /// <summary>
         /// Gets restore status.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets current restoring file name.
+        /// Gets the reason why restore is in Blocked state.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.currentRestoringFileName")]
-        public string CurrentRestoringFileName { get; private set; }
+        [JsonProperty(PropertyName = "properties.blockReason")]
+        public string BlockReason { get; private set; }
+
+        /// <summary>
+        /// Gets last uploaded file name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastUploadedFileName")]
+        public string LastUploadedFileName { get; private set; }
+
+        /// <summary>
+        /// Gets last uploaded file time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastUploadedFileTime")]
+        public System.DateTime? LastUploadedFileTime { get; private set; }
 
         /// <summary>
         /// Gets last restored file name.
@@ -101,37 +149,91 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets percent completed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.percentCompleted")]
-        public double? PercentCompleted { get; private set; }
+        public int? PercentCompleted { get; private set; }
 
         /// <summary>
-        /// Gets list of unrestorable files.
+        /// Gets current restored size MB.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.unrestorableFiles")]
-        public IList<string> UnrestorableFiles { get; private set; }
+        [JsonProperty(PropertyName = "properties.currentRestoredSizeMB")]
+        public int? CurrentRestoredSizeMB { get; private set; }
+
+        /// <summary>
+        /// Gets current restore plan size MB.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.currentRestorePlanSizeMB")]
+        public int? CurrentRestorePlanSizeMB { get; private set; }
+
+        /// <summary>
+        /// Gets current backup type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.currentBackupType")]
+        public string CurrentBackupType { get; private set; }
+
+        /// <summary>
+        /// Gets current restoring file name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.currentRestoringFileName")]
+        public string CurrentRestoringFileName { get; private set; }
 
         /// <summary>
         /// Gets number of files detected.
         /// </summary>
         [JsonProperty(PropertyName = "properties.numberOfFilesDetected")]
-        public long? NumberOfFilesDetected { get; private set; }
+        public int? NumberOfFilesDetected { get; private set; }
 
         /// <summary>
-        /// Gets last uploaded file name.
+        /// Gets number of files queued.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.lastUploadedFileName")]
-        public string LastUploadedFileName { get; private set; }
+        [JsonProperty(PropertyName = "properties.numberOfFilesQueued")]
+        public int? NumberOfFilesQueued { get; private set; }
 
         /// <summary>
-        /// Gets last uploaded file time.
+        /// Gets number of files skipped.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.lastUploadedFileTime")]
-        public System.DateTime? LastUploadedFileTime { get; private set; }
+        [JsonProperty(PropertyName = "properties.numberOfFilesSkipped")]
+        public int? NumberOfFilesSkipped { get; private set; }
 
         /// <summary>
-        /// Gets the reason why restore is in Blocked state.
+        /// Gets number of files restoring.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.blockReason")]
-        public string BlockReason { get; private set; }
+        [JsonProperty(PropertyName = "properties.numberOfFilesRestoring")]
+        public int? NumberOfFilesRestoring { get; private set; }
+
+        /// <summary>
+        /// Gets number of files restored.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.numberOfFilesRestored")]
+        public int? NumberOfFilesRestored { get; private set; }
+
+        /// <summary>
+        /// Gets number of files unrestorable.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.numberOfFilesUnrestorable")]
+        public int? NumberOfFilesUnrestorable { get; private set; }
+
+        /// <summary>
+        /// Gets full backup sets.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fullBackupSets")]
+        public IList<ManagedDatabaseRestoreDetailsBackupSetProperties> FullBackupSets { get; private set; }
+
+        /// <summary>
+        /// Gets diff backup sets.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diffBackupSets")]
+        public IList<ManagedDatabaseRestoreDetailsBackupSetProperties> DiffBackupSets { get; private set; }
+
+        /// <summary>
+        /// Gets log backup sets.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.logBackupSets")]
+        public IList<ManagedDatabaseRestoreDetailsBackupSetProperties> LogBackupSets { get; private set; }
+
+        /// <summary>
+        /// Gets unrestorable files.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unrestorableFiles")]
+        public IList<ManagedDatabaseRestoreDetailsUnrestorableFileProperties> UnrestorableFiles { get; private set; }
 
     }
 }

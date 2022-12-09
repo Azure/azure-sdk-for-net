@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualHubRoute DeserializeVirtualHubRoute(JsonElement element)
         {
             Optional<IList<string>> addressPrefixes = default;
-            Optional<string> nextHopIpAddress = default;
+            Optional<string> nextHopIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefixes"))
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextHopIpAddress"))
                 {
-                    nextHopIpAddress = property.Value.GetString();
+                    nextHopIPAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualHubRoute(Optional.ToList(addressPrefixes), nextHopIpAddress.Value);
+            return new VirtualHubRoute(Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
         }
     }
 }

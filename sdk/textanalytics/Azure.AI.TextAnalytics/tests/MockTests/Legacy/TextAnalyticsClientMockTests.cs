@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
         private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
         {
-            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)
+            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
                 Transport = transport
             };
@@ -571,6 +571,17 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             Assert.IsTrue(resultError.HasError);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultError.Error.ErrorCode.ToString());
             Assert.AreEqual("Document text is empty.", resultError.Error.Message);
+        }
+
+        [Test]
+        public void StartAnalyzeHealthcareEntitiesWithDisplayNameLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(new[] { "test" }, options: new AnalyzeHealthcareEntitiesOptions { DisplayName = "test" }));
+
+            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DisplayName is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
     }
 }

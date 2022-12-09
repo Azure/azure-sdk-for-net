@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetDeletedRequest(string subscriptionId, string location, string name)
+        internal HttpMessage CreateGetDeletedRequest(string subscriptionId, AzureLocation location, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -595,12 +595,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="location"> The location of the deleted managed HSM. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedManagedHsmData>> GetDeletedAsync(string subscriptionId, string location, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeletedManagedHsmData>> GetDeletedAsync(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetDeletedRequest(subscriptionId, location, name);
@@ -626,12 +625,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="location"> The location of the deleted managed HSM. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedManagedHsmData> GetDeleted(string subscriptionId, string location, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeletedManagedHsmData> GetDeleted(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetDeletedRequest(subscriptionId, location, name);
@@ -652,7 +650,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreatePurgeDeletedRequest(string subscriptionId, string location, string name)
+        internal HttpMessage CreatePurgeDeletedRequest(string subscriptionId, AzureLocation location, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -678,12 +676,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="location"> The location of the soft-deleted managed HSM. </param>
         /// <param name="name"> The name of the soft-deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PurgeDeletedAsync(string subscriptionId, string location, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> PurgeDeletedAsync(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreatePurgeDeletedRequest(subscriptionId, location, name);
@@ -702,12 +699,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="location"> The location of the soft-deleted managed HSM. </param>
         /// <param name="name"> The name of the soft-deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PurgeDeleted(string subscriptionId, string location, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response PurgeDeleted(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreatePurgeDeletedRequest(subscriptionId, location, name);

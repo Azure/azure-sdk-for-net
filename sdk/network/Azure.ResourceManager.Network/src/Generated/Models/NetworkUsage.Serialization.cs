@@ -14,21 +14,26 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkUsage DeserializeNetworkUsage(JsonElement element)
         {
-            Optional<string> id = default;
-            UsageUnit unit = default;
+            Optional<ResourceIdentifier> id = default;
+            NetworkUsageUnit unit = default;
             long currentValue = default;
             long limit = default;
-            UsageName name = default;
+            NetworkUsageName name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new NetworkUsageUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
@@ -43,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = NetworkUsageName.DeserializeNetworkUsageName(property.Value);
                     continue;
                 }
             }

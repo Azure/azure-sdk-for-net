@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenTelemetry.Metrics;
 using System;
+using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -17,19 +17,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="builder"><see cref="MeterProviderBuilder"/> builder to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
         /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The objects should not be disposed.")]
         public static MeterProviderBuilder AddAzureMonitorMetricExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null)
         {
-            var options = new AzureMonitorExporterOptions();
-            configure?.Invoke(options);
-
-            // TODO: Fallback to default location if location provided via options does not work.
-            if (!options.DisableOfflineStorage && options.StorageDirectory == null)
+            if (builder == null)
             {
-                options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
+                throw new ArgumentNullException(nameof(builder));
             }
 
-            var exporter = new AzureMonitorMetricExporter(options);
+            var options = new AzureMonitorExporterOptions();
+            configure?.Invoke(options);
 
             return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options))
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta });

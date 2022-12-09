@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string rgName = "myRgName";
             ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the disk collection from the resource group
-            DiskCollection diskCollection = resourceGroup.GetDisks();
+            ManagedDiskCollection diskCollection = resourceGroup.GetManagedDisks();
             // Use the same location as the resource group
             string diskName = "myDisk";
-            var input = new DiskData(resourceGroup.Data.Location)
+            ManagedDiskData input = new ManagedDiskData(resourceGroup.Data.Location)
             {
                 Sku = new DiskSku()
                 {
-                    Name = DiskStorageAccountTypes.StandardLRS
+                    Name = DiskStorageAccountType.StandardLrs
                 },
-                CreationData = new CreationData(DiskCreateOption.Empty),
+                CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
-            ArmOperation<DiskResource> lro = await diskCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
-            DiskResource disk = lro.Value;
+            ArmOperation<ManagedDiskResource> lro = await diskCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
+            ManagedDiskResource disk = lro.Value;
             #endregion Snippet:Managing_Disks_CreateADisk
         }
 
@@ -53,10 +53,9 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string rgName = "myRgName";
             ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the disk collection from the resource group
-            DiskCollection diskCollection = resourceGroup.GetDisks();
-            // With ListAsync(), we can get a list of the disks
-            AsyncPageable<DiskResource> response = diskCollection.GetAllAsync();
-            await foreach (DiskResource disk in response)
+            ManagedDiskCollection diskCollection = resourceGroup.GetManagedDisks();
+            // With GetAllAsync(), we can get a list of the disks
+            await foreach (ManagedDiskResource disk in diskCollection.GetAllAsync())
             {
                 Console.WriteLine(disk.Data.Name);
             }
@@ -74,9 +73,9 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string rgName = "myRgName";
             ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the disk collection from the resource group
-            DiskCollection diskCollection = resourceGroup.GetDisks();
+            ManagedDiskCollection diskCollection = resourceGroup.GetManagedDisks();
             string diskName = "myDisk";
-            DiskResource disk = await diskCollection.GetAsync(diskName);
+            ManagedDiskResource disk = await diskCollection.GetAsync(diskName);
             await disk.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Disks_DeleteDisk
         }

@@ -31,15 +31,19 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
+        /// <param name="properties">The connection properties.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
-        public PrivateEndpointConnection(PrivateEndpointConnectionProperties properties, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the private endpoint connection.</param>
+        public PrivateEndpointConnection(ConnectionProperties properties, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -67,9 +71,17 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         public string Type { get; private set; }
 
         /// <summary>
+        /// Gets or sets the connection properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        public ConnectionProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// private endpoint connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

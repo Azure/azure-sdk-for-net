@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static EventHubDestination DeserializeEventHubDestination(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> blobContainer = default;
             Optional<string> archiveNameFormat = default;
             Optional<Guid> dataLakeSubscriptionId = default;
@@ -84,7 +84,12 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         if (property0.NameEquals("storageAccountResourceId"))
                         {
-                            storageAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("blobContainer"))

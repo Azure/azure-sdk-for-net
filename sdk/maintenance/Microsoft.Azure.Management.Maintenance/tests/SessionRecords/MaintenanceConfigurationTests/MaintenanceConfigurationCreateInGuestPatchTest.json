@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/eee2cef4-bc47-4278-b4f8-cfc65f25dfd8/resourcegroups/maintenance_rg3842/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk5917?api-version=2021-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWVlMmNlZjQtYmM0Ny00Mjc4LWI0ZjgtY2ZjNjVmMjVkZmQ4L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMzg0Mi9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGs1OTE3P2FwaS12ZXJzaW9uPTIwMjEtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/eee2cef4-bc47-4278-b4f8-cfc65f25dfd8/resourcegroups/maintenance_rg3842/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk5917?api-version=2022-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWVlMmNlZjQtYmM0Ny00Mjc4LWI0ZjgtY2ZjNjVmMjVkZmQ4L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMzg0Mi9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGs1OTE3P2FwaS12ZXJzaW9uPTIwMjItMDctMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"eastus2euap\",\r\n  \"properties\": {\r\n    \"maintenanceScope\": \"InGuestPatch\",\r\n    \"maintenanceWindow\": {\r\n      \"startDateTime\": \"2021-09-01 01:00\",\r\n      \"duration\": \"01:00\",\r\n      \"timeZone\": \"India Standard Time\",\r\n      \"recurEvery\": \"2Months Third Monday Offset-4\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -133,8 +133,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/eee2cef4-bc47-4278-b4f8-cfc65f25dfd8/resourcegroups/maintenance_rg3842/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk5324?api-version=2021-09-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWVlMmNlZjQtYmM0Ny00Mjc4LWI0ZjgtY2ZjNjVmMjVkZmQ4L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMzg0Mi9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGs1MzI0P2FwaS12ZXJzaW9uPTIwMjEtMDktMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/eee2cef4-bc47-4278-b4f8-cfc65f25dfd8/resourcegroups/maintenance_rg3842/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk5324?api-version=2022-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWVlMmNlZjQtYmM0Ny00Mjc4LWI0ZjgtY2ZjNjVmMjVkZmQ4L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMzg0Mi9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGs1MzI0P2FwaS12ZXJzaW9uPTIwMjItMDctMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"eastus2euap\",\r\n  \"properties\": {\r\n    \"maintenanceScope\": \"InGuestPatch\",\r\n    \"maintenanceWindow\": {\r\n      \"startDateTime\": \"2021-09-01 01:00\",\r\n      \"duration\": \"01:00\",\r\n      \"timeZone\": \"India Standard Time\",\r\n      \"recurEvery\": \"2Months Third Monday Offset-4\"\r\n    },\r\n    \"installPatches\": {\r\n      \"rebootSetting\": \"IfRequired\",\r\n      \"windowsParameters\": {\r\n        \"kbNumbersToInclude\": [\r\n          \"KB123456\"\r\n        ],\r\n        \"classificationsToInclude\": [\r\n          \"UpdateRollup\",\r\n          \"ServicePack\"\r\n        ]\r\n      },\r\n      \"linuxParameters\": {\r\n        \"packageNameMasksToInclude\": [\r\n          \"apt\"\r\n        ],\r\n        \"classificationsToInclude\": [\r\n          \"Other\"\r\n        ]\r\n      },\r\n      \"tasks\": {\r\n        \"preTasks\": [\r\n          {\r\n            \"parameters\": {\r\n              \"param1\": \"value1\"\r\n            },\r\n            \"source\": \"/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.Automation/automationAccounts/Automate-42c974dd-2c03-4f1b-96ad-b07f050aaa74-EUS/runbooks/foo\",\r\n            \"taskScope\": \"Global\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {

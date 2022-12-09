@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.ManagedIdentity/operations?api-version=2021-09-30-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlZElkZW50aXR5L29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAyMS0wOS0zMC1wcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.ManagedIdentity/operations?api-version=2022-01-31-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlZElkZW50aXR5L29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAyMi0wMS0zMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5c6ff845-81f7-4982-8b9b-9347f81f7995"
+          "da8d9e0f-2346-4273-9ee5-d4f4a4a7cbd1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.11601",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22581",
-          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,22 +30,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11999"
+          "11998"
         ],
         "x-ms-request-id": [
-          "056bf774-f84c-48a5-badc-ed216184fc35"
+          "36c5a4db-e96a-49ef-a2dc-7332a847dea2"
         ],
         "x-ms-correlation-request-id": [
-          "056bf774-f84c-48a5-badc-ed216184fc35"
+          "36c5a4db-e96a-49ef-a2dc-7332a847dea2"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20220330T145451Z:056bf774-f84c-48a5-badc-ed216184fc35"
+          "NORTHEUROPE:20220629T174212Z:36c5a4db-e96a-49ef-a2dc-7332a847dea2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Mar 2022 14:54:51 GMT"
+          "Wed, 29 Jun 2022 17:42:12 GMT"
         ],
         "Content-Length": [
           "2318"
@@ -63,6 +63,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "1e7c6daf-aa6b-43dc-955d-3876d0a5e008"
+    "SubscriptionId": "5570b16b-2d97-44ca-a957-6366996e1fbc"
   }
 }

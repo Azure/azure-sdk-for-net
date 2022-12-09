@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("internalHttpsPort");
                 writer.WriteNumberValue(InternalHttpsPort.Value);
             }
-            if (Optional.IsDefined(InUse))
+            if (Optional.IsDefined(IsInUse))
             {
                 writer.WritePropertyName("inUse");
-                writer.WriteBooleanValue(InUse.Value);
+                writer.WriteBooleanValue(IsInUse.Value);
             }
             if (Optional.IsDefined(ServiceName))
             {

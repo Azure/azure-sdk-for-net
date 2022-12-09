@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="dataLakeSubscriptionId"> Subscription Id of Azure Data Lake Store. </param>
         /// <param name="dataLakeAccountName"> The Azure Data Lake Store name for the captured events. </param>
         /// <param name="dataLakeFolderPath"> The destination folder path for the captured events. </param>
-        internal EventHubDestination(string name, string storageAccountResourceId, string blobContainer, string archiveNameFormat, Guid? dataLakeSubscriptionId, string dataLakeAccountName, string dataLakeFolderPath)
+        internal EventHubDestination(string name, ResourceIdentifier storageAccountResourceId, string blobContainer, string archiveNameFormat, Guid? dataLakeSubscriptionId, string dataLakeAccountName, string dataLakeFolderPath)
         {
             Name = name;
             StorageAccountResourceId = storageAccountResourceId;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Name for capture destination. </summary>
         public string Name { get; set; }
         /// <summary> Resource id of the storage account to be used to create the blobs. </summary>
-        public string StorageAccountResourceId { get; set; }
+        public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary> Blob container Name. </summary>
         public string BlobContainer { get; set; }
         /// <summary> Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order. </summary>

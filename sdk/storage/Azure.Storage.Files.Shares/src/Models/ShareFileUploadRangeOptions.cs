@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 
@@ -32,6 +33,14 @@ namespace Azure.Storage.Files.Shares.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
+        /// Optional override settings for this client's <see cref="ShareClientOptions.TransferValidation"/> settings.
+        /// hashing on uploads.
+        /// </summary>
+        public UploadTransferValidationOptions TransferValidation { get; set; }
+
+        /// <summary>
+        /// Legacy facade for <see cref="TransferValidation"/>.
+        ///
         /// Optional MD5 hash of the range content.
         ///
         /// This hash is used to verify the integrity of the range during transport. When this hash
@@ -40,13 +49,37 @@ namespace Azure.Storage.Files.Shares.Models
         /// stored with the file.  If the two hashes do not match, the
         /// operation will fail with a <see cref="RequestFailedException"/>.
         /// </summary>
-        public byte[] TransactionalContentHash { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public byte[] TransactionalContentHash
+        {
+            get
+            {
+                if (TransferValidation == null)
+                {
+                    return null;
+                }
+                if (TransferValidation.ChecksumAlgorithm == StorageChecksumAlgorithm.MD5)
+                {
+                    return TransferValidation.PrecalculatedChecksum.ToArray();
+                }
 
-        ///// <summary>
-        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        ///// hashing on uploads.
-        ///// </summary>
-        // TODO #27253
-        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+                throw new InvalidOperationException("Legacy facade property cannot convert from non-MD5 ValidationAlgorithm.");
+            }
+            set
+            {
+                if (value == null)
+                {
+                    TransferValidation = null;
+                }
+                else
+                {
+                    TransferValidation = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                        PrecalculatedChecksum = value,
+                    };
+                }
+            }
+        }
     }
 }

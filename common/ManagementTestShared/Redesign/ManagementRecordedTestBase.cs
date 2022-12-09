@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -24,6 +25,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ManagementGroupCleanupPolicy OneTimeManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
 
+        protected ResponseNullFilterPolicy NullFilterPolicy = new ResponseNullFilterPolicy();
+
         protected ArmClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
@@ -32,14 +35,30 @@ namespace Azure.ResourceManager.TestFramework
 
         private ArmClient _cleanupClient;
         private WaitUntil _waitForCleanup;
+        private ResourceType _resourceType;
+        protected string ApiVersion { get; }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
+            : base(isAsync, mode)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
 
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
+        }
+
+        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
+            : this(isAsync, mode)
+        {
+            _resourceType = resourceType;
+            ApiVersion = apiVersion;
+        }
+
+        protected void SetTagResourceUsage(ArmClient client, bool? useTagResource)
+        {
+            var target = client.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(client);
+            target.GetType().GetField("_canUseTagResource", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(target, useTagResource);
         }
 
         private void Initialize()
@@ -61,12 +80,20 @@ namespace Azure.ResourceManager.TestFramework
 
         protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
-        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            if (enableDeleteAfter)
+            {
+                AddDeleteAfterTagPolicy deleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);
+                options.AddPolicy(deleteAfterTagPolicy, HttpPipelinePosition.PerCall);
+            }
+            if (ApiVersion is not null)
+                options.SetApiVersion(_resourceType, ApiVersion);
 
             return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,

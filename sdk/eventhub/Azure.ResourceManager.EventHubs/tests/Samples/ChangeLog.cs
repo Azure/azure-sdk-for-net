@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupResource resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
             //create namespace
-            EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
+            EventHubsNamespaceData parameters = new EventHubsNamespaceData(AzureLocation.WestUS)
             {
                 Sku = new EventHubsSku(EventHubsSkuName.Standard)
                 {
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             };
             parameters.Tags.Add("tag1", "value1");
             parameters.Tags.Add("tag2", "value2");
-            EventHubNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(WaitUntil.Completed, namespaceName, parameters).Value;
+            EventHubsNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(WaitUntil.Completed, namespaceName, parameters).Value;
 
             //create eventhub
             EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             {
                 MessageRetentionInDays = 4,
                 PartitionCount = 4,
-                Status = EntityStatus.Active,
+                Status = EventHubEntityStatus.Active,
                 CaptureDescription = new CaptureDescription()
                 {
                     Enabled = true,
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
                         Name = "EventHubArchive.AzureBlockBlob",
                         BlobContainer = "Container",
                         ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-                        StorageAccountResourceId = subscription.Id.ToString() + "/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhubnew"
+                        StorageAccountResourceId = new ResourceIdentifier(subscription.Id.ToString() + "/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhubnew")
                     },
                     SkipEmptyArchives = true
                 }

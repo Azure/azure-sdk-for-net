@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         internal static GuestAgentProfile DeserializeGuestAgentProfile(JsonElement element)
         {
             Optional<string> vmUuid = default;
-            Optional<StatusTypes> status = default;
+            Optional<StatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
             Optional<string> agentVersion = default;
             Optional<IReadOnlyList<ResponseError>> errorDetails = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new StatusTypes(property.Value.GetString());
+                    status = new StatusType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastStatusChange"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     errorDetails = array;
                     continue;

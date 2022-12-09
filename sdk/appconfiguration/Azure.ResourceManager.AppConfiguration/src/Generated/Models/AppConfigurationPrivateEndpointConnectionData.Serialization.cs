@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<AppConfigurationProvisioningState> provisioningState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<AppConfigurationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
@@ -57,12 +57,17 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -81,7 +86,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new AppConfigurationProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"))
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new AppConfigurationPrivateEndpointConnectionData(id, name, type, systemData, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
+            return new AppConfigurationPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
         }
     }
 }

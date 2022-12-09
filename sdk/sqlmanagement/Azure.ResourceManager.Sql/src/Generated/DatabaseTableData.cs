@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="temporalType"> The table temporal type. </param>
-        /// <param name="memoryOptimized"> Whether or not the table is memory optimized. </param>
-        internal DatabaseTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TableTemporalType? temporalType, bool? memoryOptimized) : base(id, name, resourceType, systemData)
+        /// <param name="isMemoryOptimized"> Whether or not the table is memory optimized. </param>
+        internal DatabaseTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TableTemporalType? temporalType, bool? isMemoryOptimized) : base(id, name, resourceType, systemData)
         {
             TemporalType = temporalType;
-            MemoryOptimized = memoryOptimized;
+            IsMemoryOptimized = isMemoryOptimized;
         }
 
         /// <summary> The table temporal type. </summary>
         public TableTemporalType? TemporalType { get; set; }
         /// <summary> Whether or not the table is memory optimized. </summary>
-        public bool? MemoryOptimized { get; set; }
+        public bool? IsMemoryOptimized { get; set; }
     }
 }

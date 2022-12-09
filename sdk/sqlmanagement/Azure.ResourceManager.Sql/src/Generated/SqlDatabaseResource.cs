@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.Sql
         private readonly MetricsRestOperations _metricsRestClient;
         private readonly ClientDiagnostics _metricDefinitionsClientDiagnostics;
         private readonly MetricDefinitionsRestOperations _metricDefinitionsRestClient;
-        private readonly ClientDiagnostics _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics;
-        private readonly DatabaseColumnsRestOperations _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient;
-        private readonly ClientDiagnostics _restorePointClientDiagnostics;
-        private readonly RestorePointsRestOperations _restorePointRestClient;
+        private readonly ClientDiagnostics _sqlDatabaseColumnDatabaseColumnsClientDiagnostics;
+        private readonly DatabaseColumnsRestOperations _sqlDatabaseColumnDatabaseColumnsRestClient;
+        private readonly ClientDiagnostics _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics;
+        private readonly RestorePointsRestOperations _sqlServerDatabaseRestorePointRestorePointsRestClient;
         private readonly ClientDiagnostics _databaseExtensionsClientDiagnostics;
         private readonly DatabaseExtensionsRestOperations _databaseExtensionsRestClient;
         private readonly ClientDiagnostics _databaseOperationsClientDiagnostics;
         private readonly DatabaseRestOperations _databaseOperationsRestClient;
         private readonly ClientDiagnostics _databaseUsagesClientDiagnostics;
         private readonly DatabaseUsagesRestOperations _databaseUsagesRestClient;
-        private readonly ClientDiagnostics _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics;
-        private readonly SensitivityLabelsRestOperations _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient;
+        private readonly ClientDiagnostics _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics;
+        private readonly SensitivityLabelsRestOperations _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient;
         private readonly SqlDatabaseData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseResource"/> class for mocking. </summary>
@@ -80,21 +80,21 @@ namespace Azure.ResourceManager.Sql
             _metricsRestClient = new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _metricDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _metricDefinitionsRestClient = new MetricDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumnResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerDatabaseSchemaTableColumnResource.ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
-            _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
-            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorePointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RestorePointResource.ResourceType, out string restorePointApiVersion);
-            _restorePointRestClient = new RestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointApiVersion);
+            _sqlDatabaseColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseColumnResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlDatabaseColumnResource.ResourceType, out string sqlDatabaseColumnDatabaseColumnsApiVersion);
+            _sqlDatabaseColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseColumnDatabaseColumnsApiVersion);
+            _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseRestorePointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlServerDatabaseRestorePointResource.ResourceType, out string sqlServerDatabaseRestorePointRestorePointsApiVersion);
+            _sqlServerDatabaseRestorePointRestorePointsRestClient = new RestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseRestorePointRestorePointsApiVersion);
             _databaseExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _databaseOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _databaseOperationsRestClient = new DatabaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _databaseUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _databaseUsagesRestClient = new DatabaseUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumnSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerDatabaseSchemaTableColumnSensitivityLabelResource.ResourceType, out string serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
-            _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
+            _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlDatabaseSensitivityLabelResource.ResourceType, out string sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
+            _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.Sql
             return GetGeoBackupPolicies().Get(geoBackupPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerDatabaseAdvisorResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ServerDatabaseAdvisorResources and their operations over a ServerDatabaseAdvisorResource. </returns>
-        public virtual ServerDatabaseAdvisorCollection GetServerDatabaseAdvisors()
+        /// <summary> Gets a collection of SqlDatabaseAdvisorResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseAdvisorResources and their operations over a SqlDatabaseAdvisorResource. </returns>
+        public virtual SqlDatabaseAdvisorCollection GetSqlDatabaseAdvisors()
         {
-            return GetCachedClient(Client => new ServerDatabaseAdvisorCollection(Client, Id));
+            return GetCachedClient(Client => new SqlDatabaseAdvisorCollection(Client, Id));
         }
 
         /// <summary>
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDatabaseAdvisorResource>> GetServerDatabaseAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseAdvisorResource>> GetSqlDatabaseAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            return await GetServerDatabaseAdvisors().GetAsync(advisorName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlDatabaseAdvisors().GetAsync(advisorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,38 +196,23 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerDatabaseAdvisorResource> GetServerDatabaseAdvisor(string advisorName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseAdvisorResource> GetSqlDatabaseAdvisor(string advisorName, CancellationToken cancellationToken = default)
         {
-            return GetServerDatabaseAdvisors().Get(advisorName, cancellationToken);
+            return GetSqlDatabaseAdvisors().Get(advisorName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a DatabaseAutomaticTuningResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="DatabaseAutomaticTuningResource" /> object. </returns>
-        public virtual DatabaseAutomaticTuningResource GetDatabaseAutomaticTuning()
+        /// <summary> Gets an object representing a SqlDatabaseAutomaticTuningResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource" /> object. </returns>
+        public virtual SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuning()
         {
-            return new DatabaseAutomaticTuningResource(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
+            return new SqlDatabaseAutomaticTuningResource(Client, new ResourceIdentifier(Id.ToString() + "/automaticTuning/current"));
         }
 
-        /// <summary> Gets a collection of ServerDatabaseSchemaResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ServerDatabaseSchemaResources and their operations over a ServerDatabaseSchemaResource. </returns>
-        public virtual ServerDatabaseSchemaCollection GetServerDatabaseSchemas()
+        /// <summary> Gets a collection of SqlDatabaseSchemaResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseSchemaResources and their operations over a SqlDatabaseSchemaResource. </returns>
+        public virtual SqlDatabaseSchemaCollection GetSqlDatabaseSchemas()
         {
-            return GetCachedClient(Client => new ServerDatabaseSchemaCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get database schema
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// Operation Id: DatabaseSchemas_Get
-        /// </summary>
-        /// <param name="schemaName"> The name of the schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDatabaseSchemaResource>> GetServerDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerDatabaseSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SqlDatabaseSchemaCollection(Client, Id));
         }
 
         /// <summary>
@@ -240,16 +225,31 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerDatabaseSchemaResource> GetServerDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseSchemaResource>> GetSqlDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            return GetServerDatabaseSchemas().Get(schemaName, cancellationToken);
+            return await GetSqlDatabaseSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DatabaseSecurityAlertPolicyResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DatabaseSecurityAlertPolicyResources and their operations over a DatabaseSecurityAlertPolicyResource. </returns>
-        public virtual DatabaseSecurityAlertPolicyCollection GetDatabaseSecurityAlertPolicies()
+        /// <summary>
+        /// Get database schema
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
+        /// Operation Id: DatabaseSchemas_Get
+        /// </summary>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlDatabaseSchemaResource> GetSqlDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DatabaseSecurityAlertPolicyCollection(Client, Id));
+            return GetSqlDatabaseSchemas().Get(schemaName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlDatabaseSecurityAlertPolicyResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseSecurityAlertPolicyResources and their operations over a SqlDatabaseSecurityAlertPolicyResource. </returns>
+        public virtual SqlDatabaseSecurityAlertPolicyCollection GetSqlDatabaseSecurityAlertPolicies()
+        {
+            return GetCachedClient(Client => new SqlDatabaseSecurityAlertPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseSecurityAlertPolicyResource>> GetDatabaseSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseSecurityAlertPolicyResource>> GetSqlDatabaseSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetDatabaseSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlDatabaseSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,29 +273,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseSecurityAlertPolicyResource> GetDatabaseSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseSecurityAlertPolicyResource> GetSqlDatabaseSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetDatabaseSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
+            return GetSqlDatabaseSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerDatabaseVulnerabilityAssessmentResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ServerDatabaseVulnerabilityAssessmentResources and their operations over a ServerDatabaseVulnerabilityAssessmentResource. </returns>
-        public virtual ServerDatabaseVulnerabilityAssessmentCollection GetServerDatabaseVulnerabilityAssessments()
+        /// <summary> Gets a collection of SqlDatabaseVulnerabilityAssessmentResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseVulnerabilityAssessmentResources and their operations over a SqlDatabaseVulnerabilityAssessmentResource. </returns>
+        public virtual SqlDatabaseVulnerabilityAssessmentCollection GetSqlDatabaseVulnerabilityAssessments()
         {
-            return GetCachedClient(Client => new ServerDatabaseVulnerabilityAssessmentCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the database&apos;s vulnerability assessment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
-        /// Operation Id: DatabaseVulnerabilityAssessments_Get
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDatabaseVulnerabilityAssessmentResource>> GetServerDatabaseVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerDatabaseVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new SqlDatabaseVulnerabilityAssessmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -306,16 +293,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerDatabaseVulnerabilityAssessmentResource> GetServerDatabaseVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseVulnerabilityAssessmentResource>> GetSqlDatabaseVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
-            return GetServerDatabaseVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
+            return await GetSqlDatabaseVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DataWarehouseUserActivitiesResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DataWarehouseUserActivitiesResources and their operations over a DataWarehouseUserActivitiesResource. </returns>
-        public virtual DataWarehouseUserActivitiesCollection GetDataWarehouseUserActivities()
+        /// <summary>
+        /// Gets the database&apos;s vulnerability assessment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
+        /// Operation Id: DatabaseVulnerabilityAssessments_Get
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlDatabaseVulnerabilityAssessmentResource> GetSqlDatabaseVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DataWarehouseUserActivitiesCollection(Client, Id));
+            return GetSqlDatabaseVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataWarehouseUserActivityResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of DataWarehouseUserActivityResources and their operations over a DataWarehouseUserActivityResource. </returns>
+        public virtual DataWarehouseUserActivityCollection GetDataWarehouseUserActivities()
+        {
+            return GetCachedClient(Client => new DataWarehouseUserActivityCollection(Client, Id));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataWarehouseUserActivitiesResource>> GetDataWarehouseUserActivitiesAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataWarehouseUserActivityResource>> GetDataWarehouseUserActivityAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             return await GetDataWarehouseUserActivities().GetAsync(dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
         }
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<DataWarehouseUserActivitiesResource> GetDataWarehouseUserActivities(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual Response<DataWarehouseUserActivityResource> GetDataWarehouseUserActivity(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             return GetDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
         }
@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.Sql
             return GetLongTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a MaintenanceWindowOptionsResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptionsResource" /> object. </returns>
-        public virtual MaintenanceWindowOptionsResource GetMaintenanceWindowOptions()
+        /// <summary> Gets an object representing a MaintenanceWindowOptionResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
+        public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOption()
         {
-            return new MaintenanceWindowOptionsResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
+            return new MaintenanceWindowOptionResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
         }
 
         /// <summary> Gets an object representing a MaintenanceWindowsResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
@@ -391,11 +391,11 @@ namespace Azure.ResourceManager.Sql
             return new MaintenanceWindowsResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
         }
 
-        /// <summary> Gets a collection of RestorePointResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of RestorePointResources and their operations over a RestorePointResource. </returns>
-        public virtual RestorePointCollection GetRestorePoints()
+        /// <summary> Gets a collection of SqlServerDatabaseRestorePointResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlServerDatabaseRestorePointResources and their operations over a SqlServerDatabaseRestorePointResource. </returns>
+        public virtual SqlServerDatabaseRestorePointCollection GetSqlServerDatabaseRestorePoints()
         {
-            return GetCachedClient(Client => new RestorePointCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerDatabaseRestorePointCollection(Client, Id));
         }
 
         /// <summary>
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerDatabaseRestorePointResource>> GetSqlServerDatabaseRestorePointAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            return await GetRestorePoints().GetAsync(restorePointName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlServerDatabaseRestorePoints().GetAsync(restorePointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerDatabaseRestorePointResource> GetSqlServerDatabaseRestorePoint(string restorePointName, CancellationToken cancellationToken = default)
         {
-            return GetRestorePoints().Get(restorePointName, cancellationToken);
+            return GetSqlServerDatabaseRestorePoints().Get(restorePointName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SyncGroupResources in the SqlDatabase. </summary>
@@ -568,11 +568,11 @@ namespace Azure.ResourceManager.Sql
             return GetBackupShortTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LedgerDigestUploadsResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LedgerDigestUploadsResources and their operations over a LedgerDigestUploadsResource. </returns>
-        public virtual LedgerDigestUploadsCollection GetLedgerDigestUploads()
+        /// <summary> Gets a collection of LedgerDigestUploadResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of LedgerDigestUploadResources and their operations over a LedgerDigestUploadResource. </returns>
+        public virtual LedgerDigestUploadCollection GetLedgerDigestUploads()
         {
-            return GetCachedClient(Client => new LedgerDigestUploadsCollection(Client, Id));
+            return GetCachedClient(Client => new LedgerDigestUploadCollection(Client, Id));
         }
 
         /// <summary>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="ledgerDigestUploads"> The LedgerDigestUploadsName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LedgerDigestUploadsResource>> GetLedgerDigestUploadsAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LedgerDigestUploadResource>> GetLedgerDigestUploadAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
             return await GetLedgerDigestUploads().GetAsync(ledgerDigestUploads, cancellationToken).ConfigureAwait(false);
         }
@@ -596,53 +596,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="ledgerDigestUploads"> The LedgerDigestUploadsName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<LedgerDigestUploadsResource> GetLedgerDigestUploads(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
+        public virtual Response<LedgerDigestUploadResource> GetLedgerDigestUpload(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
             return GetLedgerDigestUploads().Get(ledgerDigestUploads, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReplicationLinkResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ReplicationLinkResources and their operations over a ReplicationLinkResource. </returns>
-        public virtual ReplicationLinkCollection GetReplicationLinks()
+        /// <summary> Gets a collection of SqlDatabaseBlobAuditingPolicyResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseBlobAuditingPolicyResources and their operations over a SqlDatabaseBlobAuditingPolicyResource. </returns>
+        public virtual SqlDatabaseBlobAuditingPolicyCollection GetSqlDatabaseBlobAuditingPolicies()
         {
-            return GetCachedClient(Client => new ReplicationLinkCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a replication link.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}
-        /// Operation Id: ReplicationLinks_Get
-        /// </summary>
-        /// <param name="linkId"> The name of the replication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicationLinkResource>> GetReplicationLinkAsync(string linkId, CancellationToken cancellationToken = default)
-        {
-            return await GetReplicationLinks().GetAsync(linkId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a replication link.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}
-        /// Operation Id: ReplicationLinks_Get
-        /// </summary>
-        /// <param name="linkId"> The name of the replication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ReplicationLinkResource> GetReplicationLink(string linkId, CancellationToken cancellationToken = default)
-        {
-            return GetReplicationLinks().Get(linkId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DatabaseBlobAuditingPolicyResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of DatabaseBlobAuditingPolicyResources and their operations over a DatabaseBlobAuditingPolicyResource. </returns>
-        public virtual DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies()
-        {
-            return GetCachedClient(Client => new DatabaseBlobAuditingPolicyCollection(Client, Id));
+            return GetCachedClient(Client => new SqlDatabaseBlobAuditingPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -653,9 +616,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseBlobAuditingPolicyResource>> GetDatabaseBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseBlobAuditingPolicyResource>> GetSqlDatabaseBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetDatabaseBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlDatabaseBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -666,9 +629,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseBlobAuditingPolicyResource> GetDatabaseBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseBlobAuditingPolicyResource> GetSqlDatabaseBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetDatabaseBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
+            return GetSqlDatabaseBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExtendedDatabaseBlobAuditingPolicyResources in the SqlDatabase. </summary>
@@ -702,6 +665,76 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ExtendedDatabaseBlobAuditingPolicyResource> GetExtendedDatabaseBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             return GetExtendedDatabaseBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DatabaseAdvancedThreatProtectionResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of DatabaseAdvancedThreatProtectionResources and their operations over a DatabaseAdvancedThreatProtectionResource. </returns>
+        public virtual DatabaseAdvancedThreatProtectionCollection GetDatabaseAdvancedThreatProtections()
+        {
+            return GetCachedClient(Client => new DatabaseAdvancedThreatProtectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: DatabaseAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseAdvancedThreatProtectionResource>> GetDatabaseAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetDatabaseAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: DatabaseAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseAdvancedThreatProtectionResource> GetDatabaseAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerDatabaseReplicationLinkResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlServerDatabaseReplicationLinkResources and their operations over a SqlServerDatabaseReplicationLinkResource. </returns>
+        public virtual SqlServerDatabaseReplicationLinkCollection GetSqlServerDatabaseReplicationLinks()
+        {
+            return GetCachedClient(Client => new SqlServerDatabaseReplicationLinkCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a replication link.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}
+        /// Operation Id: ReplicationLinks_Get
+        /// </summary>
+        /// <param name="linkId"> The name of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlServerDatabaseReplicationLinkResource>> GetSqlServerDatabaseReplicationLinkAsync(string linkId, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlServerDatabaseReplicationLinks().GetAsync(linkId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a replication link.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}
+        /// Operation Id: ReplicationLinks_Get
+        /// </summary>
+        /// <param name="linkId"> The name of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerDatabaseReplicationLinkResource> GetSqlServerDatabaseReplicationLink(string linkId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlServerDatabaseReplicationLinks().Get(linkId, cancellationToken);
         }
 
         /// <summary>
@@ -932,10 +965,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: MetricDefinitions_ListDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlMetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _metricDefinitionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetricDefinitions");
                 scope.Start();
@@ -959,10 +992,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: MetricDefinitions_ListDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
+            Page<SqlMetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _metricDefinitionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetricDefinitions");
                 scope.Start();
@@ -991,17 +1024,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnResource> GetDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlDatabaseColumnResource> GetDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerDatabaseSchemaTableColumnResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlDatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
+                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1009,14 +1042,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerDatabaseSchemaTableColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlDatabaseColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
+                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1038,17 +1071,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTableColumnResource> GetDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlDatabaseColumnResource> GetDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ServerDatabaseSchemaTableColumnResource> FirstPageFunc(int? pageSizeHint)
+            Page<SqlDatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
+                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1056,14 +1089,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerDatabaseSchemaTableColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlDatabaseColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
+                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
                 scope.Start();
                 try
                 {
-                    var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1083,16 +1116,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="createDatabaseRestorePointDefinition"> The definition for creating the restore point of this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createDatabaseRestorePointDefinition"/> is null. </exception>
-        public virtual async Task<ArmOperation<RestorePointResource>> CreateRestorePointAsync(WaitUntil waitUntil, CreateDatabaseRestorePointDefinition createDatabaseRestorePointDefinition, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServerDatabaseRestorePointResource>> CreateRestorePointAsync(WaitUntil waitUntil, CreateDatabaseRestorePointDefinition createDatabaseRestorePointDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createDatabaseRestorePointDefinition, nameof(createDatabaseRestorePointDefinition));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("SqlDatabaseResource.CreateRestorePoint");
+            using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlDatabaseResource.CreateRestorePoint");
             scope.Start();
             try
             {
-                var response = await _restorePointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointOperationSource(Client), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1113,16 +1146,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="createDatabaseRestorePointDefinition"> The definition for creating the restore point of this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createDatabaseRestorePointDefinition"/> is null. </exception>
-        public virtual ArmOperation<RestorePointResource> CreateRestorePoint(WaitUntil waitUntil, CreateDatabaseRestorePointDefinition createDatabaseRestorePointDefinition, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlServerDatabaseRestorePointResource> CreateRestorePoint(WaitUntil waitUntil, CreateDatabaseRestorePointDefinition createDatabaseRestorePointDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createDatabaseRestorePointDefinition, nameof(createDatabaseRestorePointDefinition));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("SqlDatabaseResource.CreateRestorePoint");
+            using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlDatabaseResource.CreateRestorePoint");
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition, cancellationToken);
-                var operation = new SqlArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlServerDatabaseRestorePointRestorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition, cancellationToken);
+                var operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(new SqlServerDatabaseRestorePointOperationSource(Client), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createDatabaseRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1141,21 +1174,21 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="extensionName"> The String to use. </param>
-        /// <param name="databaseExtensions"> The database import request parameters. </param>
+        /// <param name="sqlDatabaseExtension"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="databaseExtensions"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImportExportExtensionsOperationResult>> CreateOrUpdateDatabaseExtensionAsync(WaitUntil waitUntil, string extensionName, DatabaseExtensions databaseExtensions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="sqlDatabaseExtension"/> is null. </exception>
+        public virtual async Task<ArmOperation<ImportExportExtensionsOperationResult>> CreateOrUpdateDatabaseExtensionAsync(WaitUntil waitUntil, string extensionName, SqlDatabaseExtension sqlDatabaseExtension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(databaseExtensions, nameof(databaseExtensions));
+            Argument.AssertNotNull(sqlDatabaseExtension, nameof(sqlDatabaseExtension));
 
             using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.CreateOrUpdateDatabaseExtension");
             scope.Start();
             try
             {
-                var response = await _databaseExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions).Request, response, OperationFinalStateVia.Location);
+                var response = await _databaseExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1174,21 +1207,21 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="extensionName"> The String to use. </param>
-        /// <param name="databaseExtensions"> The database import request parameters. </param>
+        /// <param name="sqlDatabaseExtension"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="databaseExtensions"/> is null. </exception>
-        public virtual ArmOperation<ImportExportExtensionsOperationResult> CreateOrUpdateDatabaseExtension(WaitUntil waitUntil, string extensionName, DatabaseExtensions databaseExtensions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="sqlDatabaseExtension"/> is null. </exception>
+        public virtual ArmOperation<ImportExportExtensionsOperationResult> CreateOrUpdateDatabaseExtension(WaitUntil waitUntil, string extensionName, SqlDatabaseExtension sqlDatabaseExtension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(databaseExtensions, nameof(databaseExtensions));
+            Argument.AssertNotNull(sqlDatabaseExtension, nameof(sqlDatabaseExtension));
 
             using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.CreateOrUpdateDatabaseExtension");
             scope.Start();
             try
             {
-                var response = _databaseExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, databaseExtensions).Request, response, OperationFinalStateVia.Location);
+                var response = _databaseExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension, cancellationToken);
+                var operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(new ImportExportExtensionsOperationResultOperationSource(), _databaseExtensionsClientDiagnostics, Pipeline, _databaseExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, sqlDatabaseExtension).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1336,10 +1369,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseOperations_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseOperation> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseOperationData> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseOperation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DatabaseOperationData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();
@@ -1354,7 +1387,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<DatabaseOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DatabaseOperationData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();
@@ -1378,10 +1411,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseOperations_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseOperation> GetDatabaseOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseOperationData> GetDatabaseOperations(CancellationToken cancellationToken = default)
         {
-            Page<DatabaseOperation> FirstPageFunc(int? pageSizeHint)
+            Page<DatabaseOperationData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();
@@ -1396,7 +1429,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<DatabaseOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DatabaseOperationData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
                 scope.Start();
@@ -1499,24 +1532,308 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListCurrentByDatabase
+        /// </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SqlDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SqlDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListCurrentByDatabase
+        /// </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="count"> The Boolean to use. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<SqlDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SqlDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Update sensitivity labels of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_Update
+        /// </summary>
+        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
+        public virtual async Task<Response> UpdateSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+
+            using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateSensitivityLabel");
+            scope.Start();
+            try
+            {
+                var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update sensitivity labels of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
+        /// Operation Id: SensitivityLabels_Update
+        /// </summary>
+        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
+        public virtual Response UpdateSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+
+            using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateSensitivityLabel");
+            scope.Start();
+            try
+            {
+                var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
+        /// </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SqlDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SqlDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets the sensitivity labels of a given database
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
+        /// </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Page<SqlDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SqlDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
+                scope.Start();
+                try
+                {
+                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Update recommended sensitivity labels states of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_UpdateRecommended
+        /// </summary>
+        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
+        public virtual async Task<Response> UpdateRecommendedSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+
+            using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateRecommendedSensitivityLabel");
+            scope.Start();
+            try
+            {
+                var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update recommended sensitivity labels states of a given database using an operations batch.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
+        /// Operation Id: SensitivityLabels_UpdateRecommended
+        /// </summary>
+        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
+        public virtual Response UpdateRecommendedSensitivityLabel(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+
+            using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateRecommendedSensitivityLabel");
+            scope.Start();
+            try
+            {
+                var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Exports a database.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/export
         /// Operation Id: Databases_Export
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportDatabaseDefinition"> The database export request parameters. </param>
+        /// <param name="databaseExportDefinition"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportDatabaseDefinition"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImportExportOperationResult>> ExportAsync(WaitUntil waitUntil, ExportDatabaseDefinition exportDatabaseDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseExportDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation<ImportExportOperationResult>> ExportAsync(WaitUntil waitUntil, DatabaseExportDefinition databaseExportDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportDatabaseDefinition, nameof(exportDatabaseDefinition));
+            Argument.AssertNotNull(databaseExportDefinition, nameof(databaseExportDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Export");
             scope.Start();
             try
             {
-                var response = await _sqlDatabaseDatabasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlDatabaseDatabasesRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1534,19 +1851,19 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: Databases_Export
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportDatabaseDefinition"> The database export request parameters. </param>
+        /// <param name="databaseExportDefinition"> The database export request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportDatabaseDefinition"/> is null. </exception>
-        public virtual ArmOperation<ImportExportOperationResult> Export(WaitUntil waitUntil, ExportDatabaseDefinition exportDatabaseDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseExportDefinition"/> is null. </exception>
+        public virtual ArmOperation<ImportExportOperationResult> Export(WaitUntil waitUntil, DatabaseExportDefinition databaseExportDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportDatabaseDefinition, nameof(exportDatabaseDefinition));
+            Argument.AssertNotNull(databaseExportDefinition, nameof(databaseExportDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Export");
             scope.Start();
             try
             {
-                var response = _sqlDatabaseDatabasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition, cancellationToken);
-                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, exportDatabaseDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlDatabaseDatabasesRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition, cancellationToken);
+                var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, _sqlDatabaseDatabasesRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseExportDefinition).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1677,18 +1994,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
         /// Operation Id: Databases_Rename
         /// </summary>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this database. </param>
+        /// <param name="sqlResourceMoveDefinition"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceMoveDefinition"/> is null. </exception>
-        public virtual async Task<Response> RenameAsync(ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlResourceMoveDefinition"/> is null. </exception>
+        public virtual async Task<Response> RenameAsync(SqlResourceMoveDefinition sqlResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(sqlResourceMoveDefinition, nameof(sqlResourceMoveDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Rename");
             scope.Start();
             try
             {
-                var response = await _sqlDatabaseDatabasesRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resourceMoveDefinition, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlDatabaseDatabasesRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sqlResourceMoveDefinition, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1703,18 +2020,18 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/move
         /// Operation Id: Databases_Rename
         /// </summary>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this database. </param>
+        /// <param name="sqlResourceMoveDefinition"> The resource move definition for renaming this database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceMoveDefinition"/> is null. </exception>
-        public virtual Response Rename(ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlResourceMoveDefinition"/> is null. </exception>
+        public virtual Response Rename(SqlResourceMoveDefinition sqlResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(sqlResourceMoveDefinition, nameof(sqlResourceMoveDefinition));
 
             using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlDatabaseResource.Rename");
             scope.Start();
             try
             {
-                var response = _sqlDatabaseDatabasesRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resourceMoveDefinition, cancellationToken);
+                var response = _sqlDatabaseDatabasesRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sqlResourceMoveDefinition, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1881,290 +2198,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: SensitivityLabels_ListCurrentByDatabase
-        /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="count"> The Boolean to use. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: SensitivityLabels_ListCurrentByDatabase
-        /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="count"> The Boolean to use. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Update sensitivity labels of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: SensitivityLabels_Update
-        /// </summary>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual async Task<Response> UpdateSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
-
-            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateSensitivityLabel");
-            scope.Start();
-            try
-            {
-                var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update sensitivity labels of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
-        /// Operation Id: SensitivityLabels_Update
-        /// </summary>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual Response UpdateSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
-
-            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateSensitivityLabel");
-            scope.Start();
-            try
-            {
-                var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
-        /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets the sensitivity labels of a given database
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
-        /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableColumnSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Update recommended sensitivity labels states of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: SensitivityLabels_UpdateRecommended
-        /// </summary>
-        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
-        public virtual async Task<Response> UpdateRecommendedSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
-
-            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateRecommendedSensitivityLabel");
-            scope.Start();
-            try
-            {
-                var response = await _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update recommended sensitivity labels states of a given database using an operations batch.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
-        /// Operation Id: SensitivityLabels_UpdateRecommended
-        /// </summary>
-        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
-        public virtual Response UpdateRecommendedSensitivityLabel(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
-
-            using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateRecommendedSensitivityLabel");
-            scope.Start();
-            try
-            {
-                var response = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
         /// Operation Id: Databases_Get
@@ -2182,11 +2215,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new SqlDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2213,11 +2261,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new SqlDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2242,12 +2305,23 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new SqlDatabasePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2272,12 +2346,23 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new SqlDatabasePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2302,11 +2387,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new SqlDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -2331,11 +2431,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _sqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new SqlDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new SqlDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

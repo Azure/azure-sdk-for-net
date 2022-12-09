@@ -37,33 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
                 }
             }
-            CertificateSource certificateSource = default;
-            ProtocolType protocolType = default;
-            Optional<MinimumTlsVersion> minimumTlsVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("certificateSource"))
-                {
-                    certificateSource = new CertificateSource(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protocolType"))
-                {
-                    protocolType = new ProtocolType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("minimumTlsVersion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    minimumTlsVersion = property.Value.GetString().ToMinimumTlsVersion();
-                    continue;
-                }
-            }
-            return new CustomDomainHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion));
+            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element);
         }
     }
 }

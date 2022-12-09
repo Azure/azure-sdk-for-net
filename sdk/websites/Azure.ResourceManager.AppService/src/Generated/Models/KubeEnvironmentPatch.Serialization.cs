@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(InternalLoadBalancerEnabled))
+            if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
                 writer.WritePropertyName("internalLoadBalancerEnabled");
-                writer.WriteBooleanValue(InternalLoadBalancerEnabled.Value);
+                writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
             }
             if (Optional.IsDefined(StaticIP))
             {
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<KubeEnvironmentProvisioningState> provisioningState = default;
             Optional<string> deploymentErrors = default;
             Optional<bool> internalLoadBalancerEnabled = default;
             Optional<string> defaultDomain = default;
-            Optional<string> staticIp = default;
+            Optional<string> staticIP = default;
             Optional<ArcConfiguration> arcConfiguration = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<string> aksResourceID = default;
+            Optional<ResourceIdentifier> aksResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -86,12 +86,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("staticIp"))
                         {
-                            staticIp = property0.Value.GetString();
+                            staticIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("arcConfiguration"))
@@ -160,14 +165,19 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("aksResourceID"))
                         {
-                            aksResourceID = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aksResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KubeEnvironmentPatch(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value);
+            return new KubeEnvironmentPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value);
         }
     }
 }

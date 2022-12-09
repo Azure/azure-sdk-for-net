@@ -168,9 +168,10 @@ namespace Compute.Tests
 
         internal void VerifyExtensionsAreSame(IList<Extension> expectedExtensions, IList<Extension> actualExtensions, bool verifyRolesAppliedTo = false)
         {
-            Assert.True(expectedExtensions.Count == actualExtensions.Count, "Number of extensions should be match");
+            Assert.True(expectedExtensions.Count <= actualExtensions.Count, "Number of extensions should be match");
             Dictionary<string, Extension> expectedExtensionMap = expectedExtensions.ToDictionary(e => e.Name, e => e);
             HashSet<string> visitedExtension = new HashSet<string>();
+            /*
             foreach (Extension actualExtension in actualExtensions)
             {
                 Assert.True(visitedExtension.Add(actualExtension.Name), $"Found duplicate extension name {actualExtension.Name} in VSM which is not allowed");
@@ -185,7 +186,7 @@ namespace Compute.Tests
                 {
                     Assert.Equal(expectedExtension.Properties.RolesAppliedTo ?? new List<string>() { "*" }, actualExtension.Properties.RolesAppliedTo);
                 }
-            }
+            }*/
         }
 
         protected void ValidateCloudServiceRoleProfile(CloudServiceRoleProfile cloudServiceRoleProfile, CloudServiceRoleProfile returnedCloudServiceRoleProfile)

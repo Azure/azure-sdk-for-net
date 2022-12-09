@@ -22,14 +22,12 @@ namespace Azure.Storage.Files.DataLake
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             bool? closeEvent) : base(
                 position,
                 bufferSize,
-                progressHandler
-                // TODO #27253
-                //hashingOptions
+                progressHandler,
+                transferValidation: validationOptions
                 )
         {
             ValidateBufferSize(bufferSize);
@@ -48,16 +46,13 @@ namespace Azure.Storage.Files.DataLake
                 await _fileClient.AppendInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    // TODO #27253
-                    //options: new DataLakeFileAppendOptions
-                    //{
-                    //    TransactionalHashingOptions = _hashingOptions,
-                    //    ProgressHandler = _progressHandler,
-                    //    LeaseId = _conditions?.LeaseId
-                    //},
-                    rangeContentMD5: default,
+                    validationOptionsOverride: _validationOptions,
                     leaseId: _conditions.LeaseId,
+                    leaseAction: null,
+                    leaseDuration: null,
+                    proposedLeaseId: null,
                     progressHandler: _progressHandler,
+                    flush: null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -77,6 +72,9 @@ namespace Azure.Storage.Files.DataLake
                 close: _closeEvent,
                 httpHeaders: default,
                 conditions: _conditions,
+                leaseAction: null,
+                leaseDuration: null,
+                proposedLeaseId: null,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

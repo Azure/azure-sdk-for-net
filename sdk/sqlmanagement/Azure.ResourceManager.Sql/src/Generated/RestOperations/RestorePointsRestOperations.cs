@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="restorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string restorePointName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlServerDatabaseRestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -256,13 +256,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        RestorePointData value = default;
+                        SqlServerDatabaseRestorePointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorePointData.DeserializeRestorePointData(document.RootElement);
+                        value = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorePointData)null, message.Response);
+                    return Response.FromValue((SqlServerDatabaseRestorePointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="restorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorePointData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string restorePointName, CancellationToken cancellationToken = default)
+        public Response<SqlServerDatabaseRestorePointData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -291,13 +291,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        RestorePointData value = default;
+                        SqlServerDatabaseRestorePointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorePointData.DeserializeRestorePointData(document.RootElement);
+                        value = SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorePointData)null, message.Response);
+                    return Response.FromValue((SqlServerDatabaseRestorePointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -17,6 +17,8 @@ namespace Azure.MixedReality.Authentication
         public MixedRealityStsClientOptions(Azure.MixedReality.Authentication.MixedRealityStsClientOptions.ServiceVersion version = Azure.MixedReality.Authentication.MixedRealityStsClientOptions.ServiceVersion.V2019_02_28_preview) { }
         public enum ServiceVersion
         {
+            V2019_02_28 = 1,
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             V2019_02_28_preview = 1,
         }
     }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
         public ConnectionMonitorHttpConfiguration()
         {
-            RequestHeaders = new ChangeTrackingList<HttpHeader>();
+            RequestHeaders = new ChangeTrackingList<NetworkWatcherHttpHeader>();
             ValidStatusCodeRanges = new ChangeTrackingList<string>();
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestHeaders"> The HTTP headers to transmit with the request. </param>
         /// <param name="validStatusCodeRanges"> HTTP status codes to consider successful. For instance, &quot;2xx,301-304,418&quot;. </param>
         /// <param name="preferHttps"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
-        internal ConnectionMonitorHttpConfiguration(int? port, HttpConfigurationMethod? method, string path, IList<HttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHttps)
+        internal ConnectionMonitorHttpConfiguration(int? port, NetworkHttpConfigurationMethod? method, string path, IList<NetworkWatcherHttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHttps)
         {
             Port = port;
             Method = method;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The port to connect to. </summary>
         public int? Port { get; set; }
         /// <summary> The HTTP method to use. </summary>
-        public HttpConfigurationMethod? Method { get; set; }
+        public NetworkHttpConfigurationMethod? Method { get; set; }
         /// <summary> The path component of the URI. For instance, &quot;/dir1/dir2&quot;. </summary>
         public string Path { get; set; }
         /// <summary> The HTTP headers to transmit with the request. </summary>
-        public IList<HttpHeader> RequestHeaders { get; }
+        public IList<NetworkWatcherHttpHeader> RequestHeaders { get; }
         /// <summary> HTTP status codes to consider successful. For instance, &quot;2xx,301-304,418&quot;. </summary>
         public IList<string> ValidStatusCodeRanges { get; }
         /// <summary> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </summary>

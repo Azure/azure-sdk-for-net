@@ -64,12 +64,7 @@ namespace Azure.Messaging.EventHubs.Perf
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
-
             _sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
-
-            // Publish an empty event to force the connection and link to be established.
-
-            await s_producer.SendAsync(new[] { new EventData(Array.Empty<byte>()) }, _sendOptions).ConfigureAwait(false);
         }
 
         /// <summary>

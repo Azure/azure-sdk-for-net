@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewayPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionResource(ArmClient client, ApplicationGatewayPrivateEndpointConnectionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ApplicationGatewayPrivateEndpointConnectionResource(ArmClient client, ApplicationGatewayPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

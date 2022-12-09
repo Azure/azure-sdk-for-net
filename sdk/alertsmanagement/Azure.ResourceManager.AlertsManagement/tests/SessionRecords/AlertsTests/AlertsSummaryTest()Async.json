@@ -1,0 +1,194 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1dcee9ba9be4b64a88d5349273ea5451-338f5ceaad7fe242-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "45dab81fbf8cc9815cd08310ec4ce521",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "629",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b2f6efcb-00f3-4c9c-b75f-5607e4a964b4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "b2f6efcb-00f3-4c9c-b75f-5607e4a964b4",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122435Z:b2f6efcb-00f3-4c9c-b75f-5607e4a964b4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "avjerafi_tag1": "testing subscription-level alert 1",
+          "avjerafi_tag2": "testing subscription-level alert 2",
+          "avjerafi_tag3": "testing subscription-level alert 3",
+          "avjerafi_tag4": "testing subscription-level alert 4"
+        },
+        "subscriptionId": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Alerts_AMP_Playground_DEV_00",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alertsSummary?groupby=severity%2CalertState\u0026api-version=2019-05-05-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c8b683735360744ebef1fa04a3712c34-0f69a85cb775b444-00",
+        "User-Agent": "azsdk-net-ResourceManager.AlertsManagement/1.0.0-alpha.20220905.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "35aad60b475ff384bd16fb3d3d6d5dd5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "1004",
+        "Content-Security-Policy": "script-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Sep 2022 12:24:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8180cc86-6d93-4b07-9ca6-7ee4fe8ab33b",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "999",
+        "x-ms-request-id": "ba3323f1-fac6-4d34-83bc-067816d10f06",
+        "x-ms-routing-request-id": "GERMANYWESTCENTRAL:20220905T122436Z:8180cc86-6d93-4b07-9ca6-7ee4fe8ab33b",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "properties": {
+          "groupedby": "severity",
+          "total": 1574,
+          "values": [
+            {
+              "name": "Sev0",
+              "count": 0,
+              "groupedby": "alertState",
+              "values": [
+                {
+                  "name": "New",
+                  "count": 0
+                },
+                {
+                  "name": "Acknowledged",
+                  "count": 0
+                },
+                {
+                  "name": "Closed",
+                  "count": 0
+                }
+              ]
+            },
+            {
+              "name": "Sev1",
+              "count": 0,
+              "groupedby": "alertState",
+              "values": [
+                {
+                  "name": "New",
+                  "count": 0
+                },
+                {
+                  "name": "Acknowledged",
+                  "count": 0
+                },
+                {
+                  "name": "Closed",
+                  "count": 0
+                }
+              ]
+            },
+            {
+              "name": "Sev2",
+              "count": 0,
+              "groupedby": "alertState",
+              "values": [
+                {
+                  "name": "New",
+                  "count": 0
+                },
+                {
+                  "name": "Acknowledged",
+                  "count": 0
+                },
+                {
+                  "name": "Closed",
+                  "count": 0
+                }
+              ]
+            },
+            {
+              "name": "Sev3",
+              "count": 1300,
+              "groupedby": "alertState",
+              "values": [
+                {
+                  "name": "New",
+                  "count": 1285
+                },
+                {
+                  "name": "Acknowledged",
+                  "count": 0
+                },
+                {
+                  "name": "Closed",
+                  "count": 15
+                }
+              ]
+            },
+            {
+              "name": "Sev4",
+              "count": 274,
+              "groupedby": "alertState",
+              "values": [
+                {
+                  "name": "New",
+                  "count": 271
+                },
+                {
+                  "name": "Acknowledged",
+                  "count": 0
+                },
+                {
+                  "name": "Closed",
+                  "count": 3
+                }
+              ]
+            }
+          ]
+        },
+        "id": "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23/providers/Microsoft.AlertsManagement/alertsSummary/current",
+        "type": "Microsoft.AlertsManagement/alertsSummary",
+        "name": "current"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "2006274193",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+  }
+}

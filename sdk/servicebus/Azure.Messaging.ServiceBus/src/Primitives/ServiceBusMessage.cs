@@ -426,10 +426,33 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the application properties bag, which can be used for custom message metadata.
         /// </summary>
         /// <remarks>
-        /// Only following value types are supported:
-        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
-        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
+        ///   <list type="bullet">
+        ///     <listheader><description>The following types are supported:</description></listheader>
+        ///     <item><description>string</description></item>
+        ///     <item><description>bool</description></item>
+        ///     <item><description>byte</description></item>
+        ///     <item><description>sbyte</description></item>
+        ///     <item><description>short</description></item>
+        ///     <item><description>ushort</description></item>
+        ///     <item><description>int</description></item>
+        ///     <item><description>uint</description></item>
+        ///     <item><description>long</description></item>
+        ///     <item><description>ulong</description></item>
+        ///     <item><description>float</description></item>
+        ///     <item><description>decimal</description></item>
+        ///     <item><description>double</description></item>
+        ///     <item><description>char</description></item>
+        ///     <item><description>Guid</description></item>
+        ///     <item><description>DateTime</description></item>
+        ///     <item><description>DateTimeOffset</description></item>
+        ///     <item><description>Stream</description></item>
+        ///     <item><description>Uri</description></item>
+        ///     <item><description>TimeSpan</description></item>
+        ///   </list>
         /// </remarks>
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when an unsupported type is used as a property.
+        /// </exception>
         public IDictionary<string, object> ApplicationProperties
         {
             get

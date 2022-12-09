@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maxNumberOfReplicas"> The maximum number of read scale replicas. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ReadScaleCapability(int? maxNumberOfReplicas, CapabilityStatus? status, string reason)
+        internal ReadScaleCapability(int? maxNumberOfReplicas, SqlCapabilityStatus? status, string reason)
         {
             MaxNumberOfReplicas = maxNumberOfReplicas;
             Status = status;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The maximum number of read scale replicas. </summary>
         public int? MaxNumberOfReplicas { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

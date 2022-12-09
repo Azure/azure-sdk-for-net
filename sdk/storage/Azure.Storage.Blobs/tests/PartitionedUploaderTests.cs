@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Staged.Count);
@@ -81,8 +81,7 @@ namespace Azure.Storage.Blobs.Test
                     InitialTransferSize = 20,
                     MaximumConcurrency = 1 // forces us through same code path
                 },
-                // TODO #27253
-                //default,
+                default,
                 arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -104,7 +103,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
@@ -129,7 +128,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Staged.Count);
@@ -153,7 +152,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 100 }, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 100 }, default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(s_response, info);
@@ -183,7 +182,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
@@ -246,8 +245,7 @@ namespace Azure.Storage.Blobs.Test
                             s_immutabilityPolicy,
                             s_legalHold,
                             s_progress,
-                            // TODO #27253
-                            //default,
+                            default,
                             default,
                             true,
                             s_cancellationToken))
@@ -264,15 +262,14 @@ namespace Azure.Storage.Blobs.Test
                     s_immutabilityPolicy,
                     s_legalHold,
                     s_progress,
-                    // TODO #27253
-                    //default,
+                    default,
                     default,
                     false,
                     s_cancellationToken))
                     .ReturnsAsync(s_response);
             }
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), default, default, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(s_response, info);
@@ -305,8 +302,7 @@ namespace Azure.Storage.Blobs.Test
                     InitialTransferSize = blockSize, // known stream length means we need to specify this to force paritioned upload
                     MaximumConcurrency = 1 // concurrency=1 puts us into upload from sequence
                 },
-                // TODO #27253
-                //hashingOptions: default,
+                transferValidation: default,
                 arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -344,12 +340,12 @@ namespace Azure.Storage.Blobs.Test
                 c => c.StageBlockInternal(
                     IsAny<string>(),
                     IsAny<Stream>(),
-                    IsAny<byte[]>(),
+                    IsAny<UploadTransferValidationOptions>(),
                     IsAny<BlobRequestConditions>(),
                     IsAny<IProgress<long>>(),
                     _async,
                     s_cancellationToken
-                )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, bool, CancellationToken>(sink.StageInternal);
+                )).Returns<string, Stream, UploadTransferValidationOptions, BlobRequestConditions, IProgress<long>, bool, CancellationToken>(sink.StageInternal);
 
             clientMock.Setup(
                 c => c.CommitBlockListInternal(
@@ -405,7 +401,7 @@ namespace Azure.Storage.Blobs.Test
                 return s_response;
             }
 
-            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, byte[] hash, BlobRequestConditions conditions, IProgress<long> progressHandler, bool async, CancellationToken cancellationToken)
+            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, UploadTransferValidationOptions validationOptions, BlobRequestConditions conditions, IProgress<long> progressHandler, bool async, CancellationToken cancellationToken)
             {
                 if (async)
                 {

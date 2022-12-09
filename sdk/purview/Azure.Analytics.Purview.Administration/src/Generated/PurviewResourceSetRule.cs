@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> The PurviewResourceSetRule service client. </summary>
+    // Data plane generated sub-client. The PurviewResourceSetRule sub-client.
+    /// <summary> The PurviewResourceSetRule sub-client. </summary>
     public partial class PurviewResourceSetRule
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -46,121 +47,10 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Get a resource set config service model. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
-        ///   pathPatternConfig: {
-        ///     acceptedPatterns: [
-        ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
-        ///       }
-        ///     ],
-        ///     complexReplacers: [
-        ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
-        ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
-        ///     normalizationRules: [
-        ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
-        ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
-        ///       }
-        ///     ],
-        ///     regexReplacers: [
-        ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
-        ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
-        ///     scopedRules: [
-        ///       {
-        ///         bindingUrl: string,
-        ///         rules: [
-        ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
-        ///           }
-        ///         ],
-        ///         storeType: string
-        ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRuleAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
@@ -178,121 +68,10 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Get a resource set config service model. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
-        ///   pathPatternConfig: {
-        ///     acceptedPatterns: [
-        ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
-        ///       }
-        ///     ],
-        ///     complexReplacers: [
-        ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
-        ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
-        ///     normalizationRules: [
-        ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
-        ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
-        ///       }
-        ///     ],
-        ///     regexReplacers: [
-        ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
-        ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
-        ///     scopedRules: [
-        ///       {
-        ///         bindingUrl: string,
-        ///         rules: [
-        ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
-        ///           }
-        ///         ],
-        ///         storeType: string
-        ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRule(RequestContext)']/*" />
         public virtual Response GetResourceSetRule(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
@@ -310,217 +89,12 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Creates or updates an resource set config. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
-        ///   pathPatternConfig: {
-        ///     acceptedPatterns: [
-        ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         path: string (required)
-        ///       }
-        ///     ],
-        ///     complexReplacers: [
-        ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
-        ///       }
-        ///     ],
-        ///     createdBy: string (required),
-        ///     enableDefaultPatterns: boolean (required),
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
-        ///     normalizationRules: [
-        ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
-        ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
-        ///       }
-        ///     ],
-        ///     regexReplacers: [
-        ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean (required),
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         regex: FastRegex,
-        ///         replaceWith: string
-        ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
-        ///     scopedRules: [
-        ///       {
-        ///         bindingUrl: string (required),
-        ///         rules: [
-        ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string (required)
-        ///           }
-        ///         ],
-        ///         storeType: string (required)
-        ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
-        ///   pathPatternConfig: {
-        ///     acceptedPatterns: [
-        ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
-        ///       }
-        ///     ],
-        ///     complexReplacers: [
-        ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
-        ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
-        ///     normalizationRules: [
-        ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
-        ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
-        ///       }
-        ///     ],
-        ///     regexReplacers: [
-        ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
-        ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
-        ///     scopedRules: [
-        ///       {
-        ///         bindingUrl: string,
-        ///         rules: [
-        ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
-        ///           }
-        ///         ],
-        ///         storeType: string
-        ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRuleAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateResourceSetRuleAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -540,217 +114,12 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Creates or updates an resource set config. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
-        ///   pathPatternConfig: {
-        ///     acceptedPatterns: [
-        ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         path: string (required)
-        ///       }
-        ///     ],
-        ///     complexReplacers: [
-        ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
-        ///       }
-        ///     ],
-        ///     createdBy: string (required),
-        ///     enableDefaultPatterns: boolean (required),
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
-        ///     normalizationRules: [
-        ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
-        ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
-        ///       }
-        ///     ],
-        ///     regexReplacers: [
-        ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean (required),
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         regex: FastRegex,
-        ///         replaceWith: string
-        ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
-        ///     scopedRules: [
-        ///       {
-        ///         bindingUrl: string (required),
-        ///         rules: [
-        ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string (required)
-        ///           }
-        ///         ],
-        ///         storeType: string (required)
-        ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
-        ///   pathPatternConfig: {
-        ///     acceptedPatterns: [
-        ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
-        ///       }
-        ///     ],
-        ///     complexReplacers: [
-        ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
-        ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
-        ///     normalizationRules: [
-        ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
-        ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
-        ///       }
-        ///     ],
-        ///     regexReplacers: [
-        ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
-        ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
-        ///     scopedRules: [
-        ///       {
-        ///         bindingUrl: string,
-        ///         rules: [
-        ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
-        ///           }
-        ///         ],
-        ///         storeType: string
-        ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRule(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateResourceSetRule(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -770,27 +139,10 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='DeleteResourceSetRuleAsync(RequestContext)']/*" />
         public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
@@ -808,27 +160,10 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='DeleteResourceSetRule(RequestContext)']/*" />
         public virtual Response DeleteResourceSetRule(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,22 +16,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SsisAccessCredential. </summary>
         /// <param name="domain"> Domain for windows authentication. </param>
         /// <param name="userName"> UseName for windows authentication. </param>
-        /// <param name="password"> Password for windows authentication. </param>
+        /// <param name="password">
+        /// Password for windows authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public SsisAccessCredential(object domain, object userName, SecretBase password)
         {
-            if (domain == null)
-            {
-                throw new ArgumentNullException(nameof(domain));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(password, nameof(password));
 
             Domain = domain;
             UserName = userName;
@@ -41,7 +37,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Domain { get; set; }
         /// <summary> UseName for windows authentication. </summary>
         public object UserName { get; set; }
-        /// <summary> Password for windows authentication. </summary>
+        /// <summary>
+        /// Password for windows authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
     }
 }

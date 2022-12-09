@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartAnalyzeDocumentWithError()
+        public void AnalyzeDocumentWithError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
@@ -133,7 +133,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartBuildModelWithError()
+        public void BuildModelWithError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateDocumentModelAdministrationClient(new DocumentAnalysisClientOptions() { Transport = mockTransport } );
 
-            var operation = new BuildModelOperation("31534618802_bc949c32-9281-4d00-a9c9-ef0080bb1b2a", client);
+            var operation = new BuildDocumentModelOperation("31534618802_bc949c32-9281-4d00-a9c9-ef0080bb1b2a", client);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InvalidSomething", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Invalid Something."));
@@ -174,7 +174,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartCopyModelWithError()
+        public void CopyModelToWithError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
@@ -207,7 +207,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var mockTransport = new MockTransport(new[] { mockResponse });
             var client = CreateDocumentModelAdministrationClient(new DocumentAnalysisClientOptions() { Transport = mockTransport });
 
-            var operation = new CopyModelOperation("31534618802_bc949c32-9281-4d00-a9c9-ef0080bb1b2a", client);
+            var operation = new CopyDocumentModelToOperation("31534618802_bc949c32-9281-4d00-a9c9-ef0080bb1b2a", client);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InvalidSomething", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Invalid Something."));

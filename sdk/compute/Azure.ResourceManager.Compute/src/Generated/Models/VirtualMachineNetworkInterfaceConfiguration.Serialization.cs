@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             string name = default;
             Optional<bool> primary = default;
-            Optional<DeleteOptions> deleteOption = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
             Optional<bool> enableAcceleratedNetworking = default;
             Optional<bool> enableFpga = default;
             Optional<bool> enableIPForwarding = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOptions(property0.Value.GetString());
+                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableAcceleratedNetworking"))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

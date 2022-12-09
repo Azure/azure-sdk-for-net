@@ -7,8 +7,8 @@
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Object to define the number of days after creation. </summary>
-    internal partial class DateAfterCreation
+    /// <summary> Object to define snapshot and version action conditions. </summary>
+    public partial class DateAfterCreation
     {
         /// <summary> Initializes a new instance of DateAfterCreation. </summary>
         /// <param name="daysAfterCreationGreaterThan"> Value indicating the age in days after creation. </param>
@@ -17,7 +17,18 @@ namespace Azure.ResourceManager.Storage.Models
             DaysAfterCreationGreaterThan = daysAfterCreationGreaterThan;
         }
 
+        /// <summary> Initializes a new instance of DateAfterCreation. </summary>
+        /// <param name="daysAfterCreationGreaterThan"> Value indicating the age in days after creation. </param>
+        /// <param name="daysAfterLastTierChangeGreaterThan"> Value indicating the age in days after last blob tier change time. This property is only applicable for tierToArchive actions and requires daysAfterCreationGreaterThan to be set for snapshots and blob version based actions. The blob will be archived if both the conditions are satisfied. </param>
+        internal DateAfterCreation(float daysAfterCreationGreaterThan, float? daysAfterLastTierChangeGreaterThan)
+        {
+            DaysAfterCreationGreaterThan = daysAfterCreationGreaterThan;
+            DaysAfterLastTierChangeGreaterThan = daysAfterLastTierChangeGreaterThan;
+        }
+
         /// <summary> Value indicating the age in days after creation. </summary>
         public float DaysAfterCreationGreaterThan { get; set; }
+        /// <summary> Value indicating the age in days after last blob tier change time. This property is only applicable for tierToArchive actions and requires daysAfterCreationGreaterThan to be set for snapshots and blob version based actions. The blob will be archived if both the conditions are satisfied. </summary>
+        public float? DaysAfterLastTierChangeGreaterThan { get; set; }
     }
 }

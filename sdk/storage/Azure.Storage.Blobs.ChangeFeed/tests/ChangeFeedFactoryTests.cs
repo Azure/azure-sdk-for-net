@@ -100,17 +100,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 blobClient.Setup(r => r.DownloadStreamingAsync(
                     default,
-                    default,
-                    default,
-                    default,
                     CancellationToken.None)).ThrowsAsync(ex);
             }
             else
             {
                 blobClient.Setup(r => r.DownloadStreaming(
-                    default,
-                    default,
-                    default,
                     default,
                     CancellationToken.None)).Throws(ex);
             }
@@ -141,17 +135,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 blobClient.Verify(r => r.DownloadStreamingAsync(
                     default,
-                    default,
-                    default,
-                    default,
                     CancellationToken.None));
             }
             else
             {
                 blobClient.Verify(r => r.DownloadStreaming(
-                    default,
-                    default,
-                    default,
                     default,
                     CancellationToken.None));
             }

@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         private const string NoneValue = "None";
-        private const string StorageFileDataSmbShareReaderValue = "StorageFileDataSmbShareReader";
-        private const string StorageFileDataSmbShareContributorValue = "StorageFileDataSmbShareContributor";
-        private const string StorageFileDataSmbShareElevatedContributorValue = "StorageFileDataSmbShareElevatedContributor";
+        private const string ReaderValue = "StorageFileDataSmbShareReader";
+        private const string ContributorValue = "StorageFileDataSmbShareContributor";
+        private const string ElevatedContributorValue = "StorageFileDataSmbShareElevatedContributor";
 
         /// <summary> None. </summary>
         public static DefaultSharePermission None { get; } = new DefaultSharePermission(NoneValue);
         /// <summary> StorageFileDataSmbShareReader. </summary>
-        public static DefaultSharePermission StorageFileDataSmbShareReader { get; } = new DefaultSharePermission(StorageFileDataSmbShareReaderValue);
+        public static DefaultSharePermission Reader { get; } = new DefaultSharePermission(ReaderValue);
         /// <summary> StorageFileDataSmbShareContributor. </summary>
-        public static DefaultSharePermission StorageFileDataSmbShareContributor { get; } = new DefaultSharePermission(StorageFileDataSmbShareContributorValue);
+        public static DefaultSharePermission Contributor { get; } = new DefaultSharePermission(ContributorValue);
         /// <summary> StorageFileDataSmbShareElevatedContributor. </summary>
-        public static DefaultSharePermission StorageFileDataSmbShareElevatedContributor { get; } = new DefaultSharePermission(StorageFileDataSmbShareElevatedContributorValue);
+        public static DefaultSharePermission ElevatedContributor { get; } = new DefaultSharePermission(ElevatedContributorValue);
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are the same. </summary>
         public static bool operator ==(DefaultSharePermission left, DefaultSharePermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are not the same. </summary>

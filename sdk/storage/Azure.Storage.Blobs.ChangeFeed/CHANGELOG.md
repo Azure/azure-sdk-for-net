@@ -1,7 +1,20 @@
 # Release History
 
-## 12.0.0-preview.26 (Unreleased)
+## 12.0.0-preview.30 (Unreleased)
+- Added support for service version 2021-12-02.
+
+## 12.0.0-preview.29 (2022-10-12)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.28 (2022-08-23)
+- Added support for service version 2021-10-04.
+
+## 12.0.0-preview.27 (2022-07-07)
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.26 (2022-06-15)
 - Added support for service version 2021-08-06.
+- Fixed bug where BlobType == PageBlob was not being parsed correctly.
 
 ## 12.0.0-preview.25 (2022-05-02)
 - Updated Change Feed to return 0 events when meta/segments.json file hasn't been created yet.

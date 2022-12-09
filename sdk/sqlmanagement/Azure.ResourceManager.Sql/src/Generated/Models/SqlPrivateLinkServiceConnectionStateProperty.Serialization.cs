@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlPrivateLinkServiceConnectionStateProperty DeserializeSqlPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
-            PrivateLinkServiceConnectionStateStatus status = default;
+            SqlPrivateLinkServiceConnectionStatus status = default;
             string description = default;
-            Optional<PrivateLinkServiceConnectionStateActionsRequire> actionsRequired = default;
+            Optional<SqlPrivateLinkServiceConnectionActionsRequired> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = new PrivateLinkServiceConnectionStateStatus(property.Value.GetString());
+                    status = new SqlPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionsRequired = new PrivateLinkServiceConnectionStateActionsRequire(property.Value.GetString());
+                    actionsRequired = new SqlPrivateLinkServiceConnectionActionsRequired(property.Value.GetString());
                     continue;
                 }
             }

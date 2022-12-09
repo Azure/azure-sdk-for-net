@@ -38,11 +38,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="updatedOn"> The time the namespace was updated. </param>
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="zoneRedundant"> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </param>
+        /// <param name="isZoneRedundant"> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </param>
         /// <param name="encryption"> Properties of BYOK Encryption description. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? zoneRedundant, Models.EncryptionProperties encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="alternateName"> Alternate name for namespace. </param>
+        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -52,10 +53,11 @@ namespace Azure.ResourceManager.ServiceBus
             UpdatedOn = updatedOn;
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
             DisableLocalAuth = disableLocalAuth;
+            AlternateName = alternateName;
         }
 
         /// <summary> Properties of SKU. </summary>
@@ -75,12 +77,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Identifier for Azure Insights metrics. </summary>
         public string MetricId { get; }
         /// <summary> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> Properties of BYOK Encryption description. </summary>
-        public Models.EncryptionProperties Encryption { get; set; }
+        public ServiceBusEncryption Encryption { get; set; }
         /// <summary> List of private endpoint connections. </summary>
         public IList<ServiceBusPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> This property disables SAS authentication for the Service Bus namespace. </summary>
         public bool? DisableLocalAuth { get; set; }
+        /// <summary> Alternate name for namespace. </summary>
+        public string AlternateName { get; set; }
     }
 }

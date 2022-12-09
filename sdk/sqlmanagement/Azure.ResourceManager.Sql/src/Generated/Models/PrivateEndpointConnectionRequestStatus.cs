@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the private endpoint connection requests status. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateLinkServiceId"> Resource id for which the private endpoint is created. </param>
         /// <param name="privateEndpointConnectionName"> The connection name for the private endpoint. </param>
         /// <param name="status"> Status of this private endpoint connection. </param>
-        internal PrivateEndpointConnectionRequestStatus(string privateLinkServiceId, string privateEndpointConnectionName, string status)
+        internal PrivateEndpointConnectionRequestStatus(ResourceIdentifier privateLinkServiceId, string privateEndpointConnectionName, string status)
         {
             PrivateLinkServiceId = privateLinkServiceId;
             PrivateEndpointConnectionName = privateEndpointConnectionName;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource id for which the private endpoint is created. </summary>
-        public string PrivateLinkServiceId { get; }
+        public ResourceIdentifier PrivateLinkServiceId { get; }
         /// <summary> The connection name for the private endpoint. </summary>
         public string PrivateEndpointConnectionName { get; }
         /// <summary> Status of this private endpoint connection. </summary>

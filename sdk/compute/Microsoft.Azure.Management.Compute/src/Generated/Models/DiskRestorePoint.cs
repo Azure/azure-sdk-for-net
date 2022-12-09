@@ -71,7 +71,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="sourceResourceLocation">Location of source disk or
         /// source disk restore point when source resource is from a different
         /// region.</param>
-        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?), string replicationState = default(string), string sourceResourceLocation = default(string))
+        /// <param name="securityProfile">Contains the security related
+        /// information for the resource.</param>
+        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?), string replicationState = default(string), string sourceResourceLocation = default(string), DiskSecurityProfile securityProfile = default(DiskSecurityProfile))
             : base(id, name, type)
         {
             TimeCreated = timeCreated;
@@ -90,6 +92,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             CompletionPercent = completionPercent;
             ReplicationState = replicationState;
             SourceResourceLocation = sourceResourceLocation;
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -203,6 +206,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceResourceLocation")]
         public string SourceResourceLocation { get; private set; }
+
+        /// <summary>
+        /// Gets or sets contains the security related information for the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public DiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Validate the object.

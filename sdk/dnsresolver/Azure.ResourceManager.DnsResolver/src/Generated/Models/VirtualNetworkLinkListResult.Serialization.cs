@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal static VirtualNetworkLinkListResult DeserializeVirtualNetworkLinkListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualNetworkLinkData>> value = default;
+            Optional<IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkLinkData> array = new List<VirtualNetworkLinkData>();
+                    List<DnsForwardingRulesetVirtualNetworkLinkData> array = new List<DnsForwardingRulesetVirtualNetworkLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(item));
+                        array.Add(DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(item));
                     }
                     value = array;
                     continue;

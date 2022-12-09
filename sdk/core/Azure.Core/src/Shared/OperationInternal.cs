@@ -110,8 +110,6 @@ namespace Azure.Core
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken) =>
             async ? await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : _internalOperation.UpdateStatus(cancellationToken);
 
-        private readonly struct VoidValue { }
-
         // Wrapper type that converts OperationState to OperationState<T> and can be passed to `OperationInternal<T>` constructor.
         private class OperationToOperationOfTProxy : IOperation<VoidValue>
         {

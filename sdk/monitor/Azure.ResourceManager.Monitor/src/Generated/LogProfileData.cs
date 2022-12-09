@@ -23,20 +23,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: &apos;Write&apos;, &apos;Delete&apos;, and/or &apos;Action.&apos;. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/>, <paramref name="categories"/> or <paramref name="retentionPolicy"/> is null. </exception>
-        public LogProfileData(AzureLocation location, IEnumerable<string> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy) : base(location)
+        public LogProfileData(AzureLocation location, IEnumerable<AzureLocation> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy) : base(location)
         {
-            if (locations == null)
-            {
-                throw new ArgumentNullException(nameof(locations));
-            }
-            if (categories == null)
-            {
-                throw new ArgumentNullException(nameof(categories));
-            }
-            if (retentionPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(retentionPolicy));
-            }
+            Argument.AssertNotNull(locations, nameof(locations));
+            Argument.AssertNotNull(categories, nameof(categories));
+            Argument.AssertNotNull(retentionPolicy, nameof(retentionPolicy));
 
             Locations = locations.ToList();
             Categories = categories.ToList();
@@ -55,7 +46,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the &apos;global&apos; location. </param>
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: &apos;Write&apos;, &apos;Delete&apos;, and/or &apos;Action.&apos;. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
-        internal LogProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string storageAccountId, string serviceBusRuleId, IList<string> locations, IList<string> categories, RetentionPolicy retentionPolicy) : base(id, name, resourceType, systemData, tags, location)
+        internal LogProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, IList<AzureLocation> locations, IList<string> categories, RetentionPolicy retentionPolicy) : base(id, name, resourceType, systemData, tags, location)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -65,11 +56,11 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> the resource id of the storage account to which you would like to send the Activity Log. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: &apos;{service bus resource ID}/authorizationrules/{key name}&apos;. </summary>
-        public string ServiceBusRuleId { get; set; }
+        public ResourceIdentifier ServiceBusRuleId { get; set; }
         /// <summary> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the &apos;global&apos; location. </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
         /// <summary> the categories of the logs. These categories are created as is convenient to the user. Some values are: &apos;Write&apos;, &apos;Delete&apos;, and/or &apos;Action.&apos;. </summary>
         public IList<string> Categories { get; }
         /// <summary> the retention policy for the events in the log. </summary>

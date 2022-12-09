@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB SQL database event. </param>
-        internal RestorableSqlDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorableSqlDatabasePropertiesResource resource) : base(id, name, resourceType, systemData)
+        internal RestorableSqlDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableSqlDatabaseResourceInfo resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }
 
         /// <summary> The resource of an Azure Cosmos DB SQL database event. </summary>
-        public RestorableSqlDatabasePropertiesResource Resource { get; }
+        public ExtendedRestorableSqlDatabaseResourceInfo Resource { get; }
     }
 }

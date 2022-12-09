@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor.
         /// Possible values include: 'Audit', 'DeployAndAutoCorrect',
         /// 'ApplyAndAutoCorrect', 'ApplyAndMonitor'</param>
+        /// <param name="assignmentSource">Specifies the origin of the
+        /// configuration.</param>
         /// <param name="contentType">Specifies the content type of the
         /// configuration. Possible values could be Builtin or Custom.</param>
         /// <param name="configurationParameter">The configuration parameters
@@ -57,7 +59,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// configuration parameters for the guest configuration.</param>
         /// <param name="configurationSetting">The configuration setting for
         /// the guest configuration.</param>
-        public GuestConfigurationNavigation(string kind = default(string), string name = default(string), string version = default(string), string contentUri = default(string), string contentHash = default(string), string assignmentType = default(string), string contentType = default(string), IList<ConfigurationParameter> configurationParameter = default(IList<ConfigurationParameter>), IList<ConfigurationParameter> configurationProtectedParameter = default(IList<ConfigurationParameter>), ConfigurationSetting configurationSetting = default(ConfigurationSetting))
+        public GuestConfigurationNavigation(string kind = default(string), string name = default(string), string version = default(string), string contentUri = default(string), string contentHash = default(string), string assignmentType = default(string), string assignmentSource = default(string), string contentType = default(string), IList<ConfigurationParameter> configurationParameter = default(IList<ConfigurationParameter>), IList<ConfigurationParameter> configurationProtectedParameter = default(IList<ConfigurationParameter>), ConfigurationSetting configurationSetting = default(ConfigurationSetting))
         {
             Kind = kind;
             Name = name;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
             ContentUri = contentUri;
             ContentHash = contentHash;
             AssignmentType = assignmentType;
+            AssignmentSource = assignmentSource;
             ContentType = contentType;
             ConfigurationParameter = configurationParameter;
             ConfigurationProtectedParameter = configurationProtectedParameter;
@@ -121,6 +124,12 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         public string AssignmentType { get; set; }
 
         /// <summary>
+        /// Gets specifies the origin of the configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "assignmentSource")]
+        public string AssignmentSource { get; private set; }
+
+        /// <summary>
         /// Gets specifies the content type of the configuration. Possible
         /// values could be Builtin or Custom.
         /// </summary>
@@ -142,10 +151,10 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         public IList<ConfigurationParameter> ConfigurationProtectedParameter { get; set; }
 
         /// <summary>
-        /// Gets or sets the configuration setting for the guest configuration.
+        /// Gets the configuration setting for the guest configuration.
         /// </summary>
         [JsonProperty(PropertyName = "configurationSetting")]
-        public ConfigurationSetting ConfigurationSetting { get; set; }
+        public ConfigurationSetting ConfigurationSetting { get; private set; }
 
     }
 }

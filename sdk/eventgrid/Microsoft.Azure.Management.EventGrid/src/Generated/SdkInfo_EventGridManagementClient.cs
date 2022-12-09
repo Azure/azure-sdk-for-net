@@ -19,42 +19,41 @@ namespace Microsoft.Azure.Management.EventGrid
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("EventGrid", "Channels", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "DomainEventSubscriptions", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "DomainTopicEventSubscriptions", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "Domains", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventChannels", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "ExtensionTopics", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "Operations", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerConfigurations", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerDestinations", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerNamespaces", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerRegistrations", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerTopicEventSubscriptions", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PartnerTopics", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PrivateEndpointConnections", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "PrivateLinkResources", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "SystemTopicEventSubscriptions", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "SystemTopics", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "TopicEventSubscriptions", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "Topics", "2021-10-15-preview"),
-                new Tuple<string, string, string>("EventGrid", "VerifiedPartners", "2021-10-15-preview"),
+                new Tuple<string, string, string>("EventGrid", "Channels", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "DomainEventSubscriptions", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "DomainTopicEventSubscriptions", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "Domains", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "ExtensionTopics", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "Operations", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "PartnerConfigurations", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "PartnerNamespaces", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "PartnerRegistrations", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "PartnerTopicEventSubscriptions", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "PartnerTopics", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "PrivateEndpointConnections", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "PrivateLinkResources", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "SystemTopicEventSubscriptions", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "SystemTopics", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "TopicEventSubscriptions", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "Topics", "2022-06-15"),
+                new Tuple<string, string, string>("EventGrid", "VerifiedPartners", "2022-06-15"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4421";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.6.1";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/eventgrid/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\swg\\bjn\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/eventgrid/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\Ga22\\net1\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "e515b6251fdc21015282d2e84b85beec7c091763";
-      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubCommidId = "b6e67f17473f06792781ba3fc4113f42e22ea90b";
+      public static readonly String CodeGenerationErrors = "npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
+
 

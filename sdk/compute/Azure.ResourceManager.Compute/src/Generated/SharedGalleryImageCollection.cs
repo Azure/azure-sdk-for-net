@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, galleryImageName, cancellationToken).ConfigureAwait(false);
+                var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name, galleryImageName);
+                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
                 return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, galleryImageName, cancellationToken);
+                var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name, galleryImageName);
+                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
                 return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SharedGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SharedGalleryImageResource> GetAllAsync(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SharedGalleryImageResource> GetAllAsync(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SharedGalleryImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _sharedGalleryImageRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sharedGalleryImageRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name, value.Name);
+                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, value.Name);
                         return new SharedGalleryImageResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _sharedGalleryImageRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sharedGalleryImageRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name, value.Name);
+                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, value.Name);
                         return new SharedGalleryImageResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SharedGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SharedGalleryImageResource> GetAll(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SharedGalleryImageResource> GetAll(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Page<SharedGalleryImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _sharedGalleryImageRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
+                    var response = _sharedGalleryImageRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name, value.Name);
+                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, value.Name);
                         return new SharedGalleryImageResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _sharedGalleryImageRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
+                    var response = _sharedGalleryImageRestClient.ListNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Name, Id.Name, value.Name);
+                        value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, value.Name);
                         return new SharedGalleryImageResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, galleryImageName, cancellationToken: cancellationToken);
+                var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization feature. </summary>
-    public partial class SiteAuthSettings : ProxyOnlyResource
+    public partial class SiteAuthSettings : ResourceData
     {
         /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
         public SiteAuthSettings()
@@ -31,14 +32,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
         /// </param>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
-        /// <param name="tokenStoreEnabled">
+        /// <param name="isTokenStoreEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.
         /// </param>
@@ -186,12 +186,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// The ConfigVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </param>
-        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? enabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? tokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprint, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SiteAuthSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? isTokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, BinaryData clientSecretCertificateThumbprint, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, string kind) : base(id, name, resourceType, systemData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
             UnauthenticatedClientAction = unauthenticatedClientAction;
-            TokenStoreEnabled = tokenStoreEnabled;
+            IsTokenStoreEnabled = isTokenStoreEnabled;
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             DefaultProvider = defaultProvider;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
@@ -226,10 +227,11 @@ namespace Azure.ResourceManager.AppService.Models
             IsAuthFromFile = isAuthFromFile;
             AuthFilePath = authFilePath;
             ConfigVersion = configVersion;
+            Kind = kind;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
@@ -241,7 +243,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
-        public bool? TokenStoreEnabled { get; set; }
+        public bool? IsTokenStoreEnabled { get; set; }
         /// <summary>
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
@@ -278,8 +280,35 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        public string ClientSecretCertificateThumbprint { get; set; }
+        public BinaryData ClientSecretCertificateThumbprint { get; set; }
         /// <summary>
         /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. https://sts.windows.net/{tenant-guid}/.
@@ -420,5 +449,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </summary>
         public string ConfigVersion { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

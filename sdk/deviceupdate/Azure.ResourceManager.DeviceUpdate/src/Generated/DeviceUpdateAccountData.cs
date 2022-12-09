@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
+            Locations = new ChangeTrackingList<DeviceUpdateAccountLocationDetail>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
@@ -34,13 +35,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="hostName"> API host name. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the account. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the account. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="sku"> Device Update Sku. </param>
+        /// <param name="locations"> Device Update account primary and failover location details. </param>
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
             HostName = hostName;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
+            Sku = sku;
+            Locations = locations;
         }
 
         /// <summary> The type of identity used for the resource. </summary>
@@ -53,5 +58,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connections associated with the account. </summary>
         public IList<DeviceUpdatePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Device Update Sku. </summary>
+        public DeviceUpdateSku? Sku { get; set; }
+        /// <summary> Device Update account primary and failover location details. </summary>
+        public IReadOnlyList<DeviceUpdateAccountLocationDetail> Locations { get; }
     }
 }

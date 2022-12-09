@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static AuthorizationRuleListResult DeserializeAuthorizationRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AuthorizationRuleData>> value = default;
+            Optional<IReadOnlyList<EventHubsAuthorizationRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AuthorizationRuleData> array = new List<AuthorizationRuleData>();
+                    List<EventHubsAuthorizationRuleData> array = new List<EventHubsAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationRuleData.DeserializeAuthorizationRuleData(item));
+                        array.Add(EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(item));
                     }
                     value = array;
                     continue;

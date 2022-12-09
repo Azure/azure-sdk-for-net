@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VCPUs))
+            if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs");
-                writer.WriteObjectValue(VCPUs);
+                writer.WriteObjectValue(VCpus);
             }
             if (Optional.IsDefined(Memory))
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
         {
-            Optional<ResourceRange> vcpUs = default;
+            Optional<ResourceRange> vCpus = default;
             Optional<ResourceRange> memory = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vcpUs = ResourceRange.DeserializeResourceRange(property.Value);
+                    vCpus = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
                 if (property.NameEquals("memory"))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RecommendedMachineConfiguration(vcpUs.Value, memory.Value);
+            return new RecommendedMachineConfiguration(vCpus.Value, memory.Value);
         }
     }
 }

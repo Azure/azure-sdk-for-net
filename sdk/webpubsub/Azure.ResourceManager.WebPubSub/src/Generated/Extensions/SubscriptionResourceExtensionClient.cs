@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckWebPubSubNameAvailability(string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<SignalRServiceUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SignalRServiceUsage> GetUsages(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<SignalRServiceUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<SignalRServiceUsage> FirstPageFunc(int? pageSizeHint)
             {

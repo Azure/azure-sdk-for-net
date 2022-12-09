@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AllowExtensionOperations))
+            {
+                writer.WritePropertyName("allowExtensionOperations");
+                writer.WriteBooleanValue(AllowExtensionOperations.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -68,6 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WindowsConfiguration> windowsConfiguration = default;
             Optional<LinuxConfiguration> linuxConfiguration = default;
             Optional<IList<VaultSecretGroup>> secrets = default;
+            Optional<bool> allowExtensionOperations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerNamePrefix"))
@@ -125,8 +131,18 @@ namespace Azure.ResourceManager.Compute.Models
                     secrets = array;
                     continue;
                 }
+                if (property.NameEquals("allowExtensionOperations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    allowExtensionOperations = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets));
+            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations));
         }
     }
 }

@@ -143,7 +143,7 @@ SearchClientOptions options = new SearchClientOptions()
     {
         // Increase timeout for each request to 5 minutes
         Timeout = TimeSpan.FromMinutes(5)
-    });
+    })
 };
 
 // Increase retry attempts to 6

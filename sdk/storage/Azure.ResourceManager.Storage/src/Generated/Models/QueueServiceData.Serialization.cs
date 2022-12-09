@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<CorsRules> cors = default;
+            Optional<SystemData> systemData = default;
+            Optional<StorageCorsRules> cors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -49,12 +49,17 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -73,14 +78,14 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new QueueServiceData(id, name, type, systemData, cors.Value);
+            return new QueueServiceData(id, name, type, systemData.Value, cors.Value);
         }
     }
 }

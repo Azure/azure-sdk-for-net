@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public ProfileData(AzureLocation location, CdnSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
         }
@@ -43,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
         /// <param name="frontDoorId"> The Id of the frontdoor. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ProfileResourceState? resourceState, string provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, resourceType, systemData, tags, location)
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -72,7 +69,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Resource status of the profile. </summary>
         public ProfileResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the profile. </summary>
-        public string ProvisioningState { get; }
+        public ProfileProvisioningState? ProvisioningState { get; }
         /// <summary> The Id of the frontdoor. </summary>
         public Guid? FrontDoorId { get; }
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>

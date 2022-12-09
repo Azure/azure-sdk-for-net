@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// UserAssigned', 'None'</param>
         /// <param name="userAssignedIdentities">Properties for User Assigned
         /// Identities</param>
-        public Identity(string principalId = default(string), string tenantId = default(string), ManagedServiceIdentityType? type = default(ManagedServiceIdentityType?), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
+        public Identity(string principalId = default(string), string tenantId = default(string), string type = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public ManagedServiceIdentityType? Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets properties for User Assigned Identities

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the ProcessInfo data model. </summary>
-    public partial class ProcessInfoData : ProxyOnlyResource
+    public partial class ProcessInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of ProcessInfoData. </summary>
         public ProcessInfoData()
@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="identifier"> ARM Identifier for deployment. </param>
         /// <param name="deploymentName"> Deployment name. </param>
         /// <param name="href"> HRef URI. </param>
@@ -68,7 +67,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isScmSite"> Is this the SCM site?. </param>
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
-        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, string kind) : base(id, name, resourceType, systemData)
         {
             Identifier = identifier;
             DeploymentName = deploymentName;
@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.AppService
             IsScmSite = isScmSite;
             IsWebjob = isWebjob;
             Description = description;
+            Kind = kind;
         }
 
         /// <summary> ARM Identifier for deployment. </summary>
@@ -180,5 +181,7 @@ namespace Azure.ResourceManager.AppService
         public bool? IsWebjob { get; set; }
         /// <summary> Description of process. </summary>
         public string Description { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

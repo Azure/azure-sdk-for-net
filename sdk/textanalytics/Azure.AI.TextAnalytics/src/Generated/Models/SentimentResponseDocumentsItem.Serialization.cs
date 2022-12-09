@@ -17,6 +17,11 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage");
+                writer.WriteObjectValue(DetectedLanguage.Value);
+            }
             writer.WritePropertyName("sentiment");
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores");
@@ -47,6 +52,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentResponseDocumentsItem DeserializeSentimentResponseDocumentsItem(JsonElement element)
         {
+            Optional<DetectedLanguageInternal> detectedLanguage = default;
             TextSentiment sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
             IList<SentenceSentimentInternal> sentences = default;
@@ -55,6 +61,16 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("detectedLanguage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("sentiment"))
                 {
                     sentiment = property.Value.GetString().ToTextSentiment();
@@ -101,7 +117,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentResponseDocumentsItem(id, warnings, Optional.ToNullable(statistics), sentiment, confidenceScores, sentences);
+            return new SentimentResponseDocumentsItem(id, warnings, Optional.ToNullable(statistics), sentiment, confidenceScores, sentences, Optional.ToNullable(detectedLanguage));
         }
     }
 }

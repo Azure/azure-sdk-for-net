@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, string policyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}/backupShortTermRetentionPolicies/{policyName}";
             return new ResourceIdentifier(resourceId);

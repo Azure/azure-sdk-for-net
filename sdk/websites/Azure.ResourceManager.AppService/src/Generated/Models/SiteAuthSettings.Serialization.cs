@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -24,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
@@ -39,10 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("unauthenticatedClientAction");
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TokenStoreEnabled))
+            if (Optional.IsDefined(IsTokenStoreEnabled))
             {
                 writer.WritePropertyName("tokenStoreEnabled");
-                writer.WriteBooleanValue(TokenStoreEnabled.Value);
+                writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
@@ -82,7 +83,11 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ClientSecretCertificateThumbprint))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint");
-                writer.WriteStringValue(ClientSecretCertificateThumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientSecretCertificateThumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientSecretCertificateThumbprint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Issuer))
             {
@@ -259,7 +264,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<bool> enabled = default;
             Optional<string> runtimeVersion = default;
             Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
@@ -270,7 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
+            Optional<BinaryData> clientSecretCertificateThumbprint = default;
             Optional<string> issuer = default;
             Optional<bool> validateIssuer = default;
             Optional<IList<string>> allowedAudiences = default;
@@ -317,12 +322,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -421,7 +431,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("clientSecretCertificateThumbprint"))
                         {
-                            clientSecretCertificateThumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clientSecretCertificateThumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("issuer"))
@@ -628,7 +643,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteAuthSettings(id, name, type, systemData, kind.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value);
+            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value);
         }
     }
 }

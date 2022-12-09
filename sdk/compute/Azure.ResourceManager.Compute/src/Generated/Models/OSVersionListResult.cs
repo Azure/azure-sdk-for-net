@@ -8,38 +8,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The OSVersionListResult. </summary>
+    /// <summary> The list operation result. </summary>
     internal partial class OSVersionListResult
     {
         /// <summary> Initializes a new instance of OSVersionListResult. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> The list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OSVersionListResult(IEnumerable<OSVersionData> value)
+        internal OSVersionListResult(IEnumerable<CloudServiceOSVersionData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of OSVersionListResult. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
-        internal OSVersionListResult(IReadOnlyList<OSVersionData> value, string nextLink)
+        /// <param name="value"> The list of resources. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </param>
+        internal OSVersionListResult(IReadOnlyList<CloudServiceOSVersionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<OSVersionData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> The list of resources. </summary>
+        public IReadOnlyList<CloudServiceOSVersionData> Value { get; }
+        /// <summary> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </summary>
         public string NextLink { get; }
     }
 }

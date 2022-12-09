@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/workers/sdk-yEQefTbSlUarzJoRpJbHNg--WorkerIDRegisterWorker?api-version=2022-07-18-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "96",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-71082c079d3bdc458f29213eb5ba0f8c-187e5fc1de2e5d4a-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220722.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "033aa8026ca4d0729414f64e54460e33",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Sat, 23 Jul 2022 04:17:40 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "queueAssignments": {},
+        "totalCapacity": 100,
+        "channelConfigurations": {},
+        "availableForOffers": true
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2, 2022-07-18-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 23 Jul 2022 04:17:42 GMT",
+        "ETag": "\u002200000001-0000-0000-4337-0a49626cda08\u0022",
+        "Last-Modified": "Sat, 23 Jul 2022 04:17:41 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "71082c079d3bdc458f29213eb5ba0f8c",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0ZHbbYgAAAACuCxDUo4WTTJnfcEL4Kq\u002BgWVZSMzExMDAwMTE2MDM3AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-yEQefTbSlUarzJoRpJbHNg--WorkerIDRegisterWorker",
+        "state": "active",
+        "queueAssignments": {},
+        "totalCapacity": 100,
+        "labels": {
+          "Id": "sdk-yEQefTbSlUarzJoRpJbHNg--WorkerIDRegisterWorker"
+        },
+        "tags": {},
+        "channelConfigurations": {},
+        "offers": [],
+        "assignedJobs": [],
+        "loadRatio": 0,
+        "availableForOffers": true
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-yEQefTbSlUarzJoRpJbHNg-",
+    "RandomSeed": "1147483634"
+  }
+}

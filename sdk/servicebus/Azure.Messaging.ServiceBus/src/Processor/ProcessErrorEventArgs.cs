@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 
 namespace Azure.Messaging.ServiceBus
@@ -20,8 +21,31 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="errorSource">The source associated with the error.</param>
         /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
         /// <param name="entityPath">The entity path used when this exception occurred.</param>
+        /// <param name="identifier">The identifier of the processor that reported this error.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        public ProcessErrorEventArgs(
+            Exception exception,
+            ServiceBusErrorSource errorSource,
+            string fullyQualifiedNamespace,
+            string entityPath,
+            string identifier,
+            CancellationToken cancellationToken) : this(exception, errorSource, fullyQualifiedNamespace, entityPath, cancellationToken)
+        {
+            Identifier = identifier;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProcessErrorEventArgs" /> class.
+        /// </summary>
+        ///
+        /// <param name="exception">The exception that triggered the call to the error event handler.</param>
+        /// <param name="errorSource">The source associated with the error.</param>
+        /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
+        /// <param name="entityPath">The entity path used when this exception occurred.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
+        /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ProcessErrorEventArgs(
             Exception exception,
             ServiceBusErrorSource errorSource,
@@ -47,6 +71,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Gets the namespace name associated with the error event.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</summary>
         public string FullyQualifiedNamespace { get; }
+
+        /// <summary>Gets the identifier of the processor that raised this event.</summary>
+        public string Identifier { get; }
 
         /// <summary>Gets the entity path associated with the error event.</summary>
         public string EntityPath { get; }

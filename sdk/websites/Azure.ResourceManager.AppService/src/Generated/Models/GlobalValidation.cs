@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of GlobalValidation. </summary>
-        /// <param name="requireAuthentication"> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isAuthenticationRequired"> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
         /// <param name="redirectToProvider">
         /// The default authentication provider to use when multiple providers are configured.
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// action is set to &quot;RedirectToLoginPage&quot;.
         /// </param>
         /// <param name="excludedPaths"> The paths for which unauthenticated flow would not be redirected to the login page. </param>
-        internal GlobalValidation(bool? requireAuthentication, UnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths)
+        internal GlobalValidation(bool? isAuthenticationRequired, UnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths)
         {
-            RequireAuthentication = requireAuthentication;
+            IsAuthenticationRequired = isAuthenticationRequired;
             UnauthenticatedClientAction = unauthenticatedClientAction;
             RedirectToProvider = redirectToProvider;
             ExcludedPaths = excludedPaths;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? RequireAuthentication { get; set; }
+        public bool? IsAuthenticationRequired { get; set; }
         /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
         public UnauthenticatedClientActionV2? UnauthenticatedClientAction { get; set; }
         /// <summary>

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             ManagementLockLevel level = default;
             Optional<string> notes = default;
             Optional<IList<ManagementLockOwner>> owners = default;
@@ -64,12 +64,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -110,7 +115,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ManagementLockData(id, name, type, systemData, level, notes.Value, Optional.ToList(owners));
+            return new ManagementLockData(id, name, type, systemData.Value, level, notes.Value, Optional.ToList(owners));
         }
     }
 }

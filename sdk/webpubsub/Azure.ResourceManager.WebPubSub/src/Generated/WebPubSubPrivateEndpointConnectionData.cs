@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="privateEndpoint"> Private endpoint associated with the private endpoint connection. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state. </param>
-        internal WebPubSubPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IReadOnlyList<string> groupIds, WebPubSubPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType, systemData)
+        internal WebPubSubPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IReadOnlyList<string> groupIds, WebPubSubPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Provisioning state of the private endpoint connection. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WebPubSubProvisioningState? ProvisioningState { get; }
         /// <summary> Private endpoint associated with the private endpoint connection. </summary>
         internal PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> Full qualified Id of the private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             set

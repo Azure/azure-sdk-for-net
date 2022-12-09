@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Container network interface child resource. </summary>
-    public partial class ContainerNetworkInterface : SubResource
+    public partial class ContainerNetworkInterface : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
         public ContainerNetworkInterface()
@@ -22,30 +23,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
-        /// <param name="resourceType"> Sub Resource type. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="containerNetworkInterfaceConfiguration"> Container network interface configuration from which this container network interface is created. </param>
         /// <param name="container"> Reference to the container to which this container network interface is attached. </param>
         /// <param name="ipConfigurations"> Reference to the ip configuration on this container nic. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface resource. </param>
-        internal ContainerNetworkInterface(string id, string name, string resourceType, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ContainerNetworkInterface(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            ResourceType = resourceType;
-            Etag = etag;
+            ETag = etag;
             ContainerNetworkInterfaceConfiguration = containerNetworkInterfaceConfiguration;
             Container = container;
             IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
-        /// <summary> Sub Resource type. </summary>
-        public string ResourceType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Container network interface configuration from which this container network interface is created. </summary>
         public ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get; }
         /// <summary> Reference to the container to which this container network interface is attached. </summary>
@@ -65,6 +60,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to the ip configuration on this container nic. </summary>
         public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get; }
         /// <summary> The provisioning state of the container network interface resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

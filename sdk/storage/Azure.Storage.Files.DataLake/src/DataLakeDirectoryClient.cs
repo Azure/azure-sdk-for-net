@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.DataLake
         /// directory.
         /// </param>
         public DataLakeDirectoryClient(Uri directoryUri)
-            : this(directoryUri, (HttpPipelinePolicy)null, null, null)
+            : this(directoryUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential: null)
         {
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeDirectoryClient(Uri directoryUri, DataLakeClientOptions options)
-            : this(directoryUri, (HttpPipelinePolicy)null, options, null)
+            : this(directoryUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
         {
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files.DataLake
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public DataLakeDirectoryClient(Uri directoryUri, AzureSasCredential credential, DataLakeClientOptions options)
-            : this(directoryUri, credential.AsPolicy<DataLakeUriBuilder>(directoryUri), options, null)
+            : this(directoryUri, credential.AsPolicy<DataLakeUriBuilder>(directoryUri), options, credential)
         {
         }
 
@@ -219,7 +219,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential)
-            : this(directoryUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
+            : this(directoryUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -242,7 +242,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(directoryUri, credential.AsPolicy(options), options, null)
+            : this(directoryUri, credential.AsPolicy(options), options, storageSharedKeyCredential: null)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -273,6 +273,35 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
             : base(directoryUri, authentication, options, storageSharedKeyCredential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeDirectoryClient
+            (Uri directoryUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            AzureSasCredential sasCredential)
+            : base(directoryUri, authentication, options, sasCredential)
         {
         }
 

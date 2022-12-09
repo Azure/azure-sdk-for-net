@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -16,9 +17,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of DnsForwardingRulesetPatch. </summary>
         public DnsForwardingRulesetPatch()
         {
+            DnsResolverOutboundEndpoints = new ChangeTrackingList<WritableSubResource>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </summary>
+        public IList<WritableSubResource> DnsResolverOutboundEndpoints { get; }
         /// <summary> Tags for DNS Resolver. </summary>
         public IDictionary<string, string> Tags { get; }
     }

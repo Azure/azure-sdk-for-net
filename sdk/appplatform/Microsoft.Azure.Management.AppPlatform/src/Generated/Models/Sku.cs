@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// Sku of Azure Spring Cloud
+    /// Sku of Azure Spring Apps
     /// </summary>
     public partial class Sku
     {

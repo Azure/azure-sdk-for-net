@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(2)]
         public async Task GremlinDatabaseCreateUpdateTests()
         {
-            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
+            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CosmosDBCreateUpdateConfig(sampleThroughput, new AutoscaleSettings()));
             var gremlinDatabaseResponse1 = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName, gremlinDatabaseCreateUpdateParameters));
             Assert.NotNull(gremlinDatabaseResponse1);
             GremlinDatabaseResource gremlinDatabase1 = gremlinDatabaseResponse1.Value;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
             Assert.AreEqual(gremlinDatabasesThroughputType, throughputSettings.Type);
 
-            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters2 = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()));
+            GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters2 = new GremlinDatabaseCreateUpdateParameters(new GremlinDatabaseResource(databaseName), new CosmosDBCreateUpdateConfig(sampleThroughput2, new AutoscaleSettings()));
             var gremlinDatabaseResponse3 = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinDatabaseAsync(resourceGroupName, databaseAccountName, databaseName, gremlinDatabaseCreateUpdateParameters2));
             Assert.NotNull(gremlinDatabaseResponse3);
             GremlinDatabaseResource gremlinDatabase3 = gremlinDatabaseResponse3.Value;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             UniqueKeyPolicy uniqueKeyPolicy = new UniqueKeyPolicy(uniqueKeys);
 
             ConflictResolutionPolicy conflictResolutionPolicy = new ConflictResolutionPolicy(new ConflictResolutionMode("LastWriterWins"), "/path", "");
-            CreateUpdateOptions createUpdateOptions = new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings());
+            CosmosDBCreateUpdateConfig createUpdateOptions = new CosmosDBCreateUpdateConfig(sampleThroughput, new AutoscaleSettings());
 
             GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters(new GremlinGraphResource(gremlinGraphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy), createUpdateOptions);
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
             Assert.AreEqual(gremlinGraphsThroughputType, throughputSettings.Type);
 
-            CreateUpdateOptions createUpdateOptions2 = new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings());
+            CosmosDBCreateUpdateConfig createUpdateOptions2 = new CosmosDBCreateUpdateConfig(sampleThroughput2, new AutoscaleSettings());
             GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters2 = new GremlinGraphCreateUpdateParameters(new GremlinGraphResource(gremlinGraphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy), createUpdateOptions2);
 
             Response<GremlinGraphResource> gremlinResponse2 = await WaitForCompletionAsync(await CosmosDBManagementClient.GremlinResources.StartCreateUpdateGremlinGraphAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraphName, gremlinGraphCreateUpdateParameters2));
@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
         }
 
         private void VerifyEqualGremlinGraphs(GremlinGraphResource expectedValue, GremlinGraphResource actualValue)
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
 
             Assert.AreEqual(expectedValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath);
             Assert.AreEqual(expectedValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath);

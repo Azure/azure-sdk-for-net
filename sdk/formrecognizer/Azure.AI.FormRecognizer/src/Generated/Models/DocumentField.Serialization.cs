@@ -22,13 +22,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<TimeSpan> valueTime = default;
             Optional<string> valuePhoneNumber = default;
             Optional<double> valueNumber = default;
-            Optional<int> valueInteger = default;
+            Optional<long> valueInteger = default;
             Optional<V3SelectionMarkState> valueSelectionMark = default;
             Optional<DocumentSignatureType> valueSignature = default;
             Optional<string> valueCountryRegion = default;
             Optional<IReadOnlyList<DocumentField>> valueArray = default;
             Optional<IReadOnlyDictionary<string, DocumentField>> valueObject = default;
             Optional<CurrencyValue> valueCurrency = default;
+            Optional<AddressValue> valueAddress = default;
             Optional<string> content = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             Optional<IReadOnlyList<DocumentSpan>> spans = default;
@@ -87,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueInteger = property.Value.GetInt32();
+                    valueInteger = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("valueSelectionMark"))
@@ -155,6 +156,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value);
                     continue;
                 }
+                if (property.NameEquals("valueAddress"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    valueAddress = AddressValue.DeserializeAddressValue(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("content"))
                 {
                     content = property.Value.GetString();
@@ -201,7 +212,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueCurrency), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence));
+            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueCurrency), valueAddress.Value, content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence));
         }
     }
 }

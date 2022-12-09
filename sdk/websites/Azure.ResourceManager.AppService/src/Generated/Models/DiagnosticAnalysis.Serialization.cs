@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<IList<AbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<AnalysisData>> payload = default;
+            Optional<IList<AnalysisDetectorEvidences>> payload = default;
             Optional<IList<DetectorDefinition>> nonCorrelatedDetectors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,12 +100,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -159,10 +164,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AnalysisData> array = new List<AnalysisData>();
+                            List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AnalysisData.DeserializeAnalysisData(item));
+                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
                             }
                             payload = array;
                             continue;
@@ -186,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DiagnosticAnalysis(id, name, type, systemData, kind.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(abnormalTimePeriods), Optional.ToList(payload), Optional.ToList(nonCorrelatedDetectors));
+            return new DiagnosticAnalysis(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(abnormalTimePeriods), Optional.ToList(payload), Optional.ToList(nonCorrelatedDetectors), kind.Value);
         }
     }
 }

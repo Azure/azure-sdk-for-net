@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class IPAllocationCollection : ArmCollection, IEnumerable<IPAllocationResource>, IAsyncEnumerable<IPAllocationResource>
     {
-        private readonly ClientDiagnostics _ipAllocationIpAllocationsClientDiagnostics;
-        private readonly IpAllocationsRestOperations _ipAllocationIpAllocationsRestClient;
+        private readonly ClientDiagnostics _ipAllocationIPAllocationsClientDiagnostics;
+        private readonly IpAllocationsRestOperations _ipAllocationIPAllocationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="IPAllocationCollection"/> class for mocking. </summary>
         protected IPAllocationCollection()
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal IPAllocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ipAllocationIpAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IPAllocationResource.ResourceType, out string ipAllocationIpAllocationsApiVersion);
-            _ipAllocationIpAllocationsRestClient = new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipAllocationIpAllocationsApiVersion);
+            _ipAllocationIPAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(IPAllocationResource.ResourceType, out string ipAllocationIPAllocationsApiVersion);
+            _ipAllocationIPAllocationsRestClient = new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipAllocationIPAllocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
+            using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ipAllocationIpAllocationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIpAllocationsClientDiagnostics, Pipeline, _ipAllocationIpAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _ipAllocationIPAllocationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIPAllocationsClientDiagnostics, Pipeline, _ipAllocationIPAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
+            using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ipAllocationIpAllocationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data, cancellationToken);
-                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIpAllocationsClientDiagnostics, Pipeline, _ipAllocationIpAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _ipAllocationIPAllocationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data, cancellationToken);
+                var operation = new NetworkArmOperation<IPAllocationResource>(new IPAllocationOperationSource(Client), _ipAllocationIPAllocationsClientDiagnostics, Pipeline, _ipAllocationIPAllocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
-            using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Get");
+            using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _ipAllocationIpAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _ipAllocationIPAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IPAllocationResource(Client, response.Value), response.GetRawResponse());
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
-            using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Get");
+            using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Get");
             scope.Start();
             try
             {
-                var response = _ipAllocationIpAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken);
+                var response = _ipAllocationIPAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IPAllocationResource(Client, response.Value), response.GetRawResponse());
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<IPAllocationResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
+                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _ipAllocationIpAllocationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _ipAllocationIPAllocationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<IPAllocationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
+                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _ipAllocationIpAllocationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _ipAllocationIPAllocationsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.Network
         {
             Page<IPAllocationResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
+                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _ipAllocationIpAllocationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _ipAllocationIPAllocationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<IPAllocationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
+                using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _ipAllocationIpAllocationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _ipAllocationIPAllocationsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new IPAllocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
-            using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Exists");
+            using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _ipAllocationIpAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ipAllocationIPAllocationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,11 +306,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
 
-            using var scope = _ipAllocationIpAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Exists");
+            using var scope = _ipAllocationIPAllocationsClientDiagnostics.CreateScope("IPAllocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _ipAllocationIpAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken);
+                var response = _ipAllocationIPAllocationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAllocationName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

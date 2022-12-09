@@ -16,8 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MonitorPrivateLinkResourceListResult DeserializeMonitorPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkData>> value = default;
-            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MonitorPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -27,21 +26,16 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkData> array = new List<PrivateLinkData>();
+                    List<MonitorPrivateLinkResourceData> array = new List<MonitorPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkData.DeserializePrivateLinkData(item));
+                        array.Add(MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new MonitorPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value);
+            return new MonitorPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

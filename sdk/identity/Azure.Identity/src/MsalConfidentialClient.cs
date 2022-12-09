@@ -2,21 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensibility;
 
 namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
+        private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}]}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
         private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
+        private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
+        private readonly Uri _authority;
 
         internal string RedirectUrl { get; }
 
@@ -26,44 +29,59 @@ namespace Azure.Identity
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, options)
         {
             _clientSecret = clientSecret;
             RedirectUrl = redirectUrl;
-            RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, options)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
-            RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, options)
         {
             _assertionCallback = assertionCallback;
-            RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, options)
         {
             _asyncAssertionCallback = assertionCallback;
-            RegionalAuthority = regionalAuthority;
         }
 
-        internal RegionalAuthority? RegionalAuthority { get; }
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> appTokenProviderCallback, TokenCredentialOptions options)
+            : base(pipeline, tenantId, clientId, options)
+        {
+            _appTokenProviderCallback = appTokenProviderCallback;
+            _authority = options?.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud;
+        }
+
+        internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
 
         protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
-                .WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
+
+            // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
+            // The authority matches the one configured in the CredentialOptions.
+            if (_appTokenProviderCallback != null)
+            {
+                confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
+                    .WithAuthority(_authority.AbsoluteUri, TenantId, false)
+                    .WithInstanceDiscoveryMetadata(s_instanceMetadata);
+            }
+            else
+            {
+                confClientBuilder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId);
+            }
 
             if (_clientSecret != null)
             {
@@ -86,9 +104,9 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
-            if (RegionalAuthority.HasValue)
+            if (_appTokenProviderCallback == null && !string.IsNullOrEmpty(RegionalAuthority))
             {
-                confClientBuilder.WithAzureRegion(RegionalAuthority.Value.ToString());
+                confClientBuilder.WithAzureRegion(RegionalAuthority);
             }
 
             if (!string.IsNullOrEmpty(RedirectUrl))

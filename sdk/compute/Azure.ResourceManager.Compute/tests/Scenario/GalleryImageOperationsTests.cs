@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     Recording.GenerateAssetName("publisher"),
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
-            var imageInput = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
+            var imageInput = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, SupportedOperatingSystemType.Linux, identifier);
             var lro = await _gallery.GetGalleryImages().CreateOrUpdateAsync(WaitUntil.Completed, galleryImageName, imageInput);
             return lro.Value;
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var description = "This is a gallery for test";
             var update = new GalleryImagePatch()
             {
-                OSType = OperatingSystemTypes.Linux, // We have to put this here, otherwise we get a 409 Changing property 'galleryImage.properties.osType' is not allowed.
+                OSType = SupportedOperatingSystemType.Linux, // We have to put this here, otherwise we get a 409 Changing property 'galleryImage.properties.osType' is not allowed.
                 Description = description
             };
             var lro = await image.UpdateAsync(WaitUntil.Completed, update);
@@ -81,10 +81,12 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(description, updatedGalleryImage.Data.Description);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("testGallery_");
             var image = await CreateGalleryImageAsync(name);
             var tags = new Dictionary<string, string>()

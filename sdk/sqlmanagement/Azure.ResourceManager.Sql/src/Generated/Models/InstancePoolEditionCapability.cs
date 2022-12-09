@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedFamilies"> The supported families. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal InstancePoolEditionCapability(string name, IReadOnlyList<InstancePoolFamilyCapability> supportedFamilies, CapabilityStatus? status, string reason)
+        internal InstancePoolEditionCapability(string name, IReadOnlyList<InstancePoolFamilyCapability> supportedFamilies, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             SupportedFamilies = supportedFamilies;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The supported families. </summary>
         public IReadOnlyList<InstancePoolFamilyCapability> SupportedFamilies { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<SettableTransportConsumer>());
 
              mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<SettableTransportConsumer>());
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);

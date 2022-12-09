@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -244,11 +245,61 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task DetectLanguageBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            ValidateBatchDocumentsResult(results);
+            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void DetectLanguageBatchDisableServiceLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.DetectLanguageBatchAsync(batchConvenienceDocuments, options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("TextAnalyticsRequestOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task DetectLanguageBatchWithScriptTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            // BUGBUG: The only model version that currently supports script detection is 2022-04-10-preview, which is even older
+            // than the latest GA API version (i.e., 2022-05-01). Ideally, we shouldn't have to pin to such an old version.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/32234.
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions() { ModelVersion = "2022-04-10-preview" };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(new List<DetectLanguageInput>() {
+                new("1", "What is your name?"),
+                new("2", "Tumhara naam kya hai?")
+            }, options: options);
+
+            DetectLanguageResult result1 = results.Where(result => result.Id == "1").FirstOrDefault();
+            Assert.IsNotNull(result1);
+            Assert.IsNull(result1.PrimaryLanguage.Script);
+
+            DetectLanguageResult result2 = results.Where(result => result.Id == "2").FirstOrDefault();
+            Assert.IsNotNull(result2);
+            Assert.AreEqual(ScriptKind.Latin, result2.PrimaryLanguage.Script);
+
+            ValidateBatchDocumentsResult(results);
+        }
+
         private void ValidateInDocumenResult(DetectedLanguage language)
         {
             Assert.That(language.Name, Is.Not.Null.And.Not.Empty);
             Assert.That(language.Iso6391Name, Is.Not.Null.And.Not.Empty);
             Assert.GreaterOrEqual(language.ConfidenceScore, 0.0);
+            Assert.LessOrEqual(language.ConfidenceScore, 1.0);
             Assert.IsNotNull(language.Warnings);
         }
 

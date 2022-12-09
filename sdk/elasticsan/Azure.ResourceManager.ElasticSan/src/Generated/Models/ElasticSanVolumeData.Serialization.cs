@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,16 +19,17 @@ namespace Azure.ResourceManager.ElasticSan
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(CreationData))
@@ -46,31 +48,30 @@ namespace Azure.ResourceManager.ElasticSan
 
         internal static ElasticSanVolumeData DeserializeElasticSanVolumeData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<string> volumeId = default;
-            Optional<SourceCreationData> creationData = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> volumeId = default;
+            Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
             Optional<long> sizeGiB = default;
             Optional<IscsiTargetInfo> storageTarget = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -85,12 +86,17 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -104,7 +110,12 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("volumeId"))
                         {
-                            volumeId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            volumeId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("creationData"))
@@ -114,7 +125,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            creationData = SourceCreationData.DeserializeSourceCreationData(property0.Value);
+                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sizeGiB"))
@@ -141,7 +152,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanVolumeData(id, name, type, systemData, tags, location, volumeId.Value, creationData.Value, Optional.ToNullable(sizeGiB), storageTarget.Value);
+            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, Optional.ToNullable(sizeGiB), storageTarget.Value, Optional.ToDictionary(tags));
         }
     }
 }

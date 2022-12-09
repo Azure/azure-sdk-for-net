@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="currentValue"> Gets the current count of the allocated resources in the subscription. </param>
         /// <param name="limit"> Gets the maximum count of the resources that can be allocated in the subscription. </param>
         /// <param name="name"> Gets the name of the type of usage. </param>
-        internal StorageUsage(UsageUnit? unit, int? currentValue, int? limit, UsageName name)
+        internal StorageUsage(StorageUsageUnit? unit, int? currentValue, int? limit, StorageUsageName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets the unit of measurement. </summary>
-        public UsageUnit? Unit { get; }
+        public StorageUsageUnit? Unit { get; }
         /// <summary> Gets the current count of the allocated resources in the subscription. </summary>
         public int? CurrentValue { get; }
         /// <summary> Gets the maximum count of the resources that can be allocated in the subscription. </summary>
         public int? Limit { get; }
         /// <summary> Gets the name of the type of usage. </summary>
-        public UsageName Name { get; }
+        public StorageUsageName Name { get; }
     }
 }

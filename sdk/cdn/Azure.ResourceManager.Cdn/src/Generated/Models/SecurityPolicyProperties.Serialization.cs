@@ -5,9 +5,31 @@
 
 #nullable disable
 
+using System.Text.Json;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class SecurityPolicyProperties
+    public partial class SecurityPolicyProperties : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteEndObject();
+        }
+
+        internal static SecurityPolicyProperties DeserializeSecurityPolicyProperties(JsonElement element)
+        {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element);
+                }
+            }
+            return UnknownSecurityPolicyProperties.DeserializeUnknownSecurityPolicyProperties(element);
+        }
     }
 }

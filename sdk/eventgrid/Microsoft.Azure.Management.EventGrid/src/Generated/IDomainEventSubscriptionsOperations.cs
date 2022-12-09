@@ -24,6 +24,37 @@ namespace Microsoft.Azure.Management.EventGrid
     public partial interface IDomainEventSubscriptionsOperations
     {
         /// <summary>
+        /// Get delivery attributes for an event subscription for domain.
+        /// </summary>
+        /// <remarks>
+        /// Get all delivery attributes for an event subscription for domain.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='domainName'>
+        /// Name of the domain topic.
+        /// </param>
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DeliveryAttributeListResult>> GetDeliveryAttributesWithHttpMessagesAsync(string resourceGroupName, string domainName, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get an event subscription of a domain.
         /// </summary>
         /// <remarks>
@@ -234,37 +265,6 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListWithHttpMessagesAsync(string resourceGroupName, string domainName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get delivery attributes for an event subscription for domain.
-        /// </summary>
-        /// <remarks>
-        /// Get all delivery attributes for an event subscription for domain.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
-        /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain topic.
-        /// </param>
-        /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<DeliveryAttributeListResult>> GetDeliveryAttributesWithHttpMessagesAsync(string resourceGroupName, string domainName, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an event subscription to a domain.
         /// </summary>

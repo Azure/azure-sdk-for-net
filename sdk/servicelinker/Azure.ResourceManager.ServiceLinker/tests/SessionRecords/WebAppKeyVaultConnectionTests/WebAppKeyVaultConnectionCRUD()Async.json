@@ -49,7 +49,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "31",
+        "Content-Length": "20",
         "Content-Type": "application/json",
         "traceparent": "00-046c8688efa114b0d6f189dfe5ab0e40-460da37144ee1c10-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.4; Linux 5.4.0-1074-azure #77~18.04.1-Ubuntu SMP Wed Mar 30 15:36:02 UTC 2022)",
@@ -58,7 +58,6 @@
         "x-ms-serviceconnector-user-token": "Sanitized"
       },
       "RequestBody": {
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,

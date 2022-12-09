@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CidrIPAddress DeserializeCidrIPAddress(JsonElement element)
         {
-            Optional<string> baseIpAddress = default;
+            Optional<string> baseIPAddress = default;
             Optional<int> prefixLength = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseIpAddress"))
                 {
-                    baseIpAddress = property.Value.GetString();
+                    baseIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("prefixLength"))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CidrIPAddress(baseIpAddress.Value, Optional.ToNullable(prefixLength));
+            return new CidrIPAddress(baseIPAddress.Value, Optional.ToNullable(prefixLength));
         }
     }
 }

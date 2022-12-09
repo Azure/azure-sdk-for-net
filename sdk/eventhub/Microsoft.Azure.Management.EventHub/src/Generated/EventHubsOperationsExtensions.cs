@@ -24,207 +24,6 @@ namespace Microsoft.Azure.Management.EventHub
     public static partial class EventHubsOperationsExtensions
     {
             /// <summary>
-            /// Gets all the Event Hubs in a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
-            /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
-            /// </param>
-            public static IPage<Eventhub> ListByNamespace(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
-            {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the Event Hubs in a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
-            /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Eventhub>> ListByNamespaceAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates a new Event Hub as a nested resource within a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create an Event Hub resource.
-            /// </param>
-            public static Eventhub CreateOrUpdate(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, Eventhub parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a new Event Hub as a nested resource within a Namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create an Event Hub resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Eventhub> CreateOrUpdateAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, Eventhub parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes an Event Hub from the specified Namespace and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            public static void Delete(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an Event Hub from the specified Namespace and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets an Event Hubs description for the specified Event Hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            public static Eventhub Get(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets an Event Hubs description for the specified Event Hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Eventhub> GetAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the authorization rules for an Event Hub.
             /// </summary>
             /// <param name='operations'>
@@ -559,12 +358,25 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
             /// </param>
-            public static IPage<Eventhub> ListByNamespaceNext(this IEventHubsOperations operations, string nextPageLink)
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
+            /// </param>
+            public static IPage<Eventhub> ListByNamespace(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
             {
-                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -573,15 +385,169 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Eventhub>> ListByNamespaceNextAsync(this IEventHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Eventhub>> ListByNamespaceAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a new Event Hub as a nested resource within a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='eventHubName'>
+            /// The Event Hub name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create an Event Hub resource.
+            /// </param>
+            public static Eventhub CreateOrUpdate(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, Eventhub parameters)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a new Event Hub as a nested resource within a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='eventHubName'>
+            /// The Event Hub name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create an Event Hub resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Eventhub> CreateOrUpdateAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, Eventhub parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an Event Hub from the specified Namespace and resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='eventHubName'>
+            /// The Event Hub name
+            /// </param>
+            public static void Delete(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
+            {
+                operations.DeleteAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an Event Hub from the specified Namespace and resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='eventHubName'>
+            /// The Event Hub name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets an Event Hubs description for the specified Event Hub.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='eventHubName'>
+            /// The Event Hub name
+            /// </param>
+            public static Eventhub Get(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
+            {
+                return operations.GetAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an Event Hubs description for the specified Event Hub.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Namespace name
+            /// </param>
+            /// <param name='eventHubName'>
+            /// The Event Hub name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Eventhub> GetAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -616,6 +582,40 @@ namespace Microsoft.Azure.Management.EventHub
             public static async Task<IPage<AuthorizationRule>> ListAuthorizationRulesNextAsync(this IEventHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the Event Hubs in a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Eventhub> ListByNamespaceNext(this IEventHubsOperations operations, string nextPageLink)
+            {
+                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the Event Hubs in a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Eventhub>> ListByNamespaceNextAsync(this IEventHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualRouterPeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualRouterPeeringResource(ArmClient client, VirtualRouterPeeringData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualRouterPeeringResource(ArmClient client, VirtualRouterPeeringData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

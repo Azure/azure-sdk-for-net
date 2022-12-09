@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A class representing a collection of <see cref="EventHubResource" /> and their operations.
-    /// Each <see cref="EventHubResource" /> in the collection will belong to the same instance of <see cref="EventHubNamespaceResource" />.
-    /// To get an <see cref="EventHubCollection" /> instance call the GetEventHubs method from an instance of <see cref="EventHubNamespaceResource" />.
+    /// Each <see cref="EventHubResource" /> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource" />.
+    /// To get an <see cref="EventHubCollection" /> instance call the GetEventHubs method from an instance of <see cref="EventHubsNamespaceResource" />.
     /// </summary>
     public partial class EventHubCollection : ArmCollection, IEnumerable<EventHubResource>, IAsyncEnumerable<EventHubResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != EventHubNamespaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventHubNamespaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != EventHubsNamespaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

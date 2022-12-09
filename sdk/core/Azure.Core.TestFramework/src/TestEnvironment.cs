@@ -213,7 +213,7 @@ namespace Azure.Core.TestFramework
                         GetVariable("CLIENT_SECRET"),
                         new ClientSecretCredentialOptions()
                         {
-                             AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST"))
+                             AuthorityHost = new Uri(AuthorityHostUrl)
                         }
                     );
                 }

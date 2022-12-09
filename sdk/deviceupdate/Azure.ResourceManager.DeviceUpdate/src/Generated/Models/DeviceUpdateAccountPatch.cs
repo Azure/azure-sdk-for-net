@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> The type of identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

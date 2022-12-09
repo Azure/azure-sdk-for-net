@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,14 +18,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal ComputeUsage(int currentValue, long limit, UsageName name)
+        internal ComputeUsage(int currentValue, long limit, ComputeUsageName name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
-            Unit = "Count";
+            Unit = ComputeUsageUnit.Count;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal ComputeUsage(string unit, int currentValue, long limit, UsageName name)
+        internal ComputeUsage(ComputeUsageUnit unit, int currentValue, long limit, ComputeUsageName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -44,12 +42,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> An enum describing the unit of usage measurement. </summary>
-        public string Unit { get; }
+        public ComputeUsageUnit Unit { get; }
         /// <summary> The current usage of the resource. </summary>
         public int CurrentValue { get; }
         /// <summary> The maximum permitted usage of the resource. </summary>
         public long Limit { get; }
         /// <summary> The name of the type of usage. </summary>
-        public UsageName Name { get; }
+        public ComputeUsageName Name { get; }
     }
 }

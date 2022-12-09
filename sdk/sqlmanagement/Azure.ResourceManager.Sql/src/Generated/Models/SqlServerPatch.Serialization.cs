@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {

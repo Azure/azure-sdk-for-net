@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -177,12 +179,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerRegistrationName'>
             /// Name of the partner registration.
             /// </param>
-            /// <param name='partnerRegistrationUpdateParameters'>
-            /// Partner registration update information.
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
             /// </param>
-            public static PartnerRegistration Update(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters)
+            public static PartnerRegistration Update(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationUpdateParameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, partnerRegistrationName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -200,15 +202,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerRegistrationName'>
             /// Name of the partner registration.
             /// </param>
-            /// <param name='partnerRegistrationUpdateParameters'>
-            /// Partner registration update information.
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerRegistration> UpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerRegistration> UpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -454,12 +456,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerRegistrationName'>
             /// Name of the partner registration.
             /// </param>
-            /// <param name='partnerRegistrationUpdateParameters'>
-            /// Partner registration update information.
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
             /// </param>
-            public static PartnerRegistration BeginUpdate(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters)
+            public static PartnerRegistration BeginUpdate(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationUpdateParameters).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, partnerRegistrationName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -477,15 +479,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerRegistrationName'>
             /// Name of the partner registration.
             /// </param>
-            /// <param name='partnerRegistrationUpdateParameters'>
-            /// Partner registration update information.
+            /// <param name='tags'>
+            /// Tags of the partner registration resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerRegistration> BeginUpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerRegistration> BeginUpdateAsync(this IPartnerRegistrationsOperations operations, string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -10,6 +10,7 @@ namespace Azure.Communication.Tests
     {
         public const string LiveTestDynamicConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING";
         public const string LiveTestStaticConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING";
+        public const string CommunicationConnectionStringEmailVariableName = "COMMUNICATION_CONNECTION_STRING_EMAIL";
         public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
         private const string SkipIntSmsTestEnvironmentVariableName = "SKIP_INT_SMS_TEST";
         private const string SkipIntPhoneNumbersTestEnvironmentVariableName = "SKIP_INT_PHONENUMBERS_TEST";
@@ -19,7 +20,7 @@ namespace Azure.Communication.Tests
             LiveTestDynamicConnectionStringEnvironmentVariableName,
             options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
 
-        public Uri LiveTestDynamicEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
+        public Uri LiveTestDynamicEndpoint => new(Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("endpoint"));
 
         public string LiveTestDynamicAccessKey => Core.ConnectionString.Parse(LiveTestDynamicConnectionString).GetRequired("accesskey");
 
@@ -27,9 +28,17 @@ namespace Azure.Communication.Tests
                 LiveTestStaticConnectionStringEnvironmentVariableName,
                 options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
 
-        public Uri LiveTestStaticEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("endpoint"));
+        public Uri LiveTestStaticEndpoint => new(Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("endpoint"));
 
         public string LiveTestStaticAccessKey => Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("accesskey");
+
+        public string CommunicationConnectionStringEmail => GetRecordedVariable(
+            CommunicationConnectionStringEmailVariableName,
+            options => options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64));
+
+        public Uri CommunicationEmailEndpoint => new(Core.ConnectionString.Parse(CommunicationConnectionStringEmail).GetRequired("endpoint"));
+
+        public string CommunicationEmailAccessKey => Core.ConnectionString.Parse(CommunicationConnectionStringEmail).GetRequired("accesskey");
 
         public string DefaultTestPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret("+14255550123"));
 

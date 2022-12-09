@@ -3,14 +3,14 @@ This sample demonstrates how to recognize Personally Identifiable Information (P
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to recognize Personally Identifiable Information in a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if neded, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
+To create a new `TextAnalyticsClient` to recognize Personally Identifiable Information in a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if neded, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Recognizing Personally Identifiable Information in a single document
@@ -187,15 +187,6 @@ Console.WriteLine($"  Invalid document count: {entititesPerDocuments.Statistics.
 Console.WriteLine($"  Transaction count: {entititesPerDocuments.Statistics.TransactionCount}");
 Console.WriteLine("");
 ```
-
-To see the full example source files, see:
-* [Recognize PII Entities with specific categories](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesWithCategoriesFilter.cs)
-* [Synchronous RecognizePiiEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntities.cs)
-* [Asynchronous RecognizePiiEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesAsync.cs)
-* [Synchronous RecognizePiiEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesBatch.cs)
-* [Asynchronous RecognizePiiEntitiesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesBatchAsync.cs)
-* [Synchronous RecognizePiiEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesBatchConvenience.cs)
-* [Asynchronous RecognizePiiEntitiesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

@@ -26,7 +26,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
-        internal GalleryImageVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, StorageAccountType? storageAccountType, ReplicationMode? replicationMode) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode)
+        /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
+        internal GalleryImageVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations)
         {
         }
     }

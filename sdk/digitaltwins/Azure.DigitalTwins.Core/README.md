@@ -38,7 +38,7 @@ In order to interact with the Azure Digital Twins service, you will need to crea
 
 ## Key concepts
 
-Azure Digital Twins Preview is an Azure IoT service that creates comprehensive models of the physical environment.
+Azure Digital Twins is an Azure IoT service that creates comprehensive models of the physical environment.
 It can create spatial intelligence graphs to model the relationships and interactions between people, spaces, and devices.
 
 You can learn more about Azure Digital Twins by visiting [Azure Digital Twins Documentation][digital_twins_documentation]

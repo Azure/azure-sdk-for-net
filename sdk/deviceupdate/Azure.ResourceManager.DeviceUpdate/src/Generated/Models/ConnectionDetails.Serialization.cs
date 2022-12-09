@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         internal static ConnectionDetails DeserializeConnectionDetails(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> privateIpAddress = default;
+            Optional<string> privateIPAddress = default;
             Optional<string> linkIdentifier = default;
             Optional<string> groupId = default;
             Optional<string> memberName = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIpAddress = property.Value.GetString();
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("linkIdentifier"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new ConnectionDetails(id.Value, privateIpAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value);
+            return new ConnectionDetails(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value);
         }
     }
 }

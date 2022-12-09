@@ -25,14 +25,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             VirtualNetworkData vnetInput = new VirtualNetworkData()
             {
                 Location = resourceGroup.Data.Location,
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.0.0.0/16", }
-                },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                AddressPrefixes = { "10.0.0.0/16", },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24" } }
             };
             VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.CreateOrUpdate(WaitUntil.Completed, vnetName, vnetInput).WaitForCompletionAsync();
@@ -43,7 +37,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             PublicIPAddressData publicIPInput = new PublicIPAddressData()
             {
                 Location = resourceGroup.Data.Location,
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = "myDomain"
@@ -60,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = "ipConfig",
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = publicIPAddress.Id

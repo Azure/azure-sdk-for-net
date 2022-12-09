@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Messaging.EventHubs.Processor\src\Azure.Messaging.EventHubs.Processor.csproj" />
   </ItemGroup>
 
   <!-- Import Azure.Core shared source -->

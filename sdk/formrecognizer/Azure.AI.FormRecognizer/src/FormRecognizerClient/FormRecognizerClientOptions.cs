@@ -30,9 +30,6 @@ namespace Azure.AI.FormRecognizer
         {
             Version = version;
             AddLoggedHeadersAndQueryParameters();
-
-            //Default Audience to Azure Public Cloud
-            Audience ??= FormRecognizerAudience.AzurePublicCloud;
         }
 
         /// <summary>

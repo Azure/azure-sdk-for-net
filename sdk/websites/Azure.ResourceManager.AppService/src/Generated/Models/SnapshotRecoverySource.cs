@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Specifies the web app that snapshot contents will be retrieved from. </summary>
@@ -22,19 +24,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
-        internal SnapshotRecoverySource(string location, string id)
+        internal SnapshotRecoverySource(AzureLocation? location, ResourceIdentifier id)
         {
             Location = location;
             Id = id;
         }
 
         /// <summary> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary>
         /// ARM resource ID of the source app. 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

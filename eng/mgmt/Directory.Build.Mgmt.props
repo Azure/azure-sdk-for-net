@@ -13,7 +13,13 @@
   <Import Project="$(RepoRoot)\tools\bootstrapTools\bootstrap.targets" />
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
+    <!--
+      In order to be able to run our tests on .NET Framework we should use public signing by default so
+      we don't have to disable strong name validation for things that are delay signed.
+    -->
+    <PublicSign Condition="'$(PublicSign)' == ''">true</PublicSign>
+    <DelaySign Condition="'$(PublicSign)' == 'true'">false</DelaySign>
+    <DelaySign Condition="'$(PublicSign)' != 'true'">true</DelaySign>
     <AssemblyOriginatorKeyFile>$(RepoEngPath)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 </Project>

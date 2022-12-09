@@ -128,6 +128,48 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             TrackMessageAsSettled(message);
         }
 
+        ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
+            ServiceBusReceivedMessage message,
+            Dictionary<string, object> propertiesToModify,
+            string deadLetterReason,
+            string deadLetterErrorDescription = default,
+            CancellationToken cancellationToken = default)
+        {
+            if (_receiver != null)
+            {
+                await _receiver.DeadLetterMessageAsync(
+                    message,
+                    propertiesToModify,
+                    deadLetterReason,
+                    deadLetterErrorDescription,
+                    cancellationToken)
+                .ConfigureAwait(false);
+            }
+            else if (_eventArgs != null)
+            {
+                await _eventArgs.DeadLetterMessageAsync(
+                    message,
+                    propertiesToModify,
+                    deadLetterReason,
+                    deadLetterErrorDescription,
+                    cancellationToken)
+                .ConfigureAwait(false);
+            }
+            else
+            {
+                await _sessionEventArgs.DeadLetterMessageAsync(
+                    message,
+                    propertiesToModify,
+                    deadLetterReason,
+                    deadLetterErrorDescription,
+                    cancellationToken)
+                .ConfigureAwait(false);
+            }
+
+            TrackMessageAsSettled(message);
+        }
+
         ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
@@ -203,7 +245,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         {
             if (_receiver is ServiceBusSessionReceiver || _sessionEventArgs != null)
             {
-                throw new InvalidOperationException(Resources.CannotLockMessageOnSessionEntity);
+                throw new InvalidOperationException("Messages cannot be locked when working with session-enabled entities. Locks are handled at the session level." +
+                                                    "In order to manually renew the session lock, bind to the 'ServiceBusSessionMessageActions' type and call 'RenewSessionLockAsync'.");
             }
             if (_receiver != null)
             {

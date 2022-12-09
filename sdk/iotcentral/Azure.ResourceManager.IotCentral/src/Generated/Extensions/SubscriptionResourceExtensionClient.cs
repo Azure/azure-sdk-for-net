@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.IotCentral
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability
         /// Operation Id: Apps_CheckNameAvailability
         /// </summary>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppAvailabilityInfo>> CheckNameAvailabilityAppAsync(OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppNameAvailabilityAsync(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotCentralAppNameAvailability");
             scope.Start();
             try
             {
-                var response = await IotCentralAppAppsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, operationInputs, cancellationToken).ConfigureAwait(false);
+                var response = await IotCentralAppAppsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -156,15 +156,15 @@ namespace Azure.ResourceManager.IotCentral
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkNameAvailability
         /// Operation Id: Apps_CheckNameAvailability
         /// </summary>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppAvailabilityInfo> CheckNameAvailabilityApp(OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppNameAvailability(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotCentralAppNameAvailability");
             scope.Start();
             try
             {
-                var response = IotCentralAppAppsRestClient.CheckNameAvailability(Id.SubscriptionId, operationInputs, cancellationToken);
+                var response = IotCentralAppAppsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -179,15 +179,15 @@ namespace Azure.ResourceManager.IotCentral
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability
         /// Operation Id: Apps_CheckSubdomainAvailability
         /// </summary>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppAvailabilityInfo>> CheckSubdomainAvailabilityAppAsync(OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppSubdomainAvailabilityAsync(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSubdomainAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotCentralAppSubdomainAvailability");
             scope.Start();
             try
             {
-                var response = await IotCentralAppAppsRestClient.CheckSubdomainAvailabilityAsync(Id.SubscriptionId, operationInputs, cancellationToken).ConfigureAwait(false);
+                var response = await IotCentralAppAppsRestClient.CheckSubdomainAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -202,15 +202,15 @@ namespace Azure.ResourceManager.IotCentral
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.IoTCentral/checkSubdomainAvailability
         /// Operation Id: Apps_CheckSubdomainAvailability
         /// </summary>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppAvailabilityInfo> CheckSubdomainAvailabilityApp(OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public virtual Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppSubdomainAvailability(IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSubdomainAvailabilityApp");
+            using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckIotCentralAppSubdomainAvailability");
             scope.Start();
             try
             {
-                var response = IotCentralAppAppsRestClient.CheckSubdomainAvailability(Id.SubscriptionId, operationInputs, cancellationToken);
+                var response = IotCentralAppAppsRestClient.CheckSubdomainAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_ListTemplates
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppTemplate> GetTemplatesAppsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppTemplate>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IotCentralAppTemplate>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotCentral
                     throw;
                 }
             }
-            async Task<Page<AppTemplate>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<IotCentralAppTemplate>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.IotCentral
         /// Operation Id: Apps_ListTemplates
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppTemplate> GetTemplatesApps(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotCentralAppTemplate> GetTemplatesApps(CancellationToken cancellationToken = default)
         {
-            Page<AppTemplate> FirstPageFunc(int? pageSizeHint)
+            Page<IotCentralAppTemplate> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.IotCentral
                     throw;
                 }
             }
-            Page<AppTemplate> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<IotCentralAppTemplate> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = IotCentralAppAppsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplatesApps");
                 scope.Start();

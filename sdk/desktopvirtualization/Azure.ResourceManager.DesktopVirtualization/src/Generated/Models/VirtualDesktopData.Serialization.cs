@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> objectId = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             Optional<string> iconHash = default;
-            Optional<byte[]> iconContent = default;
+            Optional<BinaryData> iconContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -58,12 +58,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -102,14 +107,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            iconContent = property0.Value.GetBytesFromBase64("D");
+                            iconContent = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualDesktopData(id, name, type, systemData, objectId.Value, description.Value, friendlyName.Value, iconHash.Value, iconContent.Value);
+            return new VirtualDesktopData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, iconHash.Value, iconContent.Value);
         }
     }
 }

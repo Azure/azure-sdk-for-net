@@ -25,28 +25,24 @@ namespace Azure.ResourceManager.Sql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="namePropertiesName"> Name of the sync agent. </param>
         /// <param name="syncDatabaseId"> ARM resource id of the sync database in the sync agent. </param>
         /// <param name="lastAliveOn"> Last alive time of the sync agent. </param>
         /// <param name="state"> State of the sync agent. </param>
         /// <param name="isUpToDate"> If the sync agent version is up to date. </param>
-        /// <param name="expiryOn"> Expiration time of the sync agent version. </param>
+        /// <param name="expireOn"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
-        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, string syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expiryOn, string version) : base(id, name, resourceType, systemData)
+        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version) : base(id, name, resourceType, systemData)
         {
-            NamePropertiesName = namePropertiesName;
             SyncDatabaseId = syncDatabaseId;
             LastAliveOn = lastAliveOn;
             State = state;
             IsUpToDate = isUpToDate;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             Version = version;
         }
 
-        /// <summary> Name of the sync agent. </summary>
-        public string NamePropertiesName { get; }
         /// <summary> ARM resource id of the sync database in the sync agent. </summary>
-        public string SyncDatabaseId { get; set; }
+        public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> Last alive time of the sync agent. </summary>
         public DateTimeOffset? LastAliveOn { get; }
         /// <summary> State of the sync agent. </summary>
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> If the sync agent version is up to date. </summary>
         public bool? IsUpToDate { get; }
         /// <summary> Expiration time of the sync agent version. </summary>
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> Version of the sync agent. </summary>
         public string Version { get; }
     }

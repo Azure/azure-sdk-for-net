@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityInformation. </summary>
         internal ConnectivityInformation()
         {
-            Hops = new ChangeTrackingList<ConnectivityHop>();
+            Hops = new ChangeTrackingList<ConnectivityHopInfo>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityInformation. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
-        /// <param name="connectionStatus"> The connection status. </param>
+        /// <param name="networkConnectionStatus"> The connection status. </param>
         /// <param name="avgLatencyInMs"> Average latency in milliseconds. </param>
         /// <param name="minLatencyInMs"> Minimum latency in milliseconds. </param>
         /// <param name="maxLatencyInMs"> Maximum latency in milliseconds. </param>
         /// <param name="probesSent"> Total number of probes sent. </param>
         /// <param name="probesFailed"> Number of failed probes. </param>
-        internal ConnectivityInformation(IReadOnlyList<ConnectivityHop> hops, ConnectionStatus? connectionStatus, int? avgLatencyInMs, int? minLatencyInMs, int? maxLatencyInMs, int? probesSent, int? probesFailed)
+        internal ConnectivityInformation(IReadOnlyList<ConnectivityHopInfo> hops, NetworkConnectionStatus? networkConnectionStatus, int? avgLatencyInMs, int? minLatencyInMs, int? maxLatencyInMs, int? probesSent, int? probesFailed)
         {
             Hops = hops;
-            ConnectionStatus = connectionStatus;
+            NetworkConnectionStatus = networkConnectionStatus;
             AvgLatencyInMs = avgLatencyInMs;
             MinLatencyInMs = minLatencyInMs;
             MaxLatencyInMs = maxLatencyInMs;
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of hops between the source and the destination. </summary>
-        public IReadOnlyList<ConnectivityHop> Hops { get; }
+        public IReadOnlyList<ConnectivityHopInfo> Hops { get; }
         /// <summary> The connection status. </summary>
-        public ConnectionStatus? ConnectionStatus { get; }
+        public NetworkConnectionStatus? NetworkConnectionStatus { get; }
         /// <summary> Average latency in milliseconds. </summary>
         public int? AvgLatencyInMs { get; }
         /// <summary> Minimum latency in milliseconds. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ReplicationLinkListResult DeserializeReplicationLinkListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ReplicationLinkData>> value = default;
+            Optional<IReadOnlyList<SqlServerDatabaseReplicationLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReplicationLinkData> array = new List<ReplicationLinkData>();
+                    List<SqlServerDatabaseReplicationLinkData> array = new List<SqlServerDatabaseReplicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationLinkData.DeserializeReplicationLinkData(item));
+                        array.Add(SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(item));
                     }
                     value = array;
                     continue;

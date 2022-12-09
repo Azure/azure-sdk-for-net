@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedManagedHsmProperties DeserializeDeletedManagedHsmProperties(JsonElement element)
         {
-            Optional<ResourceIdentifier> mhsmId = default;
+            Optional<ResourceIdentifier> managedHsmId = default;
             Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mhsmId = new ResourceIdentifier(property.Value.GetString());
+                    managedHsmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new DeletedManagedHsmProperties(mhsmId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(purgeProtectionEnabled), Optional.ToDictionary(tags));
+            return new DeletedManagedHsmProperties(managedHsmId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(purgeProtectionEnabled), Optional.ToDictionary(tags));
         }
     }
 }

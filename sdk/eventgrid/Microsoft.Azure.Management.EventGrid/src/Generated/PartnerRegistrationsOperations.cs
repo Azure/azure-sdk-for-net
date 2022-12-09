@@ -314,8 +314,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerRegistrationName'>
         /// Name of the partner registration.
         /// </param>
-        /// <param name='partnerRegistrationUpdateParameters'>
-        /// Partner registration update information.
+        /// <param name='tags'>
+        /// Tags of the partner registration resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -323,10 +323,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PartnerRegistration>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PartnerRegistration>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<PartnerRegistration> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, partnerRegistrationUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PartnerRegistration> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerRegistrationName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1174,8 +1174,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerRegistrationName'>
         /// Name of the partner registration.
         /// </param>
-        /// <param name='partnerRegistrationUpdateParameters'>
-        /// Partner registration update information.
+        /// <param name='tags'>
+        /// Tags of the partner registration resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1198,7 +1198,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PartnerRegistration>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PartnerRegistration>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerRegistrationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1212,13 +1212,14 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "partnerRegistrationName");
             }
-            if (partnerRegistrationUpdateParameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "partnerRegistrationUpdateParameters");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            PartnerRegistrationUpdateParameters partnerRegistrationUpdateParameters = new PartnerRegistrationUpdateParameters();
+            if (tags != null)
+            {
+                partnerRegistrationUpdateParameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

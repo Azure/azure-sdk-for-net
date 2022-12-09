@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BgpSettings. </summary>
         public BgpSettings()
         {
-            BgpPeeringAddresses = new ChangeTrackingList<IPConfigurationBgpPeeringAddress>();
+            BgpPeeringAddresses = new ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress>();
         }
 
         /// <summary> Initializes a new instance of BgpSettings. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
         /// <param name="peerWeight"> The weight added to routes learned from this BGP speaker. </param>
         /// <param name="bgpPeeringAddresses"> BGP peering address with IP configuration ID for virtual network gateway. </param>
-        internal BgpSettings(long? asn, string bgpPeeringAddress, int? peerWeight, IList<IPConfigurationBgpPeeringAddress> bgpPeeringAddresses)
+        internal BgpSettings(long? asn, string bgpPeeringAddress, int? peerWeight, IList<NetworkIPConfigurationBgpPeeringAddress> bgpPeeringAddresses)
         {
             Asn = asn;
             BgpPeeringAddress = bgpPeeringAddress;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The weight added to routes learned from this BGP speaker. </summary>
         public int? PeerWeight { get; set; }
         /// <summary> BGP peering address with IP configuration ID for virtual network gateway. </summary>
-        public IList<IPConfigurationBgpPeeringAddress> BgpPeeringAddresses { get; }
+        public IList<NetworkIPConfigurationBgpPeeringAddress> BgpPeeringAddresses { get; }
     }
 }

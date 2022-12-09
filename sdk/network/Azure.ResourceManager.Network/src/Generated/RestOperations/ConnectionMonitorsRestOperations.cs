@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject tagsObject)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, NetworkTagsObject networkTagsObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(tagsObject);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(networkTagsObject);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -322,19 +322,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="tagsObject"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="networkTagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionMonitorData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectionMonitorData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, networkTagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -355,19 +355,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
-        /// <param name="tagsObject"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="networkTagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionMonitorData> UpdateTags(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public Response<ConnectionMonitorData> UpdateTags(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
             Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, connectionMonitorName, networkTagsObject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

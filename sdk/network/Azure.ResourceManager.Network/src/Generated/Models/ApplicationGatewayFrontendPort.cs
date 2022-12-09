@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend port of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendPort : SubResource
+    public partial class ApplicationGatewayFrontendPort : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
         public ApplicationGatewayFrontendPort()
@@ -17,29 +20,23 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the frontend port that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="port"> Frontend port. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
-        internal ApplicationGatewayFrontendPort(string id, string name, string etag, string resourceType, int? port, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             Port = port;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the frontend port that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> Frontend port. </summary>
         public int? Port { get; set; }
         /// <summary> The provisioning state of the frontend port resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

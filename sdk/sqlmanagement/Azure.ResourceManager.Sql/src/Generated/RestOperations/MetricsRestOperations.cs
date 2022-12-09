@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricListResult>> ListDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlMetricListResult>> ListDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        MetricListResult value = default;
+                        SqlMetricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
+                        value = SqlMetricListResult.DeserializeSqlMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricListResult> ListDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, CancellationToken cancellationToken = default)
+        public Response<SqlMetricListResult> ListDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        MetricListResult value = default;
+                        SqlMetricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
+                        value = SqlMetricListResult.DeserializeSqlMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="elasticPoolName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricListResult>> ListElasticPoolAsync(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, string filter, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlMetricListResult>> ListElasticPoolAsync(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        MetricListResult value = default;
+                        SqlMetricListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
+                        value = SqlMetricListResult.DeserializeSqlMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="elasticPoolName"/> or <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricListResult> ListElasticPool(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, string filter, CancellationToken cancellationToken = default)
+        public Response<SqlMetricListResult> ListElasticPool(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -207,9 +207,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        MetricListResult value = default;
+                        SqlMetricListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricListResult.DeserializeMetricListResult(document.RootElement);
+                        value = SqlMetricListResult.DeserializeSqlMetricListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

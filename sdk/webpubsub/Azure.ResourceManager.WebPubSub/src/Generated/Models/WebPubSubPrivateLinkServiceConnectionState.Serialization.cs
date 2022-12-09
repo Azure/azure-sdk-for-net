@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubPrivateLinkServiceConnectionState DeserializeWebPubSubPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<PrivateLinkServiceConnectionStatus> status = default;
+            Optional<WebPubSubPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new PrivateLinkServiceConnectionStatus(property.Value.GetString());
+                    status = new WebPubSubPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

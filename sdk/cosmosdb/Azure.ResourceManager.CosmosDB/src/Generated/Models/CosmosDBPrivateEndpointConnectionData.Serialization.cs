@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<PrivateEndpointProperty> privateEndpoint = default;
             Optional<CosmosDBPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<string> groupId = default;
@@ -67,12 +67,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -118,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new CosmosDBPrivateEndpointConnectionData(id, name, type, systemData, privateEndpoint.Value, privateLinkServiceConnectionState.Value, groupId.Value, provisioningState.Value);
+            return new CosmosDBPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, groupId.Value, provisioningState.Value);
         }
     }
 }

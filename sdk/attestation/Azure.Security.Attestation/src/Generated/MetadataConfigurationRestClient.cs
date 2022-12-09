@@ -48,8 +48,9 @@ namespace Azure.Security.Attestation
             return message;
         }
 
-        /// <summary> Retrieves metadata about the attestation signing keys in use by the attestation service. </summary>
+        /// <summary> Retrieves the OpenID Configuration data for the Azure Attestation Service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves metadata about the attestation signing keys in use by the attestation service. </remarks>
         public async Task<Response<object>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
@@ -68,8 +69,9 @@ namespace Azure.Security.Attestation
             }
         }
 
-        /// <summary> Retrieves metadata about the attestation signing keys in use by the attestation service. </summary>
+        /// <summary> Retrieves the OpenID Configuration data for the Azure Attestation Service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves metadata about the attestation signing keys in use by the attestation service. </remarks>
         public Response<object> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();

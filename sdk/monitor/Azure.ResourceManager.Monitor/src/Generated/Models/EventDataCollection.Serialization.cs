@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static EventDataCollection DeserializeEventDataCollection(JsonElement element)
         {
-            IReadOnlyList<EventData> value = default;
+            IReadOnlyList<EventDataInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<EventData> array = new List<EventData>();
+                    List<EventDataInfo> array = new List<EventDataInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventData.DeserializeEventData(item));
+                        array.Add(EventDataInfo.DeserializeEventDataInfo(item));
                     }
                     value = array;
                     continue;

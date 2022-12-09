@@ -46,9 +46,10 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     /// <remarks>
     ///   The <see cref="EventHubBufferedProducerClient"/> is safe to cache and use as a singleton for the lifetime of an
-    ///   application. This is the recommended approach, since the client is responsible for efficient network,
-    ///   CPU, and memory use. Calling <see cref="CloseAsync(bool, CancellationToken)"/> or <see cref="DisposeAsync"/>
-    ///   is required so that resources can be cleaned up after use.
+    ///   application, which is the recommended approach.  The producer is responsible for ensuring efficient network,
+    ///   CPU, and memory use. Calling either <see cref="CloseAsync(bool, CancellationToken)"/> or <see cref="DisposeAsync"/>
+    ///   when no more events will be enqueued or as the application is shutting down is required so that the buffer can be flushed
+    ///   and resources cleaned up properly.
     /// </remarks>
     ///
     /// <seealso cref="EventHubProducerClient" />
@@ -58,12 +59,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The maximum amount of time, in milliseconds, to allow for acquiring the semaphore guarding a partition's publishing eligibility.</summary>
         private const int PartitionPublishingGuardAcquireLimitMilliseconds = 100;
 
-        /// <summary>The maximum number of seconds to delay between checks when no events are available in the buffers for any partition.</summary>
-        private const double MaximumEmptyBufferDelaySeconds = 1;
-
-        /// <summary>The number of seconds to use as the starting delay between checks when no events are available in the buffers for any partition.</summary>
-        private static readonly double StartingEmptyBufferDelaySeconds = TimeSpan.FromMilliseconds(25).TotalSeconds;
-
         /// <summary>The base interval to delay when publishing is throttled and an operation needs to back-off before retrying.  Four seconds is recommended by the service.</summary>
         private static readonly TimeSpan ThrottleBackoffInterval = TimeSpan.FromSeconds(4);
 
@@ -71,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private static readonly TimeSpan MinimumPublishingWaitInterval = TimeSpan.FromMilliseconds(5);
 
         /// <summary>The default interval to delay for events to be available when building a batch to publish.</summary>
-        private static readonly TimeSpan DefaultPublishingDelayInterval = TimeSpan.FromMilliseconds(25);
+        private static readonly TimeSpan PublishingDelayInterval = TimeSpan.FromMilliseconds(100);
 
         /// <summary>The set of client options to use when options were not passed when the producer was instantiated.</summary>
         private static readonly EventHubBufferedProducerClientOptions DefaultOptions = new();
@@ -102,6 +97,9 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>A <see cref="CancellationTokenSource"/> instance to signal that any active publishing operations, including those in-flight, should terminate immediately.</summary>
         private CancellationTokenSource _activeSendOperationsCancellationSource;
+
+        /// <summary>A completion source that be awaited when publishing would like to pause and wait for an event to be enqueued.</summary>
+        private TaskCompletionSource<bool> _eventEnqueuedCompletionSource;
 
         /// <summary>The task responsible for managing the operations of the producer when it is running.</summary>
         private Task _producerManagementTask;
@@ -796,6 +794,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 var count = Interlocked.Increment(ref _totalBufferedEventCount);
                 Interlocked.Increment(ref partitionState.BufferedEventCount);
 
+                _eventEnqueuedCompletionSource?.TrySetResult(true);
                 Logger.BufferedProducerEventEnqueued(Identifier, EventHubName, logPartition, partitionId, operationId, count);
             }
             catch (Exception ex)
@@ -974,6 +973,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     var count = Interlocked.Increment(ref _totalBufferedEventCount);
                     Interlocked.Increment(ref activePartitionState.BufferedEventCount);
 
+                    _eventEnqueuedCompletionSource?.TrySetResult(true);
                     Logger.BufferedProducerEventEnqueued(Identifier, EventHubName, logPartition, eventPartitionId, operationId, count);
                 }
             }
@@ -1388,7 +1388,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 var totalWaitTime = _options.MaximumWaitTime ?? Timeout.InfiniteTimeSpan;
                 var remainingWaitTime = totalWaitTime;
-                var delayInterval = CalculateBatchingDelay(totalWaitTime, DefaultPublishingDelayInterval);
+                var delayInterval = CalculateBatchingDelay(totalWaitTime, PublishingDelayInterval);
 
                 // The wait time constraint should not consider creating the batch; start tracking after the batch is available to build.
 
@@ -1881,6 +1881,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 _backgroundTasksCancellationSource?.Cancel();
                 _backgroundTasksCancellationSource?.Dispose();
+                _backgroundTasksCancellationSource = null;
 
                 if (cancelActiveSendOperations)
                 {
@@ -2150,7 +2151,6 @@ namespace Azure.Messaging.EventHubs.Producer
                     existingSource?.Dispose();
 
                     var partitionIndex = 0u;
-                    var consecutiveEmptyBufferCount = 0;
                     var partitions = default(string[]);
                     var activeTasks = new List<Task>(_options.MaximumConcurrentSends);
 
@@ -2204,21 +2204,40 @@ namespace Azure.Messaging.EventHubs.Producer
                                 // Responsibility for releasing the guard semaphore is passed to the task.
 
                                 activeTasks.Add(PublishBatchToPartition(partitionState, releaseGuard: true, activeOperationCancellationSource.Token));
-                                consecutiveEmptyBufferCount = 0;
                             }
 
-                            // If there are no publishing tasks active, introduce a small delay to avoid a tight loop.  If no events are
-                            // available in the buffers, use an increasing delay to avoid wasting resources during periods of low activity.
+                            // If there are no events in the buffer, avoid a tight loop by blocking to wait for events to be enqueued
+                            // after a small delay.
 
-                            if (activeTasks.Count == 0)
+                            if (_totalBufferedEventCount == 0)
                             {
-                                var delay = _totalBufferedEventCount switch
-                                {
-                                    0 => CalculateEmptyBufferDelay(++consecutiveEmptyBufferCount, StartingEmptyBufferDelaySeconds, MaximumEmptyBufferDelaySeconds),
-                                    _ => DefaultPublishingDelayInterval
-                                };
+                                // If completion source doesn't exist or was already set, then swap in a new completion source to be
+                                // set when an event is enqueued.  Allow the publishing loop to tick for one additional check of the
+                                // buffers, to ensure that no events were enqueued during the swap.
 
-                                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+                                if ((_eventEnqueuedCompletionSource == null) || (_eventEnqueuedCompletionSource.Task.IsCompleted))
+                                {
+                                    // Because we want to ensure that calls to enqueue events see the new completion source, use
+                                    // an interlocked operation to ensure the new value is visible to other threads.
+
+                                    Interlocked.Exchange(ref _eventEnqueuedCompletionSource, new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously));
+                                    await Task.Delay(PublishingDelayInterval, cancellationToken).ConfigureAwait(false);
+                                }
+                                else
+                                {
+                                    // If the buffer is still empty and no event was enqueued since the completion source was created,
+                                    // await an event to be enqueued.  Clearing the completion source after the await does not need a memory
+                                    // fence; it does not matter if other threads see the stale value.
+
+                                    Logger.BufferedProducerIdleStart(Identifier, EventHubName, operationId);
+
+                                    var idleWatch = ValueStopwatch.StartNew();
+
+                                    await _eventEnqueuedCompletionSource.Task.AwaitWithCancellation(cancellationToken);
+                                    _eventEnqueuedCompletionSource = null;
+
+                                    Logger.BufferedProducerIdleComplete(Identifier, EventHubName, operationId, idleWatch.GetElapsedTime().TotalSeconds);
+                                }
                             }
                         }
                         catch (OperationCanceledException)
@@ -2390,26 +2409,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private static TimeSpan CalculateBatchingDelay(TimeSpan remainingTime,
                                                        TimeSpan delayInterval) => ((remainingTime != Timeout.InfiniteTimeSpan) && (remainingTime < delayInterval)) ? remainingTime : delayInterval;
-
-        /// <summary>
-        ///   Calculates the amount of delay to apply between checks when no events are available
-        ///   in the buffers for any partition, gradually increasing for each empty check until it
-        ///   reaches the maximum limit.
-        /// </summary>
-        ///
-        /// <param name="consecutiveEmptyBufferCount">The consecutive number of times that the buffers have been empty when checked.</param>
-        /// <param name="startingEmptyBufferDelaySeconds">The number of seconds to use as the starting point for the delay.</param>
-        /// <param name="maximumBufferDelaySeconds">The maximum number of seconds to allow as a delay.</param>
-        ///
-        /// <returns>The amount of delay to apply before checking the buffers for available events.</returns>
-        ///
-        private static TimeSpan CalculateEmptyBufferDelay(int consecutiveEmptyBufferCount,
-                                                          double startingEmptyBufferDelaySeconds,
-                                                          double maximumBufferDelaySeconds)
-        {
-            var delay = (Math.Pow(1.4, consecutiveEmptyBufferCount) * startingEmptyBufferDelaySeconds);
-            return TimeSpan.FromSeconds(delay > maximumBufferDelaySeconds ? maximumBufferDelaySeconds : delay);
-        }
 
         /// <summary>
         ///   The set of information needed to track and manage the active publishing

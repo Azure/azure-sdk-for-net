@@ -1,4 +1,4 @@
-# Azure Azure.ResourceManager.ServiceBus Management client library for .NET
+# Azure Service Bus Management client library for .NET
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
@@ -6,10 +6,10 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure Azure.ResourceManager.ServiceBus management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Service Bus management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ServiceBus --prerelease
+dotnet add package Azure.ResourceManager.ServiceBus
 ```
 
 ### Prerequisites
@@ -47,7 +47,7 @@ Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/
 
 Documentation is available to help you learn how to use this package
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md)
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
 - [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet)
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
 

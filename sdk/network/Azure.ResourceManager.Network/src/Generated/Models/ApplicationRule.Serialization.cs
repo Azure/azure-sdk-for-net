@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> targetFqdns = default;
             Optional<IList<string>> targetUrls = default;
             Optional<IList<string>> fqdnTags = default;
-            Optional<IList<string>> sourceIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
             Optional<bool> terminateTLS = default;
             Optional<IList<string>> webCategories = default;
             Optional<string> name = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("terminateTLS"))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationRule(name.Value, description.Value, ruleType, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(targetUrls), Optional.ToList(fqdnTags), Optional.ToList(sourceIpGroups), Optional.ToNullable(terminateTLS), Optional.ToList(webCategories));
+            return new ApplicationRule(name.Value, description.Value, ruleType, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(targetUrls), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), Optional.ToNullable(terminateTLS), Optional.ToList(webCategories));
         }
     }
 }

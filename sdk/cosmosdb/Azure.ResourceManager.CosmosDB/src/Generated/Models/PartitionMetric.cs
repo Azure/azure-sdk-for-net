@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metric values for a single partition. </summary>
-    public partial class PartitionMetric : BaseMetric
+    public partial class PartitionMetric : CosmosDBBaseMetric
     {
         /// <summary> Initializes a new instance of PartitionMetric. </summary>
         internal PartitionMetric()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
         /// <param name="partitionId"> The partition id (GUID identifier) of the metric values. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the metric values. </param>
-        internal PartitionMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, UnitType? unit, MetricName name, IReadOnlyList<MetricValue> metricValues, string partitionId, string partitionKeyRangeId) : base(startOn, endOn, timeGrain, unit, name, metricValues)
+        internal PartitionMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, Guid? partitionId, string partitionKeyRangeId) : base(startOn, endOn, timeGrain, unit, name, metricValues)
         {
             PartitionId = partitionId;
             PartitionKeyRangeId = partitionKeyRangeId;
         }
 
         /// <summary> The partition id (GUID identifier) of the metric values. </summary>
-        public string PartitionId { get; }
+        public Guid? PartitionId { get; }
         /// <summary> The partition key range id (integer identifier) of the metric values. </summary>
         public string PartitionKeyRangeId { get; }
     }

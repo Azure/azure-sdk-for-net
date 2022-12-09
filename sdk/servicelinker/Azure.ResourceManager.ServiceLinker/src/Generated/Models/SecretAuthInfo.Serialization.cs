@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal static SecretAuthInfo DeserializeSecretAuthInfo(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<SecretInfoBase> secretInfo = default;
-            AuthType authType = default;
+            Optional<SecretBaseInfo> secretInfo = default;
+            LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         secretInfo = null;
                         continue;
                     }
-                    secretInfo = SecretInfoBase.DeserializeSecretInfoBase(property.Value);
+                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authType"))
                 {
-                    authType = new AuthType(property.Value.GetString());
+                    authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
             }

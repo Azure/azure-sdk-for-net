@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual async Task<ArmOperation<VMwareClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, VMwareClusterData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VMwareClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, VMwareClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -96,10 +97,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public virtual ArmOperation<VMwareClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, VMwareClusterData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VMwareClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, VMwareClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareClusterClustersClientDiagnostics.CreateScope("VMwareClusterCollection.CreateOrUpdate");
             scope.Start();

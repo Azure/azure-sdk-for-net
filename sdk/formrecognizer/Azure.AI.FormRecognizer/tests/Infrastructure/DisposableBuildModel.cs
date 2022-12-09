@@ -51,8 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <returns>A <see cref="DisposableBuildModel"/> instance from which the trained model ID can be obtained.</returns>
         public static async Task<DisposableBuildModel> BuildModelAsync(DocumentModelAdministrationClient adminClient, Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId)
         {
-            BuildModelOperation operation = await adminClient.StartBuildModelAsync(trainingFilesUri, buildMode, modelId);
-            await operation.WaitForCompletionAsync();
+            BuildDocumentModelOperation operation = await adminClient.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, buildMode, modelId);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -62,6 +61,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <summary>
         /// Deletes the model this instance is associated with.
         /// </summary>
-        public async ValueTask DisposeAsync() => await _adminClient.DeleteModelAsync(ModelId);
+        public async ValueTask DisposeAsync() => await _adminClient.DeleteDocumentModelAsync(ModelId);
     }
 }

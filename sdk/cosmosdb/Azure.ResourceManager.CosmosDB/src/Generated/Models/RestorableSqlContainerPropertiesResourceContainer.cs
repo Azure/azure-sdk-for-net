@@ -6,25 +6,24 @@
 #nullable disable
 
 using System;
+using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB SQL container resource object. </summary>
-    public partial class RestorableSqlContainerPropertiesResourceContainer : SqlContainerResource
+    public partial class RestorableSqlContainerPropertiesResourceContainer : CosmosDBSqlContainerResourceInfo
     {
         /// <summary> Initializes a new instance of RestorableSqlContainerPropertiesResourceContainer. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public RestorableSqlContainerPropertiesResourceContainer(string id) : base(id)
+        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        public RestorableSqlContainerPropertiesResourceContainer(string containerName) : base(containerName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
         }
 
         /// <summary> Initializes a new instance of RestorableSqlContainerPropertiesResourceContainer. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
+        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
         /// <param name="defaultTtl"> Default time to live. </param>
@@ -33,14 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the container resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal RestorableSqlContainerPropertiesResourceContainer(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string self, string rid, float? ts, string etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
+        internal RestorableSqlContainerPropertiesResourceContainer(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string self, string rid, float? timestamp, ETag? etag) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
         {
             Self = self;
             Rid = rid;
-            Ts = ts;
-            Etag = etag;
+            Timestamp = timestamp;
+            ETag = etag;
         }
 
         /// <summary> A system generated property that specifies the addressable path of the container resource. </summary>
@@ -48,8 +47,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
     }
 }

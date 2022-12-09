@@ -14,7 +14,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <summary>
         /// The latest version of the networking service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_03_01_preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_03_01_Preview;
 
         internal string ApiVersion { get; }
 
@@ -25,7 +25,7 @@ namespace Azure.Communication.NetworkTraversal
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2022_03_01_preview => "2022-03-01-preview",
+                ServiceVersion.V2022_03_01_Preview => "2022-03-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -36,12 +36,10 @@ namespace Azure.Communication.NetworkTraversal
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             /// <summary>
             /// The V2022_02_01 GA version of the networking service.
             /// </summary>
-            V2022_03_01_preview = 1,
-#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
+            V2022_03_01_Preview = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

@@ -56,10 +56,11 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        /// <summary> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </summary>
+        /// <summary> Get a registered schema by its unique ID reference. </summary>
         /// <param name="id"> References specific schema in registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
         public async Task<ResponseWithHeaders<Stream, SchemaGetByIdHeaders>> GetByIdAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -82,10 +83,11 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        /// <summary> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </summary>
+        /// <summary> Get a registered schema by its unique ID reference. </summary>
         /// <param name="id"> References specific schema in registry namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
         public ResponseWithHeaders<Stream, SchemaGetByIdHeaders> GetById(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -127,11 +129,12 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        /// <summary> Gets the list of all versions of one schema. </summary>
+        /// <summary> Get list schema versions. </summary>
         /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
-        /// <param name="schemaName"> Name of schema being registered. </param>
+        /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <remarks> Gets the list of all versions of one schema. </remarks>
         public async Task<Response<SchemaVersions>> GetVersionsAsync(string groupName, string schemaName, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -159,11 +162,12 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        /// <summary> Gets the list of all versions of one schema. </summary>
+        /// <summary> Get list schema versions. </summary>
         /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
-        /// <param name="schemaName"> Name of schema being registered. </param>
+        /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <remarks> Gets the list of all versions of one schema. </remarks>
         public Response<SchemaVersions> GetVersions(string groupName, string schemaName, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -191,6 +195,92 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
+        internal HttpMessage CreateGetSchemaVersionRequest(string groupName, string schemaName, int schemaVersion)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/$schemaGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(schemaVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get specific schema versions. </summary>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <remarks> Gets one specific version of one schema. </remarks>
+        public async Task<ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders>> GetSchemaVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        {
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+
+            using var message = CreateGetSchemaVersionRequest(groupName, schemaName, schemaVersion);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new SchemaGetSchemaVersionHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get specific schema versions. </summary>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
+        /// <remarks> Gets one specific version of one schema. </remarks>
+        public ResponseWithHeaders<Stream, SchemaGetSchemaVersionHeaders> GetSchemaVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        {
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (schemaName == null)
+            {
+                throw new ArgumentNullException(nameof(schemaName));
+            }
+
+            using var message = CreateGetSchemaVersionRequest(groupName, schemaName, schemaVersion);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new SchemaGetSchemaVersionHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateQueryIdByContentRequest(string groupName, string schemaName, string contentType, Stream schemaContent)
         {
             var message = _pipeline.CreateMessage();
@@ -212,13 +302,14 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        /// <summary> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
+        /// <summary> Get ID for existing schema. </summary>
         /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
-        /// <param name="schemaName"> Name of requested schema. </param>
+        /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
+        /// <remarks> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
         public async Task<ResponseWithHeaders<SchemaQueryIdByContentHeaders>> QueryIdByContentAsync(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -250,13 +341,14 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        /// <summary> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
+        /// <summary> Get ID for existing schema. </summary>
         /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
-        /// <param name="schemaName"> Name of requested schema. </param>
+        /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
+        /// <remarks> Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
         public ResponseWithHeaders<SchemaQueryIdByContentHeaders> QueryIdByContent(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -308,16 +400,17 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        /// <summary>
-        /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
-        /// 
-        /// </summary>
+        /// <summary> Register new schema. </summary>
         /// <param name="groupName"> Schema group under which schema should be registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
-        /// <param name="schemaName"> Name of schema being registered. </param>
+        /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
+        /// <remarks>
+        /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
+        /// 
+        /// </remarks>
         public async Task<ResponseWithHeaders<SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)
@@ -349,16 +442,17 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        /// <summary>
-        /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
-        /// 
-        /// </summary>
+        /// <summary> Register new schema. </summary>
         /// <param name="groupName"> Schema group under which schema should be registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
-        /// <param name="schemaName"> Name of schema being registered. </param>
+        /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
+        /// <remarks>
+        /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
+        /// 
+        /// </remarks>
         public ResponseWithHeaders<SchemaRegisterHeaders> Register(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
             if (groupName == null)

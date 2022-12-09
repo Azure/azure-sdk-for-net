@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> The name of the server the elastic pool is in. </param>
         /// <param name="startOn"> The time the operation started (ISO8601 format). </param>
         /// <param name="state"> The current state of the operation. </param>
-        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string databaseName, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startOn, string state) : base(id, name, resourceType, systemData)
+        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string databaseName, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startOn, string state) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DatabaseName = databaseName;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The database name. </summary>
         public string DatabaseName { get; }
         /// <summary> The time the operation finished (ISO8601 format). </summary>

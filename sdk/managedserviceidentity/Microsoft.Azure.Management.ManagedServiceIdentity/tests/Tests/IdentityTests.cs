@@ -21,6 +21,7 @@ namespace ManagedServiceIdentity.Tests.Tests
         private string SecondTagKey = "secondTag";
         private string firstIdentityName = "testIdentity1";
         private string secondIdentityName = "testIdentity2";
+        private string federatedCredentialName = "ficTest";
 
         public void Dispose()
         {
@@ -90,6 +91,29 @@ namespace ManagedServiceIdentity.Tests.Tests
                 Assert.Equal(HttpStatusCode.OK, associatedResources.Response.StatusCode);
                 Assert.Equal(0, Enumerable.Count(associatedResources.Body));
 
+                /*-------------Federated Identity Credentials -------------*/
+                // List
+                var federatedCredentials = await msiMgmtClient.FederatedIdentityCredentials.ListWithHttpMessagesAsync(ResourceGroupName, firstIdentityName);
+                Assert.Equal(HttpStatusCode.OK, federatedCredentials.Response.StatusCode);
+                Assert.Equal(0, Enumerable.Count(federatedCredentials.Body));
+                // Create
+                FederatedIdentityCredential ficParams = new FederatedIdentityCredential("https://wwww.microsoft.com", "subject", new List<string> { "audience" });
+                var federatedIdentityCredential = msiMgmtClient.FederatedIdentityCredentials.CreateOrUpdate(ResourceGroupName, firstIdentityName, federatedCredentialName, ficParams);
+                VerifyFederatedIdentityCredential(federatedIdentityCredential, ficParams);
+                // Update
+                ficParams.Subject = "subject2";
+                var federatedIdentityCredentialUpdated = msiMgmtClient.FederatedIdentityCredentials.CreateOrUpdate(ResourceGroupName, firstIdentityName, federatedCredentialName, ficParams);
+                VerifyFederatedIdentityCredential(federatedIdentityCredentialUpdated, ficParams);
+                // Get
+                var getResponseFIC = await msiMgmtClient.FederatedIdentityCredentials.GetWithHttpMessagesAsync(ResourceGroupName, firstIdentityName, federatedCredentialName);
+                Assert.Equal(HttpStatusCode.OK, getResponseFIC.Response.StatusCode);
+                VerifyFederatedIdentityCredential(getResponseFIC.Body, ficParams);
+                // Delete
+                var deleteResponseFIC = await msiMgmtClient.FederatedIdentityCredentials.DeleteWithHttpMessagesAsync(ResourceGroupName, firstIdentityName, federatedCredentialName);
+                Assert.Equal(HttpStatusCode.OK, deleteResponseFIC.Response.StatusCode);
+                // Get deleted
+                await Assert.ThrowsAsync<CloudException>( async () => { await msiMgmtClient.FederatedIdentityCredentials.GetWithHttpMessagesAsync(ResourceGroupName, firstIdentityName, federatedCredentialName); });
+
                 /*-------------DELETE-------------*/
                 var deleteResponse1 = await msiMgmtClient.UserAssignedIdentities.DeleteWithHttpMessagesAsync(ResourceGroupName, firstIdentityName);
                 Assert.Equal(HttpStatusCode.OK, deleteResponse1.Response.StatusCode);
@@ -144,6 +168,13 @@ namespace ManagedServiceIdentity.Tests.Tests
             Assert.Equal(expectedFirstTagValue, firstTagValue);
             Assert.Equal(expectedSecondTagValue, secondTagValue);
             Assert.Equal(ExplicitIdentityType, identity.Type);
+        }
+
+        private void VerifyFederatedIdentityCredential(FederatedIdentityCredential credential, FederatedIdentityCredential compareTo)
+        {
+            Assert.Equal(credential.Issuer, compareTo.Issuer);
+            Assert.Equal(credential.Subject, compareTo.Subject);
+            Assert.Equal(credential.Audiences.ToArray(), compareTo.Audiences.ToArray());
         }
     }
 }

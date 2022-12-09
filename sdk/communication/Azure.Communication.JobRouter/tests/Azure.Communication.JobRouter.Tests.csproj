@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RouterClients\ScenarioTests\**" />
+    <EmbeddedResource Remove="RouterClients\ScenarioTests\**" />
+    <None Remove="RouterClients\ScenarioTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Messaging.EventGrid" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Messaging.EventGrid" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
+    <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
+    <ProjectReference Include="..\src\Azure.Communication.JobRouter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\tests.yml" Link="\tests.yml" />
+  </ItemGroup>
+
+
+</Project>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,16 +18,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="storageId"/> is null. </exception>
-        public FlowLogInformation(string targetResourceId, string storageId, bool enabled)
+        public FlowLogInformation(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, bool enabled)
         {
-            if (targetResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceId));
-            }
-            if (storageId == null)
-            {
-                throw new ArgumentNullException(nameof(storageId));
-            }
+            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            Argument.AssertNotNull(storageId, nameof(storageId));
 
             TargetResourceId = targetResourceId;
             StorageId = storageId;
@@ -40,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
-        internal FlowLogInformation(string targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, string storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format)
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ResourceIdentifier storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format)
         {
             TargetResourceId = targetResourceId;
             FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
@@ -51,28 +46,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the resource to configure for flow log and traffic analytics (optional) . </summary>
-        public string TargetResourceId { get; set; }
+        public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
-            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
             set
             {
                 if (FlowAnalyticsConfiguration is null)
                     FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
-                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
             }
         }
 
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
-        public string StorageId { get; set; }
+        public ResourceIdentifier StorageId { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>
         public bool Enabled { get; set; }
         /// <summary> Parameters that define the retention policy for flow log. </summary>
         public RetentionPolicyParameters RetentionPolicy { get; set; }
         /// <summary> Parameters that define the flow log format. </summary>
-        public FlowLogFormatParameters Format { get; set; }
+        public FlowLogProperties Format { get; set; }
     }
 }

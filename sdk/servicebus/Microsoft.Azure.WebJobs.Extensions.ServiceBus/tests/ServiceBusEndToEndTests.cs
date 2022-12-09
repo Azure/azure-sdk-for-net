@@ -20,11 +20,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Transactions;
+using Azure.Core.Tests;
+using Azure.Messaging.ServiceBus.Diagnostics;
+using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -114,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             do
             {
-                message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+                message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
                 if (message != null)
                 {
                     count++;
@@ -338,7 +340,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction.ReceiveActions.ReceiveMessagesAsync(1));
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction.ReceiveActions.PeekMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_ReceiveFromDeadLetterQueue()
+        {
+            await WriteTopicMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestReceiveFromDeadLetterQueue>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
                 await host.StopAsync();
             }
         }
@@ -359,6 +376,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveMessagesAsync(1));
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction_Batch.ReceiveActions.PeekMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
                 await host.StopAsync();
             }
@@ -368,6 +387,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_JsonPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
+        }
+
+        [Test]
+        public async Task TestBatch_ProcessMessagesSpan()
+        {
+            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
+            var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
+            var tags = scope.Activity.Tags.ToList();
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.AreEqual(2, scope.LinkedActivities.Count);
+            Assert.IsTrue(scope.IsCompleted);
+        }
+
+        [Test]
+        public async Task TestBatch_ProcessMessagesSpan_FailedScope()
+        {
+            ExpectedRemainingMessages = 2;
+            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws>();
+            var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
+            var tags = scope.Activity.Tags.ToList();
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.AreEqual(2, scope.LinkedActivities.Count);
+            Assert.IsTrue(scope.IsFailed);
         }
 
         [Test]
@@ -562,10 +610,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // start the host and wait for all messages to be processed
                 await host.StartAsync();
-                await TestHelpers.Await(() =>
-                {
-                    return DynamicConcurrencyTestJob.InvocationCount >= numMessages;
-                });
+                await TestHelpers.Await(
+                    () => DynamicConcurrencyTestJob.InvocationCount >= numMessages,
+                    timeout: 100 * 1000);
 
                 // ensure we've dynamically increased concurrency
                 concurrencyStatus = concurrencyManager.GetStatus(functionId);
@@ -605,6 +652,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var message = new ServiceBusMessage();
                 message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task BindToAmqpValueAsPoco()
+        {
+            var host = BuildHost<ServiceBusAmqpValueBindingAsPoco>();
+            using (host)
+            {
+                var message = new ServiceBusMessage();
+                message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue(new BinaryData(new TestPoco() { Name = "Key", Value = "Value" }).ToString());
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
@@ -937,6 +1001,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string label,
                 string correlationId,
                 string sessionId,
+                string replyToSessionId,
                 IDictionary<string, object> applicationProperties,
                 IDictionary<string, object> userProperties,
                 ServiceBusMessageActions messageActions,
@@ -959,6 +1024,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.Less(enqueuedTimeUtc, DateTime.UtcNow);
                 Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
                 Assert.IsNull(sessionId);
+                Assert.IsNull(replyToSessionId);
 
                 var message = SBQueue2SBQueue_GetOutputMessage(body);
                 await messageSender.SendMessageAsync(message);
@@ -1178,6 +1244,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string[] labelArray,
                 string[] correlationIdArray,
                 string[] sessionIdArray,
+                string[] replyToSessionIdArray,
+                string[] partitionKeyArray,
+                string[] transactionPartitionKeyArray,
                 IDictionary<string, object>[] applicationPropertiesArray,
                 IDictionary<string, object>[] userPropertiesArray,
                 ServiceBusMessageActions messageActions)
@@ -1193,13 +1262,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual("subject", labelArray[i]);
                     Assert.AreEqual("correlationId", correlationIdArray[i]);
                     Assert.AreEqual("application/json", contentTypeArray[i]);
+                    Assert.AreEqual("partitionKey", partitionKeyArray[i]);
+                    Assert.AreEqual("partitionKey", transactionPartitionKeyArray[i]);
                     Assert.AreEqual("value", applicationPropertiesArray[i]["key"]);
                     Assert.AreEqual("value", userPropertiesArray[i]["key"]);
                     Assert.Greater(expiresAtUtcArray[i], DateTime.UtcNow);
                     Assert.AreEqual(expiresAtArray[i].DateTime, expiresAtUtcArray[i]);
-                    Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow);
+                    // account for clock skew
+                    Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow.AddSeconds(2));
                     Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeUtcArray[i]);
                     Assert.IsNull(sessionIdArray[i]);
+                    Assert.IsNull(replyToSessionIdArray[i]);
                 }
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
@@ -1214,6 +1287,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws
+        {
+            public static void Run(
+                [ServiceBusTrigger(FirstQueueNameKey)] TestPoco[] array,
+                ServiceBusMessageActions messageActions)
+            {
+                string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+                throw new Exception("Test exception");
             }
         }
 
@@ -1292,6 +1377,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)] string input)
             {
                 Assert.AreEqual("foobar", input);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusAmqpValueBindingAsPoco
+        {
+            public static void BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] TestPoco poco)
+            {
+                Assert.AreEqual("Key", poco.Name);
+                Assert.AreEqual("Value", poco.Value);
                 _waitHandle1.Set();
             }
         }
@@ -1465,9 +1561,31 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
                     new[] { message.SequenceNumber });
 
-                var received = await receiveActions.ReceiveMessagesAsync(1);
-                Assert.IsNotNull(received);
+                var peeked = await receiveActions.PeekMessagesAsync(1, message.SequenceNumber);
+                Assert.IsNotEmpty(peeked);
+                Assert.AreEqual(message.SequenceNumber, peeked.Single().SequenceNumber);
 
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestReceiveFromDeadLetterQueue
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions)
+            {
+                await messageActions.DeadLetterMessageAsync(message, "DLQ");
+            }
+
+            public static async Task ReceiveFromDeadLetterAsync(
+                [ServiceBusTrigger(TopicNameKey,  FirstSubscriptionNameKey + "/$deadletterqueue")]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions)
+            {
+                Assert.AreEqual("DLQ", message.DeadLetterReason);
+                await messageActions.CompleteMessageAsync(message);
                 _waitHandle1.Set();
             }
         }
@@ -1612,21 +1730,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)] string message)
             {
                 ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
-            }
-        }
-
-        public class DrainModeHelper
-        {
-            public static async Task WaitForCancellationAsync(CancellationToken cancellationToken)
-            {
-                // Wait until the drain operation begins, signalled by the cancellation token
-                int elapsedTimeMills = 0;
-                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
-                {
-                    await Task.Delay(elapsedTimeMills += 500);
-                }
-                // Allow some time for the Service Bus SDK to start draining before returning
-                await Task.Delay(DrainSleepMills);
             }
         }
 

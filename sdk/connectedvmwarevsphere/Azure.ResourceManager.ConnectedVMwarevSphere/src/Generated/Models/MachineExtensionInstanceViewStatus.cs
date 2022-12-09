@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
-        internal MachineExtensionInstanceViewStatus(string code, StatusLevelTypes? level, string displayStatus, string message, DateTimeOffset? time)
+        internal MachineExtensionInstanceViewStatus(string code, MachineExtensionStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time)
         {
             Code = code;
             Level = level;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> The status code. </summary>
         public string Code { get; }
         /// <summary> The level code. </summary>
-        public StatusLevelTypes? Level { get; }
+        public MachineExtensionStatusLevelType? Level { get; }
         /// <summary> The short localizable label for the status. </summary>
         public string DisplayStatus { get; }
         /// <summary> The detailed status message, including for alerts and error messages. </summary>

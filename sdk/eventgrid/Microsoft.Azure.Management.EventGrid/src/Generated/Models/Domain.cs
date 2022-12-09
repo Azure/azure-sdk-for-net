@@ -109,13 +109,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="dataResidencyBoundary">Data Residency Boundary of the
         /// resource. Possible values include: 'WithinGeopair',
         /// 'WithinRegion'</param>
-        /// <param name="sku">The Sku pricing tier for the Event Grid Domain
-        /// resource.</param>
-        /// <param name="identity">Identity information for the Event Grid
-        /// Domain resource.</param>
         /// <param name="systemData">The system metadata relating to the Event
         /// Grid Domain resource.</param>
-        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), string dataResidencyBoundary = default(string), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo), SystemData systemData = default(SystemData))
+        /// <param name="identity">Identity information for the Event Grid
+        /// Domain resource.</param>
+        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), string dataResidencyBoundary = default(string), SystemData systemData = default(SystemData), IdentityInfo identity = default(IdentityInfo))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -130,9 +128,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             AutoCreateTopicWithFirstSubscription = autoCreateTopicWithFirstSubscription;
             AutoDeleteTopicWithLastSubscription = autoDeleteTopicWithLastSubscription;
             DataResidencyBoundary = dataResidencyBoundary;
-            Sku = sku;
-            Identity = identity;
             SystemData = systemData;
+            Identity = identity;
             CustomInit();
         }
 
@@ -268,11 +265,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string DataResidencyBoundary { get; set; }
 
         /// <summary>
-        /// Gets or sets the Sku pricing tier for the Event Grid Domain
+        /// Gets the system metadata relating to the Event Grid Domain
         /// resource.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Sku { get; set; }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets identity information for the Event Grid Domain
@@ -280,13 +277,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public IdentityInfo Identity { get; set; }
-
-        /// <summary>
-        /// Gets the system metadata relating to the Event Grid Domain
-        /// resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

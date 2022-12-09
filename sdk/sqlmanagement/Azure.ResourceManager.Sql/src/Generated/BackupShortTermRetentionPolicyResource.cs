@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class BackupShortTermRetentionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupShortTermRetentionPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string policyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicyName policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}";
             return new ResourceIdentifier(resourceId);

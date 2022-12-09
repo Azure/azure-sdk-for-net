@@ -21,11 +21,11 @@ namespace Microsoft.Extensions.Azure
         /// <param name="endpoint">The Conversation Analysis endpoint on which to operate.</param>
         /// <param name="credential">A <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
         /// <returns>An Azure client builder.</returns>
-        public static IAzureClientBuilder<ConversationAnalysisClient, ConversationAnalysisClientOptions> AddConversationAnalysisClient<TBuilder>(
+        public static IAzureClientBuilder<ConversationAnalysisClient, ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(
             this TBuilder builder,
             Uri endpoint,
             AzureKeyCredential credential) where TBuilder : IAzureClientFactoryBuilder =>
-            builder.RegisterClientFactory<ConversationAnalysisClient, ConversationAnalysisClientOptions>(options => new ConversationAnalysisClient(endpoint, credential, options));
+            builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>(options => new ConversationAnalysisClient(endpoint, credential, options));
 
         /// <summary>
         /// Registers a <see cref="ConversationAnalysisClient"/> instance with configuration loaded from the provided <paramref name="configuration"/> instance.
@@ -35,9 +35,9 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder">The client factory builder.</param>
         /// <param name="configuration">The client configuration.</param>
         /// <returns>An Azure client builder.</returns>
-        public static IAzureClientBuilder<ConversationAnalysisClient, ConversationAnalysisClientOptions> AddConversationAnalysisClient<TBuilder, TConfiguration>(
+        public static IAzureClientBuilder<ConversationAnalysisClient, ConversationsClientOptions> AddConversationAnalysisClient<TBuilder, TConfiguration>(
             this TBuilder builder,
             TConfiguration configuration) where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> =>
-            builder.RegisterClientFactory<ConversationAnalysisClient, ConversationAnalysisClientOptions>(configuration);
+            builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>(configuration);
     }
 }

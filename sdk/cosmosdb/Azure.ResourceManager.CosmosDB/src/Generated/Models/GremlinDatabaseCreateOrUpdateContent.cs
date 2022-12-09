@@ -19,12 +19,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Gremlin database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public GremlinDatabaseCreateOrUpdateContent(AzureLocation location, GremlinDatabaseResource resource) : base(location)
+        public GremlinDatabaseCreateOrUpdateContent(AzureLocation location, GremlinDatabaseResourceInfo resource) : base(location)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -38,22 +35,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a Gremlin database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal GremlinDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinDatabaseResource resource, CreateUpdateOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal GremlinDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinDatabaseResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> The standard JSON format of a Gremlin database. </summary>
-        internal GremlinDatabaseResource Resource { get; set; }
+        internal GremlinDatabaseResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB Gremlin database. </summary>
-        public string ResourceId
+        public string ResourceDatabaseName
         {
-            get => Resource is null ? default : Resource.Id;
-            set => Resource = new GremlinDatabaseResource(value);
+            get => Resource is null ? default : Resource.DatabaseName;
+            set => Resource = new GremlinDatabaseResourceInfo(value);
         }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateOptions Options { get; set; }
+        public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

@@ -11,11 +11,9 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/932e261a870475e1a29115f62def7bb84e4d7b38/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/904899a23a417768ce1ec1d5f89f33817f8ef8ad/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
 generation1-convenience-client: true
-modelerfour:
-    seal-single-value-enum-by-default: true
 ```
 
 ## Release hacks
@@ -26,6 +24,25 @@ directive:
 - remove-operation: Documents_SearchGet
 - remove-operation: Documents_SuggestGet
 ```
+
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class:
+- CharFilter
+- CognitiveServicesAccount
+- DataChangeDetectionPolicy
+- DataDeletionDetectionPolicy
+- LexicalAnalyzer
+- LexicalNormalizer
+- LexicalTokenizer
+- ScoringFunction
+- SearchIndexerDataIdentity
+- SearchIndexerSkill
+- Similarity
+- TokenFilter
+```
+
 
 ## CodeGen hacks
 These should eventually be fixed in the code generator.
@@ -300,6 +317,7 @@ directive:
           required: true,
           type: "string",
           enum: [ accept ],
+          "x-ms-enum": { "modelAsString": false },
           "x-ms-parameter-location": "method"
         });
       }
@@ -331,4 +349,18 @@ directive:
   from: swagger-document
   where: $.parameters.ClientRequestIdParameter
   transform: $["x-ms-parameter-location"] = "client";
+```
+
+## Seal single value enums
+
+Prevents the creation of single-value extensible enum in generated code. The following single-value enum will be generated as string constant.
+
+```yaml
+directive:
+  from: swagger-document
+  where: $.parameters.PreferHeaderParameter
+  transform: >
+    $["x-ms-enum"] = {
+      "modelAsString": false
+    }
 ```

@@ -37,96 +37,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
-        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, ContentType1 contentType, string pages, string locale, StringIndexType? stringIndexType, Stream analyzeRequest)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRaw("/formrecognizer", false);
-            uri.AppendPath("/documentModels/", false);
-            uri.AppendPath(modelId, true);
-            uri.AppendPath(":analyze", false);
-            if (pages != null)
-            {
-                uri.AppendQuery("pages", pages, true);
-            }
-            if (locale != null)
-            {
-                uri.AppendQuery("locale", locale, true);
-            }
-            if (stringIndexType != null)
-            {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
-            }
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (analyzeRequest != null)
-            {
-                request.Headers.Add("Content-Type", contentType.ToSerialString());
-                request.Content = RequestContent.Create(analyzeRequest);
-            }
-            return message;
-        }
-
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="analyzeRequest"> Analyze request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
-        {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-
-            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="analyzeRequest"> Analyze request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
-        {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-
-            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, AnalyzeDocumentRequest analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -150,7 +60,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (analyzeRequest != null)
@@ -163,14 +73,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
         /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
         public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
@@ -190,14 +101,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
         /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
         public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
@@ -206,6 +118,98 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
 
             using var message = CreateAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, analyzeRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, ContentType1 contentType, string pages, string locale, StringIndexType? stringIndexType, Stream analyzeRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", "2022-08-31", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (analyzeRequest != null)
+            {
+                request.Headers.Add("Content-Type", contentType.ToSerialString());
+                request.Content = RequestContent.Create(analyzeRequest);
+            }
+            return message;
+        }
+
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
             _pipeline.Send(message, cancellationToken);
             var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
             switch (message.Response.Status)
@@ -229,17 +233,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets the result of document analysis. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get analyze result. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="resultId"> Analyze operation result ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="resultId"/> is null. </exception>
+        /// <remarks> Gets the result of document analysis. </remarks>
         public async Task<Response<AnalyzeResultOperation>> GetAnalyzeDocumentResultAsync(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
@@ -267,11 +272,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Gets the result of document analysis. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get analyze result. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="resultId"> Analyze operation result ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="resultId"/> is null. </exception>
+        /// <remarks> Gets the result of document analysis. </remarks>
         public Response<AnalyzeResultOperation> GetAnalyzeDocumentResult(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
@@ -308,7 +314,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:build", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -318,10 +324,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Builds a custom document analysis model. </summary>
+        /// <summary> Build document model. </summary>
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Builds a custom document analysis model. </remarks>
         public async Task<ResponseWithHeaders<DocumentAnalysisBuildDocumentModelHeaders>> BuildDocumentModelAsync(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
@@ -341,10 +348,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Builds a custom document analysis model. </summary>
+        /// <summary> Build document model. </summary>
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Builds a custom document analysis model. </remarks>
         public ResponseWithHeaders<DocumentAnalysisBuildDocumentModelHeaders> BuildDocumentModel(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
@@ -373,7 +381,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:compose", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -383,10 +391,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Creates a new model from document types of existing models. </summary>
+        /// <summary> Compose document model. </summary>
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        /// <remarks> Creates a new document model from document types of existing document models. </remarks>
         public async Task<ResponseWithHeaders<DocumentAnalysisComposeDocumentModelHeaders>> ComposeDocumentModelAsync(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
@@ -406,10 +415,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Creates a new model from document types of existing models. </summary>
+        /// <summary> Compose document model. </summary>
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        /// <remarks> Creates a new document model from document types of existing document models. </remarks>
         public ResponseWithHeaders<DocumentAnalysisComposeDocumentModelHeaders> ComposeDocumentModel(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
@@ -438,7 +448,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -448,11 +458,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Generates authorization to copy a model to this location with specified modelId and optional description. </summary>
+        /// <summary> Generate copy authorization. </summary>
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
-        public async Task<Response<CopyAuthorization>> AuthorizeCopyDocumentModelAsync(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Generates authorization to copy a document model to this location with specified modelId and optional description. </remarks>
+        public async Task<Response<DocumentModelCopyAuthorization>> AuthorizeCopyDocumentModelAsync(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
             if (authorizeCopyRequest == null)
             {
@@ -465,9 +476,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        CopyAuthorization value = default;
+                        DocumentModelCopyAuthorization value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CopyAuthorization.DeserializeCopyAuthorization(document.RootElement);
+                        value = DocumentModelCopyAuthorization.DeserializeDocumentModelCopyAuthorization(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -475,11 +486,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Generates authorization to copy a model to this location with specified modelId and optional description. </summary>
+        /// <summary> Generate copy authorization. </summary>
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
-        public Response<CopyAuthorization> AuthorizeCopyDocumentModel(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Generates authorization to copy a document model to this location with specified modelId and optional description. </remarks>
+        public Response<DocumentModelCopyAuthorization> AuthorizeCopyDocumentModel(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
             if (authorizeCopyRequest == null)
             {
@@ -492,9 +504,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        CopyAuthorization value = default;
+                        DocumentModelCopyAuthorization value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CopyAuthorization.DeserializeCopyAuthorization(document.RootElement);
+                        value = DocumentModelCopyAuthorization.DeserializeDocumentModelCopyAuthorization(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -502,7 +514,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateCopyDocumentModelToRequest(string modelId, CopyAuthorization copyToRequest)
+        internal HttpMessage CreateCopyDocumentModelToRequest(string modelId, DocumentModelCopyAuthorization copyToRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -513,7 +525,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":copyTo", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -523,12 +535,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Copies model to the target resource, region, and modelId. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Copy document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisCopyDocumentModelToHeaders>> CopyDocumentModelToAsync(string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Copies document model to the target resource, region, and modelId. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisCopyDocumentModelToHeaders>> CopyDocumentModelToAsync(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -551,12 +564,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Copies model to the target resource, region, and modelId. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Copy document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisCopyDocumentModelToHeaders> CopyDocumentModelTo(string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Copies document model to the target resource, region, and modelId. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisCopyDocumentModelToHeaders> CopyDocumentModelTo(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -588,14 +602,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Lists all operations. </remarks>
         public async Task<Response<GetOperationsResponse>> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetOperationsRequest();
@@ -614,8 +629,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Lists all operations. </remarks>
         public Response<GetOperationsResponse> GetOperations(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetOperationsRequest();
@@ -644,17 +660,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets operation info. </summary>
+        /// <summary> Get operation. </summary>
         /// <param name="operationId"> Unique operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async Task<Response<ModelOperation>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets operation info. </remarks>
+        public async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -667,9 +684,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        ModelOperation value = default;
+                        OperationDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelOperation.DeserializeModelOperation(document.RootElement);
+                        value = OperationDetails.DeserializeOperationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -677,11 +694,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Gets operation info. </summary>
+        /// <summary> Get operation. </summary>
         /// <param name="operationId"> Unique operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public Response<ModelOperation> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets operation info. </remarks>
+        public Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -694,9 +712,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        ModelOperation value = default;
+                        OperationDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelOperation.DeserializeModelOperation(document.RootElement);
+                        value = OperationDetails.DeserializeOperationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -704,7 +722,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateGetModelsRequest()
+        internal HttpMessage CreateGetDocumentModelsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -713,25 +731,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GetModelsResponse>> GetModelsAsync(CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public async Task<Response<GetDocumentModelsResponse>> GetDocumentModelsAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetModelsRequest();
+            using var message = CreateGetDocumentModelsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -739,19 +758,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GetModelsResponse> GetModels(CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public Response<GetDocumentModelsResponse> GetDocumentModels(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetModelsRequest();
+            using var message = CreateGetDocumentModelsRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -759,7 +779,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateGetModelRequest(string modelId)
+        internal HttpMessage CreateGetDocumentModelRequest(string modelId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -769,32 +789,33 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets detailed model information. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<Response<DocumentModel>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets detailed document model information. </remarks>
+        public async Task<Response<DocumentModelDetails>> GetDocumentModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateGetModelRequest(modelId);
+            using var message = CreateGetDocumentModelRequest(modelId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentModel value = default;
+                        DocumentModelDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DocumentModel.DeserializeDocumentModel(document.RootElement);
+                        value = DocumentModelDetails.DeserializeDocumentModelDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -802,26 +823,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Gets detailed model information. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public Response<DocumentModel> GetModel(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets detailed document model information. </remarks>
+        public Response<DocumentModelDetails> GetDocumentModel(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateGetModelRequest(modelId);
+            using var message = CreateGetDocumentModelRequest(modelId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentModel value = default;
+                        DocumentModelDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DocumentModel.DeserializeDocumentModel(document.RootElement);
+                        value = DocumentModelDetails.DeserializeDocumentModelDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -829,7 +851,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateDeleteModelRequest(string modelId)
+        internal HttpMessage CreateDeleteDocumentModelRequest(string modelId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -839,24 +861,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Deletes model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Delete document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Deletes document model. </remarks>
+        public async Task<Response> DeleteDocumentModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateDeleteModelRequest(modelId);
+            using var message = CreateDeleteDocumentModelRequest(modelId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -867,18 +890,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Deletes model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Delete document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Deletes document model. </remarks>
+        public Response DeleteDocumentModel(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateDeleteModelRequest(modelId);
+            using var message = CreateDeleteDocumentModelRequest(modelId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -889,7 +913,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateGetInfoRequest()
+        internal HttpMessage CreateGetResourceDetailsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -898,25 +922,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-08-31", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Return basic info about the current resource. </summary>
+        /// <summary> Get resource info. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GetInfoResponse>> GetInfoAsync(CancellationToken cancellationToken = default)
+        /// <remarks> Return information about the current resource. </remarks>
+        public async Task<Response<ServiceResourceDetails>> GetResourceDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetInfoRequest();
+            using var message = CreateGetResourceDetailsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetInfoResponse value = default;
+                        ServiceResourceDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetInfoResponse.DeserializeGetInfoResponse(document.RootElement);
+                        value = ServiceResourceDetails.DeserializeServiceResourceDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -924,19 +949,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Return basic info about the current resource. </summary>
+        /// <summary> Get resource info. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GetInfoResponse> GetInfo(CancellationToken cancellationToken = default)
+        /// <remarks> Return information about the current resource. </remarks>
+        public Response<ServiceResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetInfoRequest();
+            using var message = CreateGetResourceDetailsRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetInfoResponse value = default;
+                        ServiceResourceDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetInfoResponse.DeserializeGetInfoResponse(document.RootElement);
+                        value = ServiceResourceDetails.DeserializeServiceResourceDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -958,10 +984,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Lists all operations. </remarks>
         public async Task<Response<GetOperationsResponse>> GetOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -985,10 +1012,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> Lists all operations. </remarks>
         public Response<GetOperationsResponse> GetOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1012,7 +1040,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal HttpMessage CreateGetModelsNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetDocumentModelsNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1026,26 +1054,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<GetModelsResponse>> GetModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public async Task<Response<GetDocumentModelsResponse>> GetDocumentModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetModelsNextPageRequest(nextLink);
+            using var message = CreateGetDocumentModelsNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1053,26 +1082,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<GetModelsResponse> GetModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public Response<GetDocumentModelsResponse> GetDocumentModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetModelsNextPageRequest(nextLink);
+            using var message = CreateGetDocumentModelsNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

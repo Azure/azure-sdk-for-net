@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.4 (Unreleased)
+## 5.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,119 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.3.0-beta.1 (2022-12-01)
+
+### Features Added
+- Added support for dynamic classification.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
+  - Added the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
+  - Added the following classes: `DynamicClassifyDocumentResultCollection` and `DynamicClassifyOptions`.
+  - Added the `ClassificationType` enum.
+- Added support for extractive summarization.
+  - Added the `TextAnalyticsActions.ExtractSummaryActions` property to support extractive summarization in a batch of actions.
+  - Added the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to perform extractive summarization on a collection of documents.
+- Added support for abstractive summarization.
+  - Added the `TextAnalyticsActions.AbstractSummaryActions` property to support abstractive summarization in a batch of actions.
+  - Added the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to perform abstractive summarization on a collection of documents.
+- Added support for Fast Healthcare Interoperability Resources (FHIR) bundles as part of healthcare text analysis.
+  - Added the `AnalyzeHealthcareEntitiesOptions.FhirVersion` and `AnalyzeHealthcareEntitiesOptions.DocumentType` properties.
+  - Added the `AnalyzeHealthcareEntitiesAction.FhirVersion` and `AnalyzeHealthcareEntitiesAction.DocumentType` properties.
+  - Added the `AnalyzeHealthcareEntitiesResult.FhirBundle` property.
+  - Added the `WellKnownFhirVersion` and `HealthcareDocumentType` enums.
+- Added support for confidence scores in healthcare entity relations.
+  - Added the `HealthcareEntityRelation.ConfidenceScore` property.
+- Added support for named entity recognition (NER) resolutions.
+  - Added the `CategorizedEntity.Resolutions` property.
+  - Added the following classes: `AgeResolution`, `AreaResolution`, `BaseResolution`, `BooleanResolution`, `CurrencyResolution`, `DateTimeResolution`, `InformationResolution`, `LengthResolution`, `NumberResolution`, `NumericRangeResolution`, `OrdinalResolution`, `SpeedResolution`, `TemperatureResolution`, `TemporalSpanResolution` `VolumeResolution`, and `WeightResolution`.
+  - Added the following enums: `AgeUnit`, `AreaUnit`, `DateTimeSubKind`, `InformationUnit`,`LengthUnit`, `NumberKind`, `RangeKind`, `RelativeTo`, `SpeedUnit`, `TemperatureUnit`,`TemporalModifier`, `VolumeUnit`, and `WeightUnit`.
+- Added support for automatic language detection.
+  - Added the `AbstractSummaryOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `AbstractSummaryResult.DetectedLanguage` property.
+  - Added the `AnalyzeActionsOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `AnalyzeHealthcareEntitiesOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `AnalyzeHealthcareEntitiesResult.DetectedLanguage` property.
+  - Added the `AnalyzeSentimentResult.DetectedLanguage` property.
+  - Added the `ClassifyDocumentResult.DetectedLanguage` property.
+  - Added the `ExtractKeyPhrasesResult.DetectedLanguage` property.
+  - Added the `ExtractSummaryOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `ExtractSummaryResult.DetectedLanguage` property.
+  - Added the `MultiLabelClassifyOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `RecognizeCustomEntitiesOptions.AutoDetectionDefaultLanguage` property.
+  - Added the `RecognizeEntitiesResult.DetectedLanguage` property.
+  - Added the `RecognizeLinkedEntitiesResult.DetectedLanguage` property.
+  - Added the `RecognizePiiEntitiesResult.DetectedLanguage` property.
+  - Added the `SingleLabelClassifyOptions.AutoDetectionDefaultLanguage` property.
+- Added support for script detection.
+  - Added the `DetectedLanguage.Script` property.
+  - Added the `ScriptKind` enum.
+
+### Other Changes
+The client now defaults to targeting service API version `2022-10-01-preview`.
+
+## 5.2.0 (2022-09-08)
+
+### Features Added
+
+- Added `DisplayName` property to the following classes to set the optional display name of the operations below:
+  - `AnalyzeHealthcareEntitiesOptions`
+  - `MultiLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOptions`
+  - `SingleLabelClassifyOptions`
+- Added `DisplayName` property to the following operations to read the optional display name set on options classes above:
+  - `AnalyzeHealthcareEntitiesOperation` from `AnalyzeHealthcareEntitiesOptions`
+  - `ClassifyDocumentOperation` from `MultiLabelClassifyOptions` and `SingleLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOperation` from `RecognizeCustomEntitiesOptions`
+- Added the following members to `HealthcareEntityCategory` following proper naming guidelines:
+  - `Age`
+  - `GeneOrProtein`
+  - `SymptomOrSign`
+
+### Breaking Changes
+
+- Changed type `MultiLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `RecognizeCustomEntitiesOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `SingleLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
+
+### Bugs Fixed
+
+- The values of `HealthcareEntityCategory` have been redefined to match what the service actually returns. ([#20024](https://github.com/Azure/azure-rest-api-specs/issues/20024))
+
+### Other Changes
+
+- Validate that a number of operations and model properties are only used for API versions in which they were defined, or newer API versions.
+
+## 5.2.0-beta.4 (2022-08-12)
+
+### Features Added
+
+- Added `AnalyzeActionsOperation.Cancel` and `CancelAsync` to cancel a batch of actions.
+- Added `AnalyzeActionsResult.AnalyzeHealthcareEntitiesResults` to get healthcare entities from a batch of actions.
+- Added `TextAnalyticsActions.AnalyzeHealthcareEntitiesActions` to analyze healthcare entities in a batch of actions.
+- Added `TextAnalyticsClient.StartRecognizeCustomEntities` and `StartRecognizeCustomEntitiesAsync` to recognize custom entities in a collection of documents.
+- Added `TextAnalyticsClient.StartSingleLabelClassify` and `StartSingleLabelClassifyAsync` to classify documents with a single label.
+- Added `TextAnalyticsClient.StartMultiLabelClassify` and `StartMultiLabelClassifyAsync` to classify documents with multiple labels.
+
+### Breaking Changes
+
+- Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `ClassifyDocumentResult`.
+- Removed Extractive Text Summarization and related models. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
+- Removed Extractive Text Summarization, Multi Label Classification, and Single Label Classification from legacy client library.
+- Removed `HealthcareTaskParameters.FhirVersion` and `AnalyzeHealthcareEntitiesResult.FhirBundle`. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
+- Renamed `LabelClassifyResult.Classifications` to `LabelClassifyResult.ClassificationCategories`.
+- Renamed `MultiCategoryClassifyAction` to `MultiLabelClassifyAction`.
+- Renamed `MultiCategoryClassifyActionResult` to `MultiLabelClassifyActionResult`.
+- Renamed `MultiCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `MultiCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
+- Renamed `SingleCategoryClassifyAction` to `SingleLabelClassifyAction`.
+- Renamed `SingleCategoryClassifyActionResult` to `SingleLabelClassifyActionResult`.
+- Renamed `SingleCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `SingleCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
+
+### Other Changes
+
+- We are now targeting the service version `2022-05-01` API as the default instead of `3.2-preview.2`.
+- The legacy client library is now targeting the service version `3.1`.
 
 ## 5.2.0-beta.3 (2022-05-18)
 
@@ -124,7 +237,7 @@ This is the first version of the client library that targets the Azure Cognitive
 - For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
 - Removed `RelatedEntities`.
 - `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
-- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level.
 
 ### Fixes
 - `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
@@ -283,7 +396,7 @@ This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/m
 
 ### Major changes from `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`
 - This library supports only the Text Analytics Service v3.0-preview.1 API, whereas the previous library supports only earlier versions.
-- The namespace/package name for Azure Text Analytics client library has changed from 
+- The namespace/package name for Azure Text Analytics client library has changed from
     `Microsoft.Azure.CognitiveServices.Language.TextAnalytics` to `Azure.AI.TextAnalytics`
 - Added support for:
   - Subscription key and AAD authentication for both synchronous and asynchronous clients.

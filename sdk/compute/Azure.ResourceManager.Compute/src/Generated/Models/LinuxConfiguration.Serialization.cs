@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<bool> disablePasswordAuthentication = default;
             Optional<SshConfiguration> ssh = default;
-            Optional<bool> provisionVMAgent = default;
+            Optional<bool> provisionVmAgent = default;
             Optional<LinuxPatchSettings> patchSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisionVMAgent = property.Value.GetBoolean();
+                    provisionVmAgent = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("patchSettings"))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVMAgent), patchSettings.Value);
+            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVmAgent), patchSettings.Value);
         }
     }
 }

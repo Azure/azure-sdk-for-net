@@ -19,12 +19,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a MongoDB database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public MongoDBDatabaseCreateOrUpdateContent(AzureLocation location, MongoDBDatabaseResource resource) : base(location)
+        public MongoDBDatabaseCreateOrUpdateContent(AzureLocation location, MongoDBDatabaseResourceInfo resource) : base(location)
         {
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
+            Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
         }
@@ -38,22 +35,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a MongoDB database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal MongoDBDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoDBDatabaseResource resource, CreateUpdateOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal MongoDBDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoDBDatabaseResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> The standard JSON format of a MongoDB database. </summary>
-        internal MongoDBDatabaseResource Resource { get; set; }
+        internal MongoDBDatabaseResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB MongoDB database. </summary>
-        public string ResourceId
+        public string ResourceDatabaseName
         {
-            get => Resource is null ? default : Resource.Id;
-            set => Resource = new MongoDBDatabaseResource(value);
+            get => Resource is null ? default : Resource.DatabaseName;
+            set => Resource = new MongoDBDatabaseResourceInfo(value);
         }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateOptions Options { get; set; }
+        public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

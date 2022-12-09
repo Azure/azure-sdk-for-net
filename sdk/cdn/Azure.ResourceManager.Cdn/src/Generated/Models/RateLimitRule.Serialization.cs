@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Cdn.Models
             string name = default;
             Optional<CustomRuleEnabledState> enabledState = default;
             int priority = default;
-            IList<MatchCondition> matchConditions = default;
-            ActionType action = default;
+            IList<CustomRuleMatchCondition> matchConditions = default;
+            OverrideActionType action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rateLimitThreshold"))
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("matchConditions"))
                 {
-                    List<MatchCondition> array = new List<MatchCondition>();
+                    List<CustomRuleMatchCondition> array = new List<CustomRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item));
                     }
                     matchConditions = array;
                     continue;
                 }
                 if (property.NameEquals("action"))
                 {
-                    action = new ActionType(property.Value.GetString());
+                    action = new OverrideActionType(property.Value.GetString());
                     continue;
                 }
             }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// operation.</param>
         /// <param name="error">Error message containing code, description and
         /// details</param>
-        public AsyncOperationResult(string status = default(string), ErrorMesssage error = default(ErrorMesssage))
+        public AsyncOperationResult(string status = default(string), ErrorMessage error = default(ErrorMessage))
         {
             Status = status;
             Error = error;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         /// Gets or sets error message containing code, description and details
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorMesssage Error { get; set; }
+        public ErrorMessage Error { get; set; }
 
     }
 }

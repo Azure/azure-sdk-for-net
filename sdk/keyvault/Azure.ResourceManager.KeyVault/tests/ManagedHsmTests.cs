@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 true,
                 new List<string> { ObjectId },
                 ManagedHsmProperties.NetworkRuleSet,
-                PublicNetworkAccess.Disabled,
+                ManagedHsmPublicNetworkAccess.Disabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.True(count == 1);
 
             // Update
-            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Enabled;
+            ManagedHsmProperties.PublicNetworkAccess = ManagedHsmPublicNetworkAccess.Enabled;
             ManagedHsmProperties.NetworkRuleSet.DefaultAction = "Allow";
             parameters = new ManagedHsmData(Location)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 true,
                 new List<string> { ObjectId },
                 ManagedHsmProperties.NetworkRuleSet,
-                PublicNetworkAccess.Enabled,
+                ManagedHsmPublicNetworkAccess.Enabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
 
@@ -145,7 +145,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             try
             {
                 Response<DeletedManagedHsmResource> deletedMhsm = await Subscription.GetDeletedManagedHsmAsync(Location, MHSMName);
-                Assert.NotNull(managedHsm.Value);
+                Assert.NotNull(deletedMhsm.Value);
+                Assert.NotNull(deletedMhsm.Value.Data.Properties.DeletionOn);
                 await deletedMhsm.Value.PurgeDeletedAsync(WaitUntil.Completed);
             }
             catch (Exception)
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 await ManagedHsmCollection.GetAsync(MHSMName);
             });
 
-            parameters.Properties.CreateMode = CreateMode.Recover;
+            parameters.Properties.CreateMode = ManagedHsmCreateMode.Recover;
 
             // Recover in recover mode
             ArmOperation<ManagedHsmResource> recoveredVault2 = await ManagedHsmCollection.CreateOrUpdateAsync(WaitUntil.Completed, MHSMName, parameters).ConfigureAwait(false);
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnableSoftDelete,
             List<string> expectedInitialAdminObjectIds,
             ManagedHsmNetworkRuleSet expectedNetworkAcls,
-            PublicNetworkAccess expectedPublicNetworkAccess,
+            ManagedHsmPublicNetworkAccess expectedPublicNetworkAccess,
             int expectedSoftDeleteRetentionInDays,
             Dictionary<string, string> expectedTags)
         {

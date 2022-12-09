@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -21,16 +22,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="rateLimitThreshold"> Defines rate limit threshold. </param>
         /// <param name="rateLimitDurationInMinutes"> Defines rate limit duration. Default is 1 minute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="matchConditions"/> is null. </exception>
-        public RateLimitRule(string name, int priority, IEnumerable<MatchCondition> matchConditions, ActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, priority, matchConditions, action)
+        public RateLimitRule(string name, int priority, IEnumerable<CustomRuleMatchCondition> matchConditions, OverrideActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, priority, matchConditions, action)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (matchConditions == null)
-            {
-                throw new ArgumentNullException(nameof(matchConditions));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(matchConditions, nameof(matchConditions));
 
             RateLimitThreshold = rateLimitThreshold;
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;
@@ -44,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
         /// <param name="rateLimitThreshold"> Defines rate limit threshold. </param>
         /// <param name="rateLimitDurationInMinutes"> Defines rate limit duration. Default is 1 minute. </param>
-        internal RateLimitRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<MatchCondition> matchConditions, ActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, enabledState, priority, matchConditions, action)
+        internal RateLimitRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, enabledState, priority, matchConditions, action)
         {
             RateLimitThreshold = rateLimitThreshold;
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;

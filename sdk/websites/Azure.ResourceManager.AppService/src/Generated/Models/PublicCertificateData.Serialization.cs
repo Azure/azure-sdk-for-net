@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<byte[]> blob = default;
             Optional<PublicCertificateLocation> publicCertificateLocation = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -68,12 +68,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -107,14 +112,19 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("thumbprint"))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PublicCertificateData(id, name, type, systemData, kind.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value);
+            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value);
         }
     }
 }

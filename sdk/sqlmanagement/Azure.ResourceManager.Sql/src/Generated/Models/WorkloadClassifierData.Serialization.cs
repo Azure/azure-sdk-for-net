@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> memberName = default;
             Optional<string> label = default;
             Optional<string> context = default;
@@ -78,12 +78,17 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -129,7 +134,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new WorkloadClassifierData(id, name, type, systemData, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value);
+            return new WorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value);
         }
     }
 }

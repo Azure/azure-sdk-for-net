@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Monitor
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DiagnosticSettingsResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of DiagnosticSettingsResources and their operations over a DiagnosticSettingsResource. </returns>
-        public virtual DiagnosticSettingsCollection GetDiagnosticSettings()
+        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
+        public virtual DiagnosticSettingCollection GetDiagnosticSettings()
         {
-            return GetCachedClient(Client => new DiagnosticSettingsCollection(Client, Id));
+            return GetCachedClient(Client => new DiagnosticSettingCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DiagnosticSettingsCategoryResources in the ArmResource. </summary>
