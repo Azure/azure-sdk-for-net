@@ -75,8 +75,8 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                // If there is a network timeout or the user passed a cancellation token, then we will dispose the stream when
-                // cancellation is triggered.
+                // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+                // register callback to dispose the stream on cancellation.
                 if (networkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
                 {
                     cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
