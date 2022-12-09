@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Relay.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string EnabledValue = "Enabled";
         private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
-        /// <summary> Enabled. </summary>
-        public static RelayPublicNetworkAccess Enabled { get; } = new RelayPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static RelayPublicNetworkAccess Disabled { get; } = new RelayPublicNetworkAccess(DisabledValue);
+        /// <summary> Enabled. </summary>
+        public static RelayPublicNetworkAccess Enabled { get; } = new RelayPublicNetworkAccess(EnabledValue);
         /// <summary> SecuredByPerimeter. </summary>
         public static RelayPublicNetworkAccess SecuredByPerimeter { get; } = new RelayPublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="RelayPublicNetworkAccess"/> values are the same. </summary>
