@@ -99,7 +99,11 @@ namespace Azure.Core.Pipeline
                     message.Response.ContentStream = bufferedStream;
                 }
                 // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
-                catch (Exception ex) when (ex is ObjectDisposedException or IOException or OperationCanceledException or NotSupportedException)
+                catch (Exception ex)
+                    when (ex is ObjectDisposedException
+                              or IOException
+                              or OperationCanceledException
+                              or NotSupportedException)
                 {
                     ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
                     throw;
