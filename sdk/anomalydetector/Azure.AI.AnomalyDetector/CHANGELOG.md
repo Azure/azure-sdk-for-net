@@ -12,7 +12,7 @@
 - Renamed `DetectionResult` to `MultivariateDetectionResult`.
 - Renamed `DetectionStatus` to `MultivariateBatchDetectionStatus`.
 - Renamed `DetectionResultSummary` to `MultivariateBatchDetectionResultSummary`.
-Renamed `FillNaMethod` to `FillNAMethod`.
+- Renamed `FillNaMethod` to `FillNAMethod`.
 - Renamed `LastDetectionRequest` to `MultivariateLastDetectionOptions`.
 - Renamed `LastDetectionResult` to `MultivariateLastDetectionResult`.
 - Replaced `ModelSnapshot` with `AnomalyDetectionModel` in `listMultivariateModel`.
