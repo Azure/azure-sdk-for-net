@@ -10,9 +10,10 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
-    /// Optional parameters for uploading to a Blob.
+    /// Optional parameters for uploading to a
+    /// BlockBlobStorageResource.
     ///
-    /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, bool, long, long?, long, DataMovement.Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
+    /// When calling <see cref="BlockBlobStorageResource.WriteFromStreamAsync(System.IO.Stream, long, bool, long, long, Models.StorageResourceWriteToOffsetOptions, System.Threading.CancellationToken)"/>,
     /// and <see cref="BlockBlobStorageResource.CompleteTransferAsync(System.Threading.CancellationToken)"/>.
     /// These options will apply to the blob service requests to complete uploading to the block blob.
     /// </summary>
@@ -20,12 +21,12 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         /// <summary>
         /// Optional standard HTTP header properties that can be set for the
-        /// new append blob.
+        /// new block blob.
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
         /// <summary>
-        /// Optional custom metadata to set for this append blob.
+        /// Optional custom metadata to set for this block blob.
         /// For a sample code to set the metadata, see <see href="https://github.com/Azure/azure-sdk-for-net/blob/47ea075bca473fe6e9928ff9893fbaa8a552f3a5/sdk/storage/Azure.Storage.Blobs/samples/Sample03_Migrations.cs#L630">this </see>article.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
@@ -40,26 +41,26 @@ namespace Azure.Storage.DataMovement.Blobs
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the upload of this Block Blob.
+        /// Optional. See <see cref="BlobRequestConditions"/> to add
+        /// conditions on the upload of this block blob.
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Optional <see cref="AccessTier"/> to set on the
-        /// Block Blob.
+        /// Optional. See <see cref="AccessTier"/> to set on
+        /// this block blob.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
 
         /// <summary>
-        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Optional. See <see cref="BlobImmutabilityPolicy"/> to set on this block blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </summary>
         public BlobImmutabilityPolicy ImmutabilityPolicy { get; set; }
 
         /// <summary>
-        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Optional. Indicates if a legal hold should be placed on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </summary>

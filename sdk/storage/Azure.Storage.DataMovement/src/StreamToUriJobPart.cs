@@ -9,14 +9,12 @@ using System.IO;
 using System.Threading;
 using System.Buffers;
 using Azure.Storage.Shared;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class StreamToUriJobPart : JobPartInternal
+    internal class StreamToUriJobPart : JobPartInternal, IDisposable
     {
-        public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
-        public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
-
         /// <summary>
         ///  Will handle the calling the commit block list API once
         ///  all commit blocks have been uploaded.
@@ -69,6 +67,11 @@ namespace Azure.Storage.DataMovement
                   job.TransferFailedEventHandler,
                   job._cancellationTokenSource)
         {
+        }
+
+        public void Dispose()
+        {
+            DisposeHandlers();
         }
 
         /// <summary>
@@ -212,9 +215,9 @@ namespace Azure.Storage.DataMovement
                             _cancellationTokenSource.Token).ConfigureAwait(false);
                         await _destinationResource.WriteFromStreamAsync(
                             stream: slicedStream,
+                            streamLength: blockSize,
                             overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                             position: 0,
-                            streamLength: blockSize,
                             completeLength: expectedlength,
                             default,
                             _cancellationTokenSource.Token).ConfigureAwait(false);
@@ -292,9 +295,9 @@ namespace Azure.Storage.DataMovement
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                     await _destinationResource.WriteFromStreamAsync(
                         stream: slicedStream,
+                        streamLength: blockLength,
                         overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                         position: offset,
-                        streamLength: blockLength,
                         completeLength: completeLength,
                         default,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
@@ -325,9 +328,14 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CompleteTransferAsync()
         {
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
             try
             {
+                // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+
+                // Dispose the handlers
+                DisposeHandlers();
 
                 // Set completion status to completed
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -389,6 +397,26 @@ namespace Azure.Storage.DataMovement
                 maxArrayPoolRentalSize: default,
                 async: true,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task InvokeSkippedArg()
+        {
+            DisposeHandlers();
+            await base.InvokeSkippedArg().ConfigureAwait(false);
+        }
+
+        public override async Task InvokeFailedArg(Exception ex)
+        {
+            DisposeHandlers();
+            await base.InvokeFailedArg(ex).ConfigureAwait(false);
+        }
+
+        internal void DisposeHandlers()
+        {
+            if (_commitBlockHandler != default)
+            {
+                _commitBlockHandler.Dispose();
+            }
         }
     }
 }

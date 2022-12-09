@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.ToString());
+                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"))
