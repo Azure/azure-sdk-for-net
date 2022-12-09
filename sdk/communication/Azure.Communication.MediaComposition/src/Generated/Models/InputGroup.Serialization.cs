@@ -55,56 +55,7 @@ namespace Azure.Communication.MediaComposition
                     case "gridBased": return GridInputGroup.DeserializeGridInputGroup(element);
                 }
             }
-            InputGroupType kind = default;
-            Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> layer = default;
-            Optional<ScalingMode> scalingMode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new InputGroupType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("position"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    position = InputPosition.DeserializeInputPosition(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("width"))
-                {
-                    width = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("height"))
-                {
-                    height = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("layer"))
-                {
-                    layer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("scalingMode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    scalingMode = new ScalingMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new InputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode));
+            return UnknownInputGroup.DeserializeUnknownInputGroup(element);
         }
     }
 }

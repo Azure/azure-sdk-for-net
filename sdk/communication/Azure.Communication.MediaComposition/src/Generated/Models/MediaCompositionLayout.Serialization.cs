@@ -49,44 +49,7 @@ namespace Azure.Communication.MediaComposition.Models
                     case "presenter": return PresenterLayout.DeserializePresenterLayout(element);
                 }
             }
-            LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new LayoutType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resolution"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("placeholderImageUri"))
-                {
-                    placeholderImageUri = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("scalingMode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    scalingMode = new ScalingMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new MediaCompositionLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode));
+            return UnknownLayout.DeserializeUnknownLayout(element);
         }
     }
 }
