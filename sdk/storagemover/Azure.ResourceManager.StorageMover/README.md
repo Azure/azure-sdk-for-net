@@ -1,5 +1,9 @@
 # Microsoft Azure StorageMover management client library for .NET
 
+Microsoft Azure Storage Mover is a fully managed migration service that enables you to migrate your files and folders to Azure Storage while minimizing downtime for your workload. You can use Storage Mover for different migration scenarios such as lift-and-shift, and for cloud migrations that you'll have to repeat occasionally. Azure Storage Mover also helps maintain oversight and manage the migration of all your globally distributed file shares from a single storage mover resource.
+
+This library supports managing Microsoft Azure StorageMover Configuration resources.
+
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
@@ -7,6 +11,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - HTTP pipeline with custom policies.
     - Better error-handling.
     - Support uniform telemetry across all languages.
+
 
 ## Getting started 
 
