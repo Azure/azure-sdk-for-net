@@ -12,7 +12,7 @@
 
 ## 1.0.0 (2022-09-05)
 
-This is the first stable release of the MySql Management client library.
+This release is the first stable release of the MySql Management client library.
 
 ### Other Changes
 

@@ -12,7 +12,7 @@
 
 ## 1.0.0 (2022-09-19)
 
-This is the first stable release of the AlertsManagement Management client library.
+This release is the first stable release of the AlertsManagement Management client library.
 
 ### Breaking Changes
 

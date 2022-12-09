@@ -26,7 +26,7 @@ Changed the constructors of following classes from public to protected:
 
 ## 1.0.0 (2022-07-21)
 
-This is the first stable release of the Azure Service Linker management library.
+This release is the first stable release of the Azure Service Linker management library.
 
 ### Features Added
 

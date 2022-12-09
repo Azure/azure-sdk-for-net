@@ -25,7 +25,7 @@
 
 ## 1.0.0 (2022-09-05)
 
-This is the first stable release of the Stream Analytics Management client library.
+This release is the first stable release of the Stream Analytics Management client library.
 
 ### Other Changes
 

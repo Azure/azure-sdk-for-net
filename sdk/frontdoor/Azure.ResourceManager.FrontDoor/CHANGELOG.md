@@ -12,7 +12,7 @@
 
 ## 1.0.0 (2022-09-29)
 
-This is the first stable release of the Front Door Management library.
+This release is the first stable release of the Front Door Management library.
 
 ### Breaking Changes
 

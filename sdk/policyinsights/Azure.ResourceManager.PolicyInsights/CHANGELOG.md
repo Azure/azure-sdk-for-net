@@ -7,7 +7,7 @@
 
 ## 1.0.0 (2022-09-29)
 
-This is the first stable release of the Policy Insights Management library.
+This release is the first stable release of the Policy Insights Management library.
 
 ### Breaking Changes
 

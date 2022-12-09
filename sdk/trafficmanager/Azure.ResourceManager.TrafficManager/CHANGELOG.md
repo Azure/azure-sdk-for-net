@@ -19,7 +19,7 @@
 
 ## 1.0.0 (2022-09-27)
 
-This is the first stable release of the Traffic Manager Management client library.
+This release is the first stable release of the Traffic Manager Management client library.
 
 ### Breaking Changes
 

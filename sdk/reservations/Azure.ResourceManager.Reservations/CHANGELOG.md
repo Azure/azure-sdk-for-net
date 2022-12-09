@@ -26,7 +26,7 @@
 
 ## 1.0.0 (2022-09-05)
 
-This is the first stable release of the Reservations Management client library.
+This release is the first stable release of the Reservations Management client library.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

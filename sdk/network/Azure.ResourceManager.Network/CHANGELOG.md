@@ -34,7 +34,7 @@ Modified the following classes to abstract classes and changed their constructor
 
 ## 1.0.0 (2022-07-11)
 
-This is the first stable release of the Network Management client library.
+This release is the first stable release of the Network Management client library.
 
 ### Features Added
 

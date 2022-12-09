@@ -23,7 +23,7 @@
 
 ## 1.0.0 (2022-07-21)
 
-This is the first stable release of the Azure Sql management library.
+This release is the first stable release of the Azure Sql management library.
 
 ### Features Added
 

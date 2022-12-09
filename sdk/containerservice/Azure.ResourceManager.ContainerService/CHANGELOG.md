@@ -12,7 +12,7 @@
 
 ## 1.0.0 (2022-09-26)
 
-This is the first stable release of the Container Service Management library.
+This release is the first stable release of the Container Service Management library.
 
 ### Breaking Changes
 

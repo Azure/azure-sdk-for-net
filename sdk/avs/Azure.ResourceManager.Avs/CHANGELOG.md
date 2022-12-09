@@ -18,7 +18,7 @@
 
 ## 1.0.0 (2022-09-13)
 
-This is the first stable release of the Azure VMware Solution management library.
+This release is the first stable release of the Azure VMware Solution management library.
 
 ### Breaking Changes
 

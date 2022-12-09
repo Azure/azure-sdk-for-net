@@ -12,7 +12,7 @@
 
 ## 1.0.0 (2022-07-21)
 
-This is the first stable release of the Azure WebPubSub management library.
+This release is the first stable release of the Azure WebPubSub management library.
 
 ### Features Added
 

@@ -12,7 +12,7 @@
 
 ## 1.0.0 (2022-09-05)
 
-This is the first stable release of the Service Fabric Management client library.
+This release is the first stable release of the Service Fabric Management client library.
 
 ### Other Changes
 

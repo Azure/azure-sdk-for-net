@@ -132,7 +132,7 @@ CommunicationService communicationService = communicationServiceLro.Value;
 ```
 
 ## 1.0.0 (2021-03-29)
-This is the first stable release of the management library for Azure Communication Services. 
+This release is the first stable release of the management library for Azure Communication Services. 
 
 Minor changes since the public preview release:
 - CheckNameAvailability has been added

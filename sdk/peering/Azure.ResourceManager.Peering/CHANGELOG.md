@@ -8,7 +8,7 @@ Added new APIs from 2022-10-01 API:
 
 ## 1.0.0 (2022-09-26)
 
-This is the first stable release of the Peering Management library.
+This release is the first stable release of the Peering Management library.
 
 ### Breaking Changes
 

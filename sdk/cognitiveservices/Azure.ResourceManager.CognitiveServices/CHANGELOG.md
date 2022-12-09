@@ -18,7 +18,7 @@
 
 ## 1.0.0 (2022-08-29)
 
-This is the first stable release of the Cognitive Services Management client library.
+This release is the first stable release of the Cognitive Services Management client library.
 
 ### Breaking Changes
 

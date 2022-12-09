@@ -27,7 +27,7 @@ Modified the following classes to abstract classes and changed their constructor
 - Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0 (2022-07-11)
-This is the first stable release of the Azure Cdn management library.
+This release is the first stable release of the Azure Cdn management library.
 
 ### Features Added
 

@@ -12,7 +12,7 @@
 
 ## 1.0.0 (2022-07-11)
 
-This is the first stable release of the Key Vault Management client library.
+This release is the first stable release of the Key Vault Management client library.
 
 ### Features Added
 
