@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts.
         /// For a list of allowed premium page blob tiers, see
-        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/premium-storage#features. For general 
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/premium-storage#features. For general
         /// purpose v2 and blob storage account types, the valid values are Hot/Cool/Archive.
         /// </summary>
         public string AccessTier { get; }
