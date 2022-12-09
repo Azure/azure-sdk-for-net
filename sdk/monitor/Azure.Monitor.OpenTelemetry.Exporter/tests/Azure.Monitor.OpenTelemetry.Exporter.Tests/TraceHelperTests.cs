@@ -272,6 +272,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Request", telemetryItems[1].Name);
             Assert.Equal(eventName, (telemetryItems[0].Data.BaseData as MessageData).Message);
             Assert.True((telemetryItems[0].Data.BaseData as MessageData).Properties.TryGetValue("key1", out var value));
+            Assert.Equal("value1", value);
         }
 
         [Fact]
