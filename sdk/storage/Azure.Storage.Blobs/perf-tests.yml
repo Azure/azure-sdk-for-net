@@ -10,6 +10,7 @@ Tests:
 - Test: download
   Class: DownloadBlob
   Arguments:
+  - --size 1 --warmup 0 --duration 1
   - --size 10240 --parallel 64
   - --size 10485760 --parallel 32
   - --size 1073741824 --parallel 1 --warmup 60 --duration 60
