@@ -221,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             };
         }
 
-        internal static MonitorBase GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags)
+        private static MonitorBase GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags)
         {
             string exceptionType = null;
             string exceptionStackTrace = null;
