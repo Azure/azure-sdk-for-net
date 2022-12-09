@@ -2,7 +2,7 @@
 param (
     [Parameter(Position=0)]
     [ValidateNotNullOrEmpty()]
-    [string] $ProjectDirectory
+    [string] $ProjectDirectory = "C:\project\azure-sdk-for-net\sdk\anomalydetector\Azure.AI.AnomalyDetector"
 )
 
 $ErrorActionPreference = "Stop"
@@ -94,22 +94,26 @@ $pieces = $cadlConfigurationFile.Path.Replace("\","/").Split("/")
 $projectName = $pieces[$pieces.Count - 3]
 
 $specCloneDir = GetSpecCloneDir $projectName
+if ( $configuration["repo"] -and $configuration["commit"]) {
+    $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
 
-$gitRemoteValue = GetGitRemoteValue $configuration["repo"]
-
-Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
-$specSubDirectory = $configuration["directory"]
-Push-Location $specCloneDir.Path
-try {
-    if (!(Test-Path ".git")) {
-        InitializeSparseGitClone $gitRemoteValue
-        UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
+    Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
+    $specSubDirectory = $configuration["directory"]
+    Push-Location $specCloneDir.Path
+    try {
+        if (!(Test-Path ".git")) {
+            InitializeSparseGitClone $gitRemoteValue
+            UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
+        }
+        git checkout $configuration["commit"]
     }
-    git checkout $configuration["commit"]
+    finally {
+        Pop-Location
+    }
+} elseif ( $configuration["spec-root-dir"] ) {
+    $specCloneDir = $configuration["spec-root-dir"]
 }
-finally {
-    Pop-Location
-}
+
 
 $tempCadlDir = "$ProjectDirectory/TempCadlFiles"
 New-Item $tempCadlDir -Type Directory -Force | Out-Null
