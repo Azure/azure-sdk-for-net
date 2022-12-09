@@ -64,7 +64,7 @@
         },
         "searchSku": {
             "type": "string",
-            "defaultValue": "[if(equals(parameters('enableCmk'), true), 'basic', 'free')]",
+            "defaultValue": "[if(equals(parameters('enableCmk'), bool('true')), 'basic', 'free')]",
             "allowedValues": [
                 "free",
                 "basic",
