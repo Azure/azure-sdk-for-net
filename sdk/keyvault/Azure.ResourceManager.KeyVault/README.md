@@ -1,8 +1,12 @@
 # Microsoft Azure Key Vault Management client library for .NET
 
-Microsoft Azure IoT Hub is a managed service hosted in the cloud that acts as a central message hub for communication between an IoT application and its attached devices.
+Microsoft Azure Key Vault is one of several key management solutions in Azure, and helps solve the following problems:
 
-This library supports managing Microsoft Azure IoT Hub resources.
+- **Secrets Management** - Azure Key Vault can be used to Securely store and tightly control access to tokens, passwords, certificates, API keys, and other secrets
+- **Key Management** - Azure Key Vault can be used as a Key Management solution. Azure Key Vault makes it easy to create and control the encryption keys used to encrypt your data.
+- **Certificate Management** - Azure Key Vault lets you easily provision, manage, and deploy public and private Transport Layer Security/Secure Sockets Layer (TLS/SSL) certificates for use with Azure and your internal connected resources.
+
+This library supports managing Microsoft Azure Key Vault resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
