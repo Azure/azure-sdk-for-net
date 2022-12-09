@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> AutoRebuild setting for the derived image. </summary>
+    /// <summary>
+    /// AutoRebuild setting for the derived image
+    /// Serialized Name: AutoRebuildSetting
+    /// </summary>
     public readonly partial struct AutoRebuildSetting : IEquatable<AutoRebuildSetting>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DisabledValue = "Disabled";
         private const string OnBaseImageUpdateValue = "OnBaseImageUpdate";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: AutoRebuildSetting.Disabled
+        /// </summary>
         public static AutoRebuildSetting Disabled { get; } = new AutoRebuildSetting(DisabledValue);
-        /// <summary> OnBaseImageUpdate. </summary>
+        /// <summary>
+        /// OnBaseImageUpdate
+        /// Serialized Name: AutoRebuildSetting.OnBaseImageUpdate
+        /// </summary>
         public static AutoRebuildSetting OnBaseImageUpdate { get; } = new AutoRebuildSetting(OnBaseImageUpdateValue);
         /// <summary> Determines if two <see cref="AutoRebuildSetting"/> values are the same. </summary>
         public static bool operator ==(AutoRebuildSetting left, AutoRebuildSetting right) => left.Equals(right);

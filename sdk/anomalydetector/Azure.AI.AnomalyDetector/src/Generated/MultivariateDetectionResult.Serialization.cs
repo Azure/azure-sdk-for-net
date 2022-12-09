@@ -17,7 +17,7 @@ namespace Azure.AI.AnomalyDetector
         internal static MultivariateDetectionResult DeserializeMultivariateDetectionResult(JsonElement element)
         {
             string resultId = default;
-            MultivariateDetectionResultSummary summary = default;
+            MultivariateBatchDetectionResultSummary summary = default;
             IReadOnlyList<AnomalyState> results = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (property.NameEquals("summary"))
                 {
-                    summary = MultivariateDetectionResultSummary.DeserializeMultivariateDetectionResultSummary(property.Value);
+                    summary = MultivariateBatchDetectionResultSummary.DeserializeMultivariateBatchDetectionResultSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("results"))

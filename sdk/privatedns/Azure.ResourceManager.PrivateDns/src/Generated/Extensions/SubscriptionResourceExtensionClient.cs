@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PrivateDns
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _privateZoneClientDiagnostics;
-        private PrivateZonesRestOperations _privateZoneRestClient;
+        private ClientDiagnostics _privateDnsZonePrivateZonesClientDiagnostics;
+        private PrivateZonesRestOperations _privateDnsZonePrivateZonesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.PrivateDns
         {
         }
 
-        private ClientDiagnostics PrivateZoneClientDiagnostics => _privateZoneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateZoneResource.ResourceType.Namespace, Diagnostics);
-        private PrivateZonesRestOperations PrivateZoneRestClient => _privateZoneRestClient ??= new PrivateZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateZoneResource.ResourceType));
+        private ClientDiagnostics PrivateDnsZonePrivateZonesClientDiagnostics => _privateDnsZonePrivateZonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsZoneResource.ResourceType.Namespace, Diagnostics);
+        private PrivateZonesRestOperations PrivateDnsZonePrivateZonesRestClient => _privateDnsZonePrivateZonesRestClient ??= new PrivateZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateDnsZoneResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateZoneResource> GetPrivateZonesAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateDnsZoneResource> GetPrivateDnsZonesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateZoneResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateDnsZoneResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateZones");
+                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateZoneRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await PrivateDnsZonePrivateZonesRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            async Task<Page<PrivateZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PrivateDnsZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateZones");
+                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateZoneRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await PrivateDnsZonePrivateZonesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateZoneResource> GetPrivateZones(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateDnsZoneResource> GetPrivateDnsZones(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PrivateZoneResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateDnsZoneResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateZones");
+                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
                 scope.Start();
                 try
                 {
-                    var response = PrivateZoneRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = PrivateDnsZonePrivateZonesRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.PrivateDns
                     throw;
                 }
             }
-            Page<PrivateZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PrivateDnsZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateZones");
+                using var scope = PrivateDnsZonePrivateZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateDnsZones");
                 scope.Start();
                 try
                 {
-                    var response = PrivateZoneRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = PrivateDnsZonePrivateZonesRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

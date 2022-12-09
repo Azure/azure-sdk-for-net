@@ -75,6 +75,7 @@ directive:
   - from: privatedns.json
     where: $.definitions
     transform: >
+      $.PrivateZone["x-ms-client-name"] = "PrivateDnsZone";
       $.RecordSet["x-ms-client-name"] = "PrivateDnsRecord";
       $.RecordSetListResult["x-ms-client-name"] = "PrivateDnsRecordListResult";
       $.RecordSetProperties["x-ms-client-name"] = "PrivateDnsRecordProperties";

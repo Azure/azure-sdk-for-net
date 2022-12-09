@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static ListAmlUserFeatureResult DeserializeListAmlUserFeatureResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AmlUserFeature>> value = default;
+            Optional<IReadOnlyList<MachineLearningUserFeature>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AmlUserFeature> array = new List<AmlUserFeature>();
+                    List<MachineLearningUserFeature> array = new List<MachineLearningUserFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlUserFeature.DeserializeAmlUserFeature(item));
+                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item));
                     }
                     value = array;
                     continue;

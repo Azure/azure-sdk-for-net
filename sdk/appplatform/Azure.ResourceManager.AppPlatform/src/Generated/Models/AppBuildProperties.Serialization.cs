@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    triggeredBuildResult = JsonSerializer.Deserialize<SubResource>(property.Value.ToString());
+                    triggeredBuildResult = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

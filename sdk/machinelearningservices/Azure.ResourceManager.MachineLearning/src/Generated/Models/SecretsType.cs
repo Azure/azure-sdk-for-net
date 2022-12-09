@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine the datastore secrets type. </summary>
+    /// <summary>
+    /// Enum to determine the datastore secrets type.
+    /// Serialized Name: SecretsType
+    /// </summary>
     internal readonly partial struct SecretsType : IEquatable<SecretsType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SasValue = "Sas";
         private const string ServicePrincipalValue = "ServicePrincipal";
 
-        /// <summary> AccountKey. </summary>
+        /// <summary>
+        /// AccountKey
+        /// Serialized Name: SecretsType.AccountKey
+        /// </summary>
         public static SecretsType AccountKey { get; } = new SecretsType(AccountKeyValue);
-        /// <summary> Certificate. </summary>
+        /// <summary>
+        /// Certificate
+        /// Serialized Name: SecretsType.Certificate
+        /// </summary>
         public static SecretsType Certificate { get; } = new SecretsType(CertificateValue);
-        /// <summary> Sas. </summary>
+        /// <summary>
+        /// Sas
+        /// Serialized Name: SecretsType.Sas
+        /// </summary>
         public static SecretsType Sas { get; } = new SecretsType(SasValue);
-        /// <summary> ServicePrincipal. </summary>
+        /// <summary>
+        /// ServicePrincipal
+        /// Serialized Name: SecretsType.ServicePrincipal
+        /// </summary>
         public static SecretsType ServicePrincipal { get; } = new SecretsType(ServicePrincipalValue);
         /// <summary> Determines if two <see cref="SecretsType"/> values are the same. </summary>
         public static bool operator ==(SecretsType left, SecretsType right) => left.Equals(right);
