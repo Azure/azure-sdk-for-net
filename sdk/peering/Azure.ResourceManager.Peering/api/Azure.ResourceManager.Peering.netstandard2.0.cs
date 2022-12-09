@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Peering.Models
     public partial class RoutingPreferenceUnbilledPrefix
     {
         internal RoutingPreferenceUnbilledPrefix() { }
-        public string AzureRegion { get { throw null; } }
+        public Azure.Core.AzureLocation? AzureRegion { get { throw null; } }
         public int? PeerAsn { get { throw null; } }
         public string Prefix { get { throw null; } }
     }
