@@ -40,177 +40,21 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ### Authenticate the client
 In order to interact with the Data Movement library you have to create an instance with the TransferManager class.
 
-```C# Snippet:UploadSingle_ConnectionStringAsync
-    // Create simple transfer single blob upload job
-    DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-        sourceResource: new LocalFileStorageResource(sourceLocalPath),
-        destinationResource: new BlockBlobStorageResource(destinationBlob));
-    await dataTransfer.AwaitCompletion();
-}
+### Create Instance of TransferManager
+```C# Snippet:CreateTransferManagerSimple
+TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 ```
 
-```C# Snippet:DownloadSingle_SharedKeyAuthAsync
-    // Simple Download Single Blob Job
-    StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-    StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
-    await transferManager.StartTransferAsync(
-        sourceResource,
-        destinationResource);
-
-    StorageResource sourceResource2 = new BlockBlobStorageResource(sourceBlob);
-    StorageResource destinationResource2 = new LocalFileStorageResource(downloadPath2);
-
-    await transferManager.StartTransferAsync(
-        sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
-            {
-                DownloadOptions = new BlobStorageResourceDownloadOptions()
-                {
-                    Conditions = new BlobRequestConditions(){ LeaseId = "xyz" }
-                }
-            }),
-        destinationResource: new LocalFileStorageResource(downloadPath2));
-}
-```
-
-```C# Snippet:UploadDirectory_SasAsync
-    // Create simple transfer directory upload job which uploads the directory and the contents of that directory
-    DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-        sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
-        destinationResource: new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")),
-        transferOptions: options);
-}
-```
-
-```C# Snippet:UploadDirectory_CompletedEventHandler
-    // Create BlobTransferManager with event handler in Options bag
-    TransferManagerOptions options = new TransferManagerOptions();
-    ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-    containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
-    {
-        // Customers like logging their own exceptions in their production environments.
-        using (StreamWriter logStream = File.AppendText(logFile))
-        {
-            logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
-        }
-        return Task.CompletedTask;
-    };
-    TransferManager transferManager = new TransferManager(options);
-
-    // Create simple transfer directory upload job which uploads the directory and the contents of that directory
-    DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
-        new LocalDirectoryStorageResourceContainer(sourcePath),
-        new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")));
-}
-```
-
-```C# Snippet:UploadDirectory_EventHandler_SasAsync
-    // Create BlobTransferManager with event handler in Options bag
-    TransferManagerOptions options = new TransferManagerOptions();
-    ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-    containerTransferOptions.TransferStatus += (TransferStatusEventArgs args) =>
-    {
-        if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-        {
-            // Customers like logging their own exceptions in their production environments.
-            using (StreamWriter logStream = File.AppendText(logFile))
-            {
-                logStream.WriteLine($"Our transfer has completed!");
-            }
-        }
-        return Task.CompletedTask;
-    };
-    containerTransferOptions.TransferFailed += (TransferFailedEventArgs args) =>
-    {
-        // Customers like logging their own exceptions in their production environments.
-        using (StreamWriter logStream = File.AppendText(logFile))
-        {
-            // Specifying specific resources that failed, since its a directory transfer
-            // maybe only one file failed out of many
-            logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
-                $"Source Resource: {args.SourceResource.Path}, +" +
-                $"Destination Resource: {args.DestinationResource.Path}," +
-                $"Exception Message: {args.Exception.Message}");
-        }
-        return Task.CompletedTask;
-    };
-    TransferManager transferManager = new TransferManager(options);
-
-    // Create simple transfer directory upload job which uploads the directory and the contents of that directory
-    DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
-        new LocalDirectoryStorageResourceContainer(sourcePath),
-        new BlobDirectoryStorageResourceContainer(container, Randomize("sample-blob-directory")));
-}
-```
-
-```C# Snippet:DownloadDirectory_EventHandler_ActiveDirectoryAuthAsync
-    // Create BlobTransferManager with event handler in Options bag
-    TransferManagerOptions options = new TransferManagerOptions();
-    ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
-    downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
-    {
-        // TODO: change the Exception if it's a RequestFailedException and then look at the exception.StatusCode
-        if (args.Exception.Message.Contains("500"))
-        {
-            Console.WriteLine("We're getting throttled stop trying and lets try later");
-        }
-        else if (args.Exception.Message == "403")
-        {
-            Console.WriteLine("We're getting auth errors. Might be the entire container, consider stopping");
-        }
-        // Remove stub
-        await Task.CompletedTask;
-    };
-    TransferManager transferManager = new TransferManager(options);
-
-    // Simple Download Directory Job where we upload the directory and it's contents
-    await transferManager.StartTransferAsync(
-        sourceDirectory, destinationDirectory);
-
-    // Create different download transfer
-    DataTransfer downloadDirectoryJobId2 = await transferManager.StartTransferAsync(
-        sourceDirectory2,
-        destinationDirectory2);
-}
-```
-
-```C# Snippet:CopySingle_ConnectionStringAsync
-    // Create simple transfer single blob upload job
-    DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
-    await transfer.AwaitCompletion();
-
-    // Generous 10 second wait for our transfer to finish
-    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(10000);
-    await transfer.AwaitCompletion(cancellationTokenSource.Token);
-}
-```
-
-```C# Snippet:CopyDirectory
-    await transferManager.StartTransferAsync(
-        sourceDirectory1,
-        destinationDirectory1);
-}
-```
-
-```C# Snippet:ErrorHandlingPermissions
-// Create transfer single blob upload job with transfer options concurrency specified
-// i.e. it's a bigger blob so it maybe need more help uploading fast
-ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
-downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
+### Create Instance of TransferManager with Options
+```C# Snippet:CreateTransferManagerWithOptions
+// Create BlobTransferManager with event handler in Options bag
+TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
+ContainerTransferOptions options = new ContainerTransferOptions()
 {
-    if (args.Exception.Message == "Permissions Denied")
-    {
-        Console.WriteLine("Permissions denied, some users may either choose to do two things");
-        // Option 1: Cancel the all transfers, resolve error and then resume job later by adding each directory manually
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            await transferManager.TryPauseAllTransfersAsync();
-        }
-        // Option 2: Cancel the job in question
-        await transferManager.TryPauseTransferAsync(args.TransferId);
-    }
-    // Remove stub
-    await Task.CompletedTask;
+    MaximumTransferChunkSize = 4 * Constants.MB,
+    CreateMode = StorageResourceCreateMode.Overwrite,
 };
+TransferManager transferManager = new TransferManager(transferManagerOptions);
 ```
 
 ## Key concepts
@@ -235,6 +79,72 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 Please see the examples for [Blobs][blobs_examples].
+
+### Start Upload from Local File to Block Blob
+```C# Snippet:SimpleBlobUpload
+DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+    sourceResource: new LocalFileStorageResource(sourceLocalPath),
+    destinationResource: new BlockBlobStorageResource(destinationBlob));
+await dataTransfer.AwaitCompletion();
+```
+
+### Apply Options to Block Blob Download
+```C# Snippet:BlockBlobDownloadOptions
+await transferManager.StartTransferAsync(
+    sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
+    {
+        DestinationConditions = new BlobRequestConditions(){ LeaseId = "xyz" }
+    }),
+    destinationResource: new LocalFileStorageResource(downloadPath2));
+```
+
+### Start Directory Upload
+```C# Snippet:SimpleDirectoryUpload
+// Create simple transfer directory upload job which uploads the directory and the contents of that directory
+DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+    sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
+    destinationResource: new BlobDirectoryStorageResourceContainer(container, "sample-directory2"),
+    transferOptions: options);
+```
+
+### Start Directory Download
+```C# Snippet:SimpleDirectoryDownload
+DataTransfer downloadDirectoryJobId2 = await transferManager.StartTransferAsync(
+    sourceDirectory2,
+    destinationDirectory2);
+```
+
+### Simple Logger Sample for Transfer Manager Options
+```C# Snippet:SimpleLoggingSample
+// Create BlobTransferManager with event handler in Options bag
+TransferManagerOptions options = new TransferManagerOptions();
+ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
+containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+{
+    using (StreamWriter logStream = File.AppendText(logFile))
+    {
+        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
+    }
+    return Task.CompletedTask;
+};
+```
+
+### Simple Failed Event Delegation for Container Transfer Options
+```C# Snippet:FailedEventDelegation
+containerTransferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+{
+    using (StreamWriter logStream = File.AppendText(logFile))
+    {
+        // Specifying specific resources that failed, since its a directory transfer
+        // maybe only one file failed out of many
+        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
+            $"Source Resource: {args.SourceResource.Path}, +" +
+            $"Destination Resource: {args.DestinationResource.Path}," +
+            $"Exception Message: {args.Exception.Message}");
+    }
+    return Task.CompletedTask;
+};
+```
 
 ## Troubleshooting
 
