@@ -122,6 +122,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore(reason: "TODO: Decide whether to require cast for this case or not.")]
         public void CanAddStringToList()
         {
             dynamic jsonData = new BinaryData(new { value = "foo" }).ToDynamic();
@@ -139,6 +140,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore(reason:"TODO: Decide whether to require cast for this case or not.")]
         public void CanAddIntToList()
         {
             dynamic jsonData = new BinaryData(new { value = 5 }).ToDynamic();
@@ -154,6 +156,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore(reason: "TODO: Feature to be added in later version.")]
         public void GetMemberIsCaseInsensitive()
         {
             dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamic();
@@ -384,12 +387,12 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore(reason: "TODO: Decide whether to require cast for this case or not.")]
         public void EqualsForStringNUnit()
         {
             dynamic foo = new BinaryData("{ \"value\": \"foo\" }").ToDynamic();
             var value = foo.Value;
 
-            // TODO: Outstanding question regarding whether we want these to succeed without a cast.
             Assert.AreEqual(value, "foo");
             Assert.AreEqual("foo", value);
 
