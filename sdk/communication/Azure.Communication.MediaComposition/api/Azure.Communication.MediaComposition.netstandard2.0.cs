@@ -82,6 +82,7 @@ namespace Azure.Communication.MediaComposition
         public string Height { get { throw null; } set { } }
         public string Layer { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.InputPosition Position { get { throw null; } set { } }
+        public Azure.Communication.MediaComposition.ScalingMode? ScalingMode { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -180,10 +181,10 @@ namespace Azure.Communication.MediaComposition
     }
     public partial class MediaCompositionClientOptions : Azure.Core.ClientOptions
     {
-        public MediaCompositionClientOptions(Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion version = Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion.V2022_07_16_Preview1) { }
+        public MediaCompositionClientOptions(Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion version = Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion.V2022_07_16_Preview) { }
         public enum ServiceVersion
         {
-            V2022_07_16_Preview1 = 1,
+            V2022_07_16_Preview = 1,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -292,6 +293,25 @@ namespace Azure.Communication.MediaComposition
         public string StreamKey { get { throw null; } set { } }
         public string StreamUrl { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScalingMode : System.IEquatable<Azure.Communication.MediaComposition.ScalingMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScalingMode(string value) { throw null; }
+        public static Azure.Communication.MediaComposition.ScalingMode Crop { get { throw null; } }
+        public static Azure.Communication.MediaComposition.ScalingMode Fit { get { throw null; } }
+        public static Azure.Communication.MediaComposition.ScalingMode Stretch { get { throw null; } }
+        public bool Equals(Azure.Communication.MediaComposition.ScalingMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.MediaComposition.ScalingMode left, Azure.Communication.MediaComposition.ScalingMode right) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.ScalingMode (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.MediaComposition.ScalingMode left, Azure.Communication.MediaComposition.ScalingMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ScreenShare : Azure.Communication.MediaComposition.Models.MediaInput
     {
         public ScreenShare(string call) { }
@@ -389,6 +409,7 @@ namespace Azure.Communication.MediaComposition.Models
         internal MediaCompositionLayout() { }
         public string PlaceholderImageUri { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.LayoutResolution Resolution { get { throw null; } set { } }
+        public Azure.Communication.MediaComposition.ScalingMode? ScalingMode { get { throw null; } set { } }
     }
     public abstract partial class MediaInput
     {
