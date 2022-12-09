@@ -42,6 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             if (credential != null)
             {
                 pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "https://monitor.azure.com//.default") });
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", "HttpPipelineBuilder is built with AAD Credentials");
             }
             else
             {
