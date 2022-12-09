@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                             .AddProcessor(new ActivityFilteringProcessor())
                             .AddProcessor(new ActivityEnrichingProcessor())
                             .SetSampler(new ApplicationInsightsSampler(1.0F))
-                            .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString)
+                            .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=ebff0d7e-7643-4a6d-9597-a17fdea8e8bf;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/")
                             .Build();
         }
 
@@ -46,38 +46,55 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         /// </remarks>
         public void GenerateTraces()
         {
-            // Note: This activity will be dropped due to the ActivityFilteringProcessor filtering ActivityKind.Producer.
-            using (var testActivity1 = activitySource.StartActivity("TestInternalActivity", ActivityKind.Producer))
-            {
-                testActivity1?.SetTag("CustomTag1", "Value1");
-                testActivity1?.SetTag("CustomTag2", "Value2");
-            }
+            var eventName = "Custom Event";
+            //using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               "Test",
+               ActivityKind.Server);
 
-            using (var activity = activitySource.StartActivity("SayHello", ActivityKind.Client))
+            var tagsCollection = new ActivityTagsCollection
             {
-                activity?.SetTag("foo", 1);
-                activity?.SetTag("baz", new int[] { 1, 2, 3 });
-                activity?.SetStatus(ActivityStatusCode.Ok);
+                { "key1", "value1" },
+            };
 
-                using (var nestedActivity = activitySource.StartActivity("SayHelloAgain", ActivityKind.Server))
-                {
-                    nestedActivity?.SetTag("bar", "Hello, World!");
-                    nestedActivity?.SetStatus(ActivityStatusCode.Ok);
-                }
-            }
+            var activityEvent = new ActivityEvent(eventName, default, tagsCollection);
 
-            using (var activity = activitySource.StartActivity("ExceptionExample"))
-            {
-                try
-                {
-                    throw new Exception("Test exception");
-                }
-                catch (Exception ex)
-                {
-                    activity?.SetStatus(ActivityStatusCode.Error);
-                    activity?.RecordException(ex);
-                }
-            }
+            activity.AddEvent(activityEvent);
+
+            activity.Stop();
+
+            ////// Note: This activity will be dropped due to the ActivityFilteringProcessor filtering ActivityKind.Producer.
+            ////using (var testActivity1 = activitySource.StartActivity("TestInternalActivity", ActivityKind.Producer))
+            ////{
+            ////    testActivity1?.SetTag("CustomTag1", "Value1");
+            ////    testActivity1?.SetTag("CustomTag2", "Value2");
+            ////}
+
+            ////using (var activity = activitySource.StartActivity("SayHello", ActivityKind.Client))
+            ////{
+            ////    activity?.SetTag("foo", 1);
+            ////    activity?.SetTag("baz", new int[] { 1, 2, 3 });
+            ////    activity?.SetStatus(ActivityStatusCode.Ok);
+
+            ////    using (var nestedActivity = activitySource.StartActivity("SayHelloAgain", ActivityKind.Server))
+            ////    {
+            ////        nestedActivity?.SetTag("bar", "Hello, World!");
+            ////        nestedActivity?.SetStatus(ActivityStatusCode.Ok);
+            ////    }
+            ////}
+
+            //using (var activity = activitySource.StartActivity("ExceptionExample"))
+            //{
+            //    try
+            //    {
+            //        throw new Exception("Test exception");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        activity?.SetStatus(ActivityStatusCode.Error);
+            //        activity?.RecordException(ex);
+            //    }
+            //}
         }
 
         public void Dispose()

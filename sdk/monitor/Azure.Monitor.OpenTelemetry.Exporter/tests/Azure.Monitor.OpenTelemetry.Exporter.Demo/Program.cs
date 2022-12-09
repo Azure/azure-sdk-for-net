@@ -17,11 +17,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             using var traceDemo = new TraceDemo(ConnectionString);
             traceDemo.GenerateTraces();
 
-            using var metricDemo = new MetricDemo(ConnectionString);
-            metricDemo.GenerateMetrics();
+            //using var metricDemo = new MetricDemo(ConnectionString);
+            //metricDemo.GenerateMetrics();
 
-            using var logDemo = new LogDemo(ConnectionString);
-            logDemo.GenerateLogs();
+            //using var logDemo = new LogDemo(ConnectionString);
+            //logDemo.GenerateLogs();
 
             Console.WriteLine("Press Enter key to exit.");
             Console.ReadLine();

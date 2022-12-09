@@ -179,24 +179,46 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             foreach (var evnt in activity.Events)
             {
-                if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                try
                 {
-                    try
+                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
                     {
                         var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
                         if (exceptionData != null)
                         {
-                            var exceptionTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
                             telemetryItems.Add(exceptionTelemetryItem);
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractExceptionFromActivityEvent", ex);
+                        var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                        traceTelemetryItem.Data = GetTraceTelemetryData(evnt);
+                        telemetryItems.Add(traceTelemetryItem);
                     }
                 }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractActivityEvent", ex);
+                }
             }
+        }
+
+        private static MonitorBase GetTraceTelemetryData(ActivityEvent activityEvent)
+        {
+            var messageData = new MessageData(Version, activityEvent.Name);
+
+            foreach (var tag in activityEvent.Tags)
+            {
+                messageData.Properties.Add(tag.Key, tag.Value.ToString());
+            }
+
+            return new MonitorBase
+            {
+                BaseType = "MessageData",
+                BaseData = messageData,
+            };
         }
 
         internal static MonitorBase GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags)
