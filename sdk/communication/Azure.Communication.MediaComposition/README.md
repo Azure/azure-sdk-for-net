@@ -113,7 +113,7 @@ var layout = new AutoGridLayout(new List<string>() { "acsGroupCall" })
 var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
 ```
 
-Note: Upserting `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported if the media composition is running. The media composition will need to be stopped if `GroupCall`, `Room`, or `TeamsMeeting` inputs need to change.
+Note: Upserting `GroupCall` and `Room` input kind is currently not supported if the media composition is running. The media composition will need to be stopped if `GroupCall` or `Room` inputs need to change.
 You can upsert or remove inputs:
 
 ```C# Snippet:UpsertInputs

@@ -7,11 +7,11 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-37553f71ecac684285df0f5ffd101ca1-b8e4112cd5b21545-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221207.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e9107e25f637a7740d399449d278d26a",
+        "traceparent": "00-d1fa78efe0c4e046a71cde3c4f66bbb9-42dffab2bd79b542-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20221209.1 (.NET Core 3.1.31; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ce050c29a0a9310b25859d31c845cddc",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 07 Dec 2022 17:46:48 GMT",
+        "x-ms-date": "Fri, 09 Dec 2022 22:16:00 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,21 +19,22 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 07 Dec 2022 17:46:48 GMT",
+        "Date": "Fri, 09 Dec 2022 22:16:01 GMT",
+        "MS-CV": "scpeTrQNy0CYeLwbgia8rg.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0idGQYwAAAAC4HCJFa2k2TKnQxnxZUX4mWVZSMzExMDAwMTE1MDMxAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0obOTYwAAAADKRdwM0W84Q5/0mIT9vkArWVZSMzBFREdFMDMxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-37553f71ecac684285df0f5ffd101ca1-34cdf731c0caf943-00"
+        "traceId": "00-d1fa78efe0c4e046a71cde3c4f66bbb9-16da070583bf4e77-00"
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://mediacomposition-clientsdk-int.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "933755475"
+    "RandomSeed": "1994326512"
   }
 }
