@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    internal class LoadTestingOperationSource : IOperationSource<LoadTestingResource>
+    internal class LoadTestingResourceOperationSource : IOperationSource<LoadTestingResource>
     {
         private readonly ArmClient _client;
 
-        internal LoadTestingOperationSource(ArmClient client)
+        internal LoadTestingResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.LoadTesting
         LoadTestingResource IOperationSource<LoadTestingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = LoadTestingData.DeserializeLoadTestingData(document.RootElement);
+            var data = LoadTestingResourceData.DeserializeLoadTestingResourceData(document.RootElement);
             return new LoadTestingResource(_client, data);
         }
 
         async ValueTask<LoadTestingResource> IOperationSource<LoadTestingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = LoadTestingData.DeserializeLoadTestingData(document.RootElement);
+            var data = LoadTestingResourceData.DeserializeLoadTestingResourceData(document.RootElement);
             return new LoadTestingResource(_client, data);
         }
     }

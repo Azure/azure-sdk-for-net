@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    public partial class LoadTestingData : IUtf8JsonSerializable
+    public partial class LoadTestingResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.LoadTesting
             writer.WriteEndObject();
         }
 
-        internal static LoadTestingData DeserializeLoadTestingData(JsonElement element)
+        internal static LoadTestingResourceData DeserializeLoadTestingResourceData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LoadTesting
                     continue;
                 }
             }
-            return new LoadTestingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, description.Value, Optional.ToNullable(provisioningState), dataPlaneUri.Value, encryption.Value);
+            return new LoadTestingResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, description.Value, Optional.ToNullable(provisioningState), dataPlaneUri.Value, encryption.Value);
         }
     }
 }

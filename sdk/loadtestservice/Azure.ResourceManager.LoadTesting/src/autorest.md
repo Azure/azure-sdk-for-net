@@ -18,10 +18,10 @@ modelerfour:
 
 irregular-plural-words:
   quota: quota
-  Testing: Testing
 
 rename-mapping:
-  LoadTestResource: LoadTesting
+  Resource: LoadTestingBaseResource
+  LoadTestResource: LoadTestingResource
   QuotaResource: LoadTestingQuota
   CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResponse
   EncryptionProperties: CustomerManagedKeyEncryptionProperties
