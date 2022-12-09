@@ -16,13 +16,13 @@ namespace Azure.Communication.MediaComposition.Tests
         private static readonly Dictionary<string, MediaInput> _presentationInputs = new()
         {
             ["presenter"] = new ParticipantInput(
-                id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
+                id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"),
                 call: "acsGroupCall")
                 {
                    PlaceholderImageUri = "https://imageendpoint"
                 },
             ["support"] = new ParticipantInput(
-                id: new MicrosoftTeamsUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
+                id: new CommunicationUserIdentifier("fa4337b5-f13a-41c5-a34f-f2aa46699b61"),
                 call: "acsGroupCall")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
@@ -64,6 +64,7 @@ namespace Azure.Communication.MediaComposition.Tests
 
                 var outputs = new Dictionary<string, MediaOutput>()
                 {
+                    // Set up a different output from acsGroup call to test validation
                     ["teamsMeeting"] = new TeamsMeetingOutput("https://teamsJoinUrl")
                 };
 
@@ -336,7 +337,7 @@ namespace Azure.Communication.MediaComposition.Tests
             var inputsToUpsert = new Dictionary<string, MediaInput>()
             {
                 ["james"] = new ParticipantInput(
-                    id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
+                    id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
                     call: "acsGroupCall")
                 {
                     PlaceholderImageUri = "https://imageendpoint"
@@ -360,7 +361,7 @@ namespace Azure.Communication.MediaComposition.Tests
             var inputsToUpsert = new Dictionary<string, MediaInput>()
             {
                 ["presenter"] = new ParticipantInput(
-                    id: new MicrosoftTeamsUserIdentifier(updatedUserId),
+                    id: new CommunicationUserIdentifier(updatedUserId),
                     call: "acsGroupCall")
                     {
                         PlaceholderImageUri = "https://imageendpoint"
@@ -371,10 +372,10 @@ namespace Azure.Communication.MediaComposition.Tests
             response.Value.Inputs.TryGetValue("presenter", out var presenter);
             var participant = presenter as ParticipantInput;
             Assert.IsNotNull(participant);
-            Assert.IsTrue(participant?.Id is MicrosoftTeamsUserIdentifier);
-            if (participant?.Id is MicrosoftTeamsUserIdentifier teamsUser)
+            Assert.IsTrue(participant?.Id is CommunicationUserIdentifier);
+            if (participant?.Id is CommunicationUserIdentifier acsUser)
             {
-                Assert.AreEqual(teamsUser.UserId, updatedUserId);
+                Assert.AreEqual(acsUser.Id, updatedUserId);
             }
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
@@ -435,7 +436,7 @@ namespace Azure.Communication.MediaComposition.Tests
                 var inputsToUpsert = new Dictionary<string, MediaInput>()
                 {
                     ["james"] = new ParticipantInput(
-                        id: new MicrosoftTeamsUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
+                        id: new CommunicationUserIdentifier("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"),
                         call: "acsGroupCall")
                         {
                             PlaceholderImageUri = "https://imageendpoint"
