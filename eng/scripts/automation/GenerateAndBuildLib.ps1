@@ -373,6 +373,9 @@ function CreateOrUpdateCadlConfigFile() {
     }
 
     $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yaml
+    if ( !$configuration) {
+        $configuration = [System.Collections.Generic.Dictionary[string,string]](New-Object 'System.Collections.Generic.Dictionary[string,string]')
+    }
     $configuration["directory"] = $directory
     if ($commit) {
         $configuration["commit"] = $commit
@@ -391,7 +394,14 @@ function CreateOrUpdateCadlConfigFile() {
         $configuration["spec-root-dir"] = $null
     }
 
-    $configuration | Out-File $cadlConfigurationFile
+    $fileContent = ""
+    foreach ( $key in $configuration.keys) {
+        if ($configuration[$key]) {
+            $fileContent += ( $key + ": " + $configuration[$key] + [Environment]::NewLine)
+        }
+    }
+
+    $fileContent | Out-File $cadlConfigurationFile
 }
 
 function New-CADLPackageFolder() {

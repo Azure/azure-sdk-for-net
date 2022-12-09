@@ -2,7 +2,7 @@
 param (
     [Parameter(Position=0)]
     [ValidateNotNullOrEmpty()]
-    [string] $ProjectDirectory = "C:\project\azure-sdk-for-net\sdk\anomalydetector\Azure.AI.AnomalyDetector"
+    [string] $ProjectDirectory
 )
 
 $ErrorActionPreference = "Stop"
@@ -93,12 +93,13 @@ $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yam
 $pieces = $cadlConfigurationFile.Path.Replace("\","/").Split("/")
 $projectName = $pieces[$pieces.Count - 3]
 
-$specCloneDir = GetSpecCloneDir $projectName
+$specSubDirectory = $configuration["directory"]
 if ( $configuration["repo"] -and $configuration["commit"]) {
+    $specCloneDir = GetSpecCloneDir $projectName
     $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
 
     Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
-    $specSubDirectory = $configuration["directory"]
+    
     Push-Location $specCloneDir.Path
     try {
         if (!(Test-Path ".git")) {
