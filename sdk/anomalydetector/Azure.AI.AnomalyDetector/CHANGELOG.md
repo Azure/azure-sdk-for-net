@@ -1,5 +1,15 @@
 # Release History
 
+## 3.0.0-preview.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 3.0.0-preview.6 (2022-12-08)
 **Features**
 - Added `OneTable` and `MultiTable` two data schemas.
