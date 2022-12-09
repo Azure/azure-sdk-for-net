@@ -34,11 +34,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var client = CreateClient();
             if (client.GetRoutesAsync().Result.Value.Count > 0)
             {
-                client.SetRoutesAsync(new List<SipTrunkRoute>()).Wait();
+                client.SetRoutesAsync(new List<SipTrunkRoute>()).EnsureCompleted();
             }
             if (client.GetTrunksAsync().Result.Value.Count > 0)
             {
-                client.SetTrunksAsync(new List<SipTrunk>()).Wait();
+                client.SetTrunksAsync(new List<SipTrunk>()).EnsureCompleted();
             }
         }
 
