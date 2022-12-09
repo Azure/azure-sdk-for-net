@@ -67,6 +67,16 @@ namespace Azure.ResourceManager.BillingBenefits
                 writer.WritePropertyName("renew");
                 writer.WriteBooleanValue(Renew.Value);
             }
+            if (Optional.IsDefined(RenewSource))
+            {
+                writer.WritePropertyName("renewSource");
+                writer.WriteStringValue(RenewSource);
+            }
+            if (Optional.IsDefined(RenewDestination))
+            {
+                writer.WritePropertyName("renewDestination");
+                writer.WriteStringValue(RenewDestination);
+            }
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties");
@@ -103,7 +113,9 @@ namespace Azure.ResourceManager.BillingBenefits
             Optional<ExtendedStatusInfo> extendedStatusInfo = default;
             Optional<bool> renew = default;
             Optional<Utilization> utilization = default;
-            Optional<SavingsPlanModelPropertiesRenewProperties> renewProperties = default;
+            Optional<string> renewSource = default;
+            Optional<string> renewDestination = default;
+            Optional<RenewProperties> renewProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -310,6 +322,16 @@ namespace Azure.ResourceManager.BillingBenefits
                             utilization = Utilization.DeserializeUtilization(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("renewSource"))
+                        {
+                            renewSource = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("renewDestination"))
+                        {
+                            renewDestination = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("renewProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -317,14 +339,14 @@ namespace Azure.ResourceManager.BillingBenefits
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            renewProperties = SavingsPlanModelPropertiesRenewProperties.DeserializeSavingsPlanModelPropertiesRenewProperties(property0.Value);
+                            renewProperties = RenewProperties.DeserializeRenewProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SavingsPlanModelData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), displayProvisioningState.Value, billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), userFriendlyAppliedScopeType.Value, appliedScopeProperties.Value, commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(expiryDateTime), Optional.ToNullable(purchaseDateTime), Optional.ToNullable(benefitStartTime), extendedStatusInfo.Value, Optional.ToNullable(renew), utilization.Value, renewProperties.Value);
+            return new SavingsPlanModelData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), displayProvisioningState.Value, billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), userFriendlyAppliedScopeType.Value, appliedScopeProperties.Value, commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(expiryDateTime), Optional.ToNullable(purchaseDateTime), Optional.ToNullable(benefitStartTime), extendedStatusInfo.Value, Optional.ToNullable(renew), utilization.Value, renewSource.Value, renewDestination.Value, renewProperties.Value);
         }
     }
 }

@@ -51,8 +51,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="extendedStatusInfo"></param>
         /// <param name="renew"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="utilization"> Savings plan utilization. </param>
+        /// <param name="renewSource"> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </param>
+        /// <param name="renewDestination"> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </param>
         /// <param name="renewProperties"></param>
-        internal SavingsPlanModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, ProvisioningState? provisioningState, string displayProvisioningState, string billingScopeId, string billingProfileId, string customerId, string billingAccountId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, string userFriendlyAppliedScopeType, AppliedScopeProperties appliedScopeProperties, Commitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, DateTimeOffset? benefitStartOn, ExtendedStatusInfo extendedStatusInfo, bool? renew, Utilization utilization, SavingsPlanModelPropertiesRenewProperties renewProperties) : base(id, name, resourceType, systemData)
+        internal SavingsPlanModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, ProvisioningState? provisioningState, string displayProvisioningState, string billingScopeId, string billingProfileId, string customerId, string billingAccountId, Term? term, BillingPlan? billingPlan, AppliedScopeType? appliedScopeType, string userFriendlyAppliedScopeType, AppliedScopeProperties appliedScopeProperties, Commitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, DateTimeOffset? benefitStartOn, ExtendedStatusInfo extendedStatusInfo, bool? renew, Utilization utilization, string renewSource, string renewDestination, RenewProperties renewProperties) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -75,6 +77,8 @@ namespace Azure.ResourceManager.BillingBenefits
             ExtendedStatusInfo = extendedStatusInfo;
             Renew = renew;
             Utilization = utilization;
+            RenewSource = renewSource;
+            RenewDestination = renewDestination;
             RenewProperties = renewProperties;
         }
 
@@ -132,8 +136,12 @@ namespace Azure.ResourceManager.BillingBenefits
         public bool? Renew { get; set; }
         /// <summary> Savings plan utilization. </summary>
         public Utilization Utilization { get; }
+        /// <summary> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </summary>
+        public string RenewSource { get; set; }
+        /// <summary> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </summary>
+        public string RenewDestination { get; set; }
         /// <summary> Gets or sets the renew properties. </summary>
-        internal SavingsPlanModelPropertiesRenewProperties RenewProperties { get; set; }
+        internal RenewProperties RenewProperties { get; set; }
         /// <summary> Gets or sets the purchase properties. </summary>
         public PurchaseRequest RenewPurchaseProperties
         {
@@ -141,7 +149,7 @@ namespace Azure.ResourceManager.BillingBenefits
             set
             {
                 if (RenewProperties is null)
-                    RenewProperties = new SavingsPlanModelPropertiesRenewProperties();
+                    RenewProperties = new RenewProperties();
                 RenewProperties.PurchaseProperties = value;
             }
         }

@@ -22,5 +22,24 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             writer.WriteEndObject();
         }
+
+        internal static RenewProperties DeserializeRenewProperties(JsonElement element)
+        {
+            Optional<PurchaseRequest> purchaseProperties = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("purchaseProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    purchaseProperties = PurchaseRequest.DeserializePurchaseRequest(property.Value);
+                    continue;
+                }
+            }
+            return new RenewProperties(purchaseProperties.Value);
+        }
     }
 }
