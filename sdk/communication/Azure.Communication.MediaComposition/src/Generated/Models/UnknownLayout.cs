@@ -16,7 +16,8 @@ namespace Azure.Communication.MediaComposition
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
-        internal UnknownLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri) : base(kind, resolution, placeholderImageUri)
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        internal UnknownLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode) : base(kind, resolution, placeholderImageUri, scalingMode)
         {
             Kind = kind;
         }
