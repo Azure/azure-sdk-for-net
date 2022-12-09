@@ -295,13 +295,10 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task ApiProfile()
+        public async Task SetApiVersionsFromProfile()
         {
-            var profileStr = File.ReadAllText(GetFileName("2020-09-01-hybrid.json")).TrimEnd();
-            var profile = BinaryData.FromString(profileStr);
-
             var options = new ArmClientOptions();
-            options.ApiVersionProfile = profile;
+            options.SetApiVersionsFromProfile(AzureStackProfile.Profile20200901Hybrid);
             var client = GetArmClient(options);
 
             var subscription = await client.GetDefaultSubscriptionAsync();
@@ -318,14 +315,11 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        public async Task ApiProfileWithApiVersionOverride()
+        public async Task SetApiVersionsFromProfileWithApiVersionOverride()
         {
-            var profileStr = File.ReadAllText(GetFileName("2020-09-01-hybrid.json")).TrimEnd();
-            var profile = BinaryData.FromString(profileStr);
-
             var options = new ArmClientOptions();
-            options.ApiVersionProfile = profile;
             options.SetApiVersion(SubscriptionResource.ResourceType, "2021-01-01");
+            options.SetApiVersionsFromProfile(AzureStackProfile.Profile20200901Hybrid);
             options.SetApiVersion("microsoft.resources/resourceGroups", "2021-01-01");
             var client = GetArmClient(options);
 

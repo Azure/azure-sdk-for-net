@@ -27,9 +27,6 @@
     <None Update="Unit\TestAssets\GenericResourceData\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scenario\TestAssets\Profile\*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\FeatureCollectionTests\" />

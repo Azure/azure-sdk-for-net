@@ -111,57 +111,15 @@ namespace Azure.ResourceManager
 
         private void CopyApiVersionOverrides(ArmClientOptions options)
         {
-            if (options.ApiVersionProfile != null)
-            {
-                // Refer to https://github.com/Azure/azure-rest-api-specs/tree/main/profile#file-structure for data structure.
-                var allProfile = options.ApiVersionProfile.ToObjectFromJson<Dictionary<string, Dictionary<string, object>>>();
-                if (!allProfile.TryGetValue("resource-manager", out var armProfile))
-                {
-                    throw new InvalidOperationException("The ApiVersionProfile does not contain resource-manager section.");
-                }
-                foreach (var keyValuePair in armProfile)
-                {
-                    var namespaceName = keyValuePair.Key;
-                    if (!ResourceApiVersionCache.TryGetValue(namespaceName, out var apiVersionCache))
-                    {
-                        apiVersionCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-                        ResourceApiVersionCache.TryAdd(namespaceName, apiVersionCache);
-                    }
-                    if (!(keyValuePair.Value is JsonElement element))
-                    {
-                        throw new InvalidOperationException("The input ApiVersionProfile option does not have a valid JSON format.");
-                    }
-
-                    foreach (var apiVersionProperty in element.EnumerateObject())
-                    {
-                        var apiVersion = apiVersionProperty.Name;
-                        foreach (var resourceTypeItem in apiVersionProperty.Value.EnumerateArray())
-                        {
-                            string resourceType = default;
-                            foreach (var property in resourceTypeItem.EnumerateObject())
-                            {
-                                if (property.NameEquals("resourceType"))
-                                {
-                                    resourceType = property.Value.GetString();
-                                    break;
-                                }
-                            }
-                            ApiVersionOverrides[$"{namespaceName}/{resourceType}"] = apiVersion;
-                            apiVersionCache[resourceType] = apiVersion;
-                        }
-                    }
-                }
-            }
-
             foreach (var keyValuePair in options.ResourceApiVersionOverrides)
             {
-                ApiVersionOverrides[keyValuePair.Key] = keyValuePair.Value;
+                ApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
                 if (!ResourceApiVersionCache.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
                 {
                     apiVersionCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                     ResourceApiVersionCache.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
                 }
-                apiVersionCache[keyValuePair.Key.Type] = keyValuePair.Value;
+                apiVersionCache.Add(keyValuePair.Key.Type, keyValuePair.Value);
             }
         }
 
