@@ -193,9 +193,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else
                     {
-                        var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
-                        traceTelemetryItem.Data = GetTraceTelemetryData(evnt);
-                        telemetryItems.Add(traceTelemetryItem);
+                        var messageData = GetTraceTelemetryData(evnt);
+                        if (messageData != null)
+                        {
+                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            traceTelemetryItem.Data = messageData;
+                            telemetryItems.Add(traceTelemetryItem);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -207,6 +211,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static MonitorBase GetTraceTelemetryData(ActivityEvent activityEvent)
         {
+            if (activityEvent.Name == null)
+            {
+                return null;
+            }
+
             var messageData = new MessageData(Version, activityEvent.Name);
 
             foreach (var tag in activityEvent.Tags)
