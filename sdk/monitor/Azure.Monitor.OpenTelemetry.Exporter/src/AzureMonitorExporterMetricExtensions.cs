@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
@@ -16,8 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="builder"><see cref="MeterProviderBuilder"/> builder to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
+        /// <param name="credential"><see cref="TokenCredential" /></param>
         /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
-        public static MeterProviderBuilder AddAzureMonitorMetricExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null)
+        public static MeterProviderBuilder AddAzureMonitorMetricExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null, TokenCredential credential = null)
         {
             if (builder == null)
             {
@@ -27,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options))
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options, credential))
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }
