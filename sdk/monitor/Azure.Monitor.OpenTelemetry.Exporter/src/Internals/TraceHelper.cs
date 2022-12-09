@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // Check for Exceptions events
                 if (activity.Events.Any())
                 {
-                    AddExceptionTelemetryFromActivityExceptionEvents(activity, telemetryItem, telemetryItems);
+                    AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
                 }
 
                 switch (activity.GetTelemetryType())
@@ -175,7 +175,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
+        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
             foreach (var evnt in activity.Events)
             {
