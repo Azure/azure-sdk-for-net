@@ -10,6 +10,7 @@ Tests:
 - Test: download
   Class: DownloadBlob
   Arguments:
+  # TODO: Remove before merging
   - --size 1 --warmup 0 --duration 1
   - --size 10240 --parallel 64
   - --size 10485760 --parallel 32
