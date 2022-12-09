@@ -31,7 +31,7 @@ namespace FaceSDK.Tests
                     Name = "Person",
                     UserData = "UserData"
                 };
-                var result = client.PersonDirectory.CreatePersonAsync(person).Result;
+                var result = client.PersonDirectory.CreatePersonAsync(person.Name, person.UserData).Result;
                 var personId = result.Body.PersonId;
                 var operationLocation = result.Headers.OperationLocation;
                 Assert.NotNull(operationLocation);
@@ -78,12 +78,12 @@ namespace FaceSDK.Tests
                 {
                     using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                     {
-                        var faceId1 = client.PersonDirectory.AddPersonFaceFromStreamAsync(personId.ToString(), recognitionModel, stream, detectionModel).Result.Body.PersistedFaceId;
+                        var faceId1 = client.PersonDirectory.AddPersonFaceFromStreamAsync(personId, recognitionModel, stream, detectionModel).Result.Body.PersistedFaceId;
                     }
                 }
                 finally
                 {
-                    var deleteResult = client.PersonDirectory.DeletePersonAsync(personId.ToString()).Result;
+                    var deleteResult = client.PersonDirectory.DeletePersonAsync(personId).Result;
                     Assert.NotNull(deleteResult.OperationLocation);
                 }
             }
@@ -103,7 +103,7 @@ namespace FaceSDK.Tests
                     Name = "Person1",
                     UserData = "UserData1"
                 };
-                var personResult1 = client.PersonDirectory.CreatePersonAsync(person1).Result;
+                var personResult1 = client.PersonDirectory.CreatePersonAsync(person1.Name, person1.UserData).Result;
                 var personId1 = personResult1.Body.PersonId;
                 var operationLocation1 = personResult1.Headers.OperationLocation;
                 Assert.NotNull(operationLocation1);
@@ -115,7 +115,7 @@ namespace FaceSDK.Tests
                     Name = "Person2",
                     UserData = "UserData2"
                 };
-                var personResult2 = client.PersonDirectory.CreatePersonAsync(person2).Result;
+                var personResult2 = client.PersonDirectory.CreatePersonAsync(person2.Name, person2.UserData).Result;
                 var personId2 = personResult2.Body.PersonId;
                 var operationLocation2 = personResult2.Headers.OperationLocation;
                 Assert.NotNull(operationLocation2);
@@ -129,7 +129,7 @@ namespace FaceSDK.Tests
                     UserData = "User data",
                     AddPersonIds = new List<Guid> { personId1 }
                 };
-                var createGroupResult = client.PersonDirectory.CreateDynamicPersonGroupAsync(groupId, createGroupRequest).Result;
+                var createGroupResult = client.PersonDirectory.CreateDynamicPersonGroupAsync(groupId, createGroupRequest.Name, createGroupRequest.UserData, createGroupRequest.AddPersonIds).Result;
                 var createGroupOperationLocation = createGroupResult.OperationLocation;
                 Assert.NotNull(createGroupOperationLocation);
                 var createGroupOperationResult = GetOperationResult(client, createGroupOperationLocation).Status;
@@ -141,7 +141,7 @@ namespace FaceSDK.Tests
                     UserData = "Updated user data",
                     AddPersonIds = new List<Guid> { personId2 }
                 };
-                var updateGroupResult = client.PersonDirectory.UpdateDynamicPersonGroupAsync(groupId, updateGroupRequest).Result;
+                var updateGroupResult = client.PersonDirectory.UpdateDynamicPersonGroupAsync(groupId, createGroupRequest.Name, createGroupRequest.UserData, createGroupRequest.AddPersonIds).Result;
                 var updateGroupOperationLocation = updateGroupResult.OperationLocation;
                 Assert.NotNull(updateGroupOperationLocation);
                 var updateGroupOperationResult = GetOperationResult(client, updateGroupOperationLocation).Status;

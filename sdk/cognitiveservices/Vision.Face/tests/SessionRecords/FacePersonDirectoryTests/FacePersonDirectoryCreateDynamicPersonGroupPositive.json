@@ -13,7 +13,7 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -27,13 +27,13 @@
           "chunked"
         ],
         "operation-location": [
-          "/face/v1.0-preview/operations/1de3ed7b-315b-4cff-9027-f483a8d4d682"
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/ed18e6de-16dd-4773-87c9-c8ab9c868398"
         ],
         "x-envoy-upstream-service-time": [
-          "47"
+          "52"
         ],
         "apim-request-id": [
-          "291c644b-254a-481b-9e50-3b53d0cb7259"
+          "36f2e05d-5dad-4755-a84f-469d29e5c851"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -48,16 +48,16 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:44 GMT"
+          "Fri, 09 Dec 2022 02:24:18 GMT"
         ],
         "Location": [
-          "/face/v1.0-preview/persons/16063068-d806-438c-9d87-6840c1df8bd0"
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/persons/69a00f9a-38fc-46ae-bdc2-c094af168b0b"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"personId\": \"16063068-d806-438c-9d87-6840c1df8bd0\"\r\n}",
+      "ResponseBody": "{\r\n  \"personId\": \"69a00f9a-38fc-46ae-bdc2-c094af168b0b\"\r\n}",
       "StatusCode": 202
     },
     {
@@ -73,7 +73,7 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -87,13 +87,13 @@
           "chunked"
         ],
         "operation-location": [
-          "/face/v1.0-preview/operations/017137f2-650e-45a5-a007-83865ac5f629"
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/b2b19dec-58fd-417e-a9dd-9dbe65e1c77c"
         ],
         "x-envoy-upstream-service-time": [
-          "65"
+          "175"
         ],
         "apim-request-id": [
-          "3e7d2697-ba77-466f-a49d-604f8a94995e"
+          "77bc71f1-fcbd-47f9-840c-c7f58cf98808"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,21 +108,21 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:45 GMT"
+          "Fri, 09 Dec 2022 02:24:19 GMT"
         ],
         "Location": [
-          "/face/v1.0-preview/persons/c8af70b8-8b13-48a2-8861-c47a2c3e59b8"
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/persons/9f6498c6-05d1-4169-a633-6663681369f5"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"personId\": \"c8af70b8-8b13-48a2-8861-c47a2c3e59b8\"\r\n}",
+      "ResponseBody": "{\r\n  \"personId\": \"9f6498c6-05d1-4169-a633-6663681369f5\"\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/1de3ed7b-315b-4cff-9027-f483a8d4d682",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMWRlM2VkN2ItMzE1Yi00Y2ZmLTkwMjctZjQ4M2E4ZDRkNjgy",
+      "RequestUri": "/face/v1.0-preview/operations/ed18e6de-16dd-4773-87c9-c8ab9c868398",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZWQxOGU2ZGUtMTZkZC00NzczLTg3YzktYzhhYjljODY4Mzk4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -133,15 +133,15 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ]
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "14"
+          "12"
         ],
         "apim-request-id": [
-          "9d625c38-91ec-451c-914b-05718c57ce92"
+          "9c56eb72-03f3-4090-89fe-69b5f5fdbd4c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -156,7 +156,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:44 GMT"
+          "Fri, 09 Dec 2022 02:24:18 GMT"
         ],
         "Content-Length": [
           "113"
@@ -165,12 +165,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-11-18T02:04:45.6459862Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:45.6460054Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-12-09T02:24:19.0073939Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:19.0074943Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/1de3ed7b-315b-4cff-9027-f483a8d4d682",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMWRlM2VkN2ItMzE1Yi00Y2ZmLTkwMjctZjQ4M2E4ZDRkNjgy",
+      "RequestUri": "/face/v1.0-preview/operations/ed18e6de-16dd-4773-87c9-c8ab9c868398",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZWQxOGU2ZGUtMTZkZC00NzczLTg3YzktYzhhYjljODY4Mzk4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -181,15 +181,15 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ]
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "13"
+          "7"
         ],
         "apim-request-id": [
-          "5e2af0c6-e1c7-401f-b9eb-8639361e2636"
+          "21bd5749-951f-4f24-a69c-0bf9aece3346"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -204,7 +204,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:45 GMT"
+          "Fri, 09 Dec 2022 02:24:19 GMT"
         ],
         "Content-Length": [
           "161"
@@ -213,12 +213,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:45.6459862Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:45.9294301Z\",\r\n  \"finishedTime\": \"2022-11-18T02:04:45.9248841Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:19.0073939Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:19.2327313Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:19.2327318Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/017137f2-650e-45a5-a007-83865ac5f629",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMDE3MTM3ZjItNjUwZS00NWE1LWEwMDctODM4NjVhYzVmNjI5",
+      "RequestUri": "/face/v1.0-preview/operations/b2b19dec-58fd-417e-a9dd-9dbe65e1c77c",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYjJiMTlkZWMtNThmZC00MTdlLWE5ZGQtOWRiZTY1ZTFjNzdj",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -229,15 +229,15 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ]
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "6"
+          "12"
         ],
         "apim-request-id": [
-          "9021e1c4-870a-4cd5-85a4-dbaa2e2f5ae4"
+          "d2a6fa6e-af36-4577-a8e6-3a4d62fd4dcd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -252,21 +252,21 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:45 GMT"
+          "Fri, 09 Dec 2022 02:24:19 GMT"
         ],
         "Content-Length": [
-          "112"
+          "113"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-11-18T02:04:46.806065Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:46.8060804Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdTime\": \"2022-12-09T02:24:20.1697281Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:20.1698666Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/017137f2-650e-45a5-a007-83865ac5f629",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvMDE3MTM3ZjItNjUwZS00NWE1LWEwMDctODM4NjVhYzVmNjI5",
+      "RequestUri": "/face/v1.0-preview/operations/b2b19dec-58fd-417e-a9dd-9dbe65e1c77c",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYjJiMTlkZWMtNThmZC00MTdlLWE5ZGQtOWRiZTY1ZTFjNzdj",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -277,15 +277,15 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ]
       },
       "ResponseHeaders": {
         "x-envoy-upstream-service-time": [
-          "8"
+          "11"
         ],
         "apim-request-id": [
-          "47ce48dd-2cdc-4756-a395-3ed7ad959dde"
+          "986cec28-644c-41cd-be5c-f1b22471cfcc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -300,23 +300,23 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:47 GMT"
+          "Fri, 09 Dec 2022 02:24:20 GMT"
         ],
         "Content-Length": [
-          "160"
+          "161"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:46.806065Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:47.1997472Z\",\r\n  \"finishedTime\": \"2022-11-18T02:04:47.1959312Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:20.1697281Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:20.4445473Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:20.4445478Z\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
       "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"DynamicPersonGroupName\",\r\n  \"userData\": \"User data\",\r\n  \"addPersonIds\": [\r\n    \"16063068-d806-438c-9d87-6840c1df8bd0\"\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"DynamicPersonGroupName\",\r\n  \"userData\": \"User data\",\r\n  \"addPersonIds\": [\r\n    \"69a00f9a-38fc-46ae-bdc2-c094af168b0b\"\r\n  ]\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
@@ -325,7 +325,7 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -336,13 +336,13 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "/face/v1.0-preview/operations/e1553667-0d83-424f-800c-595040ca048b"
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/761504fb-fe5a-49d0-b427-88a6d4bc1911"
         ],
         "x-envoy-upstream-service-time": [
-          "277"
+          "504"
         ],
         "apim-request-id": [
-          "232502db-d040-4447-bd02-d523a3759d00"
+          "251db783-6db1-4a2f-9ffd-733f9a0d09dc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -357,7 +357,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:48 GMT"
+          "Fri, 09 Dec 2022 02:24:21 GMT"
         ],
         "Content-Length": [
           "0"
@@ -367,8 +367,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/e1553667-0d83-424f-800c-595040ca048b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZTE1NTM2NjctMGQ4My00MjRmLTgwMGMtNTk1MDQwY2EwNDhi",
+      "RequestUri": "/face/v1.0-preview/operations/761504fb-fe5a-49d0-b427-88a6d4bc1911",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvNzYxNTA0ZmItZmU1YS00OWQwLWI0MjctODhhNmQ0YmMxOTEx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -379,157 +379,7 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "x-envoy-upstream-service-time": [
-          "8"
-        ],
-        "apim-request-id": [
-          "f2cf3494-c3d2-40bc-8bd0-8a2a7130c276"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "x-ms-region": [
-          "West US 2"
-        ],
-        "CSP-Billing-Usage": [
-          "CognitiveServices.Face.Transaction=1"
-        ],
-        "Date": [
-          "Fri, 18 Nov 2022 02:04:48 GMT"
-        ],
-        "Content-Length": [
-          "266"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-11-18T02:04:48.198488Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:48.1985227Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/face/v1.0-preview/operations/e1553667-0d83-424f-800c-595040ca048b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZTE1NTM2NjctMGQ4My00MjRmLTgwMGMtNTk1MDQwY2EwNDhi",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.8.4515.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "x-envoy-upstream-service-time": [
-          "7"
-        ],
-        "apim-request-id": [
-          "6e99db5d-0202-4cac-8c47-51c13959738e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "x-ms-region": [
-          "West US 2"
-        ],
-        "CSP-Billing-Usage": [
-          "CognitiveServices.Face.Transaction=1"
-        ],
-        "Date": [
-          "Fri, 18 Nov 2022 02:04:49 GMT"
-        ],
-        "Content-Length": [
-          "265"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:48.198488Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:48.6665339Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"name\": \"UpdatedDynamicPersonGroupName\",\r\n  \"userData\": \"Updated user data\",\r\n  \"addPersonIds\": [\r\n    \"c8af70b8-8b13-48a2-8861-c47a2c3e59b8\"\r\n  ]\r\n}",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.8.4515.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "154"
-        ]
-      },
-      "ResponseHeaders": {
-        "operation-location": [
-          "/face/v1.0-preview/operations/b0cbd781-bebf-4211-af76-3b065ba3b77b"
-        ],
-        "x-envoy-upstream-service-time": [
-          "225"
-        ],
-        "apim-request-id": [
-          "b87b4db8-47ad-41f3-9ba8-a57338908c49"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "x-ms-region": [
-          "West US 2"
-        ],
-        "CSP-Billing-Usage": [
-          "CognitiveServices.Face.Transaction=1"
-        ],
-        "Date": [
-          "Fri, 18 Nov 2022 02:04:49 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/face/v1.0-preview/operations/b0cbd781-bebf-4211-af76-3b065ba3b77b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYjBjYmQ3ODEtYmViZi00MjExLWFmNzYtM2IwNjViYTNiNzdi",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Ocp-Apim-Subscription-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.8.4515.0",
-          "OSName/Windows",
-          "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -537,7 +387,7 @@
           "6"
         ],
         "apim-request-id": [
-          "b80ae095-0157-4614-b89f-4d2a1c109981"
+          "685d0504-32a8-42e3-9ac3-240f21db9ade"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -552,7 +402,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:49 GMT"
+          "Fri, 09 Dec 2022 02:24:21 GMT"
         ],
         "Content-Length": [
           "267"
@@ -561,12 +411,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-11-18T02:04:49.4944724Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:49.4945125Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-12-09T02:24:21.5760753Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:21.5761987Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/face/v1.0-preview/operations/b0cbd781-bebf-4211-af76-3b065ba3b77b",
-      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvYjBjYmQ3ODEtYmViZi00MjExLWFmNzYtM2IwNjViYTNiNzdi",
+      "RequestUri": "/face/v1.0-preview/operations/761504fb-fe5a-49d0-b427-88a6d4bc1911",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvNzYxNTA0ZmItZmU1YS00OWQwLWI0MjctODhhNmQ0YmMxOTEx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -577,7 +427,7 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -585,7 +435,7 @@
           "7"
         ],
         "apim-request-id": [
-          "f7edd5a6-e1e0-486e-8f25-a4fd989d0550"
+          "863ac258-c880-4021-a455-bfb2db276344"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -600,16 +450,166 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:50 GMT"
+          "Fri, 09 Dec 2022 02:24:22 GMT"
         ],
         "Content-Length": [
-          "266"
+          "312"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-11-18T02:04:49.4944724Z\",\r\n  \"lastActionTime\": \"2022-11-18T02:04:49.7977429Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:21.5760753Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:22.4110507Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:22.4110512Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L2R5bmFtaWNwZXJzb25ncm91cHMvZHluYW1pYy1wZXJzb24tZ3JvdXAtaWQ=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"name\": \"DynamicPersonGroupName\",\r\n  \"userData\": \"User data\",\r\n  \"addPersonIds\": [\r\n    \"69a00f9a-38fc-46ae-bdc2-c094af168b0b\"\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4515.0",
+          "OSName/Windows",
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "139"
+        ]
+      },
+      "ResponseHeaders": {
+        "operation-location": [
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/eaea7b53-349d-4155-97f0-2e8b096dd3ab"
+        ],
+        "x-envoy-upstream-service-time": [
+          "306"
+        ],
+        "apim-request-id": [
+          "9c840020-3bee-4b1c-9b89-bff033d0c6f5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 09 Dec 2022 02:24:22 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/eaea7b53-349d-4155-97f0-2e8b096dd3ab",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZWFlYTdiNTMtMzQ5ZC00MTU1LTk3ZjAtMmU4YjA5NmRkM2Fi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4515.0",
+          "OSName/Windows",
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "7"
+        ],
+        "apim-request-id": [
+          "6546291d-905b-447d-8bab-3e7a4c09b572"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 09 Dec 2022 02:24:22 GMT"
+        ],
+        "Content-Length": [
+          "267"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-12-09T02:24:23.2276188Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:23.2277523Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/face/v1.0-preview/operations/eaea7b53-349d-4155-97f0-2e8b096dd3ab",
+      "EncodedRequestUri": "L2ZhY2UvdjEuMC1wcmV2aWV3L29wZXJhdGlvbnMvZWFlYTdiNTMtMzQ5ZC00MTU1LTk3ZjAtMmU4YjA5NmRkM2Fi",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4515.0",
+          "OSName/Windows",
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "7"
+        ],
+        "apim-request-id": [
+          "af9675c4-538e-4036-9cb1-7e35373ae9b9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Fri, 09 Dec 2022 02:24:24 GMT"
+        ],
+        "Content-Length": [
+          "312"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:23.2276188Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:23.4957381Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:23.4957386Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -625,18 +625,18 @@
           "FxVersion/4.8.4515.0",
           "OSName/Windows",
           "OSVersion/10.0.19045.0",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.8.0.0"
         ]
       },
       "ResponseHeaders": {
         "operation-location": [
-          "/face/v1.0-preview/operations/bfd3c559-0adb-43e9-a266-7e6ce76e88d7"
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/1f8b1c8a-65ee-49d9-8269-a47ee218a265"
         ],
         "x-envoy-upstream-service-time": [
-          "326"
+          "282"
         ],
         "apim-request-id": [
-          "4543c21a-9c2c-44f0-aba7-17fc4ed215ea"
+          "21584e7d-30fb-4a6c-ae46-1d2ac5292d76"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -651,7 +651,7 @@
           "CognitiveServices.Face.Transaction=1"
         ],
         "Date": [
-          "Fri, 18 Nov 2022 02:04:50 GMT"
+          "Fri, 09 Dec 2022 02:24:24 GMT"
         ],
         "Content-Length": [
           "0"

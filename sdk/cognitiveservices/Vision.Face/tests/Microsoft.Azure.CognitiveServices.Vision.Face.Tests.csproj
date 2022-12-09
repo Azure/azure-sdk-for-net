@@ -3,7 +3,7 @@
     <Description>Microsoft Azure CognitiveServices Vision Face Tests Class Library</Description>
     <AssemblyTitle>Microsoft Azure CognitiveServices Vision Face Tests</AssemblyTitle>
     <VersionPrefix>1.0.0</VersionPrefix>    
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   
   <ItemGroup>

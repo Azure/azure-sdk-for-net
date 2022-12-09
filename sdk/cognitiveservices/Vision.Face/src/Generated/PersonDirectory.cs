@@ -54,8 +54,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Retrieve list of person information in person directory.
         /// </summary>
         /// <param name='start'>
+        /// List persons from the least personId greater than the "start". It contains
+        /// no more than 64 characters. Default is empty.
         /// </param>
         /// <param name='top'>
+        /// The number of persons to list, ranging in [1, 1000]. Default is 1000.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -216,7 +219,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <summary>
         /// Creates a new person in person directory.
         /// </summary>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -239,15 +246,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersonCreationResponse,PersonDirectoryCreatePersonHeaders>> CreatePersonWithHttpMessagesAsync(EnrollmentRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersonCreationResponse,PersonDirectoryCreatePersonHeaders>> CreatePersonWithHttpMessagesAsync(string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (body == null)
+            EnrollmentRequest body = new EnrollmentRequest();
+            if (name != null || userData != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -387,8 +396,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Update name or userData of a person.
         /// </summary>
         /// <param name='personId'>
+        /// Person id to update.
         /// </param>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -408,15 +422,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdatePersonWithHttpMessagesAsync(System.Guid personId, EnrollmentRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdatePersonWithHttpMessagesAsync(System.Guid personId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (body == null)
+            EnrollmentRequest body = new EnrollmentRequest();
+            if (name != null || userData != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -529,6 +545,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// person entry will all be deleted.
         /// </summary>
         /// <param name='personId'>
+        /// Person id to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1526,8 +1543,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='persistedFaceId'>
         /// PersistedFaceId created from Person Face Create
         /// </param>
-        /// <param name='body'>
-        /// Target person face id to update.
+        /// <param name='detectionModel'>
+        /// Possible values include: 'detection_01', 'detection_02', 'detection_03',
+        /// 'detection_preview_1904', 'ir_detection_01', 'expression_01'
+        /// </param>
+        /// <param name='faceFeature'>
+        /// </param>
+        /// <param name='persistedFaceId1'>
+        /// </param>
+        /// <param name='userData'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1547,7 +1571,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, PersistedFaceWithType body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), byte[] faceFeature = default(byte[]), System.Guid? persistedFaceId1 = default(System.Guid?), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1557,9 +1581,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "recognitionModel");
             }
-            if (body == null)
+            PersistedFaceWithType body = new PersistedFaceWithType();
+            if (detectionModel != null || faceFeature != null || persistedFaceId1 != null || userData != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.DetectionModel = detectionModel;
+                body.FaceFeature = faceFeature;
+                body.PersistedFaceId = persistedFaceId1;
+                body.UserData = userData;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1684,7 +1712,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// composed by numbers, English letters in lower case, '-', '_', and no longer
         /// than 64 characters.
         /// </param>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
+        /// </param>
+        /// <param name='addPersonIds'>
+        /// Person ids to add to the dynamic person group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1704,7 +1739,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<PersonDirectoryCreateDynamicPersonGroupHeaders>> CreateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, DynamicPersonGroupCreateRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<PersonDirectoryCreateDynamicPersonGroupHeaders>> CreateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1714,9 +1749,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dynamicPersonGroupId");
             }
-            if (body == null)
+            DynamicPersonGroupCreateRequest body = new DynamicPersonGroupCreateRequest();
+            if (name != null || userData != null || addPersonIds != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
+                body.AddPersonIds = addPersonIds;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1843,7 +1881,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='dynamicPersonGroupId'>
         /// User provided dynamic person group Id.
         /// </param>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
+        /// </param>
+        /// <param name='addPersonIds'>
+        /// Person ids to add to the dynamic person group.
+        /// </param>
+        /// <param name='removePersonIds'>
+        /// Person ids to remove from the dynamic person group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1863,7 +1911,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<PersonDirectoryUpdateDynamicPersonGroupHeaders>> UpdateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, DynamicPersonGroupUpdateRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<PersonDirectoryUpdateDynamicPersonGroupHeaders>> UpdateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>), IList<string> removePersonIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1873,9 +1921,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dynamicPersonGroupId");
             }
-            if (body == null)
+            DynamicPersonGroupUpdateRequest body = new DynamicPersonGroupUpdateRequest();
+            if (name != null || userData != null || addPersonIds != null || removePersonIds != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
+                body.AddPersonIds = addPersonIds;
+                body.RemovePersonIds = removePersonIds;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

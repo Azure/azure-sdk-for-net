@@ -66,6 +66,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<IList<EnrollmentResponse>> GetPersonsAsync(this IPersonDirectory operations, string start = null, string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 Guid startGuid = Guid.Empty;
@@ -82,18 +83,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='body'>
+            /// <param name='name'>
+            /// User defined name, maximum length is 128.
+            /// </param>
+            /// <param name='userData'>
+            /// User specified data. Length should not exceed 16KB.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HttpOperationResponse<PersonCreationResponse, PersonDirectoryCreatePersonHeaders>> CreatePersonAsync(this IPersonDirectory operations, EnrollmentRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HttpOperationResponse<PersonCreationResponse, PersonDirectoryCreatePersonHeaders>> CreatePersonAsync(this IPersonDirectory operations, string name = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                return  await operations.CreatePersonWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false);
+                return await operations.CreatePersonWithHttpMessagesAsync(name, userData, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
-            /// Creates a new person in person directory.
+            /// Deprecated. Creates a new person in person directory.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,14 +108,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<HttpOperationResponse<PersonCreationResponse, PersonDirectoryCreatePersonHeaders>> CreatePersonAsync(this IPersonDirectory operations, EnrolledPerson body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var convertedRequest = new EnrollmentRequest
-                {
-                    Name = body.Name,
-                    UserData = body.UserData
-                };
-                return  await operations.CreatePersonWithHttpMessagesAsync(convertedRequest, null, cancellationToken).ConfigureAwait(false);
+                return  await operations.CreatePersonWithHttpMessagesAsync(body.Name, body.UserData, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -120,15 +121,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='personId'>
+            /// Person id to update.
             /// </param>
-            /// <param name='body'>
+            /// <param name='name'>
+            /// User defined name, maximum length is 128.
+            /// </param>
+            /// <param name='userData'>
+            /// User specified data. Length should not exceed 16KB.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdatePersonAsync(this IPersonDirectory operations, System.Guid personId, EnrollmentRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdatePersonAsync(this IPersonDirectory operations, System.Guid personId, string name = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdatePersonWithHttpMessagesAsync(personId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdatePersonWithHttpMessagesAsync(personId, name, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -138,17 +144,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='personId'>
+            /// Person id to update.
             /// </param>
             /// <param name='body'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task UpdatePersonAsync(this IPersonDirectory operations, string personId, EnrollmentRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid idGuid = Guid.Empty;
-                Guid.TryParse(personId, out idGuid);
-                (await operations.UpdatePersonWithHttpMessagesAsync(idGuid, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                Guid idGuid = Guid.Parse(personId);
+                (await operations.UpdatePersonWithHttpMessagesAsync(idGuid, body.Name, body.UserData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -160,6 +167,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='personId'>
+            /// Person id to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -181,14 +189,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='personId'>
+            /// Person id to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<PersonDirectoryDeletePersonHeaders> DeletePersonAsync(this IPersonDirectory operations, string personId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid idGuid = Guid.Empty;
-                Guid.TryParse(personId, out idGuid);
+                Guid idGuid = Guid.Parse(personId);
                 using (var _result = await operations.DeletePersonWithHttpMessagesAsync(idGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
@@ -229,10 +238,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<EnrolledPerson> GetPersonAsync(this IPersonDirectory operations, string personId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid idGuid = Guid.Empty;
-                Guid.TryParse(personId, out idGuid);
+                Guid idGuid = Guid.Parse(personId);
                 using (var _result = await operations.GetPersonWithHttpMessagesAsync(idGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
@@ -311,10 +320,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<PersonResponse> GetPersonFacesAsync(this IPersonDirectory operations, string personId, string recognitionModel, CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid idGuid = Guid.Empty;
-                Guid.TryParse(personId, out idGuid);
+                Guid idGuid = Guid.Parse(personId);
                 using (var _result = await operations.GetPersonFacesWithHttpMessagesAsync(idGuid, recognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
@@ -369,12 +378,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<PersonDirectoryDeletePersonFaceHeaders> DeletePersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid personIdGuid = Guid.Empty;
-                Guid.TryParse(personId, out personIdGuid);
-                Guid faceIdGuid = Guid.Empty;
-                Guid.TryParse(personId, out faceIdGuid);
+                Guid personIdGuid = Guid.Parse(personId);
+                Guid faceIdGuid = Guid.Parse(persistedFaceId);
                 using (var _result = await operations.DeletePersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
@@ -427,12 +435,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<PersistedFaceResponse> GetPersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid personIdGuid = Guid.Empty;
-                Guid.TryParse(personId, out personIdGuid);
-                Guid faceIdGuid = Guid.Empty;
-                Guid.TryParse(personId, out faceIdGuid);
+                Guid personIdGuid = Guid.Parse(personId);
+                Guid faceIdGuid = Guid.Parse(persistedFaceId);
                 using (var _result = await operations.GetPersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
@@ -454,15 +461,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='persistedFaceId'>
             /// PersistedFaceId created from Person Face Create
             /// </param>
-            /// <param name='body'>
-            /// Target person face id to update.
+            /// <param name='detectionModel'>
+            /// Possible values include: 'detection_01', 'detection_02', 'detection_03',
+            /// 'detection_preview_1904', 'ir_detection_01', 'expression_01'
+            /// </param>
+            /// <param name='userData'>
+            /// User data of person face.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdatePersonFaceAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, System.Guid persistedFaceId, PersistedFaceWithType body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdatePersonFaceAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personId, recognitionModel, persistedFaceId, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personId, recognitionModel, persistedFaceId, detectionModel, default(byte[]), persistedFaceId, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -481,18 +492,54 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// PersistedFaceId created from Person Face Create
             /// </param>
             /// <param name='body'>
-            /// Target person face id to update.
+            /// Target person face to update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task UpdatePersonFaceAsync(this IPersonDirectory operations, string personId, string recognitionModel, string persistedFaceId, PersistedFaceWithType body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid personIdGuid = Guid.Empty;
-                Guid.TryParse(personId, out personIdGuid);
-                Guid faceIdGuid = Guid.Empty;
-                Guid.TryParse(personId, out faceIdGuid);
-                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                Guid personIdGuid = Guid.Parse(personId);
+                Guid faceIdGuid = Guid.Parse(persistedFaceId);
+                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, body.DetectionModel, body.FaceFeature, body.PersistedFaceId, body.UserData, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates a new dynamic person group with specified dynamicPersonGroupId,
+            /// name, and user-provided userData.
+            /// A dynamic person group is a container that references persons.
+            /// After creation, use "DynamicPersonGroup - Update" to add/remove persons
+            /// into the search space.
+            /// DynamicPersonGroup and UserData will be stored on server until
+            /// DynamicPersonGroup Delete is called.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='dynamicPersonGroupId'>
+            /// User provided dynamic person group Id. Valid format should be a string
+            /// composed by numbers, English letters in lower case, '-', '_', and no longer
+            /// than 64 characters.
+            /// </param>
+            /// <param name='name'>
+            /// User defined name, maximum length is 128.
+            /// </param>
+            /// <param name='userData'>
+            /// User specified data. Length should not exceed 16KB.
+            /// </param>
+            /// <param name='addPersonIds'>
+            /// Person ids to add to the dynamic person group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PersonDirectoryCreateDynamicPersonGroupHeaders> CreateDynamicPersonGroupAsync(this IPersonDirectory operations, string dynamicPersonGroupId, string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateDynamicPersonGroupWithHttpMessagesAsync(dynamicPersonGroupId, name, userData, addPersonIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
             }
 
             /// <summary>
@@ -517,9 +564,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<PersonDirectoryCreateDynamicPersonGroupHeaders> CreateDynamicPersonGroupAsync(this IPersonDirectory operations, string dynamicPersonGroupId, DynamicPersonGroupCreateRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateDynamicPersonGroupWithHttpMessagesAsync(dynamicPersonGroupId, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateDynamicPersonGroupWithHttpMessagesAsync(dynamicPersonGroupId, body.Name, body.UserData, body.AddPersonIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Updates an existing dynamic person group with specified
+            /// dynamicPersonGroupId, name, and user-provided userData.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='dynamicPersonGroupId'>
+            /// User provided dynamic person group Id.
+            /// </param>
+            /// <param name='name'>
+            /// User defined name, maximum length is 128.
+            /// </param>
+            /// <param name='userData'>
+            /// User specified data. Length should not exceed 16KB.
+            /// </param>
+            /// <param name='addPersonIds'>
+            /// Person ids to add to the dynamic person group.
+            /// </param>
+            /// <param name='removePersonIds'>
+            /// Person ids to remove from the dynamic person group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PersonDirectoryUpdateDynamicPersonGroupHeaders> UpdateDynamicPersonGroupAsync(this IPersonDirectory operations, string dynamicPersonGroupId, string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>), IList<string> removePersonIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateDynamicPersonGroupWithHttpMessagesAsync(dynamicPersonGroupId, name, userData, addPersonIds, removePersonIds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -540,9 +621,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<PersonDirectoryUpdateDynamicPersonGroupHeaders> UpdateDynamicPersonGroupAsync(this IPersonDirectory operations, string dynamicPersonGroupId, DynamicPersonGroupUpdateRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateDynamicPersonGroupWithHttpMessagesAsync(dynamicPersonGroupId, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateDynamicPersonGroupWithHttpMessagesAsync(dynamicPersonGroupId, body.Name, body.UserData, body.AddPersonIds, body.RemovePersonIds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -721,10 +803,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<PersonDynamicPersonGroupReferenceResponse> ListDynamicPersonGroupPersonReferencesAsync(this IPersonDirectory operations, string personId, string start = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid idGuid = Guid.Empty;
-                Guid.TryParse(personId, out idGuid);
+                Guid idGuid = Guid.Parse(personId);
                 using (var _result = await operations.ListDynamicPersonGroupPersonReferencesWithHttpMessagesAsync(idGuid, start, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
@@ -790,10 +872,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [Obsolete("Method is being deprecated, consider using other overloads.", false)]
             public static async Task<HttpOperationResponse<EnrollmentPrintResponse, PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamAsync(this IPersonDirectory operations, string personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                Guid idGuid = Guid.Empty;
-                Guid.TryParse(personId, out idGuid);
+                Guid idGuid = Guid.Parse(personId);
                 return await operations.AddPersonFaceFromStreamWithHttpMessagesAsync(idGuid, recognitionModel, image, detectionModel, userData, targetFace, null, cancellationToken).ConfigureAwait(false);
             }
 
