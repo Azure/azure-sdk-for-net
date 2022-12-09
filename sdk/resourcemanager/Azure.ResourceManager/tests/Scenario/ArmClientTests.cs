@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -353,11 +352,6 @@ namespace Azure.ResourceManager.Tests
             var policyField = pipeline.GetType().GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             policyField ??= pipeline.GetType().BaseType.GetField("_pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField);
             return (ReadOnlyMemory<HttpPipelinePolicy>)policyField.GetValue(pipeline);
-        }
-
-        private string GetFileName(string fileName)
-        {
-            return Path.Combine(TestContext.CurrentContext.TestDirectory, "Scenario", "TestAssets", "Profile", fileName);
         }
     }
 }
