@@ -122,17 +122,11 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore(reason: "TODO: Decide whether to require cast for this case or not.")]
         public void CanAddStringToList()
         {
             dynamic jsonData = new BinaryData(new { value = "foo" }).ToDynamic();
 
             List<string> list = new();
-
-            // TODO: Should we add an implicit cast to string?
-            // Can we do it dynamically?
-            // Alternatively, we could provide a different type for string leaf
-            // nodes, like we do for numbers.
             list.Add(jsonData.value);
 
             Assert.AreEqual(1, list.Count);
@@ -140,15 +134,11 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore(reason:"TODO: Decide whether to require cast for this case or not.")]
         public void CanAddIntToList()
         {
             dynamic jsonData = new BinaryData(new { value = 5 }).ToDynamic();
 
             List<int> list = new();
-
-            // TODO: Should we add an implicit cast to int?
-            // Can we do it dynamically?
             list.Add(jsonData.value);
 
             Assert.AreEqual(1, list.Count);

@@ -2,18 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Azure.Core.Dynamic
 {
@@ -26,67 +16,67 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="bool"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator bool(JsonData json) => json.GetBoolean();
+        public static implicit operator bool(JsonData json) => json.GetBoolean();
 
         /// <summary>
         /// Converts the value to a <see cref="int"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator int(JsonData json) => json.GetIn32();
+        public static implicit operator int(JsonData json) => json.GetIn32();
 
         /// <summary>
         /// Converts the value to a <see cref="long"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator long(JsonData json) => json.GetLong();
+        public static implicit operator long(JsonData json) => json.GetLong();
 
         /// <summary>
         /// Converts the value to a <see cref="string"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator string?(JsonData json) => json.GetString();
+        public static implicit operator string?(JsonData json) => json.GetString();
 
         /// <summary>
         /// Converts the value to a <see cref="float"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator float(JsonData json) => json.GetFloat();
+        public static implicit operator float(JsonData json) => json.GetFloat();
 
         /// <summary>
         /// Converts the value to a <see cref="double"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator double(JsonData json) => json.GetDouble();
+        public static implicit operator double(JsonData json) => json.GetDouble();
 
         /// <summary>
         /// Converts the value to a <see cref="bool"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator bool?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetBoolean();
+        public static implicit operator bool?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetBoolean();
 
         /// <summary>
         /// Converts the value to a <see cref="int"/> or null.
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator int?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetIn32();
+        public static implicit operator int?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetIn32();
 
         /// <summary>
         /// Converts the value to a <see cref="long"/> or null.
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator long?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetLong();
+        public static implicit operator long?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetLong();
 
         /// <summary>
         /// Converts the value to a <see cref="float"/> or null.
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator float?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetFloat();
+        public static implicit operator float?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetFloat();
 
         /// <summary>
         /// Converts the value to a <see cref="double"/> or null.
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static explicit operator double?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetDouble();
+        public static implicit operator double?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetDouble();
 
         /// <summary>
         /// Returns true if a <see cref="JsonData"/> has the same value as a given string,
