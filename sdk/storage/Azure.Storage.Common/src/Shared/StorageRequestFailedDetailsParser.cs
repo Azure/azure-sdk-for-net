@@ -14,16 +14,19 @@ namespace Azure.Core.Pipeline
     {
         public override bool TryParse(Response response, out ResponseError? error, out IDictionary<string, string>? data)
         {
-            if (response.ContentStream is { CanSeek: true } && response.Headers.ContentType is not null)
+            if (response.ContentStream is { } contentStream && response.Headers.ContentType is not null)
             {
-                var position = response.ContentStream.Position;
+                var position = contentStream.CanSeek ? contentStream.Position : 0;
                 try
                 {
-                    response.ContentStream.Position = 0;
+                    if (contentStream.CanSeek)
+                    {
+                        contentStream.Position = 0;
+                    }
                     // XML body
                     if (response.Headers.ContentType.Contains(Constants.ContentTypeApplicationXml))
                     {
-                        XDocument xml = XDocument.Load(response.ContentStream);
+                        XDocument xml = XDocument.Load(contentStream);
                         var errorCode = xml.Root!.Element(Constants.ErrorCode)!.Value;
                         var message = xml.Root.Element(Constants.ErrorMessage)!.Value;
                         data = new Dictionary<string, string>();
@@ -48,7 +51,7 @@ namespace Azure.Core.Pipeline
                     // Json body
                     if (response.Headers.ContentType.Contains(Constants.ContentTypeApplicationJson))
                     {
-                        using JsonDocument json = JsonDocument.Parse(response.ContentStream);
+                        using JsonDocument json = JsonDocument.Parse(contentStream);
                         JsonElement errorElement = json.RootElement.GetProperty(Constants.ErrorPropertyKey);
 
                         if (errorElement.TryGetProperty(Constants.DetailPropertyKey, out JsonElement detail))
@@ -72,7 +75,10 @@ namespace Azure.Core.Pipeline
                 }
                 finally
                 {
-                    response.ContentStream.Position = position;
+                    if (contentStream.CanSeek)
+                    {
+                        contentStream.Position = position;
+                    }
                 }
             }
             // No response body.
