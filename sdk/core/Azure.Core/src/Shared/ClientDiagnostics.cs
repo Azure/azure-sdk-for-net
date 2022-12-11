@@ -86,12 +86,22 @@ namespace Azure.Core.Pipeline
 
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
+            if (GetType() == typeof(ClientDiagnostics) && error is null && additionalInfo is null)
+            {
+                return new RequestFailedException(response, innerException);
+            }
+
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
             return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedException(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
+            if (GetType() == typeof(ClientDiagnostics) && error is null && additionalInfo is null)
+            {
+                return new RequestFailedException(response, innerException);
+            }
+
             string? content = ReadContentAsync(response, false).EnsureCompleted();
             return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
         }
