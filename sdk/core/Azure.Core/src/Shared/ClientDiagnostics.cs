@@ -65,21 +65,6 @@ namespace Azure.Core.Pipeline
                 diagnostics.LoggedHeaderNames.ToArray());
         }
 
-        /// <summary>
-        /// Partial method that can optionally be defined to extract the error
-        /// message, code, and details in a service specific manner.
-        /// </summary>
-        /// <param name="content">The error content.</param>
-        /// <param name="responseHeaders">The response headers.</param>
-        /// <param name="additionalInfo">Additional error details.</param>
-        protected virtual ResponseError? ExtractFailureContent(
-            string? content,
-            ResponseHeaders responseHeaders,
-            ref IDictionary<string, string>? additionalInfo)
-        {
-            return ExtractAzureErrorContent(content);
-        }
-
         internal static ResponseError? ExtractAzureErrorContent(string? content)
         {
             try
@@ -102,15 +87,12 @@ namespace Azure.Core.Pipeline
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
-            error ??= ExtractFailureContent(content, response.Headers, ref additionalInfo);
             return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedException(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             string? content = ReadContentAsync(response, false).EnsureCompleted();
-            error ??= ExtractFailureContent(content, response.Headers, ref additionalInfo);
-
             return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
         }
 
@@ -121,6 +103,7 @@ namespace Azure.Core.Pipeline
             IDictionary<string, string>? additionalInfo = null,
             Exception? innerException = null)
         {
+            error ??= ExtractAzureErrorContent(content);
             var formatMessage = CreateRequestFailedMessageWithContent(response, error, content, additionalInfo, _sanitizer);
             var exception = new RequestFailedException(response.Status, formatMessage, error?.Code, innerException);
 
