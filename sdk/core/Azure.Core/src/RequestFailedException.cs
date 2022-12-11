@@ -168,16 +168,13 @@ namespace Azure
                 }
             }
 
-            if (response.ContentStream is MemoryStream)
+            if (response.ContentStream is MemoryStream { Length: > 0 } memoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
             {
-                string content = response.Content.ToString();
-                if (content.Length > 0)
-                {
-                    messageBuilder
-                        .AppendLine()
-                        .AppendLine("Content:")
-                        .AppendLine(content);
-                }
+                using var streamReader = new StreamReader(memoryStream, encoding);
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Content:")
+                    .AppendLine(streamReader.ReadToEnd());
             }
 
             messageBuilder
