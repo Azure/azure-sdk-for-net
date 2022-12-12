@@ -15,7 +15,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class Sample_NestedResourceTypeSkuCollection
+    public partial class Sample_ResourceTypeSkuInfoCollection
     {
         // Skus_Get
         [NUnit.Framework.Test]
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this NestedResourceTypeSkuResource
-            NestedResourceTypeSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSkus();
+            // get the collection of this ResourceTypeSkuInfoResource
+            ResourceTypeSkuInfoCollection collection = resourceTypeRegistration.GetResourceTypeSkuInfos();
 
             // invoke the operation
             string sku = "testSku";
-            NestedResourceTypeSkuResource result = await collection.GetAsync(sku);
+            ResourceTypeSkuInfoResource result = await collection.GetAsync(sku);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this NestedResourceTypeSkuResource
-            NestedResourceTypeSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSkus();
+            // get the collection of this ResourceTypeSkuInfoResource
+            ResourceTypeSkuInfoCollection collection = resourceTypeRegistration.GetResourceTypeSkuInfos();
 
             // invoke the operation
             string sku = "testSku";
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.ProviderHub
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this NestedResourceTypeSkuResource
-            NestedResourceTypeSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSkus();
+            // get the collection of this ResourceTypeSkuInfoResource
+            ResourceTypeSkuInfoCollection collection = resourceTypeRegistration.GetResourceTypeSkuInfos();
 
             // invoke the operation
             string sku = "testSku";
@@ -122,8 +122,8 @@ new SkuCost("xxx")
 }
             }),
             };
-            ArmOperation<NestedResourceTypeSkuResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
-            NestedResourceTypeSkuResource result = lro.Value;
+            ArmOperation<ResourceTypeSkuInfoResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sku, data);
+            ResourceTypeSkuInfoResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -151,11 +151,11 @@ new SkuCost("xxx")
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
             ResourceTypeRegistrationResource resourceTypeRegistration = client.GetResourceTypeRegistrationResource(resourceTypeRegistrationResourceId);
 
-            // get the collection of this NestedResourceTypeSkuResource
-            NestedResourceTypeSkuCollection collection = resourceTypeRegistration.GetNestedResourceTypeSkus();
+            // get the collection of this ResourceTypeSkuInfoResource
+            ResourceTypeSkuInfoCollection collection = resourceTypeRegistration.GetResourceTypeSkuInfos();
 
             // invoke the operation and iterate over the result
-            await foreach (NestedResourceTypeSkuResource item in collection.GetAllAsync())
+            await foreach (ResourceTypeSkuInfoResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

@@ -15,7 +15,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class Sample_NestedResourceTypeSkuResource
+    public partial class Sample_ResourceTypeSkuInfoResource
     {
         // Skus_Get
         [NUnit.Framework.Test]
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ProviderHub
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this NestedResourceTypeSkuResource created on azure
-            // for more information of creating NestedResourceTypeSkuResource, please refer to the document of NestedResourceTypeSkuResource
+            // this example assumes you already have this ResourceTypeSkuInfoResource created on azure
+            // for more information of creating ResourceTypeSkuInfoResource, please refer to the document of ResourceTypeSkuInfoResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
-            ResourceIdentifier nestedResourceTypeSkuResourceId = NestedResourceTypeSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
-            NestedResourceTypeSkuResource nestedResourceTypeSku = client.GetNestedResourceTypeSkuResource(nestedResourceTypeSkuResourceId);
+            ResourceIdentifier resourceTypeSkuInfoResourceId = ResourceTypeSkuInfoResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
+            ResourceTypeSkuInfoResource resourceTypeSkuInfo = client.GetResourceTypeSkuInfoResource(resourceTypeSkuInfoResourceId);
 
             // invoke the operation
-            NestedResourceTypeSkuResource result = await nestedResourceTypeSku.GetAsync();
+            ResourceTypeSkuInfoResource result = await resourceTypeSkuInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.ProviderHub
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this NestedResourceTypeSkuResource created on azure
-            // for more information of creating NestedResourceTypeSkuResource, please refer to the document of NestedResourceTypeSkuResource
+            // this example assumes you already have this ResourceTypeSkuInfoResource created on azure
+            // for more information of creating ResourceTypeSkuInfoResource, please refer to the document of ResourceTypeSkuInfoResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
-            ResourceIdentifier nestedResourceTypeSkuResourceId = NestedResourceTypeSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
-            NestedResourceTypeSkuResource nestedResourceTypeSku = client.GetNestedResourceTypeSkuResource(nestedResourceTypeSkuResourceId);
+            ResourceIdentifier resourceTypeSkuInfoResourceId = ResourceTypeSkuInfoResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
+            ResourceTypeSkuInfoResource resourceTypeSkuInfo = client.GetResourceTypeSkuInfoResource(resourceTypeSkuInfoResourceId);
 
             // invoke the operation
             SkuResourceData data = new SkuResourceData()
@@ -87,8 +87,8 @@ new SkuCost("xxx")
 }
             }),
             };
-            ArmOperation<NestedResourceTypeSkuResource> lro = await nestedResourceTypeSku.UpdateAsync(WaitUntil.Completed, data);
-            NestedResourceTypeSkuResource result = lro.Value;
+            ArmOperation<ResourceTypeSkuInfoResource> lro = await resourceTypeSkuInfo.UpdateAsync(WaitUntil.Completed, data);
+            ResourceTypeSkuInfoResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -108,17 +108,17 @@ new SkuCost("xxx")
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this NestedResourceTypeSkuResource created on azure
-            // for more information of creating NestedResourceTypeSkuResource, please refer to the document of NestedResourceTypeSkuResource
+            // this example assumes you already have this ResourceTypeSkuInfoResource created on azure
+            // for more information of creating ResourceTypeSkuInfoResource, please refer to the document of ResourceTypeSkuInfoResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
-            ResourceIdentifier nestedResourceTypeSkuResourceId = NestedResourceTypeSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
-            NestedResourceTypeSkuResource nestedResourceTypeSku = client.GetNestedResourceTypeSkuResource(nestedResourceTypeSkuResourceId);
+            ResourceIdentifier resourceTypeSkuInfoResourceId = ResourceTypeSkuInfoResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
+            ResourceTypeSkuInfoResource resourceTypeSkuInfo = client.GetResourceTypeSkuInfoResource(resourceTypeSkuInfoResourceId);
 
             // invoke the operation
-            await nestedResourceTypeSku.DeleteAsync(WaitUntil.Completed);
+            await resourceTypeSkuInfo.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
