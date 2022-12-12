@@ -380,18 +380,18 @@ function CreateOrUpdateCadlConfigFile() {
     if ($commit) {
         $configuration["commit"] = $commit
     } else {
-        $configuration["commit"] = $null
+        $configuration.Remove("commit")
     }
     if ($repo) {
         $configuration["repo"] = $repo
     } else {
-        $configuration["repo"] = $null
+        $configuration.Remove("repo")
     }
 
     if ($specRoot) {
         $configuration["spec-root-dir"] = $specRoot
     } else {
-        $configuration["spec-root-dir"] = $null
+        $configuration.Remove("spec-root-dir")
     }
 
     $fileContent = ""
