@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSku : IUtf8JsonSerializable
+    public partial class ResourceTypeSkuInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeSku DeserializeResourceTypeSku(JsonElement element)
+        internal static ResourceTypeSkuInfo DeserializeResourceTypeSkuInfo(JsonElement element)
         {
             IList<SkuSetting> skuSettings = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeSku(skuSettings, Optional.ToNullable(provisioningState));
+            return new ResourceTypeSkuInfo(skuSettings, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -162,20 +162,20 @@ namespace Azure.ResourceManager.ProviderHub
         }
         #endregion
 
-        #region ResourceTypeSkuInfoResource
+        #region ResourceTypeSkuResource
         /// <summary>
-        /// Gets an object representing a <see cref="ResourceTypeSkuInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceTypeSkuInfoResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeSkuInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceTypeSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceTypeSkuResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceTypeSkuInfoResource" /> object. </returns>
-        public static ResourceTypeSkuInfoResource GetResourceTypeSkuInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceTypeSkuResource" /> object. </returns>
+        public static ResourceTypeSkuResource GetResourceTypeSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ResourceTypeSkuInfoResource.ValidateResourceId(id);
-                return new ResourceTypeSkuInfoResource(client, id);
+                ResourceTypeSkuResource.ValidateResourceId(id);
+                return new ResourceTypeSkuResource(client, id);
             }
             );
         }
