@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            virtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("networkSecurityGroup"))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"))

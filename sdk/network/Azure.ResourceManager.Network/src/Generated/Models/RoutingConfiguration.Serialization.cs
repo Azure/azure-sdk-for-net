@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("propagatedRouteTables"))

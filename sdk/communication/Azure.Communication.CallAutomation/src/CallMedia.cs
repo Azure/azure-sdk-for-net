@@ -91,13 +91,10 @@ namespace Azure.Communication.CallAutomation
 
         private static PlayRequestInternal CreatePlayRequest(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo, PlayOptions options)
         {
-            if (playSource is FileSource fileSource)
-            {
-                PlaySourceInternal sourceInternal;
-                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                sourceInternal.PlaySourceId = playSource.PlaySourceId;
+            PlaySourceInternal sourceInternal = TranslatePlaySourceToInternal(playSource);
 
+            if (sourceInternal != null)
+            {
                 PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
                 request.PlayTo = playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
 
@@ -106,30 +103,6 @@ namespace Azure.Communication.CallAutomation
                     request.PlayOptions = new PlayOptionsInternal(options.Loop);
                     request.OperationContext = options.OperationContext;
                 }
-
-                return request;
-            }
-
-            else if (playSource is TextSource textSource)
-            {
-                PlaySourceInternal sourceInternal;
-                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Text);
-                sourceInternal.TextSource = new TextSourceInternal(textSource.Text);
-                sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
-                sourceInternal.TextSource.TargetLocale = textSource.TargetLocale ?? null;
-                sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.M;
-                sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
-                sourceInternal.PlaySourceId = playSource.PlaySourceId;
-
-                PlayRequestInternal request = new PlayRequestInternal(sourceInternal);
-                request.PlayTo = playTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
-
-                if (options != null)
-                {
-                    request.PlayOptions = new PlayOptionsInternal(options.Loop);
-                    request.OperationContext = options.OperationContext;
-                }
-
                 return request;
             }
 
@@ -287,19 +260,25 @@ namespace Azure.Communication.CallAutomation
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.InputType, recognizeConfigurationsInternal);
 
-                if (recognizeDtmfOptions.Prompt != null && recognizeDtmfOptions.Prompt is FileSource fileSource)
-                {
-                    PlaySourceInternal sourceInternal;
-                    sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
-                    sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
-                    sourceInternal.PlaySourceId = recognizeOptions.Prompt.PlaySourceId;
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeDtmfOptions.Prompt);
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
+                request.OperationContext = recognizeOptions.OperationContext;
 
-                    request.PlayPrompt = sourceInternal;
-                }
-                else if (recognizeOptions.Prompt != null)
+                return request;
+            }
+            else if (recognizeOptions is CallMediaRecognizeChoiceOptions recognizeChoiceOptions)
+            {
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
                 {
-                    throw new NotSupportedException(recognizeOptions.Prompt.GetType().Name);
-                }
+                    InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
+                };
+
+                recognizeChoiceOptions.RecognizeChoices
+                    .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
+
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext;
 
@@ -309,6 +288,31 @@ namespace Azure.Communication.CallAutomation
             {
                 throw new NotSupportedException(recognizeOptions.GetType().Name);
             }
+        }
+
+        private static PlaySourceInternal TranslatePlaySourceToInternal(PlaySource playSource)
+        {
+            PlaySourceInternal sourceInternal;
+
+            if (playSource != null && playSource is FileSource fileSource)
+            {
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                sourceInternal.PlaySourceId = fileSource.PlaySourceId;
+                return sourceInternal;
+            }
+            else if (playSource != null && playSource is TextSource textSource)
+            {
+                sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Text);
+                sourceInternal.TextSource = new TextSourceInternal(textSource.Text);
+                sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
+                sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
+                sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
+                sourceInternal.PlaySourceId = textSource.PlaySourceId;
+                return sourceInternal;
+            }
+            else
+            { return null; }
         }
     }
 }

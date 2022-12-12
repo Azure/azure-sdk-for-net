@@ -10,8 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Featurization Configuration. </summary>
-    public partial class TableVerticalFeaturizationSettings : FeaturizationSettings
+    /// <summary>
+    /// Featurization Configuration.
+    /// Serialized Name: TableVerticalFeaturizationSettings
+    /// </summary>
+    public partial class TableVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
         /// <summary> Initializes a new instance of TableVerticalFeaturizationSettings. </summary>
         public TableVerticalFeaturizationSettings()
@@ -22,17 +25,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TableVerticalFeaturizationSettings. </summary>
-        /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
-        /// <param name="blockedTransformers"> These transformers shall not be used in featurization. </param>
-        /// <param name="columnNameAndTypes"> Dictionary of column name and its type (int, float, string, datetime etc). </param>
-        /// <param name="enableDnnFeaturization"> Determines whether to use Dnn based featurizers for data featurization. </param>
+        /// <param name="datasetLanguage">
+        /// Dataset language, useful for the text data.
+        /// Serialized Name: FeaturizationSettings.datasetLanguage
+        /// </param>
+        /// <param name="blockedTransformers">
+        /// These transformers shall not be used in featurization.
+        /// Serialized Name: TableVerticalFeaturizationSettings.blockedTransformers
+        /// </param>
+        /// <param name="columnNameAndTypes">
+        /// Dictionary of column name and its type (int, float, string, datetime etc).
+        /// Serialized Name: TableVerticalFeaturizationSettings.columnNameAndTypes
+        /// </param>
+        /// <param name="enableDnnFeaturization">
+        /// Determines whether to use Dnn based featurizers for data featurization.
+        /// Serialized Name: TableVerticalFeaturizationSettings.enableDnnFeaturization
+        /// </param>
         /// <param name="mode">
         /// Featurization mode - User can keep the default &apos;Auto&apos; mode and AutoML will take care of necessary transformation of the data in featurization phase.
         /// If &apos;Off&apos; is selected then no featurization is done.
         /// If &apos;Custom&apos; is selected then user can specify additional inputs to customize how featurization is done.
+        /// Serialized Name: TableVerticalFeaturizationSettings.mode
         /// </param>
-        /// <param name="transformerParams"> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </param>
-        internal TableVerticalFeaturizationSettings(string datasetLanguage, IList<BlockedTransformer> blockedTransformers, IDictionary<string, string> columnNameAndTypes, bool? enableDnnFeaturization, FeaturizationMode? mode, IDictionary<string, IList<ColumnTransformer>> transformerParams) : base(datasetLanguage)
+        /// <param name="transformerParams">
+        /// User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor.
+        /// Serialized Name: TableVerticalFeaturizationSettings.transformerParams
+        /// </param>
+        internal TableVerticalFeaturizationSettings(string datasetLanguage, IList<BlockedTransformer> blockedTransformers, IDictionary<string, string> columnNameAndTypes, bool? enableDnnFeaturization, MachineLearningFeaturizationMode? mode, IDictionary<string, IList<ColumnTransformer>> transformerParams) : base(datasetLanguage)
         {
             BlockedTransformers = blockedTransformers;
             ColumnNameAndTypes = columnNameAndTypes;
@@ -41,19 +60,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TransformerParams = transformerParams;
         }
 
-        /// <summary> These transformers shall not be used in featurization. </summary>
+        /// <summary>
+        /// These transformers shall not be used in featurization.
+        /// Serialized Name: TableVerticalFeaturizationSettings.blockedTransformers
+        /// </summary>
         public IList<BlockedTransformer> BlockedTransformers { get; set; }
-        /// <summary> Dictionary of column name and its type (int, float, string, datetime etc). </summary>
+        /// <summary>
+        /// Dictionary of column name and its type (int, float, string, datetime etc).
+        /// Serialized Name: TableVerticalFeaturizationSettings.columnNameAndTypes
+        /// </summary>
         public IDictionary<string, string> ColumnNameAndTypes { get; set; }
-        /// <summary> Determines whether to use Dnn based featurizers for data featurization. </summary>
+        /// <summary>
+        /// Determines whether to use Dnn based featurizers for data featurization.
+        /// Serialized Name: TableVerticalFeaturizationSettings.enableDnnFeaturization
+        /// </summary>
         public bool? EnableDnnFeaturization { get; set; }
         /// <summary>
         /// Featurization mode - User can keep the default &apos;Auto&apos; mode and AutoML will take care of necessary transformation of the data in featurization phase.
         /// If &apos;Off&apos; is selected then no featurization is done.
         /// If &apos;Custom&apos; is selected then user can specify additional inputs to customize how featurization is done.
+        /// Serialized Name: TableVerticalFeaturizationSettings.mode
         /// </summary>
-        public FeaturizationMode? Mode { get; set; }
-        /// <summary> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </summary>
+        public MachineLearningFeaturizationMode? Mode { get; set; }
+        /// <summary>
+        /// User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor.
+        /// Serialized Name: TableVerticalFeaturizationSettings.transformerParams
+        /// </summary>
         public IDictionary<string, IList<ColumnTransformer>> TransformerParams { get; set; }
     }
 }

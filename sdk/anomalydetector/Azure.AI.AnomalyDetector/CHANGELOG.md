@@ -1,14 +1,19 @@
 # Release History
 
-## 3.0.0-preview.6 (Unreleased)
+## 3.0.0-preview.6 (2022-12-06)
+**Features**
+  - Added `OneTable` and `MultiTable` two data schemas.
+  - Added `topContributorCount` in `detect_multivariate_last_anomaly` and `detect_multivariate_batch_anomaly`.
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+**Breaking Changes**
+  - Renamed `detect_entire_series` to `detect_univariate_entire_series`.
+  - Renamed `detect_last_point` to `detect_univariate_last_point`.
+  - Renamed `detect_change_point` to `detect_univariate_change_point`.
+  - Renamed `train_multivariate_model` to `create_and_train_multivariate_model`.
+  - Renamed `list_multivariate_model` to `list_multivariate_models`.
+  - Renamed `detect_anomaly` to `detect_multivariate_batch_anomaly`.
+  - Renamed `get_detection_result` to `get_multivariate_batch_detection_result`.
+  - Renamed `last_detect_anomaly` to `detect_multivariate_last_anomaly`.
 
 ## 3.0.0-preview.5 (2022-01-23)
 

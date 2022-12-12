@@ -7,8 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Defines an early termination policy that cancels a given percentage of runs at each evaluation interval. </summary>
-    public partial class TruncationSelectionPolicy : EarlyTerminationPolicy
+    /// <summary>
+    /// Defines an early termination policy that cancels a given percentage of runs at each evaluation interval.
+    /// Serialized Name: TruncationSelectionPolicy
+    /// </summary>
+    public partial class TruncationSelectionPolicy : MachineLearningEarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of TruncationSelectionPolicy. </summary>
         public TruncationSelectionPolicy()
@@ -17,17 +20,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TruncationSelectionPolicy. </summary>
-        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
-        /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        /// <param name="truncationPercentage"> The percentage of runs to cancel at each evaluation interval. </param>
+        /// <param name="delayEvaluation">
+        /// Number of intervals by which to delay the first evaluation.
+        /// Serialized Name: EarlyTerminationPolicy.delayEvaluation
+        /// </param>
+        /// <param name="evaluationInterval">
+        /// Interval (number of runs) between policy evaluations.
+        /// Serialized Name: EarlyTerminationPolicy.evaluationInterval
+        /// </param>
+        /// <param name="policyType">
+        /// [Required] Name of policy configuration
+        /// Serialized Name: EarlyTerminationPolicy.policyType
+        /// </param>
+        /// <param name="truncationPercentage">
+        /// The percentage of runs to cancel at each evaluation interval.
+        /// Serialized Name: TruncationSelectionPolicy.truncationPercentage
+        /// </param>
         internal TruncationSelectionPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, int? truncationPercentage) : base(delayEvaluation, evaluationInterval, policyType)
         {
             TruncationPercentage = truncationPercentage;
             PolicyType = policyType;
         }
 
-        /// <summary> The percentage of runs to cancel at each evaluation interval. </summary>
+        /// <summary>
+        /// The percentage of runs to cancel at each evaluation interval.
+        /// Serialized Name: TruncationSelectionPolicy.truncationPercentage
+        /// </summary>
         public int? TruncationPercentage { get; set; }
     }
 }

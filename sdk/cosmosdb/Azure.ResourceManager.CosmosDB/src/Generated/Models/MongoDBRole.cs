@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of MongoDBRole. </summary>
-        /// <param name="db"> The database name the role is applied. </param>
+        /// <param name="dbName"> The database name the role is applied. </param>
         /// <param name="role"> The role name. </param>
-        internal MongoDBRole(string db, string role)
+        internal MongoDBRole(string dbName, string role)
         {
-            Db = db;
+            DBName = dbName;
             Role = role;
         }
 
         /// <summary> The database name the role is applied. </summary>
-        public string Db { get; set; }
+        public string DBName { get; set; }
         /// <summary> The role name. </summary>
         public string Role { get; set; }
     }

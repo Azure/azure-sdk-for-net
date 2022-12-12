@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of DataExportListResult. </summary>
         internal DataExportListResult()
         {
-            Value = new ChangeTrackingList<DataExportData>();
+            Value = new ChangeTrackingList<OperationalInsightsDataExportData>();
         }
 
         /// <summary> Initializes a new instance of DataExportListResult. </summary>
         /// <param name="value"> List of data export instances within a workspace.. </param>
-        internal DataExportListResult(IReadOnlyList<DataExportData> value)
+        internal DataExportListResult(IReadOnlyList<OperationalInsightsDataExportData> value)
         {
             Value = value;
         }
 
         /// <summary> List of data export instances within a workspace.. </summary>
-        public IReadOnlyList<DataExportData> Value { get; }
+        public IReadOnlyList<OperationalInsightsDataExportData> Value { get; }
     }
 }

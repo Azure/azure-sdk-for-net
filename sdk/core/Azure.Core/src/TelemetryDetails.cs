@@ -53,7 +53,7 @@ namespace Azure.Core
         /// <param name="message">The <see cref="HttpMessage"/> that will use this <see cref="TelemetryDetails"/>.</param>
         public void Apply(HttpMessage message)
         {
-            message.SetInternalProperty(typeof(UserAgentValueKey), ToString());
+            message.SetProperty(typeof(UserAgentValueKey), ToString());
         }
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)

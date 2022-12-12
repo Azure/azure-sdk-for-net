@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of AccountKeyMetadata. </summary>
-        /// <param name="generationOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
-        internal AccountKeyMetadata(DateTimeOffset? generationOn)
+        /// <param name="generatedOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
+        internal AccountKeyMetadata(DateTimeOffset? generatedOn)
         {
-            GenerationOn = generationOn;
+            GeneratedOn = generatedOn;
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
-        public DateTimeOffset? GenerationOn { get; }
+        public DateTimeOffset? GeneratedOn { get; }
     }
 }

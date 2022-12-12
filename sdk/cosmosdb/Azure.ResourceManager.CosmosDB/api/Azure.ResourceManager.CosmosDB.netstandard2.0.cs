@@ -2641,10 +2641,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class DatabaseAccountKeysMetadata
     {
         internal DatabaseAccountKeysMetadata() { }
-        public System.DateTimeOffset? PrimaryMasterKeyGenerationOn { get { throw null; } }
-        public System.DateTimeOffset? PrimaryReadonlyMasterKeyGenerationOn { get { throw null; } }
-        public System.DateTimeOffset? SecondaryMasterKeyGenerationOn { get { throw null; } }
-        public System.DateTimeOffset? SecondaryReadonlyMasterKeyGenerationOn { get { throw null; } }
+        public System.DateTimeOffset? PrimaryMasterKeyGeneratedOn { get { throw null; } }
+        public System.DateTimeOffset? PrimaryReadonlyMasterKeyGeneratedOn { get { throw null; } }
+        public System.DateTimeOffset? SecondaryMasterKeyGeneratedOn { get { throw null; } }
+        public System.DateTimeOffset? SecondaryReadonlyMasterKeyGeneratedOn { get { throw null; } }
     }
     public partial class DatabaseRestoreResourceInfo
     {
@@ -2898,12 +2898,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public MongoDBPrivilege() { }
         public System.Collections.Generic.IList<string> Actions { get { throw null; } }
-        public Azure.ResourceManager.CosmosDB.Models.PrivilegeResource Resource { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.MongoDBPrivilegeResourceInfo Resource { get { throw null; } set { } }
+    }
+    public partial class MongoDBPrivilegeResourceInfo
+    {
+        public MongoDBPrivilegeResourceInfo() { }
+        public string Collection { get { throw null; } set { } }
+        public string DBName { get { throw null; } set { } }
     }
     public partial class MongoDBRole
     {
         public MongoDBRole() { }
-        public string Db { get { throw null; } set { } }
+        public string DBName { get { throw null; } set { } }
         public string Role { get { throw null; } set { } }
     }
     public partial class MongoDBRoleDefinitionCreateOrUpdateContent
@@ -2969,12 +2975,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public int? BackupIntervalInMinutes { get { throw null; } set { } }
         public int? BackupRetentionIntervalInHours { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBBackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } set { } }
-    }
-    public partial class PrivilegeResource
-    {
-        public PrivilegeResource() { }
-        public string Collection { get { throw null; } set { } }
-        public string Db { get { throw null; } set { } }
     }
     public partial class RegionForOnlineOffline
     {
