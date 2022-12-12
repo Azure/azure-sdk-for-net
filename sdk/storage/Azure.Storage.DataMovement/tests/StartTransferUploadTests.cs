@@ -226,8 +226,10 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(progressSeen);
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
-        public async Task LocalToBlockBlobBlobSize_SmallChunk()
+        [LiveOnly]
+        public async Task LocalToBlockBlobSize_SmallChunk()
         {
             long fileSize = Constants.KB;
             int waitTimeInSec = 10;
@@ -432,8 +434,8 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(0, 10)]
         [TestCase(1000, 10)]
-        [TestCase(Constants.MB, 60)]
-        [TestCase(4 * Constants.MB, 60)]
+        [TestCase(Constants.KB, 20)]
+        [TestCase(4 * Constants.KB, 20)]
         public async Task LocalToBlockBlob_SmallSize(long fileSize, int waitTimeInSec)
         {
             // Arrange
@@ -466,9 +468,9 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(1, Constants.KB, 10)]
         [TestCase(2, Constants.KB, 10)]
-        [TestCase(1, 4 * Constants.KB, 100)]
-        [TestCase(2, 4 * Constants.KB, 100)]
-        [TestCase(4, 16 * Constants.KB, 100)]
+        [TestCase(1, 4 * Constants.KB, 60)]
+        [TestCase(2, 4 * Constants.KB, 60)]
+        [TestCase(4, 16 * Constants.KB, 60)]
         public async Task LocalToBlockBlob_SmallConcurrency(int concurrency, long size, int waitTimeInSec)
         {
             // Arrange
@@ -521,17 +523,13 @@ namespace Azure.Storage.DataMovement.Tests
                 transferManagerOptions: managerOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
-        [Test]
-        [Category("Live")]
+        [RecordedTest]
         [TestCase(2, 0, 30)]
-        [TestCase(2, Constants.KB, 300)]
-        [TestCase(6, Constants.KB, 300)]
-        [TestCase(32, Constants.KB, 300)]
-        [TestCase(2, 4 * Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
-        [TestCase(2, 4 * Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
+        [TestCase(2, Constants.KB, 30)]
+        [TestCase(6, Constants.KB, 30)]
+        [TestCase(32, Constants.KB, 30)]
+        [TestCase(2, 2 * Constants.KB, 30)]
+        [TestCase(6, 2 * Constants.KB, 30)]
         public async Task LocalToBlockBlob_SmallMultiple(int blobCount, long fileSize, int waitTimeInSec)
         {
             // Arrange
@@ -1005,15 +1003,11 @@ namespace Azure.Storage.DataMovement.Tests
                 container: testContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
-        [Test]
-        [Category("Live")]
+        [RecordedTest]
         [TestCase(2, Constants.KB, 10)]
         [TestCase(6, Constants.KB, 10)]
-        [TestCase(2, Constants.KB, 60)]
-        [TestCase(6, Constants.MB, 60)]
-        [TestCase(2, 4 * Constants.KB, 10)]
-        [TestCase(6, 4 * Constants.KB, 10)]
+        [TestCase(2, 2 * Constants.KB, 10)]
+        [TestCase(6, 2 * Constants.KB, 10)]
         public async Task LocalToPageBlob_SmallMultiple(int blobCount, long fileSize, int waitTimeInSec)
         {
             // Arrange
@@ -1047,11 +1041,12 @@ namespace Azure.Storage.DataMovement.Tests
                 blobCount: blobCount);
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
+        [Category("Live")]
         public async Task LocalToPageBlob_SmallChunks()
         {
             long size = 12 * Constants.KB;
-            string exceptionMessage = default;
             SingleTransferOptions options = new SingleTransferOptions()
             {
                 InitialTransferSize = Constants.KB,
@@ -1067,12 +1062,6 @@ namespace Azure.Storage.DataMovement.Tests
                 size: size,
                 blobCount: optionsList.Count,
                 options: optionsList);
-
-            // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
         }
         #endregion SingleUpload Page Blob
 
@@ -1206,7 +1195,9 @@ namespace Azure.Storage.DataMovement.Tests
             await UploadAppendBlobsAndVerify(testContainer.Container);
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
+        [LiveOnly]
         public async Task LocalToAppend_SmallChunk()
         {
             long size = Constants.KB;
@@ -1312,7 +1303,6 @@ namespace Azure.Storage.DataMovement.Tests
                 CreateMode = StorageResourceCreateMode.Overwrite,
             };
             List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
-            TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             await UploadAppendBlobsAndVerify(
@@ -1487,11 +1477,11 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase(1, Constants.KB, 200)]
-        [TestCase(1, 4 * Constants.KB, 200)]
-        [TestCase(6, 4 * Constants.KB, 200)]
-        [TestCase(6, 10 * Constants.KB, 200)]
-        [TestCase(32, 10 * Constants.KB, 200)]
+        [TestCase(1, Constants.KB, 10)]
+        [TestCase(1, 4 * Constants.KB, 20)]
+        [TestCase(6, 4 * Constants.KB, 20)]
+        [TestCase(6, 10 * Constants.KB, 20)]
+        [TestCase(32, 10 * Constants.KB, 20)]
         public async Task LocalToAppendBlob_SmallConcurrency(int concurrency, int size, int waitTimeInSec)
         {
             // Arrange
@@ -1552,16 +1542,13 @@ namespace Azure.Storage.DataMovement.Tests
                 transferManagerOptions: managerOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
-        [Test]
-        [Category("Live")]
+        [RecordedTest]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
-        [TestCase(2, Constants.KB, 300)]
-        [TestCase(6, Constants.KB, 300)]
-        [TestCase(32, Constants.KB, 300)]
-        [TestCase(2, 4 * Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
+        [TestCase(2, Constants.KB, 30)]
+        [TestCase(6, Constants.KB, 30)]
+        [TestCase(2, 2 * Constants.KB, 30)]
+        [TestCase(6, 2 * Constants.KB, 30)]
         public async Task LocalToAppendBlob_SmallMultiple(int blobCount, long fileSize, int waitTimeInSec)
         {
             // Arrange

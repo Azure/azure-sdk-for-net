@@ -82,7 +82,7 @@ namespace Azure.Storage.DataMovement
             {
                 if (Debugger.IsAttached)
                 {
-                    //Debugger.Break();
+                    Debugger.Break();
                 }
             }
         }

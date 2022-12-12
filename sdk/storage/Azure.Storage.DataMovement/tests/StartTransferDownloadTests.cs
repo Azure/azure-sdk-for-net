@@ -411,7 +411,9 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwite file.");
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
+        [LiveOnly]
         public async Task BlockBlobToLocal_SmallChunk()
         {
             long size = Constants.KB;
@@ -502,10 +504,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(2, 0, 30)]
-        [TestCase(2, Constants.KB, 300)]
-        [TestCase(6, Constants.KB, 300)]
-        [TestCase(2, 4 * Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
+        [TestCase(2, Constants.KB, 60)]
+        [TestCase(6, Constants.KB, 60)]
+        [TestCase(2, 4 * Constants.KB, 60)]
+        [TestCase(6, 4 * Constants.KB, 60)]
         public async Task BlockBlobToLocal_SmallMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
@@ -538,9 +540,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(2, 0, 30)]
-        [TestCase(2, Constants.KB, 300)]
-        [TestCase(6, Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
+        [TestCase(2, Constants.KB, 60)]
+        [TestCase(6, Constants.KB, 60)]
+        [TestCase(6, 4 * Constants.KB, 60)]
         public async Task BlockBlobToLocal_SmallConcurrency(int concurrency, int size, int waitTimeInSec)
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -1067,10 +1069,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(2, 0, 30)]
-        [TestCase(2, Constants.KB, 300)]
-        [TestCase(6, Constants.KB, 300)]
-        [TestCase(2, 4 * Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
+        [TestCase(2, Constants.KB, 60)]
+        [TestCase(6, Constants.KB, 60)]
+        [TestCase(2, 4 * Constants.KB, 60)]
+        [TestCase(6, 4 * Constants.KB, 60)]
         public async Task AppendBlobToLocal_MultipleSmall(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
@@ -1104,7 +1106,9 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
+        [LiveOnly]
         public async Task AppendBlobToLocal_SmallChunk()
         {
             // To test parallel chunked download, this makes it faster to debug
@@ -1131,10 +1135,10 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
-        [TestCase(2, Constants.KB, 300)]
-        [TestCase(6, Constants.KB, 300)]
-        [TestCase(2, 2 * Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
+        [TestCase(2, Constants.KB, 60)]
+        [TestCase(6, Constants.KB, 60)]
+        [TestCase(2, 2 * Constants.KB, 60)]
+        [TestCase(6, 4 * Constants.KB, 60)]
         public async Task AppendBlobToLocal_SmallConcurrency(int concurrency, int size, int waitTimeInSec)
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -1507,7 +1511,9 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwite file.");
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
+        [LiveOnly]
         public async Task PageBlobToLocal_SmallChunk()
         {
             long size = 12 * Constants.KB;
@@ -1629,8 +1635,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(2, 0, 30)]
-        [TestCase(2, 4 * Constants.KB, 300)]
-        [TestCase(6, 4 * Constants.KB, 300)]
+        [TestCase(2, 4 * Constants.KB, 60)]
+        [TestCase(6, 4 * Constants.KB, 60)]
         public async Task PageBlobToLocal_SmallMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
