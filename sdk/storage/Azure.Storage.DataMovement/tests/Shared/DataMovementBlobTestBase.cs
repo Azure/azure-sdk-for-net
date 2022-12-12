@@ -582,10 +582,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         internal async Task<AppendBlobClient> CreateAppendBlob(
-    BlobContainerClient containerClient,
-    string localSourceFile,
-    string blobName,
-    long size)
+            BlobContainerClient containerClient,
+            string localSourceFile,
+            string blobName,
+            long size)
         {
             AppendBlobClient blobClient = containerClient.GetAppendBlobClient(blobName);
             await blobClient.CreateIfNotExistsAsync().ConfigureAwait(false);
