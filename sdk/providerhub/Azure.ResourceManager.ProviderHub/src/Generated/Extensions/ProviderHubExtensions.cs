@@ -162,20 +162,20 @@ namespace Azure.ResourceManager.ProviderHub
         }
         #endregion
 
-        #region NestedResourceTypeSkuResource
+        #region ResourceTypeSkuInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="NestedResourceTypeSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NestedResourceTypeSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceTypeSkuInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceTypeSkuInfoResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeSkuInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NestedResourceTypeSkuResource" /> object. </returns>
-        public static NestedResourceTypeSkuResource GetNestedResourceTypeSkuResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceTypeSkuInfoResource" /> object. </returns>
+        public static ResourceTypeSkuInfoResource GetResourceTypeSkuInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NestedResourceTypeSkuResource.ValidateResourceId(id);
-                return new NestedResourceTypeSkuResource(client, id);
+                ResourceTypeSkuInfoResource.ValidateResourceId(id);
+                return new ResourceTypeSkuInfoResource(client, id);
             }
             );
         }
