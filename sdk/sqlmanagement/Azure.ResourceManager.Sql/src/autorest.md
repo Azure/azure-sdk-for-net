@@ -430,14 +430,6 @@ directive:
       where: $.definitions
       transform: >
           $.JobSchedule.properties.interval['format'] = 'duration';
-    - from: DatabaseSqlVulnerabilityAssessmentsSettings.json
-      where: $.paths
-      transform: >
-          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}'].get.parameters[3]['x-ms-enum'].name = 'SQLVulnerabilityAssessmentName';
-    - from: SqlVulnerabilityAssessmentsSettings.json
-      where: $.paths
-      transform: >
-          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}'].get.parameters[2]['x-ms-enum'].name = 'SQLVulnerabilityAssessmentName';
     - from: ServerDevOpsAudit.json
       where: $.paths..parameters[?(@.name === 'devOpsAuditingSettingsName')]
       transform: >
