@@ -272,6 +272,12 @@ rename-mapping:
   ServiceRegistryResourceRequests: AppPlatformServiceRegistryResourceRequirements
   SkuScaleType: AppPlatformSkuScaleType
   StorageAccount: AppPlatformStorageAccount
+  LoadedCertificate.resourceId: -|arm-id
+  BindingResourceProperties.resourceId: -|arm-id
+  NetworkProfile.serviceRuntimeSubnetId: -|arm-id
+  NetworkProfile.appSubnetId: -|arm-id
+  ResourceSku.locations: -|azure-location
+  ResourceSkuRestrictionInfo.locations: -|azure-location
 
 directive:
   - from: swagger-document
@@ -290,12 +296,6 @@ directive:
     where: $.definitions
     transform: >
       delete $.BindingResourceProperties.properties.resourceType['x-ms-format'];
-      $.LoadedCertificate.properties.resourceId['x-ms-format'] = 'arm-id';
-      $.BindingResourceProperties.properties.resourceId['x-ms-format'] = 'arm-id';
-      $.NetworkProfile.properties.serviceRuntimeSubnetId['x-ms-format'] = 'arm-id';
-      $.NetworkProfile.properties.appSubnetId['x-ms-format'] = 'arm-id';
-      $.ResourceSku.properties.locations.items['x-ms-format'] = 'azure-location';
-      $.ResourceSkuRestrictionInfo.properties.locations.items['x-ms-format'] = 'azure-location';
   - from: swagger-document
     where: $.paths
     transform: >
