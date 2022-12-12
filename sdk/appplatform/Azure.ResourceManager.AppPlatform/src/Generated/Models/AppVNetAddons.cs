@@ -10,24 +10,24 @@ using System;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Additional App settings in vnet injection instance. </summary>
-    public partial class AppVNetAddons
+    public partial class AppVnetAddons
     {
-        /// <summary> Initializes a new instance of AppVNetAddons. </summary>
-        public AppVNetAddons()
+        /// <summary> Initializes a new instance of AppVnetAddons. </summary>
+        public AppVnetAddons()
         {
         }
 
-        /// <summary> Initializes a new instance of AppVNetAddons. </summary>
-        /// <param name="publicEndpoint"> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </param>
+        /// <summary> Initializes a new instance of AppVnetAddons. </summary>
+        /// <param name="isPublicEndpoint"> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </param>
         /// <param name="publicEndpointUri"> URL of the App in vnet injection instance which could be accessed from internet. </param>
-        internal AppVNetAddons(bool? publicEndpoint, Uri publicEndpointUri)
+        internal AppVnetAddons(bool? isPublicEndpoint, Uri publicEndpointUri)
         {
-            PublicEndpoint = publicEndpoint;
+            IsPublicEndpoint = isPublicEndpoint;
             PublicEndpointUri = publicEndpointUri;
         }
 
         /// <summary> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </summary>
-        public bool? PublicEndpoint { get; set; }
+        public bool? IsPublicEndpoint { get; set; }
         /// <summary> URL of the App in vnet injection instance which could be accessed from internet. </summary>
         public Uri PublicEndpointUri { get; }
     }

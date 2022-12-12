@@ -18,10 +18,10 @@ using Azure.ResourceManager.AppPlatform.Models;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A Class representing an ApiPortalResource along with the instance operations that can be performed on it.
+    /// A Class representing an ApiPortal along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiPortalResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetApiPortalResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetApiPortalResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetApiPortal method.
     /// </summary>
     public partial class ApiPortalResource : ArmResource
     {
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AppPlatform
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _apiPortalResourceApiPortalsClientDiagnostics;
-        private readonly ApiPortalsRestOperations _apiPortalResourceApiPortalsRestClient;
-        private readonly ApiPortalResourceData _data;
+        private readonly ClientDiagnostics _apiPortalClientDiagnostics;
+        private readonly ApiPortalsRestOperations _apiPortalRestClient;
+        private readonly ApiPortalData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiPortalResource"/> class for mocking. </summary>
         protected ApiPortalResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary> Initializes a new instance of the <see cref = "ApiPortalResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiPortalResource(ArmClient client, ApiPortalResourceData data) : this(client, data.Id)
+        internal ApiPortalResource(ArmClient client, ApiPortalData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiPortalResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiPortalResourceApiPortalsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiPortalResourceApiPortalsApiVersion);
-            _apiPortalResourceApiPortalsRestClient = new ApiPortalsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiPortalResourceApiPortalsApiVersion);
+            _apiPortalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiPortalApiVersion);
+            _apiPortalRestClient = new ApiPortalsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiPortalApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiPortalResourceData Data
+        public virtual ApiPortalData Data
         {
             get
             {
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.AppPlatform
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ApiPortalCustomDomainResources in the ApiPortalResource. </summary>
+        /// <summary> Gets a collection of ApiPortalCustomDomainResources in the ApiPortal. </summary>
         /// <returns> An object representing collection of ApiPortalCustomDomainResources and their operations over a ApiPortalCustomDomainResource. </returns>
-        public virtual ApiPortalCustomDomainResourceCollection GetApiPortalCustomDomainResources()
+        public virtual ApiPortalCustomDomainCollection GetApiPortalCustomDomains()
         {
-            return GetCachedClient(Client => new ApiPortalCustomDomainResourceCollection(Client, Id));
+            return GetCachedClient(Client => new ApiPortalCustomDomainCollection(Client, Id));
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiPortalCustomDomainResource>> GetApiPortalCustomDomainResourceAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiPortalCustomDomainResource>> GetApiPortalCustomDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            return await GetApiPortalCustomDomainResources().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+            return await GetApiPortalCustomDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiPortalCustomDomainResource> GetApiPortalCustomDomainResource(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiPortalCustomDomainResource> GetApiPortalCustomDomain(string domainName, CancellationToken cancellationToken = default)
         {
-            return GetApiPortalCustomDomainResources().Get(domainName, cancellationToken);
+            return GetApiPortalCustomDomains().Get(domainName, cancellationToken);
         }
 
         /// <summary>
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiPortalResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.Get");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiPortalResourceApiPortalsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiPortalRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiPortalResource(Client, response.Value), response.GetRawResponse());
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiPortalResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.Get");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.Get");
             scope.Start();
             try
             {
-                var response = _apiPortalResourceApiPortalsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _apiPortalRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiPortalResource(Client, response.Value), response.GetRawResponse());
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.Delete");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.Delete");
             scope.Start();
             try
             {
-                var response = await _apiPortalResourceApiPortalsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_apiPortalResourceApiPortalsClientDiagnostics, Pipeline, _apiPortalResourceApiPortalsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiPortalRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_apiPortalClientDiagnostics, Pipeline, _apiPortalRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.Delete");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.Delete");
             scope.Start();
             try
             {
-                var response = _apiPortalResourceApiPortalsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_apiPortalResourceApiPortalsClientDiagnostics, Pipeline, _apiPortalResourceApiPortalsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _apiPortalRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppPlatformArmOperation(_apiPortalClientDiagnostics, Pipeline, _apiPortalRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -233,16 +233,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="data"> The API portal for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiPortalResource>> UpdateAsync(WaitUntil waitUntil, ApiPortalResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiPortalResource>> UpdateAsync(WaitUntil waitUntil, ApiPortalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.Update");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiPortalResourceApiPortalsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ApiPortalResource>(new ApiPortalResourceOperationSource(Client), _apiPortalResourceApiPortalsClientDiagnostics, Pipeline, _apiPortalResourceApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiPortalRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<ApiPortalResource>(new ApiPortalOperationSource(Client), _apiPortalClientDiagnostics, Pipeline, _apiPortalRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -263,16 +263,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="data"> The API portal for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiPortalResource> Update(WaitUntil waitUntil, ApiPortalResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiPortalResource> Update(WaitUntil waitUntil, ApiPortalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.Update");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.Update");
             scope.Start();
             try
             {
-                var response = _apiPortalResourceApiPortalsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<ApiPortalResource>(new ApiPortalResourceOperationSource(Client), _apiPortalResourceApiPortalsClientDiagnostics, Pipeline, _apiPortalResourceApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _apiPortalRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AppPlatformArmOperation<ApiPortalResource>(new ApiPortalOperationSource(Client), _apiPortalClientDiagnostics, Pipeline, _apiPortalRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -289,18 +289,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apiPortals/{apiPortalName}/validateDomain
         /// Operation Id: ApiPortals_ValidateDomain
         /// </summary>
-        /// <param name="validatePayload"> Custom domain payload to be validated. </param>
+        /// <param name="content"> Custom domain payload to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validatePayload"/> is null. </exception>
-        public virtual async Task<Response<CustomDomainValidateResult>> ValidateDomainAsync(CustomDomainValidatePayload validatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AppPlatformCustomDomainValidateResult>> ValidateDomainAsync(AppPlatformCustomDomainValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validatePayload, nameof(validatePayload));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.ValidateDomain");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.ValidateDomain");
             scope.Start();
             try
             {
-                var response = await _apiPortalResourceApiPortalsRestClient.ValidateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, validatePayload, cancellationToken).ConfigureAwait(false);
+                var response = await _apiPortalRestClient.ValidateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -315,18 +315,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apiPortals/{apiPortalName}/validateDomain
         /// Operation Id: ApiPortals_ValidateDomain
         /// </summary>
-        /// <param name="validatePayload"> Custom domain payload to be validated. </param>
+        /// <param name="content"> Custom domain payload to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validatePayload"/> is null. </exception>
-        public virtual Response<CustomDomainValidateResult> ValidateDomain(CustomDomainValidatePayload validatePayload, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AppPlatformCustomDomainValidateResult> ValidateDomain(AppPlatformCustomDomainValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validatePayload, nameof(validatePayload));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiPortalResourceApiPortalsClientDiagnostics.CreateScope("ApiPortalResource.ValidateDomain");
+            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalResource.ValidateDomain");
             scope.Start();
             try
             {
-                var response = _apiPortalResourceApiPortalsRestClient.ValidateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, validatePayload, cancellationToken);
+                var response = _apiPortalRestClient.ValidateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ApiPortalCustomDomainResourceList DeserializeApiPortalCustomDomainResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiPortalCustomDomainResourceData>> value = default;
+            Optional<IReadOnlyList<ApiPortalCustomDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiPortalCustomDomainResourceData> array = new List<ApiPortalCustomDomainResourceData>();
+                    List<ApiPortalCustomDomainData> array = new List<ApiPortalCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiPortalCustomDomainResourceData.DeserializeApiPortalCustomDomainResourceData(item));
+                        array.Add(ApiPortalCustomDomainData.DeserializeApiPortalCustomDomainData(item));
                     }
                     value = array;
                     continue;

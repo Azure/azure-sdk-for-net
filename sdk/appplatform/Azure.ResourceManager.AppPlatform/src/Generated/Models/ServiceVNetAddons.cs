@@ -8,21 +8,21 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Additional Service settings in vnet injection instance. </summary>
-    internal partial class ServiceVNetAddons
+    internal partial class ServiceVnetAddons
     {
-        /// <summary> Initializes a new instance of ServiceVNetAddons. </summary>
-        public ServiceVNetAddons()
+        /// <summary> Initializes a new instance of ServiceVnetAddons. </summary>
+        public ServiceVnetAddons()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceVNetAddons. </summary>
-        /// <param name="logStreamPublicEndpoint"> Indicates whether the log stream in vnet injection instance could be accessed from internet. </param>
-        internal ServiceVNetAddons(bool? logStreamPublicEndpoint)
+        /// <summary> Initializes a new instance of ServiceVnetAddons. </summary>
+        /// <param name="isLogStreamPublicEndpoint"> Indicates whether the log stream in vnet injection instance could be accessed from internet. </param>
+        internal ServiceVnetAddons(bool? isLogStreamPublicEndpoint)
         {
-            LogStreamPublicEndpoint = logStreamPublicEndpoint;
+            IsLogStreamPublicEndpoint = isLogStreamPublicEndpoint;
         }
 
         /// <summary> Indicates whether the log stream in vnet injection instance could be accessed from internet. </summary>
-        public bool? LogStreamPublicEndpoint { get; set; }
+        public bool? IsLogStreamPublicEndpoint { get; set; }
     }
 }

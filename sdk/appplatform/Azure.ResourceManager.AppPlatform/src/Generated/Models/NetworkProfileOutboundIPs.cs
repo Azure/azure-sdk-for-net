@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>
         internal NetworkProfileOutboundIPs()
         {
-            PublicIPs = new ChangeTrackingList<string>();
+            PublicIPs = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>
         /// <param name="publicIPs"> A list of public IP addresses. </param>
-        internal NetworkProfileOutboundIPs(IReadOnlyList<string> publicIPs)
+        internal NetworkProfileOutboundIPs(IReadOnlyList<IPAddress> publicIPs)
         {
             PublicIPs = publicIPs;
         }
 
         /// <summary> A list of public IP addresses. </summary>
-        public IReadOnlyList<string> PublicIPs { get; }
+        public IReadOnlyList<IPAddress> PublicIPs { get; }
     }
 }

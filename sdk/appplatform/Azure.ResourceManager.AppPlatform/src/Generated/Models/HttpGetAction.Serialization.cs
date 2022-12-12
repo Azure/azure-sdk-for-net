@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStringValue(Scheme.Value.ToString());
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ProbeActionType.ToString());
             writer.WriteEndObject();
         }
 

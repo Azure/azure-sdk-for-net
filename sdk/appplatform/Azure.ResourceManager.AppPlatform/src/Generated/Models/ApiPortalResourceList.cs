@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ApiPortalResourceList. </summary>
         internal ApiPortalResourceList()
         {
-            Value = new ChangeTrackingList<ApiPortalResourceData>();
+            Value = new ChangeTrackingList<ApiPortalData>();
         }
 
         /// <summary> Initializes a new instance of ApiPortalResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal ApiPortalResourceList(IReadOnlyList<ApiPortalResourceData> value, string nextLink)
+        internal ApiPortalResourceList(IReadOnlyList<ApiPortalData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of API portal resources. </summary>
-        public IReadOnlyList<ApiPortalResourceData> Value { get; }
+        public IReadOnlyList<ApiPortalData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

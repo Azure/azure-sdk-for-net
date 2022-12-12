@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Public))
+            if (Optional.IsDefined(IsPublic))
             {
                 writer.WritePropertyName("public");
-                writer.WriteBooleanValue(Public.Value);
+                writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (Optional.IsDefined(HttpsOnly))
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly");
-                writer.WriteBooleanValue(HttpsOnly.Value);
+                writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsCollectionDefined(GatewayIds))
             {
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<bool> @public = default;
             Optional<Uri> uri = default;
             Optional<bool> httpsOnly = default;
-            Optional<IList<string>> gatewayIds = default;
+            Optional<IList<ResourceIdentifier>> gatewayIds = default;
             Optional<IList<Uri>> sourceUris = default;
-            Optional<SsoProperties> ssoProperties = default;
-            Optional<ApiPortalResourceRequests> resourceRequests = default;
+            Optional<AppPlatformSsoProperties> ssoProperties = default;
+            Optional<ApiPortalResourceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<ApiPortalInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     gatewayIds = array;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ssoProperties = SsoProperties.DeserializeSsoProperties(property.Value);
+                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceRequests = ApiPortalResourceRequests.DeserializeApiPortalResourceRequests(property.Value);
+                    resourceRequests = ApiPortalResourceRequirements.DeserializeApiPortalResourceRequirements(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instances"))

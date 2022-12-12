@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> A list of deployments resource ids. </summary>
-    public partial class DeploymentList
+    internal partial class DeploymentList
     {
         /// <summary> Initializes a new instance of DeploymentList. </summary>
         internal DeploymentList()
         {
-            Deployments = new ChangeTrackingList<string>();
+            Deployments = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of DeploymentList. </summary>
         /// <param name="deployments"> A list of deployment resource ids. </param>
-        internal DeploymentList(IReadOnlyList<string> deployments)
+        internal DeploymentList(IReadOnlyList<ResourceIdentifier> deployments)
         {
             Deployments = deployments;
         }
 
         /// <summary> A list of deployment resource ids. </summary>
-        public IReadOnlyList<string> Deployments { get; }
+        public IReadOnlyList<ResourceIdentifier> Deployments { get; }
     }
 }

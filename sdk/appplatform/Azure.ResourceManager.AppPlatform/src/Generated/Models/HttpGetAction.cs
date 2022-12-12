@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> HTTPGetAction describes an action based on HTTP Get requests. </summary>
-    public partial class HttpGetAction : ProbeAction
+    public partial class HttpGetAction : AppInstanceProbeAction
     {
         /// <summary> Initializes a new instance of HttpGetAction. </summary>
         public HttpGetAction()
         {
-            ActionType = ProbeActionType.HttpGetAction;
+            ProbeActionType = ProbeActionType.HttpGetAction;
         }
 
         /// <summary> Initializes a new instance of HttpGetAction. </summary>
-        /// <param name="actionType"> The type of the action to take to perform the health check. </param>
+        /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="scheme">
         /// Scheme to use for connecting to the host. Defaults to HTTP.
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
         ///  - `&quot;HTTP&quot;` means that the scheme used will be http://
         ///  - `&quot;HTTPS&quot;` means that the scheme used will be https://
         /// </param>
-        internal HttpGetAction(ProbeActionType actionType, string path, HttpSchemeType? scheme) : base(actionType)
+        internal HttpGetAction(ProbeActionType probeActionType, string path, HttpSchemeType? scheme) : base(probeActionType)
         {
             Path = path;
             Scheme = scheme;
-            ActionType = actionType;
+            ProbeActionType = probeActionType;
         }
 
         /// <summary> Path to access on the HTTP server. </summary>

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ApiPortalProperties. </summary>
         public ApiPortalProperties()
         {
-            GatewayIds = new ChangeTrackingList<string>();
+            GatewayIds = new ChangeTrackingList<ResourceIdentifier>();
             SourceUris = new ChangeTrackingList<Uri>();
             Instances = new ChangeTrackingList<ApiPortalInstance>();
         }
 
         /// <summary> Initializes a new instance of ApiPortalProperties. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
-        /// <param name="public"> Indicates whether the API portal exposes endpoint. </param>
+        /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
         /// <param name="uri"> URL of the API portal, exposed when &apos;public&apos; is true. </param>
-        /// <param name="httpsOnly"> Indicate if only https is allowed. </param>
+        /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="gatewayIds"> The array of resource Ids of gateway to integrate with API portal. </param>
         /// <param name="sourceUris"> Collection of OpenAPI source URL locations. </param>
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to API portal. </param>
-        internal ApiPortalProperties(ApiPortalProvisioningState? provisioningState, bool? @public, Uri uri, bool? httpsOnly, IList<string> gatewayIds, IList<Uri> sourceUris, SsoProperties ssoProperties, ApiPortalResourceRequests resourceRequests, IReadOnlyList<ApiPortalInstance> instances)
+        internal ApiPortalProperties(ApiPortalProvisioningState? provisioningState, bool? isPublic, Uri uri, bool? isHttpsOnly, IList<ResourceIdentifier> gatewayIds, IList<Uri> sourceUris, AppPlatformSsoProperties ssoProperties, ApiPortalResourceRequirements resourceRequests, IReadOnlyList<ApiPortalInstance> instances)
         {
             ProvisioningState = provisioningState;
-            Public = @public;
+            IsPublic = isPublic;
             Uri = uri;
-            HttpsOnly = httpsOnly;
+            IsHttpsOnly = isHttpsOnly;
             GatewayIds = gatewayIds;
             SourceUris = sourceUris;
             SsoProperties = ssoProperties;
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> State of the API portal. </summary>
         public ApiPortalProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates whether the API portal exposes endpoint. </summary>
-        public bool? Public { get; set; }
+        public bool? IsPublic { get; set; }
         /// <summary> URL of the API portal, exposed when &apos;public&apos; is true. </summary>
         public Uri Uri { get; }
         /// <summary> Indicate if only https is allowed. </summary>
-        public bool? HttpsOnly { get; set; }
+        public bool? IsHttpsOnly { get; set; }
         /// <summary> The array of resource Ids of gateway to integrate with API portal. </summary>
-        public IList<string> GatewayIds { get; }
+        public IList<ResourceIdentifier> GatewayIds { get; }
         /// <summary> Collection of OpenAPI source URL locations. </summary>
         public IList<Uri> SourceUris { get; }
         /// <summary> Single sign-on related configuration. </summary>
-        public SsoProperties SsoProperties { get; set; }
+        public AppPlatformSsoProperties SsoProperties { get; set; }
         /// <summary> The requested resource quantity for required CPU and Memory. </summary>
-        public ApiPortalResourceRequests ResourceRequests { get; }
+        public ApiPortalResourceRequirements ResourceRequests { get; }
         /// <summary> Collection of instances belong to API portal. </summary>
         public IReadOnlyList<ApiPortalInstance> Instances { get; }
     }

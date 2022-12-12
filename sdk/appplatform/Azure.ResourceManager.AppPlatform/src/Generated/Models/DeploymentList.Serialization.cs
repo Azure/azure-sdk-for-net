@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class DeploymentList
+    internal partial class DeploymentList
     {
         internal static DeploymentList DeserializeDeploymentList(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> deployments = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> deployments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deployments"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     deployments = array;
                     continue;

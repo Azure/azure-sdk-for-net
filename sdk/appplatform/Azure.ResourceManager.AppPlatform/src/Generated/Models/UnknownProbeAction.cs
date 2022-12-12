@@ -8,13 +8,13 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The UnknownProbeAction. </summary>
-    internal partial class UnknownProbeAction : ProbeAction
+    internal partial class UnknownProbeAction : AppInstanceProbeAction
     {
         /// <summary> Initializes a new instance of UnknownProbeAction. </summary>
-        /// <param name="actionType"> The type of the action to take to perform the health check. </param>
-        internal UnknownProbeAction(ProbeActionType actionType) : base(actionType)
+        /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
+        internal UnknownProbeAction(ProbeActionType probeActionType) : base(probeActionType)
         {
-            ActionType = actionType;
+            ProbeActionType = probeActionType;
         }
     }
 }
