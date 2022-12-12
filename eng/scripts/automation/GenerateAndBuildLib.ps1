@@ -429,20 +429,6 @@ function New-CADLPackageFolder() {
         if (Test-Path -Path $projectFolder/src/autorest.md) {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
-
-        # if (!(Test-Path -Path $projectFolder/src/cadl-location.yaml)) {
-        #     New-Item -Path $projectFolder/src/cadl-location.yaml
-        # }
-        # $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
-        # $fileContent = Get-Content -Path $projFile
-        # $match = ($fileContent | Select-String -Pattern "<AutoRestInput>").LineNumber
-        # if ($match.count -gt 0) {
-        #     $fileContent[$match[0] - 1] = "<AutoRestInput>$cadlInput</AutoRestInput>";
-        # } else {
-        #     $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
-        #     $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
-        # }
-        # $fileContent | Out-File $projFile
         
         CreateOrUpdateCadlConfigFile `
             -cadlConfigurationFile $projectFolder/src/$CADL_LOCATION_FILE `
@@ -484,8 +470,6 @@ function New-CADLPackageFolder() {
         $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
         $fileContent = Get-Content -Path $projFile
         $fileContent = $fileContent -replace '<Version>[^<]+</Version>', '<Version>1.0.0-beta.1</Version>'
-        # $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
-        # $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
         $fileContent | Out-File $projFile
         # (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | -replace "<AutoRestInput>*</AutoRestInput>", "<AutoRestInput>$cadlInput</AutoRestInput>" |Set-Content $projFile
         Pop-Location
