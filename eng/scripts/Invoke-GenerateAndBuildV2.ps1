@@ -133,7 +133,7 @@ if ($relatedCadlProjectFolder) {
             -service $service `
             -namespace $namespace `
             -sdkPath $sdkPath `
-            -relatedCadlProjectFolder $relatedCadlProjectFolder `
+            -relatedCadlProjectFolder $cadlRelativeFolder `
             -specRoot $swaggerDir `
             -outputJsonFile $newpackageoutput
         $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
