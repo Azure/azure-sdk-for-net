@@ -15,7 +15,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    public partial class Sample_ResourceTypeSkuInfoResource
+    public partial class Sample_ResourceTypeSkuResource
     {
         // Skus_Get
         [NUnit.Framework.Test]
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ProviderHub
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ResourceTypeSkuInfoResource created on azure
-            // for more information of creating ResourceTypeSkuInfoResource, please refer to the document of ResourceTypeSkuInfoResource
+            // this example assumes you already have this ResourceTypeSkuResource created on azure
+            // for more information of creating ResourceTypeSkuResource, please refer to the document of ResourceTypeSkuResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
-            ResourceIdentifier resourceTypeSkuInfoResourceId = ResourceTypeSkuInfoResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
-            ResourceTypeSkuInfoResource resourceTypeSkuInfo = client.GetResourceTypeSkuInfoResource(resourceTypeSkuInfoResourceId);
+            ResourceIdentifier resourceTypeSkuResourceId = ResourceTypeSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
+            ResourceTypeSkuResource resourceTypeSku = client.GetResourceTypeSkuResource(resourceTypeSkuResourceId);
 
             // invoke the operation
-            ResourceTypeSkuInfoResource result = await resourceTypeSkuInfo.GetAsync();
+            ResourceTypeSkuResource result = await resourceTypeSku.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.ProviderHub
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ResourceTypeSkuInfoResource created on azure
-            // for more information of creating ResourceTypeSkuInfoResource, please refer to the document of ResourceTypeSkuInfoResource
+            // this example assumes you already have this ResourceTypeSkuResource created on azure
+            // for more information of creating ResourceTypeSkuResource, please refer to the document of ResourceTypeSkuResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
-            ResourceIdentifier resourceTypeSkuInfoResourceId = ResourceTypeSkuInfoResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
-            ResourceTypeSkuInfoResource resourceTypeSkuInfo = client.GetResourceTypeSkuInfoResource(resourceTypeSkuInfoResourceId);
+            ResourceIdentifier resourceTypeSkuResourceId = ResourceTypeSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
+            ResourceTypeSkuResource resourceTypeSku = client.GetResourceTypeSkuResource(resourceTypeSkuResourceId);
 
             // invoke the operation
             SkuResourceData data = new SkuResourceData()
@@ -87,8 +87,8 @@ new SkuCost("xxx")
 }
             }),
             };
-            ArmOperation<ResourceTypeSkuInfoResource> lro = await resourceTypeSkuInfo.UpdateAsync(WaitUntil.Completed, data);
-            ResourceTypeSkuInfoResource result = lro.Value;
+            ArmOperation<ResourceTypeSkuResource> lro = await resourceTypeSku.UpdateAsync(WaitUntil.Completed, data);
+            ResourceTypeSkuResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -108,17 +108,17 @@ new SkuCost("xxx")
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ResourceTypeSkuInfoResource created on azure
-            // for more information of creating ResourceTypeSkuInfoResource, please refer to the document of ResourceTypeSkuInfoResource
+            // this example assumes you already have this ResourceTypeSkuResource created on azure
+            // for more information of creating ResourceTypeSkuResource, please refer to the document of ResourceTypeSkuResource
             string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
-            ResourceIdentifier resourceTypeSkuInfoResourceId = ResourceTypeSkuInfoResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
-            ResourceTypeSkuInfoResource resourceTypeSkuInfo = client.GetResourceTypeSkuInfoResource(resourceTypeSkuInfoResourceId);
+            ResourceIdentifier resourceTypeSkuResourceId = ResourceTypeSkuResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType, sku);
+            ResourceTypeSkuResource resourceTypeSku = client.GetResourceTypeSkuResource(resourceTypeSkuResourceId);
 
             // invoke the operation
-            await resourceTypeSkuInfo.DeleteAsync(WaitUntil.Completed);
+            await resourceTypeSku.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
