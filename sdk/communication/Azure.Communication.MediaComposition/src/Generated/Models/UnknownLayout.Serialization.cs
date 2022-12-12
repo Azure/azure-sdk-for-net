@@ -28,6 +28,11 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("placeholderImageUri");
                 writer.WriteStringValue(PlaceholderImageUri);
             }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode");
+                writer.WriteStringValue(ScalingMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -36,6 +41,7 @@ namespace Azure.Communication.MediaComposition
             LayoutType kind = "Unknown";
             Optional<LayoutResolution> resolution = default;
             Optional<string> placeholderImageUri = default;
+            Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -58,8 +64,18 @@ namespace Azure.Communication.MediaComposition
                     placeholderImageUri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("scalingMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    scalingMode = new ScalingMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value);
+            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode));
         }
     }
 }
