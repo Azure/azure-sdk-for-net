@@ -320,7 +320,7 @@ namespace Azure.Core.Dynamic
 
         private string? GetString() => (string?)EnsureValue();
 
-        private int GetIn32()
+        private int GetInt32()
         {
             var value = EnsureNumberValue().AsLong();
             if (value > int.MaxValue || value < int.MinValue)
@@ -408,7 +408,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         /// <param name="propertyName">The name of the property to get the value of.</param>
         /// <returns></returns>
-        private object? GetDynamicProperty(string propertyName)
+        private object? GetDynamicPropertyValue(string propertyName)
         {
             if (_kind == JsonValueKind.Array && propertyName == nameof(Length))
             {
@@ -433,7 +433,7 @@ namespace Azure.Core.Dynamic
                     return GetValueAt(arrayIndex);;
             }
 
-            throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
+            throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
         private JsonData SetValue(string propertyName, object value)
@@ -468,7 +468,7 @@ namespace Azure.Core.Dynamic
                     return SetValueAt(arrayIndex, value);
             }
 
-            throw new InvalidOperationException($"Tried to access indexer with unsupport index type: {index}");
+            throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
         }
 
         private JsonData GetValueAt(int index)
@@ -580,7 +580,7 @@ namespace Azure.Core.Dynamic
 
         private class MetaObject : DynamicMetaObject
         {
-            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicPropertyValue), BindingFlags.NonPublic | BindingFlags.Instance);
 
             private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance);
 

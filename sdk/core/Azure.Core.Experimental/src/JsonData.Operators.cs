@@ -22,7 +22,7 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="int"/>
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static implicit operator int(JsonData json) => json.GetIn32();
+        public static implicit operator int(JsonData json) => json.GetInt32();
 
         /// <summary>
         /// Converts the value to a <see cref="long"/>
@@ -58,7 +58,7 @@ namespace Azure.Core.Dynamic
         /// Converts the value to a <see cref="int"/> or null.
         /// </summary>
         /// <param name="json">The value to convert.</param>
-        public static implicit operator int?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetIn32();
+        public static implicit operator int?(JsonData json) => json.Kind == JsonValueKind.Null ? null : json.GetInt32();
 
         /// <summary>
         /// Converts the value to a <see cref="long"/> or null.

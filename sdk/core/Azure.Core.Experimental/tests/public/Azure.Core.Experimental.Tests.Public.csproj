@@ -15,10 +15,6 @@
     <ProjectReference Include="..\..\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Compile Remove="perf/**/*.*" />
-  </ItemGroup>
-  
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
