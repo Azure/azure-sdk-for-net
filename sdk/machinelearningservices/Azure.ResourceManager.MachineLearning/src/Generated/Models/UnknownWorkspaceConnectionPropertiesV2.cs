@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownWorkspaceConnectionPropertiesV2. </summary>
-    internal partial class UnknownWorkspaceConnectionPropertiesV2 : WorkspaceConnectionPropertiesV2
+    /// <summary>
+    /// The UnknownWorkspaceConnectionPropertiesV2.
+    /// Serialized Name: UnknownWorkspaceConnectionPropertiesV2
+    /// </summary>
+    internal partial class UnknownWorkspaceConnectionPropertiesV2 : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of UnknownWorkspaceConnectionPropertiesV2. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="target"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        internal UnknownWorkspaceConnectionPropertiesV2(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
+        /// <param name="authType">
+        /// Authentication type of the connection target
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.authType
+        /// </param>
+        /// <param name="category">
+        /// Category of the connection
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.category
+        /// </param>
+        /// <param name="target"> Serialized Name: WorkspaceConnectionPropertiesV2.target. </param>
+        /// <param name="value">
+        /// Value details of the workspace connection.
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.value
+        /// </param>
+        /// <param name="valueFormat">
+        /// format for the workspace connection value
+        /// Serialized Name: WorkspaceConnectionPropertiesV2.valueFormat
+        /// </param>
+        internal UnknownWorkspaceConnectionPropertiesV2(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
         {
             AuthType = authType;
         }

@@ -152,20 +152,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element);
-                    case "Command": return CommandJob.DeserializeCommandJob(element);
-                    case "Pipeline": return PipelineJob.DeserializePipelineJob(element);
-                    case "Sweep": return SweepJob.DeserializeSweepJob(element);
+                    case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element);
+                    case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element);
+                    case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element);
                 }
             }
             Optional<string> componentId = default;
             Optional<string> computeId = default;
             Optional<string> displayName = default;
             Optional<string> experimentName = default;
-            Optional<IdentityConfiguration> identity = default;
+            Optional<MachineLearningIdentityConfiguration> identity = default;
             Optional<bool> isArchived = default;
             JobType jobType = default;
-            Optional<IDictionary<string, JobService>> services = default;
-            Optional<JobStatus> status = default;
+            Optional<IDictionary<string, MachineLearningJobService>> services = default;
+            Optional<MachineLearningJobStatus> status = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = IdentityConfiguration.DeserializeIdentityConfiguration(property.Value);
+                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isArchived"))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         services = null;
                         continue;
                     }
-                    Dictionary<string, JobService> dictionary = new Dictionary<string, JobService>();
+                    Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, JobService.DeserializeJobService(property0.Value));
+                            dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
                         }
                     }
                     services = dictionary;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new JobStatus(property.Value.GetString());
+                    status = new MachineLearningJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

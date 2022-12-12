@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
     /// A class representing a collection of <see cref="PrivateDnsARecordResource" /> and their operations.
-    /// Each <see cref="PrivateDnsARecordResource" /> in the collection will belong to the same instance of <see cref="PrivateZoneResource" />.
-    /// To get an <see cref="PrivateDnsARecordCollection" /> instance call the GetPrivateDnsARecords method from an instance of <see cref="PrivateZoneResource" />.
+    /// Each <see cref="PrivateDnsARecordResource" /> in the collection will belong to the same instance of <see cref="PrivateDnsZoneResource" />.
+    /// To get an <see cref="PrivateDnsARecordCollection" /> instance call the GetPrivateDnsARecords method from an instance of <see cref="PrivateDnsZoneResource" />.
     /// </summary>
     public partial class PrivateDnsARecordCollection : ArmCollection, IEnumerable<PrivateDnsARecordResource>, IAsyncEnumerable<PrivateDnsARecordResource>
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.PrivateDns
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateZoneResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateZoneResource.ResourceType), nameof(id));
+            if (id.ResourceType != PrivateDnsZoneResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateDnsZoneResource.ResourceType), nameof(id));
         }
 
         /// <summary>
