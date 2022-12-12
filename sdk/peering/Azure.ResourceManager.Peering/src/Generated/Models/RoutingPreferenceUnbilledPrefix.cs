@@ -5,21 +5,23 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The Routing Preference unbilled prefix. </summary>
-    public partial class RpUnbilledPrefix
+    public partial class RoutingPreferenceUnbilledPrefix
     {
-        /// <summary> Initializes a new instance of RpUnbilledPrefix. </summary>
-        internal RpUnbilledPrefix()
+        /// <summary> Initializes a new instance of RoutingPreferenceUnbilledPrefix. </summary>
+        internal RoutingPreferenceUnbilledPrefix()
         {
         }
 
-        /// <summary> Initializes a new instance of RpUnbilledPrefix. </summary>
+        /// <summary> Initializes a new instance of RoutingPreferenceUnbilledPrefix. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="azureRegion"> The Azure region. </param>
         /// <param name="peerAsn"> The peer ASN. </param>
-        internal RpUnbilledPrefix(string prefix, string azureRegion, int? peerAsn)
+        internal RoutingPreferenceUnbilledPrefix(string prefix, AzureLocation? azureRegion, int? peerAsn)
         {
             Prefix = prefix;
             AzureRegion = azureRegion;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> The prefix. </summary>
         public string Prefix { get; }
         /// <summary> The Azure region. </summary>
-        public string AzureRegion { get; }
+        public AzureLocation? AzureRegion { get; }
         /// <summary> The peer ASN. </summary>
         public int? PeerAsn { get; }
     }
