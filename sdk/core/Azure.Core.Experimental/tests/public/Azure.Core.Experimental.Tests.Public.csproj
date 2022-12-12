@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <!--<IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,12 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Core.Experimental.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Remove="perf/**/*.*" />
-    <Compile Remove="public/**" />
+    <ProjectReference Include="..\..\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core -->
