@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
@@ -138,10 +139,10 @@ namespace Azure.ResourceManager.Kusto
 
             // invoke the operation
             string databaseName = "kustoReadOnlyDatabase";
-            KustoDatabaseData data = new KustoDatabaseData()
+            KustoDatabaseData data = new KustoReadOnlyFollowingDatabase()
             {
+                HotCachePeriod = XmlConvert.ToTimeSpan("P1D"),
                 Location = new AzureLocation("westus"),
-                Kind = KustoKind.ReadOnlyFollowing,
             };
             ArmOperation<KustoDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
             KustoDatabaseResource result = lro.Value;
@@ -177,10 +178,10 @@ namespace Azure.ResourceManager.Kusto
 
             // invoke the operation
             string databaseName = "KustoDatabase8";
-            KustoDatabaseData data = new KustoDatabaseData()
+            KustoDatabaseData data = new KustoReadWriteDatabase()
             {
+                SoftDeletePeriod = XmlConvert.ToTimeSpan("P1D"),
                 Location = new AzureLocation("westus"),
-                Kind = KustoKind.ReadWrite,
             };
             KustoDatabaseCallerRole? callerRole = KustoDatabaseCallerRole.Admin;
             ArmOperation<KustoDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data, callerRole: callerRole);
