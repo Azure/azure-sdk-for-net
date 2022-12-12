@@ -147,6 +147,7 @@ trigger:
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
+    - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
     - sdk/storagesync/Azure.ResourceManager.StorageSync
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
@@ -307,6 +308,7 @@ pr:
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
+    - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
     - sdk/storagesync/Azure.ResourceManager.StorageSync
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
