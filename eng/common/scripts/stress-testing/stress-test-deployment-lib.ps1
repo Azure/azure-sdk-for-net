@@ -300,8 +300,9 @@ function DeployStressPackage(
 
     Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
 
-    $helmCommandArg = "helm", ($Template ? "template":"upgrade"), $pkg.ReleaseName, $pkg.Directory, "-n", $pkg.Namespace,
-                        ($Template ? "":"--install"), "--set", "stress-test-addons.env=$environment", "--values", (Join-Path $pkg.Directory generatedValues.yaml)
+    $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
+    $subCommand = $Template ? "template" : "upgrade --install"
+    $helmCommandArg = "helm", $subCommand, $pkg.ReleaseName, $pkg.Directory, "-n", $pkg.Namespace, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
 
     $result = (Run @helmCommandArg) 2>&1 | Write-Host
 
