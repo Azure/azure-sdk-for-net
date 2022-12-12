@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A Class representing a ProviderRegistrationResourcetypeRegistrationSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProviderRegistrationResourcetypeRegistrationSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource" /> using the GetProviderRegistrationResourcetypeRegistrationSku method.
+    /// A Class representing a ResourceTypeSku along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceTypeSkuResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetResourceTypeSkuResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource" /> using the GetResourceTypeSku method.
     /// </summary>
-    public partial class ProviderRegistrationResourcetypeRegistrationSkuResource : ArmResource
+    public partial class ResourceTypeSkuResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ResourceTypeSkuResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string resourceType, string sku)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics;
-        private readonly SkusRestOperations _providerRegistrationResourcetypeRegistrationSkuSkusRestClient;
+        private readonly ClientDiagnostics _resourceTypeSkuSkusClientDiagnostics;
+        private readonly SkusRestOperations _resourceTypeSkuSkusRestClient;
         private readonly SkuResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource"/> class for mocking. </summary>
-        protected ProviderRegistrationResourcetypeRegistrationSkuResource()
+        /// <summary> Initializes a new instance of the <see cref="ResourceTypeSkuResource"/> class for mocking. </summary>
+        protected ResourceTypeSkuResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProviderRegistrationResourcetypeRegistrationSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ResourceTypeSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProviderRegistrationResourcetypeRegistrationSkuResource(ArmClient client, SkuResourceData data) : this(client, data.Id)
+        internal ResourceTypeSkuResource(ArmClient client, SkuResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceTypeSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProviderRegistrationResourcetypeRegistrationSkuResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceTypeSkuResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string providerRegistrationResourcetypeRegistrationSkuSkusApiVersion);
-            _providerRegistrationResourcetypeRegistrationSkuSkusRestClient = new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerRegistrationResourcetypeRegistrationSkuSkusApiVersion);
+            _resourceTypeSkuSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string resourceTypeSkuSkusApiVersion);
+            _resourceTypeSkuSkusRestClient = new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceTypeSkuSkusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// Operation Id: Skus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProviderRegistrationResourcetypeRegistrationSkuResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceTypeSkuResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics.CreateScope("ProviderRegistrationResourcetypeRegistrationSkuResource.Get");
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Get");
             scope.Start();
             try
             {
-                var response = await _providerRegistrationResourcetypeRegistrationSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceTypeSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderRegistrationResourcetypeRegistrationSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// Operation Id: Skus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProviderRegistrationResourcetypeRegistrationSkuResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceTypeSkuResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics.CreateScope("ProviderRegistrationResourcetypeRegistrationSkuResource.Get");
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Get");
             scope.Start();
             try
             {
-                var response = _providerRegistrationResourcetypeRegistrationSkuSkusRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceTypeSkuSkusRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderRegistrationResourcetypeRegistrationSkuResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics.CreateScope("ProviderRegistrationResourcetypeRegistrationSkuResource.Delete");
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Delete");
             scope.Start();
             try
             {
-                var response = await _providerRegistrationResourcetypeRegistrationSkuSkusRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceTypeSkuSkusRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ProviderHubArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics.CreateScope("ProviderRegistrationResourcetypeRegistrationSkuResource.Delete");
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Delete");
             scope.Start();
             try
             {
-                var response = _providerRegistrationResourcetypeRegistrationSkuSkusRestClient.Delete(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceTypeSkuSkusRestClient.Delete(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ProviderHubArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProviderRegistrationResourcetypeRegistrationSkuResource>> UpdateAsync(WaitUntil waitUntil, SkuResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceTypeSkuResource>> UpdateAsync(WaitUntil waitUntil, SkuResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics.CreateScope("ProviderRegistrationResourcetypeRegistrationSkuResource.Update");
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Update");
             scope.Start();
             try
             {
-                var response = await _providerRegistrationResourcetypeRegistrationSkuSkusRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResourcetypeRegistrationSkuResource>(Response.FromValue(new ProviderRegistrationResourcetypeRegistrationSkuResource(Client, response), response.GetRawResponse()));
+                var response = await _resourceTypeSkuSkusRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="data"> The required body parameters supplied to the resource sku operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProviderRegistrationResourcetypeRegistrationSkuResource> Update(WaitUntil waitUntil, SkuResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceTypeSkuResource> Update(WaitUntil waitUntil, SkuResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerRegistrationResourcetypeRegistrationSkuSkusClientDiagnostics.CreateScope("ProviderRegistrationResourcetypeRegistrationSkuResource.Update");
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Update");
             scope.Start();
             try
             {
-                var response = _providerRegistrationResourcetypeRegistrationSkuSkusRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResourcetypeRegistrationSkuResource>(Response.FromValue(new ProviderRegistrationResourcetypeRegistrationSkuResource(Client, response), response.GetRawResponse()));
+                var response = _resourceTypeSkuSkusRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

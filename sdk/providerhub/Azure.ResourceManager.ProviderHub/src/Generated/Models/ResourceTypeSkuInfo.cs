@@ -12,23 +12,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeSku. </summary>
-    public partial class ResourceTypeSku
+    /// <summary> The ResourceTypeSkuInfo. </summary>
+    public partial class ResourceTypeSkuInfo
     {
-        /// <summary> Initializes a new instance of ResourceTypeSku. </summary>
+        /// <summary> Initializes a new instance of ResourceTypeSkuInfo. </summary>
         /// <param name="skuSettings"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
-        public ResourceTypeSku(IEnumerable<SkuSetting> skuSettings)
+        public ResourceTypeSkuInfo(IEnumerable<SkuSetting> skuSettings)
         {
             Argument.AssertNotNull(skuSettings, nameof(skuSettings));
 
             SkuSettings = skuSettings.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSku. </summary>
+        /// <summary> Initializes a new instance of ResourceTypeSkuInfo. </summary>
         /// <param name="skuSettings"></param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal ResourceTypeSku(IList<SkuSetting> skuSettings, ProvisioningState? provisioningState)
+        internal ResourceTypeSkuInfo(IList<SkuSetting> skuSettings, ProvisioningState? provisioningState)
         {
             SkuSettings = skuSettings;
             ProvisioningState = provisioningState;
