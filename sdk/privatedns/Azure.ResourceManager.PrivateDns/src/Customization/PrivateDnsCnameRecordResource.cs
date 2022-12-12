@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PrivateDns
     /// A Class representing a PrivateDnsCnameRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateDnsCnameRecordResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsCnameRecordResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateZoneResource" /> using the GetPrivateDnsCnameRecord method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateDnsZoneResource" /> using the GetPrivateDnsCnameRecord method.
     /// </summary>
     public partial class PrivateDnsCnameRecordResource : ArmResource
     {

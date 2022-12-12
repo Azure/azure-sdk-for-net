@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Job execution constraints. </summary>
+    /// <summary>
+    /// Job execution constraints.
+    /// Serialized Name: TableVerticalLimitSettings
+    /// </summary>
     public partial class TableVerticalLimitSettings
     {
         /// <summary> Initializes a new instance of TableVerticalLimitSettings. </summary>
@@ -18,13 +21,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TableVerticalLimitSettings. </summary>
-        /// <param name="enableEarlyTermination"> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </param>
-        /// <param name="exitScore"> Exit score for the AutoML job. </param>
-        /// <param name="maxConcurrentTrials"> Maximum Concurrent iterations. </param>
-        /// <param name="maxCoresPerTrial"> Max cores per iteration. </param>
-        /// <param name="maxTrials"> Number of iterations. </param>
-        /// <param name="timeout"> AutoML job timeout. </param>
-        /// <param name="trialTimeout"> Iteration timeout. </param>
+        /// <param name="enableEarlyTermination">
+        /// Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations.
+        /// Serialized Name: TableVerticalLimitSettings.enableEarlyTermination
+        /// </param>
+        /// <param name="exitScore">
+        /// Exit score for the AutoML job.
+        /// Serialized Name: TableVerticalLimitSettings.exitScore
+        /// </param>
+        /// <param name="maxConcurrentTrials">
+        /// Maximum Concurrent iterations.
+        /// Serialized Name: TableVerticalLimitSettings.maxConcurrentTrials
+        /// </param>
+        /// <param name="maxCoresPerTrial">
+        /// Max cores per iteration.
+        /// Serialized Name: TableVerticalLimitSettings.maxCoresPerTrial
+        /// </param>
+        /// <param name="maxTrials">
+        /// Number of iterations.
+        /// Serialized Name: TableVerticalLimitSettings.maxTrials
+        /// </param>
+        /// <param name="timeout">
+        /// AutoML job timeout.
+        /// Serialized Name: TableVerticalLimitSettings.timeout
+        /// </param>
+        /// <param name="trialTimeout">
+        /// Iteration timeout.
+        /// Serialized Name: TableVerticalLimitSettings.trialTimeout
+        /// </param>
         internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxTrials, TimeSpan? timeout, TimeSpan? trialTimeout)
         {
             EnableEarlyTermination = enableEarlyTermination;
@@ -36,19 +60,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TrialTimeout = trialTimeout;
         }
 
-        /// <summary> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </summary>
+        /// <summary>
+        /// Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations.
+        /// Serialized Name: TableVerticalLimitSettings.enableEarlyTermination
+        /// </summary>
         public bool? EnableEarlyTermination { get; set; }
-        /// <summary> Exit score for the AutoML job. </summary>
+        /// <summary>
+        /// Exit score for the AutoML job.
+        /// Serialized Name: TableVerticalLimitSettings.exitScore
+        /// </summary>
         public double? ExitScore { get; set; }
-        /// <summary> Maximum Concurrent iterations. </summary>
+        /// <summary>
+        /// Maximum Concurrent iterations.
+        /// Serialized Name: TableVerticalLimitSettings.maxConcurrentTrials
+        /// </summary>
         public int? MaxConcurrentTrials { get; set; }
-        /// <summary> Max cores per iteration. </summary>
+        /// <summary>
+        /// Max cores per iteration.
+        /// Serialized Name: TableVerticalLimitSettings.maxCoresPerTrial
+        /// </summary>
         public int? MaxCoresPerTrial { get; set; }
-        /// <summary> Number of iterations. </summary>
+        /// <summary>
+        /// Number of iterations.
+        /// Serialized Name: TableVerticalLimitSettings.maxTrials
+        /// </summary>
         public int? MaxTrials { get; set; }
-        /// <summary> AutoML job timeout. </summary>
+        /// <summary>
+        /// AutoML job timeout.
+        /// Serialized Name: TableVerticalLimitSettings.timeout
+        /// </summary>
         public TimeSpan? Timeout { get; set; }
-        /// <summary> Iteration timeout. </summary>
+        /// <summary>
+        /// Iteration timeout.
+        /// Serialized Name: TableVerticalLimitSettings.trialTimeout
+        /// </summary>
         public TimeSpan? TrialTimeout { get; set; }
     }
 }

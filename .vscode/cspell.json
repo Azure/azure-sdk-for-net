@@ -90,6 +90,7 @@
     "skus",
     "structs",
     "uints",
+    "unbilled",
     "unencrypted",
     "unformattable",
     "unhold",
@@ -819,6 +820,12 @@
       "filename": "**/sdk/storagecache/**/*.cs",
       "words": [
         "Clfs"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagemover/**/*.cs",
+      "words": [
+        "Unregistering"
       ]
     },
     {

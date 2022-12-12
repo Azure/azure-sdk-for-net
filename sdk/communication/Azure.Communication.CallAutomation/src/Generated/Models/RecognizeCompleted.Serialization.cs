@@ -21,6 +21,7 @@ namespace Azure.Communication.CallAutomation
             Optional<ResultInformation> resultInformation = default;
             Optional<CallMediaRecognitionType> recognitionType = default;
             Optional<CollectTonesResult> collectTonesResult = default;
+            Optional<ChoiceResult> choiceResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"))
@@ -73,8 +74,18 @@ namespace Azure.Communication.CallAutomation
                     collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("choiceResult"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    choiceResult = ChoiceResult.DeserializeChoiceResult(property.Value);
+                    continue;
+                }
             }
-            return new RecognizeCompleted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value);
+            return new RecognizeCompleted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, choiceResult.Value);
         }
     }
 }

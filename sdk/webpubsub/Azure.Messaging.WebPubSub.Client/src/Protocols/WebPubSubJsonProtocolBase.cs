@@ -277,8 +277,9 @@ namespace Azure.Messaging.WebPubSub.Clients
                             case FromType.Group:
                                 AssertNotNull(group, GroupPropertyName);
                                 return new GroupDataMessage(group, dataType, data, sequenceId, fromUserId);
+                            // Forward compatible
                             default:
-                                throw new InvalidDataException($"Unsupported from {fromType}");
+                                return null;
                         }
 
                     case DownstreamEventType.System:
@@ -290,12 +291,13 @@ namespace Azure.Messaging.WebPubSub.Clients
                                 return new ConnectedMessage(userId, connectionId, reconnectionToken);
                             case SystemEventType.Disconnected:
                                 return new DisconnectedMessage(message);
+                            // Forward compatible
                             default:
-                                throw new InvalidDataException($"Unsupported event {systemEventType}");
+                                return null;
                         }
-
+                    // Forward compatible
                     default:
-                        throw new InvalidDataException($"Unsupported type {eventType}");
+                        return null;
                 }
             }
             catch (JsonException ex)

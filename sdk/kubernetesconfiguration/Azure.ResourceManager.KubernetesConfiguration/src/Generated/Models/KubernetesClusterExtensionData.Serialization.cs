@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 errorInfo = null;
                                 continue;
                             }
-                            errorInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.ToString());
+                            errorInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("customLocationSettings"))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            aksAssignedIdentity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.ToString());
+                            aksAssignedIdentity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
                             continue;
                         }
                     }

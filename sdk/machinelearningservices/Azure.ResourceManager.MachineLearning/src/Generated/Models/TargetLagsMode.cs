@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Target lags selection modes. </summary>
+    /// <summary>
+    /// Target lags selection modes.
+    /// Serialized Name: TargetLagsMode
+    /// </summary>
     internal readonly partial struct TargetLagsMode : IEquatable<TargetLagsMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AutoValue = "Auto";
         private const string CustomValue = "Custom";
 
-        /// <summary> Target lags to be determined automatically. </summary>
+        /// <summary>
+        /// Target lags to be determined automatically.
+        /// Serialized Name: TargetLagsMode.Auto
+        /// </summary>
         public static TargetLagsMode Auto { get; } = new TargetLagsMode(AutoValue);
-        /// <summary> Use the custom target lags. </summary>
+        /// <summary>
+        /// Use the custom target lags.
+        /// Serialized Name: TargetLagsMode.Custom
+        /// </summary>
         public static TargetLagsMode Custom { get; } = new TargetLagsMode(CustomValue);
         /// <summary> Determines if two <see cref="TargetLagsMode"/> values are the same. </summary>
         public static bool operator ==(TargetLagsMode left, TargetLagsMode right) => left.Equals(right);
