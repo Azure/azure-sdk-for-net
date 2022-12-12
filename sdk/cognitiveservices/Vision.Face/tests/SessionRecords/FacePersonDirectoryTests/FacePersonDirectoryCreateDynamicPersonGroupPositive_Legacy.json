@@ -27,7 +27,7 @@
           "chunked"
         ],
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/252044cc-a0d0-4bd8-87c8-ed5c024a9543"
+          "/face/v1.0-preview/operations/252044cc-a0d0-4bd8-87c8-ed5c024a9543"
         ],
         "x-envoy-upstream-service-time": [
           "266"
@@ -51,7 +51,7 @@
           "Fri, 09 Dec 2022 02:24:13 GMT"
         ],
         "Location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/persons/499834b5-e94c-4fc8-b557-fbade28e234d"
+          "/face/v1.0-preview/persons/499834b5-e94c-4fc8-b557-fbade28e234d"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -87,7 +87,7 @@
           "chunked"
         ],
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/b0244ae5-c128-4135-a6ef-91d1d1177ecb"
+          "/face/v1.0-preview/operations/b0244ae5-c128-4135-a6ef-91d1d1177ecb"
         ],
         "x-envoy-upstream-service-time": [
           "98"
@@ -111,7 +111,7 @@
           "Fri, 09 Dec 2022 02:24:14 GMT"
         ],
         "Location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/persons/6d2a0981-0757-4975-9480-d3c38e325fb4"
+          "/face/v1.0-preview/persons/6d2a0981-0757-4975-9480-d3c38e325fb4"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -336,7 +336,7 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/3efdd407-4e87-4c7e-9a51-64597a13ed19"
+          "/face/v1.0-preview/operations/3efdd407-4e87-4c7e-9a51-64597a13ed19"
         ],
         "x-envoy-upstream-service-time": [
           "328"
@@ -411,7 +411,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-12-09T02:24:16.0092793Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:16.0093654Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-12-09T02:24:16.0092793Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:16.0093654Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -459,7 +459,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:16.0092793Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:16.1176848Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:16.1176855Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:16.0092793Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:16.1176848Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:16.1176855Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -486,7 +486,7 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/031372e5-b3e9-4473-9026-7f6ab438e468"
+          "/face/v1.0-preview/operations/031372e5-b3e9-4473-9026-7f6ab438e468"
         ],
         "x-envoy-upstream-service-time": [
           "373"
@@ -561,7 +561,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-12-09T02:24:17.575768Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:17.5758818Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"notStarted\",\r\n  \"createdTime\": \"2022-12-09T02:24:17.575768Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:17.5758818Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -609,7 +609,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:17.575768Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:18.2857116Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:18.2857124Z\",\r\n  \"resourceLocation\": \"https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdTime\": \"2022-12-09T02:24:17.575768Z\",\r\n  \"lastActionTime\": \"2022-12-09T02:24:18.2857116Z\",\r\n  \"finishedTime\": \"2022-12-09T02:24:18.2857124Z\",\r\n  \"resourceLocation\": \"/face/v1.0-preview/dynamicpersongroups/dynamic-person-group-id\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -630,7 +630,7 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/9437a883-b5fb-43e1-b51d-85a1d3295804"
+          "/face/v1.0-preview/operations/9437a883-b5fb-43e1-b51d-85a1d3295804"
         ],
         "x-envoy-upstream-service-time": [
           "195"

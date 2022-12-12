@@ -729,7 +729,7 @@
       },
       "ResponseHeaders": {
         "Operation-Location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/largefacelists/large-face-list-id/training"
+          "/face/v1.0-preview/largefacelists/large-face-list-id/training"
         ],
         "x-envoy-upstream-service-time": [
           "43"

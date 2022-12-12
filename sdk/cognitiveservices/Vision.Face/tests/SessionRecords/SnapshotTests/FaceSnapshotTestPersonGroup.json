@@ -168,7 +168,7 @@
       },
       "ResponseHeaders": {
         "Operation-Location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/persongroups/source-person-group-id/training"
+          "/face/v1.0-preview/persongroups/source-person-group-id/training"
         ],
         "x-envoy-upstream-service-time": [
           "32"

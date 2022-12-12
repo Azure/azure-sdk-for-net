@@ -27,7 +27,7 @@
           "chunked"
         ],
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/e0930885-3c0c-4355-90a3-382f0a323eb0"
+          "/face/v1.0-preview/operations/e0930885-3c0c-4355-90a3-382f0a323eb0"
         ],
         "x-envoy-upstream-service-time": [
           "54"
@@ -51,7 +51,7 @@
           "Fri, 09 Dec 2022 02:24:26 GMT"
         ],
         "Location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/persons/54303763-5152-460e-899a-b62444093a6c"
+          "/face/v1.0-preview/persons/54303763-5152-460e-899a-b62444093a6c"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -231,7 +231,7 @@
           "chunked"
         ],
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/1d2fef40-783f-4a15-978a-aebd0d3ea1b0"
+          "/face/v1.0-preview/operations/1d2fef40-783f-4a15-978a-aebd0d3ea1b0"
         ],
         "x-envoy-upstream-service-time": [
           "158"
@@ -255,7 +255,7 @@
           "Fri, 09 Dec 2022 02:24:28 GMT"
         ],
         "Location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/persons/54303763-5152-460e-899a-b62444093a6c/recognitionModels/recognition_02/persistedFaces/886be957-ea5f-4cd3-b212-ca99ef50685f"
+          "/face/v1.0-preview/persons/54303763-5152-460e-899a-b62444093a6c/recognitionModels/recognition_02/persistedFaces/886be957-ea5f-4cd3-b212-ca99ef50685f"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -282,7 +282,7 @@
       },
       "ResponseHeaders": {
         "operation-location": [
-          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0-preview/operations/6539603f-b7a7-4124-82d1-f8611110f6b0"
+          "/face/v1.0-preview/operations/6539603f-b7a7-4124-82d1-f8611110f6b0"
         ],
         "x-envoy-upstream-service-time": [
           "232"
