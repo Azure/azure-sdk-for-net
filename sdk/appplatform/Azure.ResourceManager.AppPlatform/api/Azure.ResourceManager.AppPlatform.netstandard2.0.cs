@@ -1027,6 +1027,30 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public AppInstanceExecAction() { }
         public System.Collections.Generic.IList<string> Command { get { throw null; } }
     }
+    public partial class AppInstanceHttpGetAction : Azure.ResourceManager.AppPlatform.Models.AppInstanceProbeAction
+    {
+        public AppInstanceHttpGetAction() { }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType? Scheme { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppInstanceHttpSchemeType : System.IEquatable<Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppInstanceHttpSchemeType(string value) { throw null; }
+        public static Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType Http { get { throw null; } }
+        public static Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType Https { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType left, Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType left, Azure.ResourceManager.AppPlatform.Models.AppInstanceHttpSchemeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AppInstanceProbe
     {
         public AppInstanceProbe(bool isProbeDisabled) { }
@@ -1733,8 +1757,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
     public partial class AppPlatformMonitoringSettingProperties
     {
         public AppPlatformMonitoringSettingProperties() { }
-        public string AppInsightsAgentVersionsJava { get { throw null; } }
         public string AppInsightsInstrumentationKey { get { throw null; } set { } }
+        public string AppInsightsJavaAgentVersion { get { throw null; } }
         public double? AppInsightsSamplingRate { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformErrorInfo Error { get { throw null; } set { } }
         public bool? IsTraceEnabled { get { throw null; } set { } }
@@ -2261,30 +2285,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal ConfigServerSettingsValidateResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.ConfigServerSettingsErrorRecord> Details { get { throw null; } }
         public bool? IsValid { get { throw null; } }
-    }
-    public partial class HttpGetAction : Azure.ResourceManager.AppPlatform.Models.AppInstanceProbeAction
-    {
-        public HttpGetAction() { }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.AppPlatform.Models.HttpSchemeType? Scheme { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HttpSchemeType : System.IEquatable<Azure.ResourceManager.AppPlatform.Models.HttpSchemeType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HttpSchemeType(string value) { throw null; }
-        public static Azure.ResourceManager.AppPlatform.Models.HttpSchemeType Http { get { throw null; } }
-        public static Azure.ResourceManager.AppPlatform.Models.HttpSchemeType Https { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppPlatform.Models.HttpSchemeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.HttpSchemeType left, Azure.ResourceManager.AppPlatform.Models.HttpSchemeType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppPlatform.Models.HttpSchemeType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.HttpSchemeType left, Azure.ResourceManager.AppPlatform.Models.HttpSchemeType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class JarUploadedUserSourceInfo : Azure.ResourceManager.AppPlatform.Models.AppPlatformUploadedUserSourceInfo
     {

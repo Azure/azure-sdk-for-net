@@ -255,13 +255,13 @@ rename-mapping:
   ProbeAction: AppInstanceProbeAction
   TCPSocketAction: AppInstanceTcpSocketAction
   ExecAction: AppInstanceExecAction
-  HTTPGetAction: AppInstanceHttpGetAction
-  HTTPSchemeType: AppInstanceHTTPSchemeType
+  HttpGetAction: AppInstanceHttpGetAction
+  HttpSchemeType: AppInstanceHttpSchemeType
   ResourceRequests: AppPlatformDeploymentResourceRequirements
   SessionAffinity: AppSessionAffinity
   KeyVaultCertificateProperties: AppPlatformKeyVaultCertificateProperties
   KeyVaultCertificateProperties.excludePrivateKey: IsPrivateKeyExcluded
-  applicationInsightsAgentVersions.java: ApplicationInsightsJavaAgentVersion
+  ApplicationInsightsAgentVersions.java: AppInsightsJavaAgentVersion
   NetworkProfileOutboundIPs.publicIPs: -|ip-address
   RequiredTraffic: AppPlatformServiceRequiredTraffic
   RequiredTraffic.ips: -|ip-address
