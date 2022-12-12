@@ -532,7 +532,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 storageResource.GetPropertiesAsync(),
                 e =>
                 {
-                    Assert.AreEqual(e.ErrorCode, "BlobNotFound");
+                    Assert.AreEqual("BlobNotFound", e.ErrorCode);
                 });
         }
     }
