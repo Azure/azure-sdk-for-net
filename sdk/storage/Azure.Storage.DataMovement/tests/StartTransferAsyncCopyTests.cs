@@ -114,27 +114,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
         };
 
-        internal async Task<BlockBlobClient> CreateBlockBlob(
-            BlobContainerClient container,
-            string localSourceFile,
-            string blobName,
-            long size)
-        {
-            using Stream originalStream = await CreateLimitedMemoryStream(size);
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-            // create a new file and copy contents of stream into it, and then close the FileStream
-            // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-            using (FileStream fileStream = File.Create(localSourceFile))
-            {
-                // Copy source to a file, so we can verify the source against Copyed blob later
-                await originalStream.CopyToAsync(fileStream);
-                // Upload blob to storage account
-                originalStream.Position = 0;
-                await blob.UploadAsync(originalStream);
-            }
-            return blob;
-        }
-
         #region SyncCopy Source Block Blob
         /// <summary>
         /// Upload the blob, then copy the contents to another blob.

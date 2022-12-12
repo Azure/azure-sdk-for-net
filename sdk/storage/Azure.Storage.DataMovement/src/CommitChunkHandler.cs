@@ -109,7 +109,6 @@ namespace Azure.Storage.DataMovement
                 }
                 else if (_bytesTransferred > _expectedLength)
                 {
-                    await _updateTransferStatus(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
                     await _invokeFailedEventHandler(
                             new Exception("Unexpected Error: Amount of bytes transferred exceeds expected length.")).ConfigureAwait(false);
                 }

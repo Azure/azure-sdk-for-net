@@ -297,7 +297,7 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobUploadOptions ToBlobUploadOptions(this BlockBlobStorageResourceOptions options, bool overwrite)
+        internal static BlobUploadOptions ToBlobUploadOptions(this BlockBlobStorageResourceOptions options, bool overwrite, long initialSize)
         {
             return new BlobUploadOptions()
             {
@@ -307,6 +307,10 @@ namespace Azure.Storage.DataMovement.Blobs
                 AccessTier = options?.AccessTier,
                 ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
                 LegalHold = options?.LegalHold,
+                TransferOptions = new StorageTransferOptions()
+                {
+                    InitialTransferSize = initialSize,
+                },
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 TransferValidation = options?.UploadTransferValidationOptions,
             };

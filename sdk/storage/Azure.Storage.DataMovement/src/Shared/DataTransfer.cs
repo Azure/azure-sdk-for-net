@@ -22,17 +22,22 @@ namespace Azure.Storage.DataMovement
         public bool HasCompleted => _state.HasCompleted;
 
         /// <summary>
-        /// DataTransfer Identification
+        /// Defines the current Transfer Status of the Data Transfer.
+        /// </summary>
+        public StorageTransferStatus TransferStatus => _state.Status;
+
+        /// <summary>
+        /// DataTransfer Identification.
         /// </summary>
         public string Id => _state.Id;
 
         /// <summary>
-        /// Defines the current state of the transfer
+        /// Defines the current state of the transfer.
         /// </summary>
         internal DataTransferState _state;
 
         /// <summary>
-        /// Only to be created internally by the transfer manager
+        /// Only to be created internally by the transfer manager.
         /// </summary>
         internal DataTransfer()
         {
@@ -77,7 +82,7 @@ namespace Azure.Storage.DataMovement
             {
                 if (Debugger.IsAttached)
                 {
-                    Debugger.Break();
+                    //Debugger.Break();
                 }
             }
         }

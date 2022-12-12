@@ -102,8 +102,7 @@ namespace Azure.Storage.DataMovement
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);
                 return Task.CompletedTask;
             }
-            // TODO: maybe better exception type?
-            throw new IOException($"File path `{_path}` already exists. Cannot overwite file");
+            throw new IOException($"File path `{_path}` already exists. Cannot overwite file.");
         }
 
         /// <summary>
