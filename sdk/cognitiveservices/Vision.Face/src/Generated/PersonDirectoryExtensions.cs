@@ -473,7 +473,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             public static async Task UpdatePersonFaceAsync(this IPersonDirectory operations, System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personId, recognitionModel, persistedFaceId, detectionModel, default(byte[]), persistedFaceId, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personId, recognitionModel, persistedFaceId, detectionModel, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -502,7 +502,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 Guid personIdGuid = Guid.Parse(personId);
                 Guid faceIdGuid = Guid.Parse(persistedFaceId);
-                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, body.DetectionModel, body.FaceFeature, body.PersistedFaceId, body.UserData, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdatePersonFaceWithHttpMessagesAsync(personIdGuid, recognitionModel, faceIdGuid, body.DetectionModel, body.UserData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

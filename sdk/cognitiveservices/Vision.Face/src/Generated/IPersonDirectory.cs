@@ -298,7 +298,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), byte[] faceFeature = default(byte[]), System.Guid? persistedFaceId1 = default(System.Guid?), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new dynamic person group with specified
         /// dynamicPersonGroupId, name, and user-provided userData.

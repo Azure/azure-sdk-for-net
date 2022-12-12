@@ -1547,11 +1547,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Possible values include: 'detection_01', 'detection_02', 'detection_03',
         /// 'detection_preview_1904', 'ir_detection_01', 'expression_01'
         /// </param>
-        /// <param name='faceFeature'>
-        /// </param>
-        /// <param name='persistedFaceId1'>
-        /// </param>
         /// <param name='userData'>
+        /// User data of person face.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1571,7 +1568,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), byte[] faceFeature = default(byte[]), System.Guid? persistedFaceId1 = default(System.Guid?), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1582,11 +1579,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw new ValidationException(ValidationRules.CannotBeNull, "recognitionModel");
             }
             PersistedFaceWithType body = new PersistedFaceWithType();
-            if (detectionModel != null || faceFeature != null || persistedFaceId1 != null || userData != null)
+            if (detectionModel != null || userData != null)
             {
                 body.DetectionModel = detectionModel;
-                body.FaceFeature = faceFeature;
-                body.PersistedFaceId = persistedFaceId1;
+                body.FaceFeature = default(byte[]);
+                body.PersistedFaceId = persistedFaceId;
                 body.UserData = userData;
             }
             // Tracing
