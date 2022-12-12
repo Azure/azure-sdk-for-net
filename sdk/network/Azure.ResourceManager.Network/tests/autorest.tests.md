@@ -10,5 +10,4 @@ require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
   sample: true
-save-inputs: true
 ```

@@ -189,9 +189,37 @@ namespace Azure.ResourceManager.Network
                 Priority = 100,
                 RuleCollections =
 {
-new FirewallPolicyRuleCollectionInfo()
+new FirewallPolicyNatRuleCollectionInfo()
 {
-RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyNatRuleCollection,
+ActionType = FirewallPolicyNatRuleCollectionActionType.Dnat,
+Rules =
+{
+new NatRule()
+{
+IPProtocols =
+{
+FirewallPolicyRuleNetworkProtocol.Tcp,FirewallPolicyRuleNetworkProtocol.Udp
+},
+SourceAddresses =
+{
+"2.2.2.2"
+},
+DestinationAddresses =
+{
+"152.23.32.23"
+},
+DestinationPorts =
+{
+"8080"
+},
+TranslatedPort = "8080",
+SourceIPGroups =
+{
+},
+TranslatedFqdn = "internalhttp.server.net",
+Name = "nat-rule1",
+}
+},
 Name = "Example-Nat-Rule-Collection",
 Priority = 100,
 }
@@ -233,9 +261,32 @@ Priority = 100,
                 Priority = 100,
                 RuleCollections =
 {
-new FirewallPolicyRuleCollectionInfo()
+new FirewallPolicyFilterRuleCollectionInfo()
 {
-RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection,
+ActionType = FirewallPolicyFilterRuleCollectionActionType.Deny,
+Rules =
+{
+new NetworkRule()
+{
+IPProtocols =
+{
+FirewallPolicyRuleNetworkProtocol.Tcp
+},
+SourceAddresses =
+{
+"10.1.25.0/24"
+},
+DestinationAddresses =
+{
+"*"
+},
+DestinationPorts =
+{
+"*"
+},
+Name = "network-rule1",
+}
+},
 Name = "Example-Filter-Rule-Collection",
 Priority = 100,
 }
@@ -277,9 +328,32 @@ Priority = 100,
                 Priority = 110,
                 RuleCollections =
 {
-new FirewallPolicyRuleCollectionInfo()
+new FirewallPolicyFilterRuleCollectionInfo()
 {
-RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection,
+ActionType = FirewallPolicyFilterRuleCollectionActionType.Deny,
+Rules =
+{
+new NetworkRule()
+{
+IPProtocols =
+{
+FirewallPolicyRuleNetworkProtocol.Tcp
+},
+DestinationPorts =
+{
+"*"
+},
+SourceIPGroups =
+{
+"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups1"
+},
+DestinationIPGroups =
+{
+"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups2"
+},
+Name = "network-1",
+}
+},
 Name = "Example-Filter-Rule-Collection",
 }
 },
@@ -320,9 +394,33 @@ Name = "Example-Filter-Rule-Collection",
                 Priority = 110,
                 RuleCollections =
 {
-new FirewallPolicyRuleCollectionInfo()
+new FirewallPolicyFilterRuleCollectionInfo()
 {
-RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection,
+ActionType = FirewallPolicyFilterRuleCollectionActionType.Deny,
+Rules =
+{
+new ApplicationRule()
+{
+SourceAddresses =
+{
+"216.58.216.164","10.0.0.0/24"
+},
+Protocols =
+{
+new FirewallPolicyRuleApplicationProtocol()
+{
+ProtocolType = FirewallPolicyRuleApplicationProtocolType.Https,
+Port = 443,
+}
+},
+WebCategories =
+{
+"Hacking"
+},
+Name = "rule1",
+Description = "Deny inbound rule",
+}
+},
 Name = "Example-Filter-Rule-Collection",
 }
 },
