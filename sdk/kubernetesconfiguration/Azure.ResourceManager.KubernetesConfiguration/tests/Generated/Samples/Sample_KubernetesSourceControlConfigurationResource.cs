@@ -15,7 +15,7 @@ using Azure.ResourceManager.KubernetesConfiguration.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class Sample_SourceControlConfigurationResource
+    public partial class Sample_KubernetesSourceControlConfigurationResource
     {
         // Get Source Control Configuration
         [NUnit.Framework.Test]
@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this SourceControlConfigurationResource created on azure
-            // for more information of creating SourceControlConfigurationResource, please refer to the document of SourceControlConfigurationResource
+            // this example assumes you already have this KubernetesSourceControlConfigurationResource created on azure
+            // for more information of creating KubernetesSourceControlConfigurationResource, please refer to the document of KubernetesSourceControlConfigurationResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string sourceControlConfigurationName = "SRS_GitHubConfig";
-            ResourceIdentifier sourceControlConfigurationResourceId = SourceControlConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName);
-            SourceControlConfigurationResource sourceControlConfiguration = client.GetSourceControlConfigurationResource(sourceControlConfigurationResourceId);
+            ResourceIdentifier kubernetesSourceControlConfigurationResourceId = KubernetesSourceControlConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName);
+            KubernetesSourceControlConfigurationResource kubernetesSourceControlConfiguration = client.GetKubernetesSourceControlConfigurationResource(kubernetesSourceControlConfigurationResourceId);
 
             // invoke the operation
-            SourceControlConfigurationResource result = await sourceControlConfiguration.GetAsync();
+            KubernetesSourceControlConfigurationResource result = await kubernetesSourceControlConfiguration.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SourceControlConfigurationData resourceData = result.Data;
+            KubernetesSourceControlConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,44 +60,44 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this SourceControlConfigurationResource created on azure
-            // for more information of creating SourceControlConfigurationResource, please refer to the document of SourceControlConfigurationResource
+            // this example assumes you already have this KubernetesSourceControlConfigurationResource created on azure
+            // for more information of creating KubernetesSourceControlConfigurationResource, please refer to the document of KubernetesSourceControlConfigurationResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string sourceControlConfigurationName = "SRS_GitHubConfig";
-            ResourceIdentifier sourceControlConfigurationResourceId = SourceControlConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName);
-            SourceControlConfigurationResource sourceControlConfiguration = client.GetSourceControlConfigurationResource(sourceControlConfigurationResourceId);
+            ResourceIdentifier kubernetesSourceControlConfigurationResourceId = KubernetesSourceControlConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName);
+            KubernetesSourceControlConfigurationResource kubernetesSourceControlConfiguration = client.GetKubernetesSourceControlConfigurationResource(kubernetesSourceControlConfigurationResourceId);
 
             // invoke the operation
-            SourceControlConfigurationData data = new SourceControlConfigurationData()
+            KubernetesSourceControlConfigurationData data = new KubernetesSourceControlConfigurationData()
             {
                 RepositoryUri = new Uri("git@github.com:k8sdeveloper425/flux-get-started"),
                 OperatorNamespace = "SRS_Namespace",
                 OperatorInstanceName = "SRSGitHubFluxOp-01",
-                OperatorType = OperatorType.Flux,
+                OperatorType = KubernetesOperator.Flux,
                 OperatorParams = "--git-email=xyzgituser@users.srs.github.com",
                 ConfigurationProtectedSettings =
 {
 ["protectedSetting1Key"] = "protectedSetting1Value",
 },
-                OperatorScope = OperatorScopeType.Namespace,
+                OperatorScope = KubernetesOperatorScope.Namespace,
                 SshKnownHostsContents = "c3NoLmRldi5henVyZS5jb20gc3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDN0hyMW9UV3FOcU9sekdKT2ZHSjROYWtWeUl6ZjFyWFlkNGQ3d282akJsa0x2Q0E0b2RCbEwwbURVeVowL1FVZlRUcWV1K3RtMjJnT3N2K1ZyVlRNazZ2d1JVNzVnWS95OXV0NU1iM2JSNUJWNThkS1h5cTlBOVVlQjVDYWtlaG41WmdtNngxbUtvVnlmK0ZGbjI2aVlxWEpSZ3pJWlpjWjVWNmhyRTBRZzM5a1ptNGF6NDhvMEFVYmY2U3A0U0xkdm51TWEyc1ZOd0hCYm9TN0VKa201N1hRUFZVMy9RcHlOTEhiV0Rkend0cmxTK2V6MzBTM0FkWWhMS0VPeEFHOHdlT255cnRMSkFVZW45bVRrb2w4b0lJMWVkZjdtV1diV1ZmMG5CbWx5MjErblpjbUNUSVNRQnRkY3lQYUVubzdmRlFNREQyNi9zMGxmS29iNEt3OEg=",
-                EnableHelmOperator = true,
+                IsHelmOperatorEnabled = true,
                 HelmOperatorProperties = new HelmOperatorProperties()
                 {
                     ChartVersion = "0.3.0",
                     ChartValues = "--set git.ssh.secretName=flux-git-deploy --set tillerNamespace=kube-system",
                 },
             };
-            ArmOperation<SourceControlConfigurationResource> lro = await sourceControlConfiguration.UpdateAsync(WaitUntil.Completed, data);
-            SourceControlConfigurationResource result = lro.Value;
+            ArmOperation<KubernetesSourceControlConfigurationResource> lro = await kubernetesSourceControlConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            KubernetesSourceControlConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SourceControlConfigurationData resourceData = result.Data;
+            KubernetesSourceControlConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this SourceControlConfigurationResource created on azure
-            // for more information of creating SourceControlConfigurationResource, please refer to the document of SourceControlConfigurationResource
+            // this example assumes you already have this KubernetesSourceControlConfigurationResource created on azure
+            // for more information of creating KubernetesSourceControlConfigurationResource, please refer to the document of KubernetesSourceControlConfigurationResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string sourceControlConfigurationName = "SRS_GitHubConfig";
-            ResourceIdentifier sourceControlConfigurationResourceId = SourceControlConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName);
-            SourceControlConfigurationResource sourceControlConfiguration = client.GetSourceControlConfigurationResource(sourceControlConfigurationResourceId);
+            ResourceIdentifier kubernetesSourceControlConfigurationResourceId = KubernetesSourceControlConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName);
+            KubernetesSourceControlConfigurationResource kubernetesSourceControlConfiguration = client.GetKubernetesSourceControlConfigurationResource(kubernetesSourceControlConfigurationResourceId);
 
             // invoke the operation
-            await sourceControlConfiguration.DeleteAsync(WaitUntil.Completed);
+            await kubernetesSourceControlConfiguration.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

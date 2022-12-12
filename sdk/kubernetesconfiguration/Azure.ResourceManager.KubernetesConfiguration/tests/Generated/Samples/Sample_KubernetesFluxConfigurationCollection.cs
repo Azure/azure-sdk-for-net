@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class Sample_FluxConfigurationCollection
+    public partial class Sample_KubernetesFluxConfigurationCollection
     {
         // Get Flux Configuration
         [NUnit.Framework.Test]
@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this FluxConfigurationResource
+            // get the collection of this KubernetesFluxConfigurationResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            FluxConfigurationCollection collection = resourceGroupResource.GetFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            KubernetesFluxConfigurationCollection collection = resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation
             string fluxConfigurationName = "srs-fluxconfig";
-            FluxConfigurationResource result = await collection.GetAsync(fluxConfigurationName);
+            KubernetesFluxConfigurationResource result = await collection.GetAsync(fluxConfigurationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FluxConfigurationData resourceData = result.Data;
+            KubernetesFluxConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this FluxConfigurationResource
+            // get the collection of this KubernetesFluxConfigurationResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            FluxConfigurationCollection collection = resourceGroupResource.GetFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            KubernetesFluxConfigurationCollection collection = resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation
             string fluxConfigurationName = "srs-fluxconfig";
@@ -102,26 +102,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this FluxConfigurationResource
+            // get the collection of this KubernetesFluxConfigurationResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            FluxConfigurationCollection collection = resourceGroupResource.GetFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            KubernetesFluxConfigurationCollection collection = resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation
             string fluxConfigurationName = "srs-fluxconfig";
-            FluxConfigurationData data = new FluxConfigurationData()
+            KubernetesFluxConfigurationData data = new KubernetesFluxConfigurationData()
             {
-                Scope = ScopeType.Cluster,
+                Scope = KubernetesConfigurationScope.Cluster,
                 Namespace = "srs-namespace",
-                SourceKind = SourceKindType.GitRepository,
-                Suspend = false,
-                GitRepository = new GitRepositoryDefinition()
+                SourceKind = KubernetesConfigurationSourceKind.GitRepository,
+                IsReconciliationSuspended = false,
+                GitRepository = new KubernetesGitRepository()
                 {
                     Uri = new Uri("https://github.com/Azure/arc-k8s-demo"),
                     TimeoutInSeconds = 600,
                     SyncIntervalInSeconds = 600,
-                    RepositoryRef = new RepositoryRefDefinition()
+                    RepositoryRef = new KubernetesGitRepositoryRef()
                     {
                         Branch = "master",
                     },
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 },
                 Kustomizations =
 {
-["srs-kustomization1"] = new KustomizationDefinition()
+["srs-kustomization1"] = new Kustomization()
 {
 Path = "./test/path",
 DependsOn =
@@ -138,7 +138,7 @@ DependsOn =
 TimeoutInSeconds = 600,
 SyncIntervalInSeconds = 600,
 },
-["srs-kustomization2"] = new KustomizationDefinition()
+["srs-kustomization2"] = new Kustomization()
 {
 Path = "./other/test/path",
 DependsOn =
@@ -152,12 +152,12 @@ Prune = false,
 },
 },
             };
-            ArmOperation<FluxConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fluxConfigurationName, data);
-            FluxConfigurationResource result = lro.Value;
+            ArmOperation<KubernetesFluxConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fluxConfigurationName, data);
+            KubernetesFluxConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FluxConfigurationData resourceData = result.Data;
+            KubernetesFluxConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -180,21 +180,21 @@ Prune = false,
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this FluxConfigurationResource
+            // get the collection of this KubernetesFluxConfigurationResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            FluxConfigurationCollection collection = resourceGroupResource.GetFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            KubernetesFluxConfigurationCollection collection = resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation
             string fluxConfigurationName = "srs-fluxconfig";
-            FluxConfigurationData data = new FluxConfigurationData()
+            KubernetesFluxConfigurationData data = new KubernetesFluxConfigurationData()
             {
-                Scope = ScopeType.Cluster,
+                Scope = KubernetesConfigurationScope.Cluster,
                 Namespace = "srs-namespace",
-                SourceKind = SourceKindType.Bucket,
-                Suspend = false,
-                Bucket = new BucketDefinition()
+                SourceKind = KubernetesConfigurationSourceKind.Bucket,
+                IsReconciliationSuspended = false,
+                Bucket = new KubernetesBucket()
                 {
                     Uri = new Uri("https://fluxminiotest.az.minio.io"),
                     BucketName = "flux",
@@ -204,7 +204,7 @@ Prune = false,
                 },
                 Kustomizations =
 {
-["srs-kustomization1"] = new KustomizationDefinition()
+["srs-kustomization1"] = new Kustomization()
 {
 Path = "./test/path",
 DependsOn =
@@ -213,7 +213,7 @@ DependsOn =
 TimeoutInSeconds = 600,
 SyncIntervalInSeconds = 600,
 },
-["srs-kustomization2"] = new KustomizationDefinition()
+["srs-kustomization2"] = new Kustomization()
 {
 Path = "./other/test/path",
 DependsOn =
@@ -227,12 +227,12 @@ Prune = false,
 },
 },
             };
-            ArmOperation<FluxConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fluxConfigurationName, data);
-            FluxConfigurationResource result = lro.Value;
+            ArmOperation<KubernetesFluxConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fluxConfigurationName, data);
+            KubernetesFluxConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FluxConfigurationData resourceData = result.Data;
+            KubernetesFluxConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -255,18 +255,18 @@ Prune = false,
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this FluxConfigurationResource
+            // get the collection of this KubernetesFluxConfigurationResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            FluxConfigurationCollection collection = resourceGroupResource.GetFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            KubernetesFluxConfigurationCollection collection = resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation and iterate over the result
-            await foreach (FluxConfigurationResource item in collection.GetAllAsync())
+            await foreach (KubernetesFluxConfigurationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FluxConfigurationData resourceData = item.Data;
+                KubernetesFluxConfigurationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

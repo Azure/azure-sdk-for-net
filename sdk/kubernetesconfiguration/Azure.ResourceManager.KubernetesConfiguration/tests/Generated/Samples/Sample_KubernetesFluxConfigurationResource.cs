@@ -15,7 +15,7 @@ using Azure.ResourceManager.KubernetesConfiguration.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class Sample_FluxConfigurationResource
+    public partial class Sample_KubernetesFluxConfigurationResource
     {
         // Get Flux Configuration
         [NUnit.Framework.Test]
@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this FluxConfigurationResource created on azure
-            // for more information of creating FluxConfigurationResource, please refer to the document of FluxConfigurationResource
+            // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
+            // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string fluxConfigurationName = "srs-fluxconfig";
-            ResourceIdentifier fluxConfigurationResourceId = FluxConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName);
-            FluxConfigurationResource fluxConfiguration = client.GetFluxConfigurationResource(fluxConfigurationResourceId);
+            ResourceIdentifier kubernetesFluxConfigurationResourceId = KubernetesFluxConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName);
+            KubernetesFluxConfigurationResource kubernetesFluxConfiguration = client.GetKubernetesFluxConfigurationResource(kubernetesFluxConfigurationResourceId);
 
             // invoke the operation
-            FluxConfigurationResource result = await fluxConfiguration.GetAsync();
+            KubernetesFluxConfigurationResource result = await kubernetesFluxConfiguration.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FluxConfigurationData resourceData = result.Data;
+            KubernetesFluxConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,29 +60,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this FluxConfigurationResource created on azure
-            // for more information of creating FluxConfigurationResource, please refer to the document of FluxConfigurationResource
+            // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
+            // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string fluxConfigurationName = "srs-fluxconfig";
-            ResourceIdentifier fluxConfigurationResourceId = FluxConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName);
-            FluxConfigurationResource fluxConfiguration = client.GetFluxConfigurationResource(fluxConfigurationResourceId);
+            ResourceIdentifier kubernetesFluxConfigurationResourceId = KubernetesFluxConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName);
+            KubernetesFluxConfigurationResource kubernetesFluxConfiguration = client.GetKubernetesFluxConfigurationResource(kubernetesFluxConfigurationResourceId);
 
             // invoke the operation
-            FluxConfigurationPatch patch = new FluxConfigurationPatch()
+            KubernetesFluxConfigurationPatch patch = new KubernetesFluxConfigurationPatch()
             {
                 Suspend = true,
-                GitRepository = new GitRepositoryPatchDefinition()
+                GitRepository = new KubernetesGitRepositoryUpdateContent()
                 {
                     Uri = new Uri("https://github.com/jonathan-innis/flux2-kustomize-helm-example.git"),
                 },
                 Kustomizations =
 {
-["srs-kustomization1"] = new KustomizationPatchDefinition(),
-["srs-kustomization2"] = new KustomizationPatchDefinition()
+["srs-kustomization1"] = new KustomizationUpdateContent(),
+["srs-kustomization2"] = new KustomizationUpdateContent()
 {
 Path = "./test/alt-path",
 DependsOn =
@@ -90,19 +90,19 @@ DependsOn =
 },
 SyncIntervalInSeconds = 300,
 },
-["srs-kustomization3"] = new KustomizationPatchDefinition()
+["srs-kustomization3"] = new KustomizationUpdateContent()
 {
 Path = "./test/another-path",
 SyncIntervalInSeconds = 300,
 },
 },
             };
-            ArmOperation<FluxConfigurationResource> lro = await fluxConfiguration.UpdateAsync(WaitUntil.Completed, patch);
-            FluxConfigurationResource result = lro.Value;
+            ArmOperation<KubernetesFluxConfigurationResource> lro = await kubernetesFluxConfiguration.UpdateAsync(WaitUntil.Completed, patch);
+            KubernetesFluxConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FluxConfigurationData resourceData = result.Data;
+            KubernetesFluxConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -118,19 +118,19 @@ SyncIntervalInSeconds = 300,
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this FluxConfigurationResource created on azure
-            // for more information of creating FluxConfigurationResource, please refer to the document of FluxConfigurationResource
+            // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
+            // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string fluxConfigurationName = "srs-fluxconfig";
-            ResourceIdentifier fluxConfigurationResourceId = FluxConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName);
-            FluxConfigurationResource fluxConfiguration = client.GetFluxConfigurationResource(fluxConfigurationResourceId);
+            ResourceIdentifier kubernetesFluxConfigurationResourceId = KubernetesFluxConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName);
+            KubernetesFluxConfigurationResource kubernetesFluxConfiguration = client.GetKubernetesFluxConfigurationResource(kubernetesFluxConfigurationResourceId);
 
             // invoke the operation
-            await fluxConfiguration.DeleteAsync(WaitUntil.Completed);
+            await kubernetesFluxConfiguration.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

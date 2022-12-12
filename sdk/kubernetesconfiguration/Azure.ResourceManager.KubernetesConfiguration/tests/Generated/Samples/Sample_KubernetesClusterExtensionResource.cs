@@ -15,7 +15,7 @@ using Azure.ResourceManager.KubernetesConfiguration.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class Sample_ExtensionResource
+    public partial class Sample_KubernetesClusterExtensionResource
     {
         // Get Extension
         [NUnit.Framework.Test]
@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ExtensionResource created on azure
-            // for more information of creating ExtensionResource, please refer to the document of ExtensionResource
+            // this example assumes you already have this KubernetesClusterExtensionResource created on azure
+            // for more information of creating KubernetesClusterExtensionResource, please refer to the document of KubernetesClusterExtensionResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string extensionName = "ClusterMonitor";
-            ResourceIdentifier extensionResourceId = ExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
-            ExtensionResource extension = client.GetExtensionResource(extensionResourceId);
+            ResourceIdentifier kubernetesClusterExtensionResourceId = KubernetesClusterExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
+            KubernetesClusterExtensionResource kubernetesClusterExtension = client.GetKubernetesClusterExtensionResource(kubernetesClusterExtensionResourceId);
 
             // invoke the operation
-            ExtensionResource result = await extension.GetAsync();
+            KubernetesClusterExtensionResource result = await kubernetesClusterExtension.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExtensionData resourceData = result.Data;
+            KubernetesClusterExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ExtensionResource created on azure
-            // for more information of creating ExtensionResource, please refer to the document of ExtensionResource
+            // this example assumes you already have this KubernetesClusterExtensionResource created on azure
+            // for more information of creating KubernetesClusterExtensionResource, please refer to the document of KubernetesClusterExtensionResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string extensionName = "ClusterMonitor";
-            ResourceIdentifier extensionResourceId = ExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
-            ExtensionResource extension = client.GetExtensionResource(extensionResourceId);
+            ResourceIdentifier kubernetesClusterExtensionResourceId = KubernetesClusterExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
+            KubernetesClusterExtensionResource kubernetesClusterExtension = client.GetKubernetesClusterExtensionResource(kubernetesClusterExtensionResourceId);
 
             // invoke the operation
-            await extension.DeleteAsync(WaitUntil.Completed);
+            await kubernetesClusterExtension.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -88,19 +88,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
-            // this example assumes you already have this ExtensionResource created on azure
-            // for more information of creating ExtensionResource, please refer to the document of ExtensionResource
+            // this example assumes you already have this KubernetesClusterExtensionResource created on azure
+            // for more information of creating KubernetesClusterExtensionResource, please refer to the document of KubernetesClusterExtensionResource
             string subscriptionId = "subId1";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
             string extensionName = "ClusterMonitor";
-            ResourceIdentifier extensionResourceId = ExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
-            ExtensionResource extension = client.GetExtensionResource(extensionResourceId);
+            ResourceIdentifier kubernetesClusterExtensionResourceId = KubernetesClusterExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterRp, clusterResourceName, clusterName, extensionName);
+            KubernetesClusterExtensionResource kubernetesClusterExtension = client.GetKubernetesClusterExtensionResource(kubernetesClusterExtensionResourceId);
 
             // invoke the operation
-            ExtensionPatch patch = new ExtensionPatch()
+            KubernetesClusterExtensionPatch patch = new KubernetesClusterExtensionPatch()
             {
                 AutoUpgradeMinorVersion = true,
                 ReleaseTrain = "Preview",
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 ["omsagent.secret.key"] = "secretKeyValue01",
 },
             };
-            ArmOperation<ExtensionResource> lro = await extension.UpdateAsync(WaitUntil.Completed, patch);
-            ExtensionResource result = lro.Value;
+            ArmOperation<KubernetesClusterExtensionResource> lro = await kubernetesClusterExtension.UpdateAsync(WaitUntil.Completed, patch);
+            KubernetesClusterExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExtensionData resourceData = result.Data;
+            KubernetesClusterExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

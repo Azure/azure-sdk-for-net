@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class Sample_ExtensionCollection
+    public partial class Sample_KubernetesClusterExtensionCollection
     {
         // Create Extension
         [NUnit.Framework.Test]
@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ExtensionResource
+            // get the collection of this KubernetesClusterExtensionResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            ExtensionCollection collection = resourceGroupResource.GetExtensions(clusterRp, clusterResourceName, clusterName);
+            KubernetesClusterExtensionCollection collection = resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation
             string extensionName = "ClusterMonitor";
-            ExtensionData data = new ExtensionData()
+            KubernetesClusterExtensionData data = new KubernetesClusterExtensionData()
             {
                 ExtensionType = "azuremonitor-containers",
                 AutoUpgradeMinorVersion = true,
                 ReleaseTrain = "Preview",
-                Scope = new Scope()
+                Scope = new KubernetesClusterExtensionScope()
                 {
                     ClusterReleaseNamespace = "kube-system",
                 },
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 ["omsagent.secret.key"] = "secretKeyValue01",
 },
             };
-            ArmOperation<ExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, extensionName, data);
-            ExtensionResource result = lro.Value;
+            ArmOperation<KubernetesClusterExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, extensionName, data);
+            KubernetesClusterExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExtensionData resourceData = result.Data;
+            KubernetesClusterExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ExtensionResource
+            // get the collection of this KubernetesClusterExtensionResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            ExtensionCollection collection = resourceGroupResource.GetExtensions(clusterRp, clusterResourceName, clusterName);
+            KubernetesClusterExtensionCollection collection = resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation
             string extensionName = "ClusterMonitor";
-            ExtensionResource result = await collection.GetAsync(extensionName);
+            KubernetesClusterExtensionResource result = await collection.GetAsync(extensionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExtensionData resourceData = result.Data;
+            KubernetesClusterExtensionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ExtensionResource
+            // get the collection of this KubernetesClusterExtensionResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            ExtensionCollection collection = resourceGroupResource.GetExtensions(clusterRp, clusterResourceName, clusterName);
+            KubernetesClusterExtensionCollection collection = resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation
             string extensionName = "ClusterMonitor";
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ExtensionResource
+            // get the collection of this KubernetesClusterExtensionResource
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
             string clusterName = "clusterName1";
-            ExtensionCollection collection = resourceGroupResource.GetExtensions(clusterRp, clusterResourceName, clusterName);
+            KubernetesClusterExtensionCollection collection = resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
 
             // invoke the operation and iterate over the result
-            await foreach (ExtensionResource item in collection.GetAllAsync())
+            await foreach (KubernetesClusterExtensionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ExtensionData resourceData = item.Data;
+                KubernetesClusterExtensionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
