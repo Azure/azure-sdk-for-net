@@ -33,7 +33,7 @@ namespace Azure.Core
             {
                 bool setSignature = false;
                 // check if the signature has updated since we started processing this message
-                if (message.ProcessingStartTime.Ticks < _credential.SignatureUpdated)
+                if (message.ProcessingContext.StartTime.Ticks < _credential.SignatureUpdated)
                 {
                     string previousSig = _credential.PreviousSignature;
                     if (query.Contains(previousSig))
