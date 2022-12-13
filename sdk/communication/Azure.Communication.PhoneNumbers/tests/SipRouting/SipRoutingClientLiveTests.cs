@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
@@ -34,11 +35,15 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var client = CreateClient();
             if (client.GetRoutesAsync().Result.Value.Count > 0)
             {
-                client.SetRoutesAsync(new List<SipTrunkRoute>()).EnsureCompleted();
+                var task = client.SetRoutesAsync(new List<SipTrunkRoute>());
+                task.Wait();
+                task.EnsureCompleted();
             }
             if (client.GetTrunksAsync().Result.Value.Count > 0)
             {
-                client.SetTrunksAsync(new List<SipTrunk>()).EnsureCompleted();
+                var task = client.SetTrunksAsync(new List<SipTrunk>());
+                task.Wait();
+                task.EnsureCompleted();
             }
         }
 
