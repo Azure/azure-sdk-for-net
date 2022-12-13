@@ -43,7 +43,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #endregion Snippet:CreateSipRoutingClientWithTokenCredential
 
             client = CreateClient();
-            var newTrunks = new List<SipTrunk> { TestData.NewTrunk };
+            var newTrunks = new List<SipTrunk> { TestData!.NewTrunk };
             var newRoutes = new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk };
 
             #region Snippet:Replace
@@ -107,7 +107,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
                 Assert.Ignore("Skip SIP routing live tests flag is on.");
 
             var client = CreateClient();
-            var newTrunks = new List<SipTrunk> { TestData.NewTrunk };
+            var newTrunks = new List<SipTrunk> { TestData!.NewTrunk };
             var newRoutes = new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk };
 
             #region Snippet:ReplaceAsync

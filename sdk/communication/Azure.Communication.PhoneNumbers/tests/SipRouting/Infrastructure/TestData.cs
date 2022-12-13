@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
@@ -20,16 +21,16 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public readonly SipTrunkRoute RuleNavigateToAllTrunks;
         public readonly SipTrunkRoute RuleNavigateToNewTrunk;
 
-        public TestData(RecordedTestMode? mode)
+        public TestData(Guid random)
         {
-            Domain = mode != RecordedTestMode.Playback ? ("." + Guid.NewGuid()) : "";
-            Fqdns = new List<string>() { "sbs1" + Domain + ".com", "sbs2" + Domain + ".com" };
+            Domain = random.ToString();
+            Fqdns = new List<string>() { "sbs1." + Domain + ".com", "sbs2." + Domain + ".com" };
             TrunkList = new List<SipTrunk>
             {
                 new SipTrunk(Fqdns[0], TrunkPorts[0]),
                 new SipTrunk(Fqdns[1], TrunkPorts[1])
             };
-            NewTrunk = new SipTrunk("newsbs" + Domain + ".com", 3333);
+            NewTrunk = new SipTrunk("newsbs." + Domain + ".com", 3333);
 
             RuleNavigateToTrunk1 = new SipTrunkRoute(
                 name: "First rule",
