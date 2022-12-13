@@ -174,12 +174,14 @@ namespace Azure.Storage.DataMovement
                     {
                         // Add CommitBlockList task to the channel
                         await _queueCommitBlockTask().ConfigureAwait(false);
+                        _currentBytesSemaphore.Release();
                         return;
                     }
                     else if (_bytesTransferred > _expectedLength)
                     {
                         await _invokeFailedEventHandler(
                                 new Exception("Unexpected Error: Amount of bytes transferred exceeds expected length.")).ConfigureAwait(false);
+                        _currentBytesSemaphore.Release();
                         return;
                     }
                     _currentBytesSemaphore.Release();
