@@ -1,9 +1,12 @@
 # Release History
 
-## 1.0.0-beta.2 (2022-11-08)
+## 1.0.0-beta.2 (2022-12-12)
 
 ### Other Changes
 
+- Changed event request "Payload" property to "Data"
+- Removed country attribute from AuthenticationEventContextUser
+- Added createdDateTime to AuthenticationEventContextUser
 
 
 ## 1.0.0-beta.2 (2022-11-08)

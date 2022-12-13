@@ -14,25 +14,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets the event identifier.</summary>
         /// <value>The event identifier.</value>
         [JsonPropertyName("tenantId")]
-        [JsonRequired]
-        public Guid TenantId { get; set; }
+        [Required]
+        public Guid? TenantId { get; set; } = null;
 
         /// <summary>Gets the event identifier.</summary>
         /// <value>The event identifier.</value>
         [JsonPropertyName("authenticationEventListenerId")]
-        [JsonRequired]
-        public Guid AuthenticationEventListenerId { get; set; }
+        [Required]
+        public Guid? AuthenticationEventListenerId { get; set; } = null;
 
         /// <summary>Gets or sets the custom authentication extension identifier.</summary>
         /// <value>The custom authentication extension identifier. </value>
         [JsonPropertyName("customAuthenticationExtensionId")]
-        [JsonRequired]
-        public Guid CustomAuthenticationExtensionId { get; set; }
+        [Required]
+        public Guid? CustomAuthenticationExtensionId { get; set; } = null;
 
         /// <summary>Gets the Json settings.
         /// Which is over-ridable for sub class.</summary>
         /// <value>The json settings.</value>
-        private JsonSerializerOptions JsonSettings
+        private static JsonSerializerOptions JsonSettings
         {
             get
             {
@@ -43,13 +43,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 };
 
-                InitJsonSerializerSettings(jsonOptions);
                 return jsonOptions;
             }
         }
-
-        // TODO: What is this?
-        internal virtual void InitJsonSerializerSettings(JsonSerializerOptions jsonSerializerSettings) { }
 
         /// <summary>De-serializes the json the its associated typed object.</summary>
         /// <param name="json">The json containing the typed structure.</param>

@@ -2,6 +2,8 @@
 using Xunit;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framework
 {
@@ -22,25 +24,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             bool hasCustomAuthenticationExtensionIdKey = true,
             bool hasCustomAuthenticationExtensionIdValue = true)
         {
-            string jsonString = "{\"data\":" + "{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartCalloutData\"";
+            JsonObject obj = new ();
+
+            JsonObject context = new ();
+            context["protocol"] = "SAML";
+
+            JsonObject dataObj = new ();
+            obj["data"] = dataObj;
+            dataObj["authenticationContext"] = context;
+            dataObj["@odata.type"] = "microsoft.graph.onTokenIssuanceStartCalloutData";
+
             if (hasTenantIdKey)
             {
-                jsonString += ",";
-                jsonString += "\"tenantId\":" + "\"" + (hasTenantIdValue ? TenantId : "") + "\"";
+                dataObj["tenantId"] = hasTenantIdValue ? TenantId : "";
             }
             if (hasAuthenticationEventListenerIdKey)
             {
-                jsonString += ",";
-                jsonString += "\"authenticationEventListenerId\":" + "\"" + (hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : "") + "\"";
+                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : "";
             }
             if (hasCustomAuthenticationExtensionIdKey)
             {
-                jsonString += ",";
-                jsonString += "\"customAuthenticationExtensionId\":" + "\"" + (hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : "") + "\"";
+                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : "";
             }
-            jsonString += "}}";
 
-            return jsonString;
+            return obj.ToJsonString();
         }
 
         [Fact]
@@ -54,9 +61,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             Assert.Equal(AuthenticationEventListenerId, data.AuthenticationEventListenerId.ToString());
             Assert.Equal(CustomAuthenticationExtensionId, data.CustomAuthenticationExtensionId.ToString());
 
-            Assert.Throws<System.Text.Json.JsonException>(()=> AuthenticationEventData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString(hasTenantIdKey: false))));
-            Assert.Throws<System.Text.Json.JsonException>(()=> AuthenticationEventData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString(hasAuthenticationEventListenerIdKey: false))));
-            Assert.Throws<System.Text.Json.JsonException>(()=> AuthenticationEventData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString(hasCustomAuthenticationExtensionIdKey: false))));
+            var ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
+                ()=> Helpers.ValidateGraph(
+                    AuthenticationEventData.CreateInstance(
+                        type: type,
+                        json: new AuthenticationEventJsonElement(BuildDataString(hasTenantIdKey: false)))));
+
+            Assert.Contains("tenantid", ex.Message, StringComparison.InvariantCultureIgnoreCase);
+
+            ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
+                () => Helpers.ValidateGraph(
+                    AuthenticationEventData.CreateInstance(
+                        type: type,
+                        json: new AuthenticationEventJsonElement(BuildDataString(hasAuthenticationEventListenerIdKey: false)))));
+
+            Assert.Contains("authenticationEventListenerId", ex.Message, StringComparison.InvariantCultureIgnoreCase);
+
+            ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
+                () => Helpers.ValidateGraph(
+                    AuthenticationEventData.CreateInstance(
+                        type: type,
+                        json: new AuthenticationEventJsonElement(BuildDataString(hasCustomAuthenticationExtensionIdKey: false)))));
+
+            Assert.Contains("customAuthenticationExtensionId", ex.Message, StringComparison.InvariantCultureIgnoreCase);
+
+
         }
     }
 }
