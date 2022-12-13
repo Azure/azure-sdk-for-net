@@ -57,29 +57,183 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [TestCase(512)]
         [TestCase(Constants.KB)]
+        [TestCase(Constants.MB)]
+        [TestCase(4 * Constants.MB)]
         public async Task OneChunkTransfer(long blockSize)
         {
             // Set up tasks
-            for (int i = 0; i < 100; i++)
-            {
-                var putBlockTask = GetPutBlockTask();
-                var commitBlockTask = GetCommitBlockTask();
-                var reportProgressInBytesTask = GetReportProgressInBytesTask();
-                var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
-                var commitBlockHandler = new CommitChunkHandler(
-                    expectedLength: blockSize * 2,
-                    blockSize: blockSize,
-                    new CommitChunkHandler.Behaviors
-                    {
-                        QueuePutBlockTask = putBlockTask.Object,
-                        QueueCommitBlockTask = commitBlockTask.Object,
-                        ReportProgressInBytes = reportProgressInBytesTask.Object,
-                        InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
-                    },
-                    TransferType.Concurrent);
+            var putBlockTask = GetPutBlockTask();
+            var commitBlockTask = GetCommitBlockTask();
+            var reportProgressInBytesTask = GetReportProgressInBytesTask();
+            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            var commitBlockHandler = new CommitChunkHandler(
+                expectedLength: blockSize * 2,
+                blockSize: blockSize,
+                new CommitChunkHandler.Behaviors
+                {
+                    QueuePutBlockTask = putBlockTask.Object,
+                    QueueCommitBlockTask = commitBlockTask.Object,
+                    ReportProgressInBytes = reportProgressInBytesTask.Object,
+                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                },
+                TransferType.Concurrent);
 
-                // Make one chunk that would meet the expected length
-                await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
+            // Make one chunk that would meet the expected length
+            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
+                transferId: "fake-id",
+                success: true,
+                // Before commit block is called, one block chunk has already been added when creating the destination
+                offset: blockSize,
+                bytesTransferred: blockSize,
+                isRunningSynchronously: false,
+                cancellationToken: CancellationToken.None));
+
+            // Since the events get added to the channel and return immediately, it's
+            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
+            Thread.Sleep(5); // 5 seconds
+
+            // Assert
+            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Report Event Handler calls were incorrect");
+            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
+            Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
+            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+        }
+
+        [Test]
+        [TestCase(512)]
+        [TestCase(Constants.KB)]
+        public async Task MultipleChunkTransfer(long blockSize)
+        {
+            // Set up tasks
+            var putBlockTask = GetPutBlockTask();
+            var commitBlockTask = GetCommitBlockTask();
+            var reportProgressInBytesTask = GetReportProgressInBytesTask();
+            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            var commitBlockHandler = new CommitChunkHandler(
+                expectedLength: blockSize * 3,
+                blockSize: blockSize,
+                new CommitChunkHandler.Behaviors
+                {
+                    QueuePutBlockTask = putBlockTask.Object,
+                    QueueCommitBlockTask = commitBlockTask.Object,
+                    ReportProgressInBytes = reportProgressInBytesTask.Object,
+                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                },
+                TransferType.Concurrent);
+
+            // Make one chunk that would update the bytes but not cause a commit block list to occur
+            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
+                transferId: "fake-id",
+                success: true,
+                // Before commit block is called, one block chunk has already been added when creating the destination
+                offset: blockSize,
+                bytesTransferred: blockSize,
+                isRunningSynchronously: false,
+                cancellationToken: CancellationToken.None));
+
+            // Since the events get added to the channel and return immediately, it's
+            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
+            Thread.Sleep(5); // 5 seconds
+
+            // Assert
+            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
+            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
+            Assert.AreEqual(0, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
+            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+
+            // Now add the last block to meet the required commited block amount.
+            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
+                transferId: "fake-id",
+                success: true,
+                // Before commit block is called, one block chunk has already been added when creating the destination
+                offset: blockSize * 2,
+                bytesTransferred: blockSize,
+                isRunningSynchronously: false,
+                cancellationToken: CancellationToken.None));
+
+            // Since the events get added to the channel and return immediately, it's
+            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
+            Thread.Sleep(5); // 5 seconds
+
+            // Assert
+            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
+            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
+            Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
+            Assert.AreEqual(2, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
+        }
+
+        [Test]
+        [TestCase(512)]
+        [TestCase(Constants.KB)]
+        public async Task MultipleChunkTransfer_ExceedError(long blockSize)
+        {
+            // Set up tasks
+            var putBlockTask = GetPutBlockTask();
+            var commitBlockTask = GetCommitBlockTask();
+            var reportProgressInBytesTask = GetReportProgressInBytesTask();
+            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            var commitBlockHandler = new CommitChunkHandler(
+                expectedLength: blockSize * 2,
+                blockSize: blockSize,
+                new CommitChunkHandler.Behaviors
+                {
+                    QueuePutBlockTask = putBlockTask.Object,
+                    QueueCommitBlockTask = commitBlockTask.Object,
+                    ReportProgressInBytes = reportProgressInBytesTask.Object,
+                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                },
+                TransferType.Concurrent);
+
+            // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
+            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
+                transferId: "fake-id",
+                success: true,
+                // Before commit block is called, one block chunk has already been added when creating the destination
+                offset: blockSize,
+                bytesTransferred: blockSize * 2,
+                isRunningSynchronously: false,
+                cancellationToken: CancellationToken.None));
+
+            // Since the events get added to the channel and return immediately, it's
+            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
+            Thread.Sleep(5); // 5 seconds
+
+            // Assert
+            Assert.AreEqual(1, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
+            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of  Block Task calls were incorrect");
+            Assert.AreEqual(0, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
+            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of  Progress amount calls were incorrect");
+        }
+
+        [Test]
+        [TestCase(512, 4)]
+        [TestCase(512, 20)]
+        [TestCase(Constants.KB, 4)]
+        [TestCase(Constants.KB, 20)]
+        public async Task MultipleChunkTransfer_MultipleProcesses(long blockSize, long taskSize)
+        {
+            // Set up tasks
+            var putBlockTask = GetPutBlockTask();
+            var commitBlockTask = GetCommitBlockTask();
+            var reportProgressInBytesTask = GetReportProgressInBytesTask();
+            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+            var commitBlockHandler = new CommitChunkHandler(
+                expectedLength: blockSize * (taskSize+1),
+                blockSize: blockSize,
+                new CommitChunkHandler.Behaviors
+                {
+                    QueuePutBlockTask = putBlockTask.Object,
+                    QueueCommitBlockTask = commitBlockTask.Object,
+                    ReportProgressInBytes = reportProgressInBytesTask.Object,
+                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                },
+                TransferType.Concurrent);
+
+            List<Task> runningTasks = new List<Task>();
+
+            for (int i = 0; i < taskSize; i++)
+            {
+                Task task = commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
                     transferId: "fake-id",
                     success: true,
                     // Before commit block is called, one block chunk has already been added when creating the destination
@@ -87,13 +241,22 @@ namespace Azure.Storage.DataMovement.Tests
                     bytesTransferred: blockSize,
                     isRunningSynchronously: false,
                     cancellationToken: CancellationToken.None));
-
-                // Assert
-                Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Report Event Handler calls were incorrect");
-                Assert.AreEqual(0, putBlockTask.Invocations.Count, "Put Block Task calls were incorrect");
-                Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Commit Block Task calls were incorrect");
-                Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Report Progress amount calls were incorrect");
+                runningTasks.Add(task);
             }
+
+            // Wait for all the remaining blocks to finish staging and then
+            // commit the block list to complete the upload
+            await Task.WhenAll(runningTasks).ConfigureAwait(false);
+
+            // Since the events get added to the channel and return immediately, it's
+            // possible the chunks haven't been processed. Let's wait a respectable amount of time.
+            Thread.Sleep(5); // 5 seconds
+
+            // Assert
+            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
+            Assert.AreEqual(0, putBlockTask.Invocations.Count, "Amount of Put Block Task calls were incorrect");
+            Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
+            Assert.AreEqual(taskSize, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
         }
     }
 }
