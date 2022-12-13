@@ -106,10 +106,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.Blob,
-            };
+            ShareDataSetMappingData data = new BlobDataSetMapping("C1", Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "file21", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a");
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -145,10 +142,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.SqlDBTable,
-            };
+            ShareDataSetMappingData data = new SqlDBTableDataSetMapping("Database1", Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "dbo", new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"), "Table1");
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -184,9 +178,9 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
+            ShareDataSetMappingData data = new AdlsGen2FileDataSetMapping(Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "file21", "fileSystem", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a")
             {
-                Kind = DataSetMappingKind.AdlsGen2File,
+                OutputType = DataShareOutputType.Csv,
             };
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
@@ -223,10 +217,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.SqlDWTable,
-            };
+            ShareDataSetMappingData data = new SqlDWTableDataSetMapping(Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "DataWarehouse1", "dbo", new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"), "Table1");
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -262,10 +253,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "datasetMappingName1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.SynapseWorkspaceSqlPoolTable,
-            };
+            ShareDataSetMappingData data = new SynapseWorkspaceSqlPoolTableDataSetMapping(Guid.Parse("3dc64e49-1fc3-4186-b3dc-d388c4d3076a"), new ResourceIdentifier("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/SampleResourceGroup/providers/Microsoft.Synapse/workspaces/ExampleWorkspace/sqlPools/ExampleSqlPool/schemas/dbo/tables/table1"));
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 

@@ -106,10 +106,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string synchronizationSettingName = "Dataset1";
-            DataShareSynchronizationSettingData data = new DataShareSynchronizationSettingData()
-            {
-                Kind = SynchronizationSettingKind.ScheduleBased,
-            };
+            DataShareSynchronizationSettingData data = new ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval.Day, DateTimeOffset.Parse("2018-11-14T04:47:52.9614956Z"));
             ArmOperation<DataShareSynchronizationSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, synchronizationSettingName, data);
             DataShareSynchronizationSettingResource result = lro.Value;
 
