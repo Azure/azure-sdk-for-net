@@ -48,5 +48,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var options = tag != null ? new UploadManifestOptions(tag) : null;
             await client.UploadManifestAsync(manifest, options);
         }
+
+        public static async Task AddTag(this ContainerRegistryBlobClient client, string reference, string tag)
+        {
+            // Get the image manifest
+            var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions(reference));
+            var stream = manifestResult.Value.ManifestStream;
+            stream.Seek(0, SeekOrigin.Begin);
+
+            // Upload the manifest with the new tag
+            await client.UploadManifestAsync(stream, new UploadManifestOptions(tag));
+        }
     }
 }

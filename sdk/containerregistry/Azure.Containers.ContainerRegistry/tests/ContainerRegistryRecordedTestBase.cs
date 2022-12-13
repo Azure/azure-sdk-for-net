@@ -59,8 +59,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public async Task CreateImage(string repository, string tag)
         {
-            var client = GetUploadClient(repository);
+            await CreateImage(new Uri(TestEnvironment.Endpoint), repository, tag);
+        }
+
+        public async Task CreateImage(Uri endpoint, string repository, string tag)
+        {
+            var client = GetUploadClient(endpoint, repository);
             await client.UploadTestImage(tag);
+        }
+
+        public async Task AddTag(Uri endpoint, string repository, string reference, string tag)
+        {
+            var client = GetUploadClient(endpoint, repository);
+            await client.AddTag(reference, tag);
+        }
+
+        public async Task DeleteRepository(Uri endpoint, string repository)
+        {
+            var client = GetSetupClient(endpoint);
+            await client.GetRepository(repository).DeleteAsync();
         }
 
         public static Uri GetAuthorityHost(string endpoint)
@@ -142,13 +159,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
-        private ContainerRegistryBlobClient GetUploadClient(string repository)
+        private ContainerRegistryClient GetSetupClient(Uri endpoint)
         {
-            // We won't record the Set-up calls, so don't instrument this client.
-            string endpoint = TestEnvironment.Endpoint;
-            Uri authorityHost = GetAuthorityHost(endpoint);
+            Uri authorityHost = GetAuthorityHost(endpoint.ToString());
 
-            return new ContainerRegistryBlobClient(new Uri(endpoint),
+            // We won't record the set-up calls, so don't instrument this client.
+            return new ContainerRegistryClient(endpoint,
+                TestEnvironment.Credential,
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = GetAudience(authorityHost)
+                });
+        }
+
+        private ContainerRegistryBlobClient GetUploadClient(Uri endpoint, string repository)
+        {
+            Uri authorityHost = GetAuthorityHost(endpoint.ToString());
+
+            // We won't record the set-up calls, so don't instrument this client.
+            return new ContainerRegistryBlobClient(endpoint,
                 TestEnvironment.Credential,
                 repository,
                 new ContainerRegistryClientOptions()

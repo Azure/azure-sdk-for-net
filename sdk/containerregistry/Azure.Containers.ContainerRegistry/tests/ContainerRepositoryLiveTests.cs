@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRepositoryLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -219,11 +219,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateClient();
             var repositoryId = Recording.Random.NewGuid().ToString();
-
             List<string> tags = new List<string>() { "v1", "v2" };
-
             var repository = client.GetRepository(repositoryId);
-            var artifact = client.GetArtifact(repositoryId, tags[0]);
 
             try
             {
