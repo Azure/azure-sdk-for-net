@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
@@ -10,6 +10,7 @@
 		<PackageReference Include="Microsoft.Azure.WebJobs" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+		<PackageReference Include="System.Text.Json" VersionOverride="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
