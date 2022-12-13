@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization;
 using OpenTelemetry;
 using OpenTelemetry.Extensions.AzureMonitor;
@@ -19,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
         private readonly TracerProvider tracerProvider;
 
-        public TraceDemo(string connectionString)
+        public TraceDemo(string connectionString, TokenCredential credential = null)
         {
             var resourceAttributes = new Dictionary<string, object>
             {
@@ -36,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                             .AddProcessor(new ActivityFilteringProcessor())
                             .AddProcessor(new ActivityEnrichingProcessor())
                             .SetSampler(new ApplicationInsightsSampler(1.0F))
-                            .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString)
+                            .AddAzureMonitorTraceExporter(o => o.ConnectionString = connectionString, credential)
                             .Build();
         }
 

@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading;
-
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly ResourceParser _resourceParser;
         private readonly AzureMonitorPersistentStorage _persistentStorage;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options, TokenCredential credential = null) : this(new AzureMonitorTransmitter(options, credential))
         {
         }
 

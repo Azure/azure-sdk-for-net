@@ -1,3 +1,8 @@
+# As of 12/9/2022 this file is going to become obsolete and then deleted soon,
+# superseded by ../jobs/prepare-pipelines.yml, which includes all of the
+# logic in this file.
+# For more, please see: https://github.com/Azure/azure-sdk-tools/issues/4888
+
 parameters:
   - name: Repository
     type: string
