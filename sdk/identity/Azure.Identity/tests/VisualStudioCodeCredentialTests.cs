@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
     public class VisualStudioCodeCredentialTests : CredentialTestBase
     {
         public VisualStudioCodeCredentialTests(bool isAsync) : base(isAsync)
