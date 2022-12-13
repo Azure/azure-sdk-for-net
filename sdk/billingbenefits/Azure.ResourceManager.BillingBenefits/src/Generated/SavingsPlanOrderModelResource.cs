@@ -101,13 +101,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: SavingsPlan_Get
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SavingsPlanModelResource>> GetSavingsPlanModelAsync(string savingsPlanId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanModelResource>> GetSavingsPlanModelAsync(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetSavingsPlanModels().GetAsync(savingsPlanId, cancellationToken).ConfigureAwait(false);
+            return await GetSavingsPlanModels().GetAsync(savingsPlanId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,13 +117,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: SavingsPlan_Get
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SavingsPlanModelResource> GetSavingsPlanModel(string savingsPlanId, CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanModelResource> GetSavingsPlanModel(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSavingsPlanModels().Get(savingsPlanId, cancellationToken);
+            return GetSavingsPlanModels().Get(savingsPlanId, expand, cancellationToken);
         }
 
         /// <summary>
@@ -130,14 +132,15 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}
         /// Operation Id: SavingsPlanOrder_Get
         /// </summary>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SavingsPlanOrderModelResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanOrderModelResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _savingsPlanOrderModelSavingsPlanOrderClientDiagnostics.CreateScope("SavingsPlanOrderModelResource.Get");
             scope.Start();
             try
             {
-                var response = await _savingsPlanOrderModelSavingsPlanOrderRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _savingsPlanOrderModelSavingsPlanOrderRestClient.GetAsync(Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());
@@ -154,14 +157,15 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}
         /// Operation Id: SavingsPlanOrder_Get
         /// </summary>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SavingsPlanOrderModelResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanOrderModelResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _savingsPlanOrderModelSavingsPlanOrderClientDiagnostics.CreateScope("SavingsPlanOrderModelResource.Get");
             scope.Start();
             try
             {
-                var response = _savingsPlanOrderModelSavingsPlanOrderRestClient.Get(Id.Name, cancellationToken);
+                var response = _savingsPlanOrderModelSavingsPlanOrderRestClient.Get(Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());

@@ -60,10 +60,11 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: SavingsPlanOrder_Get
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual async Task<Response<SavingsPlanOrderModelResource>> GetAsync(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanOrderModelResource>> GetAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.BillingBenefits
             scope.Start();
             try
             {
-                var response = await _savingsPlanOrderModelSavingsPlanOrderRestClient.GetAsync(savingsPlanOrderId, cancellationToken).ConfigureAwait(false);
+                var response = await _savingsPlanOrderModelSavingsPlanOrderRestClient.GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());
@@ -89,10 +90,11 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: SavingsPlanOrder_Get
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual Response<SavingsPlanOrderModelResource> Get(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanOrderModelResource> Get(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.BillingBenefits
             scope.Start();
             try
             {
-                var response = _savingsPlanOrderModelSavingsPlanOrderRestClient.Get(savingsPlanOrderId, cancellationToken);
+                var response = _savingsPlanOrderModelSavingsPlanOrderRestClient.Get(savingsPlanOrderId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());
@@ -202,10 +204,11 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: SavingsPlanOrder_Get
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -213,7 +216,7 @@ namespace Azure.ResourceManager.BillingBenefits
             scope.Start();
             try
             {
-                var response = await _savingsPlanOrderModelSavingsPlanOrderRestClient.GetAsync(savingsPlanOrderId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _savingsPlanOrderModelSavingsPlanOrderRestClient.GetAsync(savingsPlanOrderId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -229,10 +232,11 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Operation Id: SavingsPlanOrder_Get
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual Response<bool> Exists(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -240,7 +244,7 @@ namespace Azure.ResourceManager.BillingBenefits
             scope.Start();
             try
             {
-                var response = _savingsPlanOrderModelSavingsPlanOrderRestClient.Get(savingsPlanOrderId, cancellationToken: cancellationToken);
+                var response = _savingsPlanOrderModelSavingsPlanOrderRestClient.Get(savingsPlanOrderId, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -5,14 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.BillingBenefits;
-using Azure.ResourceManager.BillingBenefits.Tests;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Reservations.Tests
+namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class ReservationOrderAliasTests : BillingBenefitsManagementTestBase
     {

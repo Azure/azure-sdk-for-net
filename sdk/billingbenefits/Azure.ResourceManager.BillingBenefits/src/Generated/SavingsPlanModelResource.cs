@@ -92,14 +92,15 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
         /// Operation Id: SavingsPlan_Get
         /// </summary>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SavingsPlanModelResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanModelResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelResource.Get");
             scope.Start();
             try
             {
-                var response = await _savingsPlanModelSavingsPlanRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _savingsPlanModelSavingsPlanRestClient.GetAsync(Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SavingsPlanModelResource(Client, response.Value), response.GetRawResponse());
@@ -116,14 +117,15 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}
         /// Operation Id: SavingsPlan_Get
         /// </summary>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SavingsPlanModelResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanModelResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _savingsPlanModelSavingsPlanClientDiagnostics.CreateScope("SavingsPlanModelResource.Get");
             scope.Start();
             try
             {
-                var response = _savingsPlanModelSavingsPlanRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _savingsPlanModelSavingsPlanRestClient.Get(Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SavingsPlanModelResource(Client, response.Value), response.GetRawResponse());

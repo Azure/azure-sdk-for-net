@@ -55,6 +55,10 @@ rename-mapping:
   ReservationOrderAliasRequestPropertiesReservedResourceProperties: ReservationOrderAliasRequestReservedResourceProperties
   ReservationOrderAliasResponsePropertiesReservedResourceProperties: ReservationOrderAliasResponseReservedResourceProperties
 directive:
+  - from: billingbenefits.json
+    where: $.parameters
+    transform: >
+      $.ExpandParameter['x-ms-parameter-location'] = 'method';
   - remove-operation: Operation_List
 
 ```

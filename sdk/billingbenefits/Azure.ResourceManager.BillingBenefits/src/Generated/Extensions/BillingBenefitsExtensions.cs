@@ -51,13 +51,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SavingsPlanOrderModelResource>> GetSavingsPlanOrderModelAsync(this TenantResource tenantResource, string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SavingsPlanOrderModelResource>> GetSavingsPlanOrderModelAsync(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSavingsPlanOrderModels().GetAsync(savingsPlanOrderId, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetSavingsPlanOrderModels().GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -67,13 +68,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SavingsPlanOrderModelResource> GetSavingsPlanOrderModel(this TenantResource tenantResource, string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public static Response<SavingsPlanOrderModelResource> GetSavingsPlanOrderModel(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSavingsPlanOrderModels().Get(savingsPlanOrderId, cancellationToken);
+            return tenantResource.GetSavingsPlanOrderModels().Get(savingsPlanOrderId, expand, cancellationToken);
         }
 
         /// <summary> Gets an object representing a ReservationOrderAliasModelResource along with the instance operations that can be performed on it in the TenantResource. </summary>

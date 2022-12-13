@@ -5,13 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.BillingBenefits;
-using Azure.ResourceManager.BillingBenefits.Tests;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.BillingBenefits.Models;
+using Azure.ResourceManager.BillingBenefits.Tests.Helper;
 
-namespace Azure.ResourceManager.Reservations.Tests
+namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansOrderAliasTests : BillingBenefitsManagementTestBase
     {
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockSavingsPlanAliasTest");
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.Shared);
+            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Shared);
             var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockSingleSavingsPlanAliasTestNew");
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.Single);
+            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Single);
             var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockSingleRGSavingsPlanAliasTest");
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.Single);
+            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Single);
             request.AppliedScopeProperties = new AppliedScopeProperties
             {
                 ResourceGroupId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourceGroups/TestRG"
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockManagementGroupSavingsPlanAliasTest");
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.ManagementGroup);
+            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.ManagementGroup);
             var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("validateTest");
             ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var model = CreatePurchaseRequestContent(AppliedScopeType.Shared);
+            var model = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Shared);
             var requestContent = new SavingsPlanPurchaseValidateContent();
             requestContent.Benefits.Add(model);
 
@@ -200,40 +199,6 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual("Compute_Savings_Plan", Data.Sku.Name);
             Assert.AreEqual("Compute_Savings_Plan", Data.SkuName);
             Assert.AreEqual(Term.P3Y, Data.Term);
-        }
-
-        private static SavingsPlanOrderAliasModelData CreatePurchaseRequestContent(AppliedScopeType scope)
-        {
-            var request = new SavingsPlanOrderAliasModelData(new BillingBenefitsSku("Compute_Savings_Plan"));
-            request.BillingScopeId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47";
-            request.Term = new Term("P3Y");
-            request.AppliedScopeType = scope;
-            request.DisplayName = "TestSPName" + scope.ToString();
-            request.BillingPlan = new BillingPlan("P1M");
-            request.Commitment = new Commitment
-            {
-                Grain = "Hourly",
-                CurrencyCode = "USD",
-                Amount = 0.001
-            };
-
-            if (scope == AppliedScopeType.Single)
-            {
-                request.AppliedScopeProperties = new AppliedScopeProperties
-                {
-                    SubscriptionId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"
-                };
-            }
-            else if (scope == AppliedScopeType.ManagementGroup)
-            {
-                request.AppliedScopeProperties = new AppliedScopeProperties
-                {
-                    ManagementGroupId = "/providers/Microsoft.Management/managementGroups/ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-                    TenantId = new Guid("ba5ed788-ddc6-429c-a6a2-0277f01dbee7")
-                };
-            }
-
-            return request;
         }
     }
 }

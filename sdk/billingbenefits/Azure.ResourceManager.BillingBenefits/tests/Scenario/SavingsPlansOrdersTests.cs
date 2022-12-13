@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.BillingBenefits;
-using Azure.ResourceManager.BillingBenefits.Tests;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Reservations.Tests
+namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansOrdersTests : BillingBenefitsManagementTestBase
     {
@@ -40,6 +38,15 @@ namespace Azure.ResourceManager.Reservations.Tests
             var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             ValidateResponseProperties(response);
+
+            // Expand 'schedule'
+            var response2 = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a", "schedule");
+            Assert.IsNotNull(response2.Value.Data.PlanInformation);
+            Assert.IsNotNull(response2.Value.Data.PlanInformation.NextPaymentDueOn);
+            Assert.IsNotNull(response2.Value.Data.PlanInformation.PricingCurrencyTotal);
+            Assert.IsNotNull(response2.Value.Data.PlanInformation.StartOn);
+            Assert.IsNotNull(response2.Value.Data.PlanInformation.Transactions);
+            Assert.Greater(response2.Value.Data.PlanInformation.Transactions.Count, 0);
         }
 
         [TestCase]

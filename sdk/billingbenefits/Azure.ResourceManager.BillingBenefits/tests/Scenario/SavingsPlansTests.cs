@@ -5,13 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.BillingBenefits;
 using Azure.ResourceManager.BillingBenefits.Models;
-using Azure.ResourceManager.BillingBenefits.Tests;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Reservations.Tests
+namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansTests : BillingBenefitsManagementTestBase
     {
@@ -134,6 +132,66 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.IsNotEmpty(newModelResponse.Value.Data.DisplayName);
             Assert.False(newModelResponse.Value.Data.DisplayName.Equals(originalName, StringComparison.OrdinalIgnoreCase));
             ValidateResponseProperties(newModelResponse.Value);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task TestUpdateSavingsPlanWithRenewSetting()
+        {
+            var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.NotNull(response.Value);
+
+            var modelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073");
+
+            Assert.AreEqual(200, modelResponse.GetRawResponse().Status);
+            Assert.NotNull(modelResponse.Value);
+
+            var modelResource = modelResponse.Value;
+            var updateProperties = new SavingsPlanModelPatch
+            {
+                Properties = new SavingsPlanUpdateRequestProperties
+                {
+                    Renew = true,
+                    RenewProperties = new RenewProperties
+                    {
+                        PurchaseProperties = new PurchaseRequest
+                        {
+                            Sku = new BillingBenefitsSku("Compute_Savings_Plan"),
+                            DisplayName = "TestRenewSP",
+                            BillingScopeId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+                            Term = new Term("P1Y"),
+                            BillingPlan = new BillingPlan("P1M"),
+                            AppliedScopeType = AppliedScopeType.Single,
+                            Commitment = new Commitment
+                            {
+                                Grain = "Hourly",
+                                CurrencyCode = "USD",
+                                Amount = 0.001
+                            },
+                            Renew = true,
+                            AppliedScopeProperties = new AppliedScopeProperties
+                            {
+                                ResourceGroupId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourcegroups/TestRG"
+                            }
+                        }
+                    }
+                }
+            };
+            var updateReponse = await modelResource.UpdateAsync(updateProperties);
+
+            Assert.AreEqual(200, updateReponse.GetRawResponse().Status);
+            Assert.NotNull(updateReponse.Value);
+
+            // Get renew properties
+            var newModelResponse = await response.Value.GetSavingsPlanModelAsync("2035abf9-4697-4220-b158-dbff2a0dc073", "renewProperties");
+            Assert.AreEqual(200, newModelResponse.GetRawResponse().Status);
+            Assert.NotNull(newModelResponse.Value);
+            Assert.IsNotEmpty(newModelResponse.Value.Data.DisplayName);
+            ValidateResponseProperties(newModelResponse.Value);
+            Assert.NotNull(newModelResponse.Value.Data.RenewProperties);
+            Assert.NotNull(newModelResponse.Value.Data.RenewProperties.PurchaseProperties);
         }
 
         [TestCase]

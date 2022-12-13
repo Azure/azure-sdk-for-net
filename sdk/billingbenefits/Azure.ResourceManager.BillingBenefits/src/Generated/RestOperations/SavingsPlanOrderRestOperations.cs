@@ -22,25 +22,22 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-        private readonly string _expand;
 
         /// <summary> Initializes a new instance of SavingsPlanOrderRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SavingsPlanOrderRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default, string expand = null)
+        public SavingsPlanOrderRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-11-01";
-            _expand = expand;
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string savingsPlanOrderId)
+        internal HttpMessage CreateGetRequest(string savingsPlanOrderId, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -50,9 +47,9 @@ namespace Azure.ResourceManager.BillingBenefits
             uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
             uri.AppendPath(savingsPlanOrderId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (_expand != null)
+            if (expand != null)
             {
-                uri.AppendQuery("$expand", _expand, true);
+                uri.AppendQuery("$expand", expand, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -62,14 +59,15 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary> Get a savings plan order. </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavingsPlanOrderModelData>> GetAsync(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public async Task<Response<SavingsPlanOrderModelData>> GetAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var message = CreateGetRequest(savingsPlanOrderId);
+            using var message = CreateGetRequest(savingsPlanOrderId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -89,14 +87,15 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary> Get a savings plan order. </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavingsPlanOrderModelData> Get(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public Response<SavingsPlanOrderModelData> Get(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var message = CreateGetRequest(savingsPlanOrderId);
+            using var message = CreateGetRequest(savingsPlanOrderId, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
