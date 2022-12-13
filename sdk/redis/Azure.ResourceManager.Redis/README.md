@@ -12,7 +12,6 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-
 ## Getting started 
 
 ### Install the package

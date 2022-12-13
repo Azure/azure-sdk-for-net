@@ -22,11 +22,11 @@ dotnet add package Azure.ResourceManager.OperationalInsights
 
 ### Prerequisites
 
-* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/)
+* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Microsoft Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md)
+To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
 ## Key concepts
 
