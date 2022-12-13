@@ -1,4 +1,4 @@
-# Microsoft Azure MySql Management client library for .NET
+# Microsoft Azure MySql management client library for .NET
 
 Microsoft Azure Database for MySQL is cost effective and easy to set up, operate, and scale. Enjoy advanced security, same-zone or zone-redundant high availability, and a service-level agreement (SLA) of up to 99.99 percent.
 

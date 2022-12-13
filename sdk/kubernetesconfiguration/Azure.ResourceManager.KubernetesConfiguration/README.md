@@ -1,4 +1,4 @@
-# Microsoft Azure Kubernetes Configuration Management client library for .NET
+# Microsoft Azure Kubernetes Configuration management client library for .NET
 
 This library supports managing Microsoft Azure Kubernetes Configuration resources.
 

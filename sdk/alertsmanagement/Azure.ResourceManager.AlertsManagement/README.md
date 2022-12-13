@@ -1,4 +1,4 @@
-# Microsoft Azure AlertsManagement Management client library for .NET
+# Microsoft Azure AlertsManagement management client library for .NET
 
 The Microsoft Alerts Management solution helps you analyze all of the alerts in your Log Analytics repository. These alerts may have come from a variety of sources including those sources created by Log Analytics or imported from Nagios or Zabbix. The solution also imports alerts from any connected System Center Operations Manager management groups.
 

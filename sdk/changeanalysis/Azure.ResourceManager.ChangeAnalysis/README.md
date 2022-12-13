@@ -1,4 +1,4 @@
-# Microsoft Azure Change Analysis Management client library for .NET
+# Microsoft Azure Change Analysis management client library for .NET
 
 Microsoft Azure Change Analysis detects various types of changes, from the infrastructure layer through application deployment. Change Analysis is a subscription-level Azure resource provider that:
 

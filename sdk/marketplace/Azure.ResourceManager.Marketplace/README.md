@@ -1,4 +1,4 @@
-# Microsoft Azure Marketplace Management client library for .NET
+# Microsoft Azure Marketplace management client library for .NET
 
 Microsoft Azure Marketplace is an online store that contains thousands of IT software applications and services built by industry-leading technology companies. 
 

@@ -1,4 +1,4 @@
-# Microsoft Azure Front Door Management client library for .NET
+# Microsoft Azure Front Door management client library for .NET
 
 Microsoft Azure Front Door is a modern cloud Content Delivery Network (Cdn) service that delivers high performance, scalability, and secure user experiences for your content and applications. 
 

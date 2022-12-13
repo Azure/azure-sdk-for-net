@@ -1,4 +1,4 @@
-# Microsoft Azure Data Box Edge Management client library for .NET
+# Microsoft Azure Data Box Edge management client library for .NET
 
 Microsoft Azure Data Box Edge is a physical network appliance, shipped by Microsoft, that sends data in and out of Azure. Data Box Edge is additionally equipped with AI-enabled edge computing capabilities that help you analyze, process, and transform the on-premises data before uploading it to the cloud.
 

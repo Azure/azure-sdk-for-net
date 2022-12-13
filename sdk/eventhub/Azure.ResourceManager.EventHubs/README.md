@@ -1,4 +1,4 @@
-# Microsoft Azure Event Hubs Management client library for .NET
+# Microsoft Azure Event Hubs management client library for .NET
 
 Microsoft Azure Elastic SAN is a cloud-native service that offers a scalable, cost-effective, high-performance, and comprehensive storage solution for a range of compute options. Get the same simplified management experience in the cloud as with your on-premises storage area network (SAN). Gain higher resiliency and minimize downtime with rapid provisioning.
 

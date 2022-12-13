@@ -1,4 +1,4 @@
-# Microsoft Azure Application Insights Management client library for .NET
+# Microsoft Azure Application Insights management client library for .NET
 
 Microsoft Application Insights is an extension of Azure Monitor and provides Application Performance Monitoring (also known as “APM”) features. APM tools are useful to monitor applications from development, through test, and into production
 

@@ -1,4 +1,4 @@
-# Microsoft Azure Kusto Management client library for .NET
+# Microsoft Azure Kusto management client library for .NET
 
 Microsoft Azure Data Explorer (Kusto) is a fully managed, high-performance, big data analytics platform that makes it easy to analyze high volumes of data in near real time. The Azure Data Explorer toolbox gives you an end-to-end solution for data ingestion, query, visualization, and management.
 

@@ -1,4 +1,4 @@
-# Microsoft Azure Guest Configuration Management client library for .NET
+# Microsoft Azure Guest Configuration management client library for .NET
 
 Microsoft Azure Guest Configuration extension is a component of Azure Policy that performs audit and configuration operations inside virtual machines. Policies such as security baseline definitions for Linux and Windows can't check settings inside machines until the extension is installed.
 

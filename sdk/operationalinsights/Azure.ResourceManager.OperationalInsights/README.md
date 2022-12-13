@@ -1,4 +1,4 @@
-# Microsoft Azure Operational Insights Management client library for .NET
+# Microsoft Azure Operational Insights management client library for .NET
 
 Microsoft Azure Operational Insights is an analysis service designed to provide IT administrators with deep insight into their on-premises and cloud environments. It helps you interact with real-time and historical computer data for rapid development of custom insights, while providing Microsoft- and community-developed patterns for data analysis.
 

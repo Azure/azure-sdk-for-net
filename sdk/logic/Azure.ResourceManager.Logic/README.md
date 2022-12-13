@@ -1,4 +1,4 @@
-# Microsoft Azure Logic Management client library for .NET
+# Microsoft Azure Logic management client library for .NET
 
 Microsoft Azure Logic Apps is a cloud platform where you can create and run automated workflows with little to no code. By using the visual designer and selecting from prebuilt operations, you can quickly build a workflow that integrates and manages your apps, data, services, and systems.
 

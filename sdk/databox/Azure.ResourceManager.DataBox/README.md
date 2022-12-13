@@ -1,4 +1,4 @@
-# Microsoft Azure Data Box Management client library for .NET
+# Microsoft Azure Data Box management client library for .NET
 
 Microsoft Azure Data Box devices easily move data to Azure when busy networks aren’t an option. Move large amounts of data to Azure when you're limited by time, network availability, or costs, using common copy tools such as Robocopy. All data is AES-encrypted, and the devices are wiped clean after upload, in accordance with NIST Special Publication 800-88 revision 1 standards.
 

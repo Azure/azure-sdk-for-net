@@ -1,4 +1,4 @@
-# Microsoft Azure Healthcare Apis Management client library for .NET
+# Microsoft Azure Healthcare Apis management client library for .NET
 
 Microsoft Azure Health Data Services is a set of managed API services based on open standards and frameworks that enable workflows to improve healthcare and offer scalable and secure healthcare solutions.
 

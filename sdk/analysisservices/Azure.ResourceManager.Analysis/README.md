@@ -1,4 +1,4 @@
-# Microsoft Azure Analysis Services Management client library for .NET
+# Microsoft Azure Analysis Services management client library for .NET
 
 Microsoft Azure Analysis Services is a fully managed platform as a service (PaaS) that provides enterprise-grade data models in the cloud. Use advanced mashup and modeling features to combine data from multiple data sources, define metrics, and secure your data in a single, trusted tabular semantic data model. The data model provides an easier and faster way for users to perform ad hoc data analysis using tools like Power BI and Excel.
 

@@ -1,4 +1,4 @@
-# Azure Machine Learning Compute Management client library for .NET
+# Azure Machine Learning Compute management client library for .NET
 
 Microsoft Azure Machine Learning Compute is a managed-compute infrastructure that allows the user to easily create a single or multi-node compute.
 

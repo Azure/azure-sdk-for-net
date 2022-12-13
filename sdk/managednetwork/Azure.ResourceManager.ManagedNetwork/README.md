@@ -1,4 +1,4 @@
-# Microsoft Azure Managed Network Management client library for .NET
+# Microsoft Azure Managed Network management client library for .NET
 
 This library supports managing Microsoft Azure Managed Network resources.
 

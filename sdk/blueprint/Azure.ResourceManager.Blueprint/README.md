@@ -1,4 +1,4 @@
-# Microsoft Azure Blueprint Management client library for .NET
+# Microsoft Azure Blueprint management client library for .NET
 
 Microsoft Azure Blueprints enables cloud architects and central information technology groups to define a repeatable set of Azure resources that implements and adheres to an organization's standards, patterns, and requirements. Azure Blueprints makes it possible for development teams to rapidly build and start up new environments with trust they're building within organizational compliance with a set of built-in components, such as networking, to speed up development and delivery.
 

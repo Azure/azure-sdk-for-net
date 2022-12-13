@@ -1,4 +1,4 @@
-# Microsoft Azure Chaos Management client library for .NET
+# Microsoft Azure Chaos management client library for .NET
 
 Microsoft Azure Chaos is a managed service that uses chaos engineering to help you measure, understand, and improve your cloud application and service resilience. Chaos engineering is a methodology by which you inject real-world faults into your application to run controlled fault injection experiments.
 

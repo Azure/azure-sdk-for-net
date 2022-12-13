@@ -1,4 +1,4 @@
-# Microsoft Azure Edge Order Management client library for .NET
+# Microsoft Azure Edge Order management client library for .NET
 
 Microsoft Azure Stack Edge is a cloud managed edge compute appliance， brings the compute, storage, and intelligence of Azure right to where you need it—whether that’s your corporate data center, your branch office, or your remote field location.
 

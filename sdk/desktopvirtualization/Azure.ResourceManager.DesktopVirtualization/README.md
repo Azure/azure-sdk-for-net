@@ -1,4 +1,4 @@
-# Microsoft Azure Desktop Virtualization Management client library for .NET
+# Microsoft Azure Desktop Virtualization management client library for .NET
 
 Microsoft Azure Virtual Desktop is a desktop and app virtualization service that runs on the cloud.
 

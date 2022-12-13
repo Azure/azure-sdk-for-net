@@ -1,4 +1,4 @@
-# Microsoft Azure Maps Management client library for .NET
+# Microsoft Azure Maps management client library for .NET
 
 Microsoft Azure Maps is a suite of geospatial services that help organizations easily incorporate location-based data into web and mobile solutions. Use location and map data to generate insights, inform data-driven decisions, enhance security, and improve customer experiences.
 

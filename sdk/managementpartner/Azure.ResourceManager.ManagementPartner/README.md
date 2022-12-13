@@ -1,4 +1,4 @@
-# Microsoft Azure Management Partner Management client library for .NET
+# Microsoft Azure Management Partner management client library for .NET
 
 This library supports managing Microsoft Azure Management Partner resources.
 

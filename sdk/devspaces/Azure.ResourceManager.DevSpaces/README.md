@@ -1,4 +1,4 @@
-# Microsoft Azure Dev Spaces Management client library for .NET
+# Microsoft Azure Dev Spaces management client library for .NET
 
 Microsoft Azure Dev Spaces is retired as of May 15, 2021. Developers should use [Bridge to Kubernetes](https://devblogs.microsoft.com/visualstudio/bridge-to-kubernetes-ga/), a client developer tool.
 The purpose of Microsoft Azure Dev Spaces was about easing developers into developing on Kubernetes. 

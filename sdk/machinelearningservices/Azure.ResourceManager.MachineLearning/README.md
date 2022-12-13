@@ -1,4 +1,4 @@
-# Microsoft Azure MachineLearning Management client library for .NET
+# Microsoft Azure MachineLearning management client library for .NET
 
 Microsoft Azure Machine Learning is a fully managed cloud service that enables you to easily build, deploy, and share predictive analytics solutions.
 

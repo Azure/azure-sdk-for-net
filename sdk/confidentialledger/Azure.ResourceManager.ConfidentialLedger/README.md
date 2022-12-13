@@ -1,4 +1,4 @@
-# Microsoft Azure Confidential Ledger Management client library for .NET
+# Microsoft Azure Confidential Ledger management client library for .NET
 
 Microsoft Azure Confidential Ledger provides a managed and decentralized ledger for data entries backed by Blockchain. Maintain data integrity by preventing unauthorized or accidental modification with tamperproof storage. Protect your data at rest, in transit, and in use with hardware-backed secure enclaves used in Azure confidential computing.
 

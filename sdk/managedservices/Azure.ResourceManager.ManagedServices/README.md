@@ -1,4 +1,4 @@
-# Microsoft Azure Managed Services Management client library for .NET
+# Microsoft Azure Managed Services management client library for .NET
 
 Microsoft Azure managed service provider is an IT service provider running their core business on Microsoft Azure.
 

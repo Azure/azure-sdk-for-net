@@ -1,4 +1,4 @@
-# Microsoft Azure Maintenance Management client library for .NET
+# Microsoft Azure Maintenance management client library for .NET
 
 This library supports managing Microsoft Azure Maintenance resources.
 

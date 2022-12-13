@@ -1,4 +1,4 @@
-# Microsoft Azure Container Registry Management client library for .NET
+# Microsoft Azure Container Registry management client library for .NET
 
 Microsoft Azure Container Registry is a managed registry service based on the open-source Docker Registry 2.0. Create and maintain Azure container registries to store and manage your container images and related artifacts.
 

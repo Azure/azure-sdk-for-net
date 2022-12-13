@@ -1,4 +1,4 @@
-# Microsoft Azure Hybrid Container Service Management client library for .NET
+# Microsoft Azure Hybrid Container Service management client library for .NET
 
 This library supports managing Microsoft Azure Hybrid Container Service resources.
 

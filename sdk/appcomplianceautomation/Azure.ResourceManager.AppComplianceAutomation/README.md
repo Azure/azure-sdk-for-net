@@ -1,4 +1,4 @@
-# Microsoft Azure App Compliance Automation Management client library for .NET
+# Microsoft Azure App Compliance Automation management client library for .NET
 
 Microsoft App Compliance Automation Tool for Microsoft 365 (ACAT) is a service in Azure portal that helps simplify the compliance journey for any app that consumes Microsoft 365 customer data and is published via Partner Center. It's an application-centric compliance automation tool that helps you complete Microsoft 365 Certification with greater ease and convenience. In Public Preview, ACAT is available to apps running on Azure.
 

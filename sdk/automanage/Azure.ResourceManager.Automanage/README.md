@@ -1,4 +1,4 @@
-# Microsoft Azure Automanage Management client library for .NET
+# Microsoft Azure Automanage management client library for .NET
 
 The Microsoft Azure Automanage offers a unified solution to simplify IT management. With point-and-click simplicity, automate operations and apply consistent best practices across the entire lifecycle of Windows Server and Linux servers in Azure or in hybrid environments enabled by Azure Arc.
 

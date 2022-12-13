@@ -1,4 +1,4 @@
-# Microsoft Azure Azure Container Apps Management client library for .NET
+# Microsoft Azure Azure Container Apps management client library for .NET
 
 Microsoft Azure Container Apps enables you to run microservices and containerized applications on a serverless platform.
 

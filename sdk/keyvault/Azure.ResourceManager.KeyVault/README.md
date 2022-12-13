@@ -1,4 +1,4 @@
-# Microsoft Azure Key Vault Management client library for .NET
+# Microsoft Azure Key Vault management client library for .NET
 
 Microsoft Azure Key Vault is one of several key management solutions in Azure, and helps solve the following problems:
 

@@ -1,4 +1,4 @@
-# Microsoft Azure Marketplace Ordering Management client library for .NET
+# Microsoft Azure Marketplace Ordering management client library for .NET
 
 This library supports managing Microsoft Azure Marketplace Ordering resources.
 

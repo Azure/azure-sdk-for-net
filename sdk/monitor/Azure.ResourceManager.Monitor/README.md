@@ -1,4 +1,4 @@
-# Microsoft Azure Monitor Management client library for .NET
+# Microsoft Azure Monitor management client library for .NET
 
 Microsoft Azure Monitor helps you maximize the availability and performance of your applications and services. It delivers a comprehensive solution for collecting, analyzing, and acting on telemetry from your cloud and on-premises environments.
 

@@ -1,4 +1,4 @@
-# Microsoft Azure Digital Twins Management client library for .NET
+# Microsoft Azure Digital Twins management client library for .NET
 
 Microsoft Azure Digital Twins is an Internet of Things (IoT) platform that enables you to create a digital representation of real-world things, places, business processes, and people. Gain insights that help you drive better products, optimize operations and costs, and create breakthrough customer experiences.
 

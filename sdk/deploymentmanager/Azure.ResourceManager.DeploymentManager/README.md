@@ -1,4 +1,4 @@
-# Microsoft Azure Deployment Manager Management client library for .NET
+# Microsoft Azure Deployment Manager management client library for .NET
 
 Microsoft Azure Deployment Manager (ADM) provides a new set of features for Azure Resource Manager and greatly expands your deployment capabilities. ADM allows you to perform staged rollouts of resources, meaning they’re deployed region by region in an ordered fashion.
 

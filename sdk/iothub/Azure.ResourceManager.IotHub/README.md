@@ -1,4 +1,4 @@
-# Microsoft Azure IoT Hub Management client library for .NET
+# Microsoft Azure IoT Hub management client library for .NET
 
 Microsoft Azure IoT Hub is a managed service hosted in the cloud that acts as a central message hub for communication between an IoT application and its attached devices.
 

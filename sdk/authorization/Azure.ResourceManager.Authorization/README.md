@@ -1,4 +1,4 @@
-# Azure Authorization Management client library for .NET
+# Azure Authorization management client library for .NET
 
 The Microsoft Azure Authorization service provides authorization functionality as Azure core service which can serve for public and as well as for internal tenants. 
 

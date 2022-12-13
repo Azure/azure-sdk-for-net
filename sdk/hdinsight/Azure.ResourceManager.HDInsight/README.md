@@ -1,4 +1,4 @@
-# Azure HDInsight Management client library for .NET
+# Azure HDInsight management client library for .NET
 
 Microsoft Azure HDInsight is a managed, full-spectrum, open-source analytics service in the cloud for enterprises. With HDInsight, you can use open-source frameworks such as, Apache Spark, Apache Hive, LLAP, Apache Kafka, Hadoop and more, in your Azure environment.
 

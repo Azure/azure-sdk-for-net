@@ -1,4 +1,4 @@
-# Microsoft Azure ApiManagement Management client library for .NET
+# Microsoft Azure ApiManagement management client library for .NET
 
 Microsoft Azure API Management is a hybrid, multicloud management platform for APIs across all environments. As a platform-as-a-service, API Management supports the complete API lifecycle.
 

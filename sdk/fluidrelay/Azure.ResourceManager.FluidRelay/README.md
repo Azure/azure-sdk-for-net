@@ -1,4 +1,4 @@
-# Microsoft Azure Fluid Relay Management client library for .NET
+# Microsoft Azure Fluid Relay management client library for .NET
 
 Microsoft Azure Fluid Relay is a managed offering for the Fluid Framework that helps developers build real-time collaborative experiences and replicate state across connected JavaScript clients in real-time.
 

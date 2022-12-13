@@ -1,4 +1,4 @@
-# Microsoft Azure AgFood Platform Management client library for .NET
+# Microsoft Azure AgFood Platform management client library for .NET
 
 Microsoft Azure AgFood Platform is a fully managed multi-tenant AgFood PaaS platform offering, targeted at AgFood tech product leaders, developers & data scientists across customers & ISVs.
 

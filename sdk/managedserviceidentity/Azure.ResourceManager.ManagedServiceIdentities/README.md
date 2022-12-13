@@ -1,4 +1,4 @@
-# Microsoft Azure Managed Service Identity Management client library for .NET
+# Microsoft Azure Managed Service Identity management client library for .NET
 
 Microsoft Azure managed identities provide an automatically managed identity in Azure Active Directory for applications to use when connecting to resources that support Azure Active Directory (Azure AD) authentication. Applications can use managed identities to obtain Azure AD tokens without having to manage any credentials.
 

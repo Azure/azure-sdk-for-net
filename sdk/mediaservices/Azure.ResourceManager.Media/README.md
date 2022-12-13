@@ -1,4 +1,4 @@
-# Microsoft Azure Media Management client library for .NET
+# Microsoft Azure Media management client library for .NET
 
 Microsoft Azure Media Services is a cloud-based platform that enables you to build solutions that achieve broadcast-quality video streaming, enhance accessibility and distribution, analyze content, and much more. 
 

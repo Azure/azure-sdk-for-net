@@ -1,4 +1,4 @@
-# Microsoft Azure DataLake Storage Management client library for .NET
+# Microsoft Azure DataLake Storage management client library for .NET
 
 Microsoft Azure Data Lake Storage is a massively scalable and secured data lake that helps to achieve high-performance analytics workloads. It eiminates data silos with a single storage platform. Optimize costs with tiered storage and policy management. Authenticate data using Azure Active Directory (Azure AD) and role-based access control (RBAC). And help protect data with security features like encryption at rest and advanced threat protection.
 

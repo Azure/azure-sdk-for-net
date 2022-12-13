@@ -1,4 +1,4 @@
-# Microsoft Azure Customer Insights Management client library for .NET
+# Microsoft Azure Customer Insights management client library for .NET
 
 Microsoft Azure Customer Insights provides an SaaS service that brings together your enterprise data from multiple sources, and helps you generate 360 degree customer knowledge and insights which your staff can immediately understand and take action on.
 

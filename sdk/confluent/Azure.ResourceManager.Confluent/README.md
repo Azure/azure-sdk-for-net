@@ -1,4 +1,4 @@
-# Microsoft Azure Confluent Management client library for .NET
+# Microsoft Azure Confluent management client library for .NET
 
 Microsoft Azure Confluent is an Azure Marketplace offering that provides Apache Kafka as a service. It's fully managed so you can focus on building your applications rather than managing the clusters. To reduce the burden of cross-platform management, Microsoft partnered with Confluent Cloud to build an integrated provisioning layer from Azure to Confluent Cloud. It provides a consolidated experience for using Confluent Cloud on Azure.
 

@@ -1,4 +1,4 @@
-# Microsoft Azure VMware Solution Management client library for .NET
+# Microsoft Azure VMware Solution management client library for .NET
 
 Microsoft Azure VMware Solution is a VMware validated solution with ongoing validation and testing of enhancements and upgrades. Microsoft manages and maintains the private cloud infrastructure and software. It allows you to focus on developing and running workloads in your private clouds to deliver business value.
 

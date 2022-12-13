@@ -1,4 +1,4 @@
-# Microsoft Azure Spring Apps Management client library for .NET
+# Microsoft Azure Spring Apps management client library for .NET
 
 Microsoft Azure Spring Apps is a fully managed service for Spring developers. Manage the lifecycle of your Spring Boot applications with comprehensive monitoring and diagnostics, configuration management, service discovery, CI/CD integration, and blue-green deployments.
 

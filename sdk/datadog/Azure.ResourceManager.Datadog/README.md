@@ -1,4 +1,4 @@
-# Microsoft Azure Datadog Management client library for .NET
+# Microsoft Azure Datadog management client library for .NET
 
 Microsoft Azure Datadog is a monitoring and analytics platform for large-scale applications. It encompasses infrastructure monitoring, application performance monitoring, log management, and user-experience monitoring.
 

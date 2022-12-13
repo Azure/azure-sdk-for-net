@@ -1,4 +1,4 @@
-# Microsoft Azure Device Update Management client library for .NET
+# Microsoft Azure Device Update management client library for .NET
 
 The Microsoft Azure Device Update for Azure IoT Hub is a service that enables you to deploy over-the-air updates for your IoT devices.
 

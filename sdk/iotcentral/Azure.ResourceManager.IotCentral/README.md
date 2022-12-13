@@ -1,4 +1,4 @@
-# Microsoft Azure IoT Central Management client library for .NET
+# Microsoft Azure IoT Central management client library for .NET
 
 Microsoft Azure IoT Central is an IoT application platform as a service (aPaaS) that reduces the burden and cost of developing, managing, and maintaining IoT solutions. Use IoT Central to quickly evaluate your IoT scenario and assess the opportunities it can create for your business. 
 

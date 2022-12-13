@@ -1,4 +1,4 @@
-# Microsoft Azure Cdn Management client library for .NET
+# Microsoft Azure Cdn management client library for .NET
 
 Microsoft Azure Content Delivery Network (Cdn) offers a global solution for rapidly delivering content. Save bandwidth and improve responsiveness when encoding or distributing gaming software, firmware updates, and IoT endpoints. Reduce load times for websites, mobile apps, and streaming media to increase user satisfaction globally.
 

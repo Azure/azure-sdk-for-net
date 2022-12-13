@@ -1,4 +1,4 @@
-# Microsoft Azure Managed Grafana Management client library for .NET
+# Microsoft Azure Managed Grafana management client library for .NET
 
 Microsoft Azure Managed Grafana is a fully managed service for analytics and monitoring solutions. It's supported by Grafana Enterprise1, which provides extensible data visualizations.
 

@@ -1,4 +1,4 @@
-# Microsoft Azure Dev Center Management client library for .NET
+# Microsoft Azure Dev Center management client library for .NET
 
 Microsoft A dev center is a collection of projects that require similar settings. Dev centers enable development infrastructure (dev infra) managers to:
 

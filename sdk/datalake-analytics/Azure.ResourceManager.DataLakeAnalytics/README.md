@@ -1,4 +1,4 @@
-# Microsoft Azure Data Lake Analytics Management client library for .NET
+# Microsoft Azure Data Lake Analytics management client library for .NET
 
 Microsoft Azure Data Lake Analytics is an on-demand analytics job service that simplifies big data. Instead of deploying, configuring, and tuning hardware, you write queries to transform your data and extract valuable insights. The analytics service can handle jobs of any scale instantly by setting the dial for how much power you need. You only pay for your job when it's running, making it cost-effective.
 

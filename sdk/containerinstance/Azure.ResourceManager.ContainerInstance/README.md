@@ -1,4 +1,4 @@
-# Microsoft Azure Container Instances Management client library for .NET
+# Microsoft Azure Container Instances management client library for .NET
 
 Microsoft Azure Container Instances offers the fastest and simplest way to run a container in Azure, without having to manage any virtual machines and without having to adopt a higher-level service.
 

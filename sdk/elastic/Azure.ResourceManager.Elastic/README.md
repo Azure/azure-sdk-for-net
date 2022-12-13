@@ -1,4 +1,4 @@
-# Microsoft Azure Elastic Management client library for .NET
+# Microsoft Azure Elastic management client library for .NET
 
 Elastic on Microsoft Azure gives you the ability to deploy Elasticsearch directly within the Azure portal, allowing you to accelerate your time to value and benefit from enhanced business agility.
 

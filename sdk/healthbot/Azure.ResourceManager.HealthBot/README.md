@@ -1,4 +1,4 @@
-# Microsoft Azure Health Bot Management client library for .NET
+# Microsoft Azure Health Bot management client library for .NET
 
 Microsoft Azure Health Bot Service is a cloud platform that empowers developers in Healthcare organizations to build and deploy their compliant, AI-powered virtual health assistants and health bots, that help them improve processes and reduce costs. It allows you to offer your users intelligent and personalized access to health-related information and interactions through a natural conversation experience.
 

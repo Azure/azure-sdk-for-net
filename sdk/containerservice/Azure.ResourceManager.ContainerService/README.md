@@ -1,4 +1,4 @@
-# Microsoft Azure Container Service Management client library for .NET
+# Microsoft Azure Container Service management client library for .NET
 
 Microsoft Azure Container Service (AKS) simplifies deploying a managed Kubernetes cluster in Microsoft Azure by offloading the operational overhead to Azure. As a hosted Kubernetes service, Microsoft Azure handles critical tasks, like health monitoring and maintenance.
 

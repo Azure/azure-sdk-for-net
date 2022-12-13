@@ -1,4 +1,4 @@
-# Microsoft Azure Hybrid Compute Management client library for .NET
+# Microsoft Azure Hybrid Compute management client library for .NET
 
 This library supports managing Microsoft Azure Hybrid Compute resources.
 

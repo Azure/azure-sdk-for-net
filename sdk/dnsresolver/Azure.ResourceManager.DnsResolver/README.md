@@ -1,4 +1,4 @@
-# Azure Dns Resolver Management client library for .NET
+# Azure Dns Resolver management client library for .NET
 
 Microsoft Azure Dns Private Resolver enables you to query Azure Dns private zones from an on-premises environment and vice versa without deploying VM based Dns servers.
 

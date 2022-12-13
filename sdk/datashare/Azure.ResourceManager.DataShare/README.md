@@ -1,4 +1,4 @@
-# Microsoft Azure Data Share Management client library for .NET
+# Microsoft Azure Data Share management client library for .NET
 
 Microsoft Azure Data Share enables organizations to securely share data with multiple customers and partners. Data providers are always in control of the data that they've shared and Azure Data Share makes it simple to manage and monitor what data was shared, when and by whom.
 

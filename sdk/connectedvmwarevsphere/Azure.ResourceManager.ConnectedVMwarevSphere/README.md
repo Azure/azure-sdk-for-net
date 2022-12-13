@@ -1,4 +1,4 @@
-# Microsoft Azure Arc-enabled VMware vSphere Management client library for .NET
+# Microsoft Azure Arc-enabled VMware vSphere management client library for .NET
 
 Microsoft Azure Arc-enabled VMware vSphere extends Azure governance and management capabilities to VMware vSphere infrastructure. With Azure Arc-enabled VMware vSphere, you get a consistent management experience across Azure and VMware vSphere infrastructure.
 

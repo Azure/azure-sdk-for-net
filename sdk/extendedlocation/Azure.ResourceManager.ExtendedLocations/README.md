@@ -1,4 +1,4 @@
-# Microsoft Azure Extended Location Management client library for .NET
+# Microsoft Azure Extended Location management client library for .NET
 
 As an extension of the Microsoft Azure location construct, a custom location provides a reference as deployment target which administrators can set up, and users can point to, when creating an Azure resource. It abstracts the backend infrastructure details from application developers, database admin users, or other users in the organization.
 

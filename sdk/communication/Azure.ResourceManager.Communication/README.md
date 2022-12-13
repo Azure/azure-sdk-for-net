@@ -1,4 +1,4 @@
-# Microsoft Azure Communication Services Management client library for .NET
+# Microsoft Azure Communication Services management client library for .NET
 
 Microsoft Azure Communication Services are cloud-based services help you integrate communication into your applications. You can add communication to your applications without being an expert in underlying technologies such as media encoding or telephony. 
 Microsoft Azure Communication Services supports various communication formats:

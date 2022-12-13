@@ -1,4 +1,4 @@
-# Microsoft Azure Lab Services Management client library for .NET
+# Microsoft Azure Lab Services management client library for .NET
 
 Microsoft Azure Lab Services lets you create labs whose infrastructure is managed by Azure. The service itself handles all the infrastructure management, from spinning up virtual machines (VMs) to handling errors and scaling the infrastructure.
 
