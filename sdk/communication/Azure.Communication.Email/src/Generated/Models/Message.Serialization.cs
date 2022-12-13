@@ -10,23 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
-    public partial class EmailMessage : IUtf8JsonSerializable
+    public partial class Message : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers");
-                writer.WriteStartArray();
-                foreach (var item in CustomHeaders)
+                writer.WriteStartObject();
+                foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
-            writer.WritePropertyName("sender");
-            writer.WriteStringValue(Sender);
+            writer.WritePropertyName("senderEmail");
+            writer.WriteStringValue(SenderEmail);
             writer.WritePropertyName("content");
             writer.WriteObjectValue(Content);
             if (Optional.IsDefined(Importance))

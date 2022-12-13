@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.Communication.Email.Models
 {
     /// <summary> Message payload for sending an email. </summary>
-    public partial class EmailMessage
+    public partial class Message
     {
-        /// <summary> Initializes a new instance of EmailMessage. </summary>
-        /// <param name="sender"> Sender email address from a verified domain. </param>
+        /// <summary> Initializes a new instance of Message. </summary>
+        /// <param name="senderEmail"> Sender email address from a verified domain. </param>
         /// <param name="content"> Email content to be sent. </param>
         /// <param name="recipients"> Recipients for the email. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sender"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
-        public EmailMessage(string sender, EmailContent content, EmailRecipients recipients)
+        /// <exception cref="ArgumentNullException"> <paramref name="senderEmail"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
+        public Message(string senderEmail, EmailContent content, EmailRecipients recipients)
         {
-            Argument.AssertNotNull(sender, nameof(sender));
+            Argument.AssertNotNull(senderEmail, nameof(senderEmail));
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(recipients, nameof(recipients));
 
-            CustomHeaders = new ChangeTrackingList<EmailCustomHeader>();
-            Sender = sender;
+            Headers = new ChangeTrackingDictionary<string, string>();
+            SenderEmail = senderEmail;
             Content = content;
             Recipients = recipients;
             Attachments = new ChangeTrackingList<EmailAttachment>();
@@ -34,9 +34,9 @@ namespace Azure.Communication.Email.Models
         }
 
         /// <summary> Custom email headers to be passed. </summary>
-        public IList<EmailCustomHeader> CustomHeaders { get; }
+        public IDictionary<string, string> Headers { get; }
         /// <summary> Sender email address from a verified domain. </summary>
-        public string Sender { get; }
+        public string SenderEmail { get; }
         /// <summary> Email content to be sent. </summary>
         public EmailContent Content { get; }
         /// <summary> The importance type for the email. </summary>
