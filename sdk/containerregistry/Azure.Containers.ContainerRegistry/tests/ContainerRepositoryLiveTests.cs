@@ -253,7 +253,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             finally
             {
                 // Clean up
-                await artifact.DeleteAsync();
+                await repository.DeleteAsync();
             }
         }
     }
