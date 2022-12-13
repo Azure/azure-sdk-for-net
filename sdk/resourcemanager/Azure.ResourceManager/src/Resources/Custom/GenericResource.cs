@@ -67,8 +67,9 @@ namespace Azure.ResourceManager.Resources
                 return _data;
             }
         }
-
+#if NET7_0_OR_GREATER
         static IOperationSource<GenericResource> IOperationSourceProvider<GenericResource>.GetOperationSource(ArmClient client) => new GenericResourceOperationSource(client);
+#endif
 
 #pragma warning disable CA1801 // Review unused parameters
         internal static void ValidateResourceId(ResourceIdentifier id)

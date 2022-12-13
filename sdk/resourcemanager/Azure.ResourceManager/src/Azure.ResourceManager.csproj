@@ -11,7 +11,7 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
-    <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+    <!-- <TargetFrameworks>net7.0;net6.0</TargetFrameworks> -->
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

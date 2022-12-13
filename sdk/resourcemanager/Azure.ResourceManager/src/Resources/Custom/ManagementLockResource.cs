@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ManagementLockResource : ArmResource, IOperationSourceProvider<ManagementLockResource>
     {
+#if NET7_0_OR_GREATER
         static IOperationSource<ManagementLockResource> IOperationSourceProvider<ManagementLockResource>.GetOperationSource(ArmClient client) => new ManagementLockOperationSource(client);
+#endif
     }
 }

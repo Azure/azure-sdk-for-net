@@ -39,6 +39,7 @@ namespace Azure.ResourceManager
         /// <summary> Initializes a new instance of ArmOperation. </summary>
         public ArmOperation(ArmClient client, string id)
         {
+#if NET7_0_OR_GREATER
             var method = typeof(T).GetMethods(BindingFlags.NonPublic | BindingFlags.Static).FirstOrDefault(m => m.Name.EndsWith("GetOperationSource"));
             if (method == null)
                 throw new InvalidOperationException($"The type {nameof(T)} does not implement the GetOperationSource method.");
@@ -47,9 +48,13 @@ namespace Azure.ResourceManager
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
             _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+#else
+            throw new InvalidOperationException("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
+#endif
         }
 
         /// <inheritdoc />
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />

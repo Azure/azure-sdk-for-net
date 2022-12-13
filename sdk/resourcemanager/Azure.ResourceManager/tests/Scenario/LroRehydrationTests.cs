@@ -29,11 +29,19 @@ namespace Azure.ResourceManager.Tests
             // The creation of a resource group is a fake LRO
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
             var rgOpId = rgOp.Id;
+            var rg = rgOp.Value;
             var rehydratedLro = new ArmOperation<ResourceGroupResource>(Client, rgOpId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             // Assert.AreEqual(rehydratedLro.Id, rgOpId);
-            ResourceGroupResource rg = rehydratedLro.Value;
-            Assert.AreEqual(rgName, rg.Data.Name);
+            ResourceGroupResource rehydratedRg = rehydratedLro.Value;
+            Assert.AreEqual(rg.Data.Id, rehydratedRg.Data.Id);
+            Assert.AreEqual(rg.Data.Name, rehydratedRg.Data.Name);
+            Assert.AreEqual(rg.Data.ResourceType, rehydratedRg.Data.ResourceType);
+            Assert.AreEqual(rg.Data.SystemData, rehydratedRg.Data.SystemData);
+            Assert.AreEqual(rg.Data.Tags, rehydratedRg.Data.Tags);
+            Assert.AreEqual(rg.Data.Location, rehydratedRg.Data.Location);
+            Assert.AreEqual(rg.Data.ResourceGroupProvisioningState, rehydratedRg.Data.ResourceGroupProvisioningState);
+            Assert.AreEqual(rg.Data.ManagedBy, rehydratedRg.Data.ManagedBy);
             // Template exportation is a real LRO with generic type
             var parameters = new ExportTemplate();
             parameters.Resources.Add("*");
@@ -53,6 +61,8 @@ namespace Azure.ResourceManager.Tests
             var deleteRehydratedLro2 = new ArmOperation(Client, deleteOpId2);
             await deleteRehydratedLro2.WaitForCompletionResponseAsync();
             Assert.AreEqual(deleteRehydratedLro2.HasCompleted, true);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rg.GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]

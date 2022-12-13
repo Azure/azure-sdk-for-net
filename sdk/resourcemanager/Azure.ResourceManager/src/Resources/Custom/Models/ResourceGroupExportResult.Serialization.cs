@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceGroupExportResult : IOperationSourceProvider<ResourceGroupExportResult>
     {
+#if NET7_0_OR_GREATER
         static IOperationSource<ResourceGroupExportResult> IOperationSourceProvider<ResourceGroupExportResult>.GetOperationSource(ArmClient client) => new ResourceGroupExportResultOperationSource();
+#endif
     }
 }
