@@ -238,7 +238,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
@@ -284,7 +284,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
@@ -323,7 +323,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);

@@ -21,11 +21,13 @@ namespace Azure.Communication.MediaComposition.Models
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
-        internal MediaCompositionLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri)
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        internal MediaCompositionLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode)
         {
             Kind = kind;
             Resolution = resolution;
             PlaceholderImageUri = placeholderImageUri;
+            ScalingMode = scalingMode;
         }
 
         /// <summary> Kind of layout. </summary>
@@ -34,5 +36,7 @@ namespace Azure.Communication.MediaComposition.Models
         public LayoutResolution Resolution { get; set; }
         /// <summary> Set global placeholder image. </summary>
         public string PlaceholderImageUri { get; set; }
+        /// <summary> The scaling mode for the view of a video stream in a cell. </summary>
+        public ScalingMode? ScalingMode { get; set; }
     }
 }
