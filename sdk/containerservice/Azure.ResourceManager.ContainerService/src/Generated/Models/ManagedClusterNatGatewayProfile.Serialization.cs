@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     effectiveOutboundIPs = array;
                     continue;

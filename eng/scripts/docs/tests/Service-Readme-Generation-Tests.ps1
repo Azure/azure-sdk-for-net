@@ -2,7 +2,9 @@
 ```
 Invoke-Pester -Output Detailed $PSScriptRoot/Service-Readme-Generation-Tests.ps1
 
-We are testing the Get-dotnet-OnboardedDocsMsPackagesForMoniker function in Docs-ToC.sp1
+We are testing:
+1. Get-dotnet-OnboardedDocsMsPackagesForMoniker function in Docs-ToC.sp1
+2. Get-dotnet-PackageLevelReadme function in Docs-ToC.sp1
 ```
 #>
 
@@ -36,5 +38,20 @@ Describe "Get-OnboardedDocsMsPackagesForMoniker" -Tag "UnitTest" {
     ) {
         $onboardingPackages = Get-dotnet-OnboardedDocsMsPackagesForMoniker -DocRepoLocation $DocRepoLocation -moniker $moniker 2> $null
         $onboardingPackages.Value | Should -BeNullOrEmpty
+    }
+}
+
+# Test plan:
+# 1. Tests on getting package level readme sucessfully.
+Describe "Get-PackageLevelReadme" -Tag "UnitTest" {
+    # Passed cases
+    It "Get package level readme readme from package" -TestCases @(
+        @{ packageMetadataJson = "$PSScriptRoot/inputs/packageMetadata/1.json"; expectedPackageReadme="resourcemanager.hci" }
+        @{ packageMetadataJson = "$PSScriptRoot/inputs/packageMetadata/2.json"; expectedPackageReadme="storage.blobs" }
+        @{ packageMetadataJson = "$PSScriptRoot/inputs/packageMetadata/3.json"; expectedPackageReadme="microsoft.rest.clientruntime" }
+    ) {
+        $packageMetadata = (Get-Content $packageMetadataJson -Raw) | ConvertFrom-Json
+        $packageReadme = Get-dotnet-PackageLevelReadme -packageMetadata $packageMetadata
+        $packageReadme | Should -Be $expectedPackageReadme
     }
 }

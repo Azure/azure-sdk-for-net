@@ -70,6 +70,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity");
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -84,6 +96,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<DigitalTwinsAuthenticationType> authenticationType = default;
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
+            Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TopicEndpoint"))
@@ -166,8 +179,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     deadLetterUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        identity = null;
+                        continue;
+                    }
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    continue;
+                }
             }
-            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, topicEndpoint, accessKey1, accessKey2.Value);
+            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, topicEndpoint, accessKey1, accessKey2.Value);
         }
     }
 }
